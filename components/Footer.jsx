@@ -54,9 +54,9 @@ function Footer() {
             GTMx<span className="footer__cursor">_</span>
           </span>
           <div className="footer__links">
-            <a href="https://linkedin.com/in/naufalnug" target="_blank" rel="noopener noreferrer" className="footer__link">[LinkedIn]</a>
-            <a href="https://x.com/naufalnug" target="_blank" rel="noopener noreferrer" className="footer__link">[X]</a>
-            <a href="mailto:naufal@gtmx.run" className="footer__link">[Email]</a>
+            <a href="https://linkedin.com/company/gtmx" target="_blank" rel="noopener noreferrer" className="footer__link">[LinkedIn]</a>
+            <a href="https://x.com/gtmxrun" target="_blank" rel="noopener noreferrer" className="footer__link">[X]</a>
+            <a href="mailto:hello@gtmx.run" className="footer__link">[Email]</a>
           </div>
           <span className="footer__copy">&copy; 2026 GTMx. All rights reserved.</span>
         </div>
