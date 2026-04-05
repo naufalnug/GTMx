@@ -33,15 +33,12 @@ function Footer() {
       <div className="footer__inner">
         <div className="footer__cta">
           <h2 className="footer__title">
-            READY TO ENGINEER YOUR<br />
-            <span className="footer__title-accent">GO-TO-MARKET PIPELINE?</span>
+            READY TO BUILD YOUR<br />
+            <span className="footer__title-accent">US REVENUE ENGINE?</span>
           </h2>
           <p className="footer__subtitle">
-            Stop guessing. Start engineering.<br />
-            Book a 30-minute strategy call — we work with teams across APAC and globally.
-          </p>
-          <p className="footer__tz-note">
-            Slots available in SGT, AEST, and most APAC timezones.
+            Book a free GTM Audit. We&apos;ll map out exactly what it would take to get<br />
+            your first qualified US or European pipeline — no pitch, no fluff.
           </p>
           <div className="footer__cal-embed" id="my-cal-inline-30min"></div>
           <pre className="footer__ascii">{`
@@ -58,7 +55,7 @@ function Footer() {
             <a href="https://x.com/gtmxrun" target="_blank" rel="noopener noreferrer" className="footer__link">[X]</a>
             <a href="mailto:hello@gtmx.run" className="footer__link">[Email]</a>
           </div>
-          <span className="footer__copy">&copy; 2026 GTMx. All rights reserved.</span>
+          <span className="footer__copy">GTMx — Revenue engineering for APAC companies going West. &copy; 2026</span>
         </div>
       </div>
     </footer>

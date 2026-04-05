@@ -8,16 +8,7 @@ function Pricing() {
     <SectionWrapper id="pricing">
       <div className="pricing__header">
         <span className="pricing__label">// pricing</span>
-        <h2 className="pricing__title">CHOOSE YOUR GTM PLAN</h2>
-        <p className="pricing__desc">
-          Two ways to work with us. Both engineered for pipeline, not busywork.
-        </p>
-        <pre className="pricing__ascii">{`
-    ┌─────────────────────────────┐
-    │  $ cat pricing.txt          │
-    │  > No surprises. No fluff.  │
-    └─────────────────────────────┘
-        `}</pre>
+        <h2 className="pricing__title">TWO WAYS TO WORK WITH GTMX</h2>
       </div>
 
       <div className="pricing__grid">
@@ -29,6 +20,10 @@ function Pricing() {
             <span className="pricing__icon">{pkg.icon}</span>
             <h3 className="pricing__card-name">{pkg.name}</h3>
             <p className="pricing__card-subtitle">{pkg.subtitle}</p>
+
+            {pkg.bestFor && (
+              <p className="pricing__best-for">Best for: {pkg.bestFor}</p>
+            )}
 
             <div className="pricing__price">
               <span className="pricing__price-value">{pkg.price}</span>
@@ -51,15 +46,12 @@ function Pricing() {
             <GlowButton href={pkg.cta.href} variant={pkg.cta.variant} size="md">
               {pkg.cta.label}
             </GlowButton>
-            {pkg.tierNote && (
-              <span className="pricing__tier-note">{pkg.tierNote}</span>
-            )}
           </div>
         ))}
       </div>
 
       <p className="pricing__currency-note">
-        * Pricing in USD. APAC clients: invoicing available in AUD and SGD — mention your preferred currency on the audit call.
+        Not sure which is right for you? Book a free 30-minute GTM Audit call. We&apos;ll tell you honestly where you are and what you actually need.
       </p>
     </SectionWrapper>
   )

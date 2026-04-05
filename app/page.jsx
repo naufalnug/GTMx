@@ -1,13 +1,12 @@
 import Navbar from '../components/Navbar'
 import Hero from '../components/Hero'
-import StatsBar from '../components/StatsBar'
-import ApacCallout from '../components/ApacCallout'
-import HowItWorks from '../components/HowItWorks'
-import Services from '../components/Services'
-import CaseStudies from '../components/CaseStudies'
-import Pricing from '../components/Pricing'
-import TechStack from '../components/TechStack'
+import Problem from '../components/Problem'
+import Solution from '../components/Solution'
+import IcpSection from '../components/IcpSection'
+import Process from '../components/Process'
+import SocialProof from '../components/SocialProof'
 import FAQ from '../components/FAQ'
+import Pricing from '../components/Pricing'
 import Footer from '../components/Footer'
 import { faqs } from '../data/faq'
 
@@ -30,7 +29,7 @@ export default function Page() {
     '@type': 'Organization',
     name: 'GTMx',
     url: 'https://gtmx.run',
-    description: 'GTM pipeline engineering for B2B teams',
+    description: 'GTM engineering for APAC B2B companies expanding to the US and Europe',
   }
 
   const serviceJsonLd = {
@@ -40,8 +39,8 @@ export default function Page() {
       '@type': 'Organization',
       name: 'GTMx',
     },
-    name: 'GTM Pipeline Engineering',
-    description: 'We build automated revenue infrastructure for funded B2B startups — from enrichment and sequences to routing, scoring, and dashboards.',
+    name: 'GTM Engineering for APAC Expansion',
+    description: 'We build the outbound revenue engine that gets APAC B2B tech companies their first qualified US and European pipeline.',
     serviceType: 'Go-to-Market Engineering',
   }
 
@@ -63,14 +62,13 @@ export default function Page() {
         <Navbar />
         <main>
           <Hero />
-          <StatsBar />
-          <ApacCallout />
-          <HowItWorks />
-          <Services />
-          <CaseStudies />
-          <Pricing />
-          <TechStack />
+          <Problem />
+          <Solution />
+          <IcpSection />
+          <Process />
+          <SocialProof />
           <FAQ />
+          <Pricing />
         </main>
         <Footer />
       </div>

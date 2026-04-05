@@ -7,11 +7,11 @@ import GlowButton from './ui/GlowButton'
 import './Hero.css'
 
 const TERMINAL_LINES = [
-  { text: '$ gtmx init --pipeline "outbound"', status: null },
-  { text: '> Initializing cold email infrastructure...', status: 'done' },
-  { text: '> Enriching 2,847 leads via Clay...', status: 'done' },
-  { text: '> Sequencing across 12 sender accounts...', status: 'done' },
-  { text: '> Pipeline live. 47 meetings booked.', status: 'done' },
+  { text: '$ gtmx init --market "us-expansion"', status: null },
+  { text: '> Building ICP for US enterprise buyers...', status: 'done' },
+  { text: '> Rewriting messaging for Western market...', status: 'done' },
+  { text: '> Launching cold email + LinkedIn sequences...', status: 'done' },
+  { text: '> Pipeline live. First US meetings booked.', status: 'done' },
 ]
 
 function Hero() {
@@ -32,27 +32,24 @@ function Hero() {
         </div>
 
         <div className={`hero__content ${typingDone ? 'hero__content--visible' : ''}`}>
-          <span className="hero__badge">GTM Engineering for B2B Teams</span>
+          <span className="hero__badge">GTM Engineering for APAC B2B Companies</span>
           <h1 className="hero__title">
-            Predictable Pipeline in 90 Days.<br />
-            <span className="hero__title-accent">No Extra Headcount Required.</span>
+            Your APAC SaaS Works.<br />
+            <span className="hero__title-accent">Now Make It Work in the US.</span>
           </h1>
           <p className="hero__subtitle">
-            We build and operate your outbound infrastructure — email, LinkedIn,<br />
-            enrichment, and routing — so your team closes deals, not configures tools.
+            GTMx builds the outbound revenue engine that gets APAC B2B tech companies<br />
+            their first qualified US and European pipeline — in weeks, not quarters.
           </p>
           <p className="hero__icp">
-            For Series A/B B2B teams across APAC and globally — with a sales org of 5–50 reps and a pipeline problem.
+            Built by operators who&apos;ve sold in APAC and executed GTM for YC-backed companies in the US.
           </p>
           <div className="hero__actions">
-            <div className="hero__cta-wrapper">
-              <GlowButton href="#book" size="lg">
-                {'>>> Book a Free GTM Audit'}
-              </GlowButton>
-              <span className="hero__cta-micro">No pitch. 30 mins. Available across SGT, AEST, and APAC timezones.</span>
-            </div>
-            <GlowButton href="#case-studies" variant="outline" size="lg">
-              {'See Client Results →'}
+            <GlowButton href="#book" size="lg">
+              {'>>> Book a Free GTM Audit'}
+            </GlowButton>
+            <GlowButton href="#process" variant="outline" size="lg">
+              {'See How It Works →'}
             </GlowButton>
           </div>
         </div>

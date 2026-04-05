@@ -5,9 +5,8 @@ import GlowButton from './ui/GlowButton'
 import './Navbar.css'
 
 const NAV_LINKS = [
-  { label: 'How It Works', href: '#how-it-works' },
-  { label: 'Services', href: '#services' },
-  { label: 'Results', href: '#case-studies' },
+  { label: 'How It Works', href: '#process' },
+  { label: 'Who It\u2019s For', href: '#icp' },
   { label: 'Pricing', href: '#pricing' },
   { label: 'FAQ', href: '#faq' },
 ]
