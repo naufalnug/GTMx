@@ -1,0 +1,47 @@
+export const caseStudies = [
+  {
+    id: 1,
+    vertical: 'B2B SaaS',
+    badge: 'APAC → US PIPELINE',
+    location: 'Singapore → United States',
+    problem: 'Series A SaaS with strong APAC traction but zero US pipeline. Founders doing manual LinkedIn outreach into a market they didn\u2019t understand.',
+    metrics: {
+      before: '0 US meetings',
+      after: '32 qualified meetings',
+      channels: 'Cold Email + LinkedIn',
+      timeline: '90 days',
+    },
+    quote: '\u201CWe spent 6 months trying to crack the US market ourselves. GTMx had us in qualified conversations within 3 weeks of launch.\u201D',
+    quoteName: '\u2014 R.L., CEO \u00b7 Series A SaaS \u00b7 Singapore',
+  },
+  {
+    id: 2,
+    vertical: 'Marketplace',
+    badge: 'TERRITORY MAPPING',
+    location: 'Australia → US & Europe',
+    problem: 'Expanding a services marketplace into 4 US metros and 2 European cities with no local network or lead data.',
+    metrics: {
+      before: '0 leads in Western markets',
+      after: '800+ verified leads',
+      channels: 'Email + Enrichment',
+      timeline: '45 days',
+    },
+    quote: '\u201CThey built our entire US and EU lead pipeline before we even had boots on the ground. The territory mapping alone saved us months.\u201D',
+    quoteName: '\u2014 A.K., VP Growth \u00b7 Marketplace \u00b7 Sydney',
+  },
+  {
+    id: 3,
+    vertical: 'Fintech',
+    badge: 'GTM ENGINEERING',
+    location: 'India → US Enterprise',
+    problem: 'Series B fintech with 12 reps spending 60% of time on manual research instead of selling into US enterprise accounts.',
+    metrics: {
+      before: '8 touches/rep/day',
+      after: '35+ touches/rep/day',
+      channels: 'Workflow Automation',
+      timeline: '60 days',
+    },
+    quote: '\u201COur reps went from drowning in spreadsheets to actually closing US enterprise deals. The GTM infrastructure GTMx built is now the backbone of our expansion.\u201D',
+    quoteName: '\u2014 S.P., Head of Sales \u00b7 Fintech \u00b7 Bangalore',
+  },
+]

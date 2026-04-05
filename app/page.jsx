@@ -5,6 +5,7 @@ import Solution from '../components/Solution'
 import IcpSection from '../components/IcpSection'
 import Process from '../components/Process'
 import SocialProof from '../components/SocialProof'
+import CaseStudies from '../components/CaseStudies'
 import FAQ from '../components/FAQ'
 import Pricing from '../components/Pricing'
 import Footer from '../components/Footer'
@@ -67,6 +68,7 @@ export default function Page() {
           <IcpSection />
           <Process />
           <SocialProof />
+          <CaseStudies />
           <FAQ />
           <Pricing />
         </main>
