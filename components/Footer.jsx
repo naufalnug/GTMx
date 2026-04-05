@@ -52,6 +52,9 @@ function Footer() {
           </span>
           <div className="footer__links">
             <a href="/content" className="footer__link">[Content]</a>
+            <span className="footer__link footer__link--disabled">[LinkedIn]</span>
+            <span className="footer__link footer__link--disabled">[X]</span>
+            <span className="footer__link footer__link--disabled">[Email]</span>
           </div>
           <span className="footer__copy">GTMx — Revenue engineering for APAC companies going West. &copy; 2026</span>
         </div>
