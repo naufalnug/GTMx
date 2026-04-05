@@ -39,12 +39,12 @@ const STEPS = [
 function Process() {
   return (
     <SectionWrapper id="process">
-      <div className="process__header">
+      <div className="process__header" data-animate="fade-up">
         <span className="process__label">// how_it_works</span>
-        <h2 className="process__title">FROM ZERO TO US PIPELINE IN 60 DAYS</h2>
+        <h2 className="process__title">From Zero to US Pipeline in 60 Days</h2>
       </div>
 
-      <div className="process__grid">
+      <div className="process__grid" data-animate="stagger">
         {STEPS.map((step, i) => (
           <div key={step.id} className="process__step">
             <div className="process__step-header">

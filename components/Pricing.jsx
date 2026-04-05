@@ -6,18 +6,19 @@ import './Pricing.css'
 function Pricing() {
   return (
     <SectionWrapper id="pricing">
-      <div className="pricing__header">
+      <div className="pricing__header" data-animate="fade-up">
         <span className="pricing__label">// pricing</span>
-        <h2 className="pricing__title">TWO WAYS TO WORK WITH GTMX</h2>
+        <h2 className="pricing__title">Two Ways to Work With GTMx</h2>
       </div>
 
-      <div className="pricing__grid">
+      <div className="pricing__grid" data-animate="stagger">
         {pricingPackages.map(pkg => (
           <div key={pkg.id} className={`pricing__card pricing__card--${pkg.tier}`}>
-            {pkg.tier === 'recommended' && (
-              <span className="pricing__badge">RECOMMENDED</span>
-            )}
-            <span className="pricing__icon">{pkg.icon}</span>
+            <div className="pricing__badge-area">
+              {pkg.tier === 'recommended' && (
+                <span className="pricing__badge">RECOMMENDED</span>
+              )}
+            </div>
             <h3 className="pricing__card-name">{pkg.name}</h3>
             <p className="pricing__card-subtitle">{pkg.subtitle}</p>
 

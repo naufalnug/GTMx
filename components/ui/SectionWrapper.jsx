@@ -1,23 +1,22 @@
 'use client'
 
-import { useInView } from 'react-intersection-observer'
+import { useRef, useEffect } from 'react'
+import { animateSection } from '../../lib/animations'
 
 function SectionWrapper({ id, children, className = '' }) {
-  const { ref, inView } = useInView({
-    threshold: 0.1,
-    triggerOnce: true,
-  })
+  const ref = useRef(null)
+
+  useEffect(() => {
+    animateSection(ref.current)
+  }, [])
 
   return (
     <section
       id={id}
       ref={ref}
-      className={`section ${className} ${inView ? 'section--visible' : ''}`}
+      className={`section ${className}`}
       style={{
-        padding: 'var(--space-3xl) var(--space-lg)',
-        opacity: inView ? 1 : 0,
-        transform: inView ? 'translateY(0)' : 'translateY(30px)',
-        transition: 'opacity 0.6s ease, transform 0.6s ease',
+        padding: 'var(--space-2xl) var(--space-lg)',
       }}
     >
       <div style={{ maxWidth: 'var(--max-width)', margin: '0 auto' }}>

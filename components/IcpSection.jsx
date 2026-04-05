@@ -18,16 +18,16 @@ const NOT_FIT = [
 function IcpSection() {
   return (
     <SectionWrapper id="icp">
-      <div className="icp__header">
+      <div className="icp__header" data-animate="fade-up">
         <span className="icp__label">// who_this_is_for</span>
-        <h2 className="icp__title">BUILT FOR ONE TYPE OF COMPANY</h2>
+        <h2 className="icp__title">Built for One Type of Company</h2>
         <p className="icp__desc">
           GTMx works exclusively with APAC B2B tech companies that are ready to expand
           into the US or European market.
         </p>
       </div>
 
-      <div className="icp__grid">
+      <div className="icp__grid" data-animate="stagger">
         <div className="icp__card icp__card--fit">
           <h3 className="icp__card-title">You&apos;re the right fit if:</h3>
           <ul className="icp__list">

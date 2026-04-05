@@ -1,3 +1,4 @@
+import PageEffects from '../components/PageEffects'
 import Navbar from '../components/Navbar'
 import Hero from '../components/Hero'
 import Problem from '../components/Problem'
@@ -60,6 +61,7 @@ export default function Page() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
       />
       <div className="app">
+        <PageEffects />
         <Navbar />
         <main>
           <Hero />

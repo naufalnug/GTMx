@@ -9,10 +9,10 @@ function Footer() {
       if (window.Cal && window.Cal.ns && window.Cal.ns["30min"]) {
         window.Cal.ns["30min"]("inline", {
           elementOrSelector: "#my-cal-inline-30min",
-          config: { layout: "month_view", useSlotsViewOnSmallScreen: "true" },
+          config: { layout: "month_view", useSlotsViewOnSmallScreen: "true", theme: "light" },
           calLink: "naufal-gtmx/30min",
         });
-        window.Cal.ns["30min"]("ui", { hideEventTypeDetails: false, layout: "month_view" });
+        window.Cal.ns["30min"]("ui", { theme: "light", hideEventTypeDetails: false, layout: "month_view" });
         return true;
       }
       return false;

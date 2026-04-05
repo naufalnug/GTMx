@@ -28,18 +28,17 @@ const MISTAKES = [
 function Problem() {
   return (
     <SectionWrapper id="problem">
-      <div className="problem__header">
+      <div className="problem__header" data-animate="fade-up">
         <span className="problem__label">// the_problem</span>
         <h2 className="problem__title">
-          THE 3 MISTAKES THAT KILL APAC EXPANSION BEFORE IT STARTS
+          The 3 Mistakes That Kill APAC Expansion Before It Starts
         </h2>
       </div>
 
-      <div className="problem__grid">
+      <div className="problem__grid" data-animate="stagger">
         {MISTAKES.map((item, i) => (
           <div key={item.id} className="problem__card">
             <span className="problem__number">0{i + 1}</span>
-            <span className="problem__icon">{item.icon}</span>
             <h3 className="problem__card-title">{item.title}</h3>
             <p className="problem__card-desc">{item.description}</p>
           </div>
