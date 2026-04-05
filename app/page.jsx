@@ -4,6 +4,7 @@ import StatsBar from '../components/StatsBar'
 import HowItWorks from '../components/HowItWorks'
 import Services from '../components/Services'
 import CaseStudies from '../components/CaseStudies'
+import Pricing from '../components/Pricing'
 import TechStack from '../components/TechStack'
 import FAQ from '../components/FAQ'
 import Footer from '../components/Footer'
@@ -65,6 +66,7 @@ export default function Page() {
           <HowItWorks />
           <Services />
           <CaseStudies />
+          <Pricing />
           <TechStack />
           <FAQ />
         </main>

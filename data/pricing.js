@@ -1,0 +1,46 @@
+export const pricingPackages = [
+  {
+    id: 'done-with-you',
+    icon: '~>',
+    tier: 'standard',
+    name: 'Done With You',
+    subtitle: 'Plug-and-play GTM workflows',
+    price: '$2,499',
+    pricePeriod: '/workflow',
+    priceNote: 'Starting at — + optional monthly maintenance',
+    features: [
+      'Custom GTM workflow builds',
+      'Delivered turnkey — you run it',
+      'Full documentation & handoff',
+      'Optional monthly tuning retainer',
+      'Slack support during build',
+    ],
+    cta: {
+      label: '>>> Scope My Workflows',
+      href: '#book',
+      variant: 'outline',
+    },
+  },
+  {
+    id: 'done-for-you',
+    icon: '=>',
+    tier: 'recommended',
+    name: 'Done For You',
+    subtitle: 'GTM outbound fully managed',
+    price: '$5,000',
+    pricePeriod: '/month',
+    priceNote: 'Cancel anytime',
+    features: [
+      'Full outbound engine — built & run for you',
+      'ICP research, copy, sequences, sending',
+      'Weekly reporting & optimization',
+      'Dedicated GTM engineer',
+      'Slack channel + async support',
+    ],
+    cta: {
+      label: '>>> Book a Free GTM Audit',
+      href: '#book',
+      variant: 'primary',
+    },
+  },
+]
