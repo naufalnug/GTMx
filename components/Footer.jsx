@@ -52,9 +52,6 @@ function Footer() {
           </span>
           <div className="footer__links">
             <a href="/content" className="footer__link">[Content]</a>
-            <a href="https://linkedin.com/company/gtmx" target="_blank" rel="noopener noreferrer" className="footer__link">[LinkedIn]</a>
-            <a href="https://x.com/gtmxrun" target="_blank" rel="noopener noreferrer" className="footer__link">[X]</a>
-            <a href="mailto:hello@gtmx.run" className="footer__link">[Email]</a>
           </div>
           <span className="footer__copy">GTMx — Revenue engineering for APAC companies going West. &copy; 2026</span>
         </div>
