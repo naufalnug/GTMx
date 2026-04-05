@@ -1,9 +1,11 @@
 import Navbar from '../components/Navbar'
 import Hero from '../components/Hero'
 import StatsBar from '../components/StatsBar'
+import ApacCallout from '../components/ApacCallout'
 import HowItWorks from '../components/HowItWorks'
 import Services from '../components/Services'
 import CaseStudies from '../components/CaseStudies'
+import Founder from '../components/Founder'
 import Pricing from '../components/Pricing'
 import TechStack from '../components/TechStack'
 import FAQ from '../components/FAQ'
@@ -63,9 +65,11 @@ export default function Page() {
         <main>
           <Hero />
           <StatsBar />
+          <ApacCallout />
           <HowItWorks />
           <Services />
           <CaseStudies />
+          <Founder />
           <Pricing />
           <TechStack />
           <FAQ />

@@ -18,7 +18,7 @@ const inter = Inter({
 
 export const metadata = {
   title: 'GTM Pipeline Engineering for B2B Teams | GTMx',
-  description: 'GTMx builds automated revenue infrastructure for funded B2B startups — from enrichment and sequences to routing, scoring, and dashboards. Book a free GTM audit.',
+  description: 'GTMx builds automated GTM pipeline infrastructure for B2B teams across APAC and globally. From enrichment and sequences to routing and dashboards — predictable pipeline in 90 days. Book a free audit.',
   openGraph: {
     title: 'GTM Pipeline Engineering for B2B Teams | GTMx',
     description: 'We build outbound systems that book meetings while you focus on closing deals.',
@@ -33,6 +33,10 @@ export const metadata = {
   },
   alternates: {
     canonical: 'https://gtmx.run',
+  },
+  other: {
+    'geo.region': 'SG',
+    'geo.placename': 'Singapore',
   },
 }
 

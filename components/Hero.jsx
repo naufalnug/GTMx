@@ -34,20 +34,23 @@ function Hero() {
         <div className={`hero__content ${typingDone ? 'hero__content--visible' : ''}`}>
           <span className="hero__badge">GTM Engineering for B2B Teams</span>
           <h1 className="hero__title">
-            PREDICTABLE PIPELINE IN 90 DAYS.<br />
-            <span className="hero__title-accent">NO EXTRA HEADCOUNT REQUIRED.</span>
+            Predictable Pipeline in 90 Days.<br />
+            <span className="hero__title-accent">No Extra Headcount Required.</span>
           </h1>
           <p className="hero__subtitle">
             We build and operate your outbound infrastructure — email, LinkedIn,<br />
             enrichment, and routing — so your team closes deals, not configures tools.
           </p>
           <p className="hero__icp">
-            For Series A/B B2B teams with a sales org of 5–50 reps and a pipeline problem.
+            For Series A/B B2B teams across APAC and globally — with a sales org of 5–50 reps and a pipeline problem.
           </p>
           <div className="hero__actions">
-            <GlowButton href="#book" size="lg">
-              {'>>> Book a Free GTM Audit'}
-            </GlowButton>
+            <div className="hero__cta-wrapper">
+              <GlowButton href="#book" size="lg">
+                {'>>> Book a Free GTM Audit'}
+              </GlowButton>
+              <span className="hero__cta-micro">No pitch. 30 mins. Available across SGT, AEST, and APAC timezones.</span>
+            </div>
             <GlowButton href="#case-studies" variant="outline" size="lg">
               {'See Client Results →'}
             </GlowButton>

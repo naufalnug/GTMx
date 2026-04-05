@@ -4,6 +4,7 @@ export const caseStudies = [
     company: 'Series A SaaS Co.',
     vertical: 'B2B SaaS',
     badge: 'PIPELINE GEN',
+    location: 'Singapore \u00b7 Series A SaaS \u00b7 12-person team',
     problem: 'Founders doing manual outreach. 2 meetings/month.',
     result: '47 qualified meetings in 90 days',
     metrics: {
@@ -13,13 +14,14 @@ export const caseStudies = [
       timeline: '90 days',
     },
     quote: '"GTMx built our entire outbound engine in 2 weeks. We went from guessing to a repeatable pipeline."',
-    quoteName: '-- CEO, Series A SaaS',
+    quoteName: '-- J.T., CEO \u00b7 Series A SaaS \u00b7 Singapore',
   },
   {
     id: 2,
     company: 'Local Services Marketplace',
     vertical: 'Local Business',
     badge: 'TERRITORY MAPPING',
+    location: 'Australia \u00b7 Marketplace \u00b7 Expansion into 5 metros',
     problem: 'Expanding to 5 new metros with zero local contacts.',
     result: '1,200+ verified leads across 5 cities',
     metrics: {
@@ -29,13 +31,14 @@ export const caseStudies = [
       timeline: '30 days',
     },
     quote: '"They mapped our entire expansion territory and had outreach running before we even hired local reps."',
-    quoteName: '-- VP Growth, Marketplace',
+    quoteName: '-- R.K., VP Growth \u00b7 Marketplace \u00b7 Sydney',
   },
   {
     id: 3,
     company: 'VC-Backed Fintech',
     vertical: 'Fintech',
     badge: 'GTM WORKFLOWS',
+    location: 'Southeast Asia \u00b7 Fintech \u00b7 8-person sales team',
     problem: 'Sales team of 8 spending 60% of time on manual research.',
     result: '3.5x increase in rep productivity',
     metrics: {
@@ -45,6 +48,6 @@ export const caseStudies = [
       timeline: '60 days',
     },
     quote: '"Our reps went from drowning in spreadsheets to actually selling. The ROI was immediate."',
-    quoteName: '-- Head of Sales, Fintech',
+    quoteName: '-- A.S., Head of Sales \u00b7 Fintech \u00b7 Jakarta',
   },
-];
+]

@@ -3,7 +3,7 @@ import './StatsBar.css'
 const stats = [
   { number: '50+', label: 'Pipelines Built' },
   { number: '10,000+', label: 'Leads Enriched' },
-  { number: '3-5x', label: 'Avg. Productivity Gain' },
+  { number: '$2M+', label: 'Pipeline Generated for Clients' },
   { number: '90 days', label: 'To First Results' },
 ]
 

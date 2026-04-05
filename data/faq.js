@@ -13,7 +13,7 @@ export const faqs = [
   },
   {
     question: 'What does pricing look like?',
-    answer: 'We offer project-based and retainer engagements. Book a strategy call and we\'ll scope a custom plan based on your ICP, channels, and volume targets.',
+    answer: 'Our Done With You workflows start at $2,499/workflow — delivered turnkey, you run it. Our Done For You fully-managed retainer is $5,000/month with a dedicated GTM engineer. Both include Slack support and full documentation. Book a call if you\'d like to scope a custom engagement.',
   },
   {
     question: 'What tools do you use?',
@@ -23,4 +23,4 @@ export const faqs = [
     question: 'Can you help with inbound too?',
     answer: 'Yes. Our Clay enrichment workflows automatically enrich inbound leads with 50+ data points and route them to the right rep with full context. No more manual research before every call.',
   },
-];
+]

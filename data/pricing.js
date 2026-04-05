@@ -42,5 +42,6 @@ export const pricingPackages = [
       href: '#book',
       variant: 'primary',
     },
+    tierNote: 'Available for APAC-based clients. Calls available SGT / AEST.',
   },
 ]

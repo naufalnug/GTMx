@@ -24,6 +24,9 @@ function CaseStudies() {
             <Terminal title={study.vertical}>
               <div className="cases__card-inner">
                 <span className="cases__badge">{study.badge}</span>
+                {study.location && (
+                  <span className="cases__location">{study.location}</span>
+                )}
                 <p className="cases__problem">{study.problem}</p>
 
                 <div className="cases__metrics">

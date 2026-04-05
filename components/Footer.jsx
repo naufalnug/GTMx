@@ -38,7 +38,10 @@ function Footer() {
           </h2>
           <p className="footer__subtitle">
             Stop guessing. Start engineering.<br />
-            Book a 30-minute strategy call.
+            Book a 30-minute strategy call — we work with teams across APAC and globally.
+          </p>
+          <p className="footer__tz-note">
+            Slots available in SGT, AEST, and most APAC timezones.
           </p>
           <div className="footer__cal-embed" id="my-cal-inline-30min"></div>
           <pre className="footer__ascii">{`
@@ -51,9 +54,9 @@ function Footer() {
             GTMx<span className="footer__cursor">_</span>
           </span>
           <div className="footer__links">
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="footer__link">[LI]</a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="footer__link">[X]</a>
-            <a href="mailto:hello@gtmx.com" className="footer__link">[EMAIL]</a>
+            <a href="https://linkedin.com/in/naufalnug" target="_blank" rel="noopener noreferrer" className="footer__link">[LinkedIn]</a>
+            <a href="https://x.com/naufalnug" target="_blank" rel="noopener noreferrer" className="footer__link">[X]</a>
+            <a href="mailto:naufal@gtmx.run" className="footer__link">[Email]</a>
           </div>
           <span className="footer__copy">&copy; 2026 GTMx. All rights reserved.</span>
         </div>

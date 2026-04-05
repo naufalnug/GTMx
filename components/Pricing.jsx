@@ -51,9 +51,16 @@ function Pricing() {
             <GlowButton href={pkg.cta.href} variant={pkg.cta.variant} size="md">
               {pkg.cta.label}
             </GlowButton>
+            {pkg.tierNote && (
+              <span className="pricing__tier-note">{pkg.tierNote}</span>
+            )}
           </div>
         ))}
       </div>
+
+      <p className="pricing__currency-note">
+        * Pricing in USD. APAC clients: invoicing available in AUD and SGD — mention your preferred currency on the audit call.
+      </p>
     </SectionWrapper>
   )
 }
