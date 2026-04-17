@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import SectionWrapper from './ui/SectionWrapper'
 import { caseStudies } from '../data/caseStudies'
 import './CaseStudies.css'
@@ -7,34 +8,40 @@ function CaseStudies() {
     <SectionWrapper id="case-studies">
       <div className="cases__header" data-animate="fade-up">
         <span className="cases__label">// results</span>
-        <h2 className="cases__title">APAC Companies We&apos;ve Taken West</h2>
+        <h2 className="cases__title">Real Results From Real Clients</h2>
         <p className="cases__desc">
-          Real expansions. Real numbers. Here&apos;s what happens when your US GTM gets engineered.
+          No fluff. No vanity metrics. Here&apos;s what happens when cold email is done right.
         </p>
       </div>
 
       <div className="cases__grid" data-animate="stagger">
         {caseStudies.map(study => (
-          <div key={study.id} className="cases__card">
+          <Link
+            key={study.id}
+            href={`/case-studies/${study.slug}`}
+            className="cases__card"
+          >
             <span className="cases__badge">{study.badge}</span>
-            <span className="cases__location">{study.location}</span>
-            <p className="cases__problem">{study.problem}</p>
+            <span className="cases__company">{study.company}</span>
+            <span className="cases__vertical">{study.vertical}</span>
+            <p className="cases__headline">{study.headline}</p>
 
-            <div className="cases__result">
-              <span className="cases__result-before">{study.metrics.before}</span>
-              <span className="cases__result-arrow">&rarr;</span>
-              <span className="cases__result-after">{study.metrics.after}</span>
-            </div>
-
-            <div className="cases__meta">
-              <span>{study.metrics.channels}</span>
-              <span>&middot;</span>
-              <span>{study.metrics.timeline}</span>
+            <div className="cases__metrics">
+              <div className="cases__metric">
+                <span className="cases__metric-value">{study.metrics.leads}</span>
+                <span className="cases__metric-label">Leads</span>
+              </div>
+              <div className="cases__metric">
+                <span className="cases__metric-value">{study.metrics.revenue}</span>
+                <span className="cases__metric-label">Revenue</span>
+              </div>
             </div>
 
             <blockquote className="cases__quote">{study.quote}</blockquote>
-            <span className="cases__quote-name">{study.quoteName}</span>
-          </div>
+            <span className="cases__quote-name">&mdash; {study.quoteName}</span>
+
+            <span className="cases__read-more">Read full case study &rarr;</span>
+          </Link>
         ))}
       </div>
     </SectionWrapper>
