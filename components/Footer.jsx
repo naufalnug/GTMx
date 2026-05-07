@@ -1,63 +1,22 @@
-'use client'
-
-import { useEffect } from 'react'
 import './Footer.css'
 
 function Footer() {
-  useEffect(() => {
-    function initCal() {
-      if (window.Cal && window.Cal.ns && window.Cal.ns["30min"]) {
-        window.Cal.ns["30min"]("inline", {
-          elementOrSelector: "#my-cal-inline-30min",
-          config: { layout: "month_view", useSlotsViewOnSmallScreen: "true", theme: "light" },
-          calLink: "naufal-gtmx/30min",
-        });
-        window.Cal.ns["30min"]("ui", { theme: "light", hideEventTypeDetails: false, layout: "month_view" });
-        return true;
-      }
-      return false;
-    }
-
-    if (initCal()) return;
-
-    // Cal.com script hasn't loaded yet — poll until ready
-    const interval = setInterval(() => {
-      if (initCal()) clearInterval(interval);
-    }, 200);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <footer className="footer" id="book">
-      <div className="footer__inner">
-        <div className="footer__cta">
-          <h2 className="footer__title">
-            READY TO BUILD YOUR<br />
-            <span className="footer__title-accent">OUTBOUND REVENUE ENGINE?</span>
-          </h2>
-          <p className="footer__subtitle">
-            Book a free GTM Audit. We&apos;ll map out exactly what it would take to get<br />
-            your first qualified pipeline — no pitch, no fluff.
-          </p>
-          <div className="footer__cal-embed" id="my-cal-inline-30min"></div>
-          <pre className="footer__ascii">{`
-  (~^.^)~  let's ship some pipeline  ~(^.^~)
-          `}</pre>
-        </div>
-
-        <div className="footer__bottom">
-          <span className="footer__brand">
-            GTMx<span className="footer__cursor">_</span>
-          </span>
-          <div className="footer__links">
-            <a href="/content" className="footer__link">[Content]</a>
-            <span className="footer__link footer__link--disabled">[LinkedIn]</span>
-            <span className="footer__link footer__link--disabled">[X]</span>
-            <span className="footer__link footer__link--disabled">[Email]</span>
+    <footer className="footer">
+      <div className="wrap footer-inner">
+        <div>
+          <img src="/logo.svg" alt="GTMx" style={{ height: 20, width: 'auto' }} />
+          <div style={{ marginTop: 6, fontSize: 13, color: 'var(--ink-3)' }}>
+            Outbound revenue engineering for B2B tech companies.
           </div>
-          <span className="footer__copy">GTMx — Outbound revenue engineering for B2B tech companies. &copy; 2026</span>
         </div>
+        <div className="footer-links">
+          <a href="/content">Content</a>
+          <span style={{ color: 'var(--ink-4)' }}>LinkedIn</span>
+          <span style={{ color: 'var(--ink-4)' }}>X</span>
+          <span style={{ color: 'var(--ink-4)' }}>Email</span>
+        </div>
+        <div className="footer-copy">&copy; 2026 GTMx &mdash; All rights reserved.</div>
       </div>
     </footer>
   )

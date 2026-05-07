@@ -1,14 +1,15 @@
-import PageEffects from '../components/PageEffects'
 import Navbar from '../components/Navbar'
 import Hero from '../components/Hero'
+import ProofStrip from '../components/ProofStrip'
 import Problem from '../components/Problem'
 import Solution from '../components/Solution'
 import IcpSection from '../components/IcpSection'
 import Process from '../components/Process'
-import SocialProof from '../components/SocialProof'
+import Founder from '../components/Founder'
 import CaseStudies from '../components/CaseStudies'
-import FAQ from '../components/FAQ'
 import Pricing from '../components/Pricing'
+import FAQ from '../components/FAQ'
+import FinalCTA from '../components/FinalCTA'
 import Footer from '../components/Footer'
 import { faqs } from '../data/faq'
 
@@ -60,22 +61,21 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
       />
-      <div className="app">
-        <PageEffects />
-        <Navbar />
-        <main>
-          <Hero />
-          <Problem />
-          <Solution />
-          <IcpSection />
-          <Process />
-          <SocialProof />
-          <CaseStudies />
-          <FAQ />
-          <Pricing />
-        </main>
-        <Footer />
-      </div>
+      <Navbar />
+      <main>
+        <Hero />
+        <ProofStrip />
+        <Problem />
+        <Solution />
+        <IcpSection />
+        <Process />
+        <Founder />
+        <CaseStudies />
+        <Pricing />
+        <FAQ />
+        <FinalCTA />
+      </main>
+      <Footer />
     </>
   )
 }

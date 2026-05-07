@@ -1,4 +1,3 @@
-import SectionWrapper from './ui/SectionWrapper'
 import './IcpSection.css'
 
 const GOOD_FIT = [
@@ -17,40 +16,32 @@ const NOT_FIT = [
 
 function IcpSection() {
   return (
-    <SectionWrapper id="icp">
-      <div className="icp__header" data-animate="fade-up">
-        <span className="icp__label">// who_this_is_for</span>
-        <h2 className="icp__title">Built for One Type of Company</h2>
-        <p className="icp__desc">
-          GTMx works with B2B tech companies that have product-market fit and are ready
-          to build a repeatable outbound revenue engine.
-        </p>
+    <section id="icp" className="section">
+      <div className="wrap section-head">
+        <span className="eyebrow">Who It&apos;s For</span>
+        <h2 className="h2">Built for <em>one</em> type of company.</h2>
       </div>
-
-      <div className="icp__grid" data-animate="stagger">
-        <div className="icp__card icp__card--fit">
-          <h3 className="icp__card-title">You&apos;re the right fit if:</h3>
-          <ul className="icp__list">
-            {GOOD_FIT.map(item => (
-              <li key={item} className="icp__item icp__item--yes">
-                <span className="icp__check">&#10003;</span> {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="icp__card icp__card--nofit">
-          <h3 className="icp__card-title">GTMx is not for you if:</h3>
-          <ul className="icp__list">
-            {NOT_FIT.map(item => (
-              <li key={item} className="icp__item icp__item--no">
-                <span className="icp__cross">&#10007;</span> {item}
-              </li>
-            ))}
-          </ul>
+      <div className="wrap">
+        <div className="icp-grid">
+          <div className="icp-col reveal">
+            <h3>You&apos;re the right fit if</h3>
+            <ul>
+              {GOOD_FIT.map((item) => (
+                <li key={item}><span className="yes-mark">&#10003;</span><span>{item}</span></li>
+              ))}
+            </ul>
+          </div>
+          <div className="icp-col no reveal">
+            <h3>GTMx is not for you if</h3>
+            <ul>
+              {NOT_FIT.map((item) => (
+                <li key={item}><span className="no-mark">&#10007;</span><span>{item}</span></li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
-    </SectionWrapper>
+    </section>
   )
 }
 

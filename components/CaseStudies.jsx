@@ -1,50 +1,45 @@
 import Link from 'next/link'
-import SectionWrapper from './ui/SectionWrapper'
 import { caseStudies } from '../data/caseStudies'
 import './CaseStudies.css'
 
 function CaseStudies() {
   return (
-    <SectionWrapper id="case-studies">
-      <div className="cases__header" data-animate="fade-up">
-        <span className="cases__label">// results</span>
-        <h2 className="cases__title">Real Results From Real Clients</h2>
-        <p className="cases__desc">
-          No fluff. No vanity metrics. Here&apos;s what happens when cold email is done right.
-        </p>
+    <section id="case-studies" className="section" style={{ background: 'var(--bg-sunk)' }}>
+      <div className="wrap section-head">
+        <span className="eyebrow">Results</span>
+        <h2 className="h2">
+          Real numbers. <em>Real clients.</em> No vanity metrics.
+        </h2>
       </div>
-
-      <div className="cases__grid" data-animate="stagger">
-        {caseStudies.map(study => (
-          <Link
-            key={study.id}
-            href={`/case-studies/${study.slug}`}
-            className="cases__card"
-          >
-            <span className="cases__badge">{study.badge}</span>
-            <span className="cases__company">{study.company}</span>
-            <span className="cases__vertical">{study.vertical}</span>
-            <p className="cases__headline">{study.headline}</p>
-
-            <div className="cases__metrics">
-              <div className="cases__metric">
-                <span className="cases__metric-value">{study.metrics.leads}</span>
-                <span className="cases__metric-label">Leads</span>
+      <div className="wrap">
+        <div className="results-grid">
+          {caseStudies.map((cs) => (
+            <Link href={`/case-studies/${cs.slug}`} key={cs.slug} className="result-card reveal">
+              <div>
+                <div className="result-tag">{cs.badge}</div>
+                <div className="result-name">{cs.company}</div>
+                <div className="result-cat">{cs.vertical}</div>
               </div>
-              <div className="cases__metric">
-                <span className="cases__metric-value">{study.metrics.revenue}</span>
-                <span className="cases__metric-label">Revenue</span>
+              <p className="result-headline">&ldquo;{cs.headline}&rdquo;</p>
+              <div className="result-metrics">
+                <div className="m">
+                  <div className="v">{cs.metrics.leads}</div>
+                  <div className="l">Leads</div>
+                </div>
+                <div className="m">
+                  <div className="v">{cs.metrics.revenue}</div>
+                  <div className="l">Revenue</div>
+                </div>
               </div>
-            </div>
-
-            <blockquote className="cases__quote">{study.quote}</blockquote>
-            <span className="cases__quote-name">&mdash; {study.quoteName}</span>
-
-            <span className="cases__read-more">Read full case study &rarr;</span>
-          </Link>
-        ))}
+              <blockquote className="result-quote">
+                {cs.quote.replace(/[\u201C\u201D]/g, '')}
+                <span className="who">&mdash; {cs.quoteName}</span>
+              </blockquote>
+            </Link>
+          ))}
+        </div>
       </div>
-    </SectionWrapper>
+    </section>
   )
 }
 

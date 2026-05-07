@@ -1,41 +1,38 @@
 'use client'
 
 import { useState } from 'react'
-import SectionWrapper from './ui/SectionWrapper'
 import { faqs } from '../data/faq'
 import './FAQ.css'
 
 function FAQ() {
-  const [openIndex, setOpenIndex] = useState(null)
-
-  const toggle = (index) => {
-    setOpenIndex(openIndex === index ? null : index)
-  }
+  const [open, setOpen] = useState(0)
 
   return (
-    <SectionWrapper id="faq">
-      <div className="faq__header">
-        <span className="faq__label">// faq</span>
-        <h2 className="faq__title">FREQUENTLY ASKED</h2>
+    <section id="faq" className="section">
+      <div className="wrap section-head">
+        <span className="eyebrow">FAQ</span>
+        <h2 className="h2">Questions, <em>answered.</em></h2>
       </div>
-
-      <div className="faq__list">
-        {faqs.map((faq, i) => (
-          <div
-            key={i}
-            className={`faq__item ${openIndex === i ? 'faq__item--open' : ''}`}
-          >
-            <button className="faq__question" onClick={() => toggle(i)}>
-              <span>{faq.question}</span>
-              <span className="faq__toggle">{openIndex === i ? '−' : '+'}</span>
-            </button>
-            <div className="faq__answer-wrapper">
-              <p className="faq__answer">{faq.answer}</p>
+      <div className="wrap">
+        <div className="faq-list">
+          {faqs.map((item, i) => (
+            <div key={i} className={`faq-item ${open === i ? 'open' : ''}`}>
+              <button className="faq-q" onClick={() => setOpen(open === i ? -1 : i)}>
+                <span>{item.question}</span>
+                <span className="faq-toggle">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                    <path d="M12 5v14M5 12h14" />
+                  </svg>
+                </span>
+              </button>
+              <div className="faq-a">
+                <div className="faq-a-inner">{item.answer}</div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </SectionWrapper>
+    </section>
   )
 }
 

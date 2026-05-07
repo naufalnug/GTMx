@@ -1,19 +1,26 @@
 import Script from 'next/script'
-import { JetBrains_Mono, Inter } from 'next/font/google'
+import { Geist, Geist_Mono } from 'next/font/google'
+import { Instrument_Serif } from 'next/font/google'
 import './globals.css'
 
-const jetbrainsMono = JetBrains_Mono({
+const geistSans = Geist({
   subsets: ['latin'],
-  variable: '--font-mono',
+  variable: '--geist-sans',
   display: 'swap',
-  weight: ['400', '500', '700'],
 })
 
-const inter = Inter({
+const geistMono = Geist_Mono({
   subsets: ['latin'],
-  variable: '--font-sans',
+  variable: '--geist-mono',
   display: 'swap',
-  weight: ['400', '500', '600', '700'],
+})
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ['latin'],
+  variable: '--instrument-serif',
+  display: 'swap',
+  weight: '400',
+  style: ['normal', 'italic'],
 })
 
 export const metadata = {
@@ -38,7 +45,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${jetbrainsMono.variable} ${inter.variable}`}>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}>
       <body>
         {children}
         <Script id="cal-embed" strategy="afterInteractive">

@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation'
 import ContentNavbar from '../../../components/ContentNavbar'
-import GlowButton from '../../../components/ui/GlowButton'
 import { articles } from '../../../data/articles'
 import './page.css'
 
@@ -83,9 +82,9 @@ export default function ArticlePage({ params }) {
             <p className="article__cta-text">
               Ready to build your US revenue engine?
             </p>
-            <GlowButton href="/#book" size="md">
-              {'>>> Book a Free GTM Audit'}
-            </GlowButton>
+            <a href="/#book" className="btn btn-primary">
+              Book a Free GTM Audit
+            </a>
           </div>
         </article>
       </main>

@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import GlowButton from './ui/GlowButton'
 import './Navbar.css'
 
 const NAV_LINKS = [
@@ -17,9 +16,9 @@ function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50)
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    const onScroll = () => setScrolled(window.scrollY > 12)
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   useEffect(() => {
@@ -32,28 +31,27 @@ function Navbar() {
   }, [menuOpen])
 
   return (
-    <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
-      <div className="navbar__inner">
-        <a href="#" className="navbar__logo">
-          GTMx<span className="navbar__cursor">_</span>
+    <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
+      <div className="wrap nav-inner">
+        <a href="#" className="brand">
+          <img src="/logo.svg" alt="GTMx" className="brand-logo" />
         </a>
 
-        <div className="navbar__links">
+        <div className="nav-links">
           {NAV_LINKS.map(link => (
-            <a key={link.href} href={link.href} className="navbar__link">
+            <a key={link.href} href={link.href} className="nav-link">
               {link.label}
             </a>
           ))}
         </div>
 
-        <div className="navbar__cta">
-          <GlowButton href="#book" size="sm">
-            {'>>> Book Free Audit'}
-          </GlowButton>
-        </div>
+        <a href="#book" className="btn btn-primary btn-sm nav-cta-desktop">
+          Book Free Audit
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="arrow"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
+        </a>
 
         <button
-          className={`navbar__hamburger ${menuOpen ? 'navbar__hamburger--open' : ''}`}
+          className={`nav-hamburger ${menuOpen ? 'open' : ''}`}
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
         >
@@ -63,20 +61,20 @@ function Navbar() {
         </button>
       </div>
 
-      <div className={`navbar__mobile ${menuOpen ? 'navbar__mobile--open' : ''}`}>
+      <div className={`nav-mobile ${menuOpen ? 'nav-mobile--open' : ''}`}>
         {NAV_LINKS.map(link => (
           <a
             key={link.href}
             href={link.href}
-            className="navbar__mobile-link"
+            className="nav-mobile-link"
             onClick={() => setMenuOpen(false)}
           >
             {link.label}
           </a>
         ))}
-        <GlowButton href="#book" size="md">
-          {'>>> Book Free Audit'}
-        </GlowButton>
+        <a href="#book" className="btn btn-primary" onClick={() => setMenuOpen(false)}>
+          Book Free Audit
+        </a>
       </div>
     </nav>
   )

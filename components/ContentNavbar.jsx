@@ -1,4 +1,3 @@
-import GlowButton from './ui/GlowButton'
 import './ContentNavbar.css'
 
 function ContentNavbar() {
@@ -6,13 +5,13 @@ function ContentNavbar() {
     <nav className="content-nav">
       <div className="content-nav__inner">
         <a href="/" className="content-nav__logo">
-          GTMx<span className="content-nav__cursor">_</span>
+          <img src="/logo.svg" alt="GTMx" style={{ height: 22, width: 'auto' }} />
         </a>
         <div className="content-nav__links">
           <a href="/content" className="content-nav__link">Content</a>
-          <GlowButton href="/#book" size="sm">
-            {'>>> Book Free Audit'}
-          </GlowButton>
+          <a href="/#book" className="btn btn-primary btn-sm">
+            Book Free Audit
+          </a>
         </div>
       </div>
     </nav>
