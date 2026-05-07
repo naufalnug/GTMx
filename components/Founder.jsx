@@ -11,8 +11,9 @@ function Founder() {
       </div>
       <div className="wrap founder-content">
         <p className="lede" style={{ fontSize: 19 }}>
-          Our founders have spent <strong style={{ color: 'var(--ink)' }}>8+ years as Account Executives</strong> selling B2B
-          tech and building GTM systems inside YC-backed companies. We&apos;ve been on
+          Our founders have spent <strong style={{ color: 'var(--ink)' }}>8+ years as Account Executives</strong>{' '}
+          selling B2B tech, have run their own agencies, and worked at top-5 global agencies.
+          We&apos;ve also built GTM systems inside YC-backed companies. We&apos;ve been on
           the execution side &mdash; so we know exactly what the buyers
           you&apos;re trying to reach expect to see.
         </p>
