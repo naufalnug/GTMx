@@ -12,8 +12,8 @@ function Solution() {
           We Don&apos;t Consult. We Engineer Your Revenue Engine.
         </h2>
         <p className="solution__desc">
-          GTMx designs, builds, and runs the full outbound system that gets APAC B2B
-          companies qualified meetings with US and EU buyers.
+          GTMx designs, builds, and runs the full outbound system that gets B2B tech
+          companies qualified meetings with their ideal buyers.
         </p>
       </div>
 

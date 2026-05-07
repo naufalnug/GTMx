@@ -8,7 +8,7 @@ const STEPS = [
     timeline: 'Week 1',
     title: 'GTM Audit',
     description:
-      'We assess your current ICP definition, messaging, outbound setup, and CRM infrastructure against what US/EU buyers actually respond to. You get a clear picture of the gap \u2014 and exactly what we\u2019ll build to close it.',
+      'We assess your current ICP definition, messaging, outbound setup, and CRM infrastructure against what your target buyers actually respond to. You get a clear picture of the gap \u2014 and exactly what we\u2019ll build to close it.',
   },
   {
     id: 'build',
@@ -16,7 +16,7 @@ const STEPS = [
     timeline: 'Weeks 2\u20134',
     title: 'Build',
     description:
-      'We engineer your outbound stack: domains, sequences, LinkedIn profiles, lead lists built on US expansion signals, and messaging rewritten for Western buyers.',
+      'We engineer your outbound stack: domains, sequences, LinkedIn profiles, lead lists built on high-intent signals, and messaging engineered for your target buyer.',
   },
   {
     id: 'launch',
@@ -41,7 +41,7 @@ function Process() {
     <SectionWrapper id="process">
       <div className="process__header" data-animate="fade-up">
         <span className="process__label">// how_it_works</span>
-        <h2 className="process__title">From Zero to US Pipeline in 60 Days</h2>
+        <h2 className="process__title">From Zero to Pipeline in 60 Days</h2>
       </div>
 
       <div className="process__grid" data-animate="stagger">

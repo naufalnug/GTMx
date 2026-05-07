@@ -17,20 +17,20 @@ function Hero() {
     <section className="hero">
       <div className="hero__inner" ref={contentRef}>
         <span className="hero__badge" data-animate="hero-reveal">
-          GTM Engineering for APAC B2B Companies
+          GTM Engineering for B2B Tech Companies
         </span>
         <h1 className="hero__title" data-animate="hero-reveal">
-          Your APAC SaaS Works.<br />
+          Your Product Works.<br />
           <span className="hero__title-accent">
-            Now Make It Work in <WordRotator />
+            Now Build the Engine for <WordRotator />
           </span>
         </h1>
         <p className="hero__subtitle" data-animate="hero-reveal">
-          GTMx builds the outbound revenue engine that gets APAC B2B tech companies
-          their first qualified US and European pipeline — in weeks, not quarters.
+          GTMx builds the outbound revenue engine that gets B2B tech companies
+          their first qualified pipeline — in weeks, not quarters.
         </p>
         <p className="hero__icp" data-animate="hero-reveal">
-          Built by operators who&apos;ve sold in APAC and executed GTM for YC-backed companies in the US.
+          Built by operators who&apos;ve closed deals and engineered GTM systems for YC-backed B2B companies.
         </p>
         <div className="hero__actions" data-animate="hero-reveal">
           <GlowButton href="#book" size="lg">

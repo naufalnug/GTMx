@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import './WordRotator.css'
 
-const WORDS = ['the US', 'Europe']
+const WORDS = ['pipeline', 'revenue', 'meetings', 'scale']
 
 function WordRotator() {
   const [index, setIndex] = useState(0)

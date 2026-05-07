@@ -2,17 +2,17 @@ import SectionWrapper from './ui/SectionWrapper'
 import './IcpSection.css'
 
 const GOOD_FIT = [
-  'You\u2019re a B2B tech or SaaS company based in Singapore, India, or Australia/NZ',
-  'Your product has proven traction in APAC with paying customers',
+  'You\u2019re a B2B tech or SaaS company with a product people pay for',
+  'Your product has proven traction with paying customers',
   'You\u2019re Series A\u2013B funded, or well-capitalised and ready to invest in GTM',
-  'You\u2019re planning to hire a US/EU sales person \u2014 or already have and need the process',
+  'You\u2019re planning to hire a sales team \u2014 or already have and need the process',
   'You\u2019ve tried outbound before and it didn\u2019t work the way you expected',
 ]
 
 const NOT_FIT = [
   'You\u2019re pre-product or pre-revenue',
   'You\u2019re looking for a cheap lead gen vendor to blast generic emails',
-  'You\u2019re not serious about committing to a US or European expansion',
+  'You\u2019re not serious about investing in a structured outbound engine',
 ]
 
 function IcpSection() {
@@ -22,8 +22,8 @@ function IcpSection() {
         <span className="icp__label">// who_this_is_for</span>
         <h2 className="icp__title">Built for One Type of Company</h2>
         <p className="icp__desc">
-          GTMx works exclusively with APAC B2B tech companies that are ready to expand
-          into the US or European market.
+          GTMx works with B2B tech companies that have product-market fit and are ready
+          to build a repeatable outbound revenue engine.
         </p>
       </div>
 

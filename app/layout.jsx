@@ -17,26 +17,22 @@ const inter = Inter({
 })
 
 export const metadata = {
-  title: 'GTMx — GTM Engineering for APAC B2B Companies Expanding to the US',
-  description: 'GTMx builds the outbound revenue engine that gets APAC B2B tech companies their first qualified US and European pipeline. Cold email, LinkedIn outbound, and GTM engineering — done for you.',
+  title: 'GTMx — Outbound Revenue Engineering for B2B Tech Companies',
+  description: 'GTMx builds the outbound revenue engine that gets B2B tech companies their first qualified pipeline. Cold email, LinkedIn outbound, and GTM engineering — done for you.',
   openGraph: {
-    title: 'GTMx — GTM Engineering for APAC B2B Companies Expanding to the US',
-    description: 'GTMx builds the outbound revenue engine that gets APAC B2B tech companies their first qualified US and European pipeline.',
+    title: 'GTMx — Outbound Revenue Engineering for B2B Tech Companies',
+    description: 'GTMx builds the outbound revenue engine that gets B2B tech companies their first qualified pipeline.',
     url: 'https://gtmx.run',
     type: 'website',
     siteName: 'GTMx',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'GTMx — GTM Engineering for APAC B2B Companies Expanding to the US',
-    description: 'GTMx builds the outbound revenue engine that gets APAC B2B tech companies their first qualified US and European pipeline.',
+    title: 'GTMx — Outbound Revenue Engineering for B2B Tech Companies',
+    description: 'GTMx builds the outbound revenue engine that gets B2B tech companies their first qualified pipeline.',
   },
   alternates: {
     canonical: 'https://gtmx.run',
-  },
-  other: {
-    'geo.region': 'SG',
-    'geo.placename': 'Singapore',
   },
 }
 

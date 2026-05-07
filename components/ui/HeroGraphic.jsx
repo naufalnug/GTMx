@@ -70,11 +70,11 @@ function HeroGraphic() {
           </filter>
         </defs>
 
-        {/* APAC card */}
+        {/* Product card */}
         <rect className="flow-card" x="0" y="30" rx="14" ry="14" width="160" height="100" fill="white" stroke="#E5E7EB" strokeWidth="1.5" filter="url(#cardShadow)" />
         <circle className="flow-icon" cx="80" cy="65" r="14" fill="#2563EB" />
         <circle className="flow-pulse" cx="80" cy="65" r="14" fill="none" stroke="#2563EB" strokeWidth="1.5" opacity="0.3" />
-        <text className="flow-label" x="80" y="105" textAnchor="middle" fill="#111827" fontSize="14" fontWeight="600" fontFamily="Inter, sans-serif">APAC</text>
+        <text className="flow-label" x="80" y="105" textAnchor="middle" fill="#111827" fontSize="14" fontWeight="600" fontFamily="Inter, sans-serif">Product</text>
 
         {/* Arrow 1 */}
         <path className="flow-line" d="M 165 80 C 200 80, 210 55, 240 55" stroke="#2563EB" strokeWidth="2" strokeDasharray="6 4" opacity="0.3" />
@@ -103,11 +103,11 @@ function HeroGraphic() {
         {/* Arrow 4 */}
         <path className="flow-line" d="M 755 55 C 785 55, 790 80, 800 80" stroke="#059669" strokeWidth="2" strokeDasharray="6 4" opacity="0.3" />
 
-        {/* US/EU card */}
+        {/* Pipeline card */}
         <rect className="flow-card" x="740" y="30" rx="14" ry="14" width="160" height="100" fill="white" stroke="#D1FAE5" strokeWidth="2" filter="url(#cardShadow)" />
         <circle className="flow-icon" cx="820" cy="65" r="14" fill="#059669" />
         <circle className="flow-pulse" cx="820" cy="65" r="14" fill="none" stroke="#059669" strokeWidth="1.5" opacity="0.3" />
-        <text className="flow-label" x="820" y="105" textAnchor="middle" fill="#111827" fontSize="14" fontWeight="600" fontFamily="Inter, sans-serif">US / EU</text>
+        <text className="flow-label" x="820" y="105" textAnchor="middle" fill="#111827" fontSize="14" fontWeight="600" fontFamily="Inter, sans-serif">Pipeline</text>
 
         {/* Traveling dots */}
         <circle r="5" fill="#2563EB" opacity="0.8">

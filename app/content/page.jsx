@@ -4,7 +4,7 @@ import './page.css'
 
 export const metadata = {
   title: 'GTM & AI Content | GTMx',
-  description: 'Practical insights on GTM engineering, AI-powered outbound, and APAC-to-US expansion for B2B tech companies.',
+  description: 'Practical insights on GTM engineering, AI-powered outbound, and pipeline building for B2B tech companies.',
 }
 
 export default function ContentPage() {
@@ -18,7 +18,7 @@ export default function ContentPage() {
             <h1 className="content-listing__title">GTM &amp; AI INSIGHTS</h1>
             <p className="content-listing__desc">
               Practical breakdowns on outbound engineering, AI-powered pipeline building,
-              and what it actually takes for APAC companies to win in the US.
+              and what it actually takes to build a repeatable revenue engine.
             </p>
           </div>
 

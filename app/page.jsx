@@ -31,7 +31,7 @@ export default function Page() {
     '@type': 'Organization',
     name: 'GTMx',
     url: 'https://gtmx.run',
-    description: 'GTM engineering for APAC B2B companies expanding to the US and Europe',
+    description: 'Outbound revenue engineering for B2B tech companies',
   }
 
   const serviceJsonLd = {
@@ -41,8 +41,8 @@ export default function Page() {
       '@type': 'Organization',
       name: 'GTMx',
     },
-    name: 'GTM Engineering for APAC Expansion',
-    description: 'We build the outbound revenue engine that gets APAC B2B tech companies their first qualified US and European pipeline.',
+    name: 'GTM Engineering for Outbound Pipeline',
+    description: 'We build the outbound revenue engine that gets B2B tech companies their first qualified pipeline.',
     serviceType: 'Go-to-Market Engineering',
   }
 

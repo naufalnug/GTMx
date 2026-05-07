@@ -5,23 +5,23 @@ const MISTAKES = [
   {
     id: 'playbook',
     icon: '!>',
-    title: 'Copying What Worked in APAC',
+    title: 'Relying on What Got You Here',
     description:
-      'The relationship-first, referral-led, channel-driven sales motion that built your APAC revenue doesn\u2019t work in the US. American B2B buyers expect structured outbound, ROI-first messaging, and speed. APAC playbooks produce silence.',
+      'The inbound-led, referral-driven, founder-sales motion that got your first customers doesn\u2019t scale. Structured outbound requires ROI-first messaging, engineered sequences, and infrastructure. Running the old playbook at new targets produces silence.',
   },
   {
     id: 'hire',
     icon: '$>',
-    title: 'Hiring a US VP of Sales Too Early',
+    title: 'Hiring a VP of Sales Too Early',
     description:
-      'A US VP of Sales costs $250K+ fully loaded and takes 6 months to ramp. Most APAC companies\u2019 first US hire fails \u2014 not because of the person, but because there\u2019s no repeatable process for them to execute. You need the engine before you hire the driver.',
+      'A VP of Sales costs $250K+ fully loaded and takes 6 months to ramp. Most B2B companies\u2019 first senior sales hire fails \u2014 not because of the person, but because there\u2019s no repeatable process for them to execute. You need the engine before you hire the driver.',
   },
   {
     id: 'messaging',
     icon: '<>',
-    title: 'Messaging Built for APAC Buyers',
+    title: 'Messaging Built for the Wrong Buyer',
     description:
-      'Your pitch was crafted to resonate in Singapore, Sydney, or Bangalore. US and European buyers have different pain points, different urgency triggers, and different social proof requirements. The same words land differently on the other side of the world.',
+      'Your pitch was crafted for the people you already know. New buyer segments have different pain points, different urgency triggers, and different social proof requirements. Generic messaging gets ignored \u2014 outbound messaging needs to be engineered for each ICP.',
   },
 ]
 
@@ -31,7 +31,7 @@ function Problem() {
       <div className="problem__header" data-animate="fade-up">
         <span className="problem__label">// the_problem</span>
         <h2 className="problem__title">
-          The 3 Mistakes That Kill APAC Expansion Before It Starts
+          The 3 Mistakes That Kill Outbound Before It Starts
         </h2>
       </div>
 

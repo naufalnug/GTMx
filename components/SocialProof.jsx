@@ -4,15 +4,15 @@ import './SocialProof.css'
 const PROOF_STATS = [
   {
     number: '8+',
-    label: 'Years Combined APAC & European B2B Sales Experience',
+    label: 'Years Combined B2B Sales and GTM Engineering Experience',
   },
   {
     number: 'YC',
-    label: 'GTM Systems Built for YC-Portfolio Companies in the US',
+    label: 'GTM Systems Built for YC-Portfolio Companies',
   },
   {
-    number: 'APAC',
-    label: 'Native \u2014 We Understand Why Your Current Motion Doesn\u2019t Translate West',
+    number: 'Ops',
+    label: 'Native \u2014 We\u2019ve Built Outbound Engines, Not Just Advised on Them',
   },
 ]
 
@@ -24,8 +24,8 @@ function SocialProof() {
         <h2 className="proof__title">We&apos;ve Been on Both Sides of This Table</h2>
         <p className="proof__desc">
           Our founders have spent 8+ years as Account Executives selling B2B tech
-          across APAC and Europe. We&apos;ve also built GTM systems inside YC-backed
-          companies expanding into the US &mdash; so we know exactly what the buyers
+          and building GTM systems inside YC-backed companies. We&apos;ve been on
+          the execution side &mdash; so we know exactly what the buyers
           you&apos;re trying to reach expect to see.
         </p>
       </div>

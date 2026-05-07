@@ -34,11 +34,11 @@ function Footer() {
         <div className="footer__cta">
           <h2 className="footer__title">
             READY TO BUILD YOUR<br />
-            <span className="footer__title-accent">US REVENUE ENGINE?</span>
+            <span className="footer__title-accent">OUTBOUND REVENUE ENGINE?</span>
           </h2>
           <p className="footer__subtitle">
             Book a free GTM Audit. We&apos;ll map out exactly what it would take to get<br />
-            your first qualified US or European pipeline — no pitch, no fluff.
+            your first qualified pipeline — no pitch, no fluff.
           </p>
           <div className="footer__cal-embed" id="my-cal-inline-30min"></div>
           <pre className="footer__ascii">{`
@@ -56,7 +56,7 @@ function Footer() {
             <span className="footer__link footer__link--disabled">[X]</span>
             <span className="footer__link footer__link--disabled">[Email]</span>
           </div>
-          <span className="footer__copy">GTMx — Revenue engineering for APAC companies going West. &copy; 2026</span>
+          <span className="footer__copy">GTMx — Outbound revenue engineering for B2B tech companies. &copy; 2026</span>
         </div>
       </div>
     </footer>

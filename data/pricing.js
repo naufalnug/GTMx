@@ -10,8 +10,8 @@ export const pricingPackages = [
     pricePeriod: null,
     priceNote: 'Starting from \u2014 one-time engagement',
     features: [
-      'ICP definition and list building for US/EU market',
-      'Outbound messaging rewritten for Western buyers',
+      'ICP definition and list building for your target market',
+      'Outbound messaging engineered for your target buyer',
       'Cold email infrastructure built and launched',
       'LinkedIn outbound system built and launched',
       'First qualified meetings booked',
