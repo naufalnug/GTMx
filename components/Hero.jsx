@@ -1,12 +1,5 @@
 import './Hero.css'
 
-const proofPoints = [
-  { num: '10+ yrs', label: 'in GTM' },
-  { num: '5M+',     label: 'emails sent' },
-  { num: '$4M+',    label: 'pipeline attributed' },
-  { num: '100%',    label: 'referral close rate' },
-]
-
 export default function Hero() {
   return (
     <section className="hero">
@@ -70,18 +63,6 @@ export default function Hero() {
               </figcaption>
             </figure>
           </aside>
-        </div>
-
-        <div className="hero__proof-wrap">
-          <span className="hero__proof-label">// proof_points</span>
-          <div className="hero__proof">
-            {proofPoints.map(p => (
-              <div key={p.num} className="hero__proof-item">
-                <span className="hero__proof-num">{p.num}</span>
-                <span className="hero__proof-label-mono">{p.label}</span>
-              </div>
-            ))}
-          </div>
         </div>
 
       </div>
