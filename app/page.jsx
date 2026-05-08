@@ -69,8 +69,9 @@ export default function Page() {
         <Solution />
         <IcpSection />
         <Process />
-        <Founder />
+        {/* Cases moved BEFORE Founder — work first, human second */}
         <CaseStudies />
+        <Founder />
         <Pricing />
         <FAQ />
         <FinalCTA />

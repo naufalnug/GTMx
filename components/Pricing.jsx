@@ -1,87 +1,100 @@
-import { pricingPackages } from '../data/pricing'
+/* ──────────────────────────────────────────────
+   GTMx — components/Pricing.jsx
+   Drop-in replacement: kills "starts $X*" framing,
+   quotes the price cleanly, two tiers + footnote.
+   ────────────────────────────────────────────── */
+
 import './Pricing.css'
 
-function CheckIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M20 6L9 17l-5-5" />
-    </svg>
-  )
-}
+const tiers = [
+  {
+    name: 'LAUNCHPAD',
+    num: '$10,000',
+    italic: '',
+    per: 'one-time · 14-day build',
+    bestFor: 'You want the engine running but plan to operate it in-house after launch.',
+    includes: [
+      'Domain + DNS infrastructure',
+      'Inbox warmup & deliverability monitoring',
+      'List building + Clay enrichment',
+      'Multi-angle sequence development',
+      'A/B testing + reply triage',
+      'Full handoff documentation',
+    ],
+    cta: 'Book a scoping call',
+    accent: false,
+  },
+  {
+    name: 'OPERATOR',
+    num: '$6,000',
+    italic: '',
+    per: '/ month · ongoing operations',
+    bestFor: 'You want us running the engine — no internal hire, no internal headache.',
+    includes: [
+      'Everything in Launchpad',
+      'Weekly performance review + iteration',
+      'Continuous list refresh + intent signals',
+      'Reply handling + lead qualification',
+      'Slack channel + monthly strategy session',
+      'Cancel anytime, 30-day notice',
+    ],
+    cta: 'Book a scoping call',
+    accent: true,
+  },
+]
 
-function ArrowIcon() {
+export default function Pricing() {
   return (
-    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="arrow">
-      <path d="M5 12h14M13 5l7 7-7 7" />
-    </svg>
-  )
-}
-
-function Pricing() {
-  return (
-    <section id="pricing" className="section">
-      <div className="wrap section-head">
-        <span className="eyebrow">Pricing</span>
-        <h2 className="h2">
-          The power of <em>10 SDRs</em> for the cost of one.
-        </h2>
-      </div>
+    <section id="pricing" className="section pricing dark">
       <div className="wrap">
-        <div className="price-banner">
-          <div className="num x10">
-            <em>10&times;</em> <small>SDR output</small>
+        <div className="section-head">
+          <span className="eyebrow eyebrow--code">// pricing</span>
+          <div>
+            <h2 className="h2">Two ways in.<br/><em>Pick your operator footprint.</em></h2>
+            <p className="lede">
+              No retainers-by-the-hour. No discovery-phase upcharges. Build it once or
+              run it ongoing — quoted, scoped, shipped.
+            </p>
           </div>
-          <p className="copy">
-            A US-based SDR runs <strong>$80&ndash;120K fully loaded</strong>, ramps for 6 months, and you get
-            one person&apos;s output. GTMx delivers a fully engineered outbound engine + RevOps infrastructure
-            for a fraction of that &mdash; running in weeks, not quarters.
-          </p>
         </div>
 
-        <div className="price-grid">
-          {pricingPackages.map((pkg) => {
-            const isFeatured = pkg.tier === 'recommended'
-            return (
-              <div key={pkg.id} className={`price-card reveal ${isFeatured ? 'featured' : ''}`}>
-                {isFeatured && <span className="pill">Recommended</span>}
-                <div className="price-card-tier">{pkg.name}</div>
-                <div>
-                  <div className="price-card-name">{pkg.subtitle.split(' · ')[0]}</div>
-                  <div className="price-card-best muted">{pkg.bestFor}</div>
-                </div>
-                <div>
-                  <div className="price-card-rate">
-                    starts {pkg.price}
-                    {pkg.pricePeriod && <em>{pkg.pricePeriod}</em>}
-                    {!pkg.pricePeriod && <em>/ project</em>}
-                  </div>
-                  <div className="price-card-sub">{pkg.priceNote}</div>
-                </div>
-                <ul>
-                  {pkg.features.map((f) => (
-                    <li key={f}>
-                      <span className="check"><CheckIcon /></span>
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <a href="#book" className={`btn ${isFeatured ? 'btn-primary' : 'btn-ghost'}`} style={{ marginTop: 8 }}>
-                  Book a Call <ArrowIcon />
-                </a>
+        <div className="pricing__grid">
+          {tiers.map(t => (
+            <div key={t.name} className={`pricing__tier ${t.accent ? 'pricing__tier--accent' : ''}`}>
+              <span className="price__name">{t.name}</span>
+
+              <div className="price__amount">
+                <span className="price__num">{t.num}</span>
+                <span className="price__per">{t.per}</span>
               </div>
-            )
-          })}
+
+              <p className="pricing__bestfor">
+                <span className="pricing__bestfor-label">Best for —</span>
+                {t.bestFor}
+              </p>
+
+              <ul className="pricing__includes">
+                {t.includes.map(line => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ul>
+
+              <a
+                href="https://cal.com/gtmx/30min"
+                className={`btn btn-lg ${t.accent ? 'btn-primary' : 'btn-ghost'}`}
+                style={{ marginTop: 'auto' }}
+              >
+                {t.cta} <span className="arrow">→</span>
+              </a>
+            </div>
+          ))}
         </div>
-        <p className="price-foot">
-          Not sure which is right?{' '}
-          <a href="#book" className="link-arrow">
-            Book a free 30-min audit <ArrowIcon />
-          </a>
-          {' '}&mdash; we&apos;ll tell you honestly where you are and what you actually need.
+
+        <p className="pricing__fine">
+          Custom scopes start at $20K. We'll quote the exact number on the audit call —
+          no asterisks, no surprises.
         </p>
       </div>
     </section>
   )
 }
-
-export default Pricing

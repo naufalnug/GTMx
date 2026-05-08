@@ -1,63 +1,90 @@
-import { pillars } from '../data/solution'
+/* ──────────────────────────────────────────────
+   GTMx — components/Solution.jsx
+   Drop-in replacement: feature-list bullets become
+   three numbered italic claims per pillar.
+   ────────────────────────────────────────────── */
+
 import './Solution.css'
 
-function CheckIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M20 6L9 17l-5-5" />
-    </svg>
-  )
-}
+const pillars = [
+  {
+    tag: '// pipeline_generation',
+    title: 'Pipeline that compounds.',
+    italic: 'compounds.',
+    claims: [
+      {
+        em: 'Infrastructure first.',
+        rest: ' Secondary domains, warmed inboxes, deliverability monitoring — your primary domain stays untouched.',
+      },
+      {
+        em: 'Signals over spray.',
+        rest: ' Intent data, hiring triggers, and tech-stack filters via Clay — not bought lists.',
+      },
+      {
+        em: 'Iterated weekly.',
+        rest: ' Multi-angle sequences, A/B tested, reply triage, bi-weekly review.',
+      },
+    ],
+    fineprint: 'Includes domains, DNS, warmup, list building, copy, sequencing, A/B testing, deliverability monitoring, reply triage, lead handoff.',
+  },
+  {
+    tag: '// gtm_engineering',
+    title: 'GTM, engineered.',
+    italic: 'engineered.',
+    claims: [
+      {
+        em: 'Workflows that ship.',
+        rest: ' Lifecycle automation, lead routing, CRM hygiene — the plumbing that lets your reps actually sell.',
+      },
+      {
+        em: 'Data that decides.',
+        rest: ' One source of truth across HubSpot / Salesforce, Clay, and your inbox tools.',
+      },
+      {
+        em: 'Hand-off, not lock-in.',
+        rest: ' We document everything. You inherit a system, not a dependency.',
+      },
+    ],
+    fineprint: 'Includes CRM build / cleanup, Clay tables, lifecycle automation, attribution, GTM dashboarding, internal SOP docs.',
+  },
+]
 
-function EngineIcon() {
+export default function Solution() {
   return (
-    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="6" width="18" height="12" rx="2" />
-      <path d="M7 10h2M7 14h6M14 10h3" />
-    </svg>
-  )
-}
-
-function WorkflowIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="3" width="6" height="6" rx="1" />
-      <rect x="15" y="15" width="6" height="6" rx="1" />
-      <path d="M9 6h6a3 3 0 013 3v6" />
-    </svg>
-  )
-}
-
-const ICONS = [<EngineIcon key="e" />, <WorkflowIcon key="w" />]
-
-function Solution() {
-  return (
-    <section className="section" style={{ background: 'var(--bg-sunk)' }}>
-      <div className="wrap section-head">
-        <span className="eyebrow">What We Build</span>
-        <h2 className="h2">
-          We don&apos;t consult. We <em>engineer</em> your revenue engine.
-        </h2>
-      </div>
-      <div className="wrap solution-grid">
-        {pillars.map((pillar, i) => (
-          <div key={pillar.id} className="sol-card reveal">
-            <span className="ico">{ICONS[i]}</span>
-            <h3>{pillar.title}</h3>
-            <p className="blurb">{pillar.description}</p>
-            <ul className="sol-list">
-              {pillar.deliverables.map((d) => (
-                <li key={d}>
-                  <span className="check"><CheckIcon /></span>
-                  <span>{d}</span>
-                </li>
-              ))}
-            </ul>
+    <section id="solution" className="section solution">
+      <div className="wrap">
+        <div className="section-head">
+          <span className="eyebrow">// what_we_do</span>
+          <div>
+            <h2 className="h2">Two engines.<br/><em>One system.</em></h2>
           </div>
-        ))}
+        </div>
+
+        <div className="solution__grid">
+          {pillars.map(p => (
+            <div key={p.tag} className="solution__pillar">
+              <span className="solution__tag">{p.tag}</span>
+              <h3 className="solution__title">
+                {p.title.replace(p.italic, '')}
+                <em>{p.italic}</em>
+              </h3>
+
+              <ol className="solution__claims">
+                {p.claims.map((c, i) => (
+                  <li key={i} className="solution__claim">
+                    <span className="solution__n">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="solution__t">
+                      <em>{c.em}</em>{c.rest}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+
+              <p className="solution__fine">{p.fineprint}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )
 }
-
-export default Solution
