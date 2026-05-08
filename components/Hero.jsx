@@ -25,7 +25,7 @@ export default function Hero() {
             </h1>
 
             <p className="hero__lede lede">
-              Cold email + LinkedIn + GTM systems for B2B tech companies.
+              Cold email + LinkedIn + GTM systems for B2B tech companies.<br />
               Shipped in 30 days. Not a slide deck. Not an agency. An engine.
             </p>
 
