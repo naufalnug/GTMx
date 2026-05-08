@@ -5,7 +5,7 @@ function ContentNavbar() {
     <nav className="content-nav">
       <div className="content-nav__inner">
         <a href="/" className="content-nav__logo">
-          <span className="brand">GTMx<span className="dot" /></span>
+          <span className="brand">GTMx<span className="brand-tail">_</span></span>
         </a>
         <div className="content-nav__links">
           <a href="/content" className="content-nav__link">Content</a>

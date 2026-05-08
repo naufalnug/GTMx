@@ -5,7 +5,7 @@ function Footer() {
     <footer className="footer">
       <div className="wrap footer-inner">
         <div>
-          <span className="brand" style={{ color: 'var(--ink)' }}>GTMx<span className="dot" /></span>
+          <span className="brand" style={{ color: 'var(--ink)' }}>GTMx<span className="brand-tail">_</span></span>
           <div style={{ marginTop: 6, fontSize: 13, color: 'var(--ink-3)' }}>
             Outbound revenue engineering for B2B tech companies.
           </div>

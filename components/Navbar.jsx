@@ -34,7 +34,7 @@ function Navbar() {
     <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
       <div className="wrap nav-inner">
         <a href="#" className="brand">
-          GTMx<span className="dot" />
+          GTMx<span className="brand-tail">_</span>
         </a>
 
         <div className="nav-links">
