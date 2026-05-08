@@ -13,6 +13,14 @@ export const faqs = [
   },
   {
     question: 'We\u2019ve tried outbound agencies before and they didn\u2019t deliver.',
-    answer: 'Most agencies send emails. GTMx engineers your entire outbound system \u2014 ICP research, messaging, infrastructure, sequences, and RevOps. We\u2019ve built GTM inside YC-backed companies and closed deals ourselves. That operational experience is what separates engineering from outsourcing.',
+    answer: 'Most agencies send emails. GTMx engineers your entire outbound system \u2014 ICP research, messaging, infrastructure, sequences, and RevOps. We\u2019ve built GTM inside YC-backed and publicly traded companies and closed deals ourselves. That operational experience is what separates engineering from outsourcing.',
+  },
+  {
+    question: 'How quickly can a pipeline go live?',
+    answer: 'Most engagements have campaigns live within 2\u20133 weeks: domain warmup and infrastructure in week 1, list and messaging in weeks 2\u20133, launch by week 3\u20134. First qualified meetings typically land within 30 days.',
+  },
+  {
+    question: 'What stack do you use?',
+    answer: 'Our default stack: Clay for enrichment, Instantly for cold email, HeyReach for LinkedIn, HubSpot for CRM. We adapt to your tooling \u2014 we\u2019re not a one-size-fits-all shop.',
   },
 ]

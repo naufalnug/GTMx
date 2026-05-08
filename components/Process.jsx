@@ -33,7 +33,7 @@ function Process() {
       <div className="wrap section-head">
         <span className="eyebrow">The Process</span>
         <h2 className="h2">
-          From zero to pipeline in <em>60 days.</em>
+          From zero to pipeline in <em>30 days.</em>
         </h2>
       </div>
       <div className="wrap">

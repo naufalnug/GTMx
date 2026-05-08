@@ -11,7 +11,7 @@ const tiers = [
     name: 'LAUNCHPAD',
     num: '$10,000',
     italic: '',
-    per: 'one-time · 14-day build',
+    per: 'one-time · 30-day build',
     bestFor: 'You want the engine running but plan to operate it in-house after launch.',
     includes: [
       'Domain + DNS infrastructure',

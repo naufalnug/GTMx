@@ -11,24 +11,25 @@ function Founder() {
       </div>
       <div className="wrap founder-content">
         <p className="lede" style={{ fontSize: 19 }}>
-          Our founders have spent <strong style={{ color: 'var(--ink)' }}>8+ years as Account Executives</strong>{' '}
-          selling B2B tech, have run their own agencies, and worked at top-5 global agencies.
-          We&apos;ve also built GTM systems inside YC-backed companies. We&apos;ve been on
-          the execution side &mdash; so we know exactly what the buyers
-          you&apos;re trying to reach expect to see.
+          Two co-founders with <strong style={{ color: 'var(--ink)' }}>10+ years in GTM</strong>{' '}
+          &mdash; as Account Executives, Product Marketers, and agency operators.
+          We&apos;ve each run our own agencies, worked inside top-5 global agencies,
+          and built GTM systems for YC-backed and publicly traded companies.
+          We&apos;ve been on the execution side &mdash; so we know exactly what
+          the buyers you&apos;re trying to reach expect to see.
         </p>
         <div className="founder-stats">
           <div>
-            <div className="v">8<em>+</em></div>
-            <div className="l">Years B2B sales &amp; GTM engineering</div>
+            <div className="v">10<em>+</em></div>
+            <div className="l">Years in GTM</div>
           </div>
           <div>
             <div className="v">YC</div>
-            <div className="l">Portfolio GTM systems built</div>
+            <div className="l">&amp; publicly traded company operators</div>
           </div>
           <div>
-            <div className="v">Ops</div>
-            <div className="l">Native &mdash; we&apos;ve built outbound engines, not just advised</div>
+            <div className="v">2x</div>
+            <div className="l">Co-founders &mdash; each ran their own agency</div>
           </div>
         </div>
       </div>

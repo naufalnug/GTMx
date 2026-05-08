@@ -1,15 +1,13 @@
 /* ──────────────────────────────────────────────
    GTMx — components/Hero.jsx
-   Refined: tighter headline rhythm + 3 mono
-   datapoints replacing the prose proof line.
    ────────────────────────────────────────────── */
 
 import './Hero.css'
 
 const proofPoints = [
-  { num: '8+ yrs', label: 'B2B sales & GTM' },
-  { num: 'YC',     label: 'portfolio operators' },
-  { num: '$170K+', label: 'pipeline shipped' },
+  { num: '10+ yrs', label: 'in GTM' },
+  { num: '5M+',     label: 'emails sent' },
+  { num: '$4M+',    label: 'pipeline attributed' },
 ]
 
 export default function Hero() {
@@ -28,11 +26,11 @@ export default function Hero() {
 
         <p className="hero__lede lede">
           Cold email + LinkedIn + GTM systems for B2B tech companies —
-          done for you in 14 days. Not a slide deck. Not an agency. An engine.
+          done for you in 30 days. Not a slide deck. Not an agency. An engine.
         </p>
 
         <div className="hero__cta">
-          <a href="https://cal.com/gtmx/30min" className="btn btn-primary btn-lg">
+          <a href="#book" className="btn btn-primary btn-lg">
             Book a free GTM audit <span className="arrow">→</span>
           </a>
           <a href="#case-studies" className="link-arrow">
