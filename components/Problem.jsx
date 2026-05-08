@@ -3,18 +3,18 @@ import './Problem.css'
 const MISTAKES = [
   {
     n: '01',
-    title: 'Relying on What Got You Here',
-    body: 'The inbound-led, referral-driven, founder-sales motion that got your first customers doesn\u2019t scale. Structured outbound requires ROI-first messaging, engineered sequences, and infrastructure. Running the old playbook at new targets produces silence.',
+    title: 'No Repeatable Process, So Nothing Scales',
+    body: 'Founders close their first deals through networks, warm intros, and hustle. But when they point that at cold markets, it dies. There\u2019s no ICP definition sharp enough, no sequences built for strangers, no infrastructure to run it consistently. They try outbound once, it doesn\u2019t work, and they conclude "outbound doesn\u2019t work for us" \u2014 when the real issue is they never built the engine.',
   },
   {
     n: '02',
-    title: 'Hiring a VP of Sales Too Early',
-    body: 'A VP of Sales costs $250K+ fully loaded and takes 6 months to ramp. Most B2B companies\u2019 first senior sales hire fails \u2014 not because of the person, but because there\u2019s no repeatable process for them to execute. You need the engine before you hire the driver.',
+    title: 'Wasted Spend on the Wrong Hire at the Wrong Time',
+    body: 'The instinct is to hire a VP of Sales or an SDR to "do outbound." But without a repeatable process underneath them, that hire fails \u2014 fast. Founders blame the person, not the missing system. $250K+ burned, 6 months lost, and still no pipeline. You need the engine before you hire the driver.',
   },
   {
     n: '03',
-    title: 'Messaging Built for the Wrong Buyer',
-    body: 'Your pitch was crafted for the people you already know. New buyer segments have different pain points, different urgency triggers, and different social proof requirements. Generic messaging gets ignored \u2014 outbound messaging needs to be engineered for each ICP.',
+    title: 'Messaging That Converts Warm Leads but Loses Cold Ones',
+    body: 'Founders write copy based on what resonated with people who already knew them. Cold buyers have zero context, different urgency triggers, and higher skepticism. Open rates look okay but replies are dead, because the message is solving the wrong problem for the wrong person. Unengineered messaging is the #1 deliverability killer founders don\u2019t see until it\u2019s too late.',
   },
 ]
 
