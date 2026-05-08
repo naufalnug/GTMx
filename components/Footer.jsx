@@ -16,7 +16,7 @@ function Footer() {
           <span style={{ color: 'var(--ink-4)' }}>X</span>
           <span style={{ color: 'var(--ink-4)' }}>Email</span>
         </div>
-        <div className="footer-copy">&copy; 2026 GTMx &mdash; All rights reserved.</div>
+        <div className="footer-copy">&copy; 2026 GTMx. All rights reserved.</div>
       </div>
     </footer>
   )

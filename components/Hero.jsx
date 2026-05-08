@@ -25,8 +25,8 @@ export default function Hero() {
             </h1>
 
             <p className="hero__lede lede">
-              Cold email + LinkedIn + GTM systems for B2B tech companies &mdash;
-              shipped in 30&ndash;60 days. Not a slide deck. Not an agency. An engine.
+              Cold email + LinkedIn + GTM systems for B2B tech companies.
+              Shipped in 30 days. Not a slide deck. Not an agency. An engine.
             </p>
 
             <div className="hero__cta">
@@ -61,7 +61,7 @@ export default function Hero() {
 
             <figure className="hero__quote">
               <blockquote>
-                &ldquo;GTMx didn&apos;t just send emails &mdash; they built us
+                &ldquo;GTMx didn&apos;t just send emails. They built us
                 a <em>system</em> that compounds.&rdquo;
               </blockquote>
               <figcaption>

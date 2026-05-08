@@ -29,7 +29,7 @@ const tiers = [
     num: '$6,000',
     italic: '',
     per: '/ month · ongoing operations',
-    bestFor: 'You want us running the engine — no internal hire, no internal headache.',
+    bestFor: 'You want us running the engine. No internal hire, no internal headache.',
     includes: [
       'Everything in Launchpad',
       'Weekly performance review + iteration',
@@ -53,7 +53,7 @@ export default function Pricing() {
             <h2 className="h2">Two ways in.<br/><em>Pick your operator footprint.</em></h2>
             <p className="lede">
               No retainers-by-the-hour. No discovery-phase upcharges. Build it once or
-              run it ongoing — quoted, scoped, shipped.
+              run it ongoing. Quoted, scoped, shipped.
             </p>
           </div>
         </div>
@@ -91,8 +91,8 @@ export default function Pricing() {
         </div>
 
         <p className="pricing__fine">
-          Custom scopes start at $20K. We'll quote the exact number on the audit call —
-          no asterisks, no surprises.
+          Custom scopes start at $20K. We'll quote the exact number on the audit call.
+          No asterisks, no surprises.
         </p>
       </div>
     </section>

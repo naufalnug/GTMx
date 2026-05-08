@@ -36,7 +36,7 @@ function FinalCTA() {
         </h2>
         <p className="lede">
           Book a free GTM Audit. We&apos;ll map out exactly what it would take to get
-          your first qualified pipeline &mdash; no pitch, no fluff.
+          your first qualified pipeline. No pitch, no fluff.
         </p>
         <div className="final-cta-embed" id="my-cal-inline-30min"></div>
         <div className="stamp">&mdash; No obligations &middot; No sales pitch &middot; Just clarity &middot;</div>

@@ -12,10 +12,10 @@ function Founder() {
       <div className="wrap founder-content">
         <p className="lede" style={{ fontSize: 19 }}>
           Two co-founders with <strong style={{ color: 'var(--ink)' }}>10+ years in GTM</strong>{' '}
-          &mdash; as Account Executives, Product Marketers, and agency operators.
+          as Account Executives, Product Marketers, and agency operators.
           We&apos;ve each run our own agencies, worked inside top-5 global agencies,
           and built GTM systems for YC-backed and publicly traded companies.
-          We&apos;ve been on the execution side &mdash; so we know exactly what
+          We&apos;ve been on the execution side, so we know exactly what
           the buyers you&apos;re trying to reach expect to see.
         </p>
         <div className="founder-stats">
@@ -29,7 +29,7 @@ function Founder() {
           </div>
           <div>
             <div className="v">2x</div>
-            <div className="l">Co-founders &mdash; each ran their own agency</div>
+            <div className="l">Co-founders, each ran their own agency</div>
           </div>
         </div>
       </div>
