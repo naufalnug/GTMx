@@ -11,6 +11,7 @@ import Pricing from '../components/Pricing'
 import FAQ from '../components/FAQ'
 import FinalCTA from '../components/FinalCTA'
 import Footer from '../components/Footer'
+import RevealObserver from '../components/RevealObserver'
 import { faqs } from '../data/faq'
 
 export default function Page() {
@@ -61,6 +62,7 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
       />
+      <RevealObserver />
       <Navbar />
       <main>
         <Hero />
