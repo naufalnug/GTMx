@@ -12,11 +12,10 @@ function Footer() {
         </div>
         <div className="footer-links">
           <a href="/content">Content</a>
-          <span style={{ color: 'var(--ink-4)' }}>LinkedIn</span>
-          <span style={{ color: 'var(--ink-4)' }}>X</span>
-          <span style={{ color: 'var(--ink-4)' }}>Email</span>
+          <a href="/privacy">Privacy</a>
+          <a href="/terms">Terms</a>
         </div>
-        <div className="footer-copy">&copy; 2026 GTMx. All rights reserved.</div>
+        <div className="footer-copy">&copy; 2026 GTMx LLC. All rights reserved.</div>
       </div>
     </footer>
   )
