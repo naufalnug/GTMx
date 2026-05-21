@@ -80,7 +80,7 @@ export default function Pricing() {
               </ul>
 
               <a
-                href="https://cal.com/gtmx/30min"
+                href="https://cal.com/team/gtmx/initial-consultation-call"
                 className={`btn btn-lg ${t.accent ? 'btn-primary' : 'btn-ghost'}`}
                 style={{ marginTop: 'auto' }}
               >
