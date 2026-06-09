@@ -34,6 +34,7 @@ export default function CampaignTable({ campaigns }) {
                   <th className="ctable__steps-col">Steps</th>
                   <th className="ctable__num-col">Sent</th>
                   <th className="ctable__num-col">Replies</th>
+                  <th className="ctable__num-col">Interested</th>
                   <th className="ctable__num-col">Reply %</th>
                   <th className="ctable__num-col">Bounce %</th>
                   <th className="ctable__num-col">Complete</th>
@@ -51,6 +52,7 @@ export default function CampaignTable({ campaigns }) {
                       <td className="ctable__num">{c.steps.length}</td>
                       <td className="ctable__num">{formatInt(c.sent)}</td>
                       <td className="ctable__num">{formatInt(c.replies)}</td>
+                      <td className="ctable__num ctable__interested">{formatInt(c.interested)}</td>
                       <td className={`ctable__num ctable__rate${isBest ? ' ctable__rate--best' : ''}`}>
                         {formatPct(c.replyRate)}
                       </td>

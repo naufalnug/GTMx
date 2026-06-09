@@ -33,7 +33,9 @@ export default function CampaignCopy({ campaigns }) {
                   <span className="copy-card__dot" aria-hidden="true">·</span>
                   <span>{c.replies} replies</span>
                   <span className="copy-card__dot" aria-hidden="true">·</span>
-                  <span className="copy-card__rate">{formatPct(c.replyRate)} reply</span>
+                  <span className="copy-card__rate">{c.interested} positive</span>
+                  <span className="copy-card__dot" aria-hidden="true">·</span>
+                  <span>{formatPct(c.replyRate)} reply</span>
                 </div>
               </header>
 

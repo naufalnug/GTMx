@@ -9,11 +9,19 @@ function formatPct(n) {
 }
 
 export default function MetricsBar({ totals }) {
+  const hasReplies = totals.replies > 0;
   const stats = [
-    { num: formatInt(totals.sent), label: 'Emails sent' },
-    { num: formatInt(totals.replies), label: 'Unique replies' },
-    { num: formatPct(totals.replyRate), label: 'Reply rate' },
-    { num: formatPct(totals.bounceRate), label: 'Bounce rate' },
+    { key: 'sent', num: formatInt(totals.sent), label: 'Emails sent' },
+    { key: 'replies', num: formatInt(totals.replies), label: 'Unique replies' },
+    {
+      key: 'positive',
+      num: formatInt(totals.interested),
+      label: 'Positive replies',
+      sub: hasReplies ? `${formatPct(totals.interestedRate)} of replies` : null,
+      accent: true,
+    },
+    { key: 'replyRate', num: formatPct(totals.replyRate), label: 'Reply rate' },
+    { key: 'bounceRate', num: formatPct(totals.bounceRate), label: 'Bounce rate' },
   ];
 
   return (
@@ -23,9 +31,12 @@ export default function MetricsBar({ totals }) {
           <span className="mbar__label">// totals_active_campaigns</span>
           <div className="mbar__stats">
             {stats.map((s) => (
-              <div key={s.label} className="mbar__stat">
-                <span className="mbar__num">{s.num}</span>
+              <div key={s.key} className="mbar__stat">
+                <span className={`mbar__num${s.accent ? ' mbar__num--accent' : ''}`}>
+                  {s.num}
+                </span>
                 <span className="mbar__sub">{s.label}</span>
+                {s.sub ? <span className="mbar__subnote">{s.sub}</span> : null}
               </div>
             ))}
           </div>
