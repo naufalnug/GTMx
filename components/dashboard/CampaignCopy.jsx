@@ -11,7 +11,7 @@ function formatPct(n) {
 
 export default function CampaignCopy({ campaigns }) {
   return (
-    <section className="section copy-section">
+    <section id="copy" className="section copy-section">
       <div className="wrap">
         <div className="copy-head">
           <span className="eyebrow--code">// campaign_copy</span>

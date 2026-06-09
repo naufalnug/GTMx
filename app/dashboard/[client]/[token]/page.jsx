@@ -4,6 +4,8 @@ import { loadDashboardData } from '../../../../lib/emailbison';
 import { deriveInsights } from '../../../../lib/dashboardInsights';
 import DashboardHeader from '../../../../components/dashboard/DashboardHeader';
 import MetricsBar from '../../../../components/dashboard/MetricsBar';
+import SectionNav from '../../../../components/dashboard/SectionNav';
+import PositiveReplies from '../../../../components/dashboard/PositiveReplies';
 import CampaignTable from '../../../../components/dashboard/CampaignTable';
 import Observations from '../../../../components/dashboard/Observations';
 import CampaignCopy from '../../../../components/dashboard/CampaignCopy';
@@ -66,6 +68,8 @@ export default async function DashboardPage({ params }) {
         campaignCount={data.campaigns.length}
       />
       <MetricsBar totals={data.totals} />
+      <SectionNav />
+      <PositiveReplies replies={data.positiveReplies} />
       <CampaignTable campaigns={data.campaigns} />
       <Observations insights={insights} />
       <CampaignCopy campaigns={data.campaigns} />

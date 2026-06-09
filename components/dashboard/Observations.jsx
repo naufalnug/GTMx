@@ -4,7 +4,7 @@ export default function Observations({ insights }) {
   if (!insights || !insights.length) return null;
 
   return (
-    <section className="section obs-section">
+    <section id="observations" className="section obs-section">
       <div className="wrap">
         <div className="obs-head">
           <span className="eyebrow--code">// observations</span>

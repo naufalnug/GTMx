@@ -15,7 +15,7 @@ export default function CampaignTable({ campaigns }) {
   const bestId = bestCampaign?.id;
 
   return (
-    <section className="section ctable-section">
+    <section id="campaigns" className="section ctable-section">
       <div className="wrap">
         <div className="ctable-head">
           <span className="eyebrow--code">// campaigns_by_volume</span>
