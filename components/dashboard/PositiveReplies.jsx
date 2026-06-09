@@ -114,6 +114,16 @@ export default function PositiveReplies({ replies }) {
                     {r.company ? (
                       <span className="positive-card__company">{r.company}</span>
                     ) : null}
+                    {r.emailDomain ? (
+                      <a
+                        className="positive-card__domain"
+                        href={`https://${r.emailDomain}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {r.emailDomain}
+                      </a>
+                    ) : null}
                     {r.industry ? (
                       <span className="positive-card__industry">{r.industry}</span>
                     ) : null}
