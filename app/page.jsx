@@ -2,12 +2,11 @@ import Navbar from '../components/Navbar'
 import Hero from '../components/Hero'
 import ProofStrip from '../components/ProofStrip'
 import Problem from '../components/Problem'
-import Solution from '../components/Solution'
+import Services from '../components/Services'
 import IcpSection from '../components/IcpSection'
 import Process from '../components/Process'
 import Founder from '../components/Founder'
 import CaseStudies from '../components/CaseStudies'
-import Pricing from '../components/Pricing'
 import FAQ from '../components/FAQ'
 import FinalCTA from '../components/FinalCTA'
 import Footer from '../components/Footer'
@@ -68,13 +67,12 @@ export default function Page() {
         <Hero />
         <ProofStrip />
         <Problem />
-        <Solution />
+        <Services />
         <IcpSection />
         <Process />
         {/* Cases moved BEFORE Founder — work first, human second */}
         <CaseStudies />
         <Founder />
-        <Pricing />
         <FAQ />
         <FinalCTA />
       </main>

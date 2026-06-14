@@ -1,4 +1,5 @@
 import { articles } from '../data/articles'
+import { services } from '../data/services'
 
 export const dynamic = 'force-static'
 
@@ -8,6 +9,13 @@ export default function sitemap() {
     lastModified: new Date(article.date),
     changeFrequency: 'monthly',
     priority: 0.7,
+  }))
+
+  const serviceEntries = services.map(service => ({
+    url: `https://gtmx.run/services/${service.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.8,
   }))
 
   return [
@@ -23,6 +31,7 @@ export default function sitemap() {
       changeFrequency: 'weekly',
       priority: 0.8,
     },
+    ...serviceEntries,
     ...articleEntries,
   ]
 }

@@ -5,9 +5,9 @@ import './Navbar.css'
 
 const NAV_LINKS = [
   { label: 'How It Works', href: '#process' },
+  { label: 'Services', href: '#services' },
   { label: 'Who It\u2019s For', href: '#icp' },
   { label: 'Results', href: '#case-studies' },
-  { label: 'Pricing', href: '#pricing' },
   { label: 'Content', href: '/content' },
 ]
 
