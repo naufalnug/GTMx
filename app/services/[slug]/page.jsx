@@ -1,15 +1,13 @@
 import { notFound } from 'next/navigation'
 import Navbar from '../../../components/home/Navbar'
 import Footer from '../../../components/home/Footer'
-import CaseStudyCta from '../../../components/CaseStudyCta'
+import ServiceFaq from '../../../components/home/ServiceFaq'
+import ServiceCta from '../../../components/home/ServiceCta'
 import { services } from '../../../data/services'
-import '../../home.css'
 import './page.css'
 
 export function generateStaticParams() {
-  return services.map(service => ({
-    slug: service.slug,
-  }))
+  return services.map(service => ({ slug: service.slug }))
 }
 
 export async function generateMetadata({ params }) {
@@ -18,103 +16,114 @@ export async function generateMetadata({ params }) {
   if (!service) return {}
 
   return {
-    title: `${service.title} | GTMx`,
+    title: `${service.name} | GTMx`,
     description: service.blurb,
     openGraph: {
-      title: `${service.title} — GTMx`,
+      title: `${service.name} — GTMx`,
       description: service.blurb,
       type: 'website',
     },
   }
 }
 
+const Arrow = () => (
+  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
+)
+
 export default async function ServicePage({ params }) {
   const { slug } = await params
   const service = services.find(s => s.slug === slug)
   if (!service) notFound()
 
-  // colour-code each page to match the homepage Services cards / Method tabs
-  const svc = slug === 'revops' ? 'revops' : slug === 'seo-aeo' ? 'search' : 'outbound'
+  const stepCount = service.process.length
+  const cols = stepCount <= 4 ? stepCount : 3
 
   return (
     <>
       <Navbar />
-      <div className="dd">
-        <main className="service">
-          <article className="service__inner" data-svc={svc}>
-            <div className="service__header">
-              <a href="/#services" className="service__back">&larr; Back to Services</a>
-              <span className="service__eyebrow">{service.hero.eyebrow}</span>
-              <h1 className="service__title">{service.hero.title}</h1>
-              <p className="service__subhead">{service.hero.subhead}</p>
+      <div className={`svc-page ${service.theme}`}>
+        <main>
+          {/* HERO */}
+          <section className="shero">
+            <div className="wrap shero__grid">
+              <div>
+                <span className="svc-eyebrow"><span className="dot"></span>{service.kicker}</span>
+                <h1 className="shero__h1" dangerouslySetInnerHTML={{ __html: service.h1 }} />
+                <p className="lede shero__lede" dangerouslySetInnerHTML={{ __html: service.subhead }} />
+                <div className="shero__cta">
+                  <a href="#book" className="btn btn--dark">Book a free audit <Arrow /></a>
+                  <a href="/#work" className="btn btn--ghost">See the work <Arrow /></a>
+                </div>
+              </div>
+              <div className="shero__art">
+                <span className="shero__blob" style={{ width: 160, height: 160, background: 'var(--white)', top: -30, left: -20, opacity: 0.4 }}></span>
+                <span className="shero__blob" style={{ width: 120, height: 120, background: 'var(--gold)', bottom: -20, right: -10 }}></span>
+                <div className="shero__icon">
+                  <svg width="58" height="58" viewBox="0 0 44 44" fill="none" stroke="#1A1712" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: service.icon }} />
+                </div>
+              </div>
             </div>
+          </section>
 
-            {/* The problem */}
-            <section className="service__section">
-              <h2 className="service__h2">The Problem</h2>
-              <p className="service__paragraph">{service.problem}</p>
-            </section>
+          {/* PROBLEM */}
+          <section className="section">
+            <div className="wrap">
+              <div className="sec-head"><h2 className="h2">The <span className="hl hl--accent">problem.</span></h2></div>
+              <div className="problem-card"><p className="lede" dangerouslySetInnerHTML={{ __html: service.problem }} /></div>
+            </div>
+          </section>
 
-            {/* What's included */}
-            <section className="service__section">
-              <h2 className="service__h2">What&apos;s Included</h2>
-              <div className="service__included-grid">
-                {service.included.map((item, i) => (
-                  <div key={i} className="service__included-card">
-                    <h3 className="service__included-title">{item.title}</h3>
-                    <p className="service__included-desc">{item.desc}</p>
+          {/* INCLUDED */}
+          <section className="section section--paper">
+            <div className="wrap">
+              <div className="sec-head">
+                <h2 className="h2">What&apos;s <span className="hl">included.</span></h2>
+                <p className="lede">Everything we build, launch, and run for you &mdash; one connected system, not a pile of tools.</p>
+              </div>
+              <div className="inc-grid">
+                {service.included.map((it, i) => (
+                  <div key={i} className="inc-card">
+                    <span className="inc-card__n">{i + 1}</span>
+                    <h3 className="inc-card__t">{it.title}</h3>
+                    <p className="inc-card__d">{it.desc}</p>
                   </div>
                 ))}
               </div>
-            </section>
+            </div>
+          </section>
 
-            {/* How it works */}
-            <section className="service__section">
-              <h2 className="service__h2">How It Works</h2>
-              <ol className="service__steps">
-                {service.process.map((step, i) => (
-                  <li key={i} className="service__step">
-                    <span className="service__step-n">{String(i + 1).padStart(2, '0')}</span>
-                    <span className="service__step-body">
-                      <span className="service__step-title">{step.title}</span>
-                      <span className="service__step-desc">{step.desc}</span>
-                    </span>
-                  </li>
+          {/* PROCESS */}
+          <section className="section" id="process">
+            <div className="wrap">
+              <div className="sec-head">
+                <h2 className="h2">How it <span className="hl">works.</span></h2>
+                <p className="lede">The GTMx Method, applied to {service.name.toLowerCase()}.</p>
+              </div>
+              <div
+                className={'steps' + (stepCount > 4 ? ' no-line' : '')}
+                style={{ gridTemplateColumns: `repeat(${cols}, 1fr)`, ...(stepCount > 4 ? { rowGap: '40px' } : {}) }}
+              >
+                {service.process.map((p, i) => (
+                  <div key={i} className="step">
+                    <div className="step__tile">{i + 1}</div>
+                    <h3 className="step__t">{p.title}</h3>
+                    <p className="step__d">{p.desc}</p>
+                  </div>
                 ))}
-              </ol>
-            </section>
+              </div>
+            </div>
+          </section>
 
-            {/* Proof (optional) */}
-            {service.proof && (
-              <section className="service__section">
-                <h2 className="service__h2">Proof</h2>
-                <p className="service__paragraph">{service.proof}</p>
-              </section>
-            )}
+          {/* PROOF */}
+          <section className="section section--paper">
+            <div className="wrap"><p className="proofline" dangerouslySetInnerHTML={{ __html: service.proof }} /></div>
+          </section>
 
-            {/* FAQ (optional) */}
-            {service.faq?.length > 0 && (
-              <section className="service__section">
-                <h2 className="service__h2">FAQ</h2>
-                <div className="service__faq">
-                  {service.faq.map((item, i) => (
-                    <details key={i} className="service__faq-item">
-                      <summary className="service__faq-q">
-                        <span>{item.q}</span>
-                        <span className="service__faq-toggle" aria-hidden="true">
-                          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#1A1712" strokeWidth="3" strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>
-                        </span>
-                      </summary>
-                      <div className="service__faq-a">{item.a}</div>
-                    </details>
-                  ))}
-                </div>
-              </section>
-            )}
+          {/* FAQ */}
+          <ServiceFaq items={service.faq} />
 
-            {/* CTA — shared component with inline Cal.com embed */}
-            <CaseStudyCta />
-          </article>
+          {/* CTA + inline Cal.com booking */}
+          <ServiceCta serviceName={service.name} />
         </main>
         <Footer />
       </div>
