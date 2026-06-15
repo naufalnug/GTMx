@@ -12,7 +12,7 @@
    ────────────────────────────────────────────── */
 
 import { useState } from 'react'
-import { faqShared, faqTabs } from '../../data/faq'
+import { faqTabs } from '../../data/faq'
 
 const PlusIcon = () => (
   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1A1712" strokeWidth="3" strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>
@@ -32,7 +32,6 @@ function Item({ item, isOpen, onToggle }) {
 
 export default function Faq() {
   const [activeTab, setActiveTab] = useState(faqTabs[0].id)
-  const [openShared, setOpenShared] = useState(0)
   // open question index per tab id; undefined → default to 0
   const [openByTab, setOpenByTab] = useState({})
 
@@ -42,23 +41,9 @@ export default function Faq() {
     <section className="section" id="faq">
       <div className="sec-head">
         <span className="faq-eyebrow">Questions</span>
-        <h2 className="h2">GTM engineering, <span className="hl">answered.</span></h2>
+        <h2 className="h2">Questions we hear <span className="hl">the most.</span></h2>
         <p className="sec-lede">The objections we hear on every call &mdash; answered up front so you don&apos;t have to ask.</p>
       </div>
-
-      {/* shared — always visible */}
-      <div className="faq">
-        {faqShared.map((item, i) => (
-          <Item
-            key={i}
-            item={item}
-            isOpen={openShared === i}
-            onToggle={() => setOpenShared(openShared === i ? null : i)}
-          />
-        ))}
-      </div>
-
-      <div className="faq-divider"><span>// by service</span></div>
 
       {/* service tabs — same coding as the Method tabs */}
       <div className="method-tabs faq-tabs">
