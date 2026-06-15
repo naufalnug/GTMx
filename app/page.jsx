@@ -1,6 +1,7 @@
 import './home.css'
 import Navbar from '../components/home/Navbar'
 import Hero from '../components/home/Hero'
+import Partners from '../components/home/Partners'
 import Services from '../components/home/Services'
 import Proof from '../components/home/Proof'
 import Method from '../components/home/Method'
@@ -63,6 +64,7 @@ export default function Page() {
         />
         <Hero />
         <main>
+          <Partners />
           <Services />
           <Proof />
           <Method />
