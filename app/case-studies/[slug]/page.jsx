@@ -1,7 +1,9 @@
 import { notFound } from 'next/navigation'
-import ContentNavbar from '../../../components/ContentNavbar'
+import Navbar from '../../../components/home/Navbar'
+import Footer from '../../../components/home/Footer'
 import CaseStudyCta from '../../../components/CaseStudyCta'
 import { caseStudies } from '../../../data/caseStudies'
+import '../../home.css'
 import './page.css'
 
 export function generateStaticParams() {
@@ -33,9 +35,10 @@ export default async function CaseStudyPage({ params }) {
 
   return (
     <>
-      <ContentNavbar />
-      <main className="casestudy">
-        <article className="casestudy__inner">
+      <Navbar />
+      <div className="dd">
+        <main className="casestudy">
+          <article className="casestudy__inner">
           <div className="casestudy__header">
             <a href="/#case-studies" className="casestudy__back">&larr; Back to Case Studies</a>
             <span className="casestudy__badge">{study.badge}</span>
@@ -137,8 +140,10 @@ export default async function CaseStudyPage({ params }) {
 
           {/* CTA */}
           <CaseStudyCta />
-        </article>
-      </main>
+          </article>
+        </main>
+        <Footer />
+      </div>
     </>
   )
 }

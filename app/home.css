@@ -141,7 +141,7 @@
     position:relative;
     margin-top:26px;
     font-weight:700;
-    font-size:clamp(52px,8.4vw,116px);
+    font-size:clamp(52px,8vw,96px);
     line-height:0.98;
     letter-spacing:-0.035em;
     max-width:14ch;
@@ -208,7 +208,9 @@
   .sec-lede{margin:22px auto 0;max-width:60ch;font-weight:500;font-size:clamp(17px,1.5vw,20px);line-height:1.5;color:var(--ink-soft);}
 
   /* service cards */
-  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1180px;margin:0 auto;}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1180px;margin:0 auto;align-items:start;}
+  /* gentle stagger so the three cards don't read as one stamped row */
+  .cards .card:nth-child(2){margin-top:30px;}
   .card{
     position:relative;display:flex;flex-direction:column;
     background:var(--white);border:2px solid var(--ink);border-radius:28px;
@@ -253,6 +255,7 @@
 
   @media(max-width:920px){
     .cards{grid-template-columns:1fr;max-width:460px;}
+    .cards .card:nth-child(2){margin-top:0;}
   }
 
   /* ============ PROOF BAND ============ */
@@ -274,14 +277,18 @@
   .proof__kicker .d{width:9px;height:9px;border-radius:50%;background:var(--flame);border:1.5px solid var(--ink);}
   .proof__rule{flex:1;height:2px;background:var(--ink);opacity:0.16;}
   .proof__stats{
-    display:grid;grid-template-columns:repeat(4,1fr);gap:28px;
+    display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:28px 36px;align-items:end;
   }
   .proof__stat{display:flex;flex-direction:column;gap:4px;}
   .proof__num{
-    font-weight:800;font-size:clamp(34px,4vw,52px);letter-spacing:-0.04em;line-height:1;
+    font-weight:800;font-size:clamp(32px,3.6vw,46px);letter-spacing:-0.04em;line-height:1;
   }
   .proof__num.is-flame{color:var(--flame);}
   .proof__lab{font-weight:600;font-size:14.5px;color:var(--ink-soft);}
+  /* lead stat — breaks the four-identical-blocks reflex */
+  .proof__stat--lead{padding-right:34px;border-right:2px dashed rgba(26,23,18,0.2);}
+  .proof__stat--lead .proof__num{font-size:clamp(56px,7vw,92px);}
+  .proof__stat--lead .proof__lab{font-size:16px;font-weight:700;color:var(--ink);}
   .proof__clients{
     margin-top:40px;padding-top:26px;border-top:2px dashed rgba(26,23,18,0.22);
     display:flex;align-items:center;gap:14px 30px;flex-wrap:wrap;
@@ -315,6 +322,7 @@
 
   @media(max-width:920px){
     .proof__stats{grid-template-columns:1fr 1fr;gap:24px;}
+    .proof__stat--lead{grid-column:1 / -1;border-right:none;padding-right:0;padding-bottom:18px;border-bottom:2px dashed rgba(26,23,18,0.2);}
     .method-track{grid-template-columns:1fr;gap:30px;}
     .method-track::before{display:none;}
   }
@@ -383,9 +391,12 @@
   .faq-q{width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 24px;font-weight:700;font-size:18px;letter-spacing:-0.01em;}
   .faq-q .ic{flex-shrink:0;width:26px;height:26px;border:2px solid var(--ink);border-radius:8px;display:grid;place-items:center;transition:transform .25s ease;background:var(--mint);}
   .faq-item.open .faq-q .ic{transform:rotate(45deg);background:var(--flame);}
-  .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
-  .faq-a__inner{padding:0 24px 24px;font-weight:500;font-size:15.5px;line-height:1.6;color:var(--ink-soft);}
-  .faq-item.open .faq-a{max-height:32em;}
+  /* grid-template-rows transition animates to auto height without
+     animating a layout property (no max-height jank / clipping) */
+  .faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s var(--e-out,cubic-bezier(.22,.61,.36,1));}
+  .faq-a__inner{overflow:hidden;min-height:0;padding:0 24px;font-weight:500;font-size:15.5px;line-height:1.6;color:var(--ink-soft);}
+  .faq-item.open .faq-a{grid-template-rows:1fr;}
+  .faq-item.open .faq-a__inner{padding-bottom:24px;}
 
   /* ============ FINAL CTA ============ */
   .final{padding:clamp(56px,8vw,108px) 40px;}
@@ -476,8 +487,7 @@
   /* ============ FAQ — tabbed additions ============ */
   .faq-eyebrow{
     display:inline-block;margin-bottom:16px;
-    font-family:var(--font-mono),ui-monospace,monospace;
-    font-size:12.5px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
+    font-weight:700;font-size:14px;letter-spacing:-0.005em;
     color:var(--flame);
   }
   .faq-divider{
@@ -527,8 +537,7 @@
   }
   .partners__label{
     display:inline-block;margin-bottom:22px;
-    font-family:var(--font-mono),ui-monospace,monospace;
-    font-size:12.5px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;
+    font-weight:600;font-size:13.5px;letter-spacing:-0.005em;
     color:var(--ink-soft);
   }
   .partners__row{
@@ -575,5 +584,12 @@
 
     /* keep the hand-drawn scribble inside the viewport */
     .scribble{font-size:clamp(16px,5vw,22px);}
+  }
+
+  /* ============ REDUCED MOTION ============ */
+  @media (prefers-reduced-motion: reduce){
+    *{transition-duration:0.001ms !important;animation-duration:0.001ms !important;animation-iteration-count:1 !important;scroll-behavior:auto !important;}
+    .card:hover,.rcard:hover,.btn-dark:hover,.btn-lg:hover,.btn-cream:hover,.btn-outline-cream:hover,.mtab:hover,.method-step__tile:hover{transform:none !important;}
+    .btn-dark:hover svg,.btn-lg:hover svg,.card:hover .card__more svg,.btn:hover .arrow{transform:none !important;}
   }
 }
