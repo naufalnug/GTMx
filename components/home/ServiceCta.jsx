@@ -47,6 +47,7 @@ export default function ServiceCta({ serviceName }) {
       calLink: CAL_LINK,
     })
     Cal.ns[CAL_NS]('ui', {
+      theme: 'light',
       cssVarsPerTheme: { light: { 'cal-brand': accent } },
       hideEventTypeDetails: false,
       layout: 'month_view',

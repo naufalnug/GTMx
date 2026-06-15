@@ -44,6 +44,7 @@ export default function FinalCTA() {
       calLink: CAL_LINK,
     })
     Cal.ns[CAL_NS]('ui', {
+      theme: 'light',
       cssVarsPerTheme: { light: { 'cal-brand': '#E8552B' } },
       hideEventTypeDetails: false,
       layout: 'month_view',

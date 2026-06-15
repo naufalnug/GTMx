@@ -8,12 +8,19 @@ export default function Founder() {
     <section className="section" id="about">
       <div className="founder-grid">
         <div className="founder-photo">
-          <span className="founder-arrow">the two of us &darr;</span>
-          <svg width="120" height="120" viewBox="0 0 120 120" fill="none" stroke="#1A1712" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="44" cy="46" r="16" /><path d="M22 92c0-14 10-23 22-23s22 9 22 23" />
-            <circle cx="80" cy="52" r="13" /><path d="M66 92c0-11 7-19 18-19s18 8 18 19" />
-          </svg>
-          <span className="founder-photo__tag">Founders photo</span>
+          <span className="founder-arrow">more soon</span>
+          <div className="founder-photo__stealth">
+            {/* incognito glyph — hat + mask/glasses */}
+            <svg width="116" height="116" viewBox="0 0 120 120" fill="none" stroke="#1A1712" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M24 58c6-22 16-32 36-32s30 10 36 32" />
+              <path d="M16 58h88" />
+              <circle cx="44" cy="76" r="13" />
+              <circle cx="76" cy="76" r="13" />
+              <path d="M57 76c1.5-2 4.5-2 6 0" />
+            </svg>
+            <span className="founder-photo__cap">Founders in stealth</span>
+          </div>
+          <span className="founder-photo__tag">Revealed soon</span>
         </div>
         <div className="founder-copy">
           <h2 className="h2">We&apos;ve been on <span className="hl">both sides</span> of the table.</h2>
