@@ -6,17 +6,6 @@
    to the design handoff.
    ────────────────────────────────────────────── */
 
-const NAV_BLOB_SVG = `
-<svg viewBox="0 0 560 150" preserveAspectRatio="none">
-  <path fill="#C2CBF2" d="M0,-40 L560,-40 L560,96
-    C540,96 532,118 512,118 C492,118 486,98 466,98
-    C446,98 440,122 420,122 C400,122 394,100 374,100
-    C354,100 348,120 328,120 C308,120 302,98 282,98
-    C262,98 256,118 236,118 C216,118 210,96 190,96
-    C170,96 164,116 144,116 C124,116 118,94 98,94
-    C78,94 72,112 52,112 C32,112 26,92 6,92 L0,92 Z"/>
-</svg>`
-
 const ILLO_SVG = `
 <svg viewBox="0 0 1440 470" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -132,32 +121,15 @@ const ILLO_SVG = `
 export default function Hero() {
   return (
     <div className="hero">
-      {/* NAV */}
-      <header className="nav">
-        <div className="brand"><b>gtm<span className="x">x</span></b><span className="dot"></span></div>
-
-        <div className="nav-blob">
-          <div className="nav-blob__bg" aria-hidden="true" dangerouslySetInnerHTML={{ __html: NAV_BLOB_SVG }} />
-          <div className="nav-right">
-            <span className="method-pill"><span className="badge">g</span>The GTMx Method</span>
-            <nav className="nav-links">
-              <a href="#services">Services</a>
-              <a href="#results">Results</a>
-              <a href="/content">Blog</a>
-            </nav>
-            <a href="#book" className="btn-dark">Book a call
-              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
-            </a>
-          </div>
-        </div>
-      </header>
+      {/* Navigation is provided by the shared <Navbar> (components/home/Navbar.jsx),
+          rendered once at the page level, so the hero no longer carries its own. */}
 
       {/* floating bg accents */}
       <span className="bg-accent" style={{ width: 120, height: 120, background: 'var(--mint)', top: '24%', left: '7%' }}></span>
       <span className="bg-accent" style={{ width: 90, height: 90, background: 'var(--lilac)', top: '16%', right: '12%' }}></span>
 
       {/* HEADLINE */}
-      <main className="stage">
+      <div className="stage">
         <span className="eyebrow"><span className="dots"><i></i><i></i><i></i></span><span>For B2B SaaS &amp; agencies at $1M+ ARR</span></span>
 
         <h1 className="h1">
@@ -179,7 +151,7 @@ export default function Hero() {
           </a>
           <a href="#book" className="btn-lg btn-lg--grad">Book a call</a>
         </div>
-      </main>
+      </div>
 
       {/* ILLUSTRATION */}
       <div className="illo" aria-hidden="true" dangerouslySetInnerHTML={{ __html: ILLO_SVG }} />

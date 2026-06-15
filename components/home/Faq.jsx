@@ -2,53 +2,98 @@
 
 /* ──────────────────────────────────────────────
    GTMx — components/home/Faq.jsx
-   Friendly click-to-expand accordion. One open at a time.
+   Tabbed FAQ, mirroring The GTMx Method:
+     section head → 3 shared accordions (always visible)
+     → `// by service` divider → service tabs
+       (Outbound / RevOps / Search, same coral/blue/green
+        coding as the Method tabs) → that service's 5 Q&As.
+   One item open at a time within each group. Defaults:
+   Outbound tab active, first question of each group open.
    ────────────────────────────────────────────── */
 
 import { useState } from 'react'
+import { faqShared, faqTabs } from '../../data/faq'
 
-const ITEMS = [
-  {
-    q: 'We should just hire a VP of Sales.',
-    a: 'A VP of Sales costs $250K+ and takes 6 months to ramp — and nearly half of first senior sales hires are replaced within 2 years, because there was no repeatable process for them to execute. GTMx builds the engine first. Then you hire the driver into a system that’s already producing pipeline.',
-  },
-  {
-    q: 'We tried cold email before and it didn’t work.',
-    a: 'Your messaging was built for the wrong audience. Different buyer segments need different pain points, urgency triggers, and social proof. We don’t just run email campaigns — we rebuild your entire outbound approach specifically for your target buyer.',
-  },
-  {
-    q: 'Isn’t this just an SDR agency?',
-    a: 'SDR agencies send emails. GTMx engineers your entire GTM system: ICP refinement, buyer positioning, full outbound infrastructure, and the RevOps foundations your team needs to operate at speed. We’re not a vendor — we’re your outbound engine.',
-  },
-  {
-    q: 'How quickly can pipeline go live?',
-    a: 'Most engagements have campaigns live within 2–3 weeks: domain warmup and infrastructure in week 1, list and messaging in weeks 2–3, launch by week 3–4. First qualified meetings typically land within 30 days.',
-  },
-  {
-    q: 'What stack do you use?',
-    a: 'Our default stack: Clay for enrichment, Instantly for cold email, HeyReach for LinkedIn, HubSpot for CRM. We adapt to your tooling — we’re not a one-size-fits-all shop.',
-  },
-]
+const PlusIcon = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1A1712" strokeWidth="3" strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>
+)
+
+function Item({ item, isOpen, onToggle }) {
+  return (
+    <div className={'faq-item' + (isOpen ? ' open' : '')}>
+      <button className="faq-q" type="button" onClick={onToggle}>
+        {item.q}
+        <span className="ic"><PlusIcon /></span>
+      </button>
+      <div className="faq-a"><div className="faq-a__inner">{item.a}</div></div>
+    </div>
+  )
+}
 
 export default function Faq() {
-  const [open, setOpen] = useState(null)
+  const [activeTab, setActiveTab] = useState(faqTabs[0].id)
+  const [openShared, setOpenShared] = useState(0)
+  // open question index per tab id; undefined → default to 0
+  const [openByTab, setOpenByTab] = useState({})
+
+  const openFor = id => (id in openByTab ? openByTab[id] : 0)
 
   return (
     <section className="section" id="faq">
       <div className="sec-head">
-        <h2 className="h2">Fair <span className="hl">questions.</span></h2>
-        <p className="sec-lede">The things every founder asks before they trust us with their pipeline.</p>
+        <span className="faq-eyebrow">Questions</span>
+        <h2 className="h2">GTM engineering, <span className="hl">answered.</span></h2>
+        <p className="sec-lede">The objections we hear on every call &mdash; answered up front so you don&apos;t have to ask.</p>
       </div>
+
+      {/* shared — always visible */}
       <div className="faq">
-        {ITEMS.map((item, i) => (
-          <div key={i} className={'faq-item' + (open === i ? ' open' : '')}>
-            <button className="faq-q" type="button" onClick={() => setOpen(open === i ? null : i)}>
-              {item.q}
-              <span className="ic">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1A1712" strokeWidth="3" strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>
-              </span>
-            </button>
-            <div className="faq-a"><div className="faq-a__inner">{item.a}</div></div>
+        {faqShared.map((item, i) => (
+          <Item
+            key={i}
+            item={item}
+            isOpen={openShared === i}
+            onToggle={() => setOpenShared(openShared === i ? null : i)}
+          />
+        ))}
+      </div>
+
+      <div className="faq-divider"><span>// by service</span></div>
+
+      {/* service tabs — same coding as the Method tabs */}
+      <div className="method-tabs faq-tabs">
+        {faqTabs.map(tab => (
+          <button
+            key={tab.id}
+            type="button"
+            className={'mtab' + (activeTab === tab.id ? ' is-active' : '')}
+            onClick={() => setActiveTab(tab.id)}
+          >
+            <span className="mtab__dot"></span>{tab.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="faq faq-svc">
+        {faqTabs.map(tab => (
+          <div
+            key={tab.id}
+            className={'faq-panel' + (activeTab === tab.id ? ' is-active' : '')}
+            data-svc={tab.id}
+          >
+            {tab.items.map((item, i) => (
+              <Item
+                key={i}
+                item={item}
+                isOpen={openFor(tab.id) === i}
+                onToggle={() =>
+                  setOpenByTab(prev => ({
+                    ...prev,
+                    [tab.id]: openFor(tab.id) === i ? null : i,
+                  }))
+                }
+              />
+            ))}
           </div>
         ))}
       </div>

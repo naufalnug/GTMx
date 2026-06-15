@@ -1,4 +1,5 @@
 import './home.css'
+import Navbar from '../components/home/Navbar'
 import Hero from '../components/home/Hero'
 import Services from '../components/home/Services'
 import Proof from '../components/home/Proof'
@@ -45,30 +46,33 @@ export default function Page() {
   }
 
   return (
-    <div className="dd">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
-      />
-      <Hero />
-      <main>
-        <Services />
-        <Proof />
-        <Method />
-        <Results />
-        <Founder />
-        <Faq />
-        <FinalCTA />
-      </main>
-      <Footer />
-    </div>
+    <>
+      <Navbar />
+      <div className="dd">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+        />
+        <Hero />
+        <main>
+          <Services />
+          <Proof />
+          <Method />
+          <Results />
+          <Founder />
+          <Faq />
+          <FinalCTA />
+        </main>
+        <Footer />
+      </div>
+    </>
   )
 }
