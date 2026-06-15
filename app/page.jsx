@@ -1,16 +1,13 @@
-import Navbar from '../components/Navbar'
-import Hero from '../components/Hero'
-import ProofStrip from '../components/ProofStrip'
-import Problem from '../components/Problem'
-import Services from '../components/Services'
-import IcpSection from '../components/IcpSection'
-import Process from '../components/Process'
-import Founder from '../components/Founder'
-import CaseStudies from '../components/CaseStudies'
-import FAQ from '../components/FAQ'
-import FinalCTA from '../components/FinalCTA'
-import Footer from '../components/Footer'
-import RevealObserver from '../components/RevealObserver'
+import './home.css'
+import Hero from '../components/home/Hero'
+import Services from '../components/home/Services'
+import Proof from '../components/home/Proof'
+import Method from '../components/home/Method'
+import Results from '../components/home/Results'
+import Founder from '../components/home/Founder'
+import Faq from '../components/home/Faq'
+import FinalCTA from '../components/home/FinalCTA'
+import Footer from '../components/home/Footer'
 import { faqs } from '../data/faq'
 
 export default function Page() {
@@ -32,7 +29,7 @@ export default function Page() {
     '@type': 'Organization',
     name: 'GTMx',
     url: 'https://gtmx.run',
-    description: 'Outbound revenue engineering for B2B tech companies',
+    description: 'Outbound, RevOps, and search systems for B2B tech companies — built into one engine.',
   }
 
   const serviceJsonLd = {
@@ -42,13 +39,13 @@ export default function Page() {
       '@type': 'Organization',
       name: 'GTMx',
     },
-    name: 'GTM Engineering for Outbound Pipeline',
-    description: 'We build the outbound revenue engine that gets B2B tech companies their first qualified pipeline.',
+    name: 'GTM Engineering — Outbound, RevOps & Search',
+    description: 'We engineer the outbound, RevOps, and search systems that turn a working product into predictable pipeline.',
     serviceType: 'Go-to-Market Engineering',
   }
 
   return (
-    <>
+    <div className="dd">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
@@ -61,22 +58,17 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
       />
-      <RevealObserver />
-      <Navbar />
+      <Hero />
       <main>
-        <Hero />
-        <ProofStrip />
-        <Problem />
         <Services />
-        <IcpSection />
-        <Process />
-        {/* Cases moved BEFORE Founder — work first, human second */}
-        <CaseStudies />
+        <Proof />
+        <Method />
+        <Results />
         <Founder />
-        <FAQ />
+        <Faq />
         <FinalCTA />
       </main>
       <Footer />
-    </>
+    </div>
   )
 }

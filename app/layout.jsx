@@ -1,6 +1,21 @@
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Instrument_Serif } from 'next/font/google'
+import { Figtree, Caveat } from 'next/font/google'
 import './globals.css'
+
+const figtree = Figtree({
+  subsets: ['latin'],
+  variable: '--font-figtree',
+  display: 'swap',
+  weight: ['400', '500', '600', '700', '800'],
+})
+
+const caveat = Caveat({
+  subsets: ['latin'],
+  variable: '--font-caveat',
+  display: 'swap',
+  weight: ['600', '700'],
+})
 
 const geistSans = Geist({
   subsets: ['latin'],
@@ -47,7 +62,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${figtree.variable} ${caveat.variable}`}>
       <body>
         {children}
       </body>
