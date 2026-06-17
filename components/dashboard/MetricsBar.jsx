@@ -34,7 +34,7 @@ export default function MetricsBar({ totals, period, sources, source }) {
   ];
 
   return (
-    <section className="mbar dark">
+    <section className="mbar">
       <div className="wrap">
         {sources && sources.length > 1 ? (
           <SourceToggle sources={sources} source={source} />

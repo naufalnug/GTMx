@@ -4,6 +4,7 @@ import { loadDashboardData, getClientSources, resolveSource } from '../../../../
 import { getEmailedCompanies } from '../../../../lib/companies';
 import { resolvePeriod } from '../../../../lib/period';
 import { deriveInsights } from '../../../../lib/dashboardInsights';
+import '../../../../components/dashboard/theme.css';
 import DashboardHeader from '../../../../components/dashboard/DashboardHeader';
 import MetricsBar from '../../../../components/dashboard/MetricsBar';
 import SectionNav from '../../../../components/dashboard/SectionNav';
@@ -71,7 +72,7 @@ export default async function DashboardPage({ params, searchParams }) {
   const updatedAt = new Date().toISOString();
 
   return (
-    <main>
+    <main className="dash">
       <DashboardHeader
         client={client}
         updatedAt={updatedAt}

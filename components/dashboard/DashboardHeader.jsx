@@ -12,7 +12,7 @@ export default function DashboardHeader({ client, updatedAt, campaignCount, peri
   });
 
   return (
-    <header className="dh dark">
+    <header className="dh">
       <div className="wrap dh__inner">
         <div className="dh__brand">
           <a href="/" className="dh__gtmx">
