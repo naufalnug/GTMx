@@ -1,6 +1,6 @@
 import './DashboardHeader.css';
 
-export default function DashboardHeader({ client, updatedAt, campaignCount }) {
+export default function DashboardHeader({ client, updatedAt, campaignCount, period }) {
   const updated = new Date(updatedAt);
   const updatedLabel = updated.toLocaleString('en-US', {
     month: 'short',
@@ -36,6 +36,12 @@ export default function DashboardHeader({ client, updatedAt, campaignCount }) {
             <span className="dh__meta-label">Active campaigns</span>
             <span className="dh__meta-value">{campaignCount}</span>
           </div>
+          {period ? (
+            <div className="dh__meta-row">
+              <span className="dh__meta-label">Period</span>
+              <span className="dh__meta-value">{period.label}</span>
+            </div>
+          ) : null}
           <div className="dh__meta-row">
             <span className="dh__meta-label">Updated</span>
             <span className="dh__meta-value">{updatedLabel}</span>

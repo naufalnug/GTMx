@@ -6,6 +6,7 @@ import './SectionNav.css';
 const LINKS = [
   { href: '#positive', label: 'Positive replies' },
   { href: '#campaigns', label: 'Campaigns' },
+  { href: '#companies', label: 'Companies emailed' },
   { href: '#observations', label: 'Observations' },
   { href: '#copy', label: 'Sequence copy' },
 ];
