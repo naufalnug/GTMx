@@ -12,6 +12,9 @@ export const services = [
   {
     slug: 'automated-outbound',
     name: 'Automated Outbound',
+    // Topic tags (shared vocabulary with article tags) drive taxonomy-based
+    // related-content links — see lib/related.js / components/RelatedContent.jsx.
+    tags: ['Outbound', 'Pipeline'],
     theme: 'svc-outbound',
     blurb: 'Cold email + LinkedIn campaigns that book meetings — built, launched, and run end to end.',
     kicker: 'Automated Outbound',
@@ -41,6 +44,7 @@ export const services = [
   {
     slug: 'revops',
     name: 'RevOps',
+    tags: ['GTM', 'Pipeline', 'RevOps'],
     theme: 'svc-revops',
     blurb: 'GTM engineering as a service — TAM sourcing, enrichment, lead scoring, and a CRM that runs itself.',
     kicker: 'RevOps \u00b7 GTM engineering',
@@ -70,6 +74,7 @@ export const services = [
   {
     slug: 'seo-aeo',
     name: 'SEO + AEO',
+    tags: ['SEO', 'AEO', 'Search'],
     theme: 'svc-search',
     blurb: 'Rank on Google and get cited by AI answer engines — ChatGPT, Claude, Perplexity, and Gemini.',
     kicker: 'SEO + AEO \u00b7 search & answer engines',

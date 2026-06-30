@@ -3,7 +3,9 @@ import Navbar from '../../../components/home/Navbar'
 import Footer from '../../../components/home/Footer'
 import CaseStudyCta from '../../../components/CaseStudyCta'
 import { caseStudies } from '../../../data/caseStudies'
+import JsonLd from '../../../components/JsonLd'
 import { pageMetadata } from '../../../lib/seo'
+import { breadcrumbSchema } from '../../../lib/structuredData'
 import '../../home.css'
 import './page.css'
 
@@ -36,10 +38,16 @@ export default async function CaseStudyPage({ params }) {
   const study = caseStudies.find(s => s.slug === slug)
   if (!study) notFound()
 
+  const breadcrumbJsonLd = breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: `${study.company} case study`, path: `/case-studies/${study.slug}` },
+  ])
+
   return (
     <>
       <Navbar />
       <div className="dd">
+        <JsonLd data={breadcrumbJsonLd} />
         <main className="casestudy">
           <article className="casestudy__inner">
           <div className="casestudy__header">

@@ -2,7 +2,10 @@ import { notFound } from 'next/navigation'
 import Navbar from '../../../components/home/Navbar'
 import Footer from '../../../components/home/Footer'
 import { articles } from '../../../data/articles'
+import RelatedContent from '../../../components/RelatedContent'
+import JsonLd from '../../../components/JsonLd'
 import { pageMetadata } from '../../../lib/seo'
+import { breadcrumbSchema } from '../../../lib/structuredData'
 import '../../home.css'
 import './page.css'
 
@@ -37,11 +40,17 @@ export default async function ArticlePage({ params }) {
   if (!article) notFound()
 
   const paragraphs = article.body.split('\n\n')
+  const breadcrumbJsonLd = breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Blog', path: '/content' },
+    { name: article.title, path: `/content/${article.slug}` },
+  ])
 
   return (
     <>
       <Navbar />
       <div className="dd">
+        <JsonLd data={breadcrumbJsonLd} />
         <main className="article-page">
           <article className="article-page__inner">
             <div className="article-page__header">
@@ -85,6 +94,8 @@ export default async function ArticlePage({ params }) {
                 )
               })}
             </div>
+
+            <RelatedContent article={article} />
 
             <div className="article-page__cta">
               <p className="article-page__cta-text">Ready to build your revenue engine?</p>

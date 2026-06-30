@@ -4,7 +4,9 @@ import Footer from '../../../components/home/Footer'
 import ServiceFaq from '../../../components/home/ServiceFaq'
 import ServiceCta from '../../../components/home/ServiceCta'
 import { services } from '../../../data/services'
-import { pageMetadata } from '../../../lib/seo'
+import { pageMetadata, faqPageJsonLd } from '../../../lib/seo'
+import { serviceSchema, breadcrumbSchema } from '../../../lib/structuredData'
+import JsonLd from '../../../components/JsonLd'
 import './page.css'
 
 export function generateStaticParams() {
@@ -39,11 +41,20 @@ export default async function ServicePage({ params }) {
 
   const stepCount = service.process.length
   const cols = stepCount <= 4 ? stepCount : 3
+  // Same Q&A array the ServiceFaq accordion renders below — schema can't drift.
+  const faqJsonLd = faqPageJsonLd(service.faq)
+  const breadcrumbJsonLd = breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: service.name, path: `/services/${service.slug}` },
+  ])
 
   return (
     <>
       <Navbar />
       <div className={`svc-page ${service.theme}`}>
+        <JsonLd data={serviceSchema(service)} />
+        <JsonLd data={breadcrumbJsonLd} />
+        <JsonLd data={faqJsonLd} />
         <main>
           {/* HERO */}
           <section className="shero">

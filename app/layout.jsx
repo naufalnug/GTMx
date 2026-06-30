@@ -2,6 +2,8 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import { Instrument_Serif } from 'next/font/google'
 import { Figtree, Caveat } from 'next/font/google'
 import { SITE_URL, SITE_NAME } from '../lib/seo'
+import { siteGraph } from '../lib/structuredData'
+import JsonLd from '../components/JsonLd'
 import './globals.css'
 
 const figtree = Figtree({
@@ -63,6 +65,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${figtree.variable} ${caveat.variable}`}>
       <body>
+        <JsonLd data={siteGraph()} />
         {children}
       </body>
     </html>

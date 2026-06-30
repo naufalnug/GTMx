@@ -133,10 +133,10 @@ export default function Hero() {
         <span className="eyebrow"><span className="dots"><i></i><i></i><i></i></span><span>For B2B SaaS &amp; agencies at $1M+ ARR</span></span>
 
         <h1 className="h1">
-          Outbound, RevOps, and Search,<br />
+          Outbound, RevOps, and Search,<br />{' '}
           built into <span className="win">one engine.
             <svg viewBox="0 0 220 20" preserveAspectRatio="none"><path d="M3,13 C46,4 92,17 138,9 C170,4 200,13 217,7" fill="none" stroke="#E8552B" strokeWidth="7" strokeLinecap="round" /></svg>
-          </span>
+          </span>{' '}
           <span className="scribble" style={{ top: '-0.62em', right: '4%' }}>no duct&nbsp;tape</span>
         </h1>
 
