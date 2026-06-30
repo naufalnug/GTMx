@@ -1,12 +1,14 @@
 import Navbar from '../../components/home/Navbar'
 import Footer from '../../components/home/Footer'
+import { pageMetadata } from '../../lib/seo'
 import '../home.css'
 import './page.css'
 
-export const metadata = {
+export const metadata = pageMetadata({
+  path: '/privacy',
   title: 'Privacy Policy | GTMx',
   description: 'GTMx privacy policy — how we collect, use, and protect your data.',
-}
+})
 
 export default function PrivacyPage() {
   return (

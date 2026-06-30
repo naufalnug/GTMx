@@ -4,6 +4,7 @@ import Footer from '../../../components/home/Footer'
 import ServiceFaq from '../../../components/home/ServiceFaq'
 import ServiceCta from '../../../components/home/ServiceCta'
 import { services } from '../../../data/services'
+import { pageMetadata } from '../../../lib/seo'
 import './page.css'
 
 export function generateStaticParams() {
@@ -13,17 +14,18 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const service = services.find(s => s.slug === slug)
+  // No canonical for an unknown slug — the page itself 404s (notFound below).
   if (!service) return {}
 
-  return {
+  return pageMetadata({
+    path: `/services/${service.slug}`,
     title: `${service.name} | GTMx`,
     description: service.blurb,
     openGraph: {
       title: `${service.name} — GTMx`,
       description: service.blurb,
-      type: 'website',
     },
-  }
+  })
 }
 
 const Arrow = () => (

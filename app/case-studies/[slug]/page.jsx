@@ -3,6 +3,7 @@ import Navbar from '../../../components/home/Navbar'
 import Footer from '../../../components/home/Footer'
 import CaseStudyCta from '../../../components/CaseStudyCta'
 import { caseStudies } from '../../../data/caseStudies'
+import { pageMetadata } from '../../../lib/seo'
 import '../../home.css'
 import './page.css'
 
@@ -15,9 +16,11 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const study = caseStudies.find(s => s.slug === slug)
+  // No canonical for an unknown slug \u2014 the page itself 404s (notFound below).
   if (!study) return {}
 
-  return {
+  return pageMetadata({
+    path: `/case-studies/${study.slug}`,
     title: `${study.company} Case Study | GTMx`,
     description: study.headline,
     openGraph: {
@@ -25,7 +28,7 @@ export async function generateMetadata({ params }) {
       description: study.headline,
       type: 'article',
     },
-  }
+  })
 }
 
 export default async function CaseStudyPage({ params }) {
