@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import Navbar from '../../../components/home/Navbar'
 import Footer from '../../../components/home/Footer'
 import { articles } from '../../../data/articles'
+import { pageMetadata } from '../../../lib/seo'
 import '../../home.css'
 import './page.css'
 
@@ -14,9 +15,11 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const article = articles.find(a => a.slug === slug)
+  // No canonical for an unknown slug — the page itself 404s (notFound below).
   if (!article) return {}
 
-  return {
+  return pageMetadata({
+    path: `/content/${article.slug}`,
     title: `${article.title} | GTMx`,
     description: article.excerpt,
     openGraph: {
@@ -25,7 +28,7 @@ export async function generateMetadata({ params }) {
       type: 'article',
       publishedTime: article.date,
     },
-  }
+  })
 }
 
 export default async function ArticlePage({ params }) {

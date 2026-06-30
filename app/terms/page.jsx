@@ -1,12 +1,14 @@
 import Navbar from '../../components/home/Navbar'
 import Footer from '../../components/home/Footer'
+import { pageMetadata } from '../../lib/seo'
 import '../home.css'
 import '../privacy/page.css'
 
-export const metadata = {
+export const metadata = pageMetadata({
+  path: '/terms',
   title: 'Terms of Service | GTMx',
   description: 'GTMx terms of service — the terms governing use of our website and services.',
-}
+})
 
 export default function TermsPage() {
   return (

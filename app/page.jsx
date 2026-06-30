@@ -11,6 +11,16 @@ import Faq from '../components/home/Faq'
 import FinalCTA from '../components/home/FinalCTA'
 import Footer from '../components/home/Footer'
 import { faqs } from '../data/faq'
+import { SITE_URL, pageMetadata } from '../lib/seo'
+
+export const metadata = pageMetadata({
+  path: '/',
+  title: 'GTMx — Outbound Revenue Engineering for B2B Tech Companies',
+  description: 'GTMx builds the outbound revenue engine that gets B2B tech companies their first qualified pipeline. Cold email, LinkedIn outbound, and GTM engineering — done for you.',
+  openGraph: {
+    description: 'GTMx builds the outbound revenue engine that gets B2B tech companies their first qualified pipeline.',
+  },
+})
 
 export default function Page() {
   const faqJsonLd = {
@@ -30,7 +40,7 @@ export default function Page() {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'GTMx',
-    url: 'https://gtmx.run',
+    url: SITE_URL,
     description: 'Outbound, RevOps, and search systems for B2B tech companies — built into one engine.',
   }
 

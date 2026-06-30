@@ -1,3 +1,5 @@
+import { absoluteUrl } from '../lib/seo'
+
 export const dynamic = 'force-static'
 
 export default function robots() {
@@ -6,6 +8,6 @@ export default function robots() {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://gtmx.run/sitemap.xml',
+    sitemap: absoluteUrl('/sitemap.xml'),
   }
 }

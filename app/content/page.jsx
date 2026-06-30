@@ -1,13 +1,15 @@
 import Navbar from '../../components/home/Navbar'
 import Footer from '../../components/home/Footer'
 import { articles } from '../../data/articles'
+import { pageMetadata } from '../../lib/seo'
 import '../home.css'
 import './page.css'
 
-export const metadata = {
+export const metadata = pageMetadata({
+  path: '/content',
   title: 'GTM & AI Content | GTMx',
   description: 'Practical insights on GTM engineering, AI-powered outbound, and pipeline building for B2B tech companies.',
-}
+})
 
 export default function ContentPage() {
   return (
