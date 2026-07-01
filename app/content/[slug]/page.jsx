@@ -1,12 +1,17 @@
 import { notFound } from 'next/navigation'
 import Navbar from '../../../components/home/Navbar'
 import Footer from '../../../components/home/Footer'
-import { articles } from '../../../data/articles'
+import { getPublishedArticles, getPublishedArticleBySlug } from '../../../lib/articles'
 import { pageMetadata } from '../../../lib/seo'
 import '../../home.css'
 import './page.css'
 
-export function generateStaticParams() {
+// Regenerate published posts on-demand; new CMS slugs render the first time
+// they're requested (dynamicParams defaults to true).
+export const revalidate = 60
+
+export async function generateStaticParams() {
+  const articles = await getPublishedArticles()
   return articles.map(article => ({
     slug: article.slug,
   }))
@@ -14,7 +19,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params
-  const article = articles.find(a => a.slug === slug)
+  const article = await getPublishedArticleBySlug(slug)
   // No canonical for an unknown slug — the page itself 404s (notFound below).
   if (!article) return {}
 
@@ -33,7 +38,7 @@ export async function generateMetadata({ params }) {
 
 export default async function ArticlePage({ params }) {
   const { slug } = await params
-  const article = articles.find(a => a.slug === slug)
+  const article = await getPublishedArticleBySlug(slug)
   if (!article) notFound()
 
   const paragraphs = article.body.split('\n\n')

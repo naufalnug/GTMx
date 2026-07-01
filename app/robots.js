@@ -7,6 +7,7 @@ export default function robots() {
     rules: {
       userAgent: '*',
       allow: '/',
+      disallow: ['/admin', '/api/'],
     },
     sitemap: absoluteUrl('/sitemap.xml'),
   }
