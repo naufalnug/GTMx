@@ -1,0 +1,218 @@
+{
+  "slug": "withjoy-waterfall-playbook",
+  "company": "WithJoy.AI",
+  "domain": "withjoy.ai",
+  "date": "2026-07-03",
+  "strategyOwner": "AI-Ark",
+  "headline": "Your investor waterfall journey.",
+  "subheadline": "A scrollable GTMx strategy artifact for routing Washington real estate investors into the right rebate-led offer.",
+  "productSummary": "WithJoy.AI is an AI-powered real estate brokerage in Washington. Joy runs the home search and drafts offers, while HALO, a licensed human review layer, signs off on material decisions.",
+  "coreInsight": "Because the rebate happens per transaction, its value compounds for anyone who buys repeatedly. Washington real estate investors are the clearest cold-outbound ICP.",
+  "heroStats": [
+    { "value": "~120k", "label": "WA investor accounts" },
+    { "value": "4", "label": "waterfall routes" },
+    { "value": "~$15k", "label": "average rebate per deal" }
+  ],
+  "cta": {
+    "primaryLabel": "Book the strategy call",
+    "primaryHref": "https://www.gtmx.run/#book",
+    "secondaryLabel": "Reply with ledger"
+  },
+  "sampleValues": {
+    "{{first_name}}": "Marcus",
+    "{{company_name}}": "Cedar Peak Holdings LLC",
+    "{{most_recent_address}}": "4127 SE Alder St",
+    "{{n_purchases}}": "3",
+    "{{est_rebate}}": "14,800",
+    "{{cumulative_rebate}}": "43,500",
+    "{{county}}": "King County",
+    "{{metro}}": "South Seattle",
+    "{{properties_owned_count}}": "6",
+    "{{last_purchase_year}}": "2023",
+    "{{deal_1}}": "2/1 bungalow, Beacon Hill, $465k",
+    "{{deal_2}}": "duplex near Rainier Valley, $690k",
+    "{{deal_3}}": "townhome in Burien, $525k"
+  },
+  "sections": [
+    { "id": "signal", "label": "Signal", "title": "The signal that proves investor intent", "takeaway": "County deed records prove who invests, how often they buy, and which tier they should enter. The TAM and routing signal come from the same source." },
+    { "id": "waterfall", "label": "Waterfall", "title": "One cascade routes every WA investor", "takeaway": "Portfolio size plus acquisition recency creates exclusive tiers, from repeat buyers to scaled dormant portfolios to emerging investors and catch-all entities." },
+    { "id": "tiers", "label": "Tiers", "title": "Each investor segment gets a distinct offer", "takeaway": "The hotter the transaction signal, the more concrete the rebate math. Softer segments get calculators and deal-alert entry points." },
+    { "id": "campaigns", "label": "Campaigns", "title": "Twenty experiments layered on the waterfall", "takeaway": "Core campaigns carry the volume. Triggered and niche plays add urgency only when the signal is specific enough." },
+    { "id": "emails", "label": "Email Copy", "title": "Copy built around a concrete number", "takeaway": "Every sequence makes the rebate visible, then asks for a tiny reply: LEDGER, YES, or CALC." },
+    { "id": "launch", "label": "Launch", "title": "Launch the clearest money proof first", "takeaway": "Start with repeat buyers and the personalized Rebate Ledger, then phase in deal alerts, emerging investors, and the catch-all calculator." }
+  ],
+  "signalReasons": [
+    "County deed records reveal owner of record, property count, deed dates, owner occupancy, and cash-versus-financed purchases.",
+    "The same source identifies the TAM and the routing signal, so there is no expensive qualification enrichment step.",
+    "Portfolio size and recent buying activity map directly to rebate value and urgency.",
+    "Every investor still gets a route, even when recency and portfolio depth are weak."
+  ],
+  "sources": [
+    { "name": "County Assessor / Recorder deed data", "delivers": "Owner of record, property count, deed dates, occupancy, cash vs. financed" },
+    { "name": "PropStream / BatchLeads", "delivers": "Queryable investor database, portfolio counts, absentee and cash-buyer flags, estimated equity" },
+    { "name": "WA Secretary of State registry", "delivers": "Real-estate-holding LLCs and principal matching" },
+    { "name": "Skip-trace / contact enrichment", "delivers": "Email and mobile resolution after the deed record qualifies the lead" },
+    { "name": "MLS / Zillow / Redfin", "delivers": "Live deal matches for Joy Deal Alert campaigns" },
+    { "name": "Public trigger datasets", "delivers": "1031 timing, trustee sales, STR permits, REIA directories, and license rosters" }
+  ],
+  "fields": [
+    "purchases_trailing_12mo",
+    "properties_owned_count",
+    "most_recent_purchase_date",
+    "owner_occupied",
+    "owner_type",
+    "cash_buyer",
+    "estimated_portfolio_value",
+    "county"
+  ],
+  "routingRules": [
+    { "if": "purchases_trailing_12mo >= 2", "then": "Tier 1", "why": "In-Market Repeat Buyer" },
+    { "if": "properties_owned_count >= 3", "then": "Tier 2", "why": "Scaled Portfolio, Dormant" },
+    { "if": "properties_owned_count in [1,2] AND owner_occupied == false", "then": "Tier 3", "why": "Emerging Investor" },
+    { "if": "all remaining WA investor entities", "then": "Catch-all", "why": "Remaining RE LLCs, cash buyers, absentee owners" }
+  ],
+  "tiers": [
+    {
+      "id": "tier1",
+      "name": "Tier 1",
+      "label": "In-Market Repeat Buyer",
+      "trigger": "Bought 2+ WA properties in the trailing 12 months",
+      "pain": "They transact often, so paying full buyer-side commission on every deal compounds into real annual leakage.",
+      "valueProp": "WithJoy rebates up to 70% of the buy-side commission back at closing, roughly $15k per deal on average.",
+      "dataSource": "County deeds / PropStream",
+      "magnet": "Personalized Rebate Ledger",
+      "share": "~8%",
+      "accounts": "~9,600",
+      "replyDensity": "Highest intent, launch first",
+      "accent": "orange"
+    },
+    {
+      "id": "tier2",
+      "name": "Tier 2",
+      "label": "Scaled Portfolio, Dormant",
+      "trigger": "Owns 3+ properties but bought fewer than 2 in the last 12 months",
+      "pain": "Capital is waiting for the right deal, but they may re-enter and overpay on commission out of habit.",
+      "valueProp": "Joy scans from a natural-language buy-box and the rebate improves the economics when they move.",
+      "dataSource": "PropStream + deed recency",
+      "magnet": "Joy Deal Alert setup",
+      "share": "~22%",
+      "accounts": "~26,400",
+      "replyDensity": "Strong once Tier 1 proves the hook",
+      "accent": "peri"
+    },
+    {
+      "id": "tier3",
+      "name": "Tier 3",
+      "label": "Emerging Investor",
+      "trigger": "Owns 1-2 non-owner-occupied properties",
+      "pain": "They have started investing and want to scale, but every acquisition dollar matters.",
+      "valueProp": "The rebate makes the next purchase materially cheaper and speeds the path to door 3.",
+      "dataSource": "Assessor owner-occupancy + portfolio count",
+      "magnet": "Scaling + Rebate Calculator",
+      "share": "~30%",
+      "accounts": "~36,000",
+      "replyDensity": "Good, softer CTA",
+      "accent": "sage"
+    },
+    {
+      "id": "catchall",
+      "name": "Catch-all",
+      "label": "Remaining WA Investor Entities",
+      "trigger": "Any remaining RE LLC, cash buyer, absentee owner, or investor entity",
+      "pain": "They own property but lack strong recency or depth signal, so intent is softer.",
+      "valueProp": "Whenever they are ready, Joy can run the search and return up to 70% of commission.",
+      "dataSource": "WA investor TAM pull",
+      "magnet": "Self-Serve Rebate Calculator",
+      "share": "~40%",
+      "accounts": "~48,000",
+      "replyDensity": "Broadest volume, lowest friction",
+      "accent": "lilac"
+    }
+  ],
+  "campaigns": [
+    { "group": "Waterfall", "tier": "catchall", "name": "Commission Rebate Calculator", "targeting": "Broad", "filter": "All WA absentee/investor owners", "strategy": "Insert property count and county", "value": "Save money, roughly $15k per deal", "overview": "Broadest net and softest CTA. Shows what a 70% rebate would return on the next purchase." },
+    { "group": "Waterfall", "tier": "tier1", "name": "Rebate Ledger", "targeting": "Broad", "filter": "Any owner with 1+ WA purchase", "strategy": "Compute rebate they would have kept per past buy", "value": "Save money, quantified from their record", "overview": "The golden ICP campaign: their public deed history becomes a personalized ledger." },
+    { "group": "Waterfall", "tier": "tier2", "name": "Joy Found 3 Deals", "targeting": "Broad", "filter": "Active investor with inferable buy-box", "strategy": "Infer buy-box and surface 3 live matches", "value": "Make money + save time", "overview": "Demonstrates Joy's product magic and the rebate in the same email." },
+    { "group": "Waterfall", "tier": "tier3", "name": "New LLC Welcome", "targeting": "Focused", "filter": "RE LLC registered under 90 days", "strategy": "Use registration date and principal", "value": "Save money on the first deal", "overview": "A new-entity opener for investors forming budget and intent now." },
+    { "group": "Waterfall", "tier": "tier1", "name": "Repeat-Buyer Velocity", "targeting": "Focused", "filter": "Bought 2+ in trailing 12 months", "strategy": "Annualize pace and commission spend", "value": "Save money at scale", "overview": "Turns recent buying velocity into concrete annual rebate math." },
+    { "group": "Variant", "tier": "tier1", "name": "Cash Buyer Fast-Close", "targeting": "Focused", "filter": "Most recent purchase all-cash", "strategy": "Detect no-lien deed", "value": "Save money + speed", "overview": "Flatters sophisticated buyers who move fast and do not need hand-holding." },
+    { "group": "Variant", "tier": "tier2", "name": "Portfolio Profile Lookalike", "targeting": "Focused", "filter": "Deed-verified 3+ in active metros", "strategy": "Match on portfolio size, geo, and type", "value": "Save money compounding", "overview": "Uses portfolio shape as proof before public customer logos exist." },
+    { "group": "Variant", "tier": "all", "name": "Out-of-State WA Owner", "targeting": "Focused", "filter": "Owner mailing state differs from property state", "strategy": "Reference owner vs. property geo mismatch", "value": "Save time remotely + save money", "overview": "Joy handles remote search legwork while the investor keeps the rebate." },
+    { "group": "Waterfall", "tier": "tier2", "name": "Dormant Whale Reactivation", "targeting": "Focused", "filter": "Owns 5+, 0 buys in 18+ months", "strategy": "Use portfolio depth and dormancy window", "value": "Make money + save money", "overview": "Reactivation angle for investors likely to re-enter with the right deal flow." },
+    { "group": "Trigger", "tier": "all", "name": "1031 Exchange Clock", "targeting": "Niche", "filter": "Recorded a WA sale in last 30 days", "strategy": "Detect sale and 45/180-day clock", "value": "Save time + hit deadline", "overview": "A triggered burst with urgency from the reinvestment deadline." },
+    { "group": "Niche", "tier": "tier3", "name": "Self-Represented Buyer", "targeting": "Niche", "filter": "Recent buy with no buyer's agent", "strategy": "Detect absent representation", "value": "Save money left on table", "overview": "Shows they kept independence but forfeited rebate economics." },
+    { "group": "Niche", "tier": "tier1", "name": "Flipper Buy-Sell Pattern", "targeting": "Niche", "filter": "Bought and sold same parcel in under 12 months", "strategy": "Deed-pair pattern detection", "value": "Improve margin", "overview": "Connects rebate dollars to spread and acquisition margin." },
+    { "group": "Niche", "tier": "tier1", "name": "Trustee-Sale Buyer", "targeting": "Niche", "filter": "Acquired via trustee sale", "strategy": "Match to auction records", "value": "Found margin", "overview": "Bridges auction-buyer margin hunting to MLS/off-market rebate margin." },
+    { "group": "Niche", "tier": "all", "name": "Hard-Money Borrower", "targeting": "Niche", "filter": "Private lender deed of trust or UCC", "strategy": "Detect private-lender lien", "value": "Offset carry cost", "overview": "Positions rebate as relief against points and cost of capital." },
+    { "group": "Niche", "tier": "all", "name": "STR Operator", "targeting": "Niche", "filter": "STR zip plus permit/listing match", "strategy": "Cross-reference permit and listing data", "value": "Expand + save money", "overview": "Frames rebate as furnishing budget for the next STR unit." },
+    { "group": "Niche", "tier": "all", "name": "Small-Multifamily Buyer", "targeting": "Niche", "filter": "Owns or bought 2-4 unit", "strategy": "Property-type classification", "value": "Higher absolute rebate", "overview": "Uses larger price points to make the rebate feel material." },
+    { "group": "Side", "tier": "all", "name": "Agent-Investor", "targeting": "Niche", "filter": "Licensed agent who also invests", "strategy": "Cross-ref license roster and deeds", "value": "Save money + time", "overview": "Investor-first angle for licensed buyers who know what commission is worth." },
+    { "group": "Expansion", "tier": "all", "name": "Relocating High-Earner", "targeting": "Broad", "filter": "New-to-WA tech-hub hires", "strategy": "LinkedIn job-change and relocation", "value": "Save money on first WA home", "overview": "An expansion play beyond investors for high-intent first-time WA buyers." },
+    { "group": "Community", "tier": "all", "name": "Portfolio Consolidator", "targeting": "Focused", "filter": "WA REIA / BiggerPockets active", "strategy": "Community-directory scrape", "value": "Make money + save money", "overview": "Warm community-aware tone for investors actively scaling doors." },
+    { "group": "Waterfall", "tier": "tier3", "name": "The Number Audit", "targeting": "Focused", "filter": "Any owner with 3+ WA purchases", "strategy": "Total historical commission paid", "value": "Loss-aversion savings", "overview": "Shows the historical commission number and what 70% could have returned." }
+  ],
+  "emails": [
+    {
+      "tier": "tier1",
+      "label": "Tier 1 — Rebate Ledger",
+      "magnet": "Personalized Rebate Ledger",
+      "messages": [
+        { "day": "Day 0", "subject": "{{most_recent_address}}", "body": "{{first_name}}, I pulled the public record on your {{most_recent_address}} buy. You've closed {{n_purchases}} in WA in the last year. At a 70% buy-side rebate, you'd have kept about ${{est_rebate}} on that one alone. Across all {{n_purchases}}, roughly ${{cumulative_rebate}}.\n\nThat's Joy, our AI agent that runs the search and drafts the offer, with a licensed team reviewing every one before it's submitted.\n\nWant the full ledger on your purchases? Reply LEDGER, no call needed." },
+        { "day": "Day 3", "subject": "threaded follow-up", "body": "{{first_name}}, quick math most investors like. Every ${{est_rebate}} back is capital you redeploy into the next down payment instead of handing to the buyer's side. Over a portfolio, that's a door or two.\n\nJoy handles the grind, so your time goes to underwriting, not tour scheduling.\n\nShould I send the ledger, or is someone else at {{company_name}} running acquisitions?" },
+        { "day": "Day 7", "subject": "question for {{first_name}}", "body": "{{first_name}}, on your next WA property, do you already have a way to claw back the buyer's-agent commission?\n\nMost investors don't, and it's the one closing cost that's fully negotiable. We rebate up to 70%. Averages about $15k a deal.\n\nNo call needed. Reply YES and I'll send your rebate ledger. Should I send it to you, or whoever handles acquisitions?" },
+        { "day": "Day 11", "subject": "built this for you", "body": "{{first_name}}, last note. I built the ledger anyway. Every WA purchase under {{company_name}}, the commission paid, and what a 70% rebate returns going forward.\n\nJoy did the math, no human wrote it.\n\nWant me to send it over?" }
+      ]
+    },
+    {
+      "tier": "tier2",
+      "label": "Tier 2 — Joy Found 3 Deals",
+      "magnet": "Joy Deal Alert setup",
+      "messages": [
+        { "day": "Day 0", "subject": "3 in {{metro}}", "body": "{{first_name}}, I had Joy run a buy-box that fits your {{metro}} portfolio. Three that came back:\n\n- {{deal_1}}\n- {{deal_2}}\n- {{deal_3}}\n\nJoy is our AI agent that sources these and drafts the offer. A licensed team reviews before anything's submitted. And on whichever you'd chase, you keep up to 70% of the buyer-side commission. About $15k.\n\nWant the full list for your box? Reply and I'll set the alert." },
+        { "day": "Day 3", "subject": "threaded follow-up", "body": "{{first_name}}, when you re-enter, the buyer-side commission is the easiest cost to cut.\n\nWe rebate up to 70% of it. Roughly $15k back per deal, straight into your next down payment instead of the listing side.\n\nJoy keeps scanning {{metro}} in the background either way. Want it watching your buy-box?" },
+        { "day": "Day 7", "subject": "off-market in {{metro}}", "body": "{{first_name}}, most deals worth buying in {{metro}} never sit on the MLS long.\n\nJoy watches both on- and off-market, matches them to your buy-box, and drafts the offer with a licensed team reviewing it. You also keep up to 70% of the buyer-side commission.\n\nWant me to turn on a free deal alert for your box? Reply YES." },
+        { "day": "Day 11", "subject": "free alert for {{metro}}", "body": "{{first_name}}, last one. I'll set up a free Joy deal alert for {{metro}} on your buy-box, no commitment.\n\nYou'll see what's out there and what a 70% rebate returns on each.\n\nWant it on?" }
+      ]
+    },
+    {
+      "tier": "catchall",
+      "label": "Catch-All — Rebate Calculator",
+      "magnet": "Self-Serve Rebate Calculator",
+      "messages": [
+        { "day": "Day 0", "subject": "your buyer's commission", "body": "{{first_name}}, you own {{properties_owned_count}} in {{county}}. Most WA investors don't realize the buyer's-agent commission is negotiable and can come back to them.\n\nWith Joy you keep up to 70% of it. About $15k on the average deal. AI runs the search, a licensed team reviews every offer before it's submitted.\n\nWant a 20-second calculator showing what you'd get back on your next purchase? Reply CALC." },
+        { "day": "Day 3", "subject": "threaded follow-up", "body": "{{first_name}}, simplest way to see it.\n\nNext WA purchase, roughly $15k of the commission comes back to you instead of staying on the listing side.\n\nSame house, same price, you just keep more. Joy does the legwork. Want the calculator?" },
+        { "day": "Day 7", "subject": "question for {{first_name}}", "body": "{{first_name}}, when WA investors buy their next property through us, they keep up to 70% of the buyer-side commission. Averages about $15k.\n\nJoy, our AI agent, handles the search and the offer. A licensed team signs off before anything goes out.\n\nWant the calculator for your numbers? Reply YES, no call needed." },
+        { "day": "Day 11", "subject": "two-minute calculator", "body": "{{first_name}}, last note from me. If now's not the time, here's a free calculator that shows what a 70% commission rebate returns on a WA purchase at your price point.\n\nTwo minutes, no call.\n\nWant me to send it?" }
+      ]
+    }
+  ],
+  "launchPlan": [
+    "Build the WA investor TAM from county deeds / PropStream, run the routing spec, and skip-trace contacts.",
+    "Warm domains and inboxes for roughly two weeks before first sends.",
+    "Launch Tier 1 first with the Rebate Ledger campaign and variants.",
+    "Phase in Tier 2 once Tier 1 shows at least 1 positive reply per 300 contacts.",
+    "Add Tier 3 and the catch-all, broadening copy and softening the CTA as intent weakens.",
+    "Layer agent recruiting and 1031 trigger campaigns only after the core waterfall is stable."
+  ],
+  "thresholds": [
+    { "rate": "1 positive reply / 150 contacts", "action": "Perfect. Scale the tier." },
+    { "rate": "1 / 300", "action": "Good. Let it run and phase the next tier." },
+    { "rate": "1 / 450-500", "action": "Borderline. Rotate the lead magnet or first-line angle." },
+    { "rate": "Worse than 1 / 500 or <1% after 1,500 sends", "action": "Cut the tier and rework trigger or offer." }
+  ],
+  "variables": [
+    "{{first_name}}",
+    "{{company_name}}",
+    "{{most_recent_address}}",
+    "{{n_purchases}}",
+    "{{est_rebate}}",
+    "{{cumulative_rebate}}",
+    "{{county}}",
+    "{{metro}}",
+    "{{properties_owned_count}}",
+    "{{last_purchase_year}}",
+    "{{deal_1}}",
+    "{{deal_2}}",
+    "{{deal_3}}"
+  ]
+}

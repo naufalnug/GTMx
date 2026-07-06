@@ -30,7 +30,7 @@ function paraLines(value) {
   return esc(value).replaceAll('\n\n', '</p><p>').replaceAll('\n', '<br>');
 }
 
-const SAMPLE_VALUES = {
+const DEFAULT_SAMPLE_VALUES = {
   '{{first_name}}': 'Dana',
   '{{company_name}}': 'NextGen AI Technologies',
   '{{open_role}}': 'customer support rep',
@@ -40,12 +40,16 @@ const SAMPLE_VALUES = {
   '{{named_agent}}': 'Maya',
 };
 
-function populateVariables(value) {
+function populateVariables(value, sampleValues) {
   let next = String(value ?? '');
-  for (const [token, sample] of Object.entries(SAMPLE_VALUES)) {
+  for (const [token, sample] of Object.entries(sampleValues)) {
     next = next.replaceAll(token, sample);
   }
   return next;
+}
+
+function escapeRegExp(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function slugify(value) {
@@ -158,7 +162,7 @@ function renderCampaigns(campaigns) {
     .join('');
 }
 
-function renderEmails(emails) {
+function renderEmails(emails, sampleValues) {
   return emails
     .map(
       (sequence, index) => `
@@ -197,10 +201,10 @@ function renderEmails(emails) {
                     </div>
                     <div class="email-subject">
                       <span>Subject</span>
-                      <h3 data-template="${attr(message.subject)}" data-preview="${attr(populateVariables(message.subject))}">${esc(message.subject)}</h3>
+                      <h3 data-template="${attr(message.subject)}" data-preview="${attr(populateVariables(message.subject, sampleValues))}">${esc(message.subject)}</h3>
                     </div>
                     <div class="email-body">
-                      <div data-template="${attr(message.body)}" data-preview="${attr(populateVariables(message.body))}">
+                      <div data-template="${attr(message.body)}" data-preview="${attr(populateVariables(message.body, sampleValues))}">
                         <p>${paraLines(message.body)}</p>
                       </div>
                     </div>
@@ -246,6 +250,8 @@ function renderHtml(data) {
   const sectionById = Object.fromEntries(data.sections.map((section) => [section.id, section]));
   const routeText = data.routingRules.map((rule, index) => `${index + 1}. IF ${rule.if} -> ${rule.then} (${rule.why})`).join('\n');
   const variablesText = data.variables.join(', ');
+  const sampleValues = { ...DEFAULT_SAMPLE_VALUES, ...(data.sampleValues ?? {}) };
+  const previewTerms = [...new Set(Object.values(sampleValues).filter(Boolean))];
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -732,7 +738,7 @@ function renderHtml(data) {
     .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
     .email-tabs {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
       gap: 12px;
       padding: 18px 18px 0;
     }
@@ -1054,7 +1060,7 @@ function renderHtml(data) {
           ${data.variables.map((item) => `<span>${esc(item)}</span>`).join('')}
           <button class="copy-btn" type="button" data-copy="${attr(variablesText)}">Copy variables</button>
         </div>
-        ${renderEmails(data.emails)}
+        ${renderEmails(data.emails, sampleValues)}
       </section>
 
       <section class="journey-section" id="launch" data-section-label="${attr(sectionById.launch.label)}">
@@ -1198,10 +1204,9 @@ function renderHtml(data) {
         .map((paragraph) => '<p>' + paragraph.replaceAll('\\n', '<br>') + '</p>')
         .join('');
       if (!highlight) return paragraphs;
-      return paragraphs.replace(
-        /\\b(Dana|NextGen AI Technologies|customer support rep|6|Intercom|healthcare operations|Maya)\\b/g,
-        '<mark>$1</mark>'
-      );
+      const terms = ${JSON.stringify(previewTerms.map(escapeRegExp))};
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\\\b(' + terms.join('|') + ')\\\\b', 'g'), '<mark>$1</mark>');
     }
 
     document.querySelectorAll('.preview-btn').forEach((button) => {
