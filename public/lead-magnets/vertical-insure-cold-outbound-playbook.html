@@ -1,0 +1,1858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vertical Insure - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-07-09</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Vertical Insure</p>
+          <h1>One waterfall. Twelve verticals. Built once.</h1>
+          <p class="hero-copy">A scrollable GTMx strategy artifact for routing checkout-owning vertical SaaS platforms by monetization maturity, not by industry silo.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Vertical is the personalization variable. Monetization maturity is the waterfall. The same cascade can run across sports, pets, events, property, construction, travel, and future categories without rebuilding the campaign.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book the strategy call</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>18k-25k</strong>
+          <span>checkout-owning SaaS TAM</span>
+        </div>
+        <div class="metric-card">
+          <strong>5</strong>
+          <span>priority-routed tiers</span>
+        </div>
+        <div class="metric-card">
+          <strong>1:150</strong>
+          <span>top-tier reply target</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Vertical Insure sells embedded, vertical-specific insurance into software platforms that already own a checkout. The platform earns revenue share on every policy while Vertical Insure carries carrier relationships, licensing, compliance, underwriting risk, and claims.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The buying signal is monetization maturity</p></div><div><span>02</span><p>One cascade routes the whole market</p></div><div><span>03</span><p>Each tier sells a smaller first step</p></div><div><span>04</span><p>Campaign angles ride on the same routing layer</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>Waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>Email Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">Signal</p>
+      <h2>The buying signal is monetization maturity</h2>
+      <p class="takeaway">A platform&#39;s vertical changes the noun in the email. Its checkout maturity decides the campaign.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>A competitor protection widget proves the category is already bought and visible at checkout.</p></div><div class="reason-card"><span>02</span><p>A live monetization or embedded-finance hire proves non-core revenue is funded right now.</p></div><div class="reason-card"><span>03</span><p>A strict refund clause proves acute customer pain using the prospect&#39;s own public words.</p></div><div class="reason-card"><span>04</span><p>A payment facilitator proves they already chose to own money movement and clip transactions.</p></div><div class="reason-card"><span>05</span><p>Every remaining checkout-owning platform still has protection demand happening off-platform.</p></div>
+            </div>
+            <div class="field-cloud"><span>owns_checkout</span><span>insurance_widget_detected</span><span>incumbent_widget</span><span>monetization_hire</span><span>jd_title</span><span>jd_quote</span><span>refund_policy_language</span><span>refund_policy_quote</span><span>payfac_detected</span><span>payfac_name</span><span>vertical</span><span>vi_product_match</span><span>headcount_tier</span><span>customer_count_claim</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>BuiltWith protection-widget lists</h3><p>Cover Genius, XCover, Refund Protect, Booking Protect, Protecht, Extend, Route, Seel, Redo, Rainwalk, and similar incumbent detections</p></div><div class="source-card"><span>02</span><h3>Capterra, G2, and GetApp directories</h3><p>Core market of transaction-owning vertical software platforms, tagged by category and checkout ownership</p></div><div class="source-card"><span>03</span><h3>Headless scrape of pricing, terms, refund policy, and help centers</h3><p>Refund language, checkout ownership, transaction fees, and customer-count claims</p></div><div class="source-card"><span>04</span><h3>BuiltWith payment facilitator lists</h3><p>Stripe Connect, Adyen for Platforms, Payrix, Finix, Stax, Tilled, and Infinicept detections</p></div><div class="source-card"><span>05</span><h3>LinkedIn Jobs and Google Jobs</h3><p>Live Head of Payments, Embedded Finance, Monetization, Fintech PM, and Partnerships requisitions</p></div><div class="source-card"><span>06</span><h3>Apollo and Crunchbase</h3><p>Catch-all market coverage, headcount tier, funding stage, and buyer mapping</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="Waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">Waterfall</p>
+      <h2>One cascade routes the whole market</h2>
+      <p class="takeaway">Every checkout-owning platform flows top to bottom: competitor widget, monetization hire, refund pain, payment rails, or catch-all.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF owns_checkout != true</span>
+          <strong>Excluded</strong>
+          <em>No checkout, no attach point</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF insurance_widget_detected != none</span>
+          <strong>Tier 1</strong>
+          <em>Competitor takedown</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF monetization_hire = true</span>
+          <strong>Tier 2</strong>
+          <em>Active intent</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF refund_policy_language = strict</span>
+          <strong>Tier 3</strong>
+          <em>Refund leakage</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF payfac_detected != none</span>
+          <strong>Tier 4</strong>
+          <em>Rails already built</em>
+        </button>
+        <button class="route-rule" type="button" data-route="5">
+          <span class="route-rule__num">06</span>
+          <span class="route-rule__if">IF remaining checkout-owning platform with headcount &gt;= 11</span>
+          <strong>Catch-all</strong>
+          <em>Owns the transaction</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF owns_checkout != true -&gt; Excluded (No checkout, no attach point)&#10;2. IF insurance_widget_detected != none -&gt; Tier 1 (Competitor takedown)&#10;3. IF monetization_hire = true -&gt; Tier 2 (Active intent)&#10;4. IF refund_policy_language = strict -&gt; Tier 3 (Refund leakage)&#10;5. IF payfac_detected != none -&gt; Tier 4 (Rails already built)&#10;6. IF remaining checkout-owning platform with headcount &gt;= 11 -&gt; Catch-all (Owns the transaction)">Copy routing spec</button>
+            <pre id="routeCode">1. IF owns_checkout != true -&gt; Excluded (No checkout, no attach point)
+2. IF insurance_widget_detected != none -&gt; Tier 1 (Competitor takedown)
+3. IF monetization_hire = true -&gt; Tier 2 (Active intent)
+4. IF refund_policy_language = strict -&gt; Tier 3 (Refund leakage)
+5. IF payfac_detected != none -&gt; Tier 4 (Rails already built)
+6. IF remaining checkout-owning platform with headcount &gt;= 11 -&gt; Catch-all (Owns the transaction)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">Tiers</p>
+      <h2>Each tier sells a smaller first step</h2>
+      <p class="takeaway">Cold email should not ask for an integration. It should sell a teardown, model, margin comparison, or mock checkout.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">4-7% TAM</span>
+          </div>
+          <h3>Tier 1: Competitor Widget Takedown</h3>
+          <p>A competitor protection widget is detected at checkout</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They bought a horizontal product built for parcels and bolted it onto a vertical workflow. One SKU, generic claims flow, thin revenue share, and no vertical-specific coverage.</dd></div>
+              <div><dt>Offer</dt><dd>Product-fit and revenue-share teardown against their current widget</dd></div>
+              <div><dt>Source</dt><dd>BuiltWith protection-widget exports</dd></div>
+              <div><dt>Reply density</dt><dd>Target 1 in 150</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-peri" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">5-8% TAM</span>
+          </div>
+          <h3>Tier 2: Active Intent</h3>
+          <p>Live requisition for Head of Payments, Embedded Finance, Monetization, Fintech PM, or Partnerships</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They are about to spend headcount and quarters standing up non-core revenue. Insurance sits behind payments because they assume it requires licensing.</dd></div>
+              <div><dt>Offer</dt><dd>Embedded-insurance revenue model for their vertical</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Jobs and Google Jobs scrape</dd></div>
+              <div><dt>Reply density</dt><dd>Target 1 in 150-250</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">15-20% TAM</span>
+          </div>
+          <h3>Tier 3: Refund Leakage</h3>
+          <p>A strict non-refundable clause appears in their terms or customers&#39; registration pages</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Their customers hard-code no refunds because money is already spent on facilities, coaches, venues, or deposits. The result is chargebacks, disputes, and lost registrations.</dd></div>
+              <div><dt>Offer</dt><dd>Refund Leakage Teardown using their clause and customer count</dd></div>
+              <div><dt>Source</dt><dd>Headless scrape of terms, refund-policy pages, and Powered By footprints</dd></div>
+              <div><dt>Reply density</dt><dd>Target 1 in 200-300</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">28-33% TAM</span>
+          </div>
+          <h3>Tier 4: Rails Already Built</h3>
+          <p>Stripe Connect, Adyen for Platforms, Payrix, Finix, Stax, Tilled, or similar detected</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They already chose to own money movement and clip a spread, but they are not clipping the higher-margin protection attach on the same checkout.</dd></div>
+              <div><dt>Offer</dt><dd>One-page comparison of processing spread against insurance commission</dd></div>
+              <div><dt>Source</dt><dd>BuiltWith payment facilitator detection plus pricing-page checks</dd></div>
+              <div><dt>Reply density</dt><dd>Target 1 in 300-400</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-orange" data-tier-card="catchall" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">35-45% TAM</span>
+          </div>
+          <h3>Catch-all: Owns the Transaction</h3>
+          <p>Any remaining checkout-owning platform with at least eleven employees</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They monetize on subscription alone while their customers buy protection off-platform from brokers or PDF workflows.</dd></div>
+              <div><dt>Offer</dt><dd>Ninety-second mock checkout video</dd></div>
+              <div><dt>Source</dt><dd>Capterra/G2/GetApp category lists, Apollo, and Crunchbase</dd></div>
+              <div><dt>Reply density</dt><dd>Target 1 in 350-500</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">Campaigns</p>
+      <h2>Campaign angles ride on the same routing layer</h2>
+      <p class="takeaway">The core seventeen campaigns become manageable once the routing layer decides which signal deserves the first touch.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Broad</span>
+          </div>
+          <h3>Creative Ideas</h3>
+          <p>The broadest motion sells curiosity instead of an integration.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Checkout-owning platforms without a stronger signal</dd></div>
+            <div><dt>AI strategy</dt><dd>Crawl their site and propose three Vertical Insure products that attach to the exact checkout moment</dd></div>
+            <div><dt>Value</dt><dd>Make insurance feel concrete</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Broad</span>
+          </div>
+          <h3>Mock Checkout Video</h3>
+          <p>A visual first step for softer leads.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Platforms with a visible signup, booking, registration, or purchase flow</dd></div>
+            <div><dt>AI strategy</dt><dd>Render the module inline inside their actual checkout and script a ninety-second walkthrough</dd></div>
+            <div><dt>Value</dt><dd>Kill conversion and engineering objections early</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Payments versus Insurance Margin</h3>
+          <p>The clean Tier 4 control because the targeting already carries relevance.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Named payment facilitator detected</dd></div>
+            <div><dt>AI strategy</dt><dd>Compare their payment spread against insurance commission on the same rails</dd></div>
+            <div><dt>Value</dt><dd>Higher-margin attach</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Refund Clause Teardown</h3>
+          <p>The highest-personalization core campaign.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Strict refund clause or customer clauses found</dd></div>
+            <div><dt>AI strategy</dt><dd>Quote the verbatim clause and combine it with customer count to price the leakage</dd></div>
+            <div><dt>Value</dt><dd>Turn hidden leakage into arithmetic</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Competitor Widget Takedown</h3>
+          <p>The hottest list because category demand is proven.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Incumbent embedded protection widget detected</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the incumbent and identify the vertical-specific coverage it lacks</dd></div>
+            <div><dt>Value</dt><dd>Replace generic protection with vertical-fit bundles</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Hiring for Monetization</h3>
+          <p>This is an always-on trickle, not a batch.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Live monetization, payments, fintech PM, or partnerships job</dd></div>
+            <div><dt>AI strategy</dt><dd>Quote the job description&#39;s own words and offer a revenue model before the hire starts</dd></div>
+            <div><dt>Value</dt><dd>Launch insurance before the roadmap hardens</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Focused</span>
+          </div>
+          <h3>Funding Trigger</h3>
+          <p>Run after the core waterfall is stable.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Series A or B raise</dd></div>
+            <div><dt>AI strategy</dt><dd>Reference round size, lead investor, and stated use of funds</dd></div>
+            <div><dt>Value</dt><dd>Board pressure to expand revenue per customer</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Niche</span>
+          </div>
+          <h3>Conference Exhibitor Sweep</h3>
+          <p>Reliable source, event-triggered routing.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>InsurTech, SaaS, sports tech, event tech, or veterinary exhibitor directories</dd></div>
+            <div><dt>AI strategy</dt><dd>Scrape exhibitor lists, not live social hashtags</dd></div>
+            <div><dt>Value</dt><dd>Timely vertical relevance</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="Email Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">Email Copy</p>
+      <h2>Copy starts with public evidence</h2>
+      <p class="takeaway">Every sequence opens with a scraped widget, job post, refund clause, payment rail, or checkout-specific idea.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company_name}}</span><span>{{incumbent_widget}}</span><span>{{missing_coverage}}</span><span>{{vi_product_1}}</span><span>{{vi_product_2}}</span><span>{{vi_product_3}}</span><span>{{vertical}}</span><span>{{vertical_noun}}</span><span>{{customer_noun}}</span><span>{{end_user_noun}}</span><span>{{refund_clause_quote}}</span><span>{{customers_checked}}</span><span>{{customers_with_clause}}</span><span>{{customer_count}}</span><span>{{negative_review_count}}</span><span>{{negative_review_quote}}</span><span>{{reviewer_first_name}}</span><span>{{review_month}}</span><span>{{jd_title}}</span><span>{{jd_quote}}</span><span>{{payfac_name}}</span><span>{{payments_headcount}}</span><span>{{checkout_moment}}</span><span>{{secondary_use_case}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company_name}}, {{incumbent_widget}}, {{missing_coverage}}, {{vi_product_1}}, {{vi_product_2}}, {{vi_product_3}}, {{vertical}}, {{vertical_noun}}, {{customer_noun}}, {{end_user_noun}}, {{refund_clause_quote}}, {{customers_checked}}, {{customers_with_clause}}, {{customer_count}}, {{negative_review_count}}, {{negative_review_quote}}, {{reviewer_first_name}}, {{review_month}}, {{jd_title}}, {{jd_quote}}, {{payfac_name}}, {{payments_headcount}}, {{checkout_moment}}, {{secondary_use_case}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Competitor Widget Takedown</strong>
+              <em>Product-fit and revenue-share teardown</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Competitor Widget Takedown steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="3" role="tab" aria-selected="false">
+                    <span>Step 4</span>
+                    <strong>Day 11</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{incumbent_widget}} at checkout&#10;&#10;{{first_name}}, saw {{company_name}} runs {{incumbent_widget}} at checkout.&#10;&#10;It sells one SKU, built for parcels, bolted onto {{vertical_noun}}.&#10;&#10;Would it be fair to assume nobody has offered your {{customer_noun}} {{missing_coverage}} alongside it?&#10;&#10;We build per vertical and bundle. WrestlingIQ ran Registration Cancellation and Gap Medical together. 11.5% of checkouts bought in month one.&#10;&#10;Reply Y and I&#39;ll send the product fit and rev share teardown for {{vertical}}. No call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{incumbent_widget}} at checkout" data-preview="Refund Protect at checkout">{{incumbent_widget}} at checkout</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, saw {{company_name}} runs {{incumbent_widget}} at checkout.&#10;&#10;It sells one SKU, built for parcels, bolted onto {{vertical_noun}}.&#10;&#10;Would it be fair to assume nobody has offered your {{customer_noun}} {{missing_coverage}} alongside it?&#10;&#10;We build per vertical and bundle. WrestlingIQ ran Registration Cancellation and Gap Medical together. 11.5% of checkouts bought in month one.&#10;&#10;Reply Y and I&#39;ll send the product fit and rev share teardown for {{vertical}}. No call." data-preview="Dana, saw LeagueFlow runs Refund Protect at checkout.&#10;&#10;It sells one SKU, built for parcels, bolted onto season registration.&#10;&#10;Would it be fair to assume nobody has offered your clubs Gap Medical alongside it?&#10;&#10;We build per vertical and bundle. WrestlingIQ ran Registration Cancellation and Gap Medical together. 11.5% of checkouts bought in month one.&#10;&#10;Reply Y and I&#39;ll send the product fit and rev share teardown for youth sports. No call.">
+                        <p>{{first_name}}, saw {{company_name}} runs {{incumbent_widget}} at checkout.</p><p>It sells one SKU, built for parcels, bolted onto {{vertical_noun}}.</p><p>Would it be fair to assume nobody has offered your {{customer_noun}} {{missing_coverage}} alongside it?</p><p>We build per vertical and bundle. WrestlingIQ ran Registration Cancellation and Gap Medical together. 11.5% of checkouts bought in month one.</p><p>Reply Y and I&#39;ll send the product fit and rev share teardown for {{vertical}}. No call.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: threaded follow-up&#10;&#10;{{first_name}}, the part most platforms miss with {{incumbent_widget}}.&#10;&#10;You carried the integration cost. They kept the margin.&#10;&#10;We rev share on every policy, and you never touch underwriting, licensing, compliance or claims. That sits with us.&#10;&#10;SportsEngine stacked embedded services to 34% higher ARPU.&#10;&#10;Two weeks of one developer to switch. Want the numbers for {{vertical}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="threaded follow-up" data-preview="threaded follow-up">threaded follow-up</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the part most platforms miss with {{incumbent_widget}}.&#10;&#10;You carried the integration cost. They kept the margin.&#10;&#10;We rev share on every policy, and you never touch underwriting, licensing, compliance or claims. That sits with us.&#10;&#10;SportsEngine stacked embedded services to 34% higher ARPU.&#10;&#10;Two weeks of one developer to switch. Want the numbers for {{vertical}}?" data-preview="Dana, the part most platforms miss with Refund Protect.&#10;&#10;You carried the integration cost. They kept the margin.&#10;&#10;We rev share on every policy, and you never touch underwriting, licensing, compliance or claims. That sits with us.&#10;&#10;SportsEngine stacked embedded services to 34% higher ARPU.&#10;&#10;Two weeks of one developer to switch. Want the numbers for youth sports?">
+                        <p>{{first_name}}, the part most platforms miss with {{incumbent_widget}}.</p><p>You carried the integration cost. They kept the margin.</p><p>We rev share on every policy, and you never touch underwriting, licensing, compliance or claims. That sits with us.</p><p>SportsEngine stacked embedded services to 34% higher ARPU.</p><p>Two weeks of one developer to switch. Want the numbers for {{vertical}}?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: cookie-cutter&#10;&#10;{{first_name}}, insurance built for parcels does not know what a {{vertical_noun}} is.&#10;&#10;It cannot price the risk, so it prices it generically. Your {{customer_noun}} feel that, and it shows up in the attach rate.&#10;&#10;We build a product per vertical. Registration Cancellation and Gap Medical are different policies because a cancelled season and a torn ACL are different problems.&#10;&#10;No need for a call. Reply yes and I&#39;ll send the {{vertical}} teardown. Should I send it to you, or whoever owns monetization?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="cookie-cutter" data-preview="cookie-cutter">cookie-cutter</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, insurance built for parcels does not know what a {{vertical_noun}} is.&#10;&#10;It cannot price the risk, so it prices it generically. Your {{customer_noun}} feel that, and it shows up in the attach rate.&#10;&#10;We build a product per vertical. Registration Cancellation and Gap Medical are different policies because a cancelled season and a torn ACL are different problems.&#10;&#10;No need for a call. Reply yes and I&#39;ll send the {{vertical}} teardown. Should I send it to you, or whoever owns monetization?" data-preview="Dana, insurance built for parcels does not know what a season registration is.&#10;&#10;It cannot price the risk, so it prices it generically. Your clubs feel that, and it shows up in the attach rate.&#10;&#10;We build a product per vertical. Registration Cancellation and Gap Medical are different policies because a cancelled season and a torn ACL are different problems.&#10;&#10;No need for a call. Reply yes and I&#39;ll send the youth sports teardown. Should I send it to you, or whoever owns monetization?">
+                        <p>{{first_name}}, insurance built for parcels does not know what a {{vertical_noun}} is.</p><p>It cannot price the risk, so it prices it generically. Your {{customer_noun}} feel that, and it shows up in the attach rate.</p><p>We build a product per vertical. Registration Cancellation and Gap Medical are different policies because a cancelled season and a torn ACL are different problems.</p><p>No need for a call. Reply yes and I&#39;ll send the {{vertical}} teardown. Should I send it to you, or whoever owns monetization?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="3">
+                    <div class="email-card__top">
+                      <span>Step 4 · Day 11</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: redirect&#10;&#10;{{first_name}}, if the protection widget at {{company_name}} is not yours to own, point me at whoever it belongs to and I&#39;ll go there instead.&#10;&#10;Either way, appreciate the time.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="redirect" data-preview="redirect">redirect</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, if the protection widget at {{company_name}} is not yours to own, point me at whoever it belongs to and I&#39;ll go there instead.&#10;&#10;Either way, appreciate the time." data-preview="Dana, if the protection widget at LeagueFlow is not yours to own, point me at whoever it belongs to and I&#39;ll go there instead.&#10;&#10;Either way, appreciate the time.">
+                        <p>{{first_name}}, if the protection widget at {{company_name}} is not yours to own, point me at whoever it belongs to and I&#39;ll go there instead.</p><p>Either way, appreciate the time.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Refund Leakage</strong>
+              <em>Refund Leakage Teardown</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Refund Leakage steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="3" role="tab" aria-selected="false">
+                    <span>Step 4</span>
+                    <strong>Day 11</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{customers_with_clause}} of your {{customer_noun}}&#10;&#10;{{first_name}}, I pulled {{customers_checked}} {{customer_noun}} running on {{company_name}}.&#10;&#10;{{customers_with_clause}} of them publish some version of &quot;no refunds once the season starts.&quot;&#10;&#10;Matt Sencenbaugh at WrestlingIQ put it plainly. If someone cancels at the last minute and the club has already paid, somebody eats it.&#10;&#10;Right now that is your {{customer_noun}}, or their {{end_user_noun}}, and it lands in your support queue either way.&#10;&#10;We embed Registration Cancellation at your checkout. Nobody eats it, and you rev share on every policy.&#10;&#10;Want the list of clauses I found?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{customers_with_clause}} of your {{customer_noun}}" data-preview="11 of your clubs">{{customers_with_clause}} of your {{customer_noun}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, I pulled {{customers_checked}} {{customer_noun}} running on {{company_name}}.&#10;&#10;{{customers_with_clause}} of them publish some version of &quot;no refunds once the season starts.&quot;&#10;&#10;Matt Sencenbaugh at WrestlingIQ put it plainly. If someone cancels at the last minute and the club has already paid, somebody eats it.&#10;&#10;Right now that is your {{customer_noun}}, or their {{end_user_noun}}, and it lands in your support queue either way.&#10;&#10;We embed Registration Cancellation at your checkout. Nobody eats it, and you rev share on every policy.&#10;&#10;Want the list of clauses I found?" data-preview="Dana, I pulled 14 clubs running on LeagueFlow.&#10;&#10;11 of them publish some version of &quot;no refunds once the season starts.&quot;&#10;&#10;Matt Sencenbaugh at WrestlingIQ put it plainly. If someone cancels at the last minute and the club has already paid, somebody eats it.&#10;&#10;Right now that is your clubs, or their parents, and it lands in your support queue either way.&#10;&#10;We embed Registration Cancellation at your checkout. Nobody eats it, and you rev share on every policy.&#10;&#10;Want the list of clauses I found?">
+                        <p>{{first_name}}, I pulled {{customers_checked}} {{customer_noun}} running on {{company_name}}.</p><p>{{customers_with_clause}} of them publish some version of &quot;no refunds once the season starts.&quot;</p><p>Matt Sencenbaugh at WrestlingIQ put it plainly. If someone cancels at the last minute and the club has already paid, somebody eats it.</p><p>Right now that is your {{customer_noun}}, or their {{end_user_noun}}, and it lands in your support queue either way.</p><p>We embed Registration Cancellation at your checkout. Nobody eats it, and you rev share on every policy.</p><p>Want the list of clauses I found?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: threaded follow-up&#10;&#10;{{first_name}}, the refund policy is the symptom. Here is the number underneath it.&#10;&#10;{{company_name}} serves {{customer_count}} {{customer_noun}}. At the attach rates our partners see, protection on those checkouts is a line of revenue you are not currently billing for, at a margin above what you make on payments.&#10;&#10;You do not underwrite it. You do not license it. You do not handle a single claim.&#10;&#10;Want me to run the math on {{company_name}} specifically?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="threaded follow-up" data-preview="threaded follow-up">threaded follow-up</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the refund policy is the symptom. Here is the number underneath it.&#10;&#10;{{company_name}} serves {{customer_count}} {{customer_noun}}. At the attach rates our partners see, protection on those checkouts is a line of revenue you are not currently billing for, at a margin above what you make on payments.&#10;&#10;You do not underwrite it. You do not license it. You do not handle a single claim.&#10;&#10;Want me to run the math on {{company_name}} specifically?" data-preview="Dana, the refund policy is the symptom. Here is the number underneath it.&#10;&#10;LeagueFlow serves 150+ clubs. At the attach rates our partners see, protection on those checkouts is a line of revenue you are not currently billing for, at a margin above what you make on payments.&#10;&#10;You do not underwrite it. You do not license it. You do not handle a single claim.&#10;&#10;Want me to run the math on LeagueFlow specifically?">
+                        <p>{{first_name}}, the refund policy is the symptom. Here is the number underneath it.</p><p>{{company_name}} serves {{customer_count}} {{customer_noun}}. At the attach rates our partners see, protection on those checkouts is a line of revenue you are not currently billing for, at a margin above what you make on payments.</p><p>You do not underwrite it. You do not license it. You do not handle a single claim.</p><p>Want me to run the math on {{company_name}} specifically?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: who eats it&#10;&#10;{{first_name}}, when a parent pulls their kid out of a season three weeks in, who eats the cost at {{company_name}}?&#10;&#10;The club already paid for the field, the refs and the coaches. So either the club refunds and loses money, or it does not refund and loses the parent.&#10;&#10;Both outcomes end up in your support queue.&#10;&#10;There is a third option, and it pays you. Reply yes and I&#39;ll send the {{vertical}} model. Should I send it to you, or whoever owns monetization?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="who eats it" data-preview="who eats it">who eats it</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, when a parent pulls their kid out of a season three weeks in, who eats the cost at {{company_name}}?&#10;&#10;The club already paid for the field, the refs and the coaches. So either the club refunds and loses money, or it does not refund and loses the parent.&#10;&#10;Both outcomes end up in your support queue.&#10;&#10;There is a third option, and it pays you. Reply yes and I&#39;ll send the {{vertical}} model. Should I send it to you, or whoever owns monetization?" data-preview="Dana, when a parent pulls their kid out of a season three weeks in, who eats the cost at LeagueFlow?&#10;&#10;The club already paid for the field, the refs and the coaches. So either the club refunds and loses money, or it does not refund and loses the parent.&#10;&#10;Both outcomes end up in your support queue.&#10;&#10;There is a third option, and it pays you. Reply yes and I&#39;ll send the youth sports model. Should I send it to you, or whoever owns monetization?">
+                        <p>{{first_name}}, when a parent pulls their kid out of a season three weeks in, who eats the cost at {{company_name}}?</p><p>The club already paid for the field, the refs and the coaches. So either the club refunds and loses money, or it does not refund and loses the parent.</p><p>Both outcomes end up in your support queue.</p><p>There is a third option, and it pays you. Reply yes and I&#39;ll send the {{vertical}} model. Should I send it to you, or whoever owns monetization?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="3">
+                    <div class="email-card__top">
+                      <span>Step 4 · Day 11</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: resource offer&#10;&#10;{{first_name}}, last one from me.&#10;&#10;Whether or not embedded protection is on the roadmap, I ran the refund leakage teardown for {{company_name}} anyway. Your clauses, your {{customer_count}} {{customer_noun}}, and what it adds up to annually.&#10;&#10;Would it be useful if I sent it over?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="resource offer" data-preview="resource offer">resource offer</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, last one from me.&#10;&#10;Whether or not embedded protection is on the roadmap, I ran the refund leakage teardown for {{company_name}} anyway. Your clauses, your {{customer_count}} {{customer_noun}}, and what it adds up to annually.&#10;&#10;Would it be useful if I sent it over?" data-preview="Dana, last one from me.&#10;&#10;Whether or not embedded protection is on the roadmap, I ran the refund leakage teardown for LeagueFlow anyway. Your clauses, your 150+ clubs, and what it adds up to annually.&#10;&#10;Would it be useful if I sent it over?">
+                        <p>{{first_name}}, last one from me.</p><p>Whether or not embedded protection is on the roadmap, I ran the refund leakage teardown for {{company_name}} anyway. Your clauses, your {{customer_count}} {{customer_noun}}, and what it adds up to annually.</p><p>Would it be useful if I sent it over?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Hiring for Monetization</strong>
+              <em>Vertical revenue model</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Hiring for Monetization steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="3" role="tab" aria-selected="false">
+                    <span>Step 4</span>
+                    <strong>Day 12</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{jd_title}}&#10;&#10;{{first_name}}, saw the {{jd_title}} req at {{company_name}}. The JD says &quot;{{jd_quote}}.&quot;&#10;&#10;Would it be fair to assume insurance sits third on that roadmap, behind payments and lending, because you assume it needs licensing?&#10;&#10;It does not. We hold the carriers, the licenses, the compliance and the claims desk. You rev share.&#10;&#10;WrestlingIQ shipped it in two weeks with one developer. 11.5% of checkouts bought protection in month one, 100% rollout at go live.&#10;&#10;You could have it live before {{jd_title}} starts. Want the {{vertical}} revenue model?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{jd_title}}" data-preview="Head of Embedded Finance">{{jd_title}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, saw the {{jd_title}} req at {{company_name}}. The JD says &quot;{{jd_quote}}.&quot;&#10;&#10;Would it be fair to assume insurance sits third on that roadmap, behind payments and lending, because you assume it needs licensing?&#10;&#10;It does not. We hold the carriers, the licenses, the compliance and the claims desk. You rev share.&#10;&#10;WrestlingIQ shipped it in two weeks with one developer. 11.5% of checkouts bought protection in month one, 100% rollout at go live.&#10;&#10;You could have it live before {{jd_title}} starts. Want the {{vertical}} revenue model?" data-preview="Dana, saw the Head of Embedded Finance req at LeagueFlow. The JD says &quot;Own new monetization products across payments and financial services.&quot;&#10;&#10;Would it be fair to assume insurance sits third on that roadmap, behind payments and lending, because you assume it needs licensing?&#10;&#10;It does not. We hold the carriers, the licenses, the compliance and the claims desk. You rev share.&#10;&#10;WrestlingIQ shipped it in two weeks with one developer. 11.5% of checkouts bought protection in month one, 100% rollout at go live.&#10;&#10;You could have it live before Head of Embedded Finance starts. Want the youth sports revenue model?">
+                        <p>{{first_name}}, saw the {{jd_title}} req at {{company_name}}. The JD says &quot;{{jd_quote}}.&quot;</p><p>Would it be fair to assume insurance sits third on that roadmap, behind payments and lending, because you assume it needs licensing?</p><p>It does not. We hold the carriers, the licenses, the compliance and the claims desk. You rev share.</p><p>WrestlingIQ shipped it in two weeks with one developer. 11.5% of checkouts bought protection in month one, 100% rollout at go live.</p><p>You could have it live before {{jd_title}} starts. Want the {{vertical}} revenue model?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: threaded follow-up&#10;&#10;{{first_name}}, on the {{jd_title}} search.&#10;&#10;The payments spread is the obvious first project. It is also the thinnest margin your new hire will find.&#10;&#10;Insurance rides the same rails and pays better. SportsEngine got to 34% higher ARPU stacking embedded services on top of what they already had.&#10;&#10;We built the insurance layer for LeagueApps, Stack Sports, TeamSnap and Demosphere.&#10;&#10;Want the model?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="threaded follow-up" data-preview="threaded follow-up">threaded follow-up</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, on the {{jd_title}} search.&#10;&#10;The payments spread is the obvious first project. It is also the thinnest margin your new hire will find.&#10;&#10;Insurance rides the same rails and pays better. SportsEngine got to 34% higher ARPU stacking embedded services on top of what they already had.&#10;&#10;We built the insurance layer for LeagueApps, Stack Sports, TeamSnap and Demosphere.&#10;&#10;Want the model?" data-preview="Dana, on the Head of Embedded Finance search.&#10;&#10;The payments spread is the obvious first project. It is also the thinnest margin your new hire will find.&#10;&#10;Insurance rides the same rails and pays better. SportsEngine got to 34% higher ARPU stacking embedded services on top of what they already had.&#10;&#10;We built the insurance layer for LeagueApps, Stack Sports, TeamSnap and Demosphere.&#10;&#10;Want the model?">
+                        <p>{{first_name}}, on the {{jd_title}} search.</p><p>The payments spread is the obvious first project. It is also the thinnest margin your new hire will find.</p><p>Insurance rides the same rails and pays better. SportsEngine got to 34% higher ARPU stacking embedded services on top of what they already had.</p><p>We built the insurance layer for LeagueApps, Stack Sports, TeamSnap and Demosphere.</p><p>Want the model?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: roadmap question&#10;&#10;{{first_name}}, when you scope monetization at {{company_name}}, where does insurance land?&#10;&#10;Most product leaders put it last, because the licensing looks like a nine month problem. That is the whole reason we exist. We carry the carriers, the licenses, the compliance and the claims. You carry the checkout.&#10;&#10;Our partners grew 270% last year. Nobody on that list has an insurance team.&#10;&#10;No call needed. Reply yes and I&#39;ll send the {{vertical}} revenue model. Should it go to you, or to {{jd_title}} once they start?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="roadmap question" data-preview="roadmap question">roadmap question</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, when you scope monetization at {{company_name}}, where does insurance land?&#10;&#10;Most product leaders put it last, because the licensing looks like a nine month problem. That is the whole reason we exist. We carry the carriers, the licenses, the compliance and the claims. You carry the checkout.&#10;&#10;Our partners grew 270% last year. Nobody on that list has an insurance team.&#10;&#10;No call needed. Reply yes and I&#39;ll send the {{vertical}} revenue model. Should it go to you, or to {{jd_title}} once they start?" data-preview="Dana, when you scope monetization at LeagueFlow, where does insurance land?&#10;&#10;Most product leaders put it last, because the licensing looks like a nine month problem. That is the whole reason we exist. We carry the carriers, the licenses, the compliance and the claims. You carry the checkout.&#10;&#10;Our partners grew 270% last year. Nobody on that list has an insurance team.&#10;&#10;No call needed. Reply yes and I&#39;ll send the youth sports revenue model. Should it go to you, or to Head of Embedded Finance once they start?">
+                        <p>{{first_name}}, when you scope monetization at {{company_name}}, where does insurance land?</p><p>Most product leaders put it last, because the licensing looks like a nine month problem. That is the whole reason we exist. We carry the carriers, the licenses, the compliance and the claims. You carry the checkout.</p><p>Our partners grew 270% last year. Nobody on that list has an insurance team.</p><p>No call needed. Reply yes and I&#39;ll send the {{vertical}} revenue model. Should it go to you, or to {{jd_title}} once they start?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="3">
+                    <div class="email-card__top">
+                      <span>Step 4 · Day 12</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: redirect&#10;&#10;{{first_name}}, if monetization is not yours, tell me who owns it at {{company_name}} and I&#39;ll take it there.&#10;&#10;Appreciate the time either way.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="redirect" data-preview="redirect">redirect</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, if monetization is not yours, tell me who owns it at {{company_name}} and I&#39;ll take it there.&#10;&#10;Appreciate the time either way." data-preview="Dana, if monetization is not yours, tell me who owns it at LeagueFlow and I&#39;ll take it there.&#10;&#10;Appreciate the time either way.">
+                        <p>{{first_name}}, if monetization is not yours, tell me who owns it at {{company_name}} and I&#39;ll take it there.</p><p>Appreciate the time either way.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 - Payments versus Insurance</strong>
+              <em>Processing spread versus insurance commission</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 - Payments versus Insurance steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="3" role="tab" aria-selected="false">
+                    <span>Step 4</span>
+                    <strong>Day 11</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{payfac_name}}&#10;&#10;{{first_name}}, {{company_name}} runs {{payfac_name}}, so you already clip the transaction.&#10;&#10;Insurance clips more, on the same rails. Zero underwriting risk. We hold the carriers, the licenses and the claims desk.&#10;&#10;WrestlingIQ shipped it in two weeks with one developer. 11.5% of checkouts bought in month one.&#10;&#10;Reply Y and I&#39;ll send the revenue model. No call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{payfac_name}}" data-preview="Stripe Connect">{{payfac_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, {{company_name}} runs {{payfac_name}}, so you already clip the transaction.&#10;&#10;Insurance clips more, on the same rails. Zero underwriting risk. We hold the carriers, the licenses and the claims desk.&#10;&#10;WrestlingIQ shipped it in two weeks with one developer. 11.5% of checkouts bought in month one.&#10;&#10;Reply Y and I&#39;ll send the revenue model. No call." data-preview="Dana, LeagueFlow runs Stripe Connect, so you already clip the transaction.&#10;&#10;Insurance clips more, on the same rails. Zero underwriting risk. We hold the carriers, the licenses and the claims desk.&#10;&#10;WrestlingIQ shipped it in two weeks with one developer. 11.5% of checkouts bought in month one.&#10;&#10;Reply Y and I&#39;ll send the revenue model. No call.">
+                        <p>{{first_name}}, {{company_name}} runs {{payfac_name}}, so you already clip the transaction.</p><p>Insurance clips more, on the same rails. Zero underwriting risk. We hold the carriers, the licenses and the claims desk.</p><p>WrestlingIQ shipped it in two weeks with one developer. 11.5% of checkouts bought in month one.</p><p>Reply Y and I&#39;ll send the revenue model. No call.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: threaded follow-up&#10;&#10;{{first_name}}, three things about {{company_name}} that made me send this.&#10;&#10;- You run {{payfac_name}}, so the rev share plumbing exists&#10;- Your {{customer_noun}} pre-spend before they get paid&#10;- Your pricing page monetizes seats, not transactions&#10;&#10;Embedded protection turns the third one around without touching the first two.&#10;&#10;Our revenue grew 150% last year doing exactly this. Worth a look?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="threaded follow-up" data-preview="threaded follow-up">threaded follow-up</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, three things about {{company_name}} that made me send this.&#10;&#10;- You run {{payfac_name}}, so the rev share plumbing exists&#10;- Your {{customer_noun}} pre-spend before they get paid&#10;- Your pricing page monetizes seats, not transactions&#10;&#10;Embedded protection turns the third one around without touching the first two.&#10;&#10;Our revenue grew 150% last year doing exactly this. Worth a look?" data-preview="Dana, three things about LeagueFlow that made me send this.&#10;&#10;- You run Stripe Connect, so the rev share plumbing exists&#10;- Your clubs pre-spend before they get paid&#10;- Your pricing page monetizes seats, not transactions&#10;&#10;Embedded protection turns the third one around without touching the first two.&#10;&#10;Our revenue grew 150% last year doing exactly this. Worth a look?">
+                        <p>{{first_name}}, three things about {{company_name}} that made me send this.</p><p>- You run {{payfac_name}}, so the rev share plumbing exists<br>- Your {{customer_noun}} pre-spend before they get paid<br>- Your pricing page monetizes seats, not transactions</p><p>Embedded protection turns the third one around without touching the first two.</p><p>Our revenue grew 150% last year doing exactly this. Worth a look?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: question for {{first_name}}&#10;&#10;{{first_name}}, what is the highest margin line on {{company_name}}&#39;s P&amp;L that is not subscription?&#10;&#10;For most platforms that own a checkout, the answer should be insurance and almost never is. Payments got built because it was obvious. Insurance did not, because everyone assumes it means becoming an insurance company.&#10;&#10;It does not. It means two weeks of one developer.&#10;&#10;No call. Reply yes and I&#39;ll send the model. You, or whoever owns monetization?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="question for {{first_name}}" data-preview="question for Dana">question for {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, what is the highest margin line on {{company_name}}&#39;s P&amp;L that is not subscription?&#10;&#10;For most platforms that own a checkout, the answer should be insurance and almost never is. Payments got built because it was obvious. Insurance did not, because everyone assumes it means becoming an insurance company.&#10;&#10;It does not. It means two weeks of one developer.&#10;&#10;No call. Reply yes and I&#39;ll send the model. You, or whoever owns monetization?" data-preview="Dana, what is the highest margin line on LeagueFlow&#39;s P&amp;L that is not subscription?&#10;&#10;For most platforms that own a checkout, the answer should be insurance and almost never is. Payments got built because it was obvious. Insurance did not, because everyone assumes it means becoming an insurance company.&#10;&#10;It does not. It means two weeks of one developer.&#10;&#10;No call. Reply yes and I&#39;ll send the model. You, or whoever owns monetization?">
+                        <p>{{first_name}}, what is the highest margin line on {{company_name}}&#39;s P&amp;L that is not subscription?</p><p>For most platforms that own a checkout, the answer should be insurance and almost never is. Payments got built because it was obvious. Insurance did not, because everyone assumes it means becoming an insurance company.</p><p>It does not. It means two weeks of one developer.</p><p>No call. Reply yes and I&#39;ll send the model. You, or whoever owns monetization?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="3">
+                    <div class="email-card__top">
+                      <span>Step 4 · Day 11</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: resource offer&#10;&#10;{{first_name}}, last note.&#10;&#10;If this is not the quarter for it, I&#39;ll send the margin one pager anyway. Processing spread against insurance commission, for a platform the size of {{company_name}}.&#10;&#10;Useful?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="resource offer" data-preview="resource offer">resource offer</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, last note.&#10;&#10;If this is not the quarter for it, I&#39;ll send the margin one pager anyway. Processing spread against insurance commission, for a platform the size of {{company_name}}.&#10;&#10;Useful?" data-preview="Dana, last note.&#10;&#10;If this is not the quarter for it, I&#39;ll send the margin one pager anyway. Processing spread against insurance commission, for a platform the size of LeagueFlow.&#10;&#10;Useful?">
+                        <p>{{first_name}}, last note.</p><p>If this is not the quarter for it, I&#39;ll send the margin one pager anyway. Processing spread against insurance commission, for a platform the size of {{company_name}}.</p><p>Useful?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Catch-all - Creative Ideas</strong>
+              <em>Mock checkout video</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Catch-all - Creative Ideas steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="3" role="tab" aria-selected="false">
+                    <span>Step 4</span>
+                    <strong>Day 12</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: three for {{company_name}}&#10;&#10;{{first_name}}, I was on {{company_name}}&#39;s site and had three ideas for your checkout.&#10;&#10;- {{vi_product_1}} at {{checkout_moment}}, protects the {{customer_noun}} who have already spent the money&#10;- {{vi_product_2}} alongside it, because the bundle is what drives the attach rate, not the individual product&#10;- {{vi_product_3}} for {{secondary_use_case}}&#10;&#10;Of course, I wrote this without knowing your roadmap or your conversion targets.&#10;&#10;WrestlingIQ ran the first two together. 11.5% of checkouts bought in month one, off two weeks of one developer&#39;s time.&#10;&#10;If it is interesting, happy to send what attach rates look like in {{vertical}}.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="three for {{company_name}}" data-preview="three for LeagueFlow">three for {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, I was on {{company_name}}&#39;s site and had three ideas for your checkout.&#10;&#10;- {{vi_product_1}} at {{checkout_moment}}, protects the {{customer_noun}} who have already spent the money&#10;- {{vi_product_2}} alongside it, because the bundle is what drives the attach rate, not the individual product&#10;- {{vi_product_3}} for {{secondary_use_case}}&#10;&#10;Of course, I wrote this without knowing your roadmap or your conversion targets.&#10;&#10;WrestlingIQ ran the first two together. 11.5% of checkouts bought in month one, off two weeks of one developer&#39;s time.&#10;&#10;If it is interesting, happy to send what attach rates look like in {{vertical}}." data-preview="Dana, I was on LeagueFlow&#39;s site and had three ideas for your checkout.&#10;&#10;- Registration Cancellation at season signup, protects the clubs who have already spent the money&#10;- Gap Medical alongside it, because the bundle is what drives the attach rate, not the individual product&#10;- Event Liability for tournament weekends&#10;&#10;Of course, I wrote this without knowing your roadmap or your conversion targets.&#10;&#10;WrestlingIQ ran the first two together. 11.5% of checkouts bought in month one, off two weeks of one developer&#39;s time.&#10;&#10;If it is interesting, happy to send what attach rates look like in youth sports.">
+                        <p>{{first_name}}, I was on {{company_name}}&#39;s site and had three ideas for your checkout.</p><p>- {{vi_product_1}} at {{checkout_moment}}, protects the {{customer_noun}} who have already spent the money<br>- {{vi_product_2}} alongside it, because the bundle is what drives the attach rate, not the individual product<br>- {{vi_product_3}} for {{secondary_use_case}}</p><p>Of course, I wrote this without knowing your roadmap or your conversion targets.</p><p>WrestlingIQ ran the first two together. 11.5% of checkouts bought in month one, off two weeks of one developer&#39;s time.</p><p>If it is interesting, happy to send what attach rates look like in {{vertical}}.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: threaded follow-up&#10;&#10;{{first_name}}, your {{customer_noun}} are already buying this.&#10;&#10;From a broker, off your platform, on a PDF, badly. None of it touches {{company_name}}.&#10;&#10;We move it into your checkout, white labelled. You rev share on every policy and carry zero underwriting risk.&#10;&#10;Partners grew 270% on our side last year. Is this on the roadmap at all?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="threaded follow-up" data-preview="threaded follow-up">threaded follow-up</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, your {{customer_noun}} are already buying this.&#10;&#10;From a broker, off your platform, on a PDF, badly. None of it touches {{company_name}}.&#10;&#10;We move it into your checkout, white labelled. You rev share on every policy and carry zero underwriting risk.&#10;&#10;Partners grew 270% on our side last year. Is this on the roadmap at all?" data-preview="Dana, your clubs are already buying this.&#10;&#10;From a broker, off your platform, on a PDF, badly. None of it touches LeagueFlow.&#10;&#10;We move it into your checkout, white labelled. You rev share on every policy and carry zero underwriting risk.&#10;&#10;Partners grew 270% on our side last year. Is this on the roadmap at all?">
+                        <p>{{first_name}}, your {{customer_noun}} are already buying this.</p><p>From a broker, off your platform, on a PDF, badly. None of it touches {{company_name}}.</p><p>We move it into your checkout, white labelled. You rev share on every policy and carry zero underwriting risk.</p><p>Partners grew 270% on our side last year. Is this on the roadmap at all?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{vertical}} attach rates&#10;&#10;{{first_name}}, quick story.&#10;&#10;WrestlingIQ runs software for 150 wrestling clubs. Small platform, one developer to spare. Their clubs kept eating last minute cancellations because the money was already spent on mats, refs and gym time.&#10;&#10;They embedded Registration Cancellation and Gap Medical at signup. Two weeks of work. 11.5% of checkouts bought protection in the first month, and the clubs stopped absorbing cancellations.&#10;&#10;{{company_name}} sells to {{customer_noun}} with the same problem. Worth a look?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{vertical}} attach rates" data-preview="youth sports attach rates">{{vertical}} attach rates</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, quick story.&#10;&#10;WrestlingIQ runs software for 150 wrestling clubs. Small platform, one developer to spare. Their clubs kept eating last minute cancellations because the money was already spent on mats, refs and gym time.&#10;&#10;They embedded Registration Cancellation and Gap Medical at signup. Two weeks of work. 11.5% of checkouts bought protection in the first month, and the clubs stopped absorbing cancellations.&#10;&#10;{{company_name}} sells to {{customer_noun}} with the same problem. Worth a look?" data-preview="Dana, quick story.&#10;&#10;WrestlingIQ runs software for 150 wrestling clubs. Small platform, one developer to spare. Their clubs kept eating last minute cancellations because the money was already spent on mats, refs and gym time.&#10;&#10;They embedded Registration Cancellation and Gap Medical at signup. Two weeks of work. 11.5% of checkouts bought protection in the first month, and the clubs stopped absorbing cancellations.&#10;&#10;LeagueFlow sells to clubs with the same problem. Worth a look?">
+                        <p>{{first_name}}, quick story.</p><p>WrestlingIQ runs software for 150 wrestling clubs. Small platform, one developer to spare. Their clubs kept eating last minute cancellations because the money was already spent on mats, refs and gym time.</p><p>They embedded Registration Cancellation and Gap Medical at signup. Two weeks of work. 11.5% of checkouts bought protection in the first month, and the clubs stopped absorbing cancellations.</p><p>{{company_name}} sells to {{customer_noun}} with the same problem. Worth a look?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="3">
+                    <div class="email-card__top">
+                      <span>Step 4 · Day 12</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: redirect&#10;&#10;{{first_name}}, if protection at checkout is not something you own, let me know who does at {{company_name}}.&#10;&#10;Otherwise I&#39;ll leave it here. Appreciate the time.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="redirect" data-preview="redirect">redirect</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, if protection at checkout is not something you own, let me know who does at {{company_name}}.&#10;&#10;Otherwise I&#39;ll leave it here. Appreciate the time." data-preview="Dana, if protection at checkout is not something you own, let me know who does at LeagueFlow.&#10;&#10;Otherwise I&#39;ll leave it here. Appreciate the time.">
+                        <p>{{first_name}}, if protection at checkout is not something you own, let me know who does at {{company_name}}.</p><p>Otherwise I&#39;ll leave it here. Appreciate the time.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">Launch</p>
+      <h2>Launch narrow, then widen the market</h2>
+      <p class="takeaway">Start with the BuiltWith competitor list, add the refund scrape, turn on job triggers, then scale into payment rails and catch-all.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Launch Tier 1 first from the BuiltWith competitor-widget export. Run one variant until it clears enough volume.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Launch Tier 3 in parallel once the refund-policy and Powered By scrape is ready. This is the highest-personalization tier.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Turn on Tier 2 as an always-on trickle from live job posts, sent within fourteen days of the role going live.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Layer Tier 4 after Tiers 1 and 3 reveal whether margin, conversion, or risk-transfer language lands better.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Open the catch-all in week seven with a mock-checkout video and the winning broad value proposition.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Apply registration-season timing across all tiers so outreach lands six to ten weeks before the buyer&#39;s enrollment window.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply / 150 contacts</strong>
+                <span>Perfect. Scale the tier hard.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 300</strong>
+                <span>Good. Let it run untouched.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 450-500</strong>
+                <span>Borderline. Test one copy or lead-magnet variant.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 / 500 or &lt;1% after 1,500 sends</strong>
+                <span>Cut the tier or rework it from the trigger up.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book the strategy call</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dana","LeagueFlow","customer support rep","6","Intercom","healthcare operations","Maya","Refund Protect","Gap Medical","Registration Cancellation","Event Liability","youth sports","season registration","clubs","parents","All registrations are final after the season begins\\.","14","11","150\\+","Paid \\$340, kid got injured, no refund\\.","March","Head of Embedded Finance","Own new monetization products across payments and financial services","Stripe Connect","7","season signup","tournament weekends"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
