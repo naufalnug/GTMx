@@ -1,0 +1,1814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zoo - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-07-11</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Zoo</p>
+          <h1>One signal. One waterfall. Every hardware team that runs CAD.</h1>
+          <p class="hero-copy">A scrollable GTMx strategy artifact for routing the entire hardware market by the CAD tool it hires for, not by vertical silo.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> CAD-buying intent is invisible. You cannot scrape &#39;uses SolidWorks&#39; off a homepage the way you read a Shopify tag. But a company&#39;s job postings broadcast it: hiring a design engineer proves they do CAD, have budget and are scaling, and the tool named in the post reveals the exact pain. The vertical changes the noun in the email. The CAD tool decides the campaign.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book the strategy call</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>60k-90k</strong>
+          <span>hardware account TAM</span>
+        </div>
+        <div class="metric-card">
+          <strong>4</strong>
+          <span>priority-routed tiers</span>
+        </div>
+        <div class="metric-card">
+          <strong>1:150</strong>
+          <span>top-tier reply target</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Zoo builds AI-native CAD. Describe design intent to the Zookeeper agent and get editable B-rep geometry back, across a hybrid point-and-click, code (KCL) and prompt workflow, on Mac, Windows or Linux. SOC 2 Type II and ITAR-ready, with a freemium, self-serve entry.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The buying signal is the CAD tool they hire for</p></div><div><span>02</span><p>One cascade routes the whole hardware market</p></div><div><span>03</span><p>Each tier sells a smaller first step</p></div><div><span>04</span><p>Twenty-one angles ride the same routing layer</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>Waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>Email Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">Signal</p>
+      <h2>The buying signal is the CAD tool they hire for</h2>
+      <p class="takeaway">A company&#39;s vertical changes the noun in the email. The CAD tool named in its job post decides the campaign it lands in.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>A job post that names a CAD tool proves the company does CAD work today, against a real headcount budget.</p></div><div class="reason-card"><span>02</span><p>The named tool reveals the exact pain: a legacy seat implies license cost, Windows lock-in and slow parametric iteration.</p></div><div class="reason-card"><span>03</span><p>Actively hiring a design engineer means the team is scaling, which is precisely when onboarding time and throughput hurt most.</p></div><div class="reason-card"><span>04</span><p>Desktop CAD leaves no web footprint, so the tool named in a job post is the only reliable at-scale intent signal. We invert on presence, never on absence.</p></div><div class="reason-card"><span>05</span><p>Every hardware company iterates eventually, so no account is truly cold. The catch-all sweeps the rest.</p></div>
+            </div>
+            <div class="field-cloud"><span>is_hiring_design_role</span><span>cad_tool_named</span><span>cad_tool_class</span><span>hardware_subvertical</span><span>funding_stage</span><span>headcount_tier</span><span>primary_contact_title</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>LinkedIn Sales Navigator (Jobs) + job scraper</h3><p>Hardware, robotics and consumer-electronics companies actively hiring, plus the CAD tool named in the JD, role seniority and Mac-friendliness (the core routing signal)</p></div><div class="source-card"><span>02</span><h3>Crunchbase / PitchBook</h3><p>Funded hardware startups and SMB, with funding stage and recency as a budget proxy plus headcount tier (priority within a tier)</p></div><div class="source-card"><span>03</span><h3>Apollo</h3><p>The contact layer, the people to email: Founder, VP Engineering, Head of Hardware, Mechanical Engineering Lead and Director of Product Design</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="Waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">Waterfall</p>
+      <h2>One cascade routes the whole hardware market</h2>
+      <p class="takeaway">Every hardware account flows top to bottom: legacy-seat payer, modern-cloud team, scaling and tool-agnostic, or catch-all. Most land in exactly one.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF hiring a design role AND JD names SolidWorks / Creo / NX / CATIA</span>
+          <strong>Tier 1</strong>
+          <em>Paying premium legacy seats while scaling</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF hiring a design role AND JD names Fusion 360 / Onshape</span>
+          <strong>Tier 2</strong>
+          <em>Modern tool, but still modeling by hand</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF hiring a mechanical / hardware / ID engineer, no CAD tool named</span>
+          <strong>Tier 3</strong>
+          <em>Design throughput is the bottleneck</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF any remaining hardware company in TAM</span>
+          <strong>Catch-all</strong>
+          <em>Next iteration, legacy CAD is the slow step</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF hiring a design role AND JD names SolidWorks / Creo / NX / CATIA -&gt; Tier 1 (Paying premium legacy seats while scaling)&#10;2. IF hiring a design role AND JD names Fusion 360 / Onshape -&gt; Tier 2 (Modern tool, but still modeling by hand)&#10;3. IF hiring a mechanical / hardware / ID engineer, no CAD tool named -&gt; Tier 3 (Design throughput is the bottleneck)&#10;4. IF any remaining hardware company in TAM -&gt; Catch-all (Next iteration, legacy CAD is the slow step)">Copy routing spec</button>
+            <pre id="routeCode">1. IF hiring a design role AND JD names SolidWorks / Creo / NX / CATIA -&gt; Tier 1 (Paying premium legacy seats while scaling)
+2. IF hiring a design role AND JD names Fusion 360 / Onshape -&gt; Tier 2 (Modern tool, but still modeling by hand)
+3. IF hiring a mechanical / hardware / ID engineer, no CAD tool named -&gt; Tier 3 (Design throughput is the bottleneck)
+4. IF any remaining hardware company in TAM -&gt; Catch-all (Next iteration, legacy CAD is the slow step)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">Tiers</p>
+      <h2>Each tier sells a smaller first step</h2>
+      <p class="takeaway">Cold email should not ask for a CAD migration. It should offer a timed teardown, free credits, a Loom, or a playground link the prospect actually wants.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">~10% TAM</span>
+          </div>
+          <h3>Tier 1: Legacy-Seat Payers</h3>
+          <p>Hiring a design role and the JD names SolidWorks, Creo, NX or CATIA</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Every new hire on a legacy tool is months of ramp plus another premium per-seat license, and half the team can&#39;t run it on their Macs. The parametric iteration loop is the real bottleneck to shipping the next revision.</dd></div>
+              <div><dt>Offer</dt><dd>Timed teardown: one of their own parts rebuilt in Zoo, head-to-head against the legacy tool</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Jobs (tool named in JD) + Crunchbase</dd></div>
+              <div><dt>Reply density</dt><dd>Highest. Target 1 in 150</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">~7% TAM</span>
+          </div>
+          <h3>Tier 2: Modern-Cloud Teams</h3>
+          <p>Hiring a design role and the JD names Fusion 360 or Onshape</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They already went modern, so speed matters to them, but they&#39;re still modeling every feature by hand. The click-by-click grind is the slow part, not the tool.</dd></div>
+              <div><dt>Offer</dt><dd>Free Zookeeper credits plus an AI-generated draft of one of their parts</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Jobs (tool named in JD)</dd></div>
+              <div><dt>Reply density</dt><dd>High. Target 1 in 150-250</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">~13% TAM</span>
+          </div>
+          <h3>Tier 3: Scaling, Tool-Agnostic</h3>
+          <p>Hiring a mechanical, hardware or industrial-design engineer with no CAD tool named</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The team is growing and the roadmap is moving fast, but design throughput, not headcount, is what&#39;s actually gating how quickly they ship. Every product cycle multiplies the modeling work.</dd></div>
+              <div><dt>Offer</dt><dd>A 2-minute Loom redesigning one of their public parts live in Zoo</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Jobs + Apollo</dd></div>
+              <div><dt>Reply density</dt><dd>Medium. Target 1 in 200-300</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="catchall" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">~70% TAM</span>
+          </div>
+          <h3>Catch-all: Every Remaining Hardware Company</h3>
+          <p>Any hardware company in the TAM not currently hiring a design role</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The CAD setup is &#39;fine&#39; right now, which is exactly when nobody is looking to change it. But the next time they iterate on hardware, legacy CAD is the slow step, and SolidWorks still won&#39;t run on their Macs.</dd></div>
+              <div><dt>Offer</dt><dd>Free Zookeeper trial plus the text-to-CAD playground link</dd></div>
+              <div><dt>Source</dt><dd>Crunchbase / Apollo base pull</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest, broadest copy. Target 1 in 350-500</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">Campaigns</p>
+      <h2>Twenty-one angles ride the same routing layer</h2>
+      <p class="takeaway">The routing layer decides which trigger earns the first touch, so the creative angles stay manageable instead of sprawling by vertical.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Legacy-CAD Switcher (migration)</h3>
+          <p>The hottest list. A named legacy seat in a live job post guarantees an open CAD budget and real switching pain.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Confirmed SolidWorks / Creo / NX shop from the JD</dd></div>
+            <div><dt>AI strategy</dt><dd>Rebuild one of their parts in Zoo and send a timed head-to-head teardown against the legacy tool</dd></div>
+            <div><dt>Value</dt><dd>Save money and time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Redraw Your Part (live proof)</h3>
+          <p>Pairs with the switcher. Nothing sells AI-native CAD like their own geometry rebuilt in seconds.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Company with a public 3D render or spec sheet</dd></div>
+            <div><dt>AI strategy</dt><dd>Generate an AI draft of their actual part and attach it, show don&#39;t tell</dd></div>
+            <div><dt>Value</dt><dd>Highest proof, lowest claim</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Job-Post Language Mirror</h3>
+          <p>A copy-test layer over Tiers 1-3. Mirroring their own words earns the open.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Any hiring hardware company (waterfall spine)</dd></div>
+            <div><dt>AI strategy</dt><dd>Quote the exact phrasing from their job post back to them to prove hyper-relevance</dd></div>
+            <div><dt>Value</dt><dd>Relevance</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Onshape / Fusion Next Step</h3>
+          <p>They already chose modern, so the AI-speed argument lands without a rip-and-replace.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Confirmed Fusion 360 or Onshape shop from the JD</dd></div>
+            <div><dt>AI strategy</dt><dd>Frame the next step as an agent that captures intent, not a faster mouse</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>KCL / Developer Champion</h3>
+          <p>Targets the engineer who codes, not the CAD-seat buyer. You script your builds, why not your CAD?</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Engineers who star or fork text-to-CAD or KCL-adjacent repos</dd></div>
+            <div><dt>AI strategy</dt><dd>Developer-led angle to the technical champion via GitHub activity</dd></div>
+            <div><dt>Value</dt><dd>Save time / build</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>API / Build-It-In</h3>
+          <p>A platform motion. Power their on-the-fly geometry with Zoo&#39;s API instead of a maintained CAD backend.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Hardware configurators, marketplaces or product-configurator startups</dd></div>
+            <div><dt>AI strategy</dt><dd>Detect a configurator or 3D on their site and pitch the text-to-CAD API</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Creative Ideas (3 parts, faster)</h3>
+          <p>The &#39;I had an idea for you&#39; opener, grounded in three specific parts they actually ship.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Base hardware list</dd></div>
+            <div><dt>AI strategy</dt><dd>Analyze their product page and name three real parts Zoo would redraft faster</dd></div>
+            <div><dt>Value</dt><dd>Save time to prototype</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Lookalike - Specialty Makers</h3>
+          <p>If it worked for a maker like them, it should work for them. Leads with a named, similar story.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Companies resembling Zoo&#39;s published maker and engineer stories</dd></div>
+            <div><dt>AI strategy</dt><dd>Match sub-vertical and team size to a relatable named Zoo story</dd></div>
+            <div><dt>Value</dt><dd>Ship faster</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>New Hire - Design Lead &lt;90 days</h3>
+          <p>A new design lead is the single most likely person to re-evaluate the CAD stack.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>New Mech Eng Lead, Head of Hardware or VP Eng started under 90 days ago</dd></div>
+            <div><dt>AI strategy</dt><dd>Pull start date and prior company; new leaders re-tool</dd></div>
+            <div><dt>Value</dt><dd>Quick win for a new leader</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Hiring Velocity</h3>
+          <p>Every new hire on legacy CAD is months of ramp. Zoo ramps engineers in days.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>3+ open mechanical or hardware roles at once</dd></div>
+            <div><dt>AI strategy</dt><dd>Count open reqs and quantify the onboarding load</dd></div>
+            <div><dt>Value</dt><dd>Save time onboarding</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Robotics Vertical</h3>
+          <p>Same waterfall spine, robotics language: rapid mechanism iteration, frequent design changes.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Robotics companies specifically</dd></div>
+            <div><dt>AI strategy</dt><dd>Reference their robot or mechanism class</dd></div>
+            <div><dt>Value</dt><dd>Ship faster</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Consumer-Electronics Vertical</h3>
+          <p>Enclosure and ID iteration speed, tight tolerances, frequent revs. Vertical-flavored copy.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>CE, wearables and device startups</dd></div>
+            <div><dt>AI strategy</dt><dd>Reference enclosure and industrial-design cadence</dd></div>
+            <div><dt>Value</dt><dd>Ship faster</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Contract / Specialty Manufacturers</h3>
+          <p>They model dozens of parts a week. Zookeeper drafts editable models from a spec in seconds.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Job shops and contract manufacturers</dd></div>
+            <div><dt>AI strategy</dt><dd>Reference part throughput and quote volume</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Team-Structure Name-Drop</h3>
+          <p>If each of three named engineers loses hours to manual modeling, that&#39;s a quantified weekly cost.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Identifiable 3-8 person design team on LinkedIn</dd></div>
+            <div><dt>AI strategy</dt><dd>Pull the actual names and titles of the design team</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Founder-to-Founder</h3>
+          <p>At this stage the founder is still in the CAD. No fluff: get the part out tonight.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Technical / engineer founder at a sub-30-person hardware startup</dd></div>
+            <div><dt>AI strategy</dt><dd>Detect the founder&#39;s engineering background and write in a peer voice</dd></div>
+            <div><dt>Value</dt><dd>Peer trust</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Cross-Platform / Mac Shop</h3>
+          <p>A sharp wedge: your team&#39;s on Macs, SolidWorks isn&#39;t, Zoo runs natively on all three OSes.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Startups visibly standardized on Mac</dd></div>
+            <div><dt>AI strategy</dt><dd>Detect Mac signals from the careers page or design-forward brand</dd></div>
+            <div><dt>Value</dt><dd>Remove friction</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Failed-Prototype / DFM</h3>
+          <p>Lead on manufacturing-aware feedback: catch DFM issues before a failed run costs weeks.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Hardware startups mid-iteration (recent launch, Kickstarter, revision news)</dd></div>
+            <div><dt>AI strategy</dt><dd>Scrape launch and respin signals, infer manufacturability pain</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Freshly Funded Hardware</h3>
+          <p>Congrats on the raise, you&#39;re about to grow the design team, here&#39;s how to not 10x the CAD spend.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Raised seed to Series B in the last 6 months</dd></div>
+            <div><dt>AI strategy</dt><dd>Pull the round and investor, tie to team scaling</dd></div>
+            <div><dt>Value</dt><dd>Save money / scale</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Compliance / ITAR-Curious SMB</h3>
+          <p>You handle export-controlled designs, Zoo is SOC 2 Type II and ITAR-ready, so your CAD isn&#39;t the weak link.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>SMB hardware touching defense or aerospace supply chains</dd></div>
+            <div><dt>AI strategy</dt><dd>Detect government or defense customers or ITAR mentions</dd></div>
+            <div><dt>Value</dt><dd>Mitigate risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Niche</span>
+          </div>
+          <h3>Funding-Triggered Touch</h3>
+          <p>Runs alongside the waterfall on an orthogonal signal, not inside it. Opt-in and time-boxed.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Hardware startup announces a raise</dd></div>
+            <div><dt>AI strategy</dt><dd>A 48-hour congrats-plus-scaling touch on the funding news</dd></div>
+            <div><dt>Value</dt><dd>Timely relevance</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Niche</span>
+          </div>
+          <h3>Trade-Show Exhibitor Follow-Up</h3>
+          <p>Saw you at the show demoing that hardware, timed to the event window. Side campaign.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>CES, Hannover Messe, RoboBusiness or RAPID+TCT exhibitor lists</dd></div>
+            <div><dt>AI strategy</dt><dd>Scrape the exhibitor list and reference their booth or product</dd></div>
+            <div><dt>Value</dt><dd>Warm relevance</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Niche</span>
+          </div>
+          <h3>Accelerator / Hardware Cohort</h3>
+          <p>As a hardware team in this batch, speed to prototype is everything, here are free credits. Side campaign.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>HAX, YC hardware, Bolt and other hardware accelerators</dd></div>
+            <div><dt>AI strategy</dt><dd>Cohort membership scrape</dd></div>
+            <div><dt>Value</dt><dd>Ship faster</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="Email Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">Email Copy</p>
+      <h2>Copy opens with the job post as evidence</h2>
+      <p class="takeaway">Every sequence starts with a scraped role, the CAD tool it names, and a pain that traces straight back to that trigger.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company_name}}</span><span>{{role_title}}</span><span>{{cad_tool}}</span><span>{{part_or_product}}</span><span>{{hardware_subvertical}}</span><span>{{case_study_company}}</span><span>{{case_study_metric}}</span><span>{{playground_link}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company_name}}, {{role_title}}, {{cad_tool}}, {{part_or_product}}, {{hardware_subvertical}}, {{case_study_company}}, {{case_study_metric}}, {{playground_link}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Legacy-Seat Payers</strong>
+              <em>Timed &#39;redraft your part&#39; teardown</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Legacy-Seat Payers steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the {{cad_tool}} seat&#10;&#10;{{first_name}}, saw {{company_name}} is hiring a {{role_title}} and the post asks for {{cad_tool}}.&#10;&#10;But every new hire on {{cad_tool}} is months of ramp plus another premium seat. Would it be fair to assume iteration speed is the real bottleneck?&#10;&#10;We built Zoo, AI-native CAD that captures design intent and returns editable B-rep models, on Mac, Windows, or Linux.&#10;&#10;{{case_study_company}} cut time-to-first-prototype by [{{case_study_metric}}].&#10;&#10;Reply &quot;Y&quot; and I&#39;ll rebuild one of your parts in Zoo, timed head-to-head against {{cad_tool}}. No call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the {{cad_tool}} seat" data-preview="the SolidWorks seat">the {{cad_tool}} seat</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, saw {{company_name}} is hiring a {{role_title}} and the post asks for {{cad_tool}}.&#10;&#10;But every new hire on {{cad_tool}} is months of ramp plus another premium seat. Would it be fair to assume iteration speed is the real bottleneck?&#10;&#10;We built Zoo, AI-native CAD that captures design intent and returns editable B-rep models, on Mac, Windows, or Linux.&#10;&#10;{{case_study_company}} cut time-to-first-prototype by [{{case_study_metric}}].&#10;&#10;Reply &quot;Y&quot; and I&#39;ll rebuild one of your parts in Zoo, timed head-to-head against {{cad_tool}}. No call." data-preview="Priya, saw Aria Robotics is hiring a Mechanical Engineer and the post asks for SolidWorks.&#10;&#10;But every new hire on SolidWorks is months of ramp plus another premium seat. Would it be fair to assume iteration speed is the real bottleneck?&#10;&#10;We built Zoo, AI-native CAD that captures design intent and returns editable B-rep models, on Mac, Windows, or Linux.&#10;&#10;A robotics team cut time-to-first-prototype by [40% faster to first prototype].&#10;&#10;Reply &quot;Y&quot; and I&#39;ll rebuild one of your parts in Zoo, timed head-to-head against SolidWorks. No call.">
+                        <p>{{first_name}}, saw {{company_name}} is hiring a {{role_title}} and the post asks for {{cad_tool}}.</p><p>But every new hire on {{cad_tool}} is months of ramp plus another premium seat. Would it be fair to assume iteration speed is the real bottleneck?</p><p>We built Zoo, AI-native CAD that captures design intent and returns editable B-rep models, on Mac, Windows, or Linux.</p><p>{{case_study_company}} cut time-to-first-prototype by [{{case_study_metric}}].</p><p>Reply &quot;Y&quot; and I&#39;ll rebuild one of your parts in Zoo, timed head-to-head against {{cad_tool}}. No call.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, most hardware leads I talk to aren&#39;t precious about the CAD tool. They&#39;re precious about the weeks lost to respins.&#10;&#10;Zoo flags manufacturability as you design, so fewer surprises hit the shop floor. And a new engineer is productive in days, not a quarter.&#10;&#10;Still happy to rebuild one of your parts, timed against {{cad_tool}}, so you can judge it on your own geometry. Want it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, most hardware leads I talk to aren&#39;t precious about the CAD tool. They&#39;re precious about the weeks lost to respins.&#10;&#10;Zoo flags manufacturability as you design, so fewer surprises hit the shop floor. And a new engineer is productive in days, not a quarter.&#10;&#10;Still happy to rebuild one of your parts, timed against {{cad_tool}}, so you can judge it on your own geometry. Want it?" data-preview="Priya, most hardware leads I talk to aren&#39;t precious about the CAD tool. They&#39;re precious about the weeks lost to respins.&#10;&#10;Zoo flags manufacturability as you design, so fewer surprises hit the shop floor. And a new engineer is productive in days, not a quarter.&#10;&#10;Still happy to rebuild one of your parts, timed against SolidWorks, so you can judge it on your own geometry. Want it?">
+                        <p>{{first_name}}, most hardware leads I talk to aren&#39;t precious about the CAD tool. They&#39;re precious about the weeks lost to respins.</p><p>Zoo flags manufacturability as you design, so fewer surprises hit the shop floor. And a new engineer is productive in days, not a quarter.</p><p>Still happy to rebuild one of your parts, timed against {{cad_tool}}, so you can judge it on your own geometry. Want it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{cad_tool}} switch&#10;&#10;{{first_name}}, quick one.&#10;&#10;A hardware team on {{cad_tool}} came to us tired of paying premium seats for software half their team couldn&#39;t run on their Macs.&#10;&#10;We rebuilt their flagship part in Zoo and they hit [{{case_study_metric}}] on the next revision.&#10;&#10;No call needed. Reply &quot;yes&quot; and I&#39;ll send the same teardown for {{company_name}}. Should this go to you or whoever owns the CAD stack?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{cad_tool}} switch" data-preview="SolidWorks switch">{{cad_tool}} switch</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, quick one.&#10;&#10;A hardware team on {{cad_tool}} came to us tired of paying premium seats for software half their team couldn&#39;t run on their Macs.&#10;&#10;We rebuilt their flagship part in Zoo and they hit [{{case_study_metric}}] on the next revision.&#10;&#10;No call needed. Reply &quot;yes&quot; and I&#39;ll send the same teardown for {{company_name}}. Should this go to you or whoever owns the CAD stack?" data-preview="Priya, quick one.&#10;&#10;A hardware team on SolidWorks came to us tired of paying premium seats for software half their team couldn&#39;t run on their Macs.&#10;&#10;We rebuilt their flagship part in Zoo and they hit [40% faster to first prototype] on the next revision.&#10;&#10;No call needed. Reply &quot;yes&quot; and I&#39;ll send the same teardown for Aria Robotics. Should this go to you or whoever owns the CAD stack?">
+                        <p>{{first_name}}, quick one.</p><p>A hardware team on {{cad_tool}} came to us tired of paying premium seats for software half their team couldn&#39;t run on their Macs.</p><p>We rebuilt their flagship part in Zoo and they hit [{{case_study_metric}}] on the next revision.</p><p>No call needed. Reply &quot;yes&quot; and I&#39;ll send the same teardown for {{company_name}}. Should this go to you or whoever owns the CAD stack?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Modern-Cloud Teams</strong>
+              <em>Free Zookeeper credits + AI draft of their part</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Modern-Cloud Teams steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: past Fusion&#10;&#10;{{first_name}}, saw {{company_name}}&#39;s {{role_title}} post mentions {{cad_tool}}. You already went modern, so this will land.&#10;&#10;But you&#39;re still modeling every feature by hand. Would it be fair to say the click-by-click part is the slow bit?&#10;&#10;Zookeeper is our AI agent. You describe the intent, it proposes constraints and returns an editable model with manufacturing-aware feedback.&#10;&#10;{{case_study_company}} cut modeling time by [{{case_study_metric}}].&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send free credits plus an AI-drafted version of one of your parts.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="past Fusion" data-preview="past Fusion">past Fusion</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, saw {{company_name}}&#39;s {{role_title}} post mentions {{cad_tool}}. You already went modern, so this will land.&#10;&#10;But you&#39;re still modeling every feature by hand. Would it be fair to say the click-by-click part is the slow bit?&#10;&#10;Zookeeper is our AI agent. You describe the intent, it proposes constraints and returns an editable model with manufacturing-aware feedback.&#10;&#10;{{case_study_company}} cut modeling time by [{{case_study_metric}}].&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send free credits plus an AI-drafted version of one of your parts." data-preview="Priya, saw Aria Robotics&#39;s Mechanical Engineer post mentions SolidWorks. You already went modern, so this will land.&#10;&#10;But you&#39;re still modeling every feature by hand. Would it be fair to say the click-by-click part is the slow bit?&#10;&#10;Zookeeper is our AI agent. You describe the intent, it proposes constraints and returns an editable model with manufacturing-aware feedback.&#10;&#10;A robotics team cut modeling time by [40% faster to first prototype].&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send free credits plus an AI-drafted version of one of your parts.">
+                        <p>{{first_name}}, saw {{company_name}}&#39;s {{role_title}} post mentions {{cad_tool}}. You already went modern, so this will land.</p><p>But you&#39;re still modeling every feature by hand. Would it be fair to say the click-by-click part is the slow bit?</p><p>Zookeeper is our AI agent. You describe the intent, it proposes constraints and returns an editable model with manufacturing-aware feedback.</p><p>{{case_study_company}} cut modeling time by [{{case_study_metric}}].</p><p>Reply &quot;Y&quot; and I&#39;ll send free credits plus an AI-drafted version of one of your parts.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, here&#39;s the thing about cloud CAD. It made collaboration easy but left the modeling manual.&#10;&#10;Zoo keeps the hybrid workflow you like, point-and-click, code with KCL, or prompt Zookeeper, and lets the AI do the repetitive geometry.&#10;&#10;Offer still stands. Free credits and an editable AI draft of one of your parts, no call. Want it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, here&#39;s the thing about cloud CAD. It made collaboration easy but left the modeling manual.&#10;&#10;Zoo keeps the hybrid workflow you like, point-and-click, code with KCL, or prompt Zookeeper, and lets the AI do the repetitive geometry.&#10;&#10;Offer still stands. Free credits and an editable AI draft of one of your parts, no call. Want it?" data-preview="Priya, here&#39;s the thing about cloud CAD. It made collaboration easy but left the modeling manual.&#10;&#10;Zoo keeps the hybrid workflow you like, point-and-click, code with KCL, or prompt Zookeeper, and lets the AI do the repetitive geometry.&#10;&#10;Offer still stands. Free credits and an editable AI draft of one of your parts, no call. Want it?">
+                        <p>{{first_name}}, here&#39;s the thing about cloud CAD. It made collaboration easy but left the modeling manual.</p><p>Zoo keeps the hybrid workflow you like, point-and-click, code with KCL, or prompt Zookeeper, and lets the AI do the repetitive geometry.</p><p>Offer still stands. Free credits and an editable AI draft of one of your parts, no call. Want it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: intent vs clicks&#10;&#10;{{first_name}}, quick story.&#10;&#10;A team already on {{cad_tool}} figured they were as fast as CAD gets. Then they let Zookeeper draft the boring 60% of the model from intent.&#10;&#10;Result: [{{case_study_metric}}], same headcount.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll load free credits on your account and draft one of your parts. Should I set it up for you or your lead engineer?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="intent vs clicks" data-preview="intent vs clicks">intent vs clicks</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, quick story.&#10;&#10;A team already on {{cad_tool}} figured they were as fast as CAD gets. Then they let Zookeeper draft the boring 60% of the model from intent.&#10;&#10;Result: [{{case_study_metric}}], same headcount.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll load free credits on your account and draft one of your parts. Should I set it up for you or your lead engineer?" data-preview="Priya, quick story.&#10;&#10;A team already on SolidWorks figured they were as fast as CAD gets. Then they let Zookeeper draft the boring 60% of the model from intent.&#10;&#10;Result: [40% faster to first prototype], same headcount.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll load free credits on your account and draft one of your parts. Should I set it up for you or your lead engineer?">
+                        <p>{{first_name}}, quick story.</p><p>A team already on {{cad_tool}} figured they were as fast as CAD gets. Then they let Zookeeper draft the boring 60% of the model from intent.</p><p>Result: [{{case_study_metric}}], same headcount.</p><p>Reply &quot;yes&quot; and I&#39;ll load free credits on your account and draft one of your parts. Should I set it up for you or your lead engineer?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Scaling, Tool-Agnostic</strong>
+              <em>2-minute Loom redesign</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Scaling, Tool-Agnostic steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company_name}} hardware&#10;&#10;{{first_name}}, saw {{company_name}} is hiring a {{role_title}}. Looks like the {{hardware_subvertical}} roadmap is moving fast.&#10;&#10;Would it be fair to assume design throughput, not headcount, is what&#39;s actually gating how quickly you ship?&#10;&#10;Zoo is AI-native CAD. Point-and-click, code, or prompt our Zookeeper agent, all in one environment, on any OS. A growing team ships more revisions without more seats.&#10;&#10;{{case_study_company}} hit [{{case_study_metric}}].&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send a 2-min Loom redesigning one of your parts live in Zoo.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company_name}} hardware" data-preview="Aria Robotics hardware">{{company_name}} hardware</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, saw {{company_name}} is hiring a {{role_title}}. Looks like the {{hardware_subvertical}} roadmap is moving fast.&#10;&#10;Would it be fair to assume design throughput, not headcount, is what&#39;s actually gating how quickly you ship?&#10;&#10;Zoo is AI-native CAD. Point-and-click, code, or prompt our Zookeeper agent, all in one environment, on any OS. A growing team ships more revisions without more seats.&#10;&#10;{{case_study_company}} hit [{{case_study_metric}}].&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send a 2-min Loom redesigning one of your parts live in Zoo." data-preview="Priya, saw Aria Robotics is hiring a Mechanical Engineer. Looks like the robotics roadmap is moving fast.&#10;&#10;Would it be fair to assume design throughput, not headcount, is what&#39;s actually gating how quickly you ship?&#10;&#10;Zoo is AI-native CAD. Point-and-click, code, or prompt our Zookeeper agent, all in one environment, on any OS. A growing team ships more revisions without more seats.&#10;&#10;A robotics team hit [40% faster to first prototype].&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send a 2-min Loom redesigning one of your parts live in Zoo.">
+                        <p>{{first_name}}, saw {{company_name}} is hiring a {{role_title}}. Looks like the {{hardware_subvertical}} roadmap is moving fast.</p><p>Would it be fair to assume design throughput, not headcount, is what&#39;s actually gating how quickly you ship?</p><p>Zoo is AI-native CAD. Point-and-click, code, or prompt our Zookeeper agent, all in one environment, on any OS. A growing team ships more revisions without more seats.</p><p>{{case_study_company}} hit [{{case_study_metric}}].</p><p>Reply &quot;Y&quot; and I&#39;ll send a 2-min Loom redesigning one of your parts live in Zoo.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the hard part of scaling hardware isn&#39;t the hiring. It&#39;s that every new product cycle multiplies the modeling work.&#10;&#10;Zoo takes the repetitive geometry off your engineers so throughput scales without the team growing.&#10;&#10;Offer&#39;s open. A 2-min Loom redesigning one of your parts, so you can see it on your own geometry. Want me to record it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the hard part of scaling hardware isn&#39;t the hiring. It&#39;s that every new product cycle multiplies the modeling work.&#10;&#10;Zoo takes the repetitive geometry off your engineers so throughput scales without the team growing.&#10;&#10;Offer&#39;s open. A 2-min Loom redesigning one of your parts, so you can see it on your own geometry. Want me to record it?" data-preview="Priya, the hard part of scaling hardware isn&#39;t the hiring. It&#39;s that every new product cycle multiplies the modeling work.&#10;&#10;Zoo takes the repetitive geometry off your engineers so throughput scales without the team growing.&#10;&#10;Offer&#39;s open. A 2-min Loom redesigning one of your parts, so you can see it on your own geometry. Want me to record it?">
+                        <p>{{first_name}}, the hard part of scaling hardware isn&#39;t the hiring. It&#39;s that every new product cycle multiplies the modeling work.</p><p>Zoo takes the repetitive geometry off your engineers so throughput scales without the team growing.</p><p>Offer&#39;s open. A 2-min Loom redesigning one of your parts, so you can see it on your own geometry. Want me to record it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: shipping faster&#10;&#10;{{first_name}}, quick one.&#10;&#10;A {{hardware_subvertical}} team our size-ish was stuck at one revision a week because CAD was the bottleneck. They moved the grunt modeling to Zookeeper and doubled it.&#10;&#10;[{{case_study_metric}}], same engineers.&#10;&#10;No call needed. Reply &quot;yes&quot; and I&#39;ll record the Loom for a {{company_name}} part. Send to you or your design lead?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="shipping faster" data-preview="shipping faster">shipping faster</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, quick one.&#10;&#10;A {{hardware_subvertical}} team our size-ish was stuck at one revision a week because CAD was the bottleneck. They moved the grunt modeling to Zookeeper and doubled it.&#10;&#10;[{{case_study_metric}}], same engineers.&#10;&#10;No call needed. Reply &quot;yes&quot; and I&#39;ll record the Loom for a {{company_name}} part. Send to you or your design lead?" data-preview="Priya, quick one.&#10;&#10;A robotics team our size-ish was stuck at one revision a week because CAD was the bottleneck. They moved the grunt modeling to Zookeeper and doubled it.&#10;&#10;[40% faster to first prototype], same engineers.&#10;&#10;No call needed. Reply &quot;yes&quot; and I&#39;ll record the Loom for a Aria Robotics part. Send to you or your design lead?">
+                        <p>{{first_name}}, quick one.</p><p>A {{hardware_subvertical}} team our size-ish was stuck at one revision a week because CAD was the bottleneck. They moved the grunt modeling to Zookeeper and doubled it.</p><p>[{{case_study_metric}}], same engineers.</p><p>No call needed. Reply &quot;yes&quot; and I&#39;ll record the Loom for a {{company_name}} part. Send to you or your design lead?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Catch-all - Every Remaining Hardware Company</strong>
+              <em>Free Zookeeper trial + text-to-CAD playground</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Catch-all - Every Remaining Hardware Company steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: for the next revision&#10;&#10;{{first_name}}, not sure where {{company_name}} is in the design cycle right now, so I&#39;ll keep this short.&#10;&#10;When you next iterate on hardware, legacy CAD is usually the slow step. Zoo fixes that. Describe the intent, get an editable model, on Mac, Windows, or Linux.&#10;&#10;It&#39;s free to try, no call, no demo.&#10;&#10;Want the link to our text-to-CAD playground? Reply &quot;link.&quot;">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="for the next revision" data-preview="for the next revision">for the next revision</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, not sure where {{company_name}} is in the design cycle right now, so I&#39;ll keep this short.&#10;&#10;When you next iterate on hardware, legacy CAD is usually the slow step. Zoo fixes that. Describe the intent, get an editable model, on Mac, Windows, or Linux.&#10;&#10;It&#39;s free to try, no call, no demo.&#10;&#10;Want the link to our text-to-CAD playground? Reply &quot;link.&quot;" data-preview="Priya, not sure where Aria Robotics is in the design cycle right now, so I&#39;ll keep this short.&#10;&#10;When you next iterate on hardware, legacy CAD is usually the slow step. Zoo fixes that. Describe the intent, get an editable model, on Mac, Windows, or Linux.&#10;&#10;It&#39;s free to try, no call, no demo.&#10;&#10;Want the link to our text-to-CAD playground? Reply &quot;link.&quot;">
+                        <p>{{first_name}}, not sure where {{company_name}} is in the design cycle right now, so I&#39;ll keep this short.</p><p>When you next iterate on hardware, legacy CAD is usually the slow step. Zoo fixes that. Describe the intent, get an editable model, on Mac, Windows, or Linux.</p><p>It&#39;s free to try, no call, no demo.</p><p>Want the link to our text-to-CAD playground? Reply &quot;link.&quot;</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, no pitch here.&#10;&#10;We put a text-to-CAD playground online. Type a part in plain English, watch Zoo build editable geometry. Takes 30 seconds and it&#39;s free.&#10;&#10;{{playground_link}}&#10;&#10;If it&#39;s useful, the full Zookeeper trial is one click from there.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no pitch here.&#10;&#10;We put a text-to-CAD playground online. Type a part in plain English, watch Zoo build editable geometry. Takes 30 seconds and it&#39;s free.&#10;&#10;{{playground_link}}&#10;&#10;If it&#39;s useful, the full Zookeeper trial is one click from there." data-preview="Priya, no pitch here.&#10;&#10;We put a text-to-CAD playground online. Type a part in plain English, watch Zoo build editable geometry. Takes 30 seconds and it&#39;s free.&#10;&#10;zoo.dev/text-to-cad&#10;&#10;If it&#39;s useful, the full Zookeeper trial is one click from there.">
+                        <p>{{first_name}}, no pitch here.</p><p>We put a text-to-CAD playground online. Type a part in plain English, watch Zoo build editable geometry. Takes 30 seconds and it&#39;s free.</p><p>{{playground_link}}</p><p>If it&#39;s useful, the full Zookeeper trial is one click from there.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: try it free&#10;&#10;{{first_name}}, last note from me.&#10;&#10;If CAD speed ever becomes the thing slowing {{company_name}} down, Zoo is worth 10 minutes. AI-native, real B-rep geometry, runs on any OS, SOC 2 and ITAR ready.&#10;&#10;Free trial, no call: {{playground_link}}&#10;&#10;Want me to send a short walkthrough video instead? Just reply &quot;video.&quot;">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="try it free" data-preview="try it free">try it free</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, last note from me.&#10;&#10;If CAD speed ever becomes the thing slowing {{company_name}} down, Zoo is worth 10 minutes. AI-native, real B-rep geometry, runs on any OS, SOC 2 and ITAR ready.&#10;&#10;Free trial, no call: {{playground_link}}&#10;&#10;Want me to send a short walkthrough video instead? Just reply &quot;video.&quot;" data-preview="Priya, last note from me.&#10;&#10;If CAD speed ever becomes the thing slowing Aria Robotics down, Zoo is worth 10 minutes. AI-native, real B-rep geometry, runs on any OS, SOC 2 and ITAR ready.&#10;&#10;Free trial, no call: zoo.dev/text-to-cad&#10;&#10;Want me to send a short walkthrough video instead? Just reply &quot;video.&quot;">
+                        <p>{{first_name}}, last note from me.</p><p>If CAD speed ever becomes the thing slowing {{company_name}} down, Zoo is worth 10 minutes. AI-native, real B-rep geometry, runs on any OS, SOC 2 and ITAR ready.</p><p>Free trial, no call: {{playground_link}}</p><p>Want me to send a short walkthrough video instead? Just reply &quot;video.&quot;</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">Launch</p>
+      <h2>Launch on intent, then widen the market</h2>
+      <p class="takeaway">Start with legacy-seat payers, reuse the machinery for modern-cloud teams, add the scaling tier, then open the catch-all.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Launch Tier 1 first from the LinkedIn Jobs pull of companies naming SolidWorks, Creo or NX. Highest intent, sharpest pain, fastest proof. Run one variant of the timed teardown until it clears enough volume.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Reuse the same machinery for Tier 2 once Tier 1&#39;s teardown and CTA are validated, swapping in the AI-speed angle for Fusion 360 and Onshape shops.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Turn on Tier 3 from the broader mechanical, hardware and ID engineer job pulls plus Apollo, with the 2-minute Loom offer.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Open the catch-all last, once the higher tiers have proven copy and warmed the sending infrastructure, on the self-serve free-trial CTA.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Do not light up a tier until its pull delivers 1,500+ contacts. Below that, results are not statistically readable.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply / 150 contacts</strong>
+                <span>Perfect. Scale the tier hard.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 300</strong>
+                <span>Good. Let it run untouched.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 450-500</strong>
+                <span>Borderline. Test one copy or lead-magnet variant.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 / 500 or &lt;1% after 1,500 sends</strong>
+                <span>Cut the tier or rework it from the trigger up.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book the strategy call</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Priya","Aria Robotics","customer support rep","6","Intercom","healthcare operations","Maya","Mechanical Engineer","SolidWorks","gripper assembly","robotics","A robotics team","40% faster to first prototype","zoo\\.dev/text-to-cad"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
