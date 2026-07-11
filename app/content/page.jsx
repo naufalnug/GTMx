@@ -1,9 +1,12 @@
 import Navbar from '../../components/home/Navbar'
 import Footer from '../../components/home/Footer'
-import { articles } from '../../data/articles'
+import { getPublishedArticles } from '../../lib/articles'
 import { pageMetadata } from '../../lib/seo'
 import '../home.css'
 import './page.css'
+
+// Revalidate the static shell periodically so newly published CMS posts appear.
+export const revalidate = 60
 
 export const metadata = pageMetadata({
   path: '/content',
@@ -11,7 +14,9 @@ export const metadata = pageMetadata({
   description: 'Practical insights on GTM engineering, AI-powered outbound, and pipeline building for B2B tech companies.',
 })
 
-export default function ContentPage() {
+export default async function ContentPage() {
+  const articles = await getPublishedArticles()
+
   return (
     <>
       <Navbar />
@@ -33,6 +38,12 @@ export default function ContentPage() {
                 href={`/content/${article.slug}`}
                 className={'blog-card blog-card--' + ((i % 3) + 1)}
               >
+                {article.coverImage && (
+                  <div className="blog-card__media">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={article.coverImage} alt="" loading="lazy" />
+                  </div>
+                )}
                 <div className="blog-card__tags">
                   {article.tags.map(tag => (
                     <span key={tag} className="blog-card__tag">{tag}</span>

@@ -1,11 +1,14 @@
-import { articles } from '../data/articles'
+import { getPublishedArticles } from '../lib/articles'
 import { services } from '../data/services'
 import { caseStudies } from '../data/caseStudies'
 import { absoluteUrl } from '../lib/seo'
 
-export const dynamic = 'force-static'
+// Rebuilt periodically so newly published CMS posts enter the sitemap.
+export const revalidate = 300
 
-export default function sitemap() {
+export default async function sitemap() {
+  const articles = await getPublishedArticles()
+
   const serviceEntries = services.map(service => ({
     url: absoluteUrl(`/services/${service.slug}`),
     lastModified: new Date(),
