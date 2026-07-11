@@ -1,18 +1,18 @@
 #!/usr/bin/env node
 /**
- * Pull every client's outreach data from EmailBison into Supabase.
+ * Pull every client's outreach data from EmailBison into Neon.
  *
  * Reads each client's instance URL + API key from the environment (see
  * lib/clients.js for the env var names), falling back to .env.local so it
- * "just works" locally. Also needs SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY.
+ * "just works" locally. Also needs DATABASE_URL (the Neon connection string).
  *
- *   node scripts/sync-emailbison-supabase.mjs            # all clients
- *   node scripts/sync-emailbison-supabase.mjs storylane  # one client
+ *   node scripts/sync-emailbison-neon.mjs            # all clients
+ *   node scripts/sync-emailbison-neon.mjs storylane  # one client
  *
  * One-off import from an explicit instance/key (archive a secondary EmailBison
  * instance's data under an existing client slug; row `source` is derived from
  * the host so it coexists with the client's normal data):
- *   node scripts/sync-emailbison-supabase.mjs storylane \
+ *   node scripts/sync-emailbison-neon.mjs storylane \
  *     --instance=https://dedi.emailbison.com --key='123|abc...'
  *
  * Idempotent — safe to re-run. A Vercel cron hits /api/cron/sync for the same

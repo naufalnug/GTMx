@@ -7,10 +7,25 @@
    imported here, so the service-role key never reaches the browser.
    ────────────────────────────────────────────── */
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import './admin.css'
 
-const EMPTY = { title: '', slug: '', status: 'draft', excerpt: '', tags: '', body: '' }
+const EMPTY = { title: '', slug: '', status: 'draft', excerpt: '', tags: '', body: '', coverImage: '' }
+
+// Uploads an image to Vercel Blob via the auth-gated route and returns its URL.
+// Uses raw fetch (not api()) so the browser sets the multipart boundary itself.
+async function uploadImage(file) {
+  const fd = new FormData()
+  fd.append('file', file)
+  const res = await fetch('/api/admin/upload', {
+    method: 'POST',
+    credentials: 'same-origin',
+    body: fd,
+  })
+  const body = await res.json().catch(() => ({}))
+  if (!res.ok) throw new Error(body.error || `Upload failed (${res.status})`)
+  return body.url
+}
 
 function slugify(s) {
   return s
@@ -181,6 +196,11 @@ function PostForm({ id, onDone }) {
   const [err, setErr] = useState('')
   const [busy, setBusy] = useState(false)
   const [loaded, setLoaded] = useState(!id)
+  const [coverBusy, setCoverBusy] = useState(false)
+  const [bodyImgBusy, setBodyImgBusy] = useState(false)
+  const bodyRef = useRef(null)
+  const coverInputRef = useRef(null)
+  const bodyInputRef = useRef(null)
 
   useEffect(() => {
     if (!id) return
@@ -194,11 +214,51 @@ function PostForm({ id, onDone }) {
           excerpt: p.excerpt || '',
           tags: (p.tags || []).join(', '),
           body: p.body || '',
+          coverImage: p.cover_image || '',
         })
         setLoaded(true)
       })
       .catch((e) => setErr(e.message))
   }, [id])
+
+  // Uploads the chosen cover image and stores its URL on the form.
+  const onCoverPick = async (e) => {
+    const file = e.target.files?.[0]
+    e.target.value = '' // allow re-picking the same file
+    if (!file) return
+    setCoverBusy(true)
+    setErr('')
+    try {
+      const url = await uploadImage(file)
+      setF((s) => ({ ...s, coverImage: url }))
+    } catch (e2) {
+      setErr(e2.message)
+    } finally {
+      setCoverBusy(false)
+    }
+  }
+
+  // Uploads an image and inserts ![alt](url) markdown at the body cursor.
+  const onBodyImagePick = async (e) => {
+    const file = e.target.files?.[0]
+    e.target.value = ''
+    if (!file) return
+    setBodyImgBusy(true)
+    setErr('')
+    try {
+      const url = await uploadImage(file)
+      const alt = (file.name || 'image').replace(/\.[^.]+$/, '')
+      const snippet = `\n\n![${alt}](${url})\n\n`
+      const el = bodyRef.current
+      const at = el ? el.selectionStart : f.body.length
+      const next = f.body.slice(0, at) + snippet + f.body.slice(at)
+      setF((s) => ({ ...s, body: next }))
+    } catch (e2) {
+      setErr(e2.message)
+    } finally {
+      setBodyImgBusy(false)
+    }
+  }
 
   const set = (k) => (e) => {
     const v = e?.target ? e.target.value : e
@@ -216,6 +276,7 @@ function PostForm({ id, onDone }) {
       ...f,
       status: publish ? 'published' : f.status,
       tags: f.tags.split(',').map((t) => t.trim()).filter(Boolean),
+      coverImage: f.coverImage,
     }
     try {
       if (id) await api(`/api/admin/articles/${id}`, { method: 'PUT', body: JSON.stringify(payload) })
@@ -240,7 +301,25 @@ function PostForm({ id, onDone }) {
           value={f.title}
           onChange={set('title')}
         />
+        <div className="cms-body-toolbar">
+          <button
+            type="button"
+            className="cms-btn cms-sm"
+            disabled={bodyImgBusy}
+            onClick={() => bodyInputRef.current?.click()}
+          >
+            {bodyImgBusy ? 'Uploading…' : '🖼 Insert image'}
+          </button>
+          <input
+            ref={bodyInputRef}
+            type="file"
+            accept="image/*"
+            hidden
+            onChange={onBodyImagePick}
+          />
+        </div>
         <textarea
+          ref={bodyRef}
           className="cms-body-input"
           placeholder={
             'Write your post here.\n\nSeparate paragraphs with a blank line.\n\n## Use two hashes for a section heading\n\n- **Bold lead-in** followed by the point for list items'
@@ -250,7 +329,7 @@ function PostForm({ id, onDone }) {
         />
         <p className="cms-muted cms-sm cms-fmt-hint">
           Formatting: blank line = new paragraph · <code>## Heading</code> · bullet lines start with
-          <code> - </code> · <code>**bold**</code>.
+          <code> - </code> · <code>**bold**</code> · image <code>![alt](url)</code>.
         </p>
       </div>
 
@@ -269,6 +348,50 @@ function PostForm({ id, onDone }) {
               {f.status === 'published' ? 'Update (live)' : 'Publish'}
             </button>
           </div>
+        </div>
+
+        <div className="cms-card">
+          <h3>Cover image</h3>
+          {f.coverImage ? (
+            <div className="cms-cover">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={f.coverImage} alt="Cover preview" />
+              <div className="cms-cover-actions">
+                <button
+                  type="button"
+                  className="cms-btn cms-sm"
+                  disabled={coverBusy}
+                  onClick={() => coverInputRef.current?.click()}
+                >
+                  Replace
+                </button>
+                <button
+                  type="button"
+                  className="cms-btn cms-sm cms-btn-danger"
+                  onClick={() => setF((s) => ({ ...s, coverImage: '' }))}
+                >
+                  Remove
+                </button>
+              </div>
+            </div>
+          ) : (
+            <button
+              type="button"
+              className="cms-btn cms-sm"
+              disabled={coverBusy}
+              onClick={() => coverInputRef.current?.click()}
+            >
+              {coverBusy ? 'Uploading…' : 'Upload cover image'}
+            </button>
+          )}
+          <input
+            ref={coverInputRef}
+            type="file"
+            accept="image/*"
+            hidden
+            onChange={onCoverPick}
+          />
+          <div className="cms-muted cms-sm">Shown on the blog card and at the top of the post.</div>
         </div>
 
         <div className="cms-card">

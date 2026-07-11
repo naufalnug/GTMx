@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 /**
- * Seed the Supabase `articles` table with the bundled starter posts
+ * Seed the Neon `articles` table with the bundled starter posts
  * (data/articles.js). Idempotent — upserts on `slug`, so re-running updates
  * existing rows instead of duplicating them.
  *
  * Prereqs:
- *   1. Run scripts/blog-schema.sql in the Supabase SQL editor (creates the table).
- *   2. SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY in the environment or .env.local.
+ *   1. Run scripts/neon-schema.sql against your Neon database (creates the table).
+ *   2. DATABASE_URL in the environment or .env.local.
  *
  *   node scripts/seed-articles.mjs
  */
@@ -14,7 +14,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { createClient } from '@supabase/supabase-js'
+import { neon } from '@neondatabase/serverless'
 import { articles } from '../data/articles.js'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
@@ -32,35 +32,36 @@ function loadEnv() {
 
 loadEnv()
 
-const url = process.env.SUPABASE_URL
-const key = process.env.SUPABASE_SERVICE_ROLE_KEY
-if (!url || !key) {
-  console.error('✗ Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY (set them or add to .env.local).')
+const url = process.env.DATABASE_URL || process.env.POSTGRES_URL
+if (!url) {
+  console.error('✗ Missing DATABASE_URL (set it or add to .env.local).')
   process.exit(1)
 }
 
-const supabase = createClient(url, key, {
-  auth: { persistSession: false, autoRefreshToken: false },
-})
+const sql = neon(url)
 
-const rows = articles.map((a) => ({
-  slug: a.slug,
-  title: a.title,
-  excerpt: a.excerpt || '',
-  body: a.body || '',
-  tags: a.tags || [],
-  status: 'published',
-  published_at: new Date(a.date).toISOString(),
-}))
-
-const { error } = await supabase.from('articles').upsert(rows, { onConflict: 'slug' })
-if (error) {
-  console.error('✗ Seed failed:', error.message)
-  if (error.code === '42P01') {
-    console.error('  The `articles` table does not exist yet — run scripts/blog-schema.sql first.')
+try {
+  for (const a of articles) {
+    await sql.query(
+      `insert into articles (slug, title, excerpt, body, tags, status, published_at)
+       values ($1, $2, $3, $4, $5, 'published', $6)
+       on conflict (slug) do update set
+         title = excluded.title,
+         excerpt = excluded.excerpt,
+         body = excluded.body,
+         tags = excluded.tags,
+         status = excluded.status,
+         published_at = excluded.published_at,
+         updated_at = now()`,
+      [a.slug, a.title, a.excerpt || '', a.body || '', a.tags || [], new Date(a.date).toISOString()]
+    )
+  }
+  console.log(`✓ Seeded ${articles.length} article(s) into Neon.`)
+  process.exit(0)
+} catch (err) {
+  console.error('✗ Seed failed:', err.message)
+  if (err.code === '42P01') {
+    console.error('  The `articles` table does not exist yet — run scripts/neon-schema.sql first.')
   }
   process.exit(1)
 }
-
-console.log(`✓ Seeded ${rows.length} article(s) into Supabase.`)
-process.exit(0)

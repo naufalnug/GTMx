@@ -43,6 +43,17 @@ export default async function ArticlePage({ params }) {
 
   const paragraphs = article.body.split('\n\n')
 
+  // Inline formatting for a text run: image markdown, then bold. URLs are
+  // restricted to http(s) so a stray "javascript:" can't slip into the src.
+  const inlineHtml = (s) =>
+    s
+      .replace(
+        /!\[([^\]]*)\]\((https?:\/\/[^\s)]+)\)/g,
+        (_, alt, url) =>
+          `<img class="article-page__img" src="${url}" alt="${alt.replace(/"/g, '&quot;')}" loading="lazy" />`
+      )
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+
   return (
     <>
       <Navbar />
@@ -66,10 +77,25 @@ export default async function ArticlePage({ params }) {
               </time>
             </div>
 
+            {article.coverImage && (
+              <div className="article-page__cover">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={article.coverImage} alt={article.title} />
+              </div>
+            )}
+
             <div className="article-page__body">
               {paragraphs.map((p, i) => {
                 if (p.startsWith('## ')) {
                   return <h2 key={i} className="article-page__h2">{p.replace('## ', '')}</h2>
+                }
+                // A paragraph that is only an image → block-level figure.
+                if (/^!\[[^\]]*\]\(https?:\/\/[^\s)]+\)$/.test(p.trim())) {
+                  return (
+                    <figure key={i} className="article-page__figure"
+                      dangerouslySetInnerHTML={{ __html: inlineHtml(p.trim()) }}
+                    />
+                  )
                 }
                 if (p.startsWith('- **')) {
                   const items = p.split('\n')
@@ -77,7 +103,7 @@ export default async function ArticlePage({ params }) {
                     <ul key={i} className="article-page__list">
                       {items.map((item, j) => (
                         <li key={j} className="article-page__list-item"
-                          dangerouslySetInnerHTML={{ __html: item.replace(/^- /, '').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }}
+                          dangerouslySetInnerHTML={{ __html: inlineHtml(item.replace(/^- /, '')) }}
                         />
                       ))}
                     </ul>
@@ -85,7 +111,7 @@ export default async function ArticlePage({ params }) {
                 }
                 return (
                   <p key={i} className="article-page__paragraph"
-                    dangerouslySetInnerHTML={{ __html: p.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }}
+                    dangerouslySetInnerHTML={{ __html: inlineHtml(p) }}
                   />
                 )
               })}

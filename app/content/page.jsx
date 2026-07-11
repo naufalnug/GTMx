@@ -38,6 +38,12 @@ export default async function ContentPage() {
                 href={`/content/${article.slug}`}
                 className={'blog-card blog-card--' + ((i % 3) + 1)}
               >
+                {article.coverImage && (
+                  <div className="blog-card__media">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={article.coverImage} alt="" loading="lazy" />
+                  </div>
+                )}
                 <div className="blog-card__tags">
                   {article.tags.map(tag => (
                     <span key={tag} className="blog-card__tag">{tag}</span>
