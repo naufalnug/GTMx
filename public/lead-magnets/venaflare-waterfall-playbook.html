@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Venaflare - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-07-11</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Venaflare</p>
+          <h1>Your Venaflare hiring-signal <mark>journey</mark>.</h1>
+          <p class="hero-copy">A scrollable GTMx strategy artifact for routing the entire market into the right AI-automation offer, using one signal: what a company is hiring for.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> For a horizontal automation offer, the cleanest buying signal is what a company is hiring for right now. An open role is real money being spent to solve a specific pain with a human, the exact pain Venaflare automates. The role type routes the lead; the role cost frames the value prop.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book the strategy call</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>200k+</strong>
+          <span>accounts in the routed market</span>
+        </div>
+        <div class="metric-card">
+          <strong>~20%</strong>
+          <span>of the week automated back</span>
+        </div>
+        <div class="metric-card">
+          <strong>Weeks</strong>
+          <span>to a live agent, not months</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Venaflare builds AI agents and workflow automation that replace manual work: AI SDRs, 24/7 chat and voice agents, internal and operational agents, and custom AI builds. Live in weeks, for a fraction of the cost of a hire.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal is open job postings</p></div><div><span>02</span><p>One cascade routes the whole market</p></div><div><span>03</span><p>Each open role maps to a different agent</p></div><div><span>04</span><p>Layer angles on the always-on waterfall</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>Waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>Email Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">Signal</p>
+      <h2>The signal is open job postings</h2>
+      <p class="takeaway">Every company is checked against what it is actively hiring for, a public signal carried natively by job boards, and routed by role type.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>An open role is budget already committed to solving a pain with a human, the exact pain Venaflare automates.</p></div><div class="reason-card"><span>02</span><p>Job postings are public and carried natively by LinkedIn Jobs, Indeed and careers pages, so the signal comes free with the market.</p></div><div class="reason-card"><span>03</span><p>The role type is a clean router: sales, support, ops or automation each map to a different Venaflare agent.</p></div><div class="reason-card"><span>04</span><p>A full-time hire is slow and expensive, which makes &#39;live in weeks for a fraction of a salary&#39; land on every tier.</p></div>
+            </div>
+            <div class="field-cloud"><span>open_roles</span><span>role_class</span><span>top_role_count</span><span>headcount_tier</span><span>industry</span><span>careers_page_url</span><span>posted_recency_days</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>LinkedIn Sales Navigator + LinkedIn Jobs</h3><p>Company TAM spine (10-500 headcount, service/ops-heavy) plus live job listings and the hiring signal</p></div><div class="source-card"><span>02</span><h3>Clay / Coresignal / Apollo job-postings</h3><p>Company, role title, department, posting date and count in a single enrichment pull</p></div><div class="source-card"><span>03</span><h3>Indeed / Google Jobs scrape</h3><p>Coverage for SMBs that do not post on LinkedIn</p></div><div class="source-card"><span>04</span><h3>Company /careers page scrape</h3><p>Roles posted only on the company&#39;s own site, plus proof of manual process</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="Waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">Waterfall</p>
+      <h2>One cascade routes the whole market</h2>
+      <p class="takeaway">Each company is tested top-to-bottom by role type and routes to exactly one campaign. Build the strategy once, then keep adding leads.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF hiring AI / automation / RevOps / GTM engineer</span>
+          <strong>Tier 1</strong>
+          <em>They&#39;ve decided automation is worth a salary</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF ELSE hiring SDR / BDR / appointment-setter</span>
+          <strong>Tier 2</strong>
+          <em>Manual prospecting and booking</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF ELSE hiring support / CX / receptionist</span>
+          <strong>Tier 3</strong>
+          <em>Inbound volume outpacing staff</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF ELSE hiring data-entry / admin / VA / ops coordinator</span>
+          <strong>Tier 4</strong>
+          <em>Humans doing repetitive back-office work</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF ELSE every remaining company with no matching open role</span>
+          <strong>Catch-all</strong>
+          <em>Greenfield, quiet manual-work loss</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF hiring AI / automation / RevOps / GTM engineer -&gt; Tier 1 (They&#39;ve decided automation is worth a salary)&#10;2. IF ELSE hiring SDR / BDR / appointment-setter -&gt; Tier 2 (Manual prospecting and booking)&#10;3. IF ELSE hiring support / CX / receptionist -&gt; Tier 3 (Inbound volume outpacing staff)&#10;4. IF ELSE hiring data-entry / admin / VA / ops coordinator -&gt; Tier 4 (Humans doing repetitive back-office work)&#10;5. IF ELSE every remaining company with no matching open role -&gt; Catch-all (Greenfield, quiet manual-work loss)">Copy routing spec</button>
+            <pre id="routeCode">1. IF hiring AI / automation / RevOps / GTM engineer -&gt; Tier 1 (They&#39;ve decided automation is worth a salary)
+2. IF ELSE hiring SDR / BDR / appointment-setter -&gt; Tier 2 (Manual prospecting and booking)
+3. IF ELSE hiring support / CX / receptionist -&gt; Tier 3 (Inbound volume outpacing staff)
+4. IF ELSE hiring data-entry / admin / VA / ops coordinator -&gt; Tier 4 (Humans doing repetitive back-office work)
+5. IF ELSE every remaining company with no matching open role -&gt; Catch-all (Greenfield, quiet manual-work loss)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">Tiers</p>
+      <h2>Each open role maps to a different agent</h2>
+      <p class="takeaway">An open SDR req gets the AI SDR pitch, a support req gets the 24/7 voice agent, an automation req gets buy-vs-hire. Pain is inferred from the trigger, never invented.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">3-5% TAM</span>
+          </div>
+          <h3>Tier 1: Automation / AI Hires</h3>
+          <p>Hiring an AI, automation, RevOps or GTM engineer</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They&#39;ve decided automation is worth a full-time salary, but a good hire is 3-6 months to productive and $100k+ a year.</dd></div>
+              <div><dt>Offer</dt><dd>15-min AI-opportunity audit of their job description</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Jobs + Clay job-postings</dd></div>
+              <div><dt>Reply density</dt><dd>Highest, target 1 in 150</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">~15% TAM</span>
+          </div>
+          <h3>Tier 2: Sales Hires</h3>
+          <p>Hiring SDR, BDR or appointment-setter roles</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Pipeline is manual and they are throwing bodies at prospecting and booking, one rep to one seat.</dd></div>
+              <div><dt>Offer</dt><dd>AI SDR vs. new-hire cost/output teardown</dd></div>
+              <div><dt>Source</dt><dd>Apollo job-postings + LinkedIn</dd></div>
+              <div><dt>Reply density</dt><dd>High, target 1 in 300</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">~15% TAM</span>
+          </div>
+          <h3>Tier 3: Support / CX Hires</h3>
+          <p>Hiring support, CX, receptionist or front-desk roles</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Inbound is piling up faster than the team can clear it, especially after hours, and leads and tickets wait in a queue.</dd></div>
+              <div><dt>Offer</dt><dd>Live demo bot trained on their site / FAQ</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Jobs + careers scrape</dd></div>
+              <div><dt>Reply density</dt><dd>High, target 1 in 300</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">~18% TAM</span>
+          </div>
+          <h3>Tier 4: Ops / Admin Hires</h3>
+          <p>Hiring data-entry, admin, VA or ops-coordinator roles</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They are paying a salary for repetitive work software should do: data entry, reporting, moving info between tools.</dd></div>
+              <div><dt>Offer</dt><dd>Free automatable-task map for their business</dd></div>
+              <div><dt>Source</dt><dd>Indeed / Google Jobs + careers scrape</dd></div>
+              <div><dt>Reply density</dt><dd>Moderate, target 1 in 450</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="catchall" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">45-50% TAM</span>
+          </div>
+          <h3>Catch-all: No Matching Open Role</h3>
+          <p>Every remaining company in the market with no relevant open role</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>No active hire, but every growing business quietly loses hours to manual work: data entry, reporting, inbound follow-up.</dd></div>
+              <div><dt>Offer</dt><dd>Free 4-step AI audit (Audit, Build, Integrate, Optimize)</dd></div>
+              <div><dt>Source</dt><dd>Full TAM (Sales Nav base pull)</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest, target 1 in 500 or better</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">Campaigns</p>
+      <h2>Layer angles on the always-on waterfall</h2>
+      <p class="takeaway">The job-postings cascade is the core engine. Funding, new-leader, platform-but-manual and lookalike motions stay as opt-in side campaigns.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Buy-vs-Hire Automation</h3>
+          <p>Hottest tier: budget and intent for automation are already proven by the open req.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Hiring an AI / automation / RevOps / GTM engineer</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the open role, contrast salary + ramp time with a done-for-you build</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>AI SDR Takeover</h3>
+          <p>Venaflare&#39;s flagship offer and largest high-fit bucket.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Hiring SDR / BDR / appointment-setter</dd></div>
+            <div><dt>AI strategy</dt><dd>Cite the open sales headcount and the cost/ramp of a rep vs. an always-on agent</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>24/7 Support Agent</h3>
+          <p>Demo-led and high converting once a demo bot exists.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Hiring support / CX / receptionist</dd></div>
+            <div><dt>AI strategy</dt><dd>Infer inbound overflow, offer a free demo bot trained on their FAQ</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Back-Office Automation</h3>
+          <p>Broad, softer intent. Leads on the ~20%-of-the-week hook.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Hiring data-entry / admin / VA / ops coordinator</dd></div>
+            <div><dt>AI strategy</dt><dd>Guess the repetitive tasks in the JD and map which are automatable</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Broad</span>
+          </div>
+          <h3>The 20% Line</h3>
+          <p>Sweeps the biggest bucket with the softest copy and the free AI audit.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>No matching open role</dd></div>
+            <div><dt>AI strategy</dt><dd>Static value-prop send, no personalization, as a control baseline</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Creative Ideas (3 agents)</h3>
+          <p>High-volume workhorse: a chat agent, a voice agent and a workflow agent scoped to their site.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Base market</dd></div>
+            <div><dt>AI strategy</dt><dd>Analyze their website, generate 3 tailored AI-agent ideas</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Focused</span>
+          </div>
+          <h3>Fresh Funding</h3>
+          <p>New capital means pressure to scale fast, before spending it all on hires.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Raised seed to Series B in last 6 months</dd></div>
+            <div><dt>AI strategy</dt><dd>Pull the round and investor, tie to pressure to scale output</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Focused</span>
+          </div>
+          <h3>New Leader Welcome</h3>
+          <p>New execs buy tools in their first quarter to show early impact.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>New Head of Ops / RevOps / CX in last 90 days</dd></div>
+            <div><dt>AI strategy</dt><dd>Reference start date and prior company, offer a visible quick win</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Focused</span>
+          </div>
+          <h3>Platform-But-Manual</h3>
+          <p>They bought the platform, Venaflare makes it actually run itself.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Uses HubSpot / Intercom / Zendesk / Calendly, no AI layer</dd></div>
+            <div><dt>AI strategy</dt><dd>Detect the platform, position the AI layer that makes it autonomous</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Focused</span>
+          </div>
+          <h3>Inbound-Leak</h3>
+          <p>Booked demos leak after hours. A booking agent catches them 24/7.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Has a contact form / book-a-call but no chat or AI detected</dd></div>
+            <div><dt>AI strategy</dt><dd>Test their form response time, quantify after-hours leakage</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="Email Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">Email Copy</p>
+      <h2>Copy that opens with their own hiring signal</h2>
+      <p class="takeaway">Each sequence names the open role, infers the pain, ties in one Venaflare capability, and asks for a one-letter yes with a free audit.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company_name}}</span><span>{{role_title}}</span><span>{{industry}}</span><span>{{open_roles_count}}</span><span>{{other_decision_maker}}</span><span>{{case_study}}</span><span>{{metric}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company_name}}, {{role_title}}, {{industry}}, {{open_roles_count}}, {{other_decision_maker}}, {{case_study}}, {{metric}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 — Automation / AI Hires</strong>
+              <em>15-min AI-opportunity audit of their job description</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 — Automation / AI Hires steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company_name}} automation role&#10;&#10;{{first_name}}, saw {{company_name}} is hiring a {{role_title}}.&#10;&#10;Smart move, but a good automation hire is 3-6 months to fully productive and $100k+ a year.&#10;&#10;We&#39;re a done-for-you AI team. We build the same agents and workflows your new hire would, live in weeks, for a fraction of a salary.&#10;&#10;Reply Y and I&#39;ll send a free audit of what we&#39;d automate first for {{company_name}}. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company_name}} automation role" data-preview="Northwind Logistics automation role">{{company_name}} automation role</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, saw {{company_name}} is hiring a {{role_title}}.&#10;&#10;Smart move, but a good automation hire is 3-6 months to fully productive and $100k+ a year.&#10;&#10;We&#39;re a done-for-you AI team. We build the same agents and workflows your new hire would, live in weeks, for a fraction of a salary.&#10;&#10;Reply Y and I&#39;ll send a free audit of what we&#39;d automate first for {{company_name}}. No call needed." data-preview="Jordan, saw Northwind Logistics is hiring a Automation Engineer.&#10;&#10;Smart move, but a good automation hire is 3-6 months to fully productive and $100k+ a year.&#10;&#10;We&#39;re a done-for-you AI team. We build the same agents and workflows your new hire would, live in weeks, for a fraction of a salary.&#10;&#10;Reply Y and I&#39;ll send a free audit of what we&#39;d automate first for Northwind Logistics. No call needed.">
+                        <p>{{first_name}}, saw {{company_name}} is hiring a {{role_title}}.</p><p>Smart move, but a good automation hire is 3-6 months to fully productive and $100k+ a year.</p><p>We&#39;re a done-for-you AI team. We build the same agents and workflows your new hire would, live in weeks, for a fraction of a salary.</p><p>Reply Y and I&#39;ll send a free audit of what we&#39;d automate first for {{company_name}}. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, one more angle on that {{role_title}} search.&#10;&#10;The reason most teams hire this role is speed. Every month of manual work is money left on the table.&#10;&#10;We shipped {{case_study}} their first agents in under 3 weeks and freed up {{metric}}.&#10;&#10;Want the audit? Just reply yes and I&#39;ll send it, or point me to whoever owns automation.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, one more angle on that {{role_title}} search.&#10;&#10;The reason most teams hire this role is speed. Every month of manual work is money left on the table.&#10;&#10;We shipped {{case_study}} their first agents in under 3 weeks and freed up {{metric}}.&#10;&#10;Want the audit? Just reply yes and I&#39;ll send it, or point me to whoever owns automation." data-preview="Jordan, one more angle on that Automation Engineer search.&#10;&#10;The reason most teams hire this role is speed. Every month of manual work is money left on the table.&#10;&#10;We shipped a 40-person agency their first agents in under 3 weeks and freed up roughly 20% of their week.&#10;&#10;Want the audit? Just reply yes and I&#39;ll send it, or point me to whoever owns automation.">
+                        <p>{{first_name}}, one more angle on that {{role_title}} search.</p><p>The reason most teams hire this role is speed. Every month of manual work is money left on the table.</p><p>We shipped {{case_study}} their first agents in under 3 weeks and freed up {{metric}}.</p><p>Want the audit? Just reply yes and I&#39;ll send it, or point me to whoever owns automation.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: question for {{first_name}}&#10;&#10;{{first_name}}, quick one. Are you hiring for {{role_title}} because you want a person, or because you want the automations built?&#10;&#10;If it&#39;s the automations, we deliver those in weeks with no headcount added.&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the free audit. Should I send it to you or {{other_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="question for {{first_name}}" data-preview="question for Jordan">question for {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, quick one. Are you hiring for {{role_title}} because you want a person, or because you want the automations built?&#10;&#10;If it&#39;s the automations, we deliver those in weeks with no headcount added.&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the free audit. Should I send it to you or {{other_decision_maker}}?" data-preview="Jordan, quick one. Are you hiring for Automation Engineer because you want a person, or because you want the automations built?&#10;&#10;If it&#39;s the automations, we deliver those in weeks with no headcount added.&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the free audit. Should I send it to you or your Head of Ops?">
+                        <p>{{first_name}}, quick one. Are you hiring for {{role_title}} because you want a person, or because you want the automations built?</p><p>If it&#39;s the automations, we deliver those in weeks with no headcount added.</p><p>No need for a call. Just reply yes and I&#39;ll send the free audit. Should I send it to you or {{other_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 — Sales Hires</strong>
+              <em>AI SDR vs. new-hire cost/output teardown</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 — Sales Hires steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company_name}} SDR role&#10;&#10;{{first_name}}, saw you&#39;re hiring {{open_roles_count}} SDRs at {{company_name}}.&#10;&#10;Have you figured out how to scale outbound without scaling headcount, or is it still one rep, one seat?&#10;&#10;We build AI SDR agents that prospect, personalize, and book meetings on autopilot. Weeks to live, fraction of a rep&#39;s salary.&#10;&#10;Reply Y and I&#39;ll send a free teardown of your outbound + what we&#39;d automate. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company_name}} SDR role" data-preview="Northwind Logistics SDR role">{{company_name}} SDR role</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, saw you&#39;re hiring {{open_roles_count}} SDRs at {{company_name}}.&#10;&#10;Have you figured out how to scale outbound without scaling headcount, or is it still one rep, one seat?&#10;&#10;We build AI SDR agents that prospect, personalize, and book meetings on autopilot. Weeks to live, fraction of a rep&#39;s salary.&#10;&#10;Reply Y and I&#39;ll send a free teardown of your outbound + what we&#39;d automate. No call needed." data-preview="Jordan, saw you&#39;re hiring 3 SDRs at Northwind Logistics.&#10;&#10;Have you figured out how to scale outbound without scaling headcount, or is it still one rep, one seat?&#10;&#10;We build AI SDR agents that prospect, personalize, and book meetings on autopilot. Weeks to live, fraction of a rep&#39;s salary.&#10;&#10;Reply Y and I&#39;ll send a free teardown of your outbound + what we&#39;d automate. No call needed.">
+                        <p>{{first_name}}, saw you&#39;re hiring {{open_roles_count}} SDRs at {{company_name}}.</p><p>Have you figured out how to scale outbound without scaling headcount, or is it still one rep, one seat?</p><p>We build AI SDR agents that prospect, personalize, and book meetings on autopilot. Weeks to live, fraction of a rep&#39;s salary.</p><p>Reply Y and I&#39;ll send a free teardown of your outbound + what we&#39;d automate. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, from experience, one SDR runs ~$70k loaded and ramps for months.&#10;&#10;An AI SDR agent runs 24/7, never ramps, and handles the research and follow-up your reps hate.&#10;&#10;We helped {{case_study}} do this and {{metric}}.&#10;&#10;Want the teardown? Reply yes and it&#39;s yours.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, from experience, one SDR runs ~$70k loaded and ramps for months.&#10;&#10;An AI SDR agent runs 24/7, never ramps, and handles the research and follow-up your reps hate.&#10;&#10;We helped {{case_study}} do this and {{metric}}.&#10;&#10;Want the teardown? Reply yes and it&#39;s yours." data-preview="Jordan, from experience, one SDR runs ~$70k loaded and ramps for months.&#10;&#10;An AI SDR agent runs 24/7, never ramps, and handles the research and follow-up your reps hate.&#10;&#10;We helped a 40-person agency do this and roughly 20% of their week.&#10;&#10;Want the teardown? Reply yes and it&#39;s yours.">
+                        <p>{{first_name}}, from experience, one SDR runs ~$70k loaded and ramps for months.</p><p>An AI SDR agent runs 24/7, never ramps, and handles the research and follow-up your reps hate.</p><p>We helped {{case_study}} do this and {{metric}}.</p><p>Want the teardown? Reply yes and it&#39;s yours.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: outbound for {{company_name}}&#10;&#10;{{first_name}}, most teams hiring SDRs tell me the same thing. They need 3x the volume but can&#39;t justify 3x the headcount.&#10;&#10;That&#39;s exactly what an AI SDR agent fixes. Same pipeline, no new seats.&#10;&#10;No call needed. Reply yes and I&#39;ll send the free audit. Should I send it to you or {{other_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="outbound for {{company_name}}" data-preview="outbound for Northwind Logistics">outbound for {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, most teams hiring SDRs tell me the same thing. They need 3x the volume but can&#39;t justify 3x the headcount.&#10;&#10;That&#39;s exactly what an AI SDR agent fixes. Same pipeline, no new seats.&#10;&#10;No call needed. Reply yes and I&#39;ll send the free audit. Should I send it to you or {{other_decision_maker}}?" data-preview="Jordan, most teams hiring SDRs tell me the same thing. They need 3x the volume but can&#39;t justify 3x the headcount.&#10;&#10;That&#39;s exactly what an AI SDR agent fixes. Same pipeline, no new seats.&#10;&#10;No call needed. Reply yes and I&#39;ll send the free audit. Should I send it to you or your Head of Ops?">
+                        <p>{{first_name}}, most teams hiring SDRs tell me the same thing. They need 3x the volume but can&#39;t justify 3x the headcount.</p><p>That&#39;s exactly what an AI SDR agent fixes. Same pipeline, no new seats.</p><p>No call needed. Reply yes and I&#39;ll send the free audit. Should I send it to you or {{other_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 — Support / CX Hires</strong>
+              <em>Live demo bot trained on their site / FAQ</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 — Support / CX Hires steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company_name}} support hire&#10;&#10;{{first_name}}, noticed {{company_name}} is hiring for support.&#10;&#10;Would it be fair to assume inbound is piling up faster than the team can clear it, especially after hours?&#10;&#10;We build 24/7 AI chat and voice agents that book leads and answer the repeat questions instantly, so your people handle the hard stuff.&#10;&#10;Reply Y and I&#39;ll spin up a free demo bot trained on your site. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company_name}} support hire" data-preview="Northwind Logistics support hire">{{company_name}} support hire</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, noticed {{company_name}} is hiring for support.&#10;&#10;Would it be fair to assume inbound is piling up faster than the team can clear it, especially after hours?&#10;&#10;We build 24/7 AI chat and voice agents that book leads and answer the repeat questions instantly, so your people handle the hard stuff.&#10;&#10;Reply Y and I&#39;ll spin up a free demo bot trained on your site. No call needed." data-preview="Jordan, noticed Northwind Logistics is hiring for support.&#10;&#10;Would it be fair to assume inbound is piling up faster than the team can clear it, especially after hours?&#10;&#10;We build 24/7 AI chat and voice agents that book leads and answer the repeat questions instantly, so your people handle the hard stuff.&#10;&#10;Reply Y and I&#39;ll spin up a free demo bot trained on your site. No call needed.">
+                        <p>{{first_name}}, noticed {{company_name}} is hiring for support.</p><p>Would it be fair to assume inbound is piling up faster than the team can clear it, especially after hours?</p><p>We build 24/7 AI chat and voice agents that book leads and answer the repeat questions instantly, so your people handle the hard stuff.</p><p>Reply Y and I&#39;ll spin up a free demo bot trained on your site. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the part most teams miss: every after-hours message that hits voicemail is a booking you lost.&#10;&#10;Our voice agent answers live, books the appointment, and logs it. {{case_study}} recovered {{metric}} doing exactly this.&#10;&#10;Want me to build the free demo bot on your FAQ? Just reply yes.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the part most teams miss: every after-hours message that hits voicemail is a booking you lost.&#10;&#10;Our voice agent answers live, books the appointment, and logs it. {{case_study}} recovered {{metric}} doing exactly this.&#10;&#10;Want me to build the free demo bot on your FAQ? Just reply yes." data-preview="Jordan, the part most teams miss: every after-hours message that hits voicemail is a booking you lost.&#10;&#10;Our voice agent answers live, books the appointment, and logs it. a 40-person agency recovered roughly 20% of their week doing exactly this.&#10;&#10;Want me to build the free demo bot on your FAQ? Just reply yes.">
+                        <p>{{first_name}}, the part most teams miss: every after-hours message that hits voicemail is a booking you lost.</p><p>Our voice agent answers live, books the appointment, and logs it. {{case_study}} recovered {{metric}} doing exactly this.</p><p>Want me to build the free demo bot on your FAQ? Just reply yes.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: question for {{first_name}}&#10;&#10;{{first_name}}, when inbound spikes, do you add people or add automation?&#10;&#10;Adding people is slow and pricey. An AI agent covers Tier-1 volume 24/7 so new hires focus on what actually needs a human.&#10;&#10;No call needed. Reply yes and I&#39;ll send a live demo bot. Should I send it to you or {{other_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="question for {{first_name}}" data-preview="question for Jordan">question for {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, when inbound spikes, do you add people or add automation?&#10;&#10;Adding people is slow and pricey. An AI agent covers Tier-1 volume 24/7 so new hires focus on what actually needs a human.&#10;&#10;No call needed. Reply yes and I&#39;ll send a live demo bot. Should I send it to you or {{other_decision_maker}}?" data-preview="Jordan, when inbound spikes, do you add people or add automation?&#10;&#10;Adding people is slow and pricey. An AI agent covers Tier-1 volume 24/7 so new hires focus on what actually needs a human.&#10;&#10;No call needed. Reply yes and I&#39;ll send a live demo bot. Should I send it to you or your Head of Ops?">
+                        <p>{{first_name}}, when inbound spikes, do you add people or add automation?</p><p>Adding people is slow and pricey. An AI agent covers Tier-1 volume 24/7 so new hires focus on what actually needs a human.</p><p>No call needed. Reply yes and I&#39;ll send a live demo bot. Should I send it to you or {{other_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 — Ops / Admin Hires</strong>
+              <em>Free automatable-task map for their business</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 — Ops / Admin Hires steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company_name}} ops role&#10;&#10;{{first_name}}, saw {{company_name}} is hiring for {{role_title}}.&#10;&#10;Would it be fair to guess a chunk of that role is data entry, reporting, and moving info between tools?&#10;&#10;That&#39;s the exact work we automate. We build the workflows in weeks, for a fraction of a full-time hire, and teams get back ~20% of their week.&#10;&#10;Reply Y and I&#39;ll map which of those tasks are automatable, free. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company_name}} ops role" data-preview="Northwind Logistics ops role">{{company_name}} ops role</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, saw {{company_name}} is hiring for {{role_title}}.&#10;&#10;Would it be fair to guess a chunk of that role is data entry, reporting, and moving info between tools?&#10;&#10;That&#39;s the exact work we automate. We build the workflows in weeks, for a fraction of a full-time hire, and teams get back ~20% of their week.&#10;&#10;Reply Y and I&#39;ll map which of those tasks are automatable, free. No call needed." data-preview="Jordan, saw Northwind Logistics is hiring for Automation Engineer.&#10;&#10;Would it be fair to guess a chunk of that role is data entry, reporting, and moving info between tools?&#10;&#10;That&#39;s the exact work we automate. We build the workflows in weeks, for a fraction of a full-time hire, and teams get back ~20% of their week.&#10;&#10;Reply Y and I&#39;ll map which of those tasks are automatable, free. No call needed.">
+                        <p>{{first_name}}, saw {{company_name}} is hiring for {{role_title}}.</p><p>Would it be fair to guess a chunk of that role is data entry, reporting, and moving info between tools?</p><p>That&#39;s the exact work we automate. We build the workflows in weeks, for a fraction of a full-time hire, and teams get back ~20% of their week.</p><p>Reply Y and I&#39;ll map which of those tasks are automatable, free. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the math on back-office roles rarely works out. You pay a salary for work software should do for pennies.&#10;&#10;We automated reporting and onboarding for {{case_study}} and {{metric}}.&#10;&#10;Want the free task-automation map for {{company_name}}? Reply yes and I&#39;ll send it.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the math on back-office roles rarely works out. You pay a salary for work software should do for pennies.&#10;&#10;We automated reporting and onboarding for {{case_study}} and {{metric}}.&#10;&#10;Want the free task-automation map for {{company_name}}? Reply yes and I&#39;ll send it." data-preview="Jordan, the math on back-office roles rarely works out. You pay a salary for work software should do for pennies.&#10;&#10;We automated reporting and onboarding for a 40-person agency and roughly 20% of their week.&#10;&#10;Want the free task-automation map for Northwind Logistics? Reply yes and I&#39;ll send it.">
+                        <p>{{first_name}}, the math on back-office roles rarely works out. You pay a salary for work software should do for pennies.</p><p>We automated reporting and onboarding for {{case_study}} and {{metric}}.</p><p>Want the free task-automation map for {{company_name}}? Reply yes and I&#39;ll send it.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company_name}} busywork&#10;&#10;{{first_name}}, what&#39;s the one repetitive task your team wishes never existed?&#10;&#10;Reply with it and I&#39;ll tell you free whether we can automate it and roughly how long it&#39;d take. Usually weeks.&#10;&#10;No call needed. Should I send the audit to you or {{other_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company_name}} busywork" data-preview="Northwind Logistics busywork">{{company_name}} busywork</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, what&#39;s the one repetitive task your team wishes never existed?&#10;&#10;Reply with it and I&#39;ll tell you free whether we can automate it and roughly how long it&#39;d take. Usually weeks.&#10;&#10;No call needed. Should I send the audit to you or {{other_decision_maker}}?" data-preview="Jordan, what&#39;s the one repetitive task your team wishes never existed?&#10;&#10;Reply with it and I&#39;ll tell you free whether we can automate it and roughly how long it&#39;d take. Usually weeks.&#10;&#10;No call needed. Should I send the audit to you or your Head of Ops?">
+                        <p>{{first_name}}, what&#39;s the one repetitive task your team wishes never existed?</p><p>Reply with it and I&#39;ll tell you free whether we can automate it and roughly how long it&#39;d take. Usually weeks.</p><p>No call needed. Should I send the audit to you or {{other_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Catch-all — No Matching Open Role</strong>
+              <em>Free 4-step AI audit (Audit, Build, Integrate, Optimize)</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Catch-all — No Matching Open Role steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company_name}} + 20%&#10;&#10;{{first_name}}, most {{industry}} teams we work with are quietly losing hours to manual work: data entry, reporting, inbound follow-up.&#10;&#10;We build AI agents that take that off their plate in weeks, not months, for a fraction of a hire. Most see ~20% of their week come back.&#10;&#10;Reply AUDIT and I&#39;ll send a free 4-step breakdown of what we&#39;d automate first for {{company_name}}. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company_name}} + 20%" data-preview="Northwind Logistics + 20%">{{company_name}} + 20%</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, most {{industry}} teams we work with are quietly losing hours to manual work: data entry, reporting, inbound follow-up.&#10;&#10;We build AI agents that take that off their plate in weeks, not months, for a fraction of a hire. Most see ~20% of their week come back.&#10;&#10;Reply AUDIT and I&#39;ll send a free 4-step breakdown of what we&#39;d automate first for {{company_name}}. No call needed." data-preview="Jordan, most logistics teams we work with are quietly losing hours to manual work: data entry, reporting, inbound follow-up.&#10;&#10;We build AI agents that take that off their plate in weeks, not months, for a fraction of a hire. Most see ~20% of their week come back.&#10;&#10;Reply AUDIT and I&#39;ll send a free 4-step breakdown of what we&#39;d automate first for Northwind Logistics. No call needed.">
+                        <p>{{first_name}}, most {{industry}} teams we work with are quietly losing hours to manual work: data entry, reporting, inbound follow-up.</p><p>We build AI agents that take that off their plate in weeks, not months, for a fraction of a hire. Most see ~20% of their week come back.</p><p>Reply AUDIT and I&#39;ll send a free 4-step breakdown of what we&#39;d automate first for {{company_name}}. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the teams that win with this don&#39;t just save time, they capture revenue that used to leak: after-hours leads, slow follow-ups, dropped tickets.&#10;&#10;We helped {{case_study}} do this in under a month and {{metric}}.&#10;&#10;Want the free audit? Just reply AUDIT.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the teams that win with this don&#39;t just save time, they capture revenue that used to leak: after-hours leads, slow follow-ups, dropped tickets.&#10;&#10;We helped {{case_study}} do this in under a month and {{metric}}.&#10;&#10;Want the free audit? Just reply AUDIT." data-preview="Jordan, the teams that win with this don&#39;t just save time, they capture revenue that used to leak: after-hours leads, slow follow-ups, dropped tickets.&#10;&#10;We helped a 40-person agency do this in under a month and roughly 20% of their week.&#10;&#10;Want the free audit? Just reply AUDIT.">
+                        <p>{{first_name}}, the teams that win with this don&#39;t just save time, they capture revenue that used to leak: after-hours leads, slow follow-ups, dropped tickets.</p><p>We helped {{case_study}} do this in under a month and {{metric}}.</p><p>Want the free audit? Just reply AUDIT.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: one question&#10;&#10;{{first_name}}, one question. If you could hand one repetitive task at {{company_name}} to a tireless AI agent tomorrow, what would it be?&#10;&#10;Reply with it and I&#39;ll send back, free, exactly how we&#39;d automate it and how long it&#39;d take.&#10;&#10;No call needed. Should I send this to you or {{other_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="one question" data-preview="one question">one question</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, one question. If you could hand one repetitive task at {{company_name}} to a tireless AI agent tomorrow, what would it be?&#10;&#10;Reply with it and I&#39;ll send back, free, exactly how we&#39;d automate it and how long it&#39;d take.&#10;&#10;No call needed. Should I send this to you or {{other_decision_maker}}?" data-preview="Jordan, one question. If you could hand one repetitive task at Northwind Logistics to a tireless AI agent tomorrow, what would it be?&#10;&#10;Reply with it and I&#39;ll send back, free, exactly how we&#39;d automate it and how long it&#39;d take.&#10;&#10;No call needed. Should I send this to you or your Head of Ops?">
+                        <p>{{first_name}}, one question. If you could hand one repetitive task at {{company_name}} to a tireless AI agent tomorrow, what would it be?</p><p>Reply with it and I&#39;ll send back, free, exactly how we&#39;d automate it and how long it&#39;d take.</p><p>No call needed. Should I send this to you or {{other_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">Launch</p>
+      <h2>Prove the hottest tier, then widen</h2>
+      <p class="takeaway">Start with companies hiring the automation role itself, then sales, then support, then ops and the catch-all.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Stand up sending infrastructure, warmup and inboxes on burner domains separate from venaflare.com.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Pull LinkedIn Jobs, Clay/Apollo job-postings and careers-page data for the launch market. Build and validate the routing matrix.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Launch Tier 1 (automation hires) plus the Creative Ideas broad campaign first. Smallest, hottest, fastest proof of the buy-vs-hire thesis.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Add Tier 2 (sales hires) once it clears 1,500 contacts, keeping Tier 1 running. This is the flagship offer.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Roll Tier 3 (support), then Tier 4 and the catch-all once top tiers are calibrated and copy winners exist. Add leads continuously; the routing logic never changes.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Layer funding, new-leader, platform-but-manual and inbound-leak side campaigns only after the core waterfall is stable.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply / 150 contacts</strong>
+                <span>Perfect. Scale this tier hard.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 300</strong>
+                <span>Good. Let it run and add leads steadily.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 450-500</strong>
+                <span>Borderline. Test a copy or lead-magnet variant.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 / 500 or &lt;1% after 1,500 sends</strong>
+                <span>Cut the tier and rework the angle.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book the strategy call</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Jordan","Northwind Logistics","customer support rep","6","Intercom","logistics","Maya","Automation Engineer","3","your Head of Ops","a 40-person agency","roughly 20% of their week"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
