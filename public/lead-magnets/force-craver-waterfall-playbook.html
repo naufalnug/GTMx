@@ -1,0 +1,1723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Force Craver - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-07-11</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Force Craver</p>
+          <h1>Your Force Craver waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">A scrollable GTMx strategy artifact for routing the entire Salesforce-owning market into the right Force Craver offer.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Every prospect already owns Salesforce. The visible pressure on that org — hiring for it, a recent raise, or a disconnected stack — tells us exactly which Force Craver capability they need right now.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book the strategy call</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>~55k</strong>
+          <span>reachable Salesforce accounts</span>
+        </div>
+        <div class="metric-card">
+          <strong>4</strong>
+          <span>routing tiers</span>
+        </div>
+        <div class="metric-card">
+          <strong>150k+</strong>
+          <span>detectable Salesforce orgs</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Force Craver is a full-service Salesforce partner: administration, development, consulting, integration, Lightning, API, support, and data management across the whole Salesforce lifecycle.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal is Salesforce ownership under pressure</p></div><div><span>02</span><p>One cascade routes the whole Salesforce TAM</p></div><div><span>03</span><p>Each pressure signal gets a different offer</p></div><div><span>04</span><p>Fifteen angles layered on the waterfall</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>Waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>Email Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">Signal</p>
+      <h2>The signal is Salesforce ownership under pressure</h2>
+      <p class="takeaway">Salesforce ownership plus the visible pressure on the org — hiring, a fresh raise, or a disconnected stack — reveals which Force Craver capability a company needs now.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>BuiltWith reveals Salesforce ownership plus the adjacent stack (Pardot, Experience Cloud, marketing, billing, support) in one pull.</p></div><div class="reason-card"><span>02</span><p>A live Salesforce job posting is 100% reliable proof a company runs Salesforce and has active budget behind the work.</p></div><div class="reason-card"><span>03</span><p>The signal maps directly to real Force Craver capabilities: staff-augmentation, development, integration, and managed support.</p></div><div class="reason-card"><span>04</span><p>A catch-all org health check keeps 100% TAM coverage for every remaining Salesforce owner.</p></div>
+            </div>
+            <div class="field-cloud"><span>salesforce_detected</span><span>hiring_salesforce_role_90d</span><span>open_sf_role_title</span><span>last_funding_date</span><span>funding_stage</span><span>adjacent_systems_detected</span><span>integration_multiplicity</span><span>headcount_tier</span><span>contact</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>BuiltWith / Wappalyzer</h3><p>Salesforce, Pardot, and Experience Cloud footprints, the adjacent stack for Tier 3, and the TAM base</p></div><div class="source-card"><span>02</span><h3>LinkedIn Jobs + Indeed</h3><p>Live Salesforce Admin/Dev/Architect/CRM hiring signal, and reliable Salesforce proof</p></div><div class="source-card"><span>03</span><h3>Crunchbase / PitchBook</h3><p>Funding stage and last-funding date for detected Salesforce accounts</p></div><div class="source-card"><span>04</span><h3>Apollo</h3><p>RevOps/Sales Ops/IT contact email, title, headcount tier, and HQ region</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="Waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">Waterfall</p>
+      <h2>One cascade routes the whole Salesforce TAM</h2>
+      <p class="takeaway">Every account is tested top-to-bottom by intent: backlog, post-raise scale-up, integration debt, then the org-health catch-all.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF hiring_salesforce_role_90d = true</span>
+          <strong>Tier 1</strong>
+          <em>Backlog / staff-augmentation</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF salesforce_detected AND last_funding_date &lt;= 12 months ago AND stage in {A, B, C}</span>
+          <strong>Tier 2</strong>
+          <em>Post-raise scale-up</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF salesforce_detected AND integration_multiplicity = true</span>
+          <strong>Tier 3</strong>
+          <em>Integration debt</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF every remaining Salesforce-owning account</span>
+          <strong>Catch-all</strong>
+          <em>Org health check</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF hiring_salesforce_role_90d = true -&gt; Tier 1 (Backlog / staff-augmentation)&#10;2. IF salesforce_detected AND last_funding_date &lt;= 12 months ago AND stage in {A, B, C} -&gt; Tier 2 (Post-raise scale-up)&#10;3. IF salesforce_detected AND integration_multiplicity = true -&gt; Tier 3 (Integration debt)&#10;4. IF every remaining Salesforce-owning account -&gt; Catch-all (Org health check)">Copy routing spec</button>
+            <pre id="routeCode">1. IF hiring_salesforce_role_90d = true -&gt; Tier 1 (Backlog / staff-augmentation)
+2. IF salesforce_detected AND last_funding_date &lt;= 12 months ago AND stage in {A, B, C} -&gt; Tier 2 (Post-raise scale-up)
+3. IF salesforce_detected AND integration_multiplicity = true -&gt; Tier 3 (Integration debt)
+4. IF every remaining Salesforce-owning account -&gt; Catch-all (Org health check)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">Tiers</p>
+      <h2>Each pressure signal gets a different offer</h2>
+      <p class="takeaway">Companies hiring for Salesforce get staff-aug. Recently funded orgs get a scale rebuild. Fragmented stacks get integration. Everyone else gets a health check.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">~6% TAM</span>
+          </div>
+          <h3>Tier 1: Backlog / staff-aug</h3>
+          <p>Live Salesforce Admin, Developer, Architect, or CRM-Ops req posted in the last 90 days</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Confirmed Salesforce work is stacking up behind a seat they cannot fill fast. Good Salesforce hires take ~8 weeks to land plus a month to ramp.</dd></div>
+              <div><dt>Offer</dt><dd>Hire-vs-fractional cost calculator</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Jobs + Indeed</dd></div>
+              <div><dt>Reply density</dt><dd>Highest intent, live hiring means live budget</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">~12% TAM</span>
+          </div>
+          <h3>Tier 2: Post-raise scale-up</h3>
+          <p>Salesforce detected and a Series A, B, or C round raised in the last 12 months</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The org was built early and lean and is now straining as headcount, process, and new tools all scale at once.</dd></div>
+              <div><dt>Offer</dt><dd>Post-raise Salesforce scale audit</dd></div>
+              <div><dt>Source</dt><dd>BuiltWith + Crunchbase</dd></div>
+              <div><dt>Reply density</dt><dd>Strong practical pain right after a raise</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">~30% TAM</span>
+          </div>
+          <h3>Tier 3: Integration debt</h3>
+          <p>Salesforce detected alongside a disconnected adjacent system (separate marketing, billing, ERP, or support tool)</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Data silos, manual CSV syncing, no single source of truth, and finance and sales quoting different numbers.</dd></div>
+              <div><dt>Offer</dt><dd>Integration leak map</dd></div>
+              <div><dt>Source</dt><dd>BuiltWith stack detection</dd></div>
+              <div><dt>Reply density</dt><dd>Large sharp-pain pool with a demonstrable offer</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="catchall" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">~52% TAM</span>
+          </div>
+          <h3>Catch-all: Org health</h3>
+          <p>Every remaining Salesforce-owning account with no expansion signal</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>An under-maintained org: unused licenses, tech debt, half-finished automations, and no dedicated admin.</dd></div>
+              <div><dt>Offer</dt><dd>Free 30-point org health check</dd></div>
+              <div><dt>Source</dt><dd>BuiltWith + Apollo TAM</dd></div>
+              <div><dt>Reply density</dt><dd>Broadest coverage, softest ask</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">Campaigns</p>
+      <h2>Fifteen angles layered on the waterfall</h2>
+      <p class="takeaway">The core waterfall carries the volume. Side campaigns stay time-boxed for release waves, new RevOps leaders, and ISV build partners.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Free Org Health Check</h3>
+          <p>The broad catch-all offer for orgs drifting without a dedicated partner.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Every remaining Salesforce owner</dd></div>
+            <div><dt>AI strategy</dt><dd>No-pitch 30-point audit, findings delivered either way</dd></div>
+            <div><dt>Value</dt><dd>Feel the competence before any call</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Salesforce Cost Leak</h3>
+          <p>Leads with the money hiding in seats nobody logs into.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Older orgs with likely unused seats</dd></div>
+            <div><dt>AI strategy</dt><dd>Right-size licenses and kill dead automations</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Integration Leak Map</h3>
+          <p>Shows where data is siloed and hand-synced across the stack.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Salesforce plus a disconnected adjacent system</dd></div>
+            <div><dt>AI strategy</dt><dd>Detected stack multiplicity plus manual-sync pain</dd></div>
+            <div><dt>Value</dt><dd>One source of truth</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Hire-vs-Fractional Calculator</h3>
+          <p>The hottest tier: a live req is a live budget.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Live Salesforce hiring req</dd></div>
+            <div><dt>AI strategy</dt><dd>Open role plus cost-of-hire math</dd></div>
+            <div><dt>Value</dt><dd>Clear the backlog without an 8-week hire</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Post-Raise Scale Audit</h3>
+          <p>Frames the post-raise quarter as when the early build cracks.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Salesforce plus a recent A/B/C round</dd></div>
+            <div><dt>AI strategy</dt><dd>Fresh raise plus early-build strain</dd></div>
+            <div><dt>Value</dt><dd>Rebuild the org to hold the growth</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Classic-to-Lightning Modernization</h3>
+          <p>Offered broadly since edition is not reliably detectable from outside.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Legacy-feeling org signals</dd></div>
+            <div><dt>AI strategy</dt><dd>Retire legacy UI and flows before they break</dd></div>
+            <div><dt>Value</dt><dd>Modernize safely</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Focused</span>
+          </div>
+          <h3>New RevOps / CRM-Leader Fast Win</h3>
+          <p>A time-boxed side play triggered by a new ops hire.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>New RevOps or CRM leader hired</dd></div>
+            <div><dt>AI strategy</dt><dd>First-30-days audit as their fast win</dd></div>
+            <div><dt>Value</dt><dd>Make the new leader look good</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Focused</span>
+          </div>
+          <h3>Release-Wave Pressure-Test</h3>
+          <p>Burst campaign around each Salesforce Spring/Summer/Winter release.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Custom-org owners near a seasonal release</dd></div>
+            <div><dt>AI strategy</dt><dd>Seasonal release breaks custom orgs</dd></div>
+            <div><dt>Value</dt><dd>Avoid release-day surprises</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Orphaned Org / Admin Left</h3>
+          <p>Sharper catch-all pain when the sole admin has left.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Recent admin departure signal</dd></div>
+            <div><dt>AI strategy</dt><dd>Your only admin quit and the org is now unowned</dd></div>
+            <div><dt>Value</dt><dd>Keep the lights on</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Pardot / Marketing Cloud Underused</h3>
+          <p>Integration and enablement for a detected-but-idle Pardot.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Pardot detected, low usage signals</dd></div>
+            <div><dt>AI strategy</dt><dd>Paying for Pardot, barely using it</dd></div>
+            <div><dt>Value</dt><dd>Get value from what you own</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Data-Quality / Duplicate Records</h3>
+          <p>Data-management angle for orgs whose numbers cannot be trusted.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Signs of dirty or duplicated data</dd></div>
+            <div><dt>AI strategy</dt><dd>Dirty data tanking reporting and forecasting</dd></div>
+            <div><dt>Value</dt><dd>Trustworthy reporting</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Einstein / AI Readiness</h3>
+          <p>Ties the post-raise rebuild to a credible AI payoff.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Recently funded, AI-curious orgs</dd></div>
+            <div><dt>AI strategy</dt><dd>You cannot do AI on messy, disconnected data</dd></div>
+            <div><dt>Value</dt><dd>Get AI-ready</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Niche</span>
+          </div>
+          <h3>AppExchange / ISV Build Partner</h3>
+          <p>Different buyer (product/eng), so it sits outside the internal-ops waterfall.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Software companies building on Salesforce</dd></div>
+            <div><dt>AI strategy</dt><dd>Dev and API capacity to build product on-platform</dd></div>
+            <div><dt>Value</dt><dd>Ship on Salesforce faster</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Niche</span>
+          </div>
+          <h3>Managed-Service Retainer</h3>
+          <p>Upsell path from delivery to a monthly admin-plus-support contract.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Prior one-off project wins</dd></div>
+            <div><dt>AI strategy</dt><dd>Convert a project into monthly support</dd></div>
+            <div><dt>Value</dt><dd>Retained revenue</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Board-Ready Dashboard Rebuild</h3>
+          <p>Reporting rebuild framed around the post-raise board deck.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Post-raise orgs with shaky reporting</dd></div>
+            <div><dt>AI strategy</dt><dd>Numbers the board can actually trust</dd></div>
+            <div><dt>Value</dt><dd>Credible forecasting</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="Email Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">Email Copy</p>
+      <h2>Copy that names the signal, not the service</h2>
+      <p class="takeaway">Each sequence opens on a specific pulled signal, pokes the operational pain, then offers a low-friction audit, calculator, or map.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company_name}}</span><span>{{open_sf_role}}</span><span>{{open_roles_count}}</span><span>{{est_annual_cost}}</span><span>{{funding_stage}}</span><span>{{last_funding_date}}</span><span>{{adjacent_system}}</span><span>{{ops_contact}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company_name}}, {{open_sf_role}}, {{open_roles_count}}, {{est_annual_cost}}, {{funding_stage}}, {{last_funding_date}}, {{adjacent_system}}, {{ops_contact}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 — Backlog / Staff-Augmentation</strong>
+              <em>Hire-vs-fractional cost calculator</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 — Backlog / Staff-Augmentation steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3-4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7-8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your {{open_sf_role}} req&#10;&#10;{{first_name}}, saw {{company_name}} has been trying to hire a {{open_sf_role}} for a while now, {{open_roles_count}} open Salesforce reqs by my count.&#10;&#10;But would it be fair to assume the backlog is piling up while that seat stays empty? Good Salesforce hires take 8 weeks to land and another month to ramp.&#10;&#10;We drop in certified admins and developers on demand, so the queue clears this month instead of next quarter.&#10;&#10;Reply &quot;calc&quot; and I&#39;ll send a hire-vs-fractional cost breakdown for {{company_name}}. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your {{open_sf_role}} req" data-preview="your Salesforce Administrator req">your {{open_sf_role}} req</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, saw {{company_name}} has been trying to hire a {{open_sf_role}} for a while now, {{open_roles_count}} open Salesforce reqs by my count.&#10;&#10;But would it be fair to assume the backlog is piling up while that seat stays empty? Good Salesforce hires take 8 weeks to land and another month to ramp.&#10;&#10;We drop in certified admins and developers on demand, so the queue clears this month instead of next quarter.&#10;&#10;Reply &quot;calc&quot; and I&#39;ll send a hire-vs-fractional cost breakdown for {{company_name}}. No call needed." data-preview="Priya, saw Northwind has been trying to hire a Salesforce Administrator for a while now, 2 open Salesforce reqs by my count.&#10;&#10;But would it be fair to assume the backlog is piling up while that seat stays empty? Good Salesforce hires take 8 weeks to land and another month to ramp.&#10;&#10;We drop in certified admins and developers on demand, so the queue clears this month instead of next quarter.&#10;&#10;Reply &quot;calc&quot; and I&#39;ll send a hire-vs-fractional cost breakdown for Northwind. No call needed.">
+                        <p>{{first_name}}, saw {{company_name}} has been trying to hire a {{open_sf_role}} for a while now, {{open_roles_count}} open Salesforce reqs by my count.</p><p>But would it be fair to assume the backlog is piling up while that seat stays empty? Good Salesforce hires take 8 weeks to land and another month to ramp.</p><p>We drop in certified admins and developers on demand, so the queue clears this month instead of next quarter.</p><p>Reply &quot;calc&quot; and I&#39;ll send a hire-vs-fractional cost breakdown for {{company_name}}. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3-4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: threaded follow-up&#10;&#10;{{first_name}}, quick math on that open Salesforce seat: a full-time senior admin is roughly {{est_annual_cost}} loaded, plus recruiter fees and 3 months before they&#39;re productive.&#10;&#10;A fractional team clears the same backlog at a fraction of that, and you turn it off when the queue is empty.&#10;&#10;Want me to run the numbers against your actual backlog? Reply &quot;yes&quot; and I&#39;ll send the 48-hour triage.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="threaded follow-up" data-preview="threaded follow-up">threaded follow-up</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, quick math on that open Salesforce seat: a full-time senior admin is roughly {{est_annual_cost}} loaded, plus recruiter fees and 3 months before they&#39;re productive.&#10;&#10;A fractional team clears the same backlog at a fraction of that, and you turn it off when the queue is empty.&#10;&#10;Want me to run the numbers against your actual backlog? Reply &quot;yes&quot; and I&#39;ll send the 48-hour triage." data-preview="Priya, quick math on that open Salesforce seat: a full-time senior admin is roughly $135k loaded, plus recruiter fees and 3 months before they&#39;re productive.&#10;&#10;A fractional team clears the same backlog at a fraction of that, and you turn it off when the queue is empty.&#10;&#10;Want me to run the numbers against your actual backlog? Reply &quot;yes&quot; and I&#39;ll send the 48-hour triage.">
+                        <p>{{first_name}}, quick math on that open Salesforce seat: a full-time senior admin is roughly {{est_annual_cost}} loaded, plus recruiter fees and 3 months before they&#39;re productive.</p><p>A fractional team clears the same backlog at a fraction of that, and you turn it off when the queue is empty.</p><p>Want me to run the numbers against your actual backlog? Reply &quot;yes&quot; and I&#39;ll send the 48-hour triage.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7-8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: Salesforce backlog&#10;&#10;{{first_name}}, quick one on {{company_name}}.&#10;&#10;An open Salesforce req usually means the work is already late, not just unstaffed. We can start clearing it this week while you keep interviewing.&#10;&#10;No need for a call. Just reply &quot;yes&quot; and I&#39;ll send the backlog triage plus cost calc. Should I send it to you, or is {{ops_contact}} the person who owns the org?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="Salesforce backlog" data-preview="Salesforce backlog">Salesforce backlog</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, quick one on {{company_name}}.&#10;&#10;An open Salesforce req usually means the work is already late, not just unstaffed. We can start clearing it this week while you keep interviewing.&#10;&#10;No need for a call. Just reply &quot;yes&quot; and I&#39;ll send the backlog triage plus cost calc. Should I send it to you, or is {{ops_contact}} the person who owns the org?" data-preview="Priya, quick one on Northwind.&#10;&#10;An open Salesforce req usually means the work is already late, not just unstaffed. We can start clearing it this week while you keep interviewing.&#10;&#10;No need for a call. Just reply &quot;yes&quot; and I&#39;ll send the backlog triage plus cost calc. Should I send it to you, or is your RevOps lead the person who owns the org?">
+                        <p>{{first_name}}, quick one on {{company_name}}.</p><p>An open Salesforce req usually means the work is already late, not just unstaffed. We can start clearing it this week while you keep interviewing.</p><p>No need for a call. Just reply &quot;yes&quot; and I&#39;ll send the backlog triage plus cost calc. Should I send it to you, or is {{ops_contact}} the person who owns the org?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 — Post-Raise Scale-Up</strong>
+              <em>Post-raise Salesforce scale audit</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 — Post-Raise Scale-Up steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3-4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7-8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: after the {{funding_stage}}&#10;&#10;{{first_name}}, saw {{company_name}} closed its {{funding_stage}} back in {{last_funding_date}}. Congrats.&#10;&#10;But would it be fair to assume the Salesforce org was built early and lean, and is now straining as headcount, process and new tools all scale at once?&#10;&#10;That gap is exactly where post-raise teams stall. We rebuild Salesforce to hold the growth, custom objects, automation, clean integrations to whatever you&#39;re buying next.&#10;&#10;Reply &quot;audit&quot; and I&#39;ll send a post-raise Salesforce scale audit for {{company_name}}. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="after the {{funding_stage}}" data-preview="after the Series B">after the {{funding_stage}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, saw {{company_name}} closed its {{funding_stage}} back in {{last_funding_date}}. Congrats.&#10;&#10;But would it be fair to assume the Salesforce org was built early and lean, and is now straining as headcount, process and new tools all scale at once?&#10;&#10;That gap is exactly where post-raise teams stall. We rebuild Salesforce to hold the growth, custom objects, automation, clean integrations to whatever you&#39;re buying next.&#10;&#10;Reply &quot;audit&quot; and I&#39;ll send a post-raise Salesforce scale audit for {{company_name}}. No call needed." data-preview="Priya, saw Northwind closed its Series B back in March. Congrats.&#10;&#10;But would it be fair to assume the Salesforce org was built early and lean, and is now straining as headcount, process and new tools all scale at once?&#10;&#10;That gap is exactly where post-raise teams stall. We rebuild Salesforce to hold the growth, custom objects, automation, clean integrations to whatever you&#39;re buying next.&#10;&#10;Reply &quot;audit&quot; and I&#39;ll send a post-raise Salesforce scale audit for Northwind. No call needed.">
+                        <p>{{first_name}}, saw {{company_name}} closed its {{funding_stage}} back in {{last_funding_date}}. Congrats.</p><p>But would it be fair to assume the Salesforce org was built early and lean, and is now straining as headcount, process and new tools all scale at once?</p><p>That gap is exactly where post-raise teams stall. We rebuild Salesforce to hold the growth, custom objects, automation, clean integrations to whatever you&#39;re buying next.</p><p>Reply &quot;audit&quot; and I&#39;ll send a post-raise Salesforce scale audit for {{company_name}}. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3-4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: threaded follow-up&#10;&#10;{{first_name}}, the pattern after a raise: you hire reps fast, but the Salesforce underneath them wasn&#39;t built for that volume, so pipeline data gets messy and forecasting gets shaky right when the board starts asking.&#10;&#10;We fix the foundation before it becomes the bottleneck, so every new rep sells inside a system that actually works.&#10;&#10;Want the scale audit so you can see what breaks first? Reply &quot;yes.&quot;">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="threaded follow-up" data-preview="threaded follow-up">threaded follow-up</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the pattern after a raise: you hire reps fast, but the Salesforce underneath them wasn&#39;t built for that volume, so pipeline data gets messy and forecasting gets shaky right when the board starts asking.&#10;&#10;We fix the foundation before it becomes the bottleneck, so every new rep sells inside a system that actually works.&#10;&#10;Want the scale audit so you can see what breaks first? Reply &quot;yes.&quot;" data-preview="Priya, the pattern after a raise: you hire reps fast, but the Salesforce underneath them wasn&#39;t built for that volume, so pipeline data gets messy and forecasting gets shaky right when the board starts asking.&#10;&#10;We fix the foundation before it becomes the bottleneck, so every new rep sells inside a system that actually works.&#10;&#10;Want the scale audit so you can see what breaks first? Reply &quot;yes.&quot;">
+                        <p>{{first_name}}, the pattern after a raise: you hire reps fast, but the Salesforce underneath them wasn&#39;t built for that volume, so pipeline data gets messy and forecasting gets shaky right when the board starts asking.</p><p>We fix the foundation before it becomes the bottleneck, so every new rep sells inside a system that actually works.</p><p>Want the scale audit so you can see what breaks first? Reply &quot;yes.&quot;</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7-8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company_name}} Salesforce&#10;&#10;{{first_name}}, quick one.&#10;&#10;Most post-raise orgs don&#39;t fail on strategy, they fail because the CRM couldn&#39;t keep up with how fast the team grew.&#10;&#10;We&#39;ve rebuilt Salesforce for companies scaling through exactly this stage.&#10;&#10;No call needed. Reply &quot;yes&quot; and I&#39;ll send the scale audit. You, or is {{ops_contact}} the right person for this?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company_name}} Salesforce" data-preview="Northwind Salesforce">{{company_name}} Salesforce</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, quick one.&#10;&#10;Most post-raise orgs don&#39;t fail on strategy, they fail because the CRM couldn&#39;t keep up with how fast the team grew.&#10;&#10;We&#39;ve rebuilt Salesforce for companies scaling through exactly this stage.&#10;&#10;No call needed. Reply &quot;yes&quot; and I&#39;ll send the scale audit. You, or is {{ops_contact}} the right person for this?" data-preview="Priya, quick one.&#10;&#10;Most post-raise orgs don&#39;t fail on strategy, they fail because the CRM couldn&#39;t keep up with how fast the team grew.&#10;&#10;We&#39;ve rebuilt Salesforce for companies scaling through exactly this stage.&#10;&#10;No call needed. Reply &quot;yes&quot; and I&#39;ll send the scale audit. You, or is your RevOps lead the right person for this?">
+                        <p>{{first_name}}, quick one.</p><p>Most post-raise orgs don&#39;t fail on strategy, they fail because the CRM couldn&#39;t keep up with how fast the team grew.</p><p>We&#39;ve rebuilt Salesforce for companies scaling through exactly this stage.</p><p>No call needed. Reply &quot;yes&quot; and I&#39;ll send the scale audit. You, or is {{ops_contact}} the right person for this?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 — Integration Debt</strong>
+              <em>Integration leak map</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 — Integration Debt steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3-4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7-8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: Salesforce + {{adjacent_system}}&#10;&#10;{{first_name}}, noticed {{company_name}} runs Salesforce alongside {{adjacent_system}}. Two systems that, out of the box, don&#39;t really talk.&#10;&#10;But would it be fair to assume someone on your team is still moving data between them by hand, or worse, finance and sales are quoting different numbers?&#10;&#10;We connect Salesforce to the rest of your stack with proper API integrations, one source of truth instead of five that disagree.&#10;&#10;Reply &quot;map&quot; and I&#39;ll send an integration leak map for {{company_name}}. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="Salesforce + {{adjacent_system}}" data-preview="Salesforce + HubSpot">Salesforce + {{adjacent_system}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, noticed {{company_name}} runs Salesforce alongside {{adjacent_system}}. Two systems that, out of the box, don&#39;t really talk.&#10;&#10;But would it be fair to assume someone on your team is still moving data between them by hand, or worse, finance and sales are quoting different numbers?&#10;&#10;We connect Salesforce to the rest of your stack with proper API integrations, one source of truth instead of five that disagree.&#10;&#10;Reply &quot;map&quot; and I&#39;ll send an integration leak map for {{company_name}}. No call needed." data-preview="Priya, noticed Northwind runs Salesforce alongside HubSpot. Two systems that, out of the box, don&#39;t really talk.&#10;&#10;But would it be fair to assume someone on your team is still moving data between them by hand, or worse, finance and sales are quoting different numbers?&#10;&#10;We connect Salesforce to the rest of your stack with proper API integrations, one source of truth instead of five that disagree.&#10;&#10;Reply &quot;map&quot; and I&#39;ll send an integration leak map for Northwind. No call needed.">
+                        <p>{{first_name}}, noticed {{company_name}} runs Salesforce alongside {{adjacent_system}}. Two systems that, out of the box, don&#39;t really talk.</p><p>But would it be fair to assume someone on your team is still moving data between them by hand, or worse, finance and sales are quoting different numbers?</p><p>We connect Salesforce to the rest of your stack with proper API integrations, one source of truth instead of five that disagree.</p><p>Reply &quot;map&quot; and I&#39;ll send an integration leak map for {{company_name}}. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3-4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: threaded follow-up&#10;&#10;{{first_name}}, the hidden cost of disconnected systems is the hours: someone exporting, reconciling, re-importing, every week, forever.&#10;&#10;We&#39;ve automated exactly that handoff between Salesforce and tools like {{adjacent_system}}, so the sync just happens and the team gets those hours back.&#10;&#10;Want the leak map so you can see where the manual work is hiding? Reply &quot;yes.&quot;">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="threaded follow-up" data-preview="threaded follow-up">threaded follow-up</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the hidden cost of disconnected systems is the hours: someone exporting, reconciling, re-importing, every week, forever.&#10;&#10;We&#39;ve automated exactly that handoff between Salesforce and tools like {{adjacent_system}}, so the sync just happens and the team gets those hours back.&#10;&#10;Want the leak map so you can see where the manual work is hiding? Reply &quot;yes.&quot;" data-preview="Priya, the hidden cost of disconnected systems is the hours: someone exporting, reconciling, re-importing, every week, forever.&#10;&#10;We&#39;ve automated exactly that handoff between Salesforce and tools like HubSpot, so the sync just happens and the team gets those hours back.&#10;&#10;Want the leak map so you can see where the manual work is hiding? Reply &quot;yes.&quot;">
+                        <p>{{first_name}}, the hidden cost of disconnected systems is the hours: someone exporting, reconciling, re-importing, every week, forever.</p><p>We&#39;ve automated exactly that handoff between Salesforce and tools like {{adjacent_system}}, so the sync just happens and the team gets those hours back.</p><p>Want the leak map so you can see where the manual work is hiding? Reply &quot;yes.&quot;</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7-8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: one source of truth&#10;&#10;{{first_name}}, quick one on {{company_name}}.&#10;&#10;Disconnected systems don&#39;t announce themselves, they just quietly cost you accuracy and time until a board deck doesn&#39;t reconcile.&#10;&#10;We&#39;ve built the API layer that fixes this for teams running Salesforce next to three or four other systems.&#10;&#10;No call needed. Reply &quot;yes&quot; and I&#39;ll send the integration leak map. Should I send it to you or {{ops_contact}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="one source of truth" data-preview="one source of truth">one source of truth</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, quick one on {{company_name}}.&#10;&#10;Disconnected systems don&#39;t announce themselves, they just quietly cost you accuracy and time until a board deck doesn&#39;t reconcile.&#10;&#10;We&#39;ve built the API layer that fixes this for teams running Salesforce next to three or four other systems.&#10;&#10;No call needed. Reply &quot;yes&quot; and I&#39;ll send the integration leak map. Should I send it to you or {{ops_contact}}?" data-preview="Priya, quick one on Northwind.&#10;&#10;Disconnected systems don&#39;t announce themselves, they just quietly cost you accuracy and time until a board deck doesn&#39;t reconcile.&#10;&#10;We&#39;ve built the API layer that fixes this for teams running Salesforce next to three or four other systems.&#10;&#10;No call needed. Reply &quot;yes&quot; and I&#39;ll send the integration leak map. Should I send it to you or your RevOps lead?">
+                        <p>{{first_name}}, quick one on {{company_name}}.</p><p>Disconnected systems don&#39;t announce themselves, they just quietly cost you accuracy and time until a board deck doesn&#39;t reconcile.</p><p>We&#39;ve built the API layer that fixes this for teams running Salesforce next to three or four other systems.</p><p>No call needed. Reply &quot;yes&quot; and I&#39;ll send the integration leak map. Should I send it to you or {{ops_contact}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Catch-All — Salesforce Org Health</strong>
+              <em>Free 30-point org health check</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Catch-All — Salesforce Org Health steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3-4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7-8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company_name}}&#39;s Salesforce org&#10;&#10;{{first_name}}, saw {{company_name}} runs on Salesforce.&#10;&#10;But would it be fair to assume no one owns it full-time, so it&#39;s drifted, unused licenses, half-finished automations, workarounds nobody documented?&#10;&#10;That&#39;s the quiet tax on most orgs without a dedicated partner. We handle admin, support and optimization so Salesforce stops costing you money in the background.&#10;&#10;No pitch. Reply &quot;check&quot; and I&#39;ll run a free 30-point health check on {{company_name}}&#39;s org. You&#39;ll get the findings either way.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company_name}}&#39;s Salesforce org" data-preview="Northwind&#39;s Salesforce org">{{company_name}}&#39;s Salesforce org</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, saw {{company_name}} runs on Salesforce.&#10;&#10;But would it be fair to assume no one owns it full-time, so it&#39;s drifted, unused licenses, half-finished automations, workarounds nobody documented?&#10;&#10;That&#39;s the quiet tax on most orgs without a dedicated partner. We handle admin, support and optimization so Salesforce stops costing you money in the background.&#10;&#10;No pitch. Reply &quot;check&quot; and I&#39;ll run a free 30-point health check on {{company_name}}&#39;s org. You&#39;ll get the findings either way." data-preview="Priya, saw Northwind runs on Salesforce.&#10;&#10;But would it be fair to assume no one owns it full-time, so it&#39;s drifted, unused licenses, half-finished automations, workarounds nobody documented?&#10;&#10;That&#39;s the quiet tax on most orgs without a dedicated partner. We handle admin, support and optimization so Salesforce stops costing you money in the background.&#10;&#10;No pitch. Reply &quot;check&quot; and I&#39;ll run a free 30-point health check on Northwind&#39;s org. You&#39;ll get the findings either way.">
+                        <p>{{first_name}}, saw {{company_name}} runs on Salesforce.</p><p>But would it be fair to assume no one owns it full-time, so it&#39;s drifted, unused licenses, half-finished automations, workarounds nobody documented?</p><p>That&#39;s the quiet tax on most orgs without a dedicated partner. We handle admin, support and optimization so Salesforce stops costing you money in the background.</p><p>No pitch. Reply &quot;check&quot; and I&#39;ll run a free 30-point health check on {{company_name}}&#39;s org. You&#39;ll get the findings either way.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3-4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: threaded follow-up&#10;&#10;{{first_name}}, one thing the health check almost always finds: licenses you&#39;re paying for that nobody logs into.&#10;&#10;We&#39;ve handed clients back real money just by right-sizing seats and killing dead automations, before touching anything strategic.&#10;&#10;Want me to run it on {{company_name}}? Reply &quot;yes&quot; and I&#39;ll send the 30-point findings.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="threaded follow-up" data-preview="threaded follow-up">threaded follow-up</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, one thing the health check almost always finds: licenses you&#39;re paying for that nobody logs into.&#10;&#10;We&#39;ve handed clients back real money just by right-sizing seats and killing dead automations, before touching anything strategic.&#10;&#10;Want me to run it on {{company_name}}? Reply &quot;yes&quot; and I&#39;ll send the 30-point findings." data-preview="Priya, one thing the health check almost always finds: licenses you&#39;re paying for that nobody logs into.&#10;&#10;We&#39;ve handed clients back real money just by right-sizing seats and killing dead automations, before touching anything strategic.&#10;&#10;Want me to run it on Northwind? Reply &quot;yes&quot; and I&#39;ll send the 30-point findings.">
+                        <p>{{first_name}}, one thing the health check almost always finds: licenses you&#39;re paying for that nobody logs into.</p><p>We&#39;ve handed clients back real money just by right-sizing seats and killing dead automations, before touching anything strategic.</p><p>Want me to run it on {{company_name}}? Reply &quot;yes&quot; and I&#39;ll send the 30-point findings.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7-8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: free org check&#10;&#10;{{first_name}}, quick one.&#10;&#10;An unmaintained Salesforce org rarely breaks loudly, it just slowly costs you licenses, clean data, and rep time until someone notices.&#10;&#10;The 30-point check takes us a day and costs you nothing.&#10;&#10;No call needed. Reply &quot;yes&quot; and I&#39;ll send the findings. Should I send them to you, or is {{ops_contact}} the person who owns the org?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="free org check" data-preview="free org check">free org check</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, quick one.&#10;&#10;An unmaintained Salesforce org rarely breaks loudly, it just slowly costs you licenses, clean data, and rep time until someone notices.&#10;&#10;The 30-point check takes us a day and costs you nothing.&#10;&#10;No call needed. Reply &quot;yes&quot; and I&#39;ll send the findings. Should I send them to you, or is {{ops_contact}} the person who owns the org?" data-preview="Priya, quick one.&#10;&#10;An unmaintained Salesforce org rarely breaks loudly, it just slowly costs you licenses, clean data, and rep time until someone notices.&#10;&#10;The 30-point check takes us a day and costs you nothing.&#10;&#10;No call needed. Reply &quot;yes&quot; and I&#39;ll send the findings. Should I send them to you, or is your RevOps lead the person who owns the org?">
+                        <p>{{first_name}}, quick one.</p><p>An unmaintained Salesforce org rarely breaks loudly, it just slowly costs you licenses, clean data, and rep time until someone notices.</p><p>The 30-point check takes us a day and costs you nothing.</p><p>No call needed. Reply &quot;yes&quot; and I&#39;ll send the findings. Should I send them to you, or is {{ops_contact}} the person who owns the org?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">Launch</p>
+      <h2>Start where the budget is already live</h2>
+      <p class="takeaway">Launch the hiring-signal tier first, then integration debt, post-raise scale-up, and finally the org-health catch-all.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Launch Tier 1 Backlog / staff-aug first. It is the smallest list, sharpest pain, and the live hiring req means the budget is already there. Only needs the LinkedIn/Indeed jobs scrape wired.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Launch Tier 3 Integration debt second. It is the largest sharp-pain pool with a concrete, demonstrable offer and easy BuiltWith sourcing.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Launch Tier 2 Post-raise scale-up once the Crunchbase overlay is joined to the BuiltWith base.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Turn on the catch-all Org health campaign as the always-on sweep for everything unmatched.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Add side campaigns (release waves, new RevOps hires, ISV build partners) only after the core waterfall is stable.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply / 150 contacts</strong>
+                <span>Perfect. Scale this tier.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 300</strong>
+                <span>Good. Let it run.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 450-500</strong>
+                <span>Borderline. Test a copy variant (rotate magnet or first-line angle).</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 / 500 or &lt;1% after 1,500 sends</strong>
+                <span>Cut and rework.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book the strategy call</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Priya","Northwind","customer support rep","6","Intercom","healthcare operations","Maya","Salesforce Administrator","2","\\$135k","Series B","March","HubSpot","your RevOps lead"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
