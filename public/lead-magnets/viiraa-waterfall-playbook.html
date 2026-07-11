@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ViiRaa - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-07-11</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for ViiRaa</p>
+          <h1>Your ViiRaa outbound <mark>journey</mark>.</h1>
+          <p class="hero-copy">One practitioner-led waterfall that turns a B2C bootcamp into a low-CAC distribution engine.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Don&#39;t chase consumers one by one. Recruit the health practitioners who already own their trust, and route every practitioner on one signal, where they sit on the CGM adoption curve, to the first tier they match. Build it once, map the market once, keep adding leads.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a strategy call</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>150-300k</strong>
+          <span>Practitioner accounts in the addressable market</span>
+        </div>
+        <div class="metric-card">
+          <strong>5 min/day</strong>
+          <span>Client effort the AI coach runs for the partner</span>
+        </div>
+        <div class="metric-card">
+          <strong>$249/yr</strong>
+          <span>Recurring membership the partner adds without building it</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>ViiRaa is a 14-day metabolic-health bootcamp: pair a continuous glucose monitor with an AI coach for five minutes a day. Seven days to awareness, seven to transformation. Compatible with Abbott FreeStyle Libre and Dexcom. $99 per bootcamp, $249/yr membership.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The single routing signal</p></div><div><span>02</span><p>How the waterfall works</p></div><div><span>03</span><p>The three tiers</p></div><div><span>04</span><p>The campaign idea bank</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>Waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">Signal</p>
+      <h2>The single routing signal</h2>
+      <p class="takeaway">Where a practitioner sits on the CGM adoption curve orders the whole market by readiness.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>It is observable natively, one scrape of a practitioner&#39;s site, LinkedIn and Instagram bio returns the whole signal.</p></div><div class="reason-card"><span>02</span><p>It maps directly to buying intent, adoption of CGM is the clearest proxy for readiness to sell a metabolic program.</p></div><div class="reason-card"><span>03</span><p>It orders the whole market on one axis, so every practitioner routes cleanly to exactly one tier.</p></div><div class="reason-card"><span>04</span><p>It self-replenishes, the GLP-1 and OTC-CGM wave keeps pushing new practitioners into the metabolic conversation.</p></div>
+            </div>
+            <div class="field-cloud"><span>serves_individual_clients</span><span>practitioner_type</span><span>cgm_mention</span><span>glucose_or_metabolic_program</span><span>metabolic_weight_longevity_positioning</span><span>glp1_mention</span><span>audience_size</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>LinkedIn Sales Navigator</h3><p>Practitioners in market plus bio keywords (CGM, glucose, metabolic) and follower count. The core targeting layer.</p></div><div class="source-card"><span>02</span><h3>Practitioner directories (IFM, NBHWC, Primal Health Coach, Precision Nutrition, Dexcom / Abbott, Levels / Nutrisense / Signos)</h3><p>Confirmation they work one-to-one with clients, plus Tier 1 seed accounts already sold on CGM.</p></div><div class="source-card"><span>03</span><h3>Google Maps</h3><p>Functional-medicine clinics, longevity and wellness clinics, med-spas, GLP-1 telehealth by city, plus review count and site link.</p></div><div class="source-card"><span>04</span><h3>Website / Instagram bio scrape (Clay + custom)</h3><p>The routing signal itself: CGM, glucose, metabolic and GLP-1 keyword detection.</p></div><div class="source-card"><span>05</span><h3>Apollo</h3><p>Contact and email enrichment on every account above.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="Waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">Waterfall</p>
+      <h2>How the waterfall works</h2>
+      <p class="takeaway">Exclusive routing, priority order, 100% market coverage.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF Site, LinkedIn or Instagram mentions CGM, or sells a glucose program</span>
+          <strong>Tier 1 - CGM-active</strong>
+          <em>They already believe in the modality but are cobbling it together by hand, with no product around it.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF Positions on weight, blood sugar, pre-diabetes, longevity or GLP-1, but no CGM detected</span>
+          <strong>Tier 2 - Metabolic-adjacent</strong>
+          <em>Adjacent and ready, leaving the highest-conviction modality and its revenue on the table.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF None of the above (any remaining health or wellness practitioner)</span>
+          <strong>Tier 3 - Catch-all</strong>
+          <em>Every remaining practitioner still needs a program clients can visibly see working.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF Site, LinkedIn or Instagram mentions CGM, or sells a glucose program -&gt; Tier 1 - CGM-active (They already believe in the modality but are cobbling it together by hand, with no product around it.)&#10;2. IF Positions on weight, blood sugar, pre-diabetes, longevity or GLP-1, but no CGM detected -&gt; Tier 2 - Metabolic-adjacent (Adjacent and ready, leaving the highest-conviction modality and its revenue on the table.)&#10;3. IF None of the above (any remaining health or wellness practitioner) -&gt; Tier 3 - Catch-all (Every remaining practitioner still needs a program clients can visibly see working.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF Site, LinkedIn or Instagram mentions CGM, or sells a glucose program -&gt; Tier 1 - CGM-active (They already believe in the modality but are cobbling it together by hand, with no product around it.)
+2. IF Positions on weight, blood sugar, pre-diabetes, longevity or GLP-1, but no CGM detected -&gt; Tier 2 - Metabolic-adjacent (Adjacent and ready, leaving the highest-conviction modality and its revenue on the table.)
+3. IF None of the above (any remaining health or wellness practitioner) -&gt; Tier 3 - Catch-all (Every remaining practitioner still needs a program clients can visibly see working.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">Tiers</p>
+      <h2>The three tiers</h2>
+      <p class="takeaway">CGM-active down to a full-market catch-all.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">5-10% TAM</span>
+          </div>
+          <h3>Tier 1: CGM-active</h3>
+          <p>Site, LinkedIn or Instagram mentions CGM, or sells a glucose program</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Believes in CGM but is doing it by hand: interpreting data manually, no structured curriculum, no AI coaching layer, no recurring product around it.</dd></div>
+              <div><dt>Offer</dt><dd>Done-For-You Metabolic Program Kit</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn / Instagram / site scrape</dd></div>
+              <div><dt>Reply density</dt><dd>Highest, target 1 positive reply per 150 contacts</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">25-35% TAM</span>
+          </div>
+          <h3>Tier 2: Metabolic-adjacent, no CGM</h3>
+          <p>Positions on weight, blood sugar, pre-diabetes, longevity or GLP-1, but no CGM detected</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Coaching metabolic health with words while competitors show clients their actual glucose data. Leaving the highest-conviction modality, and its revenue, on the table.</dd></div>
+              <div><dt>Offer</dt><dd>Add-CGM Playbook</dd></div>
+              <div><dt>Source</dt><dd>Website / LinkedIn scrape</dd></div>
+              <div><dt>Reply density</dt><dd>Strong, target 1 per 300</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">55-65% TAM</span>
+          </div>
+          <h3>Tier 3: Catch-all</h3>
+          <p>Any remaining health or wellness practitioner serving individuals</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Clients want tangible, visible results; the practitioner wants retention and recurring revenue. Generic coaching delivers neither reliably.</dd></div>
+              <div><dt>Offer</dt><dd>5-Min-a-Day Client Results Kit</dd></div>
+              <div><dt>Source</dt><dd>Directories + scrape</dd></div>
+              <div><dt>Reply density</dt><dd>Broadest, softest CTA, target 1 per 400</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">Campaigns</p>
+      <h2>The campaign idea bank</h2>
+      <p class="takeaway">Angles that layer on top of the waterfall, including GLP-1 and corporate wellness.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Done-For-You Program (believer angle)</h3>
+          <p>Open by acknowledging they already do the hard, credible thing (CGM), then show the gap: no curriculum, no AI coach, no recurring product. CTA: want the Done-For-You Program Kit?</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Practitioners already mentioning CGM / glucose</dd></div>
+            <div><dt>AI strategy</dt><dd>Detect the CGM mention, reference their existing glucose work, position ViiRaa as the productized layer under their brand.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Scale-Past-Your-Calendar (recurring revenue)</h3>
+          <p>CGM is billable-hours work today. Reframe it as a $249/yr membership that runs on the AI coach, not their calendar.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Solo coaches capped by 1:1 hours</dd></div>
+            <div><dt>AI strategy</dt><dd>Infer they trade time for money, frame the AI coach as the way to scale the modality they believe in.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Proof Beats Advice (add CGM)</h3>
+          <p>The clients who stick are the ones who see data change. Add a data-driven bootcamp without building it. CTA: the Add-CGM Playbook.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Metabolic / weight / longevity positioning, no CGM</dd></div>
+            <div><dt>AI strategy</dt><dd>Reference their focus area, contrast advice-based coaching with clients seeing their own glucose move.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Competitive FOMO (differentiator)</h3>
+          <p>The metabolic space is getting crowded fast, and we use real CGM data is the differentiator. Also new recurring revenue via quarterly bootcamps.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Crowded metabolic-health niches</dd></div>
+            <div><dt>AI strategy</dt><dd>Reference the crowding, position real CGM data as the line that closes skeptical clients.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Clients Who Actually See Results</h3>
+          <p>Clients lose motivation when nothing visibly changes. ViiRaa lets them watch their body respond in real time. CTA: the 5-Min-a-Day Results Kit.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Any health / wellness practitioner, base ICP</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with the universal retention pain, offer a program clients feel in week one.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Retention + Recurring Revenue</h3>
+          <p>A program clients feel early plus quarterly bootcamps means retention and recurring revenue without more hours from the coach.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Practitioners with churn / retention pain</dd></div>
+            <div><dt>AI strategy</dt><dd>Frame quarterly bootcamps as a recurring reason clients return.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>GLP-1 Clinic Retention (side campaign)</h3>
+          <p>Patients fear rebound weight after they taper off. A 14-day CGM bootcamp teaches what actually spikes their glucose, so results stick and they stay a patient longer. Highest-value near-term lane.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Clinics actively prescribing Ozempic / Wegovy / GLP-1s</dd></div>
+            <div><dt>AI strategy</dt><dd>Detect GLP-1 prescribing, tie CGM bootcamp to preventing rebound weight after tapering.</dd></div>
+            <div><dt>Value</dt><dd>Mitigate risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Corporate Wellness / HR Benefits (side campaign)</h3>
+          <p>A metabolic-health benefit with bulk seats. Higher deal value, longer cycle, sits outside the practitioner cascade.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Employers with shift-worker or pre-diabetic-heavy populations</dd></div>
+            <div><dt>AI strategy</dt><dd>Target manufacturing, logistics and healthcare-system HR, pitch bulk seats.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>OTC-CGM Bundle (side campaign)</h3>
+          <p>Consumers are buying OTC CGMs with no program attached. Bundle ViiRaa&#39;s bootcamp as the now-what layer.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Pharmacies, supplement brands, CGM retailers</dd></div>
+            <div><dt>AI strategy</dt><dd>Ride the Abbott Lingo / Dexcom Stelo OTC launches, pitch ViiRaa as the program layer.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Creator / Influencer Affiliate (side campaign)</h3>
+          <p>Partner with glucose and longevity creators for affiliate-led distribution to a pre-sold audience.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Metabolic-health and biohacking creators in the glucose / longevity niche</dd></div>
+            <div><dt>AI strategy</dt><dd>Affiliate distribution rather than a cold-email cadence.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">Copy</p>
+      <h2>Cold email sequences</h2>
+      <p class="takeaway">Reply-earning copy written for each tier.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{practice_name}}</span><span>{{metabolic_focus}}</span><span>{{health_focus}}</span>
+          <button class="copy-btn" type="button" data-copy="{{practice_name}}, {{metabolic_focus}}, {{health_focus}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - CGM-active practitioners</strong>
+              <em>Done-For-You Metabolic Program Kit</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - CGM-active practitioners steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your CGM clients&#10;&#10;Saw {{practice_name}} already uses continuous glucose monitoring with clients. Most coaches never go near it.&#10;&#10;But would it be fair to assume you&#39;re interpreting the data by hand: no structured curriculum, no daily nudge to the client, and no real product to sell around it?&#10;&#10;ViiRaa is a done-for-you 14-day CGM bootcamp with an AI coach that handles the daily five-minute guidance for you. You keep the client, we run the program. Seven days to awareness, seven days to transformation.&#10;&#10;Want the Done-For-You Metabolic Program Kit, the full 14-day structure plus the AI-coach demo you could offer under your own brand? Reply Y, no call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your CGM clients" data-preview="your CGM clients">your CGM clients</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Saw {{practice_name}} already uses continuous glucose monitoring with clients. Most coaches never go near it.&#10;&#10;But would it be fair to assume you&#39;re interpreting the data by hand: no structured curriculum, no daily nudge to the client, and no real product to sell around it?&#10;&#10;ViiRaa is a done-for-you 14-day CGM bootcamp with an AI coach that handles the daily five-minute guidance for you. You keep the client, we run the program. Seven days to awareness, seven days to transformation.&#10;&#10;Want the Done-For-You Metabolic Program Kit, the full 14-day structure plus the AI-coach demo you could offer under your own brand? Reply Y, no call needed." data-preview="Saw Vitality Health Collective already uses continuous glucose monitoring with clients. Most coaches never go near it.&#10;&#10;But would it be fair to assume you&#39;re interpreting the data by hand: no structured curriculum, no daily nudge to the client, and no real product to sell around it?&#10;&#10;ViiRaa is a done-for-you 14-day CGM bootcamp with an AI coach that handles the daily five-minute guidance for you. You keep the client, we run the program. Seven days to awareness, seven days to transformation.&#10;&#10;Want the Done-For-You Metabolic Program Kit, the full 14-day structure plus the AI-coach demo you could offer under your own brand? Reply Y, no call needed.">
+                        <p>Saw {{practice_name}} already uses continuous glucose monitoring with clients. Most coaches never go near it.</p><p>But would it be fair to assume you&#39;re interpreting the data by hand: no structured curriculum, no daily nudge to the client, and no real product to sell around it?</p><p>ViiRaa is a done-for-you 14-day CGM bootcamp with an AI coach that handles the daily five-minute guidance for you. You keep the client, we run the program. Seven days to awareness, seven days to transformation.</p><p>Want the Done-For-You Metabolic Program Kit, the full 14-day structure plus the AI-coach demo you could offer under your own brand? Reply Y, no call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Quick follow-up on the money side: right now CGM is billable-hours work for you. It caps at how many clients you can personally coach.&#10;&#10;ViiRaa turns it into a recurring product: a membership with four quarterly bootcamps that runs on the AI coach, not your calendar. You scale the modality you already believe in.&#10;&#10;Still happy to send the Program Kit. Want it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Quick follow-up on the money side: right now CGM is billable-hours work for you. It caps at how many clients you can personally coach.&#10;&#10;ViiRaa turns it into a recurring product: a membership with four quarterly bootcamps that runs on the AI coach, not your calendar. You scale the modality you already believe in.&#10;&#10;Still happy to send the Program Kit. Want it?" data-preview="Quick follow-up on the money side: right now CGM is billable-hours work for you. It caps at how many clients you can personally coach.&#10;&#10;ViiRaa turns it into a recurring product: a membership with four quarterly bootcamps that runs on the AI coach, not your calendar. You scale the modality you already believe in.&#10;&#10;Still happy to send the Program Kit. Want it?">
+                        <p>Quick follow-up on the money side: right now CGM is billable-hours work for you. It caps at how many clients you can personally coach.</p><p>ViiRaa turns it into a recurring product: a membership with four quarterly bootcamps that runs on the AI coach, not your calendar. You scale the modality you already believe in.</p><p>Still happy to send the Program Kit. Want it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your metabolic program&#10;&#10;No need for a call. Reply yes and I&#39;ll send the Done-For-You Metabolic Program Kit: the 14-day bootcamp plus AI-coach demo you can put your name on.&#10;&#10;Should I send it to you, or whoever runs your programs?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your metabolic program" data-preview="your metabolic program">your metabolic program</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No need for a call. Reply yes and I&#39;ll send the Done-For-You Metabolic Program Kit: the 14-day bootcamp plus AI-coach demo you can put your name on.&#10;&#10;Should I send it to you, or whoever runs your programs?" data-preview="No need for a call. Reply yes and I&#39;ll send the Done-For-You Metabolic Program Kit: the 14-day bootcamp plus AI-coach demo you can put your name on.&#10;&#10;Should I send it to you, or whoever runs your programs?">
+                        <p>No need for a call. Reply yes and I&#39;ll send the Done-For-You Metabolic Program Kit: the 14-day bootcamp plus AI-coach demo you can put your name on.</p><p>Should I send it to you, or whoever runs your programs?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Metabolic-adjacent, no CGM</strong>
+              <em>Add-CGM Playbook</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Metabolic-adjacent, no CGM steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: blood sugar, without the guesswork&#10;&#10;Saw {{practice_name}} works with clients on {{metabolic_focus}}, but it doesn&#39;t look like you&#39;re using continuous glucose data yet.&#10;&#10;Would it be fair to assume you&#39;re coaching blood sugar with advice, while the clients who actually stick are the ones who get to see their own data move?&#10;&#10;ViiRaa lets you add a data-driven 14-day CGM bootcamp to your practice without building it. The client wears the monitor, our AI coach guides five minutes a day, and they watch their glucose change in the first week. Proof beats advice.&#10;&#10;Want the Add-CGM Playbook, how to layer this onto your practice in two weeks with a real client before and after? Reply Y.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="blood sugar, without the guesswork" data-preview="blood sugar, without the guesswork">blood sugar, without the guesswork</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Saw {{practice_name}} works with clients on {{metabolic_focus}}, but it doesn&#39;t look like you&#39;re using continuous glucose data yet.&#10;&#10;Would it be fair to assume you&#39;re coaching blood sugar with advice, while the clients who actually stick are the ones who get to see their own data move?&#10;&#10;ViiRaa lets you add a data-driven 14-day CGM bootcamp to your practice without building it. The client wears the monitor, our AI coach guides five minutes a day, and they watch their glucose change in the first week. Proof beats advice.&#10;&#10;Want the Add-CGM Playbook, how to layer this onto your practice in two weeks with a real client before and after? Reply Y." data-preview="Saw Vitality Health Collective works with clients on weight loss and pre-diabetes, but it doesn&#39;t look like you&#39;re using continuous glucose data yet.&#10;&#10;Would it be fair to assume you&#39;re coaching blood sugar with advice, while the clients who actually stick are the ones who get to see their own data move?&#10;&#10;ViiRaa lets you add a data-driven 14-day CGM bootcamp to your practice without building it. The client wears the monitor, our AI coach guides five minutes a day, and they watch their glucose change in the first week. Proof beats advice.&#10;&#10;Want the Add-CGM Playbook, how to layer this onto your practice in two weeks with a real client before and after? Reply Y.">
+                        <p>Saw {{practice_name}} works with clients on {{metabolic_focus}}, but it doesn&#39;t look like you&#39;re using continuous glucose data yet.</p><p>Would it be fair to assume you&#39;re coaching blood sugar with advice, while the clients who actually stick are the ones who get to see their own data move?</p><p>ViiRaa lets you add a data-driven 14-day CGM bootcamp to your practice without building it. The client wears the monitor, our AI coach guides five minutes a day, and they watch their glucose change in the first week. Proof beats advice.</p><p>Want the Add-CGM Playbook, how to layer this onto your practice in two weeks with a real client before and after? Reply Y.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Follow-up on the competitive angle: the metabolic-health space is getting crowded fast, and we use real CGM data is the line that closes skeptical clients.&#10;&#10;It&#39;s also new recurring revenue. Quarterly bootcamps give clients a reason to keep paying you. Still want the Add-CGM Playbook?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Follow-up on the competitive angle: the metabolic-health space is getting crowded fast, and we use real CGM data is the line that closes skeptical clients.&#10;&#10;It&#39;s also new recurring revenue. Quarterly bootcamps give clients a reason to keep paying you. Still want the Add-CGM Playbook?" data-preview="Follow-up on the competitive angle: the metabolic-health space is getting crowded fast, and we use real CGM data is the line that closes skeptical clients.&#10;&#10;It&#39;s also new recurring revenue. Quarterly bootcamps give clients a reason to keep paying you. Still want the Add-CGM Playbook?">
+                        <p>Follow-up on the competitive angle: the metabolic-health space is getting crowded fast, and we use real CGM data is the line that closes skeptical clients.</p><p>It&#39;s also new recurring revenue. Quarterly bootcamps give clients a reason to keep paying you. Still want the Add-CGM Playbook?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: adding CGM to {{practice_name}}&#10;&#10;No call needed. Reply yes and I&#39;ll send the Add-CGM Playbook: the two-week rollout plus a sample client before and after.&#10;&#10;You, or whoever owns your programs?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="adding CGM to {{practice_name}}" data-preview="adding CGM to Vitality Health Collective">adding CGM to {{practice_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed. Reply yes and I&#39;ll send the Add-CGM Playbook: the two-week rollout plus a sample client before and after.&#10;&#10;You, or whoever owns your programs?" data-preview="No call needed. Reply yes and I&#39;ll send the Add-CGM Playbook: the two-week rollout plus a sample client before and after.&#10;&#10;You, or whoever owns your programs?">
+                        <p>No call needed. Reply yes and I&#39;ll send the Add-CGM Playbook: the two-week rollout plus a sample client before and after.</p><p>You, or whoever owns your programs?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Catch-all</strong>
+              <em>5-Min-a-Day Client Results Kit</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Catch-all steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: clients who actually see results&#10;&#10;You coach clients on {{health_focus}}, and like most practitioners you&#39;re probably fighting the same thing: clients who lose motivation because they can&#39;t see anything changing.&#10;&#10;Would it be fair to assume the ones who stick are the ones who get tangible, visible proof early?&#10;&#10;ViiRaa is a plug-and-play 14-day bootcamp where clients watch their own body respond in real time: five minutes a day, an AI coach doing the heavy lifting. You look cutting-edge; they stay engaged.&#10;&#10;Reply Y and I&#39;ll send a 5-Min-a-Day Client Results Kit: a sample bootcamp seat plus three real glucose transformation stories to show your clients. No call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="clients who actually see results" data-preview="clients who actually see results">clients who actually see results</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="You coach clients on {{health_focus}}, and like most practitioners you&#39;re probably fighting the same thing: clients who lose motivation because they can&#39;t see anything changing.&#10;&#10;Would it be fair to assume the ones who stick are the ones who get tangible, visible proof early?&#10;&#10;ViiRaa is a plug-and-play 14-day bootcamp where clients watch their own body respond in real time: five minutes a day, an AI coach doing the heavy lifting. You look cutting-edge; they stay engaged.&#10;&#10;Reply Y and I&#39;ll send a 5-Min-a-Day Client Results Kit: a sample bootcamp seat plus three real glucose transformation stories to show your clients. No call." data-preview="You coach clients on energy and weight, and like most practitioners you&#39;re probably fighting the same thing: clients who lose motivation because they can&#39;t see anything changing.&#10;&#10;Would it be fair to assume the ones who stick are the ones who get tangible, visible proof early?&#10;&#10;ViiRaa is a plug-and-play 14-day bootcamp where clients watch their own body respond in real time: five minutes a day, an AI coach doing the heavy lifting. You look cutting-edge; they stay engaged.&#10;&#10;Reply Y and I&#39;ll send a 5-Min-a-Day Client Results Kit: a sample bootcamp seat plus three real glucose transformation stories to show your clients. No call.">
+                        <p>You coach clients on {{health_focus}}, and like most practitioners you&#39;re probably fighting the same thing: clients who lose motivation because they can&#39;t see anything changing.</p><p>Would it be fair to assume the ones who stick are the ones who get tangible, visible proof early?</p><p>ViiRaa is a plug-and-play 14-day bootcamp where clients watch their own body respond in real time: five minutes a day, an AI coach doing the heavy lifting. You look cutting-edge; they stay engaged.</p><p>Reply Y and I&#39;ll send a 5-Min-a-Day Client Results Kit: a sample bootcamp seat plus three real glucose transformation stories to show your clients. No call.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Simple version: it&#39;s a program clients feel in the first week, and quarterly bootcamps give them a reason to come back. Retention and recurring revenue without more hours from you.&#10;&#10;Want the Results Kit on your desk?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Simple version: it&#39;s a program clients feel in the first week, and quarterly bootcamps give them a reason to come back. Retention and recurring revenue without more hours from you.&#10;&#10;Want the Results Kit on your desk?" data-preview="Simple version: it&#39;s a program clients feel in the first week, and quarterly bootcamps give them a reason to come back. Retention and recurring revenue without more hours from you.&#10;&#10;Want the Results Kit on your desk?">
+                        <p>Simple version: it&#39;s a program clients feel in the first week, and quarterly bootcamps give them a reason to come back. Retention and recurring revenue without more hours from you.</p><p>Want the Results Kit on your desk?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: a program your clients can feel&#10;&#10;No call needed. Reply yes and I&#39;ll send the 5-Min-a-Day Client Results Kit for {{practice_name}}.&#10;&#10;Should I send it to you or whoever runs client programs?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="a program your clients can feel" data-preview="a program your clients can feel">a program your clients can feel</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed. Reply yes and I&#39;ll send the 5-Min-a-Day Client Results Kit for {{practice_name}}.&#10;&#10;Should I send it to you or whoever runs client programs?" data-preview="No call needed. Reply yes and I&#39;ll send the 5-Min-a-Day Client Results Kit for Vitality Health Collective.&#10;&#10;Should I send it to you or whoever runs client programs?">
+                        <p>No call needed. Reply yes and I&#39;ll send the 5-Min-a-Day Client Results Kit for {{practice_name}}.</p><p>Should I send it to you or whoever runs client programs?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">Launch</p>
+      <h2>Launch plan and thresholds</h2>
+      <p class="takeaway">Phase-roll from highest conviction to broadest.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Phase 1: Launch Tier 1 (CGM-active) first. Smallest market, highest conviction, fastest proof. The CGM signal is unambiguous and the pain is sharp.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Phase 2: Add Tier 2 (Metabolic-adjacent) once Tier 1 shows at least 1 positive reply per 300. Biggest adjacent-and-ready pool.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Phase 3: Open the Catch-all last, once the sharper tiers have produced validated copy patterns to borrow from.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Parallel: Run the GLP-1 clinic side campaign from week one. Timely and high-intent enough to justify its own lane outside the waterfall.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply / 150 contacts</strong>
+                <span>Perfect. Scale this tier hard.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 300</strong>
+                <span>Good. Let it run.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 450-500</strong>
+                <span>Borderline. Test a copy variant, vary the lead magnet or first-line research angle.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 / 500, or reply rate under 1% after 1,500+ sends</strong>
+                <span>Cut and rework the tier.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a strategy call</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dana","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Vitality Health Collective","weight loss and pre-diabetes","energy and weight"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
