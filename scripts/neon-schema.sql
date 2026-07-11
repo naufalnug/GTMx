@@ -15,22 +15,38 @@
 -- ─────────────────────────────────────────────────────────────────────────
 
 -- ── Blog CMS ───────────────────────────────────────────────────────────────
+-- `body` is HTML produced by the admin WYSIWYG editor; legacy rows may hold
+-- the old lightweight-markdown format (detected at render time).
 create table if not exists articles (
-  id           bigint generated always as identity primary key,
-  slug         text unique not null,
-  title        text not null,
-  excerpt      text not null default '',
-  body         text not null default '',
-  cover_image  text,                             -- Vercel Blob URL, optional
-  tags         text[] not null default '{}',
-  status       text not null default 'draft',    -- 'draft' | 'published'
-  published_at timestamptz,
-  created_at   timestamptz not null default now(),
-  updated_at   timestamptz not null default now()
+  id               bigint generated always as identity primary key,
+  slug             text unique not null,
+  title            text not null,
+  excerpt          text not null default '',
+  body             text not null default '',
+  cover_image      text,                             -- Vercel Blob URL, optional
+  cover_alt        text,                             -- alt text for the cover image
+  og_image         text,                             -- social-share image override (defaults to cover)
+  meta_title       text,                             -- <title> override (defaults to title)
+  meta_description text,                             -- meta description override (defaults to excerpt)
+  canonical_url    text,                             -- canonical override (defaults to the post URL)
+  custom_schema    jsonb,                            -- extra schema.org JSON-LD (object or array)
+  faqs             jsonb not null default '[]',      -- [{"question": "...", "answer": "..."}]
+  tags             text[] not null default '{}',
+  status           text not null default 'draft',    -- 'draft' | 'published'
+  published_at     timestamptz,
+  created_at       timestamptz not null default now(),
+  updated_at       timestamptz not null default now()
 );
 
--- If you created `articles` before cover images existed, add the column:
-alter table articles add column if not exists cover_image text;
+-- Idempotent upgrades for tables created before these columns existed:
+alter table articles add column if not exists cover_image      text;
+alter table articles add column if not exists cover_alt        text;
+alter table articles add column if not exists og_image         text;
+alter table articles add column if not exists meta_title       text;
+alter table articles add column if not exists meta_description text;
+alter table articles add column if not exists canonical_url    text;
+alter table articles add column if not exists custom_schema    jsonb;
+alter table articles add column if not exists faqs             jsonb not null default '[]';
 
 create index if not exists idx_articles_status_pub on articles (status, published_at desc);
 create index if not exists idx_articles_slug        on articles (slug);

@@ -2,7 +2,8 @@ import { notFound } from 'next/navigation'
 import Navbar from '../../../components/home/Navbar'
 import Footer from '../../../components/home/Footer'
 import { getPublishedArticles, getPublishedArticleBySlug } from '../../../lib/articles'
-import { pageMetadata } from '../../../lib/seo'
+import { pageMetadata, absoluteUrl, SITE_URL, SITE_NAME } from '../../../lib/seo'
+import { looksLikeHtml, mdToHtml, sanitizeHtml } from '../../../lib/richtext'
 import '../../home.css'
 import './page.css'
 
@@ -23,39 +24,103 @@ export async function generateMetadata({ params }) {
   // No canonical for an unknown slug — the page itself 404s (notFound below).
   if (!article) return {}
 
-  return pageMetadata({
+  const title = article.metaTitle || `${article.title} | GTMx`
+  const description = article.metaDescription || article.excerpt
+  const image = article.ogImage || article.coverImage || undefined
+
+  const meta = pageMetadata({
     path: `/content/${article.slug}`,
-    title: `${article.title} | GTMx`,
-    description: article.excerpt,
+    title,
+    description,
+    image,
+    imageAlt: article.coverAlt || article.title,
     openGraph: {
-      title: article.title,
-      description: article.excerpt,
+      title: article.metaTitle || article.title,
+      description,
       type: 'article',
       publishedTime: article.date,
     },
   })
+  // Editor-supplied canonical override (e.g. when the post is syndicated from
+  // elsewhere). og:url intentionally stays on this page's own URL.
+  if (article.canonicalUrl) {
+    meta.alternates = { ...meta.alternates, canonical: article.canonicalUrl }
+  }
+  return meta
 }
+
+// Every article page ships BlogPosting + BreadcrumbList; FAQPage is added when
+// the post has FAQs, and any editor-supplied custom schema is layered on last.
+function buildSchemas(article, url) {
+  const image = article.ogImage || article.coverImage
+  const schemas = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: article.title,
+      description: article.metaDescription || article.excerpt,
+      ...(image ? { image: [image] } : {}),
+      datePublished: article.date,
+      mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+      url,
+      author: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
+      publisher: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
+      ...(article.tags.length ? { keywords: article.tags.join(', ') } : {}),
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: absoluteUrl('/content') },
+        { '@type': 'ListItem', position: 3, name: article.title, item: url },
+      ],
+    },
+  ]
+  if (article.faqs.length) {
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: article.faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.question,
+        acceptedAnswer: { '@type': 'Answer', text: f.answer },
+      })),
+    })
+  }
+  if (article.customSchema) {
+    schemas.push(...(Array.isArray(article.customSchema) ? article.customSchema : [article.customSchema]))
+  }
+  return schemas
+}
+
+// `</script>`-safe JSON-LD serialization.
+const jsonLd = (obj) => JSON.stringify(obj).replace(/</g, '\\u003c')
 
 export default async function ArticlePage({ params }) {
   const { slug } = await params
   const article = await getPublishedArticleBySlug(slug)
   if (!article) notFound()
 
-  const paragraphs = article.body.split('\n\n')
+  const url = absoluteUrl(`/content/${article.slug}`)
+  const schemas = buildSchemas(article, url)
 
-  // Inline formatting for a text run: image markdown, then bold. URLs are
-  // restricted to http(s) so a stray "javascript:" can't slip into the src.
-  const inlineHtml = (s) =>
-    s
-      .replace(
-        /!\[([^\]]*)\]\((https?:\/\/[^\s)]+)\)/g,
-        (_, alt, url) =>
-          `<img class="article-page__img" src="${url}" alt="${alt.replace(/"/g, '&quot;')}" loading="lazy" />`
-      )
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+  // WYSIWYG posts are stored as HTML (sanitized again on render, so rows that
+  // predate save-time sanitization are covered); legacy posts hold the old
+  // lightweight-markdown format and are upgraded here.
+  const bodyHtml = looksLikeHtml(article.body)
+    ? sanitizeHtml(article.body)
+    : mdToHtml(article.body)
 
   return (
     <>
+      {schemas.map((schema, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLd(schema) }}
+        />
+      ))}
       <Navbar />
       <div className="dd">
         <main className="article-page">
@@ -80,42 +145,26 @@ export default async function ArticlePage({ params }) {
             {article.coverImage && (
               <div className="article-page__cover">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={article.coverImage} alt={article.title} />
+                <img src={article.coverImage} alt={article.coverAlt || article.title} />
               </div>
             )}
 
-            <div className="article-page__body">
-              {paragraphs.map((p, i) => {
-                if (p.startsWith('## ')) {
-                  return <h2 key={i} className="article-page__h2">{p.replace('## ', '')}</h2>
-                }
-                // A paragraph that is only an image → block-level figure.
-                if (/^!\[[^\]]*\]\(https?:\/\/[^\s)]+\)$/.test(p.trim())) {
-                  return (
-                    <figure key={i} className="article-page__figure"
-                      dangerouslySetInnerHTML={{ __html: inlineHtml(p.trim()) }}
-                    />
-                  )
-                }
-                if (p.startsWith('- **')) {
-                  const items = p.split('\n')
-                  return (
-                    <ul key={i} className="article-page__list">
-                      {items.map((item, j) => (
-                        <li key={j} className="article-page__list-item"
-                          dangerouslySetInnerHTML={{ __html: inlineHtml(item.replace(/^- /, '')) }}
-                        />
-                      ))}
-                    </ul>
-                  )
-                }
-                return (
-                  <p key={i} className="article-page__paragraph"
-                    dangerouslySetInnerHTML={{ __html: inlineHtml(p) }}
-                  />
-                )
-              })}
-            </div>
+            <div
+              className="article-page__body"
+              dangerouslySetInnerHTML={{ __html: bodyHtml }}
+            />
+
+            {article.faqs.length > 0 && (
+              <section className="article-page__faqs">
+                <h2 className="article-page__faqs-title">Frequently asked questions</h2>
+                {article.faqs.map((f, i) => (
+                  <details key={i} className="article-page__faq">
+                    <summary>{f.question}</summary>
+                    <p>{f.answer}</p>
+                  </details>
+                ))}
+              </section>
+            )}
 
             <div className="article-page__cta">
               <p className="article-page__cta-text">Ready to build your revenue engine?</p>
