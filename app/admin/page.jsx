@@ -241,6 +241,13 @@ function PostList({ onNew, onEdit, onLogout }) {
 // without React touching the DOM, so the caret never jumps.
 function RichEditor({ initialHtml, onChange, onInsertImage, imageBusy, onImport, importBusy, mode, onMode }) {
   const ref = useRef(null)
+  // Freeze the seed HTML for the life of this mount. onChange updates parent
+  // state on every keystroke, which re-renders us with a fresh `initialHtml` —
+  // if that were passed to dangerouslySetInnerHTML directly, React would
+  // rewrite innerHTML each keypress and kick the caret back to the start
+  // (typed text comes out reversed). Content is only re-seeded by remounting
+  // (the parent bumps `key`).
+  const [seedHtml] = useState(initialHtml)
 
   useEffect(() => {
     // Emit <p> on Enter instead of the browser default <div>.
@@ -321,7 +328,7 @@ function RichEditor({ initialHtml, onChange, onInsertImage, imageBusy, onImport,
         contentEditable
         suppressContentEditableWarning
         data-placeholder="Write your post here…"
-        dangerouslySetInnerHTML={{ __html: initialHtml }}
+        dangerouslySetInnerHTML={{ __html: seedHtml }}
         onInput={() => onChange(ref.current?.innerHTML || '')}
         onBlur={() => onChange(ref.current?.innerHTML || '')}
       />
