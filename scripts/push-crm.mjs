@@ -9,7 +9,7 @@
  *   node scripts/push-crm.mjs           # live backfill/reconcile
  *
  * Needs (from .env.local): EMAILBISON_GTMX_API_KEY, EMAILBISON_GTMX_INSTANCE_URL,
- * TWENTY_API_KEY, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY.
+ * TWENTY_API_KEY, DATABASE_URL (Neon).
  */
 
 import fs from 'node:fs';
@@ -31,13 +31,12 @@ function loadEnv() {
 
 loadEnv();
 
-const { getSupabase } = await import('../lib/supabase.js');
 const { reconcileInterestedReplies } = await import('../lib/crmPush.js');
 
 const dryRun = process.argv.slice(2).includes('--dry');
 const log = (msg) => process.stdout.write(`${msg}\n`);
 
-reconcileInterestedReplies({ sb: getSupabase(), log, dryRun })
+reconcileInterestedReplies({ log, dryRun })
   .then((counts) => {
     log(`\n${dryRun ? 'Dry run' : 'Push'} complete: ${JSON.stringify(counts, null, 2)}`);
     process.exit(0);

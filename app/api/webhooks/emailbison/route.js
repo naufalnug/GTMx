@@ -1,4 +1,3 @@
-import { getSupabase } from '../../../../lib/supabase';
 import {
   getGtmxConfig,
   getReply,
@@ -84,8 +83,7 @@ export async function POST(request) {
     let lead = leadInline && leadInline.email ? leadInline : null;
     if (!lead && resolvedLeadId) lead = await getLead(cfg, resolvedLeadId).catch(() => null);
 
-    const sb = getSupabase();
-    const res = await pushReplyToTwenty({ reply, lead }, { sb, cfg, log: (m) => console.log(m) });
+    const res = await pushReplyToTwenty({ reply, lead }, { cfg, log: (m) => console.log(m) });
     return Response.json({ ok: true, result: res });
   } catch (err) {
     console.error('EmailBison webhook failed', err);

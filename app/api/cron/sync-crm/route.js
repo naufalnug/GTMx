@@ -1,4 +1,3 @@
-import { getSupabase } from '../../../../lib/supabase';
 import { reconcileInterestedReplies } from '../../../../lib/crmPush';
 
 export const dynamic = 'force-dynamic';
@@ -20,8 +19,7 @@ export async function GET(request) {
     }
   }
   try {
-    const sb = getSupabase();
-    const counts = await reconcileInterestedReplies({ sb, log: (m) => console.log(m) });
+    const counts = await reconcileInterestedReplies({ log: (m) => console.log(m) });
     return Response.json({ ok: true, counts });
   } catch (err) {
     console.error('CRM sync failed', err);

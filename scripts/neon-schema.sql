@@ -181,3 +181,24 @@ select
 from contacts c
 where domain is not null and domain <> ''
 group by client, source, domain;
+
+-- ── crm_pushed_replies ledger ───────────────────────────────────────────────
+-- Idempotency ledger for the EmailBison -> Twenty CRM pipeline (lib/crmPush.js).
+-- One row per interested reply pushed into Twenty; crm_note_id being set means
+-- the reply is fully processed and must never be re-pushed (notes have no other
+-- dedup key). Written by the webhook + the hourly reconcile cron.
+create table if not exists crm_pushed_replies (
+  workspace_id   text        not null,   -- EmailBison workspace id ('29' = GTMx)
+  reply_id       bigint      not null,
+  lead_id        bigint,
+  email          text,
+  crm_company_id uuid,
+  crm_person_id  uuid,
+  crm_note_id    uuid,
+  pushed_at      timestamptz,
+  error          text,
+  updated_at     timestamptz not null default now(),
+  primary key (workspace_id, reply_id)
+);
+create index if not exists idx_crm_pushed_pending
+  on crm_pushed_replies (workspace_id) where crm_note_id is null;
