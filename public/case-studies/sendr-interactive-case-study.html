@@ -58,7 +58,7 @@
     .eyebrow {
       display: inline-flex;
       align-items: center;
-      width: max-content;
+      width: fit-content;
       max-width: 100%;
       gap: 8px;
       font-family: var(--mono);
@@ -67,6 +67,8 @@
       text-transform: uppercase;
       font-weight: 700;
       color: #9a593e;
+      overflow-wrap: anywhere;
+      word-break: normal;
     }
     .wordmark { font-family: var(--display); font-size: 31px; font-weight: 900; letter-spacing: -.04em; }
     .wordmark span {
@@ -333,6 +335,8 @@
     .section-head h2 { margin-top: 8px; font-size: clamp(34px, 5vw, 58px); }
     .takeaway { max-width: 64ch; margin-top: 14px; font-size: 19px; }
     .panel {
+      min-width: 0;
+      overflow: hidden;
       background: var(--paper);
       border: var(--border);
       border-radius: 20px;
@@ -341,7 +345,9 @@
     }
     .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
     .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .exhibit-rank-grid { grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr); }
     .quote {
+      min-width: 0;
       border: var(--border);
       border-radius: 18px;
       background: var(--panel);
@@ -352,8 +358,16 @@
     .quote p { color: var(--ink); font-size: clamp(20px, 2.2vw, 28px); line-height: 1.18; font-family: var(--display); font-weight: 800; }
     .quote cite { display: block; margin-top: 18px; color: var(--muted); font-family: var(--mono); font-size: 12px; font-style: normal; text-transform: uppercase; letter-spacing: .08em; }
     .body-copy { display: grid; gap: 16px; }
+    .body-copy h3,
+    .body-copy p,
+    .quote p,
+    .quote cite {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
     .body-copy p { font-size: 17px; line-height: 1.72; }
     .source-page {
+      min-width: 0;
       margin-top: 22px;
       border: var(--border);
       border-radius: 20px;
@@ -377,6 +391,12 @@
       letter-spacing: .06em;
       text-transform: uppercase;
       color: #8a563d;
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+    .source-page__top span {
+      min-width: 0;
+      overflow-wrap: anywhere;
     }
     .source-page[data-expandable] .source-page__top::after {
       content: "Click to expand";
@@ -636,6 +656,9 @@
       .hero { min-height: auto; }
       .metric-strip, .grid-3, .pillar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
+    @media (max-width: 1180px) {
+      .exhibit-rank-grid { grid-template-columns: 1fr; }
+    }
     @media (max-width: 680px) {
       .wrap { width: min(100% - 32px, 1180px); }
       .brandbar { flex-direction: column; align-items: flex-start; margin-bottom: 34px; }
@@ -843,7 +866,7 @@
           <button class="tab" type="button" data-tab="runrate">Exhibit D · Run rate</button>
         </div>
         <div class="tab-panel is-active" data-panel="rank">
-          <div class="grid-2">
+          <div class="grid-2 exhibit-rank-grid">
             <div class="panel body-copy">
               <p class="eyebrow">§ EXHIBIT B · RANKED #2 · ABOVE ZOOMINFO</p>
               <h3>Google's AI Overview now answers "what is the best GTM tool" with Sendr.</h3>
