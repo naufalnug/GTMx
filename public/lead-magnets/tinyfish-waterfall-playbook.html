@@ -1,0 +1,1688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TinyFish - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-07-13</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for TinyFish</p>
+          <h1>Your TinyFish waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">A scrollable GTMx strategy artifact for routing the entire enterprise web-data market into the right offer, using one signal: how deeply a company already depends on live web data.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> For an infrastructure product that spans developers and enterprises, the cleanest buying signal is how much a company already leans on live web data. A company running a scraping vendor has proven the pain and the budget. A company hiring scraper engineers is building what TinyFish sells. A company whose model runs on competitor pricing needs it whether or not they&#39;ve named it.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book the strategy call</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>50k+</strong>
+          <span>accounts in the routed market</span>
+        </div>
+        <div class="metric-card">
+          <strong>89.9%</strong>
+          <span>Mind2Web accuracy on live pages</span>
+        </div>
+        <div class="metric-card">
+          <strong>&lt;250ms</strong>
+          <span>browser cold starts</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>TinyFish is enterprise infrastructure for AI web agents: four APIs (Search, Fetch, Agent, Browser) that hit the live page where default AI web access returns cached, blocked or stale results. 89.9% Mind2Web accuracy, sub-250ms browser cold starts, one key, structured JSON out.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal is proven live-web-data dependency</p></div><div><span>02</span><p>One cascade routes the whole market</p></div><div><span>03</span><p>Each signal maps to a different pitch</p></div><div><span>04</span><p>Layer angles on the always-on waterfall</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>Waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>Email Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">Signal</p>
+      <h2>The signal is proven live-web-data dependency</h2>
+      <p class="takeaway">Every company is checked against how much it already leans on live web data, a public signal carried in its tools, its open roles and its business model, then routed by strength.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>A detected scraping vendor is budget already committed to live web data, the exact job TinyFish does better in one API.</p></div><div class="reason-card"><span>02</span><p>The signal is public: tech-stack detection, open job posts and business model are all observable without expensive enrichment.</p></div><div class="reason-card"><span>03</span><p>The signal type is a clean router: a tool detection, a hiring signal and a vertical each map to a different, sharper pitch.</p></div><div class="reason-card"><span>04</span><p>We only route on signals that are provable when present, never on the absence of a tool, so no tier rests on a false negative.</p></div>
+            </div>
+            <div class="field-cloud"><span>webdata_tool_detected</span><span>scraping_job_open</span><span>webdata_vertical</span><span>ai_llm_stack</span><span>headcount_tier</span><span>funding_stage</span><span>github_scraping_repos</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>BuiltWith / Wappalyzer / PredictLeads</h3><p>Web-data and browser-automation infra detection (Bright Data, Apify, Zyte, Browserbase, Firecrawl, ScraperAPI, Diffbot) plus the AI/LLM stack, in one pull</p></div><div class="source-card"><span>02</span><h3>LinkedIn Jobs + Coresignal / Clay</h3><p>Open roles mentioning scraping, crawling, data extraction, web automation, web agents, Playwright, Puppeteer, Selenium or Scrapy</p></div><div class="source-card"><span>03</span><h3>Crunchbase / Apollo</h3><p>Industry classification, funding stage and headcount, driving the Tier 3 vertical tag and the priority order inside every tier</p></div><div class="source-card"><span>04</span><h3>GitHub org search</h3><p>Public repos leaning on Playwright / Puppeteer / Scrapy / Crawlee at scale, a supporting signal for Tier 1 and Tier 2</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="Waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">Waterfall</p>
+      <h2>One cascade routes the whole market</h2>
+      <p class="takeaway">Each company is tested top-to-bottom (tool, then hiring, then vertical) and routes to exactly one campaign. Build the strategy once, then keep adding leads.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF a web-data / scraping / browser-automation tool is detected</span>
+          <strong>Tier 1</strong>
+          <em>Proven pain and budget for live web data</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF ELSE an open role mentions scraping / crawling / web automation</span>
+          <strong>Tier 2</strong>
+          <em>Building brittle scrapers in-house</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF ELSE the business model is a live-web-data vertical</span>
+          <strong>Tier 3</strong>
+          <em>Pricing and inventory decisions run on stale data</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF ELSE every remaining company building agents or products</span>
+          <strong>Catch-all</strong>
+          <em>Agents hit reliability ceilings on cached web results</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF a web-data / scraping / browser-automation tool is detected -&gt; Tier 1 (Proven pain and budget for live web data)&#10;2. IF ELSE an open role mentions scraping / crawling / web automation -&gt; Tier 2 (Building brittle scrapers in-house)&#10;3. IF ELSE the business model is a live-web-data vertical -&gt; Tier 3 (Pricing and inventory decisions run on stale data)&#10;4. IF ELSE every remaining company building agents or products -&gt; Catch-all (Agents hit reliability ceilings on cached web results)">Copy routing spec</button>
+            <pre id="routeCode">1. IF a web-data / scraping / browser-automation tool is detected -&gt; Tier 1 (Proven pain and budget for live web data)
+2. IF ELSE an open role mentions scraping / crawling / web automation -&gt; Tier 2 (Building brittle scrapers in-house)
+3. IF ELSE the business model is a live-web-data vertical -&gt; Tier 3 (Pricing and inventory decisions run on stale data)
+4. IF ELSE every remaining company building agents or products -&gt; Catch-all (Agents hit reliability ceilings on cached web results)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">Tiers</p>
+      <h2>Each signal maps to a different pitch</h2>
+      <p class="takeaway">A detected scraping vendor gets the replace-your-stack pitch, an open scraper req gets build-vs-buy, a pricing-dependent vertical gets the live sample. Pain is inferred from the trigger, never invented.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">8-12% TAM</span>
+          </div>
+          <h3>Tier 1: Scraping-Vendor Users</h3>
+          <p>Runs a scraping or browser-automation vendor (Bright Data, Apify, Zyte, Browserbase, Firecrawl, ScraperAPI, Diffbot)</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Paying for a stack that returns cached or blocked pages, breaks on auth and bot detection, and needs constant proxy babysitting.</dd></div>
+              <div><dt>Offer</dt><dd>Head-to-head benchmark vs. their current tool (accuracy + cost)</dd></div>
+              <div><dt>Source</dt><dd>BuiltWith / Wappalyzer tool detection</dd></div>
+              <div><dt>Reply density</dt><dd>Highest, target 1 in 150</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">10-15% TAM</span>
+          </div>
+          <h3>Tier 2: Hiring Scrapers</h3>
+          <p>Hiring for scraping, data-extraction, web-automation or AI-agent roles</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Building brittle in-house scrapers, with engineers burning cycles on maintenance and bot detection.</dd></div>
+              <div><dt>Offer</dt><dd>Build-vs-buy teardown of their scraping stack</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Jobs + Coresignal / Clay</dd></div>
+              <div><dt>Reply density</dt><dd>High, target 1 in 300</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">25-30% TAM</span>
+          </div>
+          <h3>Tier 3: Web-Data Verticals</h3>
+          <p>Business model depends on live competitor / market web data (e-commerce pricing, travel inventory, marketplace, insurance quoting)</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Pricing and inventory decisions made on stale or hand-pulled data while competitors reprice off live data.</dd></div>
+              <div><dt>Offer</dt><dd>Live sample: a real-time price/inventory monitor for their category</dd></div>
+              <div><dt>Source</dt><dd>Crunchbase / Apollo vertical tag</dd></div>
+              <div><dt>Reply density</dt><dd>High, target 1 in 300</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="catchall" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">45-55% TAM</span>
+          </div>
+          <h3>Catch-all: Agent / Product Builders</h3>
+          <p>Building AI agents or products (AI/LLM stack detected), or all remaining enterprise</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Their agents hit reliability ceilings on cached and blocked web results.</dd></div>
+              <div><dt>Offer</dt><dd>Free API credits + the Mind2Web accuracy report</dd></div>
+              <div><dt>Source</dt><dd>Full TAM + AI/LLM stack detection</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest, target 1 in 500 or better</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">Campaigns</p>
+      <h2>Layer angles on the always-on waterfall</h2>
+      <p class="takeaway">The dependency cascade is the core engine. Competitor-takedown, funding, new-leader, hackathon and lookalike motions stay as opt-in side campaigns.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Replace-Your-Stack</h3>
+          <p>Hottest tier: budget and pain for live web data are proven by the detected vendor.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Scraping / browser-automation vendor detected</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the detected tool, contrast the proxy-plus-parser stack with one API</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Build-vs-Buy Teardown</h3>
+          <p>High-fit builders. The scraper is never done; TinyFish is the whole layer as one API.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Hiring scraping / data-extraction / web-automation roles</dd></div>
+            <div><dt>AI strategy</dt><dd>Quote the JD, contrast building and maintaining scrapers with an API call</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Live Category Monitor</h3>
+          <p>Outcome-led and high converting once the live category sample exists.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Web-data-dependent vertical (pricing, inventory, quoting)</dd></div>
+            <div><dt>AI strategy</dt><dd>Infer stale-data cost, offer a live sample monitor for their category</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Broad</span>
+          </div>
+          <h3>Cached-vs-Live</h3>
+          <p>Sweeps the biggest bucket with the softest copy and the free-credits CTA.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Building agents / products, no tool or vertical match</dd></div>
+            <div><dt>AI strategy</dt><dd>Static value-prop send: default web access is cached, TinyFish hits the live page</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Creative Ideas (3 web-agent ideas)</h3>
+          <p>High-volume workhorse: a competitor-price monitor, a portal-pulling agent and a live-web feed scoped to their site.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Base market</dd></div>
+            <div><dt>AI strategy</dt><dd>Analyze their website, generate 3 tailored live-web ideas</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>89.9% Accuracy</h3>
+          <p>Self-selecting no-AI control: the accuracy stat does the qualifying.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Base market</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with the Mind2Web number, no personalization</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Focused</span>
+          </div>
+          <h3>Bright Data / Apify Takedown</h3>
+          <p>Sharpen Tier 1 by naming the exact incumbent and its known gaps.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Specific vendor detected</dd></div>
+            <div><dt>AI strategy</dt><dd>Vendor-specific angle on cost and auth/bot-detection reliability</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Niche</span>
+          </div>
+          <h3>Playwright-at-Scale</h3>
+          <p>Dev-native proof that they already build this and the maintenance never ends.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>GitHub repos heavy on Playwright / Puppeteer</dd></div>
+            <div><dt>AI strategy</dt><dd>Cite the repos, offer to maintain the hard 20% they keep patching</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Focused</span>
+          </div>
+          <h3>New Data / AI Leader</h3>
+          <p>New leaders buy tools in their first quarter to show early impact.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>New Head of Data / AI / ML in last 90 days</dd></div>
+            <div><dt>AI strategy</dt><dd>Reference start date and prior company, offer a visible quick win</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Focused</span>
+          </div>
+          <h3>Fresh Funding (AI-native)</h3>
+          <p>New capital means pressure to ship, before burning it rebuilding the web layer.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Raised seed to Series B in last 6 months</dd></div>
+            <div><dt>AI strategy</dt><dd>Pull the round, tie to pressure to ship agents fast without building infra</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Focused</span>
+          </div>
+          <h3>Agent-Framework Users</h3>
+          <p>Their agents are blind to the live web; TinyFish is the missing tool.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>LangChain / CrewAI / LlamaIndex detected</dd></div>
+            <div><dt>AI strategy</dt><dd>Detect the framework, position free Search + Fetch as the live-web layer</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Niche</span>
+          </div>
+          <h3>Hackathon Builders</h3>
+          <p>Time-boxed, dev-loved motion that mirrors TinyFish&#39;s own hackathon presence.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Recent AI hackathon participants</dd></div>
+            <div><dt>AI strategy</dt><dd>Meet ship-fast builders where they are with a live-web API to wire in today</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="Email Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">Email Copy</p>
+      <h2>Copy that opens with their own web-data signal</h2>
+      <p class="takeaway">Each sequence names the tool, role or vertical, infers the pain, ties in one TinyFish capability, and asks for a one-word yes with a free asset.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company_name}}</span><span>{{webdata_tool}}</span><span>{{role_title}}</span><span>{{webdata_signal}}</span><span>{{industry}}</span><span>{{other_decision_maker}}</span><span>{{case_study}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company_name}}, {{webdata_tool}}, {{role_title}}, {{webdata_signal}}, {{industry}}, {{other_decision_maker}}, {{case_study}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 — Scraping-Vendor Users</strong>
+              <em>Head-to-head benchmark vs. their current tool (accuracy + cost)</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 — Scraping-Vendor Users steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company_name}} + {{webdata_tool}}&#10;&#10;{{first_name}}, noticed {{company_name}} is running {{webdata_tool}} for web data.&#10;&#10;Would it be fair to assume your team spends more time on proxies, retries, and pages that come back blocked or cached than on the data itself?&#10;&#10;We built TinyFish so one API hits the live page and returns clean structured JSON. 89.9% Mind2Web accuracy, no routing code, auth and bot detection handled.&#10;&#10;Reply Y and I&#39;ll send a head-to-head benchmark vs {{webdata_tool}} on accuracy and cost. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company_name}} + {{webdata_tool}}" data-preview="Northwind Commerce + Bright Data">{{company_name}} + {{webdata_tool}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, noticed {{company_name}} is running {{webdata_tool}} for web data.&#10;&#10;Would it be fair to assume your team spends more time on proxies, retries, and pages that come back blocked or cached than on the data itself?&#10;&#10;We built TinyFish so one API hits the live page and returns clean structured JSON. 89.9% Mind2Web accuracy, no routing code, auth and bot detection handled.&#10;&#10;Reply Y and I&#39;ll send a head-to-head benchmark vs {{webdata_tool}} on accuracy and cost. No call needed." data-preview="Jordan, noticed Northwind Commerce is running Bright Data for web data.&#10;&#10;Would it be fair to assume your team spends more time on proxies, retries, and pages that come back blocked or cached than on the data itself?&#10;&#10;We built TinyFish so one API hits the live page and returns clean structured JSON. 89.9% Mind2Web accuracy, no routing code, auth and bot detection handled.&#10;&#10;Reply Y and I&#39;ll send a head-to-head benchmark vs Bright Data on accuracy and cost. No call needed.">
+                        <p>{{first_name}}, noticed {{company_name}} is running {{webdata_tool}} for web data.</p><p>Would it be fair to assume your team spends more time on proxies, retries, and pages that come back blocked or cached than on the data itself?</p><p>We built TinyFish so one API hits the live page and returns clean structured JSON. 89.9% Mind2Web accuracy, no routing code, auth and bot detection handled.</p><p>Reply Y and I&#39;ll send a head-to-head benchmark vs {{webdata_tool}} on accuracy and cost. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, one more angle on the {{webdata_tool}} setup.&#10;&#10;Most teams are paying for proxies, a parser, and a headless browser as three line items, plus the engineers who keep them alive.&#10;&#10;TinyFish is one key across Search, Fetch, Agent, and Browser, with Search and Fetch free. {{case_study}} run this at scale.&#10;&#10;Want the benchmark? Just reply yes and I&#39;ll send it, or point me to whoever owns your data infra.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, one more angle on the {{webdata_tool}} setup.&#10;&#10;Most teams are paying for proxies, a parser, and a headless browser as three line items, plus the engineers who keep them alive.&#10;&#10;TinyFish is one key across Search, Fetch, Agent, and Browser, with Search and Fetch free. {{case_study}} run this at scale.&#10;&#10;Want the benchmark? Just reply yes and I&#39;ll send it, or point me to whoever owns your data infra." data-preview="Jordan, one more angle on the Bright Data setup.&#10;&#10;Most teams are paying for proxies, a parser, and a headless browser as three line items, plus the engineers who keep them alive.&#10;&#10;TinyFish is one key across Search, Fetch, Agent, and Browser, with Search and Fetch free. a major rideshare and global e-commerce brands run this at scale.&#10;&#10;Want the benchmark? Just reply yes and I&#39;ll send it, or point me to whoever owns your data infra.">
+                        <p>{{first_name}}, one more angle on the {{webdata_tool}} setup.</p><p>Most teams are paying for proxies, a parser, and a headless browser as three line items, plus the engineers who keep them alive.</p><p>TinyFish is one key across Search, Fetch, Agent, and Browser, with Search and Fetch free. {{case_study}} run this at scale.</p><p>Want the benchmark? Just reply yes and I&#39;ll send it, or point me to whoever owns your data infra.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: question for {{first_name}}&#10;&#10;{{first_name}}, quick one. When a page needs a login or trips bot detection, does {{webdata_tool}} still get you clean data, or does that job quietly fail?&#10;&#10;That&#39;s the exact gap TinyFish closes. Live page, structured JSON, sub-250ms browser cold starts.&#10;&#10;No need for a call. Reply yes and I&#39;ll send the benchmark. Should I send it to you or {{other_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="question for {{first_name}}" data-preview="question for Jordan">question for {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, quick one. When a page needs a login or trips bot detection, does {{webdata_tool}} still get you clean data, or does that job quietly fail?&#10;&#10;That&#39;s the exact gap TinyFish closes. Live page, structured JSON, sub-250ms browser cold starts.&#10;&#10;No need for a call. Reply yes and I&#39;ll send the benchmark. Should I send it to you or {{other_decision_maker}}?" data-preview="Jordan, quick one. When a page needs a login or trips bot detection, does Bright Data still get you clean data, or does that job quietly fail?&#10;&#10;That&#39;s the exact gap TinyFish closes. Live page, structured JSON, sub-250ms browser cold starts.&#10;&#10;No need for a call. Reply yes and I&#39;ll send the benchmark. Should I send it to you or your Head of Data?">
+                        <p>{{first_name}}, quick one. When a page needs a login or trips bot detection, does {{webdata_tool}} still get you clean data, or does that job quietly fail?</p><p>That&#39;s the exact gap TinyFish closes. Live page, structured JSON, sub-250ms browser cold starts.</p><p>No need for a call. Reply yes and I&#39;ll send the benchmark. Should I send it to you or {{other_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 — Hiring Scrapers</strong>
+              <em>Build-vs-buy teardown of their scraping stack</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 — Hiring Scrapers steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company_name}} {{role_title}} role&#10;&#10;{{first_name}}, saw {{company_name}} is hiring a {{role_title}}.&#10;&#10;Reading the JD, a big chunk of it is building and babysitting scrapers: proxies, headless browsers, parsers that break every time a site changes.&#10;&#10;TinyFish is that whole layer as one API. Your engineers call it and get live-page structured data back, instead of maintaining brittle pipelines.&#10;&#10;Reply Y and I&#39;ll send a build-vs-buy teardown of what that role would own vs what we&#39;d hand you day one. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company_name}} {{role_title}} role" data-preview="Northwind Commerce Data Extraction Engineer role">{{company_name}} {{role_title}} role</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, saw {{company_name}} is hiring a {{role_title}}.&#10;&#10;Reading the JD, a big chunk of it is building and babysitting scrapers: proxies, headless browsers, parsers that break every time a site changes.&#10;&#10;TinyFish is that whole layer as one API. Your engineers call it and get live-page structured data back, instead of maintaining brittle pipelines.&#10;&#10;Reply Y and I&#39;ll send a build-vs-buy teardown of what that role would own vs what we&#39;d hand you day one. No call needed." data-preview="Jordan, saw Northwind Commerce is hiring a Data Extraction Engineer.&#10;&#10;Reading the JD, a big chunk of it is building and babysitting scrapers: proxies, headless browsers, parsers that break every time a site changes.&#10;&#10;TinyFish is that whole layer as one API. Your engineers call it and get live-page structured data back, instead of maintaining brittle pipelines.&#10;&#10;Reply Y and I&#39;ll send a build-vs-buy teardown of what that role would own vs what we&#39;d hand you day one. No call needed.">
+                        <p>{{first_name}}, saw {{company_name}} is hiring a {{role_title}}.</p><p>Reading the JD, a big chunk of it is building and babysitting scrapers: proxies, headless browsers, parsers that break every time a site changes.</p><p>TinyFish is that whole layer as one API. Your engineers call it and get live-page structured data back, instead of maintaining brittle pipelines.</p><p>Reply Y and I&#39;ll send a build-vs-buy teardown of what that role would own vs what we&#39;d hand you day one. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, from experience, the scraper is never done. Sites change, bot detection tightens, and the maintenance never ends.&#10;&#10;TinyFish is live in days, not a quarter of ramp. 89.9% Mind2Web accuracy, auth and bot detection handled, one key across four products.&#10;&#10;We did this for {{case_study}}. Want the teardown? Reply yes and it&#39;s yours.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, from experience, the scraper is never done. Sites change, bot detection tightens, and the maintenance never ends.&#10;&#10;TinyFish is live in days, not a quarter of ramp. 89.9% Mind2Web accuracy, auth and bot detection handled, one key across four products.&#10;&#10;We did this for {{case_study}}. Want the teardown? Reply yes and it&#39;s yours." data-preview="Jordan, from experience, the scraper is never done. Sites change, bot detection tightens, and the maintenance never ends.&#10;&#10;TinyFish is live in days, not a quarter of ramp. 89.9% Mind2Web accuracy, auth and bot detection handled, one key across four products.&#10;&#10;We did this for a major rideshare and global e-commerce brands. Want the teardown? Reply yes and it&#39;s yours.">
+                        <p>{{first_name}}, from experience, the scraper is never done. Sites change, bot detection tightens, and the maintenance never ends.</p><p>TinyFish is live in days, not a quarter of ramp. 89.9% Mind2Web accuracy, auth and bot detection handled, one key across four products.</p><p>We did this for {{case_study}}. Want the teardown? Reply yes and it&#39;s yours.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: build or buy for {{company_name}}&#10;&#10;{{first_name}}, most teams hiring this role want the data, not another pipeline to maintain.&#10;&#10;If that&#39;s you, TinyFish gives you the data as an API call and frees the hire for the work only a human can do.&#10;&#10;No call needed. Reply yes and I&#39;ll send the build-vs-buy teardown. Should I send it to you or {{other_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="build or buy for {{company_name}}" data-preview="build or buy for Northwind Commerce">build or buy for {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, most teams hiring this role want the data, not another pipeline to maintain.&#10;&#10;If that&#39;s you, TinyFish gives you the data as an API call and frees the hire for the work only a human can do.&#10;&#10;No call needed. Reply yes and I&#39;ll send the build-vs-buy teardown. Should I send it to you or {{other_decision_maker}}?" data-preview="Jordan, most teams hiring this role want the data, not another pipeline to maintain.&#10;&#10;If that&#39;s you, TinyFish gives you the data as an API call and frees the hire for the work only a human can do.&#10;&#10;No call needed. Reply yes and I&#39;ll send the build-vs-buy teardown. Should I send it to you or your Head of Data?">
+                        <p>{{first_name}}, most teams hiring this role want the data, not another pipeline to maintain.</p><p>If that&#39;s you, TinyFish gives you the data as an API call and frees the hire for the work only a human can do.</p><p>No call needed. Reply yes and I&#39;ll send the build-vs-buy teardown. Should I send it to you or {{other_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 — Web-Data Verticals</strong>
+              <em>Live sample: a real-time price/inventory monitor for their category</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 — Web-Data Verticals steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company_name}} competitor pricing&#10;&#10;{{first_name}}, {{company_name}} lives and dies on {{webdata_signal}}, competitor pricing, inventory, and availability across the market.&#10;&#10;Would it be fair to assume a lot of that still gets pulled manually, or on data that&#39;s already a day or two old?&#10;&#10;TinyFish monitors thousands of platforms in real time and returns structured JSON, so your pricing and inventory calls run on live data.&#10;&#10;Reply Y and I&#39;ll send a live sample: a real-time monitor for your exact category. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company_name}} competitor pricing" data-preview="Northwind Commerce competitor pricing">{{company_name}} competitor pricing</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, {{company_name}} lives and dies on {{webdata_signal}}, competitor pricing, inventory, and availability across the market.&#10;&#10;Would it be fair to assume a lot of that still gets pulled manually, or on data that&#39;s already a day or two old?&#10;&#10;TinyFish monitors thousands of platforms in real time and returns structured JSON, so your pricing and inventory calls run on live data.&#10;&#10;Reply Y and I&#39;ll send a live sample: a real-time monitor for your exact category. No call needed." data-preview="Jordan, Northwind Commerce lives and dies on competitor pricing, competitor pricing, inventory, and availability across the market.&#10;&#10;Would it be fair to assume a lot of that still gets pulled manually, or on data that&#39;s already a day or two old?&#10;&#10;TinyFish monitors thousands of platforms in real time and returns structured JSON, so your pricing and inventory calls run on live data.&#10;&#10;Reply Y and I&#39;ll send a live sample: a real-time monitor for your exact category. No call needed.">
+                        <p>{{first_name}}, {{company_name}} lives and dies on {{webdata_signal}}, competitor pricing, inventory, and availability across the market.</p><p>Would it be fair to assume a lot of that still gets pulled manually, or on data that&#39;s already a day or two old?</p><p>TinyFish monitors thousands of platforms in real time and returns structured JSON, so your pricing and inventory calls run on live data.</p><p>Reply Y and I&#39;ll send a live sample: a real-time monitor for your exact category. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the cost of stale data is quiet but real. Every hour your prices lag the market is margin or volume left on the table.&#10;&#10;A major rideshare uses TinyFish to analyze millions of pricing variables a month. Global e-commerce brands use it to watch competitor prices and promos live.&#10;&#10;Want the live sample for {{company_name}}&#39;s category? Just reply yes.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the cost of stale data is quiet but real. Every hour your prices lag the market is margin or volume left on the table.&#10;&#10;A major rideshare uses TinyFish to analyze millions of pricing variables a month. Global e-commerce brands use it to watch competitor prices and promos live.&#10;&#10;Want the live sample for {{company_name}}&#39;s category? Just reply yes." data-preview="Jordan, the cost of stale data is quiet but real. Every hour your prices lag the market is margin or volume left on the table.&#10;&#10;A major rideshare uses TinyFish to analyze millions of pricing variables a month. Global e-commerce brands use it to watch competitor prices and promos live.&#10;&#10;Want the live sample for Northwind Commerce&#39;s category? Just reply yes.">
+                        <p>{{first_name}}, the cost of stale data is quiet but real. Every hour your prices lag the market is margin or volume left on the table.</p><p>A major rideshare uses TinyFish to analyze millions of pricing variables a month. Global e-commerce brands use it to watch competitor prices and promos live.</p><p>Want the live sample for {{company_name}}&#39;s category? Just reply yes.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: question for {{first_name}}&#10;&#10;{{first_name}}, how fresh is the competitor and inventory data your team actually reprices on today?&#10;&#10;If the honest answer is &#39;a day old&#39; or &#39;a manual pull,&#39; TinyFish makes it real time across thousands of sources.&#10;&#10;No call needed. Reply yes and I&#39;ll send the live category sample. Should I send it to you or {{other_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="question for {{first_name}}" data-preview="question for Jordan">question for {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, how fresh is the competitor and inventory data your team actually reprices on today?&#10;&#10;If the honest answer is &#39;a day old&#39; or &#39;a manual pull,&#39; TinyFish makes it real time across thousands of sources.&#10;&#10;No call needed. Reply yes and I&#39;ll send the live category sample. Should I send it to you or {{other_decision_maker}}?" data-preview="Jordan, how fresh is the competitor and inventory data your team actually reprices on today?&#10;&#10;If the honest answer is &#39;a day old&#39; or &#39;a manual pull,&#39; TinyFish makes it real time across thousands of sources.&#10;&#10;No call needed. Reply yes and I&#39;ll send the live category sample. Should I send it to you or your Head of Data?">
+                        <p>{{first_name}}, how fresh is the competitor and inventory data your team actually reprices on today?</p><p>If the honest answer is &#39;a day old&#39; or &#39;a manual pull,&#39; TinyFish makes it real time across thousands of sources.</p><p>No call needed. Reply yes and I&#39;ll send the live category sample. Should I send it to you or {{other_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Catch-all — Agent / Product Builders</strong>
+              <em>Free API credits + the Mind2Web accuracy report</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Catch-all — Agent / Product Builders steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company_name}} + the live web&#10;&#10;{{first_name}}, if {{company_name}} is building anything that reads the web, you&#39;ve probably hit the wall: default AI web access returns cached, blocked, or half-rendered pages.&#10;&#10;TinyFish hits the live page instead. Search, Fetch, Agent, and Browser under one key, 89.9% Mind2Web accuracy, structured JSON out.&#10;&#10;Search and Fetch are free. Reply CREDITS and I&#39;ll send API credits so you can test a live fetch against whatever&#39;s giving you trouble. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company_name}} + the live web" data-preview="Northwind Commerce + the live web">{{company_name}} + the live web</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, if {{company_name}} is building anything that reads the web, you&#39;ve probably hit the wall: default AI web access returns cached, blocked, or half-rendered pages.&#10;&#10;TinyFish hits the live page instead. Search, Fetch, Agent, and Browser under one key, 89.9% Mind2Web accuracy, structured JSON out.&#10;&#10;Search and Fetch are free. Reply CREDITS and I&#39;ll send API credits so you can test a live fetch against whatever&#39;s giving you trouble. No call needed." data-preview="Jordan, if Northwind Commerce is building anything that reads the web, you&#39;ve probably hit the wall: default AI web access returns cached, blocked, or half-rendered pages.&#10;&#10;TinyFish hits the live page instead. Search, Fetch, Agent, and Browser under one key, 89.9% Mind2Web accuracy, structured JSON out.&#10;&#10;Search and Fetch are free. Reply CREDITS and I&#39;ll send API credits so you can test a live fetch against whatever&#39;s giving you trouble. No call needed.">
+                        <p>{{first_name}}, if {{company_name}} is building anything that reads the web, you&#39;ve probably hit the wall: default AI web access returns cached, blocked, or half-rendered pages.</p><p>TinyFish hits the live page instead. Search, Fetch, Agent, and Browser under one key, 89.9% Mind2Web accuracy, structured JSON out.</p><p>Search and Fetch are free. Reply CREDITS and I&#39;ll send API credits so you can test a live fetch against whatever&#39;s giving you trouble. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the reason this matters: teams lose weeks building the web layer, proxies, browsers, parsers, before their agent does anything useful.&#10;&#10;TinyFish is that layer as one API call. Sub-250ms browser cold starts, auth and bot detection handled, zero routing code.&#10;&#10;Want the free credits to try it? Just reply CREDITS.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the reason this matters: teams lose weeks building the web layer, proxies, browsers, parsers, before their agent does anything useful.&#10;&#10;TinyFish is that layer as one API call. Sub-250ms browser cold starts, auth and bot detection handled, zero routing code.&#10;&#10;Want the free credits to try it? Just reply CREDITS." data-preview="Jordan, the reason this matters: teams lose weeks building the web layer, proxies, browsers, parsers, before their agent does anything useful.&#10;&#10;TinyFish is that layer as one API call. Sub-250ms browser cold starts, auth and bot detection handled, zero routing code.&#10;&#10;Want the free credits to try it? Just reply CREDITS.">
+                        <p>{{first_name}}, the reason this matters: teams lose weeks building the web layer, proxies, browsers, parsers, before their agent does anything useful.</p><p>TinyFish is that layer as one API call. Sub-250ms browser cold starts, auth and bot detection handled, zero routing code.</p><p>Want the free credits to try it? Just reply CREDITS.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: one question&#10;&#10;{{first_name}}, one question. What&#39;s the one page or site your product needs and can&#39;t reliably read today?&#10;&#10;Reply with it and I&#39;ll show you, free, TinyFish pulling it live as structured JSON. Usually takes a couple of minutes.&#10;&#10;No call needed. Should I send this to you or {{other_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="one question" data-preview="one question">one question</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, one question. What&#39;s the one page or site your product needs and can&#39;t reliably read today?&#10;&#10;Reply with it and I&#39;ll show you, free, TinyFish pulling it live as structured JSON. Usually takes a couple of minutes.&#10;&#10;No call needed. Should I send this to you or {{other_decision_maker}}?" data-preview="Jordan, one question. What&#39;s the one page or site your product needs and can&#39;t reliably read today?&#10;&#10;Reply with it and I&#39;ll show you, free, TinyFish pulling it live as structured JSON. Usually takes a couple of minutes.&#10;&#10;No call needed. Should I send this to you or your Head of Data?">
+                        <p>{{first_name}}, one question. What&#39;s the one page or site your product needs and can&#39;t reliably read today?</p><p>Reply with it and I&#39;ll show you, free, TinyFish pulling it live as structured JSON. Usually takes a couple of minutes.</p><p>No call needed. Should I send this to you or {{other_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">Launch</p>
+      <h2>Prove the hottest tier, then widen</h2>
+      <p class="takeaway">Start with companies already paying a scraping vendor, then those hiring scrapers, then the web-data-dependent verticals, then the catch-all.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Stand up sending infrastructure, warmup and inboxes on burner domains separate from tinyfish.ai.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Run BuiltWith / Wappalyzer detection, LinkedIn Jobs and Crunchbase pulls for the launch market. Build and validate the routing matrix.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Launch Tier 1 (scraping-vendor users) plus the Creative Ideas broad campaign first. Smallest, hottest, fastest proof of the replace-your-stack thesis.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Add Tier 2 (hiring scrapers) once it clears 1,500 contacts, keeping Tier 1 running. Strong build-vs-buy math.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Roll Tier 3 (web-data verticals), then the catch-all once top tiers are calibrated and copy winners exist. Add leads continuously; the routing logic never changes.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Layer competitor-takedown, funding, new-leader, agent-framework and hackathon side campaigns only after the core waterfall is stable.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply / 150 contacts</strong>
+                <span>Perfect. Scale this tier hard.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 300</strong>
+                <span>Good. Let it run and add leads steadily.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 450-500</strong>
+                <span>Borderline. Test a copy or lead-magnet variant.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 / 500 or &lt;1% after 1,500 sends</strong>
+                <span>Cut the tier and rework the angle.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book the strategy call</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Jordan","Northwind Commerce","customer support rep","6","Intercom","e-commerce","Maya","Bright Data","Data Extraction Engineer","competitor pricing","your Head of Data","a major rideshare and global e-commerce brands"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
