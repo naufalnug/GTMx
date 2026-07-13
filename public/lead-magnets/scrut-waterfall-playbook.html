@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scrut Automation - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-07-14</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Scrut Automation</p>
+          <h1>One waterfall. The whole compliance market. Built once.</h1>
+          <p class="hero-copy">A scrollable GTMx strategy artifact that routes every company in the GRC market by compliance posture, not by industry or title.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> A fintech CTO running Vanta has more in common with a healthtech CTO running Vanta than with a fintech CTO who has no compliance program at all. Posture segments by readiness to buy, which is what predicts a reply. Industry and title become personalization, not the routing key.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book the strategy call</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>300k+</strong>
+          <span>compliance TAM</span>
+        </div>
+        <div class="metric-card">
+          <strong>5</strong>
+          <span>priority-routed tiers</span>
+        </div>
+        <div class="metric-card">
+          <strong>1:150</strong>
+          <span>top-tier reply target</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Scrut Automation is an AI-powered GRC platform that automates security compliance across 60+ frameworks (SOC 2, ISO 27001, HIPAA, PCI, GDPR) with continuous control monitoring, AI Scrut Teammates, vendor-risk management, and a live trust center, so teams get and stay audit-ready without drowning in manual evidence work.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The buying signal is compliance posture</p></div><div><span>02</span><p>One cascade routes the whole market</p></div><div><span>03</span><p>Each tier sells a smaller first step</p></div><div><span>04</span><p>Campaign angles ride on the same routing layer</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>Waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>Email Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">Signal</p>
+      <h2>The buying signal is compliance posture</h2>
+      <p class="takeaway">What tool a company runs, whether they have a trust center, whether they&#39;re hiring to do it by hand, and whether they just raised, all predict readiness to buy, and all are detectable for free.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>A detected competitor tool proves the category is already bought and budgeted, and a renewal is coming.</p></div><div class="reason-card"><span>02</span><p>A trust center or SOC 2 badge with no automation behind it proves a manual, consultant-run program.</p></div><div class="reason-card"><span>03</span><p>A live GRC or Compliance requisition proves they are about to spend a salary doing compliance by hand.</p></div><div class="reason-card"><span>04</span><p>A fresh Series A or B proves a move upmarket where enterprise security reviews will soon stall deals.</p></div><div class="reason-card"><span>05</span><p>Every remaining company that stores customer data will eventually be asked, are you SOC 2 compliant?</p></div>
+            </div>
+            <div class="field-cloud"><span>compliance_tool_detected</span><span>trust_center_present</span><span>trust_center_type</span><span>frameworks_claimed</span><span>hiring_grc_role</span><span>grc_role_title</span><span>last_funding</span><span>industry</span><span>headcount_tier</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>BuiltWith / Wappalyzer technology lists</h3><p>Live-site user lists for Vanta, Drata, Secureframe, Sprinto, Thoropass, and Hyperproof, the Tier-1 market and competitor signal in one query</p></div><div class="source-card"><span>02</span><h3>Trust-center and security-page crawl</h3><p>Detection of trust.&lt;domain&gt;, /trust, /security, security.txt, and hosted trust pages, distinguishing a live automated trust center from a static SOC 2 PDF</p></div><div class="source-card"><span>03</span><h3>Apollo and LinkedIn Jobs</h3><p>Open GRC, Compliance, ISMS, and Security-analyst requisitions, plus the base B2B SaaS, fintech, and health market</p></div><div class="source-card"><span>04</span><h3>Crunchbase and Apollo funding filter</h3><p>Series A and B raises in the last six to nine months across SaaS, fintech, and health</p></div><div class="source-card"><span>05</span><h3>Apollo base pull</h3><p>All remaining B2B companies with 10 to 1,000 employees that store customer data, the catch-all market</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="Waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">Waterfall</p>
+      <h2>One cascade routes the whole market</h2>
+      <p class="takeaway">Every company flows top to bottom: competitor tool, manual posture, GRC hire, fresh raise, or catch-all. Most land in exactly one tier.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF compliance_tool_detected != none</span>
+          <strong>Tier 1</strong>
+          <em>Competitor takedown, renewal is coming</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF trust_center_present = true AND no tool detected</span>
+          <strong>Tier 2</strong>
+          <em>Manual, consultant-run program</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF hiring_grc_role = true</span>
+          <strong>Tier 3</strong>
+          <em>About to do compliance by hand</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF last_funding = Series A/B within 6-9 months</span>
+          <strong>Tier 4</strong>
+          <em>Moving upmarket, deals will stall</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF any remaining company that stores customer data</span>
+          <strong>Catch-all</strong>
+          <em>The SOC 2 question is coming</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF compliance_tool_detected != none -&gt; Tier 1 (Competitor takedown, renewal is coming)&#10;2. IF trust_center_present = true AND no tool detected -&gt; Tier 2 (Manual, consultant-run program)&#10;3. IF hiring_grc_role = true -&gt; Tier 3 (About to do compliance by hand)&#10;4. IF last_funding = Series A/B within 6-9 months -&gt; Tier 4 (Moving upmarket, deals will stall)&#10;5. IF any remaining company that stores customer data -&gt; Catch-all (The SOC 2 question is coming)">Copy routing spec</button>
+            <pre id="routeCode">1. IF compliance_tool_detected != none -&gt; Tier 1 (Competitor takedown, renewal is coming)
+2. IF trust_center_present = true AND no tool detected -&gt; Tier 2 (Manual, consultant-run program)
+3. IF hiring_grc_role = true -&gt; Tier 3 (About to do compliance by hand)
+4. IF last_funding = Series A/B within 6-9 months -&gt; Tier 4 (Moving upmarket, deals will stall)
+5. IF any remaining company that stores customer data -&gt; Catch-all (The SOC 2 question is coming)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">Tiers</p>
+      <h2>Each tier sells a smaller first step</h2>
+      <p class="takeaway">Cold email should not ask for a demo. It should sell a teardown, a gap assessment, a cost model, a roadmap, or a readiness scorecard.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">8-12% TAM</span>
+          </div>
+          <h3>Tier 1: Competitor Takedown</h3>
+          <p>Runs Vanta, Drata, Secureframe, or Sprinto (tool or hosted trust center detected)</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Locked into a premium tool facing a steep renewal hike. The first-year discount is gone and the renewal quote came in a lot higher, for the same outcome.</dd></div>
+              <div><dt>Offer</dt><dd>Competitor renewal-hike teardown plus Scrut savings calculator</dd></div>
+              <div><dt>Source</dt><dd>BuiltWith tool lists plus trust-center crawl</dd></div>
+              <div><dt>Reply density</dt><dd>Target 1 in 150</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">~10% TAM</span>
+          </div>
+          <h3>Tier 2: Manual / Consultant</h3>
+          <p>Has a trust center or SOC 2 / ISO badge but no automation tool detected</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Running compliance on spreadsheets plus a consultant. Evidence collection is manual and point-in-time, and audit prep turns into a fire drill once a year while controls drift the other 11 months.</dd></div>
+              <div><dt>Offer</dt><dd>Manual-to-continuous evidence-automation gap assessment</dd></div>
+              <div><dt>Source</dt><dd>Trust-center crawl plus BuiltWith absence</dd></div>
+              <div><dt>Reply density</dt><dd>Target 1 in 150-250</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">5-8% TAM</span>
+          </div>
+          <h3>Tier 3: Hiring the Pain</h3>
+          <p>Actively hiring a GRC, Compliance, ISMS, or Security-analyst role</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>About to spend a $90-160k salary and 3-6 months of ramp to do compliance by hand, scaling the program with headcount instead of automation.</dd></div>
+              <div><dt>Offer</dt><dd>GRC hire vs automation cost / output model</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Jobs plus Apollo</dd></div>
+              <div><dt>Reply density</dt><dd>Target 1 in 200-300</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">8-10% TAM</span>
+          </div>
+          <h3>Tier 4: Just Raised</h3>
+          <p>Raised Series A or B in the last 6-9 months, no visible compliance posture</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Raised to move upmarket, and the first enterprise deals are about to stall on send us your SOC 2, quietly killing post-raise momentum.</dd></div>
+              <div><dt>Offer</dt><dd>Audit-ready in 90 days roadmap</dd></div>
+              <div><dt>Source</dt><dd>Crunchbase and Apollo funding filter</dd></div>
+              <div><dt>Reply density</dt><dd>Target 1 in 300-400</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-orange" data-tier-card="catchall" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">55-60% TAM</span>
+          </div>
+          <h3>Catch-all: The Question Is Coming</h3>
+          <p>Any remaining B2B company that stores customer data</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Are you SOC 2 compliant is starting to show up in sales conversations, and it is easy to keep pushing it down the list until a deal depends on it, losing to the vendor who already did it.</dd></div>
+              <div><dt>Offer</dt><dd>Free SOC 2 / ISO readiness scorecard</dd></div>
+              <div><dt>Source</dt><dd>Apollo base pull</dd></div>
+              <div><dt>Reply density</dt><dd>Target 1 in 350-500</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">Campaigns</p>
+      <h2>Campaign angles ride on the same routing layer</h2>
+      <p class="takeaway">The renewal cliff, point-in-time vs continuous, buy-vs-hire, and unblock-enterprise angles each map to one tier of the same cascade.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Renewal Cliff</h3>
+          <p>The hottest list because category demand and budget are already proven.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Competitor tool detected via BuiltWith or a hosted trust center</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the incumbent, time outreach ~90 days before typical renewal windows, and quantify the switch</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Migration Done For You</h3>
+          <p>The objection-handler variant of the competitor takedown.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Competitor tool detected</dd></div>
+            <div><dt>AI strategy</dt><dd>Neutralize switching-cost fear, we migrate evidence and controls so nothing is rebuilt</dd></div>
+            <div><dt>Value</dt><dd>Kill switching risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Point-in-Time to Continuous</h3>
+          <p>Scrut&#39;s sharpest differentiator, told through the audit-week fire drill.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Trust center or SOC 2 badge, no automation tool detected</dd></div>
+            <div><dt>AI strategy</dt><dd>A consultant plus spreadsheets gets a badge once a year, controls drift the other 11 months</dd></div>
+            <div><dt>Value</dt><dd>Save time, cut risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>One Evidence Set, 60+ Frameworks</h3>
+          <p>Targets companies about to take on a second framework.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Single framework claimed, expansion likely</dd></div>
+            <div><dt>AI strategy</dt><dd>Kill redundant work when they add ISO, HIPAA, or GDPR with unified control mapping</dd></div>
+            <div><dt>Value</dt><dd>Avoid redundant work</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Buy the Outcome, Not the Headcount</h3>
+          <p>An always-on trickle triggered within days of a role going live.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Live GRC, Compliance, or ISMS requisition</dd></div>
+            <div><dt>AI strategy</dt><dd>Quote the role, a hire is $90-160k and 3-6 months, Scrut delivers monitoring day one</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Unblock Enterprise Pipeline</h3>
+          <p>Timely post-raise trigger paired with a trust-center demo.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Series A or B in the last 6-9 months</dd></div>
+            <div><dt>AI strategy</dt><dd>Reference the raise, the first enterprise deal stalls on send your SOC 2, a trust center unblocks it</dd></div>
+            <div><dt>Value</dt><dd>Unblock revenue</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Broad</span>
+          </div>
+          <h3>The Question That&#39;s Coming</h3>
+          <p>The broadest, softest motion, selling a self-serve scorecard, not a call.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Any remaining B2B company handling customer data</dd></div>
+            <div><dt>AI strategy</dt><dd>Infer the regulated-buyer pain from their industry, offer a zero-friction readiness scorecard</dd></div>
+            <div><dt>Value</dt><dd>Concrete first step</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Focused</span>
+          </div>
+          <h3>New Security Leader</h3>
+          <p>Run alongside the waterfall once it is stable.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>New CISO or Head of GRC in the last 60 days</dd></div>
+            <div><dt>AI strategy</dt><dd>New security leaders re-evaluate their stack in their first 90 days</dd></div>
+            <div><dt>Value</dt><dd>Timely re-evaluation</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Niche</span>
+          </div>
+          <h3>New-Framework Mandate</h3>
+          <p>Orthogonal trigger, event-driven routing.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Expanding into the EU, healthcare, or payments</dd></div>
+            <div><dt>AI strategy</dt><dd>Add GDPR, HIPAA, or PCI without redoing the work via unified control mapping</dd></div>
+            <div><dt>Value</dt><dd>Avoid redundant work</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="Email Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">Email Copy</p>
+      <h2>Copy starts with public evidence</h2>
+      <p class="takeaway">Every sequence opens with a detected tool, a trust badge, a live job post, or a funding event, then pokes the pain that signal implies.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company}}</span><span>{{competitor_tool}}</span><span>{{framework}}</span><span>{{migration_customer}}</span><span>{{savings_pct}}</span><span>{{security_leader}}</span><span>{{trust_or_security_page}}</span><span>{{role_title}}</span><span>{{posted_recency}}</span><span>{{round}}</span><span>{{funding_month}}</span><span>{{industry}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company}}, {{competitor_tool}}, {{framework}}, {{migration_customer}}, {{savings_pct}}, {{security_leader}}, {{trust_or_security_page}}, {{role_title}}, {{posted_recency}}, {{round}}, {{funding_month}}, {{industry}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Competitor Takedown</strong>
+              <em>Renewal-hike teardown plus savings calculator</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Competitor Takedown steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{competitor_tool}} renewal?&#10;&#10;Hey {{first_name}},&#10;&#10;Was looking at {{company}}&#39;s trust center and saw you&#39;re running {{competitor_tool}}, SOC 2 {{framework}} all live, nicely done.&#10;&#10;But would it be fair to assume the renewal quote came in a lot higher than year one? That&#39;s the pattern we hear almost every week from teams on {{competitor_tool}}.&#10;&#10;We built Scrut to give you the same continuous monitoring and multi-framework automation for meaningfully less, and we migrate your existing controls and evidence over for you, so you&#39;re not rebuilding anything.&#10;&#10;2,500+ teams run compliance on us, and {{migration_customer}} switched without a gap in coverage.&#10;&#10;Worth a look before you re-sign? Reply Y and I&#39;ll send a quick teardown of your likely {{competitor_tool}} spend vs Scrut, plus the migration plan. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{competitor_tool}} renewal?" data-preview="Drata renewal?">{{competitor_tool}} renewal?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Was looking at {{company}}&#39;s trust center and saw you&#39;re running {{competitor_tool}}, SOC 2 {{framework}} all live, nicely done.&#10;&#10;But would it be fair to assume the renewal quote came in a lot higher than year one? That&#39;s the pattern we hear almost every week from teams on {{competitor_tool}}.&#10;&#10;We built Scrut to give you the same continuous monitoring and multi-framework automation for meaningfully less, and we migrate your existing controls and evidence over for you, so you&#39;re not rebuilding anything.&#10;&#10;2,500+ teams run compliance on us, and {{migration_customer}} switched without a gap in coverage.&#10;&#10;Worth a look before you re-sign? Reply Y and I&#39;ll send a quick teardown of your likely {{competitor_tool}} spend vs Scrut, plus the migration plan. No call needed." data-preview="Hey Dana,&#10;&#10;Was looking at Northwind&#39;s trust center and saw you&#39;re running Drata, SOC 2 Type II all live, nicely done.&#10;&#10;But would it be fair to assume the renewal quote came in a lot higher than year one? That&#39;s the pattern we hear almost every week from teams on Drata.&#10;&#10;We built Scrut to give you the same continuous monitoring and multi-framework automation for meaningfully less, and we migrate your existing controls and evidence over for you, so you&#39;re not rebuilding anything.&#10;&#10;2,500+ teams run compliance on us, and Toddle switched without a gap in coverage.&#10;&#10;Worth a look before you re-sign? Reply Y and I&#39;ll send a quick teardown of your likely Drata spend vs Scrut, plus the migration plan. No call needed.">
+                        <p>Hey {{first_name}},</p><p>Was looking at {{company}}&#39;s trust center and saw you&#39;re running {{competitor_tool}}, SOC 2 {{framework}} all live, nicely done.</p><p>But would it be fair to assume the renewal quote came in a lot higher than year one? That&#39;s the pattern we hear almost every week from teams on {{competitor_tool}}.</p><p>We built Scrut to give you the same continuous monitoring and multi-framework automation for meaningfully less, and we migrate your existing controls and evidence over for you, so you&#39;re not rebuilding anything.</p><p>2,500+ teams run compliance on us, and {{migration_customer}} switched without a gap in coverage.</p><p>Worth a look before you re-sign? Reply Y and I&#39;ll send a quick teardown of your likely {{competitor_tool}} spend vs Scrut, plus the migration plan. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, one number to put it in context: teams switching from {{competitor_tool}} to us typically cut their compliance-tooling spend {{savings_pct}}% while keeping continuous monitoring across 60+ frameworks.&#10;&#10;And the switch isn&#39;t the project you&#39;re picturing, we handle the evidence and control migration.&#10;&#10;Want the side-by-side teardown for {{company}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, one number to put it in context: teams switching from {{competitor_tool}} to us typically cut their compliance-tooling spend {{savings_pct}}% while keeping continuous monitoring across 60+ frameworks.&#10;&#10;And the switch isn&#39;t the project you&#39;re picturing, we handle the evidence and control migration.&#10;&#10;Want the side-by-side teardown for {{company}}?" data-preview="Dana, one number to put it in context: teams switching from Drata to us typically cut their compliance-tooling spend 40% while keeping continuous monitoring across 60+ frameworks.&#10;&#10;And the switch isn&#39;t the project you&#39;re picturing, we handle the evidence and control migration.&#10;&#10;Want the side-by-side teardown for Northwind?">
+                        <p>{{first_name}}, one number to put it in context: teams switching from {{competitor_tool}} to us typically cut their compliance-tooling spend {{savings_pct}}% while keeping continuous monitoring across 60+ frameworks.</p><p>And the switch isn&#39;t the project you&#39;re picturing, we handle the evidence and control migration.</p><p>Want the side-by-side teardown for {{company}}?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: quick {{competitor_tool}} question&#10;&#10;Hey {{first_name}}, no need for a call. Just reply yes and I&#39;ll send the {{competitor_tool}}-vs-Scrut savings teardown for {{company}}.&#10;&#10;Should I send it to you, or is {{security_leader}} the better person for the renewal call?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="quick {{competitor_tool}} question" data-preview="quick Drata question">quick {{competitor_tool}} question</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}}, no need for a call. Just reply yes and I&#39;ll send the {{competitor_tool}}-vs-Scrut savings teardown for {{company}}.&#10;&#10;Should I send it to you, or is {{security_leader}} the better person for the renewal call?" data-preview="Hey Dana, no need for a call. Just reply yes and I&#39;ll send the Drata-vs-Scrut savings teardown for Northwind.&#10;&#10;Should I send it to you, or is your Head of Security the better person for the renewal call?">
+                        <p>Hey {{first_name}}, no need for a call. Just reply yes and I&#39;ll send the {{competitor_tool}}-vs-Scrut savings teardown for {{company}}.</p><p>Should I send it to you, or is {{security_leader}} the better person for the renewal call?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Manual / Consultant</strong>
+              <em>Manual-to-continuous gap assessment</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Manual / Consultant steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your SOC 2 evidence&#10;&#10;Hey {{first_name}},&#10;&#10;Saw {{company}} has SOC 2 {{framework}} on your {{trust_or_security_page}}, but I couldn&#39;t spot a compliance-automation platform behind it, which usually means a consultant plus a lot of spreadsheets.&#10;&#10;Would it be fair to assume evidence collection is still manual, and audit prep turns into a fire drill once a year?&#10;&#10;Scrut runs continuous control monitoring so controls are checked 24/7 instead of point-in-time, and one evidence set maps to 60+ frameworks, so adding ISO or HIPAA doesn&#39;t mean redoing the work.&#10;&#10;Toddle&#39;s GRC team saved ~100 hours every month after moving to us.&#10;&#10;Want me to send a short what&#39;s-manual-vs-automatable gap assessment for {{company}}? Reply Y, no call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your SOC 2 evidence" data-preview="your SOC 2 evidence">your SOC 2 evidence</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Saw {{company}} has SOC 2 {{framework}} on your {{trust_or_security_page}}, but I couldn&#39;t spot a compliance-automation platform behind it, which usually means a consultant plus a lot of spreadsheets.&#10;&#10;Would it be fair to assume evidence collection is still manual, and audit prep turns into a fire drill once a year?&#10;&#10;Scrut runs continuous control monitoring so controls are checked 24/7 instead of point-in-time, and one evidence set maps to 60+ frameworks, so adding ISO or HIPAA doesn&#39;t mean redoing the work.&#10;&#10;Toddle&#39;s GRC team saved ~100 hours every month after moving to us.&#10;&#10;Want me to send a short what&#39;s-manual-vs-automatable gap assessment for {{company}}? Reply Y, no call needed." data-preview="Hey Dana,&#10;&#10;Saw Northwind has SOC 2 Type II on your security page, but I couldn&#39;t spot a compliance-automation platform behind it, which usually means a consultant plus a lot of spreadsheets.&#10;&#10;Would it be fair to assume evidence collection is still manual, and audit prep turns into a fire drill once a year?&#10;&#10;Scrut runs continuous control monitoring so controls are checked 24/7 instead of point-in-time, and one evidence set maps to 60+ frameworks, so adding ISO or HIPAA doesn&#39;t mean redoing the work.&#10;&#10;Toddle&#39;s GRC team saved ~100 hours every month after moving to us.&#10;&#10;Want me to send a short what&#39;s-manual-vs-automatable gap assessment for Northwind? Reply Y, no call needed.">
+                        <p>Hey {{first_name}},</p><p>Saw {{company}} has SOC 2 {{framework}} on your {{trust_or_security_page}}, but I couldn&#39;t spot a compliance-automation platform behind it, which usually means a consultant plus a lot of spreadsheets.</p><p>Would it be fair to assume evidence collection is still manual, and audit prep turns into a fire drill once a year?</p><p>Scrut runs continuous control monitoring so controls are checked 24/7 instead of point-in-time, and one evidence set maps to 60+ frameworks, so adding ISO or HIPAA doesn&#39;t mean redoing the work.</p><p>Toddle&#39;s GRC team saved ~100 hours every month after moving to us.</p><p>Want me to send a short what&#39;s-manual-vs-automatable gap assessment for {{company}}? Reply Y, no call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the real gap with the consultant-plus-spreadsheets setup isn&#39;t audit week, it&#39;s the other 11 months: controls drift and nobody sees it until the next audit. Continuous monitoring closes that.&#10;&#10;Happy to show where {{company}}&#39;s current evidence would auto-collect vs stay manual. Want the gap assessment?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the real gap with the consultant-plus-spreadsheets setup isn&#39;t audit week, it&#39;s the other 11 months: controls drift and nobody sees it until the next audit. Continuous monitoring closes that.&#10;&#10;Happy to show where {{company}}&#39;s current evidence would auto-collect vs stay manual. Want the gap assessment?" data-preview="Dana, the real gap with the consultant-plus-spreadsheets setup isn&#39;t audit week, it&#39;s the other 11 months: controls drift and nobody sees it until the next audit. Continuous monitoring closes that.&#10;&#10;Happy to show where Northwind&#39;s current evidence would auto-collect vs stay manual. Want the gap assessment?">
+                        <p>{{first_name}}, the real gap with the consultant-plus-spreadsheets setup isn&#39;t audit week, it&#39;s the other 11 months: controls drift and nobody sees it until the next audit. Continuous monitoring closes that.</p><p>Happy to show where {{company}}&#39;s current evidence would auto-collect vs stay manual. Want the gap assessment?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: audit prep at {{company}}&#10;&#10;Hey {{first_name}}, no call needed, reply yes and I&#39;ll send the evidence-automation gap assessment for {{company}}.&#10;&#10;Are you the right person for this, or should I loop in {{security_leader}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="audit prep at {{company}}" data-preview="audit prep at Northwind">audit prep at {{company}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}}, no call needed, reply yes and I&#39;ll send the evidence-automation gap assessment for {{company}}.&#10;&#10;Are you the right person for this, or should I loop in {{security_leader}}?" data-preview="Hey Dana, no call needed, reply yes and I&#39;ll send the evidence-automation gap assessment for Northwind.&#10;&#10;Are you the right person for this, or should I loop in your Head of Security?">
+                        <p>Hey {{first_name}}, no call needed, reply yes and I&#39;ll send the evidence-automation gap assessment for {{company}}.</p><p>Are you the right person for this, or should I loop in {{security_leader}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Hiring the Pain</strong>
+              <em>GRC hire vs automation cost model</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Hiring the Pain steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your {{role_title}} req&#10;&#10;Hey {{first_name}},&#10;&#10;Saw {{company}} posted a {{role_title}} role {{posted_recency}}, looks like compliance is scaling faster than the current team can keep up with.&#10;&#10;But before that seat is filled: would it be fair to assume a big chunk of that role is manual evidence collection and framework upkeep, the exact work that doesn&#39;t need a human?&#10;&#10;Scrut&#39;s AI Teammates run continuous monitoring across 60+ frameworks out of the box, so your new hire can own risk strategy instead of chasing screenshots. Most teams get the monitoring live in weeks, not the 3-6 months a hire takes to ramp.&#10;&#10;We keep 2,500+ teams continuously compliant, monitoring 10M+ assets a month.&#10;&#10;Want a quick GRC-hire-vs-automation model for {{company}}? Reply Y and I&#39;ll send it, no call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your {{role_title}} req" data-preview="your GRC Analyst req">your {{role_title}} req</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Saw {{company}} posted a {{role_title}} role {{posted_recency}}, looks like compliance is scaling faster than the current team can keep up with.&#10;&#10;But before that seat is filled: would it be fair to assume a big chunk of that role is manual evidence collection and framework upkeep, the exact work that doesn&#39;t need a human?&#10;&#10;Scrut&#39;s AI Teammates run continuous monitoring across 60+ frameworks out of the box, so your new hire can own risk strategy instead of chasing screenshots. Most teams get the monitoring live in weeks, not the 3-6 months a hire takes to ramp.&#10;&#10;We keep 2,500+ teams continuously compliant, monitoring 10M+ assets a month.&#10;&#10;Want a quick GRC-hire-vs-automation model for {{company}}? Reply Y and I&#39;ll send it, no call." data-preview="Hey Dana,&#10;&#10;Saw Northwind posted a GRC Analyst role last week, looks like compliance is scaling faster than the current team can keep up with.&#10;&#10;But before that seat is filled: would it be fair to assume a big chunk of that role is manual evidence collection and framework upkeep, the exact work that doesn&#39;t need a human?&#10;&#10;Scrut&#39;s AI Teammates run continuous monitoring across 60+ frameworks out of the box, so your new hire can own risk strategy instead of chasing screenshots. Most teams get the monitoring live in weeks, not the 3-6 months a hire takes to ramp.&#10;&#10;We keep 2,500+ teams continuously compliant, monitoring 10M+ assets a month.&#10;&#10;Want a quick GRC-hire-vs-automation model for Northwind? Reply Y and I&#39;ll send it, no call.">
+                        <p>Hey {{first_name}},</p><p>Saw {{company}} posted a {{role_title}} role {{posted_recency}}, looks like compliance is scaling faster than the current team can keep up with.</p><p>But before that seat is filled: would it be fair to assume a big chunk of that role is manual evidence collection and framework upkeep, the exact work that doesn&#39;t need a human?</p><p>Scrut&#39;s AI Teammates run continuous monitoring across 60+ frameworks out of the box, so your new hire can own risk strategy instead of chasing screenshots. Most teams get the monitoring live in weeks, not the 3-6 months a hire takes to ramp.</p><p>We keep 2,500+ teams continuously compliant, monitoring 10M+ assets a month.</p><p>Want a quick GRC-hire-vs-automation model for {{company}}? Reply Y and I&#39;ll send it, no call.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the math that surprises people: a GRC hire is $90-160k plus ramp; Scrut delivers the monitoring day one for a fraction of that, and the hire becomes far more effective on top of it.&#10;&#10;Want the side-by-side for {{company}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the math that surprises people: a GRC hire is $90-160k plus ramp; Scrut delivers the monitoring day one for a fraction of that, and the hire becomes far more effective on top of it.&#10;&#10;Want the side-by-side for {{company}}?" data-preview="Dana, the math that surprises people: a GRC hire is $90-160k plus ramp; Scrut delivers the monitoring day one for a fraction of that, and the hire becomes far more effective on top of it.&#10;&#10;Want the side-by-side for Northwind?">
+                        <p>{{first_name}}, the math that surprises people: a GRC hire is $90-160k plus ramp; Scrut delivers the monitoring day one for a fraction of that, and the hire becomes far more effective on top of it.</p><p>Want the side-by-side for {{company}}?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: GRC hire math&#10;&#10;Hey {{first_name}}, no need for a call, reply yes and I&#39;ll send the hire-vs-automation model for {{company}}.&#10;&#10;Best sent to you or to {{security_leader}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="GRC hire math" data-preview="GRC hire math">GRC hire math</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}}, no need for a call, reply yes and I&#39;ll send the hire-vs-automation model for {{company}}.&#10;&#10;Best sent to you or to {{security_leader}}?" data-preview="Hey Dana, no need for a call, reply yes and I&#39;ll send the hire-vs-automation model for Northwind.&#10;&#10;Best sent to you or to your Head of Security?">
+                        <p>Hey {{first_name}}, no need for a call, reply yes and I&#39;ll send the hire-vs-automation model for {{company}}.</p><p>Best sent to you or to {{security_leader}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 - Just Raised</strong>
+              <em>Audit-ready in 90 days roadmap</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 - Just Raised steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: congrats on the raise&#10;&#10;Hey {{first_name}},&#10;&#10;Congrats on the {{round}} in {{funding_month}}, usually that means moving upmarket into bigger, more security-conscious buyers.&#10;&#10;Would it be fair to assume the first few enterprise deals are going to hit a send us your SOC 2 / ISO report wall? That&#39;s where a lot of post-raise momentum quietly stalls.&#10;&#10;Scrut gets teams audit-ready in weeks and gives you a live trust center that shortens buyer security reviews, so compliance becomes a reason you win deals, not a blocker.&#10;&#10;2,500+ teams run on us across 60+ frameworks.&#10;&#10;Want a SOC 2-ready in 90 days roadmap tailored to {{company}}? Reply Y, no call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="congrats on the raise" data-preview="congrats on the raise">congrats on the raise</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Congrats on the {{round}} in {{funding_month}}, usually that means moving upmarket into bigger, more security-conscious buyers.&#10;&#10;Would it be fair to assume the first few enterprise deals are going to hit a send us your SOC 2 / ISO report wall? That&#39;s where a lot of post-raise momentum quietly stalls.&#10;&#10;Scrut gets teams audit-ready in weeks and gives you a live trust center that shortens buyer security reviews, so compliance becomes a reason you win deals, not a blocker.&#10;&#10;2,500+ teams run on us across 60+ frameworks.&#10;&#10;Want a SOC 2-ready in 90 days roadmap tailored to {{company}}? Reply Y, no call needed." data-preview="Hey Dana,&#10;&#10;Congrats on the Series B in April, usually that means moving upmarket into bigger, more security-conscious buyers.&#10;&#10;Would it be fair to assume the first few enterprise deals are going to hit a send us your SOC 2 / ISO report wall? That&#39;s where a lot of post-raise momentum quietly stalls.&#10;&#10;Scrut gets teams audit-ready in weeks and gives you a live trust center that shortens buyer security reviews, so compliance becomes a reason you win deals, not a blocker.&#10;&#10;2,500+ teams run on us across 60+ frameworks.&#10;&#10;Want a SOC 2-ready in 90 days roadmap tailored to Northwind? Reply Y, no call needed.">
+                        <p>Hey {{first_name}},</p><p>Congrats on the {{round}} in {{funding_month}}, usually that means moving upmarket into bigger, more security-conscious buyers.</p><p>Would it be fair to assume the first few enterprise deals are going to hit a send us your SOC 2 / ISO report wall? That&#39;s where a lot of post-raise momentum quietly stalls.</p><p>Scrut gets teams audit-ready in weeks and gives you a live trust center that shortens buyer security reviews, so compliance becomes a reason you win deals, not a blocker.</p><p>2,500+ teams run on us across 60+ frameworks.</p><p>Want a SOC 2-ready in 90 days roadmap tailored to {{company}}? Reply Y, no call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, framing it as revenue, not cost: every enterprise deal waiting on a security review is pipeline you&#39;ve already earned but can&#39;t close. A trust center plus SOC 2 turns we&#39;ll circle back into a signature.&#10;&#10;Want the 90-day roadmap for {{company}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, framing it as revenue, not cost: every enterprise deal waiting on a security review is pipeline you&#39;ve already earned but can&#39;t close. A trust center plus SOC 2 turns we&#39;ll circle back into a signature.&#10;&#10;Want the 90-day roadmap for {{company}}?" data-preview="Dana, framing it as revenue, not cost: every enterprise deal waiting on a security review is pipeline you&#39;ve already earned but can&#39;t close. A trust center plus SOC 2 turns we&#39;ll circle back into a signature.&#10;&#10;Want the 90-day roadmap for Northwind?">
+                        <p>{{first_name}}, framing it as revenue, not cost: every enterprise deal waiting on a security review is pipeline you&#39;ve already earned but can&#39;t close. A trust center plus SOC 2 turns we&#39;ll circle back into a signature.</p><p>Want the 90-day roadmap for {{company}}?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: before your first enterprise deal&#10;&#10;Hey {{first_name}}, no call needed, reply yes and I&#39;ll send the audit-ready roadmap for {{company}}.&#10;&#10;You, or is {{security_leader}} running point on compliance?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="before your first enterprise deal" data-preview="before your first enterprise deal">before your first enterprise deal</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}}, no call needed, reply yes and I&#39;ll send the audit-ready roadmap for {{company}}.&#10;&#10;You, or is {{security_leader}} running point on compliance?" data-preview="Hey Dana, no call needed, reply yes and I&#39;ll send the audit-ready roadmap for Northwind.&#10;&#10;You, or is your Head of Security running point on compliance?">
+                        <p>Hey {{first_name}}, no call needed, reply yes and I&#39;ll send the audit-ready roadmap for {{company}}.</p><p>You, or is {{security_leader}} running point on compliance?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Catch-all - The Question Is Coming</strong>
+              <em>Free SOC 2 / ISO readiness scorecard</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Catch-all - The Question Is Coming steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: SOC 2 question&#10;&#10;Hey {{first_name}},&#10;&#10;Quick one, {{company}} handles customer data in {{industry}}, so I&#39;d guess are you SOC 2 compliant is starting to show up in your sales conversations.&#10;&#10;Would it be fair to assume it&#39;s not fully sorted yet, and it&#39;s easy to keep pushing down the list until a deal depends on it?&#10;&#10;Scrut makes companies audit-ready across SOC 2, ISO 27001, and 60+ frameworks with continuous monitoring, so you become the vendor that passes security review instead of losing to the one who already did.&#10;&#10;No pitch, reply Y and I&#39;ll send a free readiness scorecard that grades where {{company}} stands today. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="SOC 2 question" data-preview="SOC 2 question">SOC 2 question</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Quick one, {{company}} handles customer data in {{industry}}, so I&#39;d guess are you SOC 2 compliant is starting to show up in your sales conversations.&#10;&#10;Would it be fair to assume it&#39;s not fully sorted yet, and it&#39;s easy to keep pushing down the list until a deal depends on it?&#10;&#10;Scrut makes companies audit-ready across SOC 2, ISO 27001, and 60+ frameworks with continuous monitoring, so you become the vendor that passes security review instead of losing to the one who already did.&#10;&#10;No pitch, reply Y and I&#39;ll send a free readiness scorecard that grades where {{company}} stands today. No call needed." data-preview="Hey Dana,&#10;&#10;Quick one, Northwind handles customer data in healthtech, so I&#39;d guess are you SOC 2 compliant is starting to show up in your sales conversations.&#10;&#10;Would it be fair to assume it&#39;s not fully sorted yet, and it&#39;s easy to keep pushing down the list until a deal depends on it?&#10;&#10;Scrut makes companies audit-ready across SOC 2, ISO 27001, and 60+ frameworks with continuous monitoring, so you become the vendor that passes security review instead of losing to the one who already did.&#10;&#10;No pitch, reply Y and I&#39;ll send a free readiness scorecard that grades where Northwind stands today. No call needed.">
+                        <p>Hey {{first_name}},</p><p>Quick one, {{company}} handles customer data in {{industry}}, so I&#39;d guess are you SOC 2 compliant is starting to show up in your sales conversations.</p><p>Would it be fair to assume it&#39;s not fully sorted yet, and it&#39;s easy to keep pushing down the list until a deal depends on it?</p><p>Scrut makes companies audit-ready across SOC 2, ISO 27001, and 60+ frameworks with continuous monitoring, so you become the vendor that passes security review instead of losing to the one who already did.</p><p>No pitch, reply Y and I&#39;ll send a free readiness scorecard that grades where {{company}} stands today. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the quiet cost here is the deals you never hear you lost: procurement quietly picks the vendor who&#39;s already compliant.&#10;&#10;The scorecard takes 2 minutes and shows exactly what&#39;s between {{company}} and audit-ready. Want it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the quiet cost here is the deals you never hear you lost: procurement quietly picks the vendor who&#39;s already compliant.&#10;&#10;The scorecard takes 2 minutes and shows exactly what&#39;s between {{company}} and audit-ready. Want it?" data-preview="Dana, the quiet cost here is the deals you never hear you lost: procurement quietly picks the vendor who&#39;s already compliant.&#10;&#10;The scorecard takes 2 minutes and shows exactly what&#39;s between Northwind and audit-ready. Want it?">
+                        <p>{{first_name}}, the quiet cost here is the deals you never hear you lost: procurement quietly picks the vendor who&#39;s already compliant.</p><p>The scorecard takes 2 minutes and shows exactly what&#39;s between {{company}} and audit-ready. Want it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: are you audit-ready?&#10;&#10;Hey {{first_name}}, no call needed, reply yes and I&#39;ll send the free SOC 2 readiness scorecard for {{company}}.&#10;&#10;Should that go to you or {{security_leader}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="are you audit-ready?" data-preview="are you audit-ready?">are you audit-ready?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}}, no call needed, reply yes and I&#39;ll send the free SOC 2 readiness scorecard for {{company}}.&#10;&#10;Should that go to you or {{security_leader}}?" data-preview="Hey Dana, no call needed, reply yes and I&#39;ll send the free SOC 2 readiness scorecard for Northwind.&#10;&#10;Should that go to you or your Head of Security?">
+                        <p>Hey {{first_name}}, no call needed, reply yes and I&#39;ll send the free SOC 2 readiness scorecard for {{company}}.</p><p>Should that go to you or {{security_leader}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">Launch</p>
+      <h2>Launch narrow, then widen the market</h2>
+      <p class="takeaway">Start with the BuiltWith competitor list, add the manual-posture crawl, turn on GRC job triggers, then scale into funding and the catch-all.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Launch Tier 1 first from the BuiltWith competitor list. It&#39;s the smallest, hottest bucket and the savings-plus-migration story writes itself.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Launch Tier 2 next once the trust-center crawl is ready. It&#39;s large, high-fit, and carries Scrut&#39;s sharpest differentiator, continuous vs point-in-time.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Turn on Tier 3 as an always-on trickle from live GRC job posts, refreshed weekly and sent within days of a role going live.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Layer Tier 4 from the funding filter once the top tiers reveal whether savings, time, or unblock-revenue language lands hardest.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Open the catch-all last with the readiness scorecard and the winning broad value proposition.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Add side campaigns, new security leader, breach disclosure, new-framework mandate, only after the core waterfall is stable.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply / 150 contacts</strong>
+                <span>Perfect. Scale the tier hard.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 300</strong>
+                <span>Good. Let it run untouched.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 450-500</strong>
+                <span>Borderline. Test one copy or lead-magnet variant.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 / 500 or &lt;1% after 1,500 sends</strong>
+                <span>Cut the tier or rework it from the trigger up.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book the strategy call</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dana","NextGen AI Technologies","customer support rep","6","Intercom","healthtech","Maya","Northwind","Drata","Type II","Toddle","40","your Head of Security","security page","GRC Analyst","last week","Series B","April"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
