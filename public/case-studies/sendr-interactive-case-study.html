@@ -52,7 +52,7 @@
     button { font: inherit; }
     h1, h2, h3, h4 { font-family: var(--display); margin: 0; line-height: 1.02; letter-spacing: -.02em; }
     p { margin: 0; color: var(--muted); }
-    .top-rule { height: 14px; background: var(--ink); }
+    .top-rule { height: 12px; background: var(--clay); border-bottom: var(--border); }
     .wrap { width: min(1180px, calc(100% - 44px)); margin: 0 auto; }
     .mono { font-family: var(--mono); }
     .eyebrow {
@@ -181,7 +181,7 @@
       transition: transform .15s ease, box-shadow .15s ease;
     }
     .btn:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--ink); }
-    .btn-primary { background: var(--ink); color: var(--paper); box-shadow: 4px 4px 0 var(--clay); }
+    .btn-primary { background: var(--clay); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
     .btn-soft { background: var(--sage); box-shadow: 4px 4px 0 var(--ink); }
 
     .proof-stack { display: grid; gap: 12px; margin-top: 20px; }
@@ -344,13 +344,13 @@
     .quote {
       border: var(--border);
       border-radius: 18px;
-      background: var(--ink);
-      color: var(--paper);
+      background: var(--panel);
+      color: var(--ink);
       padding: 24px;
-      box-shadow: 7px 7px 0 var(--clay);
+      box-shadow: 7px 7px 0 var(--sage);
     }
-    .quote p { color: var(--paper); font-size: clamp(22px, 3vw, 34px); line-height: 1.12; font-family: var(--display); font-weight: 800; }
-    .quote cite { display: block; margin-top: 18px; color: #efe7d2; font-family: var(--mono); font-size: 12px; font-style: normal; text-transform: uppercase; letter-spacing: .08em; }
+    .quote p { color: var(--ink); font-size: clamp(20px, 2.2vw, 28px); line-height: 1.18; font-family: var(--display); font-weight: 800; }
+    .quote cite { display: block; margin-top: 18px; color: var(--muted); font-family: var(--mono); font-size: 12px; font-style: normal; text-transform: uppercase; letter-spacing: .08em; }
     .body-copy { display: grid; gap: 16px; }
     .body-copy p { font-size: 17px; line-height: 1.72; }
     .source-page {
@@ -360,6 +360,9 @@
       background: var(--paper);
       padding: 14px;
       box-shadow: var(--shadow);
+    }
+    .source-page[data-expandable] {
+      cursor: zoom-in;
     }
     .source-page__top {
       display: flex;
@@ -375,6 +378,17 @@
       text-transform: uppercase;
       color: #8a563d;
     }
+    .source-page[data-expandable] .source-page__top::after {
+      content: "Click to expand";
+      padding: 5px 9px;
+      border: 1.5px solid var(--ink);
+      border-radius: 999px;
+      background: var(--butter);
+      color: var(--ink);
+      letter-spacing: 0;
+      text-transform: none;
+      white-space: nowrap;
+    }
     .source-page img {
       display: block;
       width: 100%;
@@ -385,7 +399,7 @@
     }
     .source-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 1fr;
       gap: 18px;
       margin-top: 22px;
     }
@@ -442,7 +456,7 @@
       font-weight: 900;
       cursor: pointer;
     }
-    .tab.is-active { background: var(--ink); color: var(--paper); }
+    .tab.is-active { background: var(--clay); color: var(--ink); box-shadow: 3px 3px 0 var(--ink); }
     .tab-panel { display: none; }
     .tab-panel.is-active { display: block; }
     .pillar-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
@@ -542,24 +556,66 @@
       font-family: var(--mono);
       font-weight: 800;
     }
-    .raw-page {
-      white-space: pre-wrap;
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      padding: 28px;
+      background: rgba(239, 234, 220, .94);
+      backdrop-filter: blur(4px);
+    }
+    .lightbox.is-open {
+      display: grid;
+      place-items: center;
+    }
+    .lightbox__inner {
+      width: min(1280px, 100%);
+      max-height: min(88vh, 920px);
+      padding: 14px;
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--paper);
+      box-shadow: 8px 8px 0 var(--clay);
+      overflow: auto;
+    }
+    .lightbox__top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 12px;
       font-family: var(--mono);
       font-size: 12px;
-      line-height: 1.65;
-      color: var(--ink);
-      background: var(--panel);
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: #8a563d;
+    }
+    .lightbox__close {
+      min-height: 38px;
+      padding: 7px 12px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--butter);
+      font-family: var(--display);
+      font-weight: 900;
+      cursor: pointer;
+    }
+    .lightbox img {
+      display: block;
+      width: 100%;
+      height: auto;
       border: var(--border);
       border-radius: 14px;
-      padding: 16px;
-      max-height: 420px;
-      overflow: auto;
+      background: white;
     }
     .footer-cta {
       padding: 70px 0 90px;
-      background: var(--ink);
-      color: var(--paper);
-      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+      background: var(--mist);
+      color: var(--ink);
+      box-shadow: 50vw 0 0 var(--mist), -50vw 0 0 var(--mist);
+      border-top: var(--border);
     }
     .footer-cta .panel {
       display: grid;
@@ -578,7 +634,7 @@
       .progress-rail { display: none; }
       .mobile-progress { display: block; }
       .hero { min-height: auto; }
-      .metric-strip, .grid-3, .pillar-grid, .source-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .metric-strip, .grid-3, .pillar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 680px) {
       .wrap { width: min(100% - 32px, 1180px); }
@@ -611,10 +667,10 @@
         <div>
           <p class="eyebrow">RankedTag. CASE STUDY · SENDR.AI · CLIENT PROOF</p>
           <h1>Live numbers, not promises.</h1>
-          <p class="hero-copy">Sendr.ai: 0 → 1.52M organicimpressions and 10.9K clicks in 8 months.</p>
+          <p class="hero-copy">Sendr.ai: 0 → 1.52M organic impressions and 10.9K clicks in 8 months.</p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="#exhibits">Explore the proof</a>
-            <a class="btn btn-soft" href="#verbatim">Read verbatim pages</a>
+            <a class="btn btn-soft" href="#appendix">Open the evidence</a>
           </div>
           <div class="metric-strip" aria-label="Primary metrics">
             <div class="metric-card"><strong>1.52M</strong><span>Total organic impressions</span></div>
@@ -659,7 +715,7 @@
       <section class="section" id="proof" data-label="Proof">
         <div class="section-head">
           <p class="eyebrow">§ PROOF · LIVE NUMBERS, NOT PROMISES</p>
-          <h2>Sendr.ai: 0 → 1.52M organicimpressions and 10.9K clicks in 8 months.</h2>
+          <h2>Sendr.ai: 0 → 1.52M organic impressions and 10.9K clicks in 8 months.</h2>
           <p class="takeaway">Every number in this document is pulled straight from Google Search Console and GA4, with the source screenshots included.</p>
         </div>
         <div class="grid-2">
@@ -672,7 +728,7 @@
           <div class="panel stat-list">
             <div class="stat-row"><strong>1.52M</strong><span>Total organic impressions<br>▲ Google Search Console · 02 Nov 2025 to 30 Jun 2026</span></div>
             <div class="stat-row"><strong>10.9K</strong><span>Total organic clicks<br>▲ Google Search Console · same window</span></div>
-            <div class="stat-row"><strong>96</strong><span>Organic-search signups in June 71 in May, 35% MoM<br>▲ GA4 · New Accounts · Organic Search</span></div>
+            <div class="stat-row"><strong>96</strong><span>Organic-search signups in June (71 in May, +35% MoM)<br>▲ GA4 · New Accounts · Organic Search</span></div>
             <div class="stat-row"><strong>#2</strong><span>Google AI Overview rank, above ZoomInfo at #8<br>▲ Live SERP · independently verifiable</span></div>
           </div>
         </div>
@@ -692,10 +748,10 @@
           <div class="panel body-copy">
             <h3>The client: Sendr.ai</h3>
             <p>Sendr.ai is the most personal engagement platform in sales: an all-in-one outbound CRM that replaces the messy outbound stack (lead finder, enrichment, personalised pages, dynamic video, campaigns, tracking) with one clean workflow. GDPR and ISO 27001 certified, 500M+ refreshed B2B profiles, 5M+ personalised pages generated, 12K+ meetings booked across its customer base.</p>
-            <p>The product was exceptional. The problem: in late 2025 nobody could find it on Google, and ChatGPT, Gemini, Claude and Perplexity had no idea it existed. Sendr was competing in a category owned by 8 figure incumbents like ZoomInfo, with none of their budget. The brief to RankedTag was one sentence: become the first name that comes up when someone asks about modern outbound, on Google and inside every major LLM.</p>
+            <p>The product was exceptional. The problem: in late 2025 nobody could find it on Google, and ChatGPT, Gemini, Claude and Perplexity had no idea it existed. Sendr was competing in a category owned by 8-figure incumbents like ZoomInfo, with none of their budget. The brief to RankedTag was one sentence: become the first name that comes up when someone asks about modern outbound, on Google and inside every major LLM.</p>
           </div>
         </div>
-        <figure class="source-page">
+        <figure class="source-page" data-expandable>
           <figcaption class="source-page__top"><span>Google Search Console screenshot</span><span>02 Nov 2025 to 30 Jun 2026</span></figcaption>
           <img src="/case-studies/sendr-assets/sendr-proof-p02-01.jpeg" alt="Google Search Console screenshot showing 10.9K clicks and 1.52M impressions for Sendr.ai" loading="lazy">
         </figure>
@@ -748,12 +804,12 @@
           <article class="pillar">
             <span class="num">01 / TECHNICAL FOUNDATION</span>
             <h3>Technical SEO & schema</h3>
-            <p>Before chasing traffic we fixed the plumbing: full Core Web Vitals audit, internal link architecture rebuild, JSONLD structured data SoftwareApplication, Organization, FAQPage), llms.txt, sitemap cleanup and crawl budget optimisation. Google re-crawled the entire site in under 72 hours.</p>
+            <p>Before chasing traffic we fixed the plumbing: full Core Web Vitals audit, internal link architecture rebuild, JSON-LD structured data (SoftwareApplication, Organization, FAQPage), llms.txt, sitemap cleanup and crawl budget optimisation. Google re-crawled the entire site in under 72 hours.</p>
             <p class="tagline">Core Web Vitals · Schema.org · llms.txt · the 52-check stack</p>
           </article>
           <article class="pillar">
             <span class="num">02 / CONTENT</span>
-            <h3>Category-deﬁning content</h3>
+            <h3>Category-defining content</h3>
             <p>Pillar pages around the buying-intent clusters Sendr's ICP actually searches: "best GTM tool", "outbound CRM", "AI sales platform", "personalised video at scale", "lead enrichment alternatives". Each pillar spawned 6 to 10 supporting articles with tight internal linking. Depth and originality over volume: the kind of pages LLMs want to cite.</p>
             <p class="tagline">Topic clusters · pillar pages · comparison SEO · use-case pages</p>
           </article>
@@ -791,7 +847,7 @@
             <div class="panel body-copy">
               <p class="eyebrow">§ EXHIBIT B · RANKED #2 · ABOVE ZOOMINFO</p>
               <h3>Google's AI Overview now answers "what is the best GTM tool" with Sendr.</h3>
-              <p>Sendr.ai sits at #2 in Google's AI Overview for the category-defining query. ZoomInfo, the 8 figure incumbent, sits at #8. Sendr's own blog post is the source Google cites in the panel. That is the difference between renting traffic and owning the answer.</p>
+              <p>Sendr.ai sits at #2 in Google's AI Overview for the category-defining query. ZoomInfo, the 8-figure incumbent, sits at #8. Sendr's own blog post is the source Google cites in the panel. That is the difference between renting traffic and owning the answer.</p>
               <p>GOOGLE · AI OVERVIEW · QUERY: "what is the best GTM tool"</p>
               <p>#2 Sendr.ai ← RANKEDTAG CLIENT · CITED SOURCE</p>
               <p>#8 ZoomInfo 8-FIGURE INCUMBENT</p>
@@ -803,7 +859,7 @@
               <cite>FOUNDER · SENDR.AI · ENGAGEMENT ONGOING</cite>
             </blockquote>
           </div>
-          <figure class="source-page">
+          <figure class="source-page" data-expandable>
             <figcaption class="source-page__top"><span>Live SERP screenshot</span><span>Sendr.ai at #2 · ZoomInfo at #8</span></figcaption>
             <img src="/case-studies/sendr-assets/sendr-proof-p10-01.png" alt="Google AI Overview screenshot for what is the best GTM tool showing Sendr.ai listed above ZoomInfo" loading="lazy">
           </figure>
@@ -822,11 +878,11 @@
             <p>GA4 · 01 to 31 May 2026 · Organic Search: 2,231 sessions · 232 signup views · 71 new accounts (circled)</p>
           </div>
           <div class="source-grid">
-            <figure class="source-page">
+            <figure class="source-page" data-expandable>
               <figcaption class="source-page__top"><span>GA4 screenshot</span><span>June 2026 · 96 new accounts</span></figcaption>
               <img src="/case-studies/sendr-assets/sendr-proof-p06-01.jpeg" alt="GA4 screenshot showing 96 organic search new accounts in June 2026" loading="lazy">
             </figure>
-            <figure class="source-page">
+            <figure class="source-page" data-expandable>
               <figcaption class="source-page__top"><span>GA4 screenshot</span><span>May 2026 · 71 new accounts</span></figcaption>
               <img src="/case-studies/sendr-assets/sendr-proof-p06-02.jpeg" alt="GA4 screenshot showing 71 organic search new accounts in May 2026" loading="lazy">
             </figure>
@@ -842,10 +898,10 @@
             <div class="time-step"><strong>NOV 2025 · FOUNDATION</strong><p>Brand-only traffic, impressions flat near zero. Technical audit, schema and llms.txt shipped. Google re-crawls the full site in under 72 hours.</p></div>
             <div class="time-step"><strong>JAN 2026 · FIRST INFLECTION</strong><p>First non-brand rankings emerge as pillar pages index. First LLM citations recorded across ChatGPT and Perplexity.</p></div>
             <div class="time-step"><strong>FEB TO APR 2026 · BREAKOUT</strong><p>Sustained near-vertical climb. 1,200+ non-brand terms ranking. Sendr enters Google's AI Overview for category queries.</p></div>
-            <div class="time-step"><strong>MAY 2026 · PIPELINE PROOF</strong><p>71 new accounts from organic search in a single month GA4. Organic becomes a top acquisition channel, outpacing paid.</p></div>
-            <div class="time-step"><strong>JUN 2026 · COMPOUNDING</strong><p>163K monthly impressions, 96 organic-search signups 35% MoM, #2 in Google's AI Overview above ZoomInfo. Cumulative: 1.52M impressions, 10.9K clicks.</p></div>
+            <div class="time-step"><strong>MAY 2026 · PIPELINE PROOF</strong><p>71 new accounts from organic search in a single month (GA4). Organic becomes a top acquisition channel, outpacing paid.</p></div>
+            <div class="time-step"><strong>JUN 2026 · COMPOUNDING</strong><p>163K monthly impressions, 96 organic-search signups (+35% MoM), #2 in Google's AI Overview above ZoomInfo. Cumulative: 1.52M impressions, 10.9K clicks.</p></div>
           </div>
-          <figure class="source-page">
+          <figure class="source-page" data-expandable>
             <figcaption class="source-page__top"><span>Google Search Console screenshot</span><span>June 2026 run rate</span></figcaption>
             <img src="/case-studies/sendr-assets/sendr-proof-p07-01.jpeg" alt="Google Search Console screenshot showing June 2026 run rate of 1.59K clicks and 163K impressions" loading="lazy">
           </figure>
@@ -896,7 +952,7 @@
                 <div class="metric-card"><strong>7.1</strong><span>Average position<br>▲ across the indexed surface area</span></div>
               </div>
               <p>Google Search Console · sendr.ai · 09/11/2025 to 28/04/2026 · 7.43K clicks · 1.05M impressions · avg CTR 0.7% · avg position 7.1 · the original screenshot published at rankedtag.com/result-sendr.jpeg</p>
-              <figure class="source-page">
+              <figure class="source-page" data-expandable>
                 <figcaption class="source-page__top"><span>Google Search Console screenshot</span><span>Original 6-month archive</span></figcaption>
                 <img src="/case-studies/sendr-assets/sendr-proof-p09-01.png" alt="Google Search Console screenshot showing the original 6-month proof of 1.05M impressions and 7.43K clicks" loading="lazy">
               </figure>
@@ -906,7 +962,7 @@
             <summary>§ APPENDIX B · THE LIVE SERP, AS CAPTURED <span>Open</span></summary>
             <div class="details-body">
               <h3>The live SERP behind Exhibit B.</h3>
-              <p>The complete screenshot referenced on page 5 Google's AI Overview for "what is the best GTM tool", with Sendr.ai at #2, ZoomInfo at #8, and Sendr's own blog post featured as the cited source in the right-hand panel. Timestamped to the engagement; live results shift over time, which is why the query remains independently verifiable.</p>
+              <p>The complete screenshot referenced on page 5: Google's AI Overview for "what is the best GTM tool", with Sendr.ai at #2, ZoomInfo at #8, and Sendr's own blog post featured as the cited source in the right-hand panel. Timestamped to the engagement; live results shift over time, which is why the query remains independently verifiable.</p>
               <p>Google search · "what is the best GTM tool" · Sendr.ai listed at #2 · ZoomInfo at #8 · Sendr.ai's blog post cited in the source panel · published at rankedtag.com/result-ranked.jpeg</p>
               <div class="grid-3">
                 <div class="panel body-copy"><h3>AI citation share</h3><p>Whether the AI names you when a buyer asks for a recommendation. Sendr.ai is the #2 cited answer in its category, above an eight-figure incumbent.</p></div>
@@ -916,325 +972,12 @@
               <p>How fast the engine moves.</p>
               <p>WK 2 · PIPELINE LIVE WK 3 · FIRST PAGES INDEXED WK 5 TO 7 · FIRST TOP-20 RANKINGS</p>
               <p>DAY 30 TO 45 · FIRST LLM CITATION MO 3 TO 6 · COMPOUNDING CURVE</p>
-              <figure class="source-page">
+              <figure class="source-page" data-expandable>
                 <figcaption class="source-page__top"><span>Live SERP screenshot</span><span>Original captured evidence</span></figcaption>
                 <img src="/case-studies/sendr-assets/sendr-proof-p10-01.png" alt="Captured Google AI Overview SERP screenshot with Sendr.ai ranking above ZoomInfo" loading="lazy">
               </figure>
             </div>
           </details>
-        </div>
-      </section>
-
-      <section class="section" id="verbatim" data-label="Verbatim">
-        <div class="section-head">
-          <p class="eyebrow">Verbatim text archive</p>
-          <h2>Original extracted page text.</h2>
-          <p class="takeaway">This section preserves the source document text page-by-page for auditability.</p>
-        </div>
-        <div class="accordion">
-          <details><summary>Page 1 <span>Open</span></summary><div class="details-body"><pre class="raw-page">RankedTag. CASE STUDY · SENDR.AI · CLIENT PROOF
-§ PROOF · LIVE NUMBERS, NOT PROMISES
-Sendr.ai: 0 → 1.52M organicimpressions and 10.9K clicks in
-8 months.
-A seed-stage B2B SaaS, invisible on Google and unknown to every LLM, now
-sits at #2 in Google's AI Overview for "what is the best GTM tool", six places
-above ZoomInfo, and added 96 organic-search signups in June alone. Every
-number in this document is pulled straight from Google Search Console and
-GA4, with the source screenshots included.
-INDUSTRY · B2B SAAS, OUTBOUND CRM STAGE · SEED ENGAGEMENT · SEO + AI SEO + GEO + AEO
-WINDOW · NOV 2025 TO JUN 2026
-1.52M
-Total organic impressions
-▲  Google Search Console · 02 Nov 2025 to 30 Jun
-2026
-10.9K
-Total organic clicks
-▲  Google Search Console · same window
-96
-Organic-search signups in June 71 in May,
-35% MoM
-▲  GA4 · New Accounts · Organic Search
-#2
-Google AI Overview rank, above ZoomInfo at #8
-▲  Live SERP · independently verifiable
-EVERY CLAIM IN THIS DOCUMENT IS BACKED BY A SCREENSHOT ON THE FOLLOWING PAGES,
-AND CAN BE CROSS-CHECKED LIVE: SEARCH "WHAT IS THE BEST GTM TOOL" ON GOOGLE.
-© 2026 RANKEDTAG · RANKEDTAG.COM 01 / 08</pre></div></details>
-          <details><summary>Page 2 <span>Open</span></summary><div class="details-body"><pre class="raw-page">§ EXHIBIT A · THE FULL CURVE
-10.9K clicks. 1.52M impressions. One screenshot.
-The full engagement window in a single Google Search Console view. The impressions line
-(purple) is flat and hugging zero through November and December 2025: that was Sendr's
-entire organic footprint when RankedTag took over. The inflection begins in January as the first
-rankings compound, and from February onwards the climb is sustained, not a spike.
-Google Search Console · sendr.ai · 02 Nov 2025 to 30 Jun 2026 · 10.9K clicks · 1.52M impressions · avg CTR 0.7% ·
-avg position 7.4
-The client: Sendr.ai
-Sendr.ai is the most personal engagement platform in sales: an all-in-one outbound CRM that replaces
-the messy outbound stack (lead finder, enrichment, personalised pages, dynamic video, campaigns,
-tracking) with one clean workflow. GDPR and ISO 27001 certified, 500M+ refreshed B2B profiles, 5M+
-personalised pages generated, 12K+ meetings booked across its customer base.
-The product was exceptional. The problem: in late 2025 nobody could find it on Google, and ChatGPT,
-Gemini, Claude and Perplexity had no idea it existed. Sendr was competing in a category owned by 8
-figure incumbents like ZoomInfo, with none of their budget. The brief to RankedTag was one sentence:
-become the first name that comes up when someone asks about modern outbound, on Google and
-inside every major LLM.
-SENDR.AI CASE STUDY · RANKEDTAG 02 / 08</pre></div></details>
-          <details><summary>Page 3 <span>Open</span></summary><div class="details-body"><pre class="raw-page">§ THE CHALLENGE
-Great product. Zero organic visibility.
-When Sendr came to RankedTag in early November 2025, the domain was indexed but barely
-surfacing. It ranked only for direct brand queries, impressions flatlining near zero, almost
-entirely from people who already knew the name. No traffic from category-defining terms. No
-presence in AI answers. No compounding growth.
-BEFORE · NOV 2025
-Organic visibility brand-only, near zero
-Non-brand ranked
-terms
-~0
-Organic-search
-signups
-negligible
-LLM citations none
-Google AI
-Overview
-absent
-Category
-recognition
-unknown
-AFTER · JUN 2026
-Organic
-visibility
-163K imps / month
-Non-brand
-ranked
-terms
-1,200+
-Organic-
-search
-signups
-96 in June
-LLM
-citations
-ChatGPT · Gemini · Claude · Perplexity
-Google AI
-Overview
-#2 · above ZoomInfo
-Category
-recognition
-leading GTM tool
-Why traditional SEO alone would have failed
-Traditional SEO alone is a 2024 strategy. In 2026, buyers are split: half search Google, half ask
-ChatGPT, Gemini, Claude or Perplexity. A modern GTM tool needs to be the answer on both surfaces.
-RankedTag's Inbound Engine covers the whole stack: senior strategists pick the fights, Claude
-compresses the research at scale, and editors keep the craft. Nothing ships unread, nothing ships on
-autopilot.
-SENDR.AI CASE STUDY · RANKEDTAG 03 / 08</pre></div></details>
-          <details><summary>Page 4 <span>Open</span></summary><div class="details-body"><pre class="raw-page">§ THE STRATEGY
-One engine, four disciplines.
-Classic SEO for Google, AI SEO for everything else. The four-pillar framework RankedTag built
-and executed for Sendr:
-01 / TECHNICAL FOUNDATION
-Technical SEO & schema
-Before chasing traffic we fixed the plumbing: full
-Core Web Vitals audit, internal link architecture
-rebuild, JSONLD structured data
-SoftwareApplication, Organization, FAQPage),
-llms.txt, sitemap cleanup and crawl budget
-optimisation. Google re-crawled the entire site in
-under 72 hours.
-Core Web Vitals · Schema.org · llms.txt · the 52-
-check stack
-02 / CONTENT
-Category-deﬁning content
-Pillar pages around the buying-intent clusters
-Sendr's ICP actually searches: "best GTM tool",
-"outbound CRM", "AI sales platform", "personalised
-video at scale", "lead enrichment alternatives".
-Each pillar spawned 6 to 10 supporting articles
-with tight internal linking. Depth and originality
-over volume: the kind of pages LLMs want to cite.
-Topic clusters · pillar pages · comparison SEO ·
-use-case pages
-03 / AI SEO · GEO
-Generative Engine Optimisation
-This is what set the campaign apart. We optimised
-Sendr's content for how large language models
-retrieve and cite, not just how Google indexes:
-clean semantic chunking, direct answer formats,
-comparison tables, statistic-first paragraphs, and
-authoritative mentions across Reddit, G2, Capterra
-and Product Hunt. LLMs now reliably surface
-Sendr for outbound CRM and personalised-video
-queries.
-GEO · LLM optimisation · citation building · answer
-engineering
-04 / AEO + AUTHORITY
-Answer engines & digital PR
-Answer Engine Optimisation to win AI Overviews,
-featured snippets and PAA boxes, paired with
-strategic placements across GTM publications,
-podcast features and a quiet backlink program
-from genuinely relevant domains. No link farms, no
-PBNs: every link earned. Topical authority around
-"outbound" and "sales engagement" became
-dominant.
-AEO · digital PR · founder-led content · topical
-authority
-The stack behind it: senior human strategy, Claude for deep research and GEO citation mapping, N8N
-workflows for velocity, measured with Ahrefs, SEMrush, Surfer, Screaming Frog, GSC, GA4, Profound and
-Otterly. AI compresses the grunt work; humans handle the craft.
-SENDR.AI CASE STUDY · RANKEDTAG 04 / 08</pre></div></details>
-          <details><summary>Page 5 <span>Open</span></summary><div class="details-body"><pre class="raw-page">§ EXHIBIT B · RANKED #2 · ABOVE ZOOMINFO
-Google's AI Overview now answers "what is the
-best GTM tool" with Sendr.
-Sendr.ai sits at #2 in Google's AI Overview for the category-defining query. ZoomInfo, the 8
-figure incumbent, sits at #8. Sendr's own blog post is the source Google cites in the panel.
-That is the difference between renting traffic and owning the answer.
-GOOGLE · AI OVERVIEW · QUERY: "what is the best GTM tool"
-#2 Sendr.ai ← RANKEDTAG CLIENT · CITED SOURCE
-·  ·  ·
-#8 ZoomInfo 8-FIGURE INCUMBENT
-RENDERED SUMMARY OF THE LIVE SERP. FULL SCREENSHOT: RANKEDTAG.COM/RESULT-RANKED.JPEG
-VERIFY IT YOURSELF: RUN THE SAME QUERY ON GOOGLE.
-"We went from invisible to the answer Google's AI Overview
-gives when someone asks for the best GTM tool. Six places
-above ZoomInfo. The pipeline runs while we ship product."
-FOUNDER · SENDR.AI · ENGAGEMENT ONGOING
-SENDR.AI CASE STUDY · RANKEDTAG 05 / 08</pre></div></details>
-          <details><summary>Page 6 <span>Open</span></summary><div class="details-body"><pre class="raw-page">§ EXHIBIT C · PIPELINE, NOT VANITY TRAFFIC
-71 organic signups in May. 96 in June.
-Compounding.
-Impressions are a means to an end; what matters is what lands in the product. GA4 shows 71
-new accounts from organic search in May and 96 in June, a 35% month-over-month
-jump, on top of steady contribution from organic video, communities and review-site referrals
-fed by the same content engine. Fully inbound, zero paid search, no sales effort at the top of
-funnel.
-71
-▲  GA4 · May 2026 · organic-search
-new accounts
-96
-▲  GA4 · Jun 2026 · organic-search
-new accounts
-+35%
-▲  Month over month · consistent,
-not a spike
-GA4 · 01 to 30 Jun 2026 · Organic Search: 2,507 sessions · 266 signup views · 96 new accounts (circled)
-GA4 · 01 to 31 May 2026 · Organic Search: 2,231 sessions · 232 signup views · 71 new accounts (circled)
-SENDR.AI CASE STUDY · RANKEDTAG 06 / 08</pre></div></details>
-          <details><summary>Page 7 <span>Open</span></summary><div class="details-body"><pre class="raw-page">§ EXHIBIT D · THE CURRENT RUN RATE
-June 2026: 163K impressions, 1.59K clicks, in one
-month.
-Google Search Console · sendr.ai · 01 to 30 Jun 2026 · 1.59K clicks · 163K impressions · avg CTR 1%
-NOV 2025 · FOUNDATION
-Brand-only traffic, impressions flat near zero. Technical audit, schema and llms.txt shipped. Google re-crawls
-the full site in under 72 hours.
-JAN 2026 · FIRST INFLECTION
-First non-brand rankings emerge as pillar pages index. First LLM citations recorded across ChatGPT and
-Perplexity.
-FEB TO APR 2026 · BREAKOUT
-Sustained near-vertical climb. 1,200+ non-brand terms ranking. Sendr enters Google's AI Overview for
-category queries.
-MAY 2026 · PIPELINE PROOF
-71 new accounts from organic search in a single month GA4. Organic becomes a top acquisition channel,
-outpacing paid.
-JUN 2026 · COMPOUNDING
-163K monthly impressions, 96 organic-search signups 35% MoM, #2 in Google's AI Overview above
-ZoomInfo. Cumulative: 1.52M impressions, 10.9K clicks.
-SENDR.AI CASE STUDY · RANKEDTAG 07 / 08</pre></div></details>
-          <details><summary>Page 8 <span>Open</span></summary><div class="details-body"><pre class="raw-page">§ THE OUTCOME
-Search became Sendr's cheapest, fastest-
-compounding growth channel.
-96 / mo
-Organic signups, and
-climbing. 71 in May, 96 in
-June from organic search
-alone. Fully inbound, no paid
-lift, and diversified across
-Google, ChatGPT, Gemini,
-Claude, Perplexity, Bing
-Copilot, Reddit and
-G2/Capterra.
-#2
-Owning the category answer.
-Sendr is the answer Google's
-AI Overview gives for "what is
-the best GTM tool", above
-ZoomInfo, and gets cited
-consistently across every
-major AI answer engine.
-1.52M
-Impressions that keep
-compounding. 10.9K clicks, a
-163K-per-month run rate,
-zero paid search, zero
-artificial backlinks: 100%
-organic growth that outlives
-the engagement.
-The takeaway for your SaaS
-Sendr is a seed-stage startup that out-ranked an 8-figure incumbent in its own category, in 8 months,
-with zero ad spend. The engine that did it, senior human strategy, AI-compressed research and a
-content system built for both Google and LLMs, is repeatable. The numbers in this document are the
-evidence: live, sourced, and independently verifiable.
-✓ HOW TO VERIFY THIS DOCUMENT
-1. Every metric maps to a Google Search Console or GA4 screenshot on pages 2, 6 and 7. 2. The AI
-Overview ranking is live: search "what is the best GTM tool" on Google and count the positions. 3. Screen-
-share walkthroughs of the live GSC and GA4 properties are available on request, with the client's
-participation.
-rankedtag.com hello@rankedtag.com
-Case study: rankedtag.com/case-study/sendr
-© 2026 RANKEDTAG · ALL METRICS VERIFIED VIA GSC & GA4 · NOV 2025 TO JUN 2026 08 / 08</pre></div></details>
-          <details><summary>Page 9 <span>Open</span></summary><div class="details-body"><pre class="raw-page">APPENDIX  ·  ARCHIVE  ·  RANKEDTAG.COM/CASE-STUDY/SENDR
-§ APPENDIX A  ·  THE ORIGINAL 6-MONTH PROOF
-The archive: 0 →1.05M impressions in the
-first 6 months.
-These are the numbers as first published on the live case study at rankedtag.com/case-study/sendr,
-covering the opening six months of the engagement (09/11/2025 to 28/04/2026). They are the earlier
-snapshot of the same curve shown on page 2: the 8-month totals at the front of this document have since
-superseded them, and nothing here has been restated or smoothed. Straight from Google Search Console.
-1.05M
-Total organic impressions · 6 months
-▲ Google Search Console · 09/11/2025 to 28/04/2026
-7.43K
-Total organic clicks
-▲ same 6-month window
-0.7%
-Average CTR
-▲ across all ranking queries
-7.1
-Average position
-▲ across the indexed surface area
-Google Search Console · sendr.ai · 09/11/2025 to 28/04/2026 · 7.43K clicks · 1.05M impressions · avg CTR 0.7% · avg
-position 7.1 · the original screenshot published at rankedtag.com/result-sendr.jpeg
-SENDR.AI CASE STUDY · RANKEDTAG APPENDIX · A1 / A2</pre></div></details>
-          <details><summary>Page 10 <span>Open</span></summary><div class="details-body"><pre class="raw-page">§ APPENDIX B  ·  THE LIVE SERP, AS CAPTURED
-The live SERP behind Exhibit B.
-The complete screenshot referenced on page 5 Google's AI Overview for "what is the best GTM tool", with
-Sendr.ai at #2, ZoomInfo at #8, and Sendr's own blog post featured as the cited source in the right-hand
-panel. Timestamped to the engagement; live results shift over time, which is why the query remains
-independently verifiable.
-Google search · "what is the best GTM tool" · Sendr.ai listed at #2 · ZoomInfo at #8 · Sendr.ai's blog post cited
-in the source panel · published at rankedtag.com/result-ranked.jpeg
-Measured on what moves revenue, not vanity traﬃc.
-AI citation share
-Whether the AI names you when a
-buyer asks for a recommendation.
-Sendr.ai is the #2 cited answer in
-its category, above an eight-figure
-incumbent.
-Share of voice
-Owning the answer panel, not a
-link buried below it. Surface area
-competitors cannot simply out-
-spend you for overnight.
-Pipeline
-Qualified inbound that
-compounds while you ship
-product. No ads to refill, no
-outreach to send. The engine runs
-whether or not you do.
-How fast the engine moves.
-WK 2 · PIPELINE LIVE WK 3 · FIRST PAGES INDEXED WK 5 TO 7 · FIRST TOP-20 RANKINGS
-DAY 30 TO 45 · FIRST LLM CITATION MO 3 TO 6 · COMPOUNDING CURVE
-SENDR.AI CASE STUDY · RANKEDTAG APPENDIX · A2 / A2</pre></div></details>
         </div>
       </section>
     </main>
@@ -1245,13 +988,23 @@ SENDR.AI CASE STUDY · RANKEDTAG APPENDIX · A2 / A2</pre></div></details>
       <div class="panel">
         <div>
           <p class="eyebrow">© 2026 RANKEDTAG · ALL METRICS VERIFIED VIA GSC & GA4 · NOV 2025 TO JUN 2026</p>
-          <h2>Measured on what moves revenue, not vanity traﬃc.</h2>
+          <h2>Measured on what moves revenue, not vanity traffic.</h2>
           <p>rankedtag.com · hello@rankedtag.com · Case study: rankedtag.com/case-study/sendr</p>
         </div>
         <a class="btn btn-primary" href="#top">Back to top</a>
       </div>
     </div>
   </footer>
+
+  <div class="lightbox" id="proofLightbox" aria-hidden="true" role="dialog" aria-label="Expanded proof screenshot">
+    <div class="lightbox__inner">
+      <div class="lightbox__top">
+        <span id="lightboxTitle">Proof screenshot</span>
+        <button class="lightbox__close" type="button" id="lightboxClose">Close</button>
+      </div>
+      <img id="lightboxImage" src="" alt="">
+    </div>
+  </div>
 
   <script>
     const sections = [...document.querySelectorAll('main .section')];
@@ -1260,6 +1013,10 @@ SENDR.AI CASE STUDY · RANKEDTAG APPENDIX · A2 / A2</pre></div></details>
     const mobileBar = document.getElementById('mobileBar');
     const mobileLabel = document.getElementById('mobileLabel');
     const mobilePct = document.getElementById('mobilePct');
+    const lightbox = document.getElementById('proofLightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxTitle = document.getElementById('lightboxTitle');
+    const lightboxClose = document.getElementById('lightboxClose');
 
     function setActive() {
       const scrollY = window.scrollY;
@@ -1300,6 +1057,45 @@ SENDR.AI CASE STUDY · RANKEDTAG APPENDIX · A2 / A2</pre></div></details>
         const label = item.querySelector('summary span');
         if (label) label.textContent = item.open ? 'Close' : 'Open';
       });
+    });
+
+    document.querySelectorAll('.source-page[data-expandable]').forEach((figure) => {
+      figure.setAttribute('tabindex', '0');
+      figure.setAttribute('role', 'button');
+      figure.setAttribute('aria-label', 'Expand proof screenshot');
+
+      const openFigure = () => {
+        const image = figure.querySelector('img');
+        const label = [...figure.querySelectorAll('.source-page__top span')].map((item) => item.textContent.trim()).join(' · ');
+        if (!image) return;
+        lightboxImage.src = image.currentSrc || image.src;
+        lightboxImage.alt = image.alt;
+        lightboxTitle.textContent = label || 'Proof screenshot';
+        lightbox.classList.add('is-open');
+        lightbox.setAttribute('aria-hidden', 'false');
+      };
+
+      figure.addEventListener('click', openFigure);
+      figure.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openFigure();
+        }
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightboxImage.src = '';
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox) closeLightbox();
+    });
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
     });
 
     window.addEventListener('scroll', setActive, { passive: true });
