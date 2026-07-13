@@ -1,0 +1,1658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pype AI - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-07-14</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Pype AI</p>
+          <h1>One waterfall for every hospital in the market.</h1>
+          <p class="hero-copy">A scrollable GTMx strategy artifact for routing hospitals and health systems by how they handle patient communication today, not by bed count or geography.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Bed count is the personalization variable. How a hospital handles patient communication today is the waterfall. The same cascade routes the entire hospital market without rebuilding the campaign, and every account exits with exactly one tier.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book the strategy call</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>25k-40k</strong>
+          <span>hospital + clinic TAM</span>
+        </div>
+        <div class="metric-card">
+          <strong>4</strong>
+          <span>priority-routed tiers</span>
+        </div>
+        <div class="metric-card">
+          <strong>60%</strong>
+          <span>no-show reduction Pype delivers</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Pype AI sells AI voice and text agents that automate patient communication for hospitals and health systems: appointment reminders, no-show recovery, procedure prep, post-discharge follow-ups, medication adherence, and chronic-care check-ins. Voice-native across WhatsApp, SMS, email, and phone, in 20+ languages, HIPAA-certified and SOC-2, live in 2 weeks.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The buying signal is patient-comms maturity</p></div><div><span>02</span><p>One cascade routes the whole market</p></div><div><span>03</span><p>Each tier sells a smaller first step</p></div><div><span>04</span><p>Campaign angles ride on the same routing layer</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>Waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>Email Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">Signal</p>
+      <h2>The buying signal is patient-comms maturity</h2>
+      <p class="takeaway">A hospital&#39;s size changes the number in the email. How it handles patient communication decides the campaign.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>A detected patient-engagement tool proves the hospital already bought into automated communication and is visible to scrape.</p></div><div class="reason-card"><span>02</span><p>A live coordinator or front-desk requisition proves they are solving patient comms with headcount right now.</p></div><div class="reason-card"><span>03</span><p>A review that says patients cannot get through is acute pain in the hospital&#39;s own public words.</p></div><div class="reason-card"><span>04</span><p>Every remaining hospital still loses revenue to no-shows and still chases reminders by hand.</p></div>
+            </div>
+            <div class="field-cloud"><span>patient_comms_tool_detected</span><span>hiring_patient_comms_role</span><span>review_reachability_pain</span><span>review_count</span><span>bed_count</span><span>patient_volume_tier</span><span>multi_site</span><span>decision_maker</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>Google Maps and Places</h3><p>The hospital market by city and specialty, plus review count and review text carrying the reachability signal, in one pull</p></div><div class="source-card"><span>02</span><h3>BuiltWith and headless site scrape</h3><p>Detection of an existing patient-engagement, scheduling, or messaging platform on the hospital domain</p></div><div class="source-card"><span>03</span><h3>LinkedIn Jobs and Indeed</h3><p>Live requisitions for call-center agents, patient coordinators, front-desk, and outreach roles</p></div><div class="source-card"><span>04</span><h3>LinkedIn Sales Navigator</h3><p>The decision-maker layer: COO, CMIO, Director of Patient Experience or Patient Access, Head of Operations, Medical Superintendent</p></div><div class="source-card"><span>05</span><h3>Definitive Healthcare, national registries, and Practo</h3><p>Bed count, patient volume, and multi-site mapping for prioritization and catch-all coverage</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="Waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">Waterfall</p>
+      <h2>One cascade routes the whole market</h2>
+      <p class="takeaway">Every hospital flows top to bottom: a detected comms tool, a live hiring signal, visible reachability pain, or the catch-all.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF patient_comms_tool_detected != none</span>
+          <strong>Tier 1</strong>
+          <em>Competitor switch, already automating</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF hiring_patient_comms_role = true</span>
+          <strong>Tier 2</strong>
+          <em>Scaling comms with headcount</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF review_reachability_pain in (mild, severe)</span>
+          <strong>Tier 3</strong>
+          <em>Visible reachability pain</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF any remaining hospital or clinic in the market</span>
+          <strong>Catch-all</strong>
+          <em>No-show leakage, 100% coverage</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF patient_comms_tool_detected != none -&gt; Tier 1 (Competitor switch, already automating)&#10;2. IF hiring_patient_comms_role = true -&gt; Tier 2 (Scaling comms with headcount)&#10;3. IF review_reachability_pain in (mild, severe) -&gt; Tier 3 (Visible reachability pain)&#10;4. IF any remaining hospital or clinic in the market -&gt; Catch-all (No-show leakage, 100% coverage)">Copy routing spec</button>
+            <pre id="routeCode">1. IF patient_comms_tool_detected != none -&gt; Tier 1 (Competitor switch, already automating)
+2. IF hiring_patient_comms_role = true -&gt; Tier 2 (Scaling comms with headcount)
+3. IF review_reachability_pain in (mild, severe) -&gt; Tier 3 (Visible reachability pain)
+4. IF any remaining hospital or clinic in the market -&gt; Catch-all (No-show leakage, 100% coverage)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">Tiers</p>
+      <h2>Each tier sells a smaller first step</h2>
+      <p class="takeaway">Cold email should not ask for a rollout. It should offer a free Patient Reachability Audit built from their own reviews.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">8-12% TAM</span>
+          </div>
+          <h3>Tier 1: Already Automating</h3>
+          <p>An existing patient-engagement, scheduling, or messaging tool is detected on the hospital domain</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They bought into automated patient comms, but the tool is text-only or single-channel. Older and regional-language patients still fall back to the front desk, so the reminders that matter most never land.</dd></div>
+              <div><dt>Offer</dt><dd>Voice-vs-text patient-comms teardown plus the Patient Reachability Audit</dd></div>
+              <div><dt>Source</dt><dd>BuiltWith and headless site scrape</dd></div>
+              <div><dt>Reply density</dt><dd>Target 1 in 150</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">10-15% TAM</span>
+          </div>
+          <h3>Tier 2: Scaling With Humans</h3>
+          <p>A live requisition for call-center agents, patient coordinators, front-desk, or outreach roles</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They are solving patient communication with expensive headcount, capped by working hours. Even a full desk cannot cover after-hours calls, weekends, or the reminder volume when clinics are full.</dd></div>
+              <div><dt>Offer</dt><dd>Human-vs-AI patient-line cost model plus the Patient Reachability Audit</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Jobs and Indeed</dd></div>
+              <div><dt>Reply density</dt><dd>Target 1 in 150-300</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">20-30% TAM</span>
+          </div>
+          <h3>Tier 3: Visible Reachability Pain</h3>
+          <p>Public reviews mention patients could not get through, were left on hold, or got no callback</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>When patients cannot reach the desk, they do not leave a voicemail. They miss the appointment and sometimes leave a review about it. The front desk never even knows the slot went empty.</dd></div>
+              <div><dt>Offer</dt><dd>Patient Reachability Audit built from their real reviews</dd></div>
+              <div><dt>Source</dt><dd>Google Maps and Places reviews plus a live mystery-call test</dd></div>
+              <div><dt>Reply density</dt><dd>Target 1 in 200-300</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="catchall" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">45-60% TAM</span>
+          </div>
+          <h3>Catch-all: No-Show Leakage</h3>
+          <p>Any remaining hospital or clinic in the market</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>A chunk of appointments still no-show, and the team chases reminders and follow-ups by hand. The after-hours and multilingual gap is bigger than anyone measures.</dd></div>
+              <div><dt>Offer</dt><dd>No-Show Leakage Calculator plus the Patient Reachability Audit</dd></div>
+              <div><dt>Source</dt><dd>Google Maps, national registries, Practo, and Sales Navigator</dd></div>
+              <div><dt>Reply density</dt><dd>Target 1 in 350-500</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">Campaigns</p>
+      <h2>Campaign angles ride on the same routing layer</h2>
+      <p class="takeaway">Seventeen campaign angles become manageable once the routing layer decides which signal earns the first touch.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Broad</span>
+          </div>
+          <h3>Creative Ideas (3 patient flows)</h3>
+          <p>The broadest motion sells three tailored ideas instead of a rollout.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Hospitals without a stronger signal</dd></div>
+            <div><dt>AI strategy</dt><dd>Crawl their service lines and propose three patient-comms flows Pype would automate, from chemo-prep calls to maternity reminder cadences</dd></div>
+            <div><dt>Value</dt><dd>Make automation feel concrete</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Broad</span>
+          </div>
+          <h3>No-Show Leakage Calculator</h3>
+          <p>Leads with a quantified number and offers the calculator as the magnet.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Any hospital with visible appointment volume or bed count</dd></div>
+            <div><dt>AI strategy</dt><dd>Estimate annual revenue lost to no-shows from bed count and appointment volume</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Reachability Reviews</h3>
+          <p>The highest-personalization core campaign and the launch tier.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Reviews mention cannot-reach, on-hold, or no callback</dd></div>
+            <div><dt>AI strategy</dt><dd>Quote the actual patient review back, then tie it to the no-show rate</dd></div>
+            <div><dt>Value</dt><dd>Turn a public complaint into arithmetic</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Competitor Switch</h3>
+          <p>The hottest list because category demand is already proven.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Patient-comms tool detected on domain</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the detected tool and contrast voice-native, multilingual coverage against text-only</dd></div>
+            <div><dt>Value</dt><dd>Save money and save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Hiring for Patient Comms</h3>
+          <p>An always-on trickle sent within days of the role going live.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Live coordinator, front-desk, or outreach job</dd></div>
+            <div><dt>AI strategy</dt><dd>Quote the job post and price the loaded cost of the hire against an AI voice agent</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Lookalike (follow-up-heavy networks)</h3>
+          <p>The strongest social proof, twinning a named customer to the prospect.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Oncology, maternity, surgical, dialysis, or IVF networks</dd></div>
+            <div><dt>AI strategy</dt><dd>Match the service line to the closest named customer, HCG or Cloud9</dd></div>
+            <div><dt>Value</dt><dd>Make money and mitigate risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Focused</span>
+          </div>
+          <h3>New Patient-Experience Leader</h3>
+          <p>Run alongside the waterfall as an orthogonal trigger.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>New COO, CMIO, or Director started under 90 days</dd></div>
+            <div><dt>AI strategy</dt><dd>Reference the start date and prior employer, then frame a quick win for the new mandate</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Focused</span>
+          </div>
+          <h3>Multilingual Patient Base</h3>
+          <p>Leads entirely with 20+ languages. Strong in India, Gulf, and US-border markets.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Hospitals serving multilingual or migrant populations</dd></div>
+            <div><dt>AI strategy</dt><dd>Detect the languages a region speaks and contrast with a one-language reminder system</dd></div>
+            <div><dt>Value</dt><dd>Mitigate risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Focused</span>
+          </div>
+          <h3>Readmission-Penalty Season (US)</h3>
+          <p>Time-boxed, leads with the 28% readmission-reduction stat.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>US hospitals exposed to CMS readmission penalties</dd></div>
+            <div><dt>AI strategy</dt><dd>Time the send to the CMS penalty publication and lead with post-discharge follow-up</dd></div>
+            <div><dt>Value</dt><dd>Save money and mitigate risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Niche</span>
+          </div>
+          <h3>Conference / HIMSS Follow-up</h3>
+          <p>Warm-ish event follow-up, event-triggered and time-boxed.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Health-IT and hospital-association exhibitor and attendee lists</dd></div>
+            <div><dt>AI strategy</dt><dd>Scrape exhibitor lists, not live social hashtags</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="Email Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">Email Copy</p>
+      <h2>Copy starts with public evidence</h2>
+      <p class="takeaway">Every sequence opens with a detected tool, a job post, a real patient review, or a no-show number.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company_name}}</span><span>{{detected_tool}}</span><span>{{open_role}}</span><span>{{open_roles_count}}</span><span>{{review_snippet}}</span><span>{{alt_decision_maker}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company_name}}, {{detected_tool}}, {{open_role}}, {{open_roles_count}}, {{review_snippet}}, {{alt_decision_maker}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Already Automating</strong>
+              <em>Voice-vs-text teardown plus Patient Reachability Audit</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Already Automating steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company_name}} + {{detected_tool}}&#10;&#10;{{first_name}}, I saw {{company_name}} is running {{detected_tool}} for patient messaging.&#10;&#10;But would it be fair to assume it&#39;s text-only, and your older or regional-language patients still fall back to your front desk?&#10;&#10;We built Pype so the reminders, prep calls, and follow-ups actually happen by voice too, across WhatsApp, SMS and phone, in 20+ languages. HIPAA and SOC-2 certified, and it escalates the complex cases to your clinical team.&#10;&#10;HCG Hospital moved to us and cut no-shows 60%.&#10;&#10;Reply Y and I&#39;ll run you a free Patient Reachability Audit on {{company_name}}. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company_name}} + {{detected_tool}}" data-preview="Sunrise Multispecialty Hospital + Klara">{{company_name}} + {{detected_tool}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, I saw {{company_name}} is running {{detected_tool}} for patient messaging.&#10;&#10;But would it be fair to assume it&#39;s text-only, and your older or regional-language patients still fall back to your front desk?&#10;&#10;We built Pype so the reminders, prep calls, and follow-ups actually happen by voice too, across WhatsApp, SMS and phone, in 20+ languages. HIPAA and SOC-2 certified, and it escalates the complex cases to your clinical team.&#10;&#10;HCG Hospital moved to us and cut no-shows 60%.&#10;&#10;Reply Y and I&#39;ll run you a free Patient Reachability Audit on {{company_name}}. No call needed." data-preview="Rajesh, I saw Sunrise Multispecialty Hospital is running Klara for patient messaging.&#10;&#10;But would it be fair to assume it&#39;s text-only, and your older or regional-language patients still fall back to your front desk?&#10;&#10;We built Pype so the reminders, prep calls, and follow-ups actually happen by voice too, across WhatsApp, SMS and phone, in 20+ languages. HIPAA and SOC-2 certified, and it escalates the complex cases to your clinical team.&#10;&#10;HCG Hospital moved to us and cut no-shows 60%.&#10;&#10;Reply Y and I&#39;ll run you a free Patient Reachability Audit on Sunrise Multispecialty Hospital. No call needed.">
+                        <p>{{first_name}}, I saw {{company_name}} is running {{detected_tool}} for patient messaging.</p><p>But would it be fair to assume it&#39;s text-only, and your older or regional-language patients still fall back to your front desk?</p><p>We built Pype so the reminders, prep calls, and follow-ups actually happen by voice too, across WhatsApp, SMS and phone, in 20+ languages. HIPAA and SOC-2 certified, and it escalates the complex cases to your clinical team.</p><p>HCG Hospital moved to us and cut no-shows 60%.</p><p>Reply Y and I&#39;ll run you a free Patient Reachability Audit on {{company_name}}. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, quick money angle on this.&#10;&#10;Every reminder that lands as a text but never gets read is a slot that goes empty. Voice plus multilingual closes that gap, which is where the 60% no-show drop comes from.&#10;&#10;Switching off {{detected_tool}} took Sparsh about 2 weeks, start to live.&#10;&#10;Want the audit? Just reply Y.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, quick money angle on this.&#10;&#10;Every reminder that lands as a text but never gets read is a slot that goes empty. Voice plus multilingual closes that gap, which is where the 60% no-show drop comes from.&#10;&#10;Switching off {{detected_tool}} took Sparsh about 2 weeks, start to live.&#10;&#10;Want the audit? Just reply Y." data-preview="Rajesh, quick money angle on this.&#10;&#10;Every reminder that lands as a text but never gets read is a slot that goes empty. Voice plus multilingual closes that gap, which is where the 60% no-show drop comes from.&#10;&#10;Switching off Klara took Sparsh about 2 weeks, start to live.&#10;&#10;Want the audit? Just reply Y.">
+                        <p>{{first_name}}, quick money angle on this.</p><p>Every reminder that lands as a text but never gets read is a slot that goes empty. Voice plus multilingual closes that gap, which is where the 60% no-show drop comes from.</p><p>Switching off {{detected_tool}} took Sparsh about 2 weeks, start to live.</p><p>Want the audit? Just reply Y.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: worth a switch?&#10;&#10;{{first_name}}, no need for a call.&#10;&#10;Most teams on {{detected_tool}} tell me the same thing. It handles the easy texts, but the phone still rings and the follow-ups still get missed. We take that whole layer off your staff, in every language your patients speak.&#10;&#10;Just reply yes and I&#39;ll send the Patient Reachability Audit for {{company_name}}. Should I send it to you, or is {{alt_decision_maker}} the better person?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="worth a switch?" data-preview="worth a switch?">worth a switch?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no need for a call.&#10;&#10;Most teams on {{detected_tool}} tell me the same thing. It handles the easy texts, but the phone still rings and the follow-ups still get missed. We take that whole layer off your staff, in every language your patients speak.&#10;&#10;Just reply yes and I&#39;ll send the Patient Reachability Audit for {{company_name}}. Should I send it to you, or is {{alt_decision_maker}} the better person?" data-preview="Rajesh, no need for a call.&#10;&#10;Most teams on Klara tell me the same thing. It handles the easy texts, but the phone still rings and the follow-ups still get missed. We take that whole layer off your staff, in every language your patients speak.&#10;&#10;Just reply yes and I&#39;ll send the Patient Reachability Audit for Sunrise Multispecialty Hospital. Should I send it to you, or is your COO the better person?">
+                        <p>{{first_name}}, no need for a call.</p><p>Most teams on {{detected_tool}} tell me the same thing. It handles the easy texts, but the phone still rings and the follow-ups still get missed. We take that whole layer off your staff, in every language your patients speak.</p><p>Just reply yes and I&#39;ll send the Patient Reachability Audit for {{company_name}}. Should I send it to you, or is {{alt_decision_maker}} the better person?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Scaling With Humans</strong>
+              <em>Human-vs-AI cost model plus Patient Reachability Audit</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Scaling With Humans steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: hiring {{open_role}}?&#10;&#10;{{first_name}}, I noticed {{company_name}} is hiring {{open_roles_count}} {{open_role}} right now.&#10;&#10;But would it be fair to assume even a full desk still can&#39;t cover after-hours calls, weekends, or the reminder volume when clinics are full?&#10;&#10;We built Pype to handle that entire load as an AI voice agent. It ran 2M+ patient calls last year, HIPAA and SOC-2 certified, live in 2 weeks, no new headcount.&#10;&#10;Cloud9 handles thousands of maternity reminders and follow-ups this way without adding staff.&#10;&#10;Reply Y and I&#39;ll send a free Patient Reachability Audit on {{company_name}}. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="hiring {{open_role}}?" data-preview="hiring patient coordinators?">hiring {{open_role}}?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, I noticed {{company_name}} is hiring {{open_roles_count}} {{open_role}} right now.&#10;&#10;But would it be fair to assume even a full desk still can&#39;t cover after-hours calls, weekends, or the reminder volume when clinics are full?&#10;&#10;We built Pype to handle that entire load as an AI voice agent. It ran 2M+ patient calls last year, HIPAA and SOC-2 certified, live in 2 weeks, no new headcount.&#10;&#10;Cloud9 handles thousands of maternity reminders and follow-ups this way without adding staff.&#10;&#10;Reply Y and I&#39;ll send a free Patient Reachability Audit on {{company_name}}. No call needed." data-preview="Rajesh, I noticed Sunrise Multispecialty Hospital is hiring 3 patient coordinators right now.&#10;&#10;But would it be fair to assume even a full desk still can&#39;t cover after-hours calls, weekends, or the reminder volume when clinics are full?&#10;&#10;We built Pype to handle that entire load as an AI voice agent. It ran 2M+ patient calls last year, HIPAA and SOC-2 certified, live in 2 weeks, no new headcount.&#10;&#10;Cloud9 handles thousands of maternity reminders and follow-ups this way without adding staff.&#10;&#10;Reply Y and I&#39;ll send a free Patient Reachability Audit on Sunrise Multispecialty Hospital. No call needed.">
+                        <p>{{first_name}}, I noticed {{company_name}} is hiring {{open_roles_count}} {{open_role}} right now.</p><p>But would it be fair to assume even a full desk still can&#39;t cover after-hours calls, weekends, or the reminder volume when clinics are full?</p><p>We built Pype to handle that entire load as an AI voice agent. It ran 2M+ patient calls last year, HIPAA and SOC-2 certified, live in 2 weeks, no new headcount.</p><p>Cloud9 handles thousands of maternity reminders and follow-ups this way without adding staff.</p><p>Reply Y and I&#39;ll send a free Patient Reachability Audit on {{company_name}}. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, from my experience the fully-loaded cost of a coordinator is far more than the salary once you add training, turnover and the calls that still slip after 6pm.&#10;&#10;Pype covers the same volume around the clock, in 20+ languages, and hands off only the cases that need a human.&#10;&#10;Is bringing down that patient-comms headcount cost on your radar?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, from my experience the fully-loaded cost of a coordinator is far more than the salary once you add training, turnover and the calls that still slip after 6pm.&#10;&#10;Pype covers the same volume around the clock, in 20+ languages, and hands off only the cases that need a human.&#10;&#10;Is bringing down that patient-comms headcount cost on your radar?" data-preview="Rajesh, from my experience the fully-loaded cost of a coordinator is far more than the salary once you add training, turnover and the calls that still slip after 6pm.&#10;&#10;Pype covers the same volume around the clock, in 20+ languages, and hands off only the cases that need a human.&#10;&#10;Is bringing down that patient-comms headcount cost on your radar?">
+                        <p>{{first_name}}, from my experience the fully-loaded cost of a coordinator is far more than the salary once you add training, turnover and the calls that still slip after 6pm.</p><p>Pype covers the same volume around the clock, in 20+ languages, and hands off only the cases that need a human.</p><p>Is bringing down that patient-comms headcount cost on your radar?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: question for {{first_name}}&#10;&#10;{{first_name}}, when a patient calls at 9pm to reschedule, who picks up today?&#10;&#10;That gap is exactly what we automate. Live on your patient line in 2 weeks, HIPAA and SOC-2, escalates anything clinical to your team.&#10;&#10;No call needed. Reply yes and I&#39;ll send the Patient Reachability Audit for {{company_name}}. Should I send it to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="question for {{first_name}}" data-preview="question for Rajesh">question for {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, when a patient calls at 9pm to reschedule, who picks up today?&#10;&#10;That gap is exactly what we automate. Live on your patient line in 2 weeks, HIPAA and SOC-2, escalates anything clinical to your team.&#10;&#10;No call needed. Reply yes and I&#39;ll send the Patient Reachability Audit for {{company_name}}. Should I send it to you or {{alt_decision_maker}}?" data-preview="Rajesh, when a patient calls at 9pm to reschedule, who picks up today?&#10;&#10;That gap is exactly what we automate. Live on your patient line in 2 weeks, HIPAA and SOC-2, escalates anything clinical to your team.&#10;&#10;No call needed. Reply yes and I&#39;ll send the Patient Reachability Audit for Sunrise Multispecialty Hospital. Should I send it to you or your COO?">
+                        <p>{{first_name}}, when a patient calls at 9pm to reschedule, who picks up today?</p><p>That gap is exactly what we automate. Live on your patient line in 2 weeks, HIPAA and SOC-2, escalates anything clinical to your team.</p><p>No call needed. Reply yes and I&#39;ll send the Patient Reachability Audit for {{company_name}}. Should I send it to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Visible Reachability Pain</strong>
+              <em>Patient Reachability Audit built from their reviews</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Visible Reachability Pain steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: a review on {{company_name}}&#10;&#10;{{first_name}}, I was reading {{company_name}}&#39;s Google reviews and saw a patient write &quot;{{review_snippet}}&quot;.&#10;&#10;But would it be fair to assume that when patients can&#39;t get through, they just don&#39;t show, and the front desk never even knows?&#10;&#10;We built Pype so every patient reaches a live AI voice agent that confirms, reschedules and reminds, 24/7, in 20+ languages. HIPAA and SOC-2 certified.&#10;&#10;HCG Hospital cut no-shows 60% with it.&#10;&#10;Reply Y and I&#39;ll run a free Patient Reachability Audit on {{company_name}}, using your real reviews and a live test call. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="a review on {{company_name}}" data-preview="a review on Sunrise Multispecialty Hospital">a review on {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, I was reading {{company_name}}&#39;s Google reviews and saw a patient write &quot;{{review_snippet}}&quot;.&#10;&#10;But would it be fair to assume that when patients can&#39;t get through, they just don&#39;t show, and the front desk never even knows?&#10;&#10;We built Pype so every patient reaches a live AI voice agent that confirms, reschedules and reminds, 24/7, in 20+ languages. HIPAA and SOC-2 certified.&#10;&#10;HCG Hospital cut no-shows 60% with it.&#10;&#10;Reply Y and I&#39;ll run a free Patient Reachability Audit on {{company_name}}, using your real reviews and a live test call. No call needed." data-preview="Rajesh, I was reading Sunrise Multispecialty Hospital&#39;s Google reviews and saw a patient write &quot;no one ever answers the appointment line&quot;.&#10;&#10;But would it be fair to assume that when patients can&#39;t get through, they just don&#39;t show, and the front desk never even knows?&#10;&#10;We built Pype so every patient reaches a live AI voice agent that confirms, reschedules and reminds, 24/7, in 20+ languages. HIPAA and SOC-2 certified.&#10;&#10;HCG Hospital cut no-shows 60% with it.&#10;&#10;Reply Y and I&#39;ll run a free Patient Reachability Audit on Sunrise Multispecialty Hospital, using your real reviews and a live test call. No call needed.">
+                        <p>{{first_name}}, I was reading {{company_name}}&#39;s Google reviews and saw a patient write &quot;{{review_snippet}}&quot;.</p><p>But would it be fair to assume that when patients can&#39;t get through, they just don&#39;t show, and the front desk never even knows?</p><p>We built Pype so every patient reaches a live AI voice agent that confirms, reschedules and reminds, 24/7, in 20+ languages. HIPAA and SOC-2 certified.</p><p>HCG Hospital cut no-shows 60% with it.</p><p>Reply Y and I&#39;ll run a free Patient Reachability Audit on {{company_name}}, using your real reviews and a live test call. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the revenue angle on this is bigger than it looks.&#10;&#10;If even 15% of appointments no-show because patients couldn&#39;t reach you, that&#39;s full clinic hours sitting empty every week. Recovering the bulk of that is what the 60% number means in real revenue.&#10;&#10;Live in 2 weeks. Want the audit?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the revenue angle on this is bigger than it looks.&#10;&#10;If even 15% of appointments no-show because patients couldn&#39;t reach you, that&#39;s full clinic hours sitting empty every week. Recovering the bulk of that is what the 60% number means in real revenue.&#10;&#10;Live in 2 weeks. Want the audit?" data-preview="Rajesh, the revenue angle on this is bigger than it looks.&#10;&#10;If even 15% of appointments no-show because patients couldn&#39;t reach you, that&#39;s full clinic hours sitting empty every week. Recovering the bulk of that is what the 60% number means in real revenue.&#10;&#10;Live in 2 weeks. Want the audit?">
+                        <p>{{first_name}}, the revenue angle on this is bigger than it looks.</p><p>If even 15% of appointments no-show because patients couldn&#39;t reach you, that&#39;s full clinic hours sitting empty every week. Recovering the bulk of that is what the 60% number means in real revenue.</p><p>Live in 2 weeks. Want the audit?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: patients getting through?&#10;&#10;{{first_name}}, one more on this and I&#39;ll leave it.&#10;&#10;When a patient can&#39;t reach the desk, they don&#39;t leave a voicemail, they just miss the appointment and sometimes leave a review about it. We close that gap so the calls get answered and the slots get filled.&#10;&#10;No call needed. Reply yes and I&#39;ll send the Patient Reachability Audit for {{company_name}}. Should I send it to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="patients getting through?" data-preview="patients getting through?">patients getting through?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, one more on this and I&#39;ll leave it.&#10;&#10;When a patient can&#39;t reach the desk, they don&#39;t leave a voicemail, they just miss the appointment and sometimes leave a review about it. We close that gap so the calls get answered and the slots get filled.&#10;&#10;No call needed. Reply yes and I&#39;ll send the Patient Reachability Audit for {{company_name}}. Should I send it to you or {{alt_decision_maker}}?" data-preview="Rajesh, one more on this and I&#39;ll leave it.&#10;&#10;When a patient can&#39;t reach the desk, they don&#39;t leave a voicemail, they just miss the appointment and sometimes leave a review about it. We close that gap so the calls get answered and the slots get filled.&#10;&#10;No call needed. Reply yes and I&#39;ll send the Patient Reachability Audit for Sunrise Multispecialty Hospital. Should I send it to you or your COO?">
+                        <p>{{first_name}}, one more on this and I&#39;ll leave it.</p><p>When a patient can&#39;t reach the desk, they don&#39;t leave a voicemail, they just miss the appointment and sometimes leave a review about it. We close that gap so the calls get answered and the slots get filled.</p><p>No call needed. Reply yes and I&#39;ll send the Patient Reachability Audit for {{company_name}}. Should I send it to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Catch-all - No-Show Leakage</strong>
+              <em>No-Show Leakage Calculator plus Patient Reachability Audit</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Catch-all - No-Show Leakage steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: no-shows at {{company_name}}&#10;&#10;{{first_name}}, quick one for {{company_name}}.&#10;&#10;Would it be fair to assume a chunk of your appointments still no-show, and your team is chasing reminders and follow-ups by hand?&#10;&#10;We built Pype, an AI voice agent that handles reminders, prep calls and post-discharge follow-ups automatically. 60% fewer no-shows, 28% fewer readmissions, HIPAA and SOC-2 certified, live in 2 weeks.&#10;&#10;Cloud9 and HCG Hospital run thousands of these calls without adding staff.&#10;&#10;Reply Y and I&#39;ll send a free Patient Reachability Audit on {{company_name}}. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="no-shows at {{company_name}}" data-preview="no-shows at Sunrise Multispecialty Hospital">no-shows at {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, quick one for {{company_name}}.&#10;&#10;Would it be fair to assume a chunk of your appointments still no-show, and your team is chasing reminders and follow-ups by hand?&#10;&#10;We built Pype, an AI voice agent that handles reminders, prep calls and post-discharge follow-ups automatically. 60% fewer no-shows, 28% fewer readmissions, HIPAA and SOC-2 certified, live in 2 weeks.&#10;&#10;Cloud9 and HCG Hospital run thousands of these calls without adding staff.&#10;&#10;Reply Y and I&#39;ll send a free Patient Reachability Audit on {{company_name}}. No call needed." data-preview="Rajesh, quick one for Sunrise Multispecialty Hospital.&#10;&#10;Would it be fair to assume a chunk of your appointments still no-show, and your team is chasing reminders and follow-ups by hand?&#10;&#10;We built Pype, an AI voice agent that handles reminders, prep calls and post-discharge follow-ups automatically. 60% fewer no-shows, 28% fewer readmissions, HIPAA and SOC-2 certified, live in 2 weeks.&#10;&#10;Cloud9 and HCG Hospital run thousands of these calls without adding staff.&#10;&#10;Reply Y and I&#39;ll send a free Patient Reachability Audit on Sunrise Multispecialty Hospital. No call needed.">
+                        <p>{{first_name}}, quick one for {{company_name}}.</p><p>Would it be fair to assume a chunk of your appointments still no-show, and your team is chasing reminders and follow-ups by hand?</p><p>We built Pype, an AI voice agent that handles reminders, prep calls and post-discharge follow-ups automatically. 60% fewer no-shows, 28% fewer readmissions, HIPAA and SOC-2 certified, live in 2 weeks.</p><p>Cloud9 and HCG Hospital run thousands of these calls without adding staff.</p><p>Reply Y and I&#39;ll send a free Patient Reachability Audit on {{company_name}}. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the part most teams underestimate is the after-hours and multilingual gap.&#10;&#10;Pype answers every patient in their own language, day or night, and only routes the clinical cases to your staff. That&#39;s where the no-show and readmission numbers come from.&#10;&#10;Worth a look at the audit?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the part most teams underestimate is the after-hours and multilingual gap.&#10;&#10;Pype answers every patient in their own language, day or night, and only routes the clinical cases to your staff. That&#39;s where the no-show and readmission numbers come from.&#10;&#10;Worth a look at the audit?" data-preview="Rajesh, the part most teams underestimate is the after-hours and multilingual gap.&#10;&#10;Pype answers every patient in their own language, day or night, and only routes the clinical cases to your staff. That&#39;s where the no-show and readmission numbers come from.&#10;&#10;Worth a look at the audit?">
+                        <p>{{first_name}}, the part most teams underestimate is the after-hours and multilingual gap.</p><p>Pype answers every patient in their own language, day or night, and only routes the clinical cases to your staff. That&#39;s where the no-show and readmission numbers come from.</p><p>Worth a look at the audit?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: question for {{first_name}}&#10;&#10;{{first_name}}, does {{company_name}} have a reliable way to reach every patient before their appointment, without adding headcount?&#10;&#10;If not, that&#39;s the whole reason we built Pype. Live on your patient line in 2 weeks.&#10;&#10;No call needed. Reply yes and I&#39;ll send the Patient Reachability Audit. Should I send it to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="question for {{first_name}}" data-preview="question for Rajesh">question for {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, does {{company_name}} have a reliable way to reach every patient before their appointment, without adding headcount?&#10;&#10;If not, that&#39;s the whole reason we built Pype. Live on your patient line in 2 weeks.&#10;&#10;No call needed. Reply yes and I&#39;ll send the Patient Reachability Audit. Should I send it to you or {{alt_decision_maker}}?" data-preview="Rajesh, does Sunrise Multispecialty Hospital have a reliable way to reach every patient before their appointment, without adding headcount?&#10;&#10;If not, that&#39;s the whole reason we built Pype. Live on your patient line in 2 weeks.&#10;&#10;No call needed. Reply yes and I&#39;ll send the Patient Reachability Audit. Should I send it to you or your COO?">
+                        <p>{{first_name}}, does {{company_name}} have a reliable way to reach every patient before their appointment, without adding headcount?</p><p>If not, that&#39;s the whole reason we built Pype. Live on your patient line in 2 weeks.</p><p>No call needed. Reply yes and I&#39;ll send the Patient Reachability Audit. Should I send it to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">Launch</p>
+      <h2>Launch on the loudest pain, then widen</h2>
+      <p class="takeaway">Start with reachability reviews, add the competitor switch, turn on hiring triggers, then open the catch-all.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Launch Tier 3 first from the Google Maps reachability-review scrape, paired with the Patient Reachability Audit. It is the fastest and most emotionally undeniable proof.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Add Tier 1 next from the BuiltWith detection list. Smallest tier but the highest reply ratio, and competitor-switch copy converts fast.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Turn on Tier 2 as an always-on trickle from live job posts, sent within days of the requisition going live.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Open the catch-all once the top three are tuned, leading with the No-Show Leakage Calculator and the winning broad value prop.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Layer the side campaigns, new-leader, multilingual, readmission-penalty season, and conference follow-up, only after the waterfall is stable.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply / 150 contacts</strong>
+                <span>Perfect. Scale the tier hard.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 300</strong>
+                <span>Good. Let it run untouched.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 450-500</strong>
+                <span>Borderline. Test one copy or lead-magnet variant.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 / 500 or &lt;1% after 1,500 sends</strong>
+                <span>Cut the tier or rework it from the trigger up.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book the strategy call</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Rajesh","Sunrise Multispecialty Hospital","patient coordinators","6","Intercom","healthcare operations","Maya","Klara","3","no one ever answers the appointment line","your COO"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
