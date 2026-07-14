@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Riveter - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-07-14</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Riveter</p>
+          <h1>One waterfall for the entire web-data market.</h1>
+          <p class="hero-copy">A scrollable GTMx strategy artifact that routes every company consuming web data by how committed they already are, not by industry or job title.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> The buying signal is not who they are, it is how they already collect web data. Every account is either paying a competitor for it, hiring an engineer to build it, or doing it by hand. That single ladder, from a proxy-heavy scraper stack down to an analyst copy-pasting from 40 tabs, routes the whole market on one signal.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book the strategy call</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>150k-250k</strong>
+          <span>web-data TAM</span>
+        </div>
+        <div class="metric-card">
+          <strong>4</strong>
+          <span>priority-routed tiers</span>
+        </div>
+        <div class="metric-card">
+          <strong>1:150</strong>
+          <span>top-tier reply target</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Riveter is an API-first platform of AI agents that search, navigate, scrape, and extract any part of the web into structured data, then keep it fresh on a schedule. It replaces fragile in-house scrapers and legacy tools with a single API, priced per action, and is already trusted by teams at OpenAI, Snap, and Fermat.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The buying signal is existing web-data commitment</p></div><div><span>02</span><p>One cascade routes the whole market</p></div><div><span>03</span><p>Each tier sells one small first step</p></div><div><span>04</span><p>Angles ride on the same routing layer</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>Waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>Email Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">Signal</p>
+      <h2>The buying signal is existing web-data commitment</h2>
+      <p class="takeaway">How a company already collects web data, paying a competitor, hiring to build, or doing it by hand, sets both the urgency and which offer opens the conversation.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>A detected competitor tool or proxy vendor proves they already pay for web data and feel the maintenance tax daily.</p></div><div class="reason-card"><span>02</span><p>An open scraping or data-engineering req proves they have decided to build a pipeline by hand, right now.</p></div><div class="reason-card"><span>03</span><p>A data-dependent product proves their whole business rests on coverage and freshness their pipeline struggles to keep.</p></div><div class="reason-card"><span>04</span><p>Every remaining research-heavy team still pulls data off the web by hand into spreadsheets that go stale the next day.</p></div><div class="reason-card"><span>05</span><p>The signal is public and scrapable, so the entire lead list can be built with Riveter, a live demo of the product.</p></div>
+            </div>
+            <div class="field-cloud"><span>scraping_tool_detected</span><span>scraping_job_open</span><span>eng_scraping_signal</span><span>data_product_type</span><span>research_function</span><span>funding_stage</span><span>headcount_tier</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>Job boards (Greenhouse / Lever / Ashby, LinkedIn Jobs)</h3><p>Companies hiring eng and data roles, with descriptions that name the tools, Scrapy, Playwright, Bright Data, Apify, proving stack and intent</p></div><div class="source-card"><span>02</span><h3>BuiltWith / Wappalyzer</h3><p>Front-end detections: Clay, Apollo, ZoomInfo, proxy and anti-bot vendors</p></div><div class="source-card"><span>03</span><h3>Crunchbase</h3><p>Funded companies tagged data, analytics, or market intelligence, plus funding stage</p></div><div class="source-card"><span>04</span><h3>GitHub org and repo search</h3><p>Repos importing scrapy, playwright, selenium, or puppeteer, reliable proof of an in-house scraper</p></div><div class="source-card"><span>05</span><h3>Company site scrape</h3><p>Their own copy classifying them as a data-dependent product company</p></div><div class="source-card"><span>06</span><h3>LinkedIn Sales Navigator</h3><p>The decision-maker: data-eng, RevOps, or market-intel titles, tenure, and recent posts</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="Waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">Waterfall</p>
+      <h2>One cascade routes the whole market</h2>
+      <p class="takeaway">Every account flows top to bottom: running a scraper stack, hiring to build, a data-dependent product, or the catch-all. Most land in exactly one campaign.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF scraping_tool_detected != none OR eng_scraping_signal != none</span>
+          <strong>Tier 1</strong>
+          <em>Already running a scraper stack</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF scraping_job_open = true AND posted within 90 days</span>
+          <strong>Tier 2</strong>
+          <em>Hiring to build it in-house</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF data_product_type != none</span>
+          <strong>Tier 3</strong>
+          <em>Data-dependent product company</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF any remaining B2B team with a research-heavy function</span>
+          <strong>Catch-all</strong>
+          <em>Doing web research by hand</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF scraping_tool_detected != none OR eng_scraping_signal != none -&gt; Tier 1 (Already running a scraper stack)&#10;2. IF scraping_job_open = true AND posted within 90 days -&gt; Tier 2 (Hiring to build it in-house)&#10;3. IF data_product_type != none -&gt; Tier 3 (Data-dependent product company)&#10;4. IF any remaining B2B team with a research-heavy function -&gt; Catch-all (Doing web research by hand)">Copy routing spec</button>
+            <pre id="routeCode">1. IF scraping_tool_detected != none OR eng_scraping_signal != none -&gt; Tier 1 (Already running a scraper stack)
+2. IF scraping_job_open = true AND posted within 90 days -&gt; Tier 2 (Hiring to build it in-house)
+3. IF data_product_type != none -&gt; Tier 3 (Data-dependent product company)
+4. IF any remaining B2B team with a research-heavy function -&gt; Catch-all (Doing web research by hand)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">Tiers</p>
+      <h2>Each tier sells one small first step</h2>
+      <p class="takeaway">Cold email never asks for a contract. It offers a Scraper Cost Teardown, a Build-vs-Buy Blueprint, a Coverage Gap Sample, or a free dataset. Every magnet is a live sample, not a PDF.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">~8% TAM</span>
+          </div>
+          <h3>Tier 1: Already Running a Scraper Stack</h3>
+          <p>Competitor or legacy scraping tool or proxy vendor detected, or an in-house scraper proven on GitHub or the eng blog</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Fragile scrapers, proxy bans, and per-GB proxy bills, with an engineer more or less permanently on maintenance, patching selectors every time a site changes.</dd></div>
+              <div><dt>Offer</dt><dd>Scraper Cost Teardown, their stack cost against the same job on Riveter, run live</dd></div>
+              <div><dt>Source</dt><dd>Job posts, BuiltWith, and GitHub</dd></div>
+              <div><dt>Reply density</dt><dd>Target 1 in 150, highest of any tier</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">~12% TAM</span>
+          </div>
+          <h3>Tier 2: Hiring to Build It In-House</h3>
+          <p>An open scraping, crawling, or web-data-pipeline engineering role within 90 days, with no competitor tool detected</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They are about to spend three-plus months and a headcount building fragile crawlers, and then someone owns those crawlers forever.</dd></div>
+              <div><dt>Offer</dt><dd>Build-vs-Buy Blueprint, the exact dataset they are hiring to build, spec&#39;d as a Riveter job with 25 real rows</dd></div>
+              <div><dt>Source</dt><dd>Greenhouse, Lever, Ashby, and LinkedIn Jobs</dd></div>
+              <div><dt>Reply density</dt><dd>Target 1 in 200-300</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">~18% TAM</span>
+          </div>
+          <h3>Tier 3: Data-Dependent Product Company</h3>
+          <p>A product that depends on web data, market intelligence, price monitoring, real estate, ecommerce, or compliance, with no hire or tool detected</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Their dataset is only ever as fresh and complete as their pipeline can keep up with, and there are coverage gaps and stale rows they already know about.</dd></div>
+              <div><dt>Offer</dt><dd>Coverage Gap Sample, 50 fresh records showing what is missing or stale in their own dataset</dd></div>
+              <div><dt>Source</dt><dd>Crunchbase plus company site scrape</dd></div>
+              <div><dt>Reply density</dt><dd>Target 1 in 250-350</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="catchall" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">~62% TAM</span>
+          </div>
+          <h3>Catch-all: Doing Research by Hand</h3>
+          <p>Any remaining B2B team with a research-heavy function, RevOps, finance and PE, product intelligence, or ops</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Hours lost copy-pasting data off the web across dozens of tabs into a spreadsheet that is stale the day after it is built.</dd></div>
+              <div><dt>Offer</dt><dd>Free Dataset, up to 250 rows on whatever they are researching</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Sales Navigator and Apollo</dd></div>
+              <div><dt>Reply density</dt><dd>Target 1 in 350-500</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">Campaigns</p>
+      <h2>Angles ride on the same routing layer</h2>
+      <p class="takeaway">Four waterfall campaigns plus time-boxed trigger plays, all sitting on one signal, so the market is covered once and the lead list is built with Riveter itself.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Scraper Cost Teardown</h3>
+          <p>The launch campaign. Highest intent, competitor-takedown narrative, and the fastest ROI proof. Send from a Riveter founder.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Competitor tool, proxy vendor, or in-house scraper detected</dd></div>
+            <div><dt>AI strategy</dt><dd>Quote the exact library or vendor from their job post or GitHub, then run their stack cost against the same job on Riveter, live</dd></div>
+            <div><dt>Value</dt><dd>Save money and eng time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Build-vs-Buy Blueprint</h3>
+          <p>Large and urgent. The skip-the-hire math sells itself.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Open scraping or data-eng role within 90 days, no competitor tool</dd></div>
+            <div><dt>AI strategy</dt><dd>Pair the open req with the timeline reality, then hand them the dataset they are hiring to build as a live Riveter job</dd></div>
+            <div><dt>Value</dt><dd>Skip the 3-month build</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Coverage Gap Sample</h3>
+          <p>Richest personalization, so it runs last once the sending motion is proven.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Data-dependent product company, no hire or tool detected</dd></div>
+            <div><dt>AI strategy</dt><dd>Name a specific gap in their own dataset that Riveter found, then offer 50 fresh records to prove it</dd></div>
+            <div><dt>Value</dt><dd>Wider, fresher coverage</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Broad</span>
+          </div>
+          <h3>Free Dataset</h3>
+          <p>The volume tier. Softest CTA and a free-tier hook that maps straight to self-serve.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Any remaining research-heavy B2B team</dd></div>
+            <div><dt>AI strategy</dt><dd>Point at the tabs and stale spreadsheets, then offer to build one dataset free as a starting point</dd></div>
+            <div><dt>Value</dt><dd>Research done once, kept current</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Focused</span>
+          </div>
+          <h3>Competitor Price-Hike Burst</h3>
+          <p>Time-boxed real-time trigger. Run alongside, not inside, the waterfall.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Bright Data, Apify, or proxy-vendor pricing change or outage</dd></div>
+            <div><dt>AI strategy</dt><dd>Fire same-week to their users while the pain is acute, offering the same job at 0.05 credits a scrape</dd></div>
+            <div><dt>Value</dt><dd>Strike the highest-urgency window</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Focused</span>
+          </div>
+          <h3>New Head of Data</h3>
+          <p>An org-change trigger, not a standing signal.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>New Head of Data or Data Engineering appointment</dd></div>
+            <div><dt>AI strategy</dt><dd>Congratulate the mandate and hand them a live dataset for their new remit</dd></div>
+            <div><dt>Value</dt><dd>New mandate, new budget</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Niche</span>
+          </div>
+          <h3>Accelerator Cohort Dogfood</h3>
+          <p>Riveter&#39;s own YC network warms this cohort motion.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>YC and Techstars batches</dd></div>
+            <div><dt>AI strategy</dt><dd>Batch-personalize the whole cohort by building each company a sample dataset with Riveter</dd></div>
+            <div><dt>Value</dt><dd>One clock, many buyers</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Niche</span>
+          </div>
+          <h3>GitHub Scraper-Maintainer</h3>
+          <p>Developer-direct trigger sourced from live commit activity.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Devs committing to a scraping repo this month</dd></div>
+            <div><dt>AI strategy</dt><dd>Reference the repo they maintain and frame scraping as a solved problem</dd></div>
+            <div><dt>Value</dt><dd>Stop maintaining crawlers</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Focused</span>
+          </div>
+          <h3>Fresh-Funding in Data Verticals</h3>
+          <p>Funding-triggered, vertical-timed routing.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>New capital in fintech-risk, real estate, ecom, or market research</dd></div>
+            <div><dt>AI strategy</dt><dd>Tie the new raise to a new data budget and lead with a coverage sample in their vertical</dd></div>
+            <div><dt>Value</dt><dd>New capital, new data spend</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="Email Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">Email Copy</p>
+      <h2>Copy opens with public evidence</h2>
+      <p class="takeaway">Every sequence starts with a scraped fact: their detected tool, their open eng req, a gap in their own dataset, or the tabs their team pulls by hand.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company_name}}</span><span>{{detected_tool}}</span><span>{{scraping_lib}}</span><span>{{eng_role}}</span><span>{{open_role}}</span><span>{{data_domain}}</span><span>{{team_function}}</span><span>{{case_study_company}}</span><span>{{alt_decision_maker}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company_name}}, {{detected_tool}}, {{scraping_lib}}, {{eng_role}}, {{open_role}}, {{data_domain}}, {{team_function}}, {{case_study_company}}, {{alt_decision_maker}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Already Running a Scraper Stack</strong>
+              <em>Scraper Cost Teardown</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Already Running a Scraper Stack steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company_name}} + {{detected_tool}}&#10;&#10;{{first_name}}, I was looking at {{company_name}}&#39;s stack and saw you&#39;re running {{detected_tool}}, then noticed your {{eng_role}} req mentions {{scraping_lib}} too.&#10;&#10;But would it be fair to assume there&#39;s an engineer more or less permanently on scraper maintenance, chasing proxy bans and patching selectors every time a site changes?&#10;&#10;We built Riveter to delete that whole layer. One API searches, navigates, scrapes, and extracts, and monitors it on a schedule, at 0.05 credits a scrape instead of a per-GB proxy bill.&#10;&#10;Teams at OpenAI and Snap moved off DIY scrapers onto us and [X].&#10;&#10;Reply Y and I&#39;ll send a Scraper Cost Teardown for {{company_name}}, your current stack cost against the same job on Riveter, run live. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company_name}} + {{detected_tool}}" data-preview="Northbeam Labs + Bright Data">{{company_name}} + {{detected_tool}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, I was looking at {{company_name}}&#39;s stack and saw you&#39;re running {{detected_tool}}, then noticed your {{eng_role}} req mentions {{scraping_lib}} too.&#10;&#10;But would it be fair to assume there&#39;s an engineer more or less permanently on scraper maintenance, chasing proxy bans and patching selectors every time a site changes?&#10;&#10;We built Riveter to delete that whole layer. One API searches, navigates, scrapes, and extracts, and monitors it on a schedule, at 0.05 credits a scrape instead of a per-GB proxy bill.&#10;&#10;Teams at OpenAI and Snap moved off DIY scrapers onto us and [X].&#10;&#10;Reply Y and I&#39;ll send a Scraper Cost Teardown for {{company_name}}, your current stack cost against the same job on Riveter, run live. No call needed." data-preview="Cody, I was looking at Northbeam Labs&#39;s stack and saw you&#39;re running Bright Data, then noticed your Data Engineer req mentions Playwright too.&#10;&#10;But would it be fair to assume there&#39;s an engineer more or less permanently on scraper maintenance, chasing proxy bans and patching selectors every time a site changes?&#10;&#10;We built Riveter to delete that whole layer. One API searches, navigates, scrapes, and extracts, and monitors it on a schedule, at 0.05 credits a scrape instead of a per-GB proxy bill.&#10;&#10;Teams at OpenAI and Snap moved off DIY scrapers onto us and [X].&#10;&#10;Reply Y and I&#39;ll send a Scraper Cost Teardown for Northbeam Labs, your current stack cost against the same job on Riveter, run live. No call needed.">
+                        <p>{{first_name}}, I was looking at {{company_name}}&#39;s stack and saw you&#39;re running {{detected_tool}}, then noticed your {{eng_role}} req mentions {{scraping_lib}} too.</p><p>But would it be fair to assume there&#39;s an engineer more or less permanently on scraper maintenance, chasing proxy bans and patching selectors every time a site changes?</p><p>We built Riveter to delete that whole layer. One API searches, navigates, scrapes, and extracts, and monitors it on a schedule, at 0.05 credits a scrape instead of a per-GB proxy bill.</p><p>Teams at OpenAI and Snap moved off DIY scrapers onto us and [X].</p><p>Reply Y and I&#39;ll send a Scraper Cost Teardown for {{company_name}}, your current stack cost against the same job on Riveter, run live. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, quick money angle on this.&#10;&#10;The proxy bill is the part people see. The hidden cost is the engineer, every hour spent unbreaking a scraper is an hour not shipping product. Riveter turns that maintenance line item into a single API call, so the eng time goes back into the roadmap.&#10;&#10;Want the Scraper Cost Teardown? Just reply Y.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, quick money angle on this.&#10;&#10;The proxy bill is the part people see. The hidden cost is the engineer, every hour spent unbreaking a scraper is an hour not shipping product. Riveter turns that maintenance line item into a single API call, so the eng time goes back into the roadmap.&#10;&#10;Want the Scraper Cost Teardown? Just reply Y." data-preview="Cody, quick money angle on this.&#10;&#10;The proxy bill is the part people see. The hidden cost is the engineer, every hour spent unbreaking a scraper is an hour not shipping product. Riveter turns that maintenance line item into a single API call, so the eng time goes back into the roadmap.&#10;&#10;Want the Scraper Cost Teardown? Just reply Y.">
+                        <p>{{first_name}}, quick money angle on this.</p><p>The proxy bill is the part people see. The hidden cost is the engineer, every hour spent unbreaking a scraper is an hour not shipping product. Riveter turns that maintenance line item into a single API call, so the eng time goes back into the roadmap.</p><p>Want the Scraper Cost Teardown? Just reply Y.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: who unbreaks the scrapers?&#10;&#10;{{first_name}}, no need for a call.&#10;&#10;Most teams running their own scrapers accept the maintenance as the cost of doing business. It isn&#39;t anymore, that&#39;s the whole reason we built Riveter. Same data, no proxy management, no selector-patching, priced per action.&#10;&#10;Just reply yes and I&#39;ll send the Scraper Cost Teardown for {{company_name}}. Should I send it to you, or is {{alt_decision_maker}} the better person?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="who unbreaks the scrapers?" data-preview="who unbreaks the scrapers?">who unbreaks the scrapers?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no need for a call.&#10;&#10;Most teams running their own scrapers accept the maintenance as the cost of doing business. It isn&#39;t anymore, that&#39;s the whole reason we built Riveter. Same data, no proxy management, no selector-patching, priced per action.&#10;&#10;Just reply yes and I&#39;ll send the Scraper Cost Teardown for {{company_name}}. Should I send it to you, or is {{alt_decision_maker}} the better person?" data-preview="Cody, no need for a call.&#10;&#10;Most teams running their own scrapers accept the maintenance as the cost of doing business. It isn&#39;t anymore, that&#39;s the whole reason we built Riveter. Same data, no proxy management, no selector-patching, priced per action.&#10;&#10;Just reply yes and I&#39;ll send the Scraper Cost Teardown for Northbeam Labs. Should I send it to you, or is your Head of Data the better person?">
+                        <p>{{first_name}}, no need for a call.</p><p>Most teams running their own scrapers accept the maintenance as the cost of doing business. It isn&#39;t anymore, that&#39;s the whole reason we built Riveter. Same data, no proxy management, no selector-patching, priced per action.</p><p>Just reply yes and I&#39;ll send the Scraper Cost Teardown for {{company_name}}. Should I send it to you, or is {{alt_decision_maker}} the better person?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Hiring to Build It In-House</strong>
+              <em>Build-vs-Buy Blueprint</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Hiring to Build It In-House steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your {{open_role}} req&#10;&#10;{{first_name}}, saw {{company_name}} is hiring a {{open_role}}, and the description is basically &quot;build and maintain web data pipelines.&quot;&#10;&#10;But would it be fair to assume that&#39;s a 3-month build before the first clean row lands, and then someone owns those crawlers forever?&#10;&#10;We built Riveter to be that pipeline. It&#39;s the API your new hire would have built, searching, scraping, extracting, and monitoring the web, live this week instead of next quarter. No crawlers to own.&#10;&#10;{{case_study_company}} skipped the build entirely and [X].&#10;&#10;Reply Y and I&#39;ll send a Build-vs-Buy Blueprint, the exact dataset you&#39;re hiring to build, spec&#39;d as a Riveter job with 25 real rows. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your {{open_role}} req" data-preview="your Data Engineer req">your {{open_role}} req</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, saw {{company_name}} is hiring a {{open_role}}, and the description is basically &quot;build and maintain web data pipelines.&quot;&#10;&#10;But would it be fair to assume that&#39;s a 3-month build before the first clean row lands, and then someone owns those crawlers forever?&#10;&#10;We built Riveter to be that pipeline. It&#39;s the API your new hire would have built, searching, scraping, extracting, and monitoring the web, live this week instead of next quarter. No crawlers to own.&#10;&#10;{{case_study_company}} skipped the build entirely and [X].&#10;&#10;Reply Y and I&#39;ll send a Build-vs-Buy Blueprint, the exact dataset you&#39;re hiring to build, spec&#39;d as a Riveter job with 25 real rows. No call needed." data-preview="Cody, saw Northbeam Labs is hiring a Data Engineer, and the description is basically &quot;build and maintain web data pipelines.&quot;&#10;&#10;But would it be fair to assume that&#39;s a 3-month build before the first clean row lands, and then someone owns those crawlers forever?&#10;&#10;We built Riveter to be that pipeline. It&#39;s the API your new hire would have built, searching, scraping, extracting, and monitoring the web, live this week instead of next quarter. No crawlers to own.&#10;&#10;a team at Snap skipped the build entirely and [X].&#10;&#10;Reply Y and I&#39;ll send a Build-vs-Buy Blueprint, the exact dataset you&#39;re hiring to build, spec&#39;d as a Riveter job with 25 real rows. No call needed.">
+                        <p>{{first_name}}, saw {{company_name}} is hiring a {{open_role}}, and the description is basically &quot;build and maintain web data pipelines.&quot;</p><p>But would it be fair to assume that&#39;s a 3-month build before the first clean row lands, and then someone owns those crawlers forever?</p><p>We built Riveter to be that pipeline. It&#39;s the API your new hire would have built, searching, scraping, extracting, and monitoring the web, live this week instead of next quarter. No crawlers to own.</p><p>{{case_study_company}} skipped the build entirely and [X].</p><p>Reply Y and I&#39;ll send a Build-vs-Buy Blueprint, the exact dataset you&#39;re hiring to build, spec&#39;d as a Riveter job with 25 real rows. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the math is the uncomfortable part.&#10;&#10;A data engineer is a full salary plus a quarter of ramp before the first pipeline is stable, and the pipeline still breaks when sites change. Riveter is live in days, and the maintenance is our problem, not a headcount on your P&amp;L.&#10;&#10;Want the Build-vs-Buy Blueprint with your 25 sample rows? Just reply Y.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the math is the uncomfortable part.&#10;&#10;A data engineer is a full salary plus a quarter of ramp before the first pipeline is stable, and the pipeline still breaks when sites change. Riveter is live in days, and the maintenance is our problem, not a headcount on your P&amp;L.&#10;&#10;Want the Build-vs-Buy Blueprint with your 25 sample rows? Just reply Y." data-preview="Cody, the math is the uncomfortable part.&#10;&#10;A data engineer is a full salary plus a quarter of ramp before the first pipeline is stable, and the pipeline still breaks when sites change. Riveter is live in days, and the maintenance is our problem, not a headcount on your P&amp;L.&#10;&#10;Want the Build-vs-Buy Blueprint with your 25 sample rows? Just reply Y.">
+                        <p>{{first_name}}, the math is the uncomfortable part.</p><p>A data engineer is a full salary plus a quarter of ramp before the first pipeline is stable, and the pipeline still breaks when sites change. Riveter is live in days, and the maintenance is our problem, not a headcount on your P&amp;L.</p><p>Want the Build-vs-Buy Blueprint with your 25 sample rows? Just reply Y.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: build vs buy for {{company_name}}&#10;&#10;{{first_name}}, one more and I&#39;ll leave it.&#10;&#10;By all means make the hire for the hard, differentiated work. But web scraping is a solved problem now, it doesn&#39;t need to be the first thing a new engineer spends a quarter on. Let us hand you the dataset and put the hire on your actual product.&#10;&#10;No call needed. Reply yes and I&#39;ll send the Build-vs-Buy Blueprint for {{company_name}}. Should I send it to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="build vs buy for {{company_name}}" data-preview="build vs buy for Northbeam Labs">build vs buy for {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, one more and I&#39;ll leave it.&#10;&#10;By all means make the hire for the hard, differentiated work. But web scraping is a solved problem now, it doesn&#39;t need to be the first thing a new engineer spends a quarter on. Let us hand you the dataset and put the hire on your actual product.&#10;&#10;No call needed. Reply yes and I&#39;ll send the Build-vs-Buy Blueprint for {{company_name}}. Should I send it to you or {{alt_decision_maker}}?" data-preview="Cody, one more and I&#39;ll leave it.&#10;&#10;By all means make the hire for the hard, differentiated work. But web scraping is a solved problem now, it doesn&#39;t need to be the first thing a new engineer spends a quarter on. Let us hand you the dataset and put the hire on your actual product.&#10;&#10;No call needed. Reply yes and I&#39;ll send the Build-vs-Buy Blueprint for Northbeam Labs. Should I send it to you or your Head of Data?">
+                        <p>{{first_name}}, one more and I&#39;ll leave it.</p><p>By all means make the hire for the hard, differentiated work. But web scraping is a solved problem now, it doesn&#39;t need to be the first thing a new engineer spends a quarter on. Let us hand you the dataset and put the hire on your actual product.</p><p>No call needed. Reply yes and I&#39;ll send the Build-vs-Buy Blueprint for {{company_name}}. Should I send it to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Data-Dependent Product Company</strong>
+              <em>Coverage Gap Sample</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Data-Dependent Product Company steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company_name}}&#39;s coverage&#10;&#10;{{first_name}}, I was on {{company_name}} and saw your dataset covers {{data_domain}}, so I ran a quick check against what&#39;s live on the web right now.&#10;&#10;But would it be fair to assume the coverage is only ever as fresh as your pipeline can keep up with, and there are gaps and stale rows you already know about?&#10;&#10;That&#39;s exactly what Riveter fixes. We build datasets from nothing, enrich a record or a million in one request, and re-check everything on a schedule so your data doesn&#39;t go stale between crawls.&#10;&#10;{{case_study_company}} used us to expand coverage without expanding the eng team and [X].&#10;&#10;Reply Y and I&#39;ll send a Coverage Gap Sample, 50 fresh records in your domain showing what&#39;s missing or out of date today. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company_name}}&#39;s coverage" data-preview="Northbeam Labs&#39;s coverage">{{company_name}}&#39;s coverage</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, I was on {{company_name}} and saw your dataset covers {{data_domain}}, so I ran a quick check against what&#39;s live on the web right now.&#10;&#10;But would it be fair to assume the coverage is only ever as fresh as your pipeline can keep up with, and there are gaps and stale rows you already know about?&#10;&#10;That&#39;s exactly what Riveter fixes. We build datasets from nothing, enrich a record or a million in one request, and re-check everything on a schedule so your data doesn&#39;t go stale between crawls.&#10;&#10;{{case_study_company}} used us to expand coverage without expanding the eng team and [X].&#10;&#10;Reply Y and I&#39;ll send a Coverage Gap Sample, 50 fresh records in your domain showing what&#39;s missing or out of date today. No call needed." data-preview="Cody, I was on Northbeam Labs and saw your dataset covers US commercial real estate listings, so I ran a quick check against what&#39;s live on the web right now.&#10;&#10;But would it be fair to assume the coverage is only ever as fresh as your pipeline can keep up with, and there are gaps and stale rows you already know about?&#10;&#10;That&#39;s exactly what Riveter fixes. We build datasets from nothing, enrich a record or a million in one request, and re-check everything on a schedule so your data doesn&#39;t go stale between crawls.&#10;&#10;a team at Snap used us to expand coverage without expanding the eng team and [X].&#10;&#10;Reply Y and I&#39;ll send a Coverage Gap Sample, 50 fresh records in your domain showing what&#39;s missing or out of date today. No call needed.">
+                        <p>{{first_name}}, I was on {{company_name}} and saw your dataset covers {{data_domain}}, so I ran a quick check against what&#39;s live on the web right now.</p><p>But would it be fair to assume the coverage is only ever as fresh as your pipeline can keep up with, and there are gaps and stale rows you already know about?</p><p>That&#39;s exactly what Riveter fixes. We build datasets from nothing, enrich a record or a million in one request, and re-check everything on a schedule so your data doesn&#39;t go stale between crawls.</p><p>{{case_study_company}} used us to expand coverage without expanding the eng team and [X].</p><p>Reply Y and I&#39;ll send a Coverage Gap Sample, 50 fresh records in your domain showing what&#39;s missing or out of date today. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the freshness angle is the one that bites quietest.&#10;&#10;A customer churns not because your dataset is small but because the one record they checked was three months old. Scheduled monitoring means the whole set re-verifies on its own, so &quot;stale&quot; stops being a support ticket.&#10;&#10;Want the Coverage Gap Sample for {{data_domain}}? Just reply Y.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the freshness angle is the one that bites quietest.&#10;&#10;A customer churns not because your dataset is small but because the one record they checked was three months old. Scheduled monitoring means the whole set re-verifies on its own, so &quot;stale&quot; stops being a support ticket.&#10;&#10;Want the Coverage Gap Sample for {{data_domain}}? Just reply Y." data-preview="Cody, the freshness angle is the one that bites quietest.&#10;&#10;A customer churns not because your dataset is small but because the one record they checked was three months old. Scheduled monitoring means the whole set re-verifies on its own, so &quot;stale&quot; stops being a support ticket.&#10;&#10;Want the Coverage Gap Sample for US commercial real estate listings? Just reply Y.">
+                        <p>{{first_name}}, the freshness angle is the one that bites quietest.</p><p>A customer churns not because your dataset is small but because the one record they checked was three months old. Scheduled monitoring means the whole set re-verifies on its own, so &quot;stale&quot; stops being a support ticket.</p><p>Want the Coverage Gap Sample for {{data_domain}}? Just reply Y.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: 50 rows you&#39;re missing&#10;&#10;{{first_name}}, no call needed.&#10;&#10;You&#39;ve built the product; the moat is coverage and freshness. Riveter is the fastest way to widen both without adding headcount to your pipeline. The 50-row sample shows the gap in your own data better than I can describe it.&#10;&#10;Reply yes and I&#39;ll send the Coverage Gap Sample for {{company_name}}. Should I send it to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="50 rows you&#39;re missing" data-preview="50 rows you&#39;re missing">50 rows you&#39;re missing</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed.&#10;&#10;You&#39;ve built the product; the moat is coverage and freshness. Riveter is the fastest way to widen both without adding headcount to your pipeline. The 50-row sample shows the gap in your own data better than I can describe it.&#10;&#10;Reply yes and I&#39;ll send the Coverage Gap Sample for {{company_name}}. Should I send it to you or {{alt_decision_maker}}?" data-preview="Cody, no call needed.&#10;&#10;You&#39;ve built the product; the moat is coverage and freshness. Riveter is the fastest way to widen both without adding headcount to your pipeline. The 50-row sample shows the gap in your own data better than I can describe it.&#10;&#10;Reply yes and I&#39;ll send the Coverage Gap Sample for Northbeam Labs. Should I send it to you or your Head of Data?">
+                        <p>{{first_name}}, no call needed.</p><p>You&#39;ve built the product; the moat is coverage and freshness. Riveter is the fastest way to widen both without adding headcount to your pipeline. The 50-row sample shows the gap in your own data better than I can describe it.</p><p>Reply yes and I&#39;ll send the Coverage Gap Sample for {{company_name}}. Should I send it to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Catch-all - Doing Research by Hand</strong>
+              <em>Free Dataset</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Catch-all - Doing Research by Hand steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company_name}} + 40 open tabs&#10;&#10;{{first_name}}, quick one for {{company_name}}.&#10;&#10;Would it be fair to assume someone on your {{team_function}} team spends real hours pulling data off the web by hand, copy-pasting across a few dozen tabs into a spreadsheet that&#39;s stale the day after it&#39;s built?&#10;&#10;That&#39;s the whole reason Riveter exists. You describe the dataset in plain English, our agents search, navigate, and extract it, and keep it current on a schedule. No code, no engineer.&#10;&#10;{{case_study_company}} turned a recurring manual pull into a standing dataset and [X].&#10;&#10;Reply Y and I&#39;ll build you one dataset free, up to 250 rows on whatever you&#39;re researching. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company_name}} + 40 open tabs" data-preview="Northbeam Labs + 40 open tabs">{{company_name}} + 40 open tabs</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, quick one for {{company_name}}.&#10;&#10;Would it be fair to assume someone on your {{team_function}} team spends real hours pulling data off the web by hand, copy-pasting across a few dozen tabs into a spreadsheet that&#39;s stale the day after it&#39;s built?&#10;&#10;That&#39;s the whole reason Riveter exists. You describe the dataset in plain English, our agents search, navigate, and extract it, and keep it current on a schedule. No code, no engineer.&#10;&#10;{{case_study_company}} turned a recurring manual pull into a standing dataset and [X].&#10;&#10;Reply Y and I&#39;ll build you one dataset free, up to 250 rows on whatever you&#39;re researching. No call needed." data-preview="Cody, quick one for Northbeam Labs.&#10;&#10;Would it be fair to assume someone on your RevOps team spends real hours pulling data off the web by hand, copy-pasting across a few dozen tabs into a spreadsheet that&#39;s stale the day after it&#39;s built?&#10;&#10;That&#39;s the whole reason Riveter exists. You describe the dataset in plain English, our agents search, navigate, and extract it, and keep it current on a schedule. No code, no engineer.&#10;&#10;a team at Snap turned a recurring manual pull into a standing dataset and [X].&#10;&#10;Reply Y and I&#39;ll build you one dataset free, up to 250 rows on whatever you&#39;re researching. No call needed.">
+                        <p>{{first_name}}, quick one for {{company_name}}.</p><p>Would it be fair to assume someone on your {{team_function}} team spends real hours pulling data off the web by hand, copy-pasting across a few dozen tabs into a spreadsheet that&#39;s stale the day after it&#39;s built?</p><p>That&#39;s the whole reason Riveter exists. You describe the dataset in plain English, our agents search, navigate, and extract it, and keep it current on a schedule. No code, no engineer.</p><p>{{case_study_company}} turned a recurring manual pull into a standing dataset and [X].</p><p>Reply Y and I&#39;ll build you one dataset free, up to 250 rows on whatever you&#39;re researching. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the hidden cost is that the manual version is never current.&#10;&#10;By the time the spreadsheet is built it&#39;s already drifting, and nobody has time to rebuild it weekly. A Riveter dataset re-checks itself, so the research is done once and stays done.&#10;&#10;Want us to build you one free? Just reply Y.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the hidden cost is that the manual version is never current.&#10;&#10;By the time the spreadsheet is built it&#39;s already drifting, and nobody has time to rebuild it weekly. A Riveter dataset re-checks itself, so the research is done once and stays done.&#10;&#10;Want us to build you one free? Just reply Y." data-preview="Cody, the hidden cost is that the manual version is never current.&#10;&#10;By the time the spreadsheet is built it&#39;s already drifting, and nobody has time to rebuild it weekly. A Riveter dataset re-checks itself, so the research is done once and stays done.&#10;&#10;Want us to build you one free? Just reply Y.">
+                        <p>{{first_name}}, the hidden cost is that the manual version is never current.</p><p>By the time the spreadsheet is built it&#39;s already drifting, and nobody has time to rebuild it weekly. A Riveter dataset re-checks itself, so the research is done once and stays done.</p><p>Want us to build you one free? Just reply Y.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: question for {{first_name}}&#10;&#10;{{first_name}}, what&#39;s the one dataset your team keeps rebuilding by hand?&#10;&#10;Whatever it is, we&#39;ll build it for you free as a starting point, up to 250 rows, no call. If it&#39;s useful you keep going on the free tier; if not, no harm done.&#10;&#10;Reply yes and tell me the dataset. Should I send it to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="question for {{first_name}}" data-preview="question for Cody">question for {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, what&#39;s the one dataset your team keeps rebuilding by hand?&#10;&#10;Whatever it is, we&#39;ll build it for you free as a starting point, up to 250 rows, no call. If it&#39;s useful you keep going on the free tier; if not, no harm done.&#10;&#10;Reply yes and tell me the dataset. Should I send it to you or {{alt_decision_maker}}?" data-preview="Cody, what&#39;s the one dataset your team keeps rebuilding by hand?&#10;&#10;Whatever it is, we&#39;ll build it for you free as a starting point, up to 250 rows, no call. If it&#39;s useful you keep going on the free tier; if not, no harm done.&#10;&#10;Reply yes and tell me the dataset. Should I send it to you or your Head of Data?">
+                        <p>{{first_name}}, what&#39;s the one dataset your team keeps rebuilding by hand?</p><p>Whatever it is, we&#39;ll build it for you free as a starting point, up to 250 rows, no call. If it&#39;s useful you keep going on the free tier; if not, no harm done.</p><p>Reply yes and tell me the dataset. Should I send it to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">Launch</p>
+      <h2>Launch on the takedown, then widen</h2>
+      <p class="takeaway">Start with Tier 1 because the competitor-takedown proves ROI fastest, then add Tier 2, the catch-all, and Tier 3 as each tier tunes.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Launch Tier 1 first, Already Running a Scraper Stack. Highest intent, competitor-takedown narrative, and the cleanest ROI story. Send from a Riveter founder while the job post or tool detection is live.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Add Tier 2 next, Hiring to Build It In-House. Large and urgent, and the skip-the-hire math sells itself against an open req.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Open the catch-all third, Doing Research by Hand. The volume tier, softest copy, and a free-tier CTA that maps straight to self-serve.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Turn on Tier 3 last, Data-Dependent Product Company. Richest personalization with the Coverage Gap Sample, so it runs once the sending motion is proven.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Layer the trigger campaigns, competitor price-hikes, new Heads of Data, accelerator cohorts, and GitHub maintainers, only after the waterfall is stable.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Before any send, drop Riveter&#39;s confirmed proof numbers into the [X] placeholders for OpenAI, Snap, Fermat, and Zeffy. The whole pitch rests on measurable results.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply / 150 contacts</strong>
+                <span>Perfect. Scale the tier hard.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 300</strong>
+                <span>Good. Let it run untouched.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 450-500</strong>
+                <span>Borderline. Test one copy or lead-magnet variant.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 / 500 or &lt;1% after 1,500 sends</strong>
+                <span>Cut the tier or rework it from the trigger up.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book the strategy call</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Cody","Northbeam Labs","Data Engineer","6","Intercom","healthcare operations","Maya","Bright Data","Playwright","US commercial real estate listings","RevOps","a team at Snap","your Head of Data"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
