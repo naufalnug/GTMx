@@ -10,12 +10,12 @@
 // visible size stays fully CSS-controlled (`.partners__logo` pins height and
 // leaves width auto), so these attributes change nothing you can see.
 const PARTNERS = [
-  { src: '/partners/clay.png', alt: 'Clay', width: 220, height: 168 },
-  { src: '/partners/smartlead.png', alt: 'Smartlead', width: 800, height: 800 },
-  { src: '/partners/instantly.png', alt: 'Instantly', width: 200, height: 200 },
-  { src: '/partners/heyreach.png', alt: 'HeyReach', width: 301, height: 301 },
-  { src: '/partners/emailbison.png', alt: 'EmailBison', width: 512, height: 512 },
-  { src: '/partners/trigify.png', alt: 'Trigify', width: 2000, height: 2000 },
+  { src: '/partners/clay.png', alt: 'Clay', width: 157, height: 120 },
+  { src: '/partners/smartlead.png', alt: 'Smartlead', width: 120, height: 120 },
+  { src: '/partners/instantly.png', alt: 'Instantly', width: 120, height: 120 },
+  { src: '/partners/heyreach.png', alt: 'HeyReach', width: 120, height: 120 },
+  { src: '/partners/emailbison.png', alt: 'EmailBison', width: 120, height: 120 },
+  { src: '/partners/trigify.png', alt: 'Trigify', width: 120, height: 120 },
 ]
 
 export default function Partners() {

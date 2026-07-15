@@ -18,16 +18,25 @@ const caveat = Caveat({
   weight: ['600', '700'],
 })
 
+// Figtree (and the Caveat scribble) are the only fonts used above the fold on
+// the homepage, whose LCP element is the hero <h1> (rendered in Figtree). The
+// three families below are used lower down / on inner pages, so we drop them
+// from the <head> preload set: preloading all five made them compete for the
+// network and delayed the critical Figtree download, pushing LCP out. They
+// still load normally when first referenced — `display: swap` is unchanged, so
+// there is no visible difference, only a faster path to the LCP font.
 const geistSans = Geist({
   subsets: ['latin'],
   variable: '--geist-sans',
   display: 'swap',
+  preload: false,
 })
 
 const geistMono = Geist_Mono({
   subsets: ['latin'],
   variable: '--geist-mono',
   display: 'swap',
+  preload: false,
 })
 
 const instrumentSerif = Instrument_Serif({
@@ -36,6 +45,7 @@ const instrumentSerif = Instrument_Serif({
   display: 'swap',
   weight: '400',
   style: ['normal', 'italic'],
+  preload: false,
 })
 
 // metadataBase lets Next resolve any relative metadata URLs and silences the
