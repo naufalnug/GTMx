@@ -1,8 +1,17 @@
 'use client'
 
-import Script from 'next/script'
+import { useDeferredCalEmbed } from './useDeferredCalEmbed'
 
 function CaseStudyCta() {
+  // Deferred until the booking area nears the viewport (see the hook). Same
+  // calendar and config as the previous afterInteractive inline script.
+  useDeferredCalEmbed({
+    namespace: 'initial-consultation-call',
+    calLink: 'team/gtmx/initial-consultation-call',
+    elementId: 'casestudy-cal-embed',
+    ui: { hideEventTypeDetails: false, layout: 'month_view' },
+  })
+
   return (
     <div className="casestudy__cta">
       <h2 className="casestudy__cta-title">
@@ -13,12 +22,6 @@ function CaseStudyCta() {
         that generates qualified leads on autopilot.
       </p>
       <div className="casestudy__cal-embed" id="casestudy-cal-embed"></div>
-      <Script id="cal-inline-casestudy" strategy="afterInteractive">
-        {`(function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
-Cal("init", "initial-consultation-call", {origin:"https://app.cal.com"});
-Cal.ns["initial-consultation-call"]("inline", {elementOrSelector:"#casestudy-cal-embed",config: {"layout":"month_view","useSlotsViewOnSmallScreen":"true"},calLink: "team/gtmx/initial-consultation-call",});
-Cal.ns["initial-consultation-call"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});`}
-      </Script>
     </div>
   );
 }
