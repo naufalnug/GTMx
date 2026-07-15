@@ -24,7 +24,10 @@ export default async function ContentPage() {
         <main className="section blog">
           <div className="sec-head blog__head">
             <span className="blog__eyebrow">Blog</span>
-            <h2 className="h2">GTM &amp; AI <span className="hl">insights.</span></h2>
+            {/* Real <h1> for the standalone blog index (no hero h1 above it).
+                Keeps the .h2 class so the styling is unchanged; only the
+                semantic level moves from h2 → h1 to fix heading order / SEO. */}
+            <h1 className="h2">GTM &amp; AI <span className="hl">insights.</span></h1>
             <p className="sec-lede">
               Practical breakdowns on outbound engineering, AI-powered pipeline building,
               and what it actually takes to build a repeatable revenue engine.
@@ -49,7 +52,9 @@ export default async function ContentPage() {
                     <span key={tag} className="blog-card__tag">{tag}</span>
                   ))}
                 </div>
-                <h3 className="blog-card__title">{article.title}</h3>
+                {/* h2 (was h3) so the index has no skipped heading level under
+                    the page h1. Class unchanged → identical styling. */}
+                <h2 className="blog-card__title">{article.title}</h2>
                 <p className="blog-card__excerpt">{article.excerpt}</p>
                 <span className="blog-card__date">
                   {new Date(article.date).toLocaleDateString('en-US', {
