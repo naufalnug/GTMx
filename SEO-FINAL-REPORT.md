@@ -57,6 +57,27 @@ for `/`, a service page, a case study, and a blog post (expect zero errors).
 
 ---
 
+## PRODUCTION scores (Lighthouse against live https://gtmx.run, 2026-07-15, post-deploy)
+
+Measured from this machine against the deployed Vercel production after
+merging the optimization branch to `main`. Homepage = 3 runs.
+
+| Page (mobile) | Perf | A11y | Best Prac | SEO |
+|---|---|---|---|---|
+| Home (median of 3) | **94** (91/94/95) | 96 | 100 | 92 |
+| /services/automated-outbound | 97 | 95 | 100 | 100 |
+| /content | 97 | 95 | 100 | 100 |
+| /case-studies/opensponsorship | 97 | 95 | 100 | 100 |
+
+| Page (desktop) | Perf | A11y | Best Prac | SEO |
+|---|---|---|---|---|
+| Home (3/3 runs) | **99** | 96 | 100 | 92 |
+
+Homepage mobile on prod: LCP 2.7s, FCP ~1.3s, TBT 30-160ms, CLS 0.
+The user-reported pre-deploy scores (mobile 64-72, desktop 84-87) were
+measurements of the OLD deploy; the optimizations were on an unmerged branch
+until now. Raw reports: seo-reports/final/prod-*.json.
+
 ## Measured scores (Lighthouse, local production build)
 
 Measured with `lighthouse@latest` against `next start` (production build) on
