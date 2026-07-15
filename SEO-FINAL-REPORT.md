@@ -57,23 +57,48 @@ for `/`, a service page, a case study, and a blog post (expect zero errors).
 
 ---
 
-## Score posture (code-audit basis — replace with measured PSI after preview run)
+## Measured scores (Lighthouse, local production build)
 
-These are **expected** category outcomes based on what the code now controls;
-they are not measured lab scores. Fill the "Measured" columns after the
-re-test run above.
+Measured with `lighthouse@latest` against `next start` (production build) on
+this machine, mobile = Moto-G-class throttling (4x CPU, slow 4G), desktop =
+Lighthouse desktop preset. Homepage-mobile values are the median of 3 runs.
 
-| Category | Codebase posture after this work | Expected | Measured (fill in) |
-|---|---|---|---|
-| Performance | next/font self-host+swap, SVG (non-raster) LCP, lazy images, CLS sources removed, Vercel Brotli/HTTP3/immutable cache | 90+ likely | |
-| Accessibility | `lang`, alt text, discernible names, single-h1 per page + ordered headings, decorative SVG `aria-hidden`, no clickable divs | 90+ likely (pending contrast/tap check) | |
-| Best Practices | HTTPS (Vercel), correct doctype/charset (Next), security headers added, no known deprecated APIs; console-error check pending preview | 90+ likely | |
-| SEO | unique title/description + canonical per page, robots+sitemap, crawlable `<a>` links, full structured-data coverage | 90+ likely (often 100) | |
-| Agentic Browsing | clean a11y tree + CLS-controlled + valid `/llms.txt` | 3/3 targeted | |
+**Before → After (all ≥90 on every category, every template):**
 
-> Honest caveat: I have not seen a live PSI number for this site. "Likely 90+"
-> reflects that the codebase now satisfies the audits those scores are built
-> from; it is a prediction to confirm, not a measured result.
+| Template (mobile) | Perf | A11y | Best Prac | SEO |
+|---|---|---|---|---|
+| Home | **64→91** | 96 | **81→100** | 92 |
+| Service `/services/automated-outbound` | →95 | 95 | 100 | 100 |
+| Blog index `/content` | →94 | 95 | 100 | 100 |
+| Blog post `/content/[slug]` | →~94 | 95 | 100 | 100 |
+| Case study `/case-studies/opensponsorship` | →96 | 95 | 100 | 100 |
+
+| Template (desktop) | Perf | A11y | Best Prac | SEO |
+|---|---|---|---|---|
+| Home | **84→100** | 96 | **81→100** | 92 |
+
+Key homepage-mobile metrics after the perf pass: **LCP 12.2s → 3.5s**,
+FCP 2.2s → 1.5s, **TBT 260ms → ~50ms**, CLS 0, Speed Index 3.0s → 1.5s.
+
+> Caveat: these are **local lab** numbers. Vercel's edge (HTTP/3, faster TTFB,
+> no local `next start` overhead) generally moves them up a little, so the
+> preview should meet or beat these. Re-confirm on the preview per the plan
+> above; field data (CrUX) stabilises ~28 days post-deploy.
+
+### What moved the numbers (root causes found via the local Lighthouse run)
+
+- **LCP 12.2s and Best-Practices 81** shared one cause: the **Cal.com booking
+  embed loaded eagerly on mount** on every page that uses it, pulling ~1MB of
+  third-party JS + an iframe + 3 third-party cookies onto the critical path.
+  Deferring it (IntersectionObserver, 800px margin) fixed LCP, the
+  third-party-cookie audit, the inspector-issues audit, and most of TBT at once.
+- **Console error (Best Practices)** was self-inflicted: `upgrade-insecure-requests`
+  in the *report-only* CSP logs a browser warning. Removed from report-only.
+- **Font preloads**: all five families were preloaded and competed for the
+  network; only Figtree/Caveat are above the fold, so the other three no longer
+  preload.
+- **Partner logos** were ~620KB of oversized PNGs (up to 2000×2000 for a 26px
+  render); downscaled to ~73KB.
 
 ---
 
@@ -109,6 +134,19 @@ re-test run above.
 - **`app/llms.txt/route.js`** (new): serves a spec-valid `/llms.txt` at the domain root, generated from the live services/case-studies data so every link is an absolute URL returning 200. Single H1, blockquote summary, sectioned bulleted links with descriptions.
   - **Audit:** PSI Agentic Browsing → valid `llms.txt`.
   - **Note:** no `/llms.txt` or `/llm-info` existed before; this is net-new. House style (no em/en dashes) is enforced by normalising dashes to commas in reused copy.
+
+### Phase 7 — Performance & Best-Practices remediation (driven by measured Lighthouse) — commits `perf: defer Cal.com embed`, `perf: shrink LCP path`, `best-practices/SEO polish`
+- **`components/useDeferredCalEmbed.js`** (new) + **`FinalCTA.jsx`**, **`ServiceCta.jsx`**, **`CaseStudyCta.jsx`**: defer the Cal.com embed until it nears the viewport.
+  - **Audits:** LCP (w25), third-party-cookies (w5), inspector-issues, errors-in-console, TBT.
+  - **Non-visual:** the calendar still renders where and how it did; only its load timing changed. Each component keeps its exact prior Cal config (namespace, calLink, ui/brand, forwardQueryParams).
+- **`app/layout.jsx`**: `preload: false` on Geist, Geist Mono, Instrument Serif (not above the fold). `display: swap` unchanged.
+  - **Audit:** LCP / render-blocking. **Non-visual.**
+- **`components/home/Partners.jsx`** + **`public/partners/*.png`**: downscaled logos (~620KB → ~73KB); intrinsic dimensions updated.
+  - **Audit:** image-delivery, total byte weight. **Non-visual** (pixel-identical at 26px display).
+- **`next.config.js`**: removed `upgrade-insecure-requests` from the Report-Only CSP (it logs a console warning in report-only mode).
+  - **Audit:** errors-in-console (Best Practices). **Non-visual.**
+- **`components/home/Services.jsx`**: `aria-label` on the three "Learn more" links.
+  - **Audit:** link-text (SEO) / screen-reader naming. **Non-visual** (visible text unchanged; see approval note — this LH version grades visible text, so the audit itself needs a copy change to go green, which was not made).
 
 ### Supporting fix — DB-less build crash — commit `fix: normalize seed-article fallback`
 - **`lib/articles.js`**: the bundled seed articles omit `faqs`, which the article template dereferences as `.length`; the DB-less fallback returned them raw and crashed article prerender/SSR. Added `normalizeSeedArticle` (mirrors `rowToArticle`; `faqs`/`tags` default to `[]`).

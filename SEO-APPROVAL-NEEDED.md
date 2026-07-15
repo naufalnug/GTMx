@@ -1,36 +1,54 @@
 # SEO — Visual Changes Awaiting Human Approval
 
 Per the hard constraints, anything that would change a rendered pixel (colour
-contrast, tap-target size, font size, spacing) is **not applied**. It is logged
-here for a human to approve or reject.
+contrast, tap-target size, font size) is **not applied** — it is logged here for
+a human to approve or reject. Everything shipped so far is non-visual.
 
-## Status: no visual changes were required by the fixes shipped
+## Colour contrast (Accessibility) — NEEDS A DESIGN DECISION
 
-Every change made in Phases 0–5 is non-visual by construction (markup
-semantics, HTML attributes, response headers, JSON-LD `<script>` blocks, a new
-`/llms.txt` endpoint, robots/sitemap, and one DB-less-fallback bug fix). None
-touch a CSS rule, a class, visible text, colour, font, or layout. So there is
-nothing in this file that blocks the current work.
+Measured with Lighthouse on the deployed build. **Accessibility already scores
+95–96 (≥90 target met)** because these failures are on accent/label text, but
+they are genuine WCAG AA contrast failures. Fixing them means darkening brand
+colours on the affected surfaces — a visible change — so they are **not** made
+here.
 
-## Items to re-check once Lighthouse runs against the Vercel preview
-
-I could not run PageSpeed Insights / Lighthouse against the deployed site from
-this environment (see `SEO-FINAL-REPORT.md` → "Verification"). Two audit
-categories can only surface on a live render and, if they fail, would require a
-visual change — so they are pre-logged here as **candidates**. Confirm against
-the preview URL; if any fail, fill in the element + minimal change and get
-sign-off before touching the UI.
-
-| Candidate | Where to look | Why it may surface | Minimal fix (needs approval) | Est. score impact |
+| Element (selector) | Where | FG on BG | Ratio | Needs |
 |---|---|---|---|---|
-| Colour contrast | `--ink-soft` muted text on peach/tinted fills (flagged in `PRODUCT.md`); eyebrow/label text; muted `.lede`/`.sec-lede`; footer fine print | These are the classic sub-4.5:1 risks on this warm palette | Nudge the muted ink token a few points darker **only on the failing surfaces** | Accessibility: up to ~7 pts if it's the sole contrast failure |
-| Tap-target size | Footer inline links (`Privacy · Terms`), nav links on mobile, FAQ `<summary>` toggles | Targets under 24×24 CSS px / too close together fail on mobile | Increase hit area via padding (no visible box change) or spacing | Accessibility: ~small; mobile-only |
+| `.proof__num` | Proof stats (big numbers) | `#e8552b` on cream | 2.98 | ≥3:1 (large text) — a touch darker orange |
+| `.faq-eyebrow` | FAQ section eyebrow | `#e8552b` on cream | 3.09 | ≥4.5:1 (small text) |
+| `.final-eyebrow` | Final CTA eyebrow | `#fffdf7` on vermilion | 2.95 | ≥4.5:1 |
+| `.rcard__vert` | Results card vertical label | `#5c564c` on card | 4.22 | ≥4.5:1 (small) — marginal |
+| `.af-chip` (several) | Decorative "artifact" mockups in Method (`.af`/`.mstep__art`) | mint `#5bbf7e`, gold `#ebb73e`, greens on light | 1.8–4.1 | ≥4.5:1 (or treat as decorative) |
 
-If both come back clean on the preview, no visual change is needed anywhere and
-this file can be closed as "nothing to approve."
+**Recommendation:**
+- The `.af-chip` items live inside the hand-drawn artifact mockups (decorative
+  illustrations of a UI). If they are decorative, the accessible fix is to mark
+  the mockup container `aria-hidden` / `role="img"` with a label rather than
+  recolour it — **that** would be non-visual and I can do it on approval.
+- For `.proof__num`, `.faq-eyebrow`, `.final-eyebrow`: darken the token a few
+  points **only on these surfaces** (e.g. vermilion `#e8552b` → ~`#cf4517` for
+  small text on cream). Minimal, but it is a visible change to brand accents, so
+  it needs sign-off. Estimated impact: Accessibility 96 → ~100.
 
-## Not a visual change, but needs a human decision (tracked in the final report)
+Tell me which you want and I will apply it in a single reviewable commit.
 
-- **Enforcing the CSP.** Shipped as `Content-Security-Policy-Report-Only`.
-  Flipping it to enforced needs a short monitoring window + nonce-based inline
-  handling. Details and the exact policy are in `SEO-FINAL-REPORT.md`.
+## Tap targets
+
+No tap-target failures surfaced in the Lighthouse runs on any template. Nothing
+to approve here.
+
+## SEO `link-text` (informational, target already met)
+
+The three service-card links read "Learn more". This Lighthouse version's
+`link-text` audit grades **visible** text, so the `aria-label`s I added help
+screen readers but don't clear the audit. Clearing it would mean changing the
+visible copy (e.g. "Learn more about RevOps"), which is a content change and is
+**not** made. SEO already scores 92 (home) / 100 (other templates), so the
+target is met; this is logged only for transparency. Approve a visible-copy
+change if you want the audit itself green.
+
+## Not a visual change, but needs a decision
+
+- **Enforcing the CSP.** Still shipped as `Content-Security-Policy-Report-Only`
+  (now warning-free). Enforcing needs a nonce via `middleware.js` for Next's
+  inline bootstrap + the Cal.com loader. Details in `SEO-FINAL-REPORT.md`.
