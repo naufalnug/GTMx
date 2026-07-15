@@ -23,7 +23,9 @@ const cspReportOnly = [
   "script-src 'self' 'unsafe-inline' https://app.cal.com https://cal.com",
   "connect-src 'self' https://app.cal.com https://cal.com",
   "frame-src 'self' https://app.cal.com https://cal.com",
-  'upgrade-insecure-requests',
+  // NOTE: `upgrade-insecure-requests` is intentionally omitted here — it is
+  // ignored inside a report-only policy and browsers log a console warning if
+  // present. Add it back only when the policy is switched to enforced.
 ].join('; ')
 
 const securityHeaders = [

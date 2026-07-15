@@ -31,7 +31,7 @@ export default function Services() {
             <li>ICP targeting &amp; enrichment in Clay</li>
             <li>Personalized multi-channel copy</li>
           </ul>
-          <a href="/services/automated-outbound" className="card__more">Learn more <Arrow /></a>
+          <a href="/services/automated-outbound" className="card__more" aria-label="Learn more about Automated Outbound">Learn more <Arrow /></a>
         </article>
 
         {/* RevOps */}
@@ -47,7 +47,7 @@ export default function Services() {
             <li>Inbound enrich, score &amp; route</li>
             <li>Clay &times; HubSpot / Salesforce builds</li>
           </ul>
-          <a href="/services/revops" className="card__more">Learn more <Arrow /></a>
+          <a href="/services/revops" className="card__more" aria-label="Learn more about RevOps">Learn more <Arrow /></a>
         </article>
 
         {/* Search */}
@@ -63,7 +63,7 @@ export default function Services() {
             <li>Answer-engine optimization</li>
             <li>Authority, citations &amp; tracking</li>
           </ul>
-          <a href="/services/seo-aeo" className="card__more">Learn more <Arrow /></a>
+          <a href="/services/seo-aeo" className="card__more" aria-label="Learn more about Search">Learn more <Arrow /></a>
         </article>
       </div>
     </section>
