@@ -41,7 +41,16 @@ export default function Page() {
     '@type': 'Organization',
     name: 'GTMx',
     url: SITE_URL,
+    logo: `${SITE_URL}/gtmx-emblem-cream.png`,
     description: 'Outbound, RevOps, and search systems for B2B tech companies — built into one engine.',
+  }
+
+  const websiteJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'GTMx',
+    url: SITE_URL,
+    publisher: { '@type': 'Organization', name: 'GTMx', url: SITE_URL },
   }
 
   const serviceJsonLd = {
@@ -67,6 +76,10 @@ export default function Page() {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         <script
           type="application/ld+json"
