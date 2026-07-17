@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Walla - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-07-17</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Walla</p>
+          <h1>Your Walla waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">One priority-routed cascade, mapped to every boutique studio in the market — built once, run for months.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Every studio already runs some booking software. The tool they run today is the sharpest read on switching intent — so we route the entire market on that one signal instead of building a campaign per vertical or pain point.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a working session</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>90,000+</strong>
+          <span>US boutique studios in the addressable market</span>
+        </div>
+        <div class="metric-card">
+          <strong>4</strong>
+          <span>tiers, 100% market coverage</span>
+        </div>
+        <div class="metric-card">
+          <strong>~4 wks</strong>
+          <span>hand-held go-live once they switch</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Walla is the boutique-fitness operating system: booking, memberships, payments, payroll, a branded app, marketing, and WallaPredict AI churn prevention — built for one business, boutique fitness studios.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The single signal</p></div><div><span>02</span><p>How the cascade works</p></div><div><span>03</span><p>The four tiers</p></div><div><span>04</span><p>Campaign experiments</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>Waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>Emails</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">Signal</p>
+      <h2>The single signal</h2>
+      <p class="takeaway">Route every studio on the booking software it runs today — detected free from its own website.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>Walla is rip-and-replace: every target studio already runs something, so the current tool is always observable.</p></div><div class="reason-card"><span>02</span><p>The tool a studio runs tells us both how much switching pain it feels and which Walla value prop lands hardest.</p></div><div class="reason-card"><span>03</span><p>It&#39;s detectable per studio for free — straight from the booking widget and &#39;Book&#39; button on the studio&#39;s website.</p></div><div class="reason-card"><span>04</span><p>No expensive enrichment: Google Maps delivers the market, the website delivers the signal in the same pass.</p></div>
+            </div>
+            <div class="field-cloud"><span>booking_tool</span><span>tool_class</span><span>vertical</span><span>location_count</span><span>review_count</span><span>owner_name</span><span>owner_email</span><span>metro_state</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>Google Maps (vertical x metro)</h3><p>The market spine — yoga, pilates, barre, Lagree, cycling, HIIT studios across ~150 US metros, with name, website, phone, reviews.</p></div><div class="source-card"><span>02</span><h3>Website booking-widget detection</h3><p>The routing signal — the exact booking tool each studio runs, from its &#39;Book&#39; button and page scripts (Mindbody, Momence, Glofox, Mariana Tek, Arketa, etc.).</p></div><div class="source-card"><span>03</span><h3>ClassPass &amp; Mindbody directories</h3><p>A secondary source of confirmed operating boutique studios, often exposing the booking backend.</p></div><div class="source-card"><span>04</span><h3>Owner enrichment (ai-ark)</h3><p>The decision-maker layer — owner / founder / studio director and verified email once account and tier are set.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="Waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">Waterfall</p>
+      <h2>How the cascade works</h2>
+      <p class="takeaway">Exclusive routing, priority order, and a catch-all that sweeps the whole market.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF booking_tool = Mindbody</span>
+          <strong>Tier 1 — Mindbody takedown</strong>
+          <em>The most-switched-from incumbent and Walla&#39;s explicitly named competitor: highest pain, sharpest intent.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF ELSE IF tool_class = generic-scheduler (Vagaro, Square, Acuity, Calendly, Wix, Booker, Fresha)</span>
+          <strong>Tier 2 — outgrown a generic tool</strong>
+          <em>A general scheduler was never built for a studio; memberships, payroll, and retention are done by hand around it.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF ELSE IF tool_class = modern-boutique (Glofox, Mariana Tek, Momence, Arketa, Zen Planner, Pike13, WellnessLiving)</span>
+          <strong>Tier 3 — modern-tool gap</strong>
+          <em>Already on a real platform, but paying for gaps: weak retention AI, thin support, or per-location cost at scale.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF ELSE (no booking widget detected — phone / email / DM / Google Form)</span>
+          <strong>Tier 4 — catch-all, no system</strong>
+          <em>Running the studio manually; the first-real-system pitch. Sweeps the rest of the market so coverage is 100%.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF booking_tool = Mindbody -&gt; Tier 1 — Mindbody takedown (The most-switched-from incumbent and Walla&#39;s explicitly named competitor: highest pain, sharpest intent.)&#10;2. IF ELSE IF tool_class = generic-scheduler (Vagaro, Square, Acuity, Calendly, Wix, Booker, Fresha) -&gt; Tier 2 — outgrown a generic tool (A general scheduler was never built for a studio; memberships, payroll, and retention are done by hand around it.)&#10;3. IF ELSE IF tool_class = modern-boutique (Glofox, Mariana Tek, Momence, Arketa, Zen Planner, Pike13, WellnessLiving) -&gt; Tier 3 — modern-tool gap (Already on a real platform, but paying for gaps: weak retention AI, thin support, or per-location cost at scale.)&#10;4. IF ELSE (no booking widget detected — phone / email / DM / Google Form) -&gt; Tier 4 — catch-all, no system (Running the studio manually; the first-real-system pitch. Sweeps the rest of the market so coverage is 100%.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF booking_tool = Mindbody -&gt; Tier 1 — Mindbody takedown (The most-switched-from incumbent and Walla&#39;s explicitly named competitor: highest pain, sharpest intent.)
+2. IF ELSE IF tool_class = generic-scheduler (Vagaro, Square, Acuity, Calendly, Wix, Booker, Fresha) -&gt; Tier 2 — outgrown a generic tool (A general scheduler was never built for a studio; memberships, payroll, and retention are done by hand around it.)
+3. IF ELSE IF tool_class = modern-boutique (Glofox, Mariana Tek, Momence, Arketa, Zen Planner, Pike13, WellnessLiving) -&gt; Tier 3 — modern-tool gap (Already on a real platform, but paying for gaps: weak retention AI, thin support, or per-location cost at scale.)
+4. IF ELSE (no booking widget detected — phone / email / DM / Google Form) -&gt; Tier 4 — catch-all, no system (Running the studio manually; the first-real-system pitch. Sweeps the rest of the market so coverage is 100%.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">Tiers</p>
+      <h2>The four tiers</h2>
+      <p class="takeaway">Mindbody, generic schedulers, modern boutique tools, and studios with no real system.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">30-35% TAM</span>
+          </div>
+          <h3>Tier 1: Mindbody takedown</h3>
+          <p>Studio books through Mindbody</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Overpaying for a bloated system with slow support — and ClassPass keeps pulling members off full-price memberships onto cheaper drop-ins.</dd></div>
+              <div><dt>Offer</dt><dd>Mindbody to Walla Switch Teardown (cost + feature-gap + migration timeline)</dd></div>
+              <div><dt>Source</dt><dd>Website booking-widget detection (mindbodyonline.com scripts / Book button)</dd></div>
+              <div><dt>Reply density</dt><dd>Highest — sharpest pain, Walla&#39;s home-turf takedown</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">15-20% TAM</span>
+          </div>
+          <h3>Tier 2: Outgrown a generic tool</h3>
+          <p>Books through a generic scheduler (Vagaro, Square, Acuity, Calendly, Wix, Booker, Fresha)</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>A general booking tool bolted onto a studio it was never built for — memberships, packages, payroll, and no-show follow-up all happen in spreadsheets or by hand.</dd></div>
+              <div><dt>Offer</dt><dd>Boutique Operating-System Gap Report (what a generic scheduler is costing in no-shows + manual admin)</dd></div>
+              <div><dt>Source</dt><dd>Website booking-widget detection (generic-scheduler class)</dd></div>
+              <div><dt>Reply density</dt><dd>Strong — clear upgrade path, low switching cost</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">20-25% TAM</span>
+          </div>
+          <h3>Tier 3: Modern-tool gap</h3>
+          <p>Books through a modern boutique tool (Glofox, Mariana Tek, Momence, Arketa, Zen Planner, Pike13, WellnessLiving)</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Already on a real platform, but retention is still manual — they find out a member has gone only once they&#39;ve already cancelled.</dd></div>
+              <div><dt>Offer</dt><dd>Retention Teardown (WallaPredict at-risk-member recovery projection vs. their current tool)</dd></div>
+              <div><dt>Source</dt><dd>Website booking-widget detection (modern-boutique class)</dd></div>
+              <div><dt>Reply density</dt><dd>Moderate — softer takedown, higher switching cost</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">20-30% TAM</span>
+          </div>
+          <h3>Tier 4: Catch-all — no system</h3>
+          <p>No detectable booking system (phone / email / DM / Google Form)</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Running the studio on manual booking — losing would-be members after hours, no membership automation, no data; the owner is the system.</dd></div>
+              <div><dt>Offer</dt><dd>Studio Launch Kit (first-system setup guide + go-live-in-4-weeks plan)</dd></div>
+              <div><dt>Source</dt><dd>Website booking-flow scrape (no vendor widget present)</dd></div>
+              <div><dt>Reply density</dt><dd>Broadest and coldest — run last, at volume, softest CTA</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">Campaigns</p>
+      <h2>Campaign experiments</h2>
+      <p class="takeaway">The primary play per tier, plus time-boxed side campaigns.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Mindbody Switch (teardown-led)</h3>
+          <p>Primary Day-0 variant. Chaos-test against a ClassPass-cannibalization angle to find the sharper hook.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>booking_tool = Mindbody</dd></div>
+            <div><dt>AI strategy</dt><dd>Personalize the notice line to the studio&#39;s Mindbody-powered schedule; offer a free Switch Teardown (cost + feature gap + migration timeline).</dd></div>
+            <div><dt>Value</dt><dd>Save money + simplify</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Outgrown-your-scheduler (wedge-led)</h3>
+          <p>Sharp &#39;you&#39;ve outgrown this&#39; pain with a low-friction upgrade path.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>tool_class = generic-scheduler</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with &#39;Built for boutique fitness. Period.&#39; Offer a Gap Report quantifying no-shows + manual admin cost of the generic tool.</dd></div>
+            <div><dt>Value</dt><dd>Save time + grow revenue</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Retention gap (WallaPredict-led)</h3>
+          <p>Softer takedown; for multi-location, add the per-location cost + unified reporting angle in Email 2.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>tool_class = modern-boutique</dd></div>
+            <div><dt>AI strategy</dt><dd>Acknowledge they&#39;re dialed in, then poke the manual-retention gap; offer a WallaPredict recovery projection vs. their current tool.</dd></div>
+            <div><dt>Value</dt><dd>Grow revenue (retention)</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>First-system (Launch Kit-led)</h3>
+          <p>Largest, coldest tier; run at volume with the softest reply-only CTA.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>no booking widget detected</dd></div>
+            <div><dt>AI strategy</dt><dd>Note that booking means calling/DMing; offer a Studio Launch Kit with a go-live-in-4-weeks plan.</dd></div>
+            <div><dt>Value</dt><dd>Capture lost bookings</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Trigger</span>
+          </div>
+          <h3>Side: New studio openings</h3>
+          <p>Time-boxed side campaign, switched on once the waterfall is stable.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>&#39;coming soon&#39; / just-opened studios, launch posts, licensing feeds</dd></div>
+            <div><dt>AI strategy</dt><dd>Start on a system built for boutique fitness instead of migrating later — fastest close, no rip-out. NOT part of the core cascade.</dd></div>
+            <div><dt>Value</dt><dd>Fastest close</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Trigger</span>
+          </div>
+          <h3>Side: ClassPass complaint mining + Mindbody moments</h3>
+          <p>Orthogonal signal; runs alongside, not inside, the waterfall.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>owners griping about ClassPass margin; Mindbody price hikes / outages</dd></div>
+            <div><dt>AI strategy</dt><dd>Keep members booking direct; WallaPredict + memberships protect margin. Time-boxed blast to the Tier 1 list on any Mindbody pricing/outage moment.</dd></div>
+            <div><dt>Value</dt><dd>Protect margin</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="Emails">
+        
+    <div class="section-head">
+      <p class="eyebrow">Emails</p>
+      <h2>The email copy</h2>
+      <p class="takeaway">A proven 3-email shape per tier; only the research and value prop change.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{studio_name}}</span><span>{{vertical}}</span><span>{{current_tool}}</span><span>{{named_studio}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{studio_name}}, {{vertical}}, {{current_tool}}, {{named_studio}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Mindbody Takedown</strong>
+              <em>Mindbody to Walla Switch Teardown</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Mindbody Takedown steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{studio_name}} + Mindbody&#10;&#10;Hi {{first_name}} - I was looking at {{studio_name}} and saw your {{vertical}} schedule still books through Mindbody.&#10;&#10;But would it be fair to assume the monthly bill (plus every add-on) and the clunky front-desk flow are bigger headaches than you&#39;d like - and that ClassPass keeps pulling members off your full-price memberships?&#10;&#10;We built Walla only for boutique studios like yours: same tools, a far simpler UI your front desk actually likes, and we handle the whole migration so you&#39;re live in about 4 weeks.&#10;&#10;{{named_studio}} switched off Mindbody and [saved $X/yr and cut front-desk time by X%].&#10;&#10;Want me to build you a free Mindbody to Walla teardown - exact cost difference plus what migrating looks like for {{studio_name}}? Reply &quot;Y&quot; and I&#39;ll send it. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{studio_name}} + Mindbody" data-preview="Riverbend Pilates + Mindbody">{{studio_name}} + Mindbody</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}} - I was looking at {{studio_name}} and saw your {{vertical}} schedule still books through Mindbody.&#10;&#10;But would it be fair to assume the monthly bill (plus every add-on) and the clunky front-desk flow are bigger headaches than you&#39;d like - and that ClassPass keeps pulling members off your full-price memberships?&#10;&#10;We built Walla only for boutique studios like yours: same tools, a far simpler UI your front desk actually likes, and we handle the whole migration so you&#39;re live in about 4 weeks.&#10;&#10;{{named_studio}} switched off Mindbody and [saved $X/yr and cut front-desk time by X%].&#10;&#10;Want me to build you a free Mindbody to Walla teardown - exact cost difference plus what migrating looks like for {{studio_name}}? Reply &quot;Y&quot; and I&#39;ll send it. No call needed." data-preview="Hi Dana - I was looking at Riverbend Pilates and saw your pilates schedule still books through Mindbody.&#10;&#10;But would it be fair to assume the monthly bill (plus every add-on) and the clunky front-desk flow are bigger headaches than you&#39;d like - and that ClassPass keeps pulling members off your full-price memberships?&#10;&#10;We built Walla only for boutique studios like yours: same tools, a far simpler UI your front desk actually likes, and we handle the whole migration so you&#39;re live in about 4 weeks.&#10;&#10;Motivate Movement switched off Mindbody and [saved $X/yr and cut front-desk time by X%].&#10;&#10;Want me to build you a free Mindbody to Walla teardown - exact cost difference plus what migrating looks like for Riverbend Pilates? Reply &quot;Y&quot; and I&#39;ll send it. No call needed.">
+                        <p>Hi {{first_name}} - I was looking at {{studio_name}} and saw your {{vertical}} schedule still books through Mindbody.</p><p>But would it be fair to assume the monthly bill (plus every add-on) and the clunky front-desk flow are bigger headaches than you&#39;d like - and that ClassPass keeps pulling members off your full-price memberships?</p><p>We built Walla only for boutique studios like yours: same tools, a far simpler UI your front desk actually likes, and we handle the whole migration so you&#39;re live in about 4 weeks.</p><p>{{named_studio}} switched off Mindbody and [saved $X/yr and cut front-desk time by X%].</p><p>Want me to build you a free Mindbody to Walla teardown - exact cost difference plus what migrating looks like for {{studio_name}}? Reply &quot;Y&quot; and I&#39;ll send it. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One more thing, {{first_name}}: it&#39;s not just the bill. Every full-price member ClassPass converts to a cheaper drop-in is margin off your top line.&#10;&#10;Walla keeps members booking direct, and WallaPredict flags at-risk members before they cancel - studios recover [X%] of would-be churn.&#10;&#10;Want the teardown?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One more thing, {{first_name}}: it&#39;s not just the bill. Every full-price member ClassPass converts to a cheaper drop-in is margin off your top line.&#10;&#10;Walla keeps members booking direct, and WallaPredict flags at-risk members before they cancel - studios recover [X%] of would-be churn.&#10;&#10;Want the teardown?" data-preview="One more thing, Dana: it&#39;s not just the bill. Every full-price member ClassPass converts to a cheaper drop-in is margin off your top line.&#10;&#10;Walla keeps members booking direct, and WallaPredict flags at-risk members before they cancel - studios recover [X%] of would-be churn.&#10;&#10;Want the teardown?">
+                        <p>One more thing, {{first_name}}: it&#39;s not just the bill. Every full-price member ClassPass converts to a cheaper drop-in is margin off your top line.</p><p>Walla keeps members booking direct, and WallaPredict flags at-risk members before they cancel - studios recover [X%] of would-be churn.</p><p>Want the teardown?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: worth a look?&#10;&#10;No need for a call - just reply yes and I&#39;ll send the Mindbody to Walla teardown for {{studio_name}}.&#10;&#10;Should I send it to you, or is there a co-owner or manager who&#39;d want it too?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="worth a look?" data-preview="worth a look?">worth a look?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No need for a call - just reply yes and I&#39;ll send the Mindbody to Walla teardown for {{studio_name}}.&#10;&#10;Should I send it to you, or is there a co-owner or manager who&#39;d want it too?" data-preview="No need for a call - just reply yes and I&#39;ll send the Mindbody to Walla teardown for Riverbend Pilates.&#10;&#10;Should I send it to you, or is there a co-owner or manager who&#39;d want it too?">
+                        <p>No need for a call - just reply yes and I&#39;ll send the Mindbody to Walla teardown for {{studio_name}}.</p><p>Should I send it to you, or is there a co-owner or manager who&#39;d want it too?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Outgrown a Generic Scheduler</strong>
+              <em>Boutique Operating-System Gap Report</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Outgrown a Generic Scheduler steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{studio_name}} booking&#10;&#10;Hi {{first_name}} - saw {{studio_name}} runs booking through {{current_tool}}. Nice and simple to start, but it&#39;s a general scheduler, not a studio system.&#10;&#10;Would it be fair to assume memberships, packages, payroll, and no-show follow-up are all happening in spreadsheets or by hand around it?&#10;&#10;Walla is built for boutique fitness - period. Booking, memberships, packages, payments, payroll, a branded app, and retention live in one place, so you stop duct-taping tools together.&#10;&#10;{{named_studio}} moved off {{current_tool}} and [cut admin by X hrs/week and grew memberships X%].&#10;&#10;Want a free Gap Report showing what {{current_tool}} is costing {{studio_name}} in no-shows and manual admin? Reply &quot;Y&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{studio_name}} booking" data-preview="Riverbend Pilates booking">{{studio_name}} booking</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}} - saw {{studio_name}} runs booking through {{current_tool}}. Nice and simple to start, but it&#39;s a general scheduler, not a studio system.&#10;&#10;Would it be fair to assume memberships, packages, payroll, and no-show follow-up are all happening in spreadsheets or by hand around it?&#10;&#10;Walla is built for boutique fitness - period. Booking, memberships, packages, payments, payroll, a branded app, and retention live in one place, so you stop duct-taping tools together.&#10;&#10;{{named_studio}} moved off {{current_tool}} and [cut admin by X hrs/week and grew memberships X%].&#10;&#10;Want a free Gap Report showing what {{current_tool}} is costing {{studio_name}} in no-shows and manual admin? Reply &quot;Y&quot;." data-preview="Hi Dana - saw Riverbend Pilates runs booking through Vagaro. Nice and simple to start, but it&#39;s a general scheduler, not a studio system.&#10;&#10;Would it be fair to assume memberships, packages, payroll, and no-show follow-up are all happening in spreadsheets or by hand around it?&#10;&#10;Walla is built for boutique fitness - period. Booking, memberships, packages, payments, payroll, a branded app, and retention live in one place, so you stop duct-taping tools together.&#10;&#10;Motivate Movement moved off Vagaro and [cut admin by X hrs/week and grew memberships X%].&#10;&#10;Want a free Gap Report showing what Vagaro is costing Riverbend Pilates in no-shows and manual admin? Reply &quot;Y&quot;.">
+                        <p>Hi {{first_name}} - saw {{studio_name}} runs booking through {{current_tool}}. Nice and simple to start, but it&#39;s a general scheduler, not a studio system.</p><p>Would it be fair to assume memberships, packages, payroll, and no-show follow-up are all happening in spreadsheets or by hand around it?</p><p>Walla is built for boutique fitness - period. Booking, memberships, packages, payments, payroll, a branded app, and retention live in one place, so you stop duct-taping tools together.</p><p>{{named_studio}} moved off {{current_tool}} and [cut admin by X hrs/week and grew memberships X%].</p><p>Want a free Gap Report showing what {{current_tool}} is costing {{studio_name}} in no-shows and manual admin? Reply &quot;Y&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Quick follow-up, {{first_name}} - the hidden cost of a generic scheduler is your hours: chasing payments, rebuilding packages, manual reminders.&#10;&#10;Walla automates all of it, and setup is handled for you in ~4 weeks.&#10;&#10;Want the Gap Report?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Quick follow-up, {{first_name}} - the hidden cost of a generic scheduler is your hours: chasing payments, rebuilding packages, manual reminders.&#10;&#10;Walla automates all of it, and setup is handled for you in ~4 weeks.&#10;&#10;Want the Gap Report?" data-preview="Quick follow-up, Dana - the hidden cost of a generic scheduler is your hours: chasing payments, rebuilding packages, manual reminders.&#10;&#10;Walla automates all of it, and setup is handled for you in ~4 weeks.&#10;&#10;Want the Gap Report?">
+                        <p>Quick follow-up, {{first_name}} - the hidden cost of a generic scheduler is your hours: chasing payments, rebuilding packages, manual reminders.</p><p>Walla automates all of it, and setup is handled for you in ~4 weeks.</p><p>Want the Gap Report?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: should I send this over?&#10;&#10;No call needed - reply yes and I&#39;ll send the Gap Report for {{studio_name}}.&#10;&#10;You, or whoever runs the front desk?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="should I send this over?" data-preview="should I send this over?">should I send this over?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed - reply yes and I&#39;ll send the Gap Report for {{studio_name}}.&#10;&#10;You, or whoever runs the front desk?" data-preview="No call needed - reply yes and I&#39;ll send the Gap Report for Riverbend Pilates.&#10;&#10;You, or whoever runs the front desk?">
+                        <p>No call needed - reply yes and I&#39;ll send the Gap Report for {{studio_name}}.</p><p>You, or whoever runs the front desk?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Modern-Tool Retention Gap</strong>
+              <em>Retention Teardown (WallaPredict projection)</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Modern-Tool Retention Gap steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{studio_name}} + {{current_tool}}&#10;&#10;Hi {{first_name}} - {{studio_name}} is clearly dialed in; I saw you&#39;re running {{current_tool}}. Solid platform.&#10;&#10;But would it be fair to assume retention is still mostly manual - you find out a member&#39;s gone once they&#39;ve already cancelled, not before?&#10;&#10;That&#39;s the one thing Walla does differently: WallaPredict flags at-risk members early so you can win them back, plus hands-on support and straightforward per-location pricing - and we move you over without the migration being your problem.&#10;&#10;{{named_studio}} switched from {{current_tool}} and [recovered X at-risk members / cut churn X%] in the first [timeframe].&#10;&#10;Want a quick {{current_tool}} to Walla retention teardown for {{studio_name}}? Reply &quot;Y&quot; and it&#39;s yours.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{studio_name}} + {{current_tool}}" data-preview="Riverbend Pilates + Vagaro">{{studio_name}} + {{current_tool}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}} - {{studio_name}} is clearly dialed in; I saw you&#39;re running {{current_tool}}. Solid platform.&#10;&#10;But would it be fair to assume retention is still mostly manual - you find out a member&#39;s gone once they&#39;ve already cancelled, not before?&#10;&#10;That&#39;s the one thing Walla does differently: WallaPredict flags at-risk members early so you can win them back, plus hands-on support and straightforward per-location pricing - and we move you over without the migration being your problem.&#10;&#10;{{named_studio}} switched from {{current_tool}} and [recovered X at-risk members / cut churn X%] in the first [timeframe].&#10;&#10;Want a quick {{current_tool}} to Walla retention teardown for {{studio_name}}? Reply &quot;Y&quot; and it&#39;s yours." data-preview="Hi Dana - Riverbend Pilates is clearly dialed in; I saw you&#39;re running Vagaro. Solid platform.&#10;&#10;But would it be fair to assume retention is still mostly manual - you find out a member&#39;s gone once they&#39;ve already cancelled, not before?&#10;&#10;That&#39;s the one thing Walla does differently: WallaPredict flags at-risk members early so you can win them back, plus hands-on support and straightforward per-location pricing - and we move you over without the migration being your problem.&#10;&#10;Motivate Movement switched from Vagaro and [recovered X at-risk members / cut churn X%] in the first [timeframe].&#10;&#10;Want a quick Vagaro to Walla retention teardown for Riverbend Pilates? Reply &quot;Y&quot; and it&#39;s yours.">
+                        <p>Hi {{first_name}} - {{studio_name}} is clearly dialed in; I saw you&#39;re running {{current_tool}}. Solid platform.</p><p>But would it be fair to assume retention is still mostly manual - you find out a member&#39;s gone once they&#39;ve already cancelled, not before?</p><p>That&#39;s the one thing Walla does differently: WallaPredict flags at-risk members early so you can win them back, plus hands-on support and straightforward per-location pricing - and we move you over without the migration being your problem.</p><p>{{named_studio}} switched from {{current_tool}} and [recovered X at-risk members / cut churn X%] in the first [timeframe].</p><p>Want a quick {{current_tool}} to Walla retention teardown for {{studio_name}}? Reply &quot;Y&quot; and it&#39;s yours.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Following up, {{first_name}} - if you&#39;re multi-location, {{current_tool}}&#39;s per-site cost usually climbs faster than Walla&#39;s, and you get unified reporting across every studio.&#10;&#10;Happy to put real numbers next to your setup in the teardown. Want it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Following up, {{first_name}} - if you&#39;re multi-location, {{current_tool}}&#39;s per-site cost usually climbs faster than Walla&#39;s, and you get unified reporting across every studio.&#10;&#10;Happy to put real numbers next to your setup in the teardown. Want it?" data-preview="Following up, Dana - if you&#39;re multi-location, Vagaro&#39;s per-site cost usually climbs faster than Walla&#39;s, and you get unified reporting across every studio.&#10;&#10;Happy to put real numbers next to your setup in the teardown. Want it?">
+                        <p>Following up, {{first_name}} - if you&#39;re multi-location, {{current_tool}}&#39;s per-site cost usually climbs faster than Walla&#39;s, and you get unified reporting across every studio.</p><p>Happy to put real numbers next to your setup in the teardown. Want it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: retention teardown?&#10;&#10;No call - just reply yes and I&#39;ll send the retention teardown for {{studio_name}}.&#10;&#10;Send to you or a co-owner?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="retention teardown?" data-preview="retention teardown?">retention teardown?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call - just reply yes and I&#39;ll send the retention teardown for {{studio_name}}.&#10;&#10;Send to you or a co-owner?" data-preview="No call - just reply yes and I&#39;ll send the retention teardown for Riverbend Pilates.&#10;&#10;Send to you or a co-owner?">
+                        <p>No call - just reply yes and I&#39;ll send the retention teardown for {{studio_name}}.</p><p>Send to you or a co-owner?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 - Catch-all (No System)</strong>
+              <em>Studio Launch Kit</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 - Catch-all (No System) steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: booking at {{studio_name}}&#10;&#10;Hi {{first_name}} - love what you&#39;re building at {{studio_name}}. I noticed booking a {{vertical}} class means calling or DMing you rather than booking online.&#10;&#10;Would it be fair to assume you&#39;re losing a few would-be members after hours, and that memberships and payments are all tracked by hand?&#10;&#10;Walla gives you a real studio system - online booking, memberships, payments, and your own branded app - built only for boutique fitness, with a specialist setting it all up so you&#39;re live in about 4 weeks.&#10;&#10;{{named_studio}} went from manual booking to [X new online bookings / $X in the first month] after switching on Walla.&#10;&#10;Want a free Studio Launch Kit - the exact go-live plan for {{studio_name}}? Reply &quot;Y&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="booking at {{studio_name}}" data-preview="booking at Riverbend Pilates">booking at {{studio_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}} - love what you&#39;re building at {{studio_name}}. I noticed booking a {{vertical}} class means calling or DMing you rather than booking online.&#10;&#10;Would it be fair to assume you&#39;re losing a few would-be members after hours, and that memberships and payments are all tracked by hand?&#10;&#10;Walla gives you a real studio system - online booking, memberships, payments, and your own branded app - built only for boutique fitness, with a specialist setting it all up so you&#39;re live in about 4 weeks.&#10;&#10;{{named_studio}} went from manual booking to [X new online bookings / $X in the first month] after switching on Walla.&#10;&#10;Want a free Studio Launch Kit - the exact go-live plan for {{studio_name}}? Reply &quot;Y&quot;." data-preview="Hi Dana - love what you&#39;re building at Riverbend Pilates. I noticed booking a pilates class means calling or DMing you rather than booking online.&#10;&#10;Would it be fair to assume you&#39;re losing a few would-be members after hours, and that memberships and payments are all tracked by hand?&#10;&#10;Walla gives you a real studio system - online booking, memberships, payments, and your own branded app - built only for boutique fitness, with a specialist setting it all up so you&#39;re live in about 4 weeks.&#10;&#10;Motivate Movement went from manual booking to [X new online bookings / $X in the first month] after switching on Walla.&#10;&#10;Want a free Studio Launch Kit - the exact go-live plan for Riverbend Pilates? Reply &quot;Y&quot;.">
+                        <p>Hi {{first_name}} - love what you&#39;re building at {{studio_name}}. I noticed booking a {{vertical}} class means calling or DMing you rather than booking online.</p><p>Would it be fair to assume you&#39;re losing a few would-be members after hours, and that memberships and payments are all tracked by hand?</p><p>Walla gives you a real studio system - online booking, memberships, payments, and your own branded app - built only for boutique fitness, with a specialist setting it all up so you&#39;re live in about 4 weeks.</p><p>{{named_studio}} went from manual booking to [X new online bookings / $X in the first month] after switching on Walla.</p><p>Want a free Studio Launch Kit - the exact go-live plan for {{studio_name}}? Reply &quot;Y&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Quick one, {{first_name}} - most of the bookings you&#39;re missing happen when you&#39;re teaching or asleep. Online booking captures them automatically.&#10;&#10;Want the Launch Kit so you can see how fast it comes together?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Quick one, {{first_name}} - most of the bookings you&#39;re missing happen when you&#39;re teaching or asleep. Online booking captures them automatically.&#10;&#10;Want the Launch Kit so you can see how fast it comes together?" data-preview="Quick one, Dana - most of the bookings you&#39;re missing happen when you&#39;re teaching or asleep. Online booking captures them automatically.&#10;&#10;Want the Launch Kit so you can see how fast it comes together?">
+                        <p>Quick one, {{first_name}} - most of the bookings you&#39;re missing happen when you&#39;re teaching or asleep. Online booking captures them automatically.</p><p>Want the Launch Kit so you can see how fast it comes together?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: launch kit for {{studio_name}}?&#10;&#10;No call needed - reply yes and I&#39;ll send the Studio Launch Kit built for {{studio_name}}.&#10;&#10;You&#39;re the right person, or should I loop someone else in?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="launch kit for {{studio_name}}?" data-preview="launch kit for Riverbend Pilates?">launch kit for {{studio_name}}?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed - reply yes and I&#39;ll send the Studio Launch Kit built for {{studio_name}}.&#10;&#10;You&#39;re the right person, or should I loop someone else in?" data-preview="No call needed - reply yes and I&#39;ll send the Studio Launch Kit built for Riverbend Pilates.&#10;&#10;You&#39;re the right person, or should I loop someone else in?">
+                        <p>No call needed - reply yes and I&#39;ll send the Studio Launch Kit built for {{studio_name}}.</p><p>You&#39;re the right person, or should I loop someone else in?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">Launch</p>
+      <h2>Launch plan &amp; metrics</h2>
+      <p class="takeaway">Prove it on Mindbody, then rinse the process down the cascade.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Phase 1 - Tier 1 (Mindbody): highest intent, sharpest pain, huge TAM. Launch here to prove the motion fast, with two Day-0 copy variants (teardown offer vs. ClassPass-cannibalization angle).</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Phase 2 - Tier 2 (generic schedulers): sharp &#39;you&#39;ve outgrown this&#39; pain, low switching cost. Lead with the &#39;Built for boutique fitness. Period.&#39; wedge.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Phase 3 - Tier 3 (modern boutique tools): softer takedown; lead with WallaPredict retention.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Phase 4 - Tier 4 (no system): largest and coldest; broad first-system pitch at volume with the softest CTA.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Layer the side campaigns (new openings, ClassPass mining, Mindbody moments) once Tier 1 is posting at target.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacts</strong>
+                <span>Perfect - scale this tier hard</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good - let it run</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450-500</strong>
+                <span>Borderline - test a copy variant (swap the lead magnet or first-line angle)</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or &lt;1% reply after 1,500 sends</strong>
+                <span>Cut and rework the tier</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a working session</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dana","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Riverbend Pilates","pilates","Vagaro","Motivate Movement"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
