@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Phone Finder — GTMx</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF8F3; --bg-paper:#FFFFFF; --bg-sunk:#F2EFE7;
+  --ink:#14130F; --ink-2:#3A3833; --ink-3:#6E6B63; --ink-4:#A8A49A;
+  --line:rgba(20,19,15,.09); --line-2:rgba(20,19,15,.16);
+  --accent:#E8552B; --accent-deep:#B33C18; --accent-soft:rgba(232,85,43,.10); --accent-ink:#fff;
+  --ok:#2f7d4f; --ok-soft:rgba(47,125,79,.08);
+  --r-sm:6px; --r-md:10px; --r-lg:16px; --r-xl:24px;
+  --e:cubic-bezier(.22,.61,.36,1);
+  --sans:"Figtree",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --serif:"Instrument Serif","Times New Roman",serif;
+  --mono:"Geist Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+.wrap{max-width:760px;margin:0 auto;padding:40px 28px 96px}
+header .brand{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-weight:500;font-size:14px;letter-spacing:.02em}
+header .dot{width:9px;height:9px;border-radius:50%;background:var(--accent)}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(38px,7vw,60px);line-height:1.02;letter-spacing:-.01em;margin:22px 0 10px}
+h1 em{font-style:italic;color:var(--accent)}
+.lede{color:var(--ink-2);font-size:18px;max-width:52ch;margin:0}
+.credits{float:right;font-family:var(--mono);font-size:12px;color:var(--ink-3);background:var(--bg-paper);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+.credits b{color:var(--ink)}
+
+.card{background:var(--bg-paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;margin-top:26px;box-shadow:0 1px 0 var(--line)}
+.step{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.step .n{display:inline-grid;place-items:center;width:22px;height:22px;border:1px solid var(--accent);border-radius:50%;font-size:11px}
+label.fld{display:block;font-size:13px;color:var(--ink-3);margin-bottom:7px}
+.inrow{display:flex;gap:10px;flex-wrap:wrap}
+input[type=text],input[type=password]{flex:1;min-width:220px;font-family:var(--mono);font-size:14px;color:var(--ink);background:var(--bg-sunk);border:1px solid var(--line);border-radius:var(--r-md);padding:13px 14px;outline:none;transition:border-color .15s var(--e),background .15s var(--e)}
+input:focus{border-color:var(--accent);background:var(--bg-paper)}
+button{font-family:var(--sans);font-weight:600;font-size:14px;border-radius:var(--r-md);padding:13px 18px;cursor:pointer;border:1px solid transparent;transition:transform .12s var(--e),background .15s var(--e),opacity .15s}
+button:active{transform:translateY(1px)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.btn-primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent-deep)}
+.btn-primary:hover:not(:disabled){background:var(--accent-deep)}
+.btn-ghost{background:var(--bg-paper);color:var(--ink);border-color:var(--line-2)}
+.btn-ghost:hover:not(:disabled){background:var(--bg-sunk)}
+.cost{font-family:var(--mono);font-size:11px;color:var(--ink-4);margin-top:9px}
+.hint{font-size:13px;color:var(--ink-3);margin:8px 0 0}
+
+.hide{display:none}
+.result{margin-top:16px;border-top:1px dashed var(--line-2);padding-top:16px}
+.who{display:flex;justify-content:space-between;gap:14px;align-items:baseline;flex-wrap:wrap}
+.who .nm{font-family:var(--serif);font-size:26px;line-height:1.1}
+.who .co{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+.ttl{color:var(--ink-2);font-size:14px;margin-top:2px}
+.phones{margin-top:14px;display:flex;flex-direction:column;gap:9px}
+.phone{display:flex;align-items:center;gap:12px;background:var(--ok-soft);border:1px solid rgba(47,125,79,.18);border-radius:var(--r-md);padding:13px 15px}
+.phone .num{font-family:var(--mono);font-size:19px;font-weight:500;letter-spacing:.01em}
+.phone .cp{margin-left:auto;font-size:12px;color:var(--ink-3);background:var(--bg-paper);border:1px solid var(--line);border-radius:var(--r-sm);padding:5px 9px;cursor:pointer}
+.miss{background:var(--accent-soft);border:1px solid rgba(232,85,43,.18);border-radius:var(--r-md);padding:13px 15px;font-size:14px;color:var(--ink-2)}
+.miss b{color:var(--ink)}
+
+.team{margin-top:12px}
+.tmember{display:flex;align-items:center;gap:13px;padding:12px 4px;border-bottom:1px solid var(--line)}
+.tmember:last-child{border-bottom:none}
+.tmember input{width:18px;height:18px;accent-color:var(--accent);flex:none}
+.tmember .info{flex:1;min-width:0}
+.tmember .tn{font-weight:600;font-size:15px}
+.tmember .tt{font-size:13px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tmember .out{font-family:var(--mono);font-size:14px;text-align:right;flex:none;min-width:130px}
+.tmember .out.g{color:var(--ok)}
+.tmember .out.m{color:var(--ink-4)}
+.teamactions{display:flex;gap:10px;align-items:center;margin-top:16px;flex-wrap:wrap}
+.sel-count{font-family:var(--mono);font-size:12px;color:var(--ink-3);margin-left:auto}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:-2px;margin-right:7px}
+.btn-ghost .spinner{border:2px solid var(--line-2);border-top-color:var(--ink)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.err{color:var(--accent-deep);font-size:13px;margin-top:10px}
+footer{margin-top:40px;font-family:var(--mono);font-size:11px;color:var(--ink-4);line-height:1.7}
+
+/* gate */
+.gate{max-width:420px;margin:16vh auto 0;text-align:center}
+.gate .lock{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.gate h2{font-family:var(--serif);font-weight:400;font-size:40px;margin:14px 0 6px}
+.gate p{color:var(--ink-3);font-size:14px;margin:0 0 22px}
+.gate .inrow{justify-content:center}
+</style>
+</head>
+<body>
+
+<!-- PASSWORD GATE -->
+<div class="wrap" id="gate">
+  <div class="gate">
+    <div class="lock">GTMx · Private tool</div>
+    <h2>Phone Finder</h2>
+    <p>Enter the access password to continue.</p>
+    <div class="inrow">
+      <input type="password" id="pw" placeholder="password" autocomplete="off" spellcheck="false">
+      <button class="btn-primary" id="unlock" onclick="unlock()">Unlock</button>
+    </div>
+    <div class="err hide" id="gateErr"></div>
+  </div>
+</div>
+
+<!-- TOOL -->
+<div class="wrap hide" id="app">
+  <header>
+    <span class="credits" id="credits">credits <b>…</b></span>
+    <div class="brand"><span class="dot"></span> GTMx · Phone Finder</div>
+    <h1>Turn a LinkedIn URL<br>into a <em>mobile number</em>.</h1>
+    <p class="lede">Paste a profile. If they're not reachable, walk their team and pull the next best number — one click at a time.</p>
+  </header>
+
+  <section class="card">
+    <div class="step"><span class="n">1</span> Person</div>
+    <label class="fld" for="li">LinkedIn profile URL</label>
+    <div class="inrow">
+      <input type="text" id="li" placeholder="https://www.linkedin.com/in/username" spellcheck="false">
+      <button class="btn-primary" id="go" onclick="findPhone()">Find phone</button>
+    </div>
+    <div class="cost">Resolves the person (0.5 cr) → looks up mobile (5 cr per number found, 0 on miss).</div>
+    <div class="err hide" id="err1"></div>
+
+    <div class="result hide" id="res1">
+      <div class="who">
+        <div><div class="nm" id="pName">—</div><div class="ttl" id="pTitle"></div></div>
+        <div class="co" id="pCo"></div>
+      </div>
+      <div class="phones" id="pPhones"></div>
+    </div>
+  </section>
+
+  <section class="card hide" id="card2">
+    <div class="step"><span class="n">2</span> Their team</div>
+    <p class="hint" id="teamHint">Pull colleagues at the same company, then select who to look up.</p>
+    <div class="inrow" style="margin-top:12px">
+      <button class="btn-ghost" id="loadTeam" onclick="loadTeam()">Load team</button>
+      <select id="teamSize" style="font-family:var(--mono);font-size:13px;border:1px solid var(--line);border-radius:var(--r-md);padding:0 12px;background:var(--bg-sunk)">
+        <option value="10">up to 10</option>
+        <option value="15" selected>up to 15</option>
+        <option value="25">up to 25</option>
+        <option value="40">up to 40</option>
+      </select>
+    </div>
+    <div class="cost">Team pull costs 0.5 cr per person returned.</div>
+    <div class="err hide" id="err2"></div>
+
+    <div class="hide" id="teamWrap">
+      <div class="team" id="team"></div>
+      <div class="teamactions">
+        <button class="btn-primary" id="getNums" onclick="getSelected()">Get selected numbers</button>
+        <button class="btn-ghost" onclick="toggleAll()">Select all</button>
+        <span class="sel-count" id="selCount">0 selected</span>
+      </div>
+      <div class="cost">Each selected lookup costs 5 cr if a mobile is found, 0 if not.</div>
+    </div>
+  </section>
+
+  <footer>
+    Data: AI Ark developer API · billed to your token (server-side) · password enforced by the backend<br>
+    Your token is never exposed to this page.
+  </footer>
+</div>
+
+<script>
+const API='/api/phone-finder';
+let PASS=sessionStorage.getItem('pf_pass')||'';
+let CURRENT=null;
+const $=id=>document.getElementById(id);
+const esc=s=>(s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const spin=t=>'<span class="spinner"></span>'+t;
+function showErr(id,m){const e=$(id);e.textContent=m;e.classList.remove('hide');}
+function clearErr(id){$(id).classList.add('hide');}
+
+async function call(body){
+  const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','x-pf-pass':PASS},body:JSON.stringify(body)});
+  if(r.status===401){throw new Error('unauthorized');}
+  if(r.status===429){throw new Error('too many attempts — wait a few minutes');}
+  return r.json();
+}
+async function refreshCredits(){
+  try{const d=await call({action:'credits'});
+    $('credits').innerHTML='credits <b>'+(d.credits==null?'—':Math.round(d.credits).toLocaleString())+'</b>';}catch(e){}
+}
+
+async function unlock(){
+  clearErr('gateErr');
+  const pw=$('pw').value.trim();
+  if(!pw){showErr('gateErr','Enter the password.');return;}
+  const btn=$('unlock');btn.disabled=true;btn.innerHTML=spin('Checking…');
+  PASS=pw;
+  try{
+    const d=await call({action:'auth'});
+    if(d&&d.ok){
+      sessionStorage.setItem('pf_pass',pw);
+      $('gate').classList.add('hide');$('app').classList.remove('hide');
+      refreshCredits();
+    }else{showErr('gateErr','Wrong password.');PASS='';}
+  }catch(e){
+    PASS='';
+    showErr('gateErr',e.message==='unauthorized'?'Wrong password.':('Error: '+e.message));
+  }finally{btn.disabled=false;btn.textContent='Unlock';}
+}
+
+function phoneRow(num){
+  const clean=esc(num).replace(/'/g,'');
+  return '<div class="phone"><span class="num">'+esc(num)+'</span>'+
+    '<span class="cp" onclick="navigator.clipboard.writeText(\''+clean+'\');this.textContent=\'copied\'">copy</span></div>';
+}
+
+async function findPhone(){
+  const li=$('li').value.trim();
+  clearErr('err1');
+  if(!/linkedin\.com\/in\//i.test(li)){showErr('err1','Enter a full LinkedIn profile URL (…/in/username).');return;}
+  const btn=$('go');btn.disabled=true;btn.innerHTML=spin('Resolving…');
+  $('res1').classList.add('hide');$('card2').classList.add('hide');
+  try{
+    const look=await call({action:'lookup',linkedin:li});
+    if(look.error){showErr('err1',look.error);return;}
+    if(!look.found){showErr('err1','No profile found in AI Ark for that URL. Double-check the handle.');return;}
+    CURRENT=look.person;
+    $('pName').textContent=CURRENT.name||'Unknown';
+    $('pTitle').textContent=CURRENT.title||'';
+    $('pCo').innerHTML=CURRENT.company_name?('@ '+esc(CURRENT.company_name)):'';
+    $('pPhones').innerHTML='<div class="miss">'+spin('Looking up mobile…')+'</div>';
+    $('res1').classList.remove('hide');
+
+    btn.innerHTML=spin('Finding number…');
+    const ph=await call({action:'phone',linkedin:CURRENT.linkedin||li});
+    refreshCredits();
+    if(ph.phones&&ph.phones.length){
+      $('pPhones').innerHTML=ph.phones.map(phoneRow).join('');
+    }else{
+      $('pPhones').innerHTML='<div class="miss"><b>No mobile on file'+
+        (CURRENT.name?(' for '+esc(CURRENT.name)):'')+'.</b> Try someone else on their team below.</div>';
+    }
+    setupTeam();
+  }catch(e){showErr('err1','Request failed: '+e.message);}
+  finally{btn.disabled=false;btn.textContent='Find phone';}
+}
+
+function setupTeam(){
+  $('card2').classList.remove('hide');
+  $('teamWrap').classList.add('hide');$('team').innerHTML='';
+  const has=!!(CURRENT.company_linkedin||CURRENT.company_domain);
+  $('teamHint').innerHTML=CURRENT.company_name
+    ? 'Pull colleagues at <b>'+esc(CURRENT.company_name)+'</b>, then select who to look up.'
+    : 'Pull colleagues at the same company, then select who to look up.';
+  if(!has)$('teamHint').innerHTML+=' <span style="color:var(--ink-4)">(no company on this profile — can\'t pull team)</span>';
+  $('loadTeam').disabled=!has;
+}
+
+async function loadTeam(){
+  clearErr('err2');
+  const btn=$('loadTeam');btn.disabled=true;btn.innerHTML=spin('Loading…');
+  try{
+    const d=await call({action:'team',company_linkedin:CURRENT.company_linkedin,
+      company_domain:CURRENT.company_domain,exclude:CURRENT.linkedin,size:parseInt($('teamSize').value,10)});
+    refreshCredits();
+    if(d.error){showErr('err2',d.error);return;}
+    const ppl=d.people||[];
+    if(!ppl.length){showErr('err2','No teammates found in AI Ark for this company.');return;}
+    $('team').innerHTML=ppl.map((p,i)=>{
+      const li=esc(p.linkedin||'');
+      return '<label class="tmember"><input type="checkbox" data-li="'+li+'" data-i="'+i+'" onchange="updateCount()">'+
+        '<span class="info"><span class="tn">'+esc(p.name||'Unknown')+'</span>'+
+        '<div class="tt">'+esc(p.title||'')+'</div></span>'+
+        '<span class="out m" id="out'+i+'">—</span></label>';
+    }).join('');
+    $('teamWrap').classList.remove('hide');
+    updateCount();
+  }catch(e){showErr('err2','Request failed: '+e.message);}
+  finally{btn.disabled=false;btn.textContent='Load team';}
+}
+
+function boxes(){return [...document.querySelectorAll('#team input[type=checkbox]')];}
+function updateCount(){const n=boxes().filter(b=>b.checked).length;$('selCount').textContent=n+' selected';$('getNums').disabled=!n;}
+function toggleAll(){const bs=boxes();const all=bs.every(b=>b.checked);bs.forEach(b=>b.checked=!all);updateCount();}
+
+async function getSelected(){
+  const sel=boxes().filter(b=>b.checked);
+  if(!sel.length)return;
+  const btn=$('getNums');btn.disabled=true;btn.innerHTML=spin('Looking up '+sel.length+'…');
+  for(const b of sel){
+    const i=b.dataset.i,li=b.dataset.li,out=$('out'+i);
+    out.className='out m';out.innerHTML='<span class="spinner" style="border-color:var(--line-2);border-top-color:var(--ink)"></span>';
+    try{
+      const ph=await call({action:'phone',linkedin:li});
+      refreshCredits();
+      if(ph.phones&&ph.phones.length){
+        out.className='out g';
+        out.innerHTML=ph.phones.map(n=>'<span style="cursor:pointer" title="click to copy" onclick="navigator.clipboard.writeText(\''+esc(n).replace(/\x27/g,'')+'\')">'+esc(n)+'</span>').join('<br>');
+      }else{out.className='out m';out.textContent='no mobile';}
+    }catch(e){out.className='out m';out.textContent='error';}
+    b.checked=false;
+  }
+  updateCount();
+  btn.disabled=false;btn.textContent='Get selected numbers';
+}
+
+// auto-unlock if we already have a valid session password
+(async function(){
+  $('pw').addEventListener('keydown',e=>{if(e.key==='Enter')unlock();});
+  $('li')&&$('li').addEventListener('keydown',e=>{if(e.key==='Enter')findPhone();});
+  if(PASS){
+    try{const d=await call({action:'auth'});
+      if(d&&d.ok){$('gate').classList.add('hide');$('app').classList.remove('hide');refreshCredits();}
+      else{sessionStorage.removeItem('pf_pass');PASS='';}
+    }catch(e){sessionStorage.removeItem('pf_pass');PASS='';}
+  }
+})();
+</script>
+</body>
+</html>
