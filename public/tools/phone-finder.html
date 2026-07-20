@@ -199,6 +199,11 @@ async function unlock(){
       sessionStorage.setItem('pf_pass',pw);
       $('gate').classList.add('hide');$('app').classList.remove('hide');
       refreshCredits();
+    }else if(d&&d.error){
+      PASS='';
+      showErr('gateErr',/not configured/i.test(d.error)
+        ? 'Backend not set up yet: set APP_PASSWORD and AI_ARK_TOKEN in Vercel, then redeploy.'
+        : d.error);
     }else{showErr('gateErr','Wrong password.');PASS='';}
   }catch(e){
     PASS='';
