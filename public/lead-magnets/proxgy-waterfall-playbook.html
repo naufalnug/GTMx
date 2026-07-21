@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proxgy - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-07-21</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Proxgy</p>
+          <h1>Your Proxgy waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">One signal, five tiers, full-market coverage. Built once, fed forever.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Every industrial employer with a hazardous, distributed field workforce pays an invisible tax: incidents no one saw coming, compliance built by hand, and remote sites no one can watch. The whole program routes on one question, how visibly is a company already under pressure to fix field-worker safety, and how far have they already committed to solving it?</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a Strategy Call</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>35</strong>
+          <span>Patents filed</span>
+        </div>
+        <div class="metric-card">
+          <strong>Zone-C</strong>
+          <span>Type-1 certified SmartHat</span>
+        </div>
+        <div class="metric-card">
+          <strong>6</strong>
+          <span>Marquee clients incl. Adani &amp; Airtel</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>A connected-worker platform for blue-collar field workforces: the SmartHat IoT safety helmet plus a SaaS layer that turns every hard hat into a live safety-and-productivity sensor.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal</p></div><div><span>02</span><p>The waterfall</p></div><div><span>03</span><p>The tiers</p></div><div><span>04</span><p>The campaigns</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>01</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>02</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>03</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>04</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>05</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>06</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="01">
+        
+    <div class="section-head">
+      <p class="eyebrow">01</p>
+      <h2>The signal</h2>
+      <p class="takeaway">One observable axis: how visibly a company is under pressure to fix field-worker safety, and how far they&#39;ve committed.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>A reportable incident is the single sharpest buying signal in this market, it&#39;s the one moment a safety leader is actively looking for what Proxgy sells.</p></div><div class="reason-card"><span>02</span><p>A published LTIFR in a sustainability report is a board-visible KPI the buyer is personally measured on, and it&#39;s collected by hand today.</p></div><div class="reason-card"><span>03</span><p>A posted HSE / Safety Officer requisition is fully reliable proof that safety budget is being spent right now.</p></div><div class="reason-card"><span>04</span><p>One signal ladder covers oil &amp; gas, mining, construction, power, logistics and manufacturing, so the strategy is built once and never rebuilt.</p></div>
+            </div>
+            <div class="field-cloud"><span>industrial_field_workforce</span><span>recent_incident</span><span>hiring_hse_role</span><span>published_safety_kpi</span><span>site_count</span><span>vertical</span><span>buyer_role</span><span>contact_secondary</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>News + regulatory scrape</h3><p>Industrial employers with a recent incident or citation, DGMS, Factory Inspectorate, OSHA, HSE RIDDOR, GCC labour ministries and trade press (Tier 1).</p></div><div class="source-card"><span>02</span><h3>LinkedIn Jobs / Naukri / Indeed</h3><p>Companies hiring field and plant workers, live HSE / Safety Officer / Fire-and-Safety requisitions (Tier 2), plus EHS and operations contacts.</p></div><div class="source-card"><span>03</span><h3>ESG / BRSR / sustainability report scrape</h3><p>Listed and large industrial employers, and their published LTIFR / TRIFR / zero-harm KPIs (Tier 3).</p></div><div class="source-card"><span>04</span><h3>Company locations / plants page scrape</h3><p>Multi-site operators and their site, plant or rig count (Tier 4).</p></div><div class="source-card"><span>05</span><h3>Apollo + LinkedIn Sales Navigator</h3><p>Industrial employers by vertical and headcount (200+ field workers), firmographics and EHS / Ops / Digital-Transformation contacts.</p></div><div class="source-card"><span>06</span><h3>Industry directories (FICCI/CII, D&amp;B, GCC contractor registries)</h3><p>The large-employer TAM base by vertical and headcount for the catch-all.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="02">
+        
+    <div class="section-head">
+      <p class="eyebrow">02</p>
+      <h2>The waterfall</h2>
+      <p class="takeaway">Every account tested top-to-bottom, routed to the first tier it matches.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF industrial_field_workforce is FALSE</span>
+          <strong>Not in market</strong>
+          <em>No hazardous vertical or field workforce means no safety gap to close. Not in the TAM.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF recent_incident is not none (last ~12 months)</span>
+          <strong>Tier 1, Prevent the Next One</strong>
+          <em>An incident just happened, so there is acute, board-level, time-boxed pressure to prove it won&#39;t recur.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF else, hiring_hse_role is TRUE</span>
+          <strong>Tier 2, Equip the Team You&#39;re Building</strong>
+          <em>Safety budget is being spent now, but on headcount, one officer still can&#39;t watch every worker.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF else, published_safety_kpi is not none</span>
+          <strong>Tier 3, Your KPI Is Manual and Lagging</strong>
+          <em>They measure safety and answer to a board on it, but the number is compiled by hand, weeks late.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF else, site_count is 5 or more</span>
+          <strong>Tier 4, You Can&#39;t Be at Every Site</strong>
+          <em>Crews spread across sites means no inspector can be everywhere, so hazards surface late and travel bleeds.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="5">
+          <span class="route-rule__num">06</span>
+          <span class="route-rule__if">IF else (field workforce, no sharper signal)</span>
+          <strong>Catch-all, Blue-Collar Has No Tools</strong>
+          <em>The structural gap Proxgy was built for. Broadest, softest, catches everything above missed.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF industrial_field_workforce is FALSE -&gt; Not in market (No hazardous vertical or field workforce means no safety gap to close. Not in the TAM.)&#10;2. IF recent_incident is not none (last ~12 months) -&gt; Tier 1, Prevent the Next One (An incident just happened, so there is acute, board-level, time-boxed pressure to prove it won&#39;t recur.)&#10;3. IF else, hiring_hse_role is TRUE -&gt; Tier 2, Equip the Team You&#39;re Building (Safety budget is being spent now, but on headcount, one officer still can&#39;t watch every worker.)&#10;4. IF else, published_safety_kpi is not none -&gt; Tier 3, Your KPI Is Manual and Lagging (They measure safety and answer to a board on it, but the number is compiled by hand, weeks late.)&#10;5. IF else, site_count is 5 or more -&gt; Tier 4, You Can&#39;t Be at Every Site (Crews spread across sites means no inspector can be everywhere, so hazards surface late and travel bleeds.)&#10;6. IF else (field workforce, no sharper signal) -&gt; Catch-all, Blue-Collar Has No Tools (The structural gap Proxgy was built for. Broadest, softest, catches everything above missed.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF industrial_field_workforce is FALSE -&gt; Not in market (No hazardous vertical or field workforce means no safety gap to close. Not in the TAM.)
+2. IF recent_incident is not none (last ~12 months) -&gt; Tier 1, Prevent the Next One (An incident just happened, so there is acute, board-level, time-boxed pressure to prove it won&#39;t recur.)
+3. IF else, hiring_hse_role is TRUE -&gt; Tier 2, Equip the Team You&#39;re Building (Safety budget is being spent now, but on headcount, one officer still can&#39;t watch every worker.)
+4. IF else, published_safety_kpi is not none -&gt; Tier 3, Your KPI Is Manual and Lagging (They measure safety and answer to a board on it, but the number is compiled by hand, weeks late.)
+5. IF else, site_count is 5 or more -&gt; Tier 4, You Can&#39;t Be at Every Site (Crews spread across sites means no inspector can be everywhere, so hazards surface late and travel bleeds.)
+6. IF else (field workforce, no sharper signal) -&gt; Catch-all, Blue-Collar Has No Tools (The structural gap Proxgy was built for. Broadest, softest, catches everything above missed.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="03">
+        
+    <div class="section-head">
+      <p class="eyebrow">03</p>
+      <h2>The tiers</h2>
+      <p class="takeaway">Five tiers, strongest intent to weakest, exclusive routing, full coverage.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Catch-all</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">~5% TAM</span>
+          </div>
+          <h3>Tier 1: Prevent the Next One</h3>
+          <p>Field workforce AND a reportable incident or regulatory citation in roughly the last 12 months.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>An incident just happened. There is acute, board-level, time-boxed pressure to prove it can&#39;t recur, when today no one actually sees a hazard until after it&#39;s hurt someone.</dd></div>
+              <div><dt>Offer</dt><dd>Connected-Worker Safety Audit, where your current process would have caught vs. missed an incident like this</dd></div>
+              <div><dt>Source</dt><dd>News + regulatory scrape</dd></div>
+              <div><dt>Reply density</dt><dd>Highest, an incident is the one moment an EHS leader is actively looking for what Proxgy sells.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">~12% TAM</span>
+          </div>
+          <h3>Tier 2: Equip the Team You&#39;re Building</h3>
+          <p>NOT Tier 1 AND a live HSE / Safety Officer / Fire-and-Safety requisition.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They&#39;re spending safety budget now, but on headcount. One officer still can&#39;t physically watch dozens of workers across a site, they&#39;re scaling people, not visibility.</dd></div>
+              <div><dt>Offer</dt><dd>Field Safety Coverage Calculator, officers x sites x workers = how many workers go unmonitored per shift</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Jobs / Naukri / Indeed</dd></div>
+              <div><dt>Reply density</dt><dd>High, safety budget is confirmed and being spent right now.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">~15% TAM</span>
+          </div>
+          <h3>Tier 3: Your KPI Is Manual and Lagging</h3>
+          <p>NOT Tier 1/2 AND a published LTIFR / TRIFR / zero-harm KPI in an ESG or BRSR report.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They already measure safety and answer to a board on it, but the number is compiled by hand, weeks late. It&#39;s a lagging record of harm already done, not a lever to prevent it.</dd></div>
+              <div><dt>Offer</dt><dd>Safety-Reporting Automation Teardown, EHS hours spent compiling LTIFR and BRSR by hand vs. auto-generated</dd></div>
+              <div><dt>Source</dt><dd>ESG / BRSR report scrape</dd></div>
+              <div><dt>Reply density</dt><dd>Solid, board-visible KPI pain the buyer is personally measured on.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">~20% TAM</span>
+          </div>
+          <h3>Tier 4: You Can&#39;t Be at Every Site</h3>
+          <p>NOT Tier 1/2/3 AND a locations page listing 5 or more sites, plants, rigs or projects.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Crews are spread across plants, rigs and project sites. No senior inspector can be everywhere at once, so hazards and quality issues surface late and travel budgets bleed.</dd></div>
+              <div><dt>Offer</dt><dd>Remote-Inspection ROI Model, travel days and inspection hours saved across your sites</dd></div>
+              <div><dt>Source</dt><dd>Locations page scrape</dd></div>
+              <div><dt>Reply density</dt><dd>Moderate, broad and observable but a softer pain than an active incident.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">~48% TAM</span>
+          </div>
+          <h3>Catch-all: Blue-Collar Has No Tools</h3>
+          <p>All remaining industrial employers with a field workforce and no sharper signal.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Structural: white-collar staff have Slack, Teams and Zoom, the field workforce has nothing, so it runs blind, disconnected and reactive by default.</dd></div>
+              <div><dt>Offer</dt><dd>Blue-Collar Connectivity Benchmark, where your field workforce sits vs. industry peers on connected-worker adoption</dd></div>
+              <div><dt>Source</dt><dd>Apollo + directories</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest, softest, the volume tier that guarantees full coverage.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="04">
+        
+    <div class="section-head">
+      <p class="eyebrow">04</p>
+      <h2>The campaigns</h2>
+      <p class="takeaway">One experiment per tier, each anchored to a trigger we can see.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Catch-all</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>The Incident Response</h3>
+          <p>An incident just put safety on the board agenda. SmartHat catches the next hazard before it lands and logs a time-stamped record for the inspectorate and the insurer.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Industrial employers with a reportable incident or citation in the last 12 months, surfaced from regulators and trade press.</dd></div>
+            <div><dt>AI strategy</dt><dd>Open with the specific incident and site, acknowledge the day it was, then reframe the board pressure around real-time detection and a defensible evidence trail.</dd></div>
+            <div><dt>Value</dt><dd>Prevent harm + defensible compliance</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>The Force Multiplier</h3>
+          <p>You&#39;re hiring safety headcount, but people don&#39;t scale like sensors. SmartHat and Sleefe let one supervisor see 10x more workers at once.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Companies with a live HSE / Safety Officer / Fire-and-Safety requisition and no incident in the last 12 months.</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the open role, then poke at the ceiling on headcount, one officer still can&#39;t watch dozens of workers across a site at once.</dd></div>
+            <div><dt>Value</dt><dd>Wider coverage, no linear headcount</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>The Reporting Automation</h3>
+          <p>You publish an LTIFR and compile it by hand. Proxgy&#39;s SaaS layer generates it automatically and turns near-miss patterns into alerts before they become the next injury.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Employers publishing an LTIFR, TRIFR or zero-harm pledge in an ESG or BRSR report, no incident or open safety req.</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with their own published KPI, then quantify the manual hours behind it and reframe the number from a lagging scorecard to a proactive early-warning system.</dd></div>
+            <div><dt>Value</dt><dd>Save time + prevent proactively</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>The Remote Eyes</h3>
+          <p>You can&#39;t be at every site at once. Sleefe and SmartHat put a remote expert&#39;s eyes on any location in 30 seconds, no flight required.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Multi-site operators with 5 or more plants, rigs or projects and no sharper signal.</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with the observable site count, then frame the travel cost and the late-surfacing hazards of crews no inspector can reach.</dd></div>
+            <div><dt>Value</dt><dd>Save travel + faster response</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Broad</span>
+          </div>
+          <h3>The Connectivity Gap</h3>
+          <p>Your office staff have Slack and Teams; your field workforce has a hard hat and a radio. Proxgy is the connected-worker stack that closes the gap.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Industrial employers with a field workforce and no incident, open safety req, published KPI or multi-site signal.</dd></div>
+            <div><dt>AI strategy</dt><dd>Soft, low-pressure, name the white-collar vs. blue-collar tooling gap and offer a benchmark rather than a pitch.</dd></div>
+            <div><dt>Value</dt><dd>Modernize the field</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="05">
+        
+    <div class="section-head">
+      <p class="eyebrow">05</p>
+      <h2>The copy</h2>
+      <p class="takeaway">Three-email sequences per tier: notice, poke, proof, low-effort CTA.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company}}</span><span>{{incident_type}}</span><span>{{site}}</span><span>{{hse_role_title}}</span><span>{{report_name}}</span><span>{{kpi_value}}</span><span>{{site_count}}</span><span>{{region}}</span><span>{{contact_secondary}}</span><span>{{sender_name}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company}}, {{incident_type}}, {{site}}, {{hse_role_title}}, {{report_name}}, {{kpi_value}}, {{site_count}}, {{region}}, {{contact_secondary}}, {{sender_name}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Prevent the Next One</strong>
+              <em>Connected-Worker Safety Audit</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Prevent the Next One steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} + the {{incident_type}} at {{site}}&#10;&#10;Hi {{first_name}},&#10;&#10;I saw the report on the {{incident_type}} at {{company}}&#39;s {{site}} last month, genuinely sorry, those are the worst days in this job.&#10;&#10;But would it be fair to assume the hardest part now is proving to the board it can&#39;t happen again, when today nobody actually sees a hazard until after it&#39;s hurt someone?&#10;&#10;That&#39;s the gap we close at Proxgy. Our SmartHat is a certified safety helmet that detects falls, gas and environment in real time, fires an instant SOS, and auto-logs a time-stamped, geolocated evidence trail, so the next hazard gets caught before it lands and every response is defensible. It&#39;s deployed with teams like Adani and backed by 35 patents.&#10;&#10;Reply Y and I&#39;ll send a Connected-Worker Safety Audit, a one-pager mapping exactly where your current process would have caught vs. missed an incident like this. No call needed.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} + the {{incident_type}} at {{site}}" data-preview="Meridian Infra + the scaffold fall at Dahej plant">{{company}} + the {{incident_type}} at {{site}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;I saw the report on the {{incident_type}} at {{company}}&#39;s {{site}} last month, genuinely sorry, those are the worst days in this job.&#10;&#10;But would it be fair to assume the hardest part now is proving to the board it can&#39;t happen again, when today nobody actually sees a hazard until after it&#39;s hurt someone?&#10;&#10;That&#39;s the gap we close at Proxgy. Our SmartHat is a certified safety helmet that detects falls, gas and environment in real time, fires an instant SOS, and auto-logs a time-stamped, geolocated evidence trail, so the next hazard gets caught before it lands and every response is defensible. It&#39;s deployed with teams like Adani and backed by 35 patents.&#10;&#10;Reply Y and I&#39;ll send a Connected-Worker Safety Audit, a one-pager mapping exactly where your current process would have caught vs. missed an incident like this. No call needed.&#10;&#10;{{sender_name}}" data-preview="Hi Rajesh,&#10;&#10;I saw the report on the scaffold fall at Meridian Infra&#39;s Dahej plant last month, genuinely sorry, those are the worst days in this job.&#10;&#10;But would it be fair to assume the hardest part now is proving to the board it can&#39;t happen again, when today nobody actually sees a hazard until after it&#39;s hurt someone?&#10;&#10;That&#39;s the gap we close at Proxgy. Our SmartHat is a certified safety helmet that detects falls, gas and environment in real time, fires an instant SOS, and auto-logs a time-stamped, geolocated evidence trail, so the next hazard gets caught before it lands and every response is defensible. It&#39;s deployed with teams like Adani and backed by 35 patents.&#10;&#10;Reply Y and I&#39;ll send a Connected-Worker Safety Audit, a one-pager mapping exactly where your current process would have caught vs. missed an incident like this. No call needed.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>I saw the report on the {{incident_type}} at {{company}}&#39;s {{site}} last month, genuinely sorry, those are the worst days in this job.</p><p>But would it be fair to assume the hardest part now is proving to the board it can&#39;t happen again, when today nobody actually sees a hazard until after it&#39;s hurt someone?</p><p>That&#39;s the gap we close at Proxgy. Our SmartHat is a certified safety helmet that detects falls, gas and environment in real time, fires an instant SOS, and auto-logs a time-stamped, geolocated evidence trail, so the next hazard gets caught before it lands and every response is defensible. It&#39;s deployed with teams like Adani and backed by 35 patents.</p><p>Reply Y and I&#39;ll send a Connected-Worker Safety Audit, a one-pager mapping exactly where your current process would have caught vs. missed an incident like this. No call needed.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Quick follow-up, {{first_name}},&#10;&#10;Beyond preventing the next one, the auto-logged trail matters for what comes after an incident: instead of reconstructing what happened from memory and paper, you have the geotagged, time-stamped record ready for the inspectorate and the insurer. That&#39;s the difference between a defensible position and an exposed one.&#10;&#10;Want the audit? One word back and it&#39;s yours.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Quick follow-up, {{first_name}},&#10;&#10;Beyond preventing the next one, the auto-logged trail matters for what comes after an incident: instead of reconstructing what happened from memory and paper, you have the geotagged, time-stamped record ready for the inspectorate and the insurer. That&#39;s the difference between a defensible position and an exposed one.&#10;&#10;Want the audit? One word back and it&#39;s yours." data-preview="Quick follow-up, Rajesh,&#10;&#10;Beyond preventing the next one, the auto-logged trail matters for what comes after an incident: instead of reconstructing what happened from memory and paper, you have the geotagged, time-stamped record ready for the inspectorate and the insurer. That&#39;s the difference between a defensible position and an exposed one.&#10;&#10;Want the audit? One word back and it&#39;s yours.">
+                        <p>Quick follow-up, {{first_name}},</p><p>Beyond preventing the next one, the auto-logged trail matters for what comes after an incident: instead of reconstructing what happened from memory and paper, you have the geotagged, time-stamped record ready for the inspectorate and the insurer. That&#39;s the difference between a defensible position and an exposed one.</p><p>Want the audit? One word back and it&#39;s yours.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} field safety&#10;&#10;{{first_name}}, no need for a call. Just reply yes and I&#39;ll send the Safety Audit one-pager.&#10;&#10;Should I send it to you, or is {{contact_secondary}} the right person on EHS?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} field safety" data-preview="Meridian Infra field safety">{{company}} field safety</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no need for a call. Just reply yes and I&#39;ll send the Safety Audit one-pager.&#10;&#10;Should I send it to you, or is {{contact_secondary}} the right person on EHS?" data-preview="Rajesh, no need for a call. Just reply yes and I&#39;ll send the Safety Audit one-pager.&#10;&#10;Should I send it to you, or is your Head of Operations the right person on EHS?">
+                        <p>{{first_name}}, no need for a call. Just reply yes and I&#39;ll send the Safety Audit one-pager.</p><p>Should I send it to you, or is {{contact_secondary}} the right person on EHS?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Equip the Team You&#39;re Building</strong>
+              <em>Field Safety Coverage Calculator</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Equip the Team You&#39;re Building steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your open {{hse_role_title}} role&#10;&#10;Hi {{first_name}},&#10;&#10;Saw {{company}} is hiring a {{hse_role_title}}, so safety headcount is clearly a priority right now.&#10;&#10;But would it be fair to assume that even with the hire, one officer still can&#39;t physically watch dozens of workers spread across the {{site}} at once?&#10;&#10;That&#39;s where we come in at Proxgy. SmartHat cameras and our Sleefe device put live eyes on every crew, so a single supervisor can see 10x more workers at once, your new hire starts with a force-multiplier instead of a clipboard and a radio. Deployed with teams like Adani and Airtel.&#10;&#10;Reply Y and I&#39;ll send a Field Safety Coverage Calculator, officers x sites x workers = how many people currently go unwatched on every shift. No call needed.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your open {{hse_role_title}} role" data-preview="your open Safety Officer role">your open {{hse_role_title}} role</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Saw {{company}} is hiring a {{hse_role_title}}, so safety headcount is clearly a priority right now.&#10;&#10;But would it be fair to assume that even with the hire, one officer still can&#39;t physically watch dozens of workers spread across the {{site}} at once?&#10;&#10;That&#39;s where we come in at Proxgy. SmartHat cameras and our Sleefe device put live eyes on every crew, so a single supervisor can see 10x more workers at once, your new hire starts with a force-multiplier instead of a clipboard and a radio. Deployed with teams like Adani and Airtel.&#10;&#10;Reply Y and I&#39;ll send a Field Safety Coverage Calculator, officers x sites x workers = how many people currently go unwatched on every shift. No call needed.&#10;&#10;{{sender_name}}" data-preview="Hi Rajesh,&#10;&#10;Saw Meridian Infra is hiring a Safety Officer, so safety headcount is clearly a priority right now.&#10;&#10;But would it be fair to assume that even with the hire, one officer still can&#39;t physically watch dozens of workers spread across the Dahej plant at once?&#10;&#10;That&#39;s where we come in at Proxgy. SmartHat cameras and our Sleefe device put live eyes on every crew, so a single supervisor can see 10x more workers at once, your new hire starts with a force-multiplier instead of a clipboard and a radio. Deployed with teams like Adani and Airtel.&#10;&#10;Reply Y and I&#39;ll send a Field Safety Coverage Calculator, officers x sites x workers = how many people currently go unwatched on every shift. No call needed.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>Saw {{company}} is hiring a {{hse_role_title}}, so safety headcount is clearly a priority right now.</p><p>But would it be fair to assume that even with the hire, one officer still can&#39;t physically watch dozens of workers spread across the {{site}} at once?</p><p>That&#39;s where we come in at Proxgy. SmartHat cameras and our Sleefe device put live eyes on every crew, so a single supervisor can see 10x more workers at once, your new hire starts with a force-multiplier instead of a clipboard and a radio. Deployed with teams like Adani and Airtel.</p><p>Reply Y and I&#39;ll send a Field Safety Coverage Calculator, officers x sites x workers = how many people currently go unwatched on every shift. No call needed.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, one more angle.&#10;&#10;The other reason teams do this: instead of hiring an officer per site as you scale, one supervisor covers several sites remotely. You get wider coverage without a linear headcount bill, the tech scales, the payroll doesn&#39;t have to.&#10;&#10;Still happy to send the coverage calculator, just say the word.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, one more angle.&#10;&#10;The other reason teams do this: instead of hiring an officer per site as you scale, one supervisor covers several sites remotely. You get wider coverage without a linear headcount bill, the tech scales, the payroll doesn&#39;t have to.&#10;&#10;Still happy to send the coverage calculator, just say the word." data-preview="Rajesh, one more angle.&#10;&#10;The other reason teams do this: instead of hiring an officer per site as you scale, one supervisor covers several sites remotely. You get wider coverage without a linear headcount bill, the tech scales, the payroll doesn&#39;t have to.&#10;&#10;Still happy to send the coverage calculator, just say the word.">
+                        <p>{{first_name}}, one more angle.</p><p>The other reason teams do this: instead of hiring an officer per site as you scale, one supervisor covers several sites remotely. You get wider coverage without a linear headcount bill, the tech scales, the payroll doesn&#39;t have to.</p><p>Still happy to send the coverage calculator, just say the word.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: field safety coverage at {{company}}&#10;&#10;{{first_name}}, no call needed. Reply yes and I&#39;ll send the coverage calculator for your sites.&#10;&#10;Should this go to you or whoever owns EHS at {{company}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="field safety coverage at {{company}}" data-preview="field safety coverage at Meridian Infra">field safety coverage at {{company}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed. Reply yes and I&#39;ll send the coverage calculator for your sites.&#10;&#10;Should this go to you or whoever owns EHS at {{company}}?" data-preview="Rajesh, no call needed. Reply yes and I&#39;ll send the coverage calculator for your sites.&#10;&#10;Should this go to you or whoever owns EHS at Meridian Infra?">
+                        <p>{{first_name}}, no call needed. Reply yes and I&#39;ll send the coverage calculator for your sites.</p><p>Should this go to you or whoever owns EHS at {{company}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Your KPI Is Manual and Lagging</strong>
+              <em>Safety-Reporting Automation Teardown</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Your KPI Is Manual and Lagging steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}}&#39;s LTIFR&#10;&#10;Hi {{first_name}},&#10;&#10;I was reading {{company}}&#39;s {{report_name}} and saw you publish an LTIFR of {{kpi_value}}, you clearly measure safety seriously and answer to the board on it.&#10;&#10;But would it be fair to assume that number is stitched together by hand, weeks after the fact, a lagging record of harm already done, rather than something you can act on before it happens?&#10;&#10;That&#39;s exactly what our SaaS layer changes at Proxgy. SmartHat feeds the platform automatically, so safety reports, geolocation logs and incident timelines generate themselves, a manual, backward-looking LTIFR becomes real-time proactive alerts and audit-ready BRSR / ESG reporting. Built with teams like Adani and Bank of India.&#10;&#10;Reply Y and I&#39;ll send a Safety-Reporting Automation Teardown, the EHS hours your team currently burns compiling LTIFR and BRSR by hand vs. auto-generated. No call needed.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}}&#39;s LTIFR" data-preview="Meridian Infra&#39;s LTIFR">{{company}}&#39;s LTIFR</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;I was reading {{company}}&#39;s {{report_name}} and saw you publish an LTIFR of {{kpi_value}}, you clearly measure safety seriously and answer to the board on it.&#10;&#10;But would it be fair to assume that number is stitched together by hand, weeks after the fact, a lagging record of harm already done, rather than something you can act on before it happens?&#10;&#10;That&#39;s exactly what our SaaS layer changes at Proxgy. SmartHat feeds the platform automatically, so safety reports, geolocation logs and incident timelines generate themselves, a manual, backward-looking LTIFR becomes real-time proactive alerts and audit-ready BRSR / ESG reporting. Built with teams like Adani and Bank of India.&#10;&#10;Reply Y and I&#39;ll send a Safety-Reporting Automation Teardown, the EHS hours your team currently burns compiling LTIFR and BRSR by hand vs. auto-generated. No call needed.&#10;&#10;{{sender_name}}" data-preview="Hi Rajesh,&#10;&#10;I was reading Meridian Infra&#39;s FY24 Sustainability Report and saw you publish an LTIFR of 0.42, you clearly measure safety seriously and answer to the board on it.&#10;&#10;But would it be fair to assume that number is stitched together by hand, weeks after the fact, a lagging record of harm already done, rather than something you can act on before it happens?&#10;&#10;That&#39;s exactly what our SaaS layer changes at Proxgy. SmartHat feeds the platform automatically, so safety reports, geolocation logs and incident timelines generate themselves, a manual, backward-looking LTIFR becomes real-time proactive alerts and audit-ready BRSR / ESG reporting. Built with teams like Adani and Bank of India.&#10;&#10;Reply Y and I&#39;ll send a Safety-Reporting Automation Teardown, the EHS hours your team currently burns compiling LTIFR and BRSR by hand vs. auto-generated. No call needed.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>I was reading {{company}}&#39;s {{report_name}} and saw you publish an LTIFR of {{kpi_value}}, you clearly measure safety seriously and answer to the board on it.</p><p>But would it be fair to assume that number is stitched together by hand, weeks after the fact, a lagging record of harm already done, rather than something you can act on before it happens?</p><p>That&#39;s exactly what our SaaS layer changes at Proxgy. SmartHat feeds the platform automatically, so safety reports, geolocation logs and incident timelines generate themselves, a manual, backward-looking LTIFR becomes real-time proactive alerts and audit-ready BRSR / ESG reporting. Built with teams like Adani and Bank of India.</p><p>Reply Y and I&#39;ll send a Safety-Reporting Automation Teardown, the EHS hours your team currently burns compiling LTIFR and BRSR by hand vs. auto-generated. No call needed.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the bigger prize isn&#39;t the hours saved on reporting.&#10;&#10;It&#39;s that once the data flows in live, the number stops being a scorecard and starts being an early-warning system, you see the near-miss patterns before they become the next lost-time injury. The report writes itself; the prevention is the point.&#10;&#10;Want the teardown?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the bigger prize isn&#39;t the hours saved on reporting.&#10;&#10;It&#39;s that once the data flows in live, the number stops being a scorecard and starts being an early-warning system, you see the near-miss patterns before they become the next lost-time injury. The report writes itself; the prevention is the point.&#10;&#10;Want the teardown?" data-preview="Rajesh, the bigger prize isn&#39;t the hours saved on reporting.&#10;&#10;It&#39;s that once the data flows in live, the number stops being a scorecard and starts being an early-warning system, you see the near-miss patterns before they become the next lost-time injury. The report writes itself; the prevention is the point.&#10;&#10;Want the teardown?">
+                        <p>{{first_name}}, the bigger prize isn&#39;t the hours saved on reporting.</p><p>It&#39;s that once the data flows in live, the number stops being a scorecard and starts being an early-warning system, you see the near-miss patterns before they become the next lost-time injury. The report writes itself; the prevention is the point.</p><p>Want the teardown?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: automating safety reporting at {{company}}&#10;&#10;{{first_name}}, no call. Reply yes and I&#39;ll send the reporting teardown.&#10;&#10;Should I send it to you or {{contact_secondary}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="automating safety reporting at {{company}}" data-preview="automating safety reporting at Meridian Infra">automating safety reporting at {{company}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call. Reply yes and I&#39;ll send the reporting teardown.&#10;&#10;Should I send it to you or {{contact_secondary}}?" data-preview="Rajesh, no call. Reply yes and I&#39;ll send the reporting teardown.&#10;&#10;Should I send it to you or your Head of Operations?">
+                        <p>{{first_name}}, no call. Reply yes and I&#39;ll send the reporting teardown.</p><p>Should I send it to you or {{contact_secondary}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 - You Can&#39;t Be at Every Site</strong>
+              <em>Remote-Inspection ROI Model</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 - You Can&#39;t Be at Every Site steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{site_count}} sites, one inspector?&#10;&#10;Hi {{first_name}},&#10;&#10;Saw {{company}} runs {{site_count}} sites across {{region}}, plants, projects and crews spread wide.&#10;&#10;But would it be fair to assume no senior inspector can be at all of them at once, so hazards and quality issues surface late, and half your travel budget goes to just getting eyes on a site?&#10;&#10;That&#39;s the gap Proxgy closes. Sleefe and SmartHat, plus our video-AI layer, put a remote expert&#39;s eyes on any site instantly, remote inspection, live audits and connected crews across every location, no flight required. In use with teams like Adani and Airtel.&#10;&#10;Reply Y and I&#39;ll send a Remote-Inspection ROI Model, travel days and inspection hours saved across {{site_count}} sites. No call needed.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{site_count}} sites, one inspector?" data-preview="11 sites, one inspector?">{{site_count}} sites, one inspector?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Saw {{company}} runs {{site_count}} sites across {{region}}, plants, projects and crews spread wide.&#10;&#10;But would it be fair to assume no senior inspector can be at all of them at once, so hazards and quality issues surface late, and half your travel budget goes to just getting eyes on a site?&#10;&#10;That&#39;s the gap Proxgy closes. Sleefe and SmartHat, plus our video-AI layer, put a remote expert&#39;s eyes on any site instantly, remote inspection, live audits and connected crews across every location, no flight required. In use with teams like Adani and Airtel.&#10;&#10;Reply Y and I&#39;ll send a Remote-Inspection ROI Model, travel days and inspection hours saved across {{site_count}} sites. No call needed.&#10;&#10;{{sender_name}}" data-preview="Hi Rajesh,&#10;&#10;Saw Meridian Infra runs 11 sites across Gujarat &amp; Maharashtra, plants, projects and crews spread wide.&#10;&#10;But would it be fair to assume no senior inspector can be at all of them at once, so hazards and quality issues surface late, and half your travel budget goes to just getting eyes on a site?&#10;&#10;That&#39;s the gap Proxgy closes. Sleefe and SmartHat, plus our video-AI layer, put a remote expert&#39;s eyes on any site instantly, remote inspection, live audits and connected crews across every location, no flight required. In use with teams like Adani and Airtel.&#10;&#10;Reply Y and I&#39;ll send a Remote-Inspection ROI Model, travel days and inspection hours saved across 11 sites. No call needed.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>Saw {{company}} runs {{site_count}} sites across {{region}}, plants, projects and crews spread wide.</p><p>But would it be fair to assume no senior inspector can be at all of them at once, so hazards and quality issues surface late, and half your travel budget goes to just getting eyes on a site?</p><p>That&#39;s the gap Proxgy closes. Sleefe and SmartHat, plus our video-AI layer, put a remote expert&#39;s eyes on any site instantly, remote inspection, live audits and connected crews across every location, no flight required. In use with teams like Adani and Airtel.</p><p>Reply Y and I&#39;ll send a Remote-Inspection ROI Model, travel days and inspection hours saved across {{site_count}} sites. No call needed.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, beyond the travel savings:&#10;&#10;When something goes wrong at a remote site, the expert is a flight away becomes the expert is looking at it in 30 seconds. Faster calls, fewer stoppages, and issues caught while they&#39;re still small.&#10;&#10;Want the ROI model for your {{site_count}} sites?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, beyond the travel savings:&#10;&#10;When something goes wrong at a remote site, the expert is a flight away becomes the expert is looking at it in 30 seconds. Faster calls, fewer stoppages, and issues caught while they&#39;re still small.&#10;&#10;Want the ROI model for your {{site_count}} sites?" data-preview="Rajesh, beyond the travel savings:&#10;&#10;When something goes wrong at a remote site, the expert is a flight away becomes the expert is looking at it in 30 seconds. Faster calls, fewer stoppages, and issues caught while they&#39;re still small.&#10;&#10;Want the ROI model for your 11 sites?">
+                        <p>{{first_name}}, beyond the travel savings:</p><p>When something goes wrong at a remote site, the expert is a flight away becomes the expert is looking at it in 30 seconds. Faster calls, fewer stoppages, and issues caught while they&#39;re still small.</p><p>Want the ROI model for your {{site_count}} sites?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: remote inspection across {{company}}&#10;&#10;{{first_name}}, no call needed. Reply yes and I&#39;ll send the ROI model.&#10;&#10;Should this go to you or whoever owns field operations at {{company}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="remote inspection across {{company}}" data-preview="remote inspection across Meridian Infra">remote inspection across {{company}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed. Reply yes and I&#39;ll send the ROI model.&#10;&#10;Should this go to you or whoever owns field operations at {{company}}?" data-preview="Rajesh, no call needed. Reply yes and I&#39;ll send the ROI model.&#10;&#10;Should this go to you or whoever owns field operations at Meridian Infra?">
+                        <p>{{first_name}}, no call needed. Reply yes and I&#39;ll send the ROI model.</p><p>Should this go to you or whoever owns field operations at {{company}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Catch-all - Blue-Collar Has No Tools</strong>
+              <em>Blue-Collar Connectivity Benchmark</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Catch-all - Blue-Collar Has No Tools steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your field team&#39;s toolkit&#10;&#10;Hi {{first_name}},&#10;&#10;Quick one. Your office staff at {{company}} have Slack, Teams and Zoom. Your field workforce, the people in the actual hazard, have a hard hat and a radio.&#10;&#10;But would it be fair to assume that gap is why field ops still run blind and reactive: problems surface late, safety is after-the-fact, and no one sees a site until they drive to it?&#10;&#10;Proxgy is the connected-worker stack built for blue-collar. SmartHat turns every helmet into a live safety-and-productivity sensor, real-time hazard detection, remote eyes, auto-generated reports. Safe, connected, efficient. Made in India, Shark Tank-backed, 35 patents, trusted by Adani, Airtel and Bank of India.&#10;&#10;Reply Y and I&#39;ll send a Blue-Collar Connectivity Benchmark, where your field workforce sits vs. industry peers on connected-worker adoption. No call needed.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your field team&#39;s toolkit" data-preview="your field team&#39;s toolkit">your field team&#39;s toolkit</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Quick one. Your office staff at {{company}} have Slack, Teams and Zoom. Your field workforce, the people in the actual hazard, have a hard hat and a radio.&#10;&#10;But would it be fair to assume that gap is why field ops still run blind and reactive: problems surface late, safety is after-the-fact, and no one sees a site until they drive to it?&#10;&#10;Proxgy is the connected-worker stack built for blue-collar. SmartHat turns every helmet into a live safety-and-productivity sensor, real-time hazard detection, remote eyes, auto-generated reports. Safe, connected, efficient. Made in India, Shark Tank-backed, 35 patents, trusted by Adani, Airtel and Bank of India.&#10;&#10;Reply Y and I&#39;ll send a Blue-Collar Connectivity Benchmark, where your field workforce sits vs. industry peers on connected-worker adoption. No call needed.&#10;&#10;{{sender_name}}" data-preview="Hi Rajesh,&#10;&#10;Quick one. Your office staff at Meridian Infra have Slack, Teams and Zoom. Your field workforce, the people in the actual hazard, have a hard hat and a radio.&#10;&#10;But would it be fair to assume that gap is why field ops still run blind and reactive: problems surface late, safety is after-the-fact, and no one sees a site until they drive to it?&#10;&#10;Proxgy is the connected-worker stack built for blue-collar. SmartHat turns every helmet into a live safety-and-productivity sensor, real-time hazard detection, remote eyes, auto-generated reports. Safe, connected, efficient. Made in India, Shark Tank-backed, 35 patents, trusted by Adani, Airtel and Bank of India.&#10;&#10;Reply Y and I&#39;ll send a Blue-Collar Connectivity Benchmark, where your field workforce sits vs. industry peers on connected-worker adoption. No call needed.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>Quick one. Your office staff at {{company}} have Slack, Teams and Zoom. Your field workforce, the people in the actual hazard, have a hard hat and a radio.</p><p>But would it be fair to assume that gap is why field ops still run blind and reactive: problems surface late, safety is after-the-fact, and no one sees a site until they drive to it?</p><p>Proxgy is the connected-worker stack built for blue-collar. SmartHat turns every helmet into a live safety-and-productivity sensor, real-time hazard detection, remote eyes, auto-generated reports. Safe, connected, efficient. Made in India, Shark Tank-backed, 35 patents, trusted by Adani, Airtel and Bank of India.</p><p>Reply Y and I&#39;ll send a Blue-Collar Connectivity Benchmark, where your field workforce sits vs. industry peers on connected-worker adoption. No call needed.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, worth adding:&#10;&#10;This isn&#39;t a gadget, it&#39;s the same shift white-collar work made 15 years ago, finally reaching the field. Teams that make it see fewer incidents and more uptime, because the same device that keeps a worker safe also tells you what&#39;s happening on the ground in real time.&#10;&#10;Want the benchmark?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, worth adding:&#10;&#10;This isn&#39;t a gadget, it&#39;s the same shift white-collar work made 15 years ago, finally reaching the field. Teams that make it see fewer incidents and more uptime, because the same device that keeps a worker safe also tells you what&#39;s happening on the ground in real time.&#10;&#10;Want the benchmark?" data-preview="Rajesh, worth adding:&#10;&#10;This isn&#39;t a gadget, it&#39;s the same shift white-collar work made 15 years ago, finally reaching the field. Teams that make it see fewer incidents and more uptime, because the same device that keeps a worker safe also tells you what&#39;s happening on the ground in real time.&#10;&#10;Want the benchmark?">
+                        <p>{{first_name}}, worth adding:</p><p>This isn&#39;t a gadget, it&#39;s the same shift white-collar work made 15 years ago, finally reaching the field. Teams that make it see fewer incidents and more uptime, because the same device that keeps a worker safe also tells you what&#39;s happening on the ground in real time.</p><p>Want the benchmark?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: connected field ops at {{company}}&#10;&#10;{{first_name}}, no call. Reply yes and the benchmark&#39;s on its way.&#10;&#10;Should I send it to you or whoever owns EHS / operations at {{company}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="connected field ops at {{company}}" data-preview="connected field ops at Meridian Infra">connected field ops at {{company}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call. Reply yes and the benchmark&#39;s on its way.&#10;&#10;Should I send it to you or whoever owns EHS / operations at {{company}}?" data-preview="Rajesh, no call. Reply yes and the benchmark&#39;s on its way.&#10;&#10;Should I send it to you or whoever owns EHS / operations at Meridian Infra?">
+                        <p>{{first_name}}, no call. Reply yes and the benchmark&#39;s on its way.</p><p>Should I send it to you or whoever owns EHS / operations at {{company}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="06">
+        
+    <div class="section-head">
+      <p class="eyebrow">06</p>
+      <h2>The launch</h2>
+      <p class="takeaway">Phase-roll from highest intent to highest volume. Add leads forever.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Weeks 1-3: Tier 1 only. 1,500-2,000 contacts. Chaos-test two copies, prevention-led vs. compliance-led. Run the incident scrape near-daily.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Week 3: First read. The chaos-test winner becomes the Tier 1 control.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 3-6: Tier 2 opens. Tier 1 keeps running untouched if it&#39;s at 1-in-300 or better.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Week 6: Cut any tier past 1-in-500. Rework, don&#39;t tinker.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Weeks 6-12: Tiers 3, 4 and the catch-all phase in. Reassess the full cascade at week 12.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Ongoing: the strategy is not rebuilt. The lead agent keeps adding accounts to the same five tiers. Add leads forever.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacts</strong>
+                <span>Perfect. Scale the tier hard.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run untouched.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450-500</strong>
+                <span>Borderline. Test one copy variant, vary the lead magnet first.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or reply rate under 1% after 1,500+ sends</strong>
+                <span>Dead. Cut and rework, don&#39;t tinker.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a Strategy Call</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Rajesh","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Meridian Infra","scaffold fall","Dahej plant","Safety Officer","FY24 Sustainability Report","0\\.42","11","Gujarat & Maharashtra","your Head of Operations","Alex"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
