@@ -1,0 +1,1843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Almabase - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-07-24</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Almabase</p>
+          <h1>Your Almabase waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">One priority-routed cascade that covers every advancement office in the market, built once and added to forever.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Advancement is a public-facing function. The alumni portal, the giving day microsite, the donation form host and the open job req are all indexable from the open web. That means the buying signal is free, checkable on 100% of the market, and it is the pain.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>~16,000</strong>
+          <span>Institutions in the addressable market</span>
+        </div>
+        <div class="metric-card">
+          <strong>~57,000</strong>
+          <span>Advancement contacts at ~4 per account</span>
+        </div>
+        <div class="metric-card">
+          <strong>5 tiers</strong>
+          <span>Exclusive routing, zero TAM left uncovered</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Almabase is an alumni engagement, events and online giving platform that sits on top of Raiser&#39;s Edge NXT, Blackbaud CRM, Salesforce and Ellucian, syncing every engagement action back to the constituent record in real time.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The routing signal</p></div><div><span>02</span><p>The data matrix and routing spec</p></div><div><span>03</span><p>Five tiers, narrow top to wide base</p></div><div><span>04</span><p>Campaign experiments</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>01</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>02</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>03</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>04</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>05</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>06</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="01">
+        
+    <div class="section-head">
+      <p class="eyebrow">01</p>
+      <h2>The routing signal</h2>
+      <p class="takeaway">Route on how the institution currently runs alumni engagement and online giving, read straight off its public web presence. No enrichment spend, no data vendor.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>It is observable on 100% of the market. Alumni portals live on predictable subdomains, giving day microsites publish their totals, donation forms reveal the CRM, and advancement job reqs name it outright.</p></div><div class="reason-card"><span>02</span><p>It maps directly to proven spend. A school on Hivebrite has budget and a renewal date. A school on a third-party giving day has proven it will pay for digital fundraising. A school hiring has an open budget line right now.</p></div><div class="reason-card"><span>03</span><p>The pain is inferable from the trigger, never invented. A separate community platform implies engagement data that never reaches the record. A rented giving day implies a manual reconciliation window afterwards.</p></div><div class="reason-card"><span>04</span><p>It survives the vertical split. Higher ed, K-12 independent schools and healthcare foundations all route through the same five tiers. Institution type is a vocabulary swap, not a second strategy.</p></div>
+            </div>
+            <div class="field-cloud"><span>alumni_platform_detected</span><span>giving_platform_detected</span><span>giving_day_total_raised</span><span>giving_day_donor_count</span><span>giving_day_date</span><span>open_advancement_role</span><span>jd_mentions_crm</span><span>crm_detected</span><span>alumni_directory_gated</span><span>event_tool_detected</span><span>institution_type</span><span>alumni_base_size</span><span>is_almabase_customer</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>IPEDS / NCES bulk download</h3><p>US higher education market: ~3,900 degree-granting Title IV institutions with enrolment, control and sector.</p></div><div class="source-card"><span>02</span><h3>NCES Private School Universe Survey + NAIS + NCEA directories</h3><p>US K-12 schools with a genuine advancement office: ~5,000, with enrolment.</p></div><div class="source-card"><span>03</span><h3>AHP membership + IRS Form 990 hospital foundation filings</h3><p>US healthcare foundation market: ~1,800 accounts.</p></div><div class="source-card"><span>04</span><h3>ISC (UK), CIS, CASE Europe and CASE Asia-Pacific member lists</h3><p>International independent schools and universities: ~3,500 accounts.</p></div><div class="source-card"><span>05</span><h3>Subdomain enumeration + DNS/CNAME on alumni., giving., connect., community., network.</h3><p>Tier 1 signal. Resolves to Hivebrite, Graduway/Gravyty, PeopleGrove, ToucanTech, Anthology Encompass (iModules), 360Alumni, Vaave, AlmaShines.</p></div><div class="source-card"><span>06</span><h3>HTML fingerprint of the alumni and giving pages</h3><p>Tier 1, 2 and 4 signals. Platform badges, form actions, JS bundles and footer credits.</p></div><div class="source-card"><span>07</span><h3>GiveCampus directory, GiveGab/Bonterra, Community Funded, Classy, Donorbox</h3><p>Tier 2 signal, plus public dollars raised, donor count and campaign date for personalisation.</p></div><div class="source-card"><span>08</span><h3>Donation form host detection (Blackbaud NXT, BBOX, Sphere, Salesforce NPSP)</h3><p>Tier 4 signal. Identifies which CRM sits behind the giving page.</p></div><div class="source-card"><span>09</span><h3>HigherEdJobs, CASE Career Central, AFP job board, Indeed, LinkedIn Jobs</h3><p>Tier 3 signal on a rolling 60-day window, with the CRM frequently named in the job description.</p></div><div class="source-card"><span>10</span><h3>LinkedIn Sales Navigator</h3><p>Three to six contacts per account by title, plus tenure and recent role changes.</p></div><div class="source-card"><span>11</span><h3>Almabase footprint detection + client CRM export</h3><p>Suppression. Never contact an existing customer or an open opportunity.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="02">
+        
+    <div class="section-head">
+      <p class="eyebrow">02</p>
+      <h2>The data matrix and routing spec</h2>
+      <p class="takeaway">Eleven sources deliver the market and the signal in one pull. Thirteen fields per account. First match wins, top to bottom.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF is_almabase_customer = TRUE</span>
+          <strong>Suppress</strong>
+          <em>Existing customers and open opportunities never enter the send list. Detected via the Almabase platform footprint plus a CRM export.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF alumni_platform_detected is not none</span>
+          <strong>Tier 1 - Platform Switch</strong>
+          <em>A competitor alumni platform is the strongest possible proof of budget, category belief and a renewal date. It outranks everything below it.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF giving_platform_detected is not in (none, blackbaud-native)</span>
+          <strong>Tier 2 - Giving Day Silo</strong>
+          <em>A third-party giving day proves they will spend on digital fundraising, and the microsite publishes dollars and donor counts for free personalisation.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF open_advancement_role = TRUE and posted within 60 days</span>
+          <strong>Tier 3 - New Headcount</strong>
+          <em>An open req is an open budget line right now. Job descriptions also name the CRM, which hands you the merge field.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF crm_detected is in (renxt, blackbaud-crm, salesforce, ellucian)</span>
+          <strong>Tier 4 - CRM-Rich, Engagement-Poor</strong>
+          <em>They own the system of record but engagement is do-it-yourself. Perfect technical fit, latent pain, no competitor to displace.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="5">
+          <span class="route-rule__num">06</span>
+          <span class="route-rule__if">IF no condition above matched</span>
+          <strong>Tier 5 - Catch-All Peer Benchmark</strong>
+          <em>Everything else with an alumni base and an advancement function. Broadest copy, softest CTA, 100% coverage.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF is_almabase_customer = TRUE -&gt; Suppress (Existing customers and open opportunities never enter the send list. Detected via the Almabase platform footprint plus a CRM export.)&#10;2. IF alumni_platform_detected is not none -&gt; Tier 1 - Platform Switch (A competitor alumni platform is the strongest possible proof of budget, category belief and a renewal date. It outranks everything below it.)&#10;3. IF giving_platform_detected is not in (none, blackbaud-native) -&gt; Tier 2 - Giving Day Silo (A third-party giving day proves they will spend on digital fundraising, and the microsite publishes dollars and donor counts for free personalisation.)&#10;4. IF open_advancement_role = TRUE and posted within 60 days -&gt; Tier 3 - New Headcount (An open req is an open budget line right now. Job descriptions also name the CRM, which hands you the merge field.)&#10;5. IF crm_detected is in (renxt, blackbaud-crm, salesforce, ellucian) -&gt; Tier 4 - CRM-Rich, Engagement-Poor (They own the system of record but engagement is do-it-yourself. Perfect technical fit, latent pain, no competitor to displace.)&#10;6. IF no condition above matched -&gt; Tier 5 - Catch-All Peer Benchmark (Everything else with an alumni base and an advancement function. Broadest copy, softest CTA, 100% coverage.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF is_almabase_customer = TRUE -&gt; Suppress (Existing customers and open opportunities never enter the send list. Detected via the Almabase platform footprint plus a CRM export.)
+2. IF alumni_platform_detected is not none -&gt; Tier 1 - Platform Switch (A competitor alumni platform is the strongest possible proof of budget, category belief and a renewal date. It outranks everything below it.)
+3. IF giving_platform_detected is not in (none, blackbaud-native) -&gt; Tier 2 - Giving Day Silo (A third-party giving day proves they will spend on digital fundraising, and the microsite publishes dollars and donor counts for free personalisation.)
+4. IF open_advancement_role = TRUE and posted within 60 days -&gt; Tier 3 - New Headcount (An open req is an open budget line right now. Job descriptions also name the CRM, which hands you the merge field.)
+5. IF crm_detected is in (renxt, blackbaud-crm, salesforce, ellucian) -&gt; Tier 4 - CRM-Rich, Engagement-Poor (They own the system of record but engagement is do-it-yourself. Perfect technical fit, latent pain, no competitor to displace.)
+6. IF no condition above matched -&gt; Tier 5 - Catch-All Peer Benchmark (Everything else with an alumni base and an advancement function. Broadest copy, softest CTA, 100% coverage.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="03">
+        
+    <div class="section-head">
+      <p class="eyebrow">03</p>
+      <h2>Five tiers, narrow top to wide base</h2>
+      <p class="takeaway">Tier 1 is proven competitor spend. Tier 5 is anyone with an alumni base and no way to measure engagement. Every tier clears the 1,500-contact launch floor.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">12% TAM</span>
+          </div>
+          <h3>Tier 1: Platform Switch</h3>
+          <p>A competitor alumni platform detected on the alumni or community subdomain: Hivebrite, Graduway/Gravyty, PeopleGrove, ToucanTech, Anthology Encompass, 360Alumni, Vaave or AlmaShines.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They already bought the category, but the community tool is a silo. RSVPs, profile updates, job board activity and email opens never write back to the constituent record, so gift officers work from stale data and the platform is hard to defend at renewal.</dd></div>
+              <div><dt>Offer</dt><dd>Engagement-to-CRM Gap Teardown</dd></div>
+              <div><dt>Source</dt><dd>Subdomain enumeration + DNS/CNAME + HTML fingerprint</dd></div>
+              <div><dt>Reply density</dt><dd>Highest. Proven budget, proven category belief, a renewal date to aim at.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">15% TAM</span>
+          </div>
+          <h3>Tier 2: Giving Day Silo</h3>
+          <p>Giving day or online giving running on a third-party platform: GiveCampus, GiveGab/Bonterra, Community Funded, Classy or Donorbox.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The giving day is rented once a year. Donors are acquired into someone else&#39;s platform, gifts come back as a CSV, and reconciliation consumes the two weeks afterwards, which is exactly the window in which a thank-you converts into a second gift.</dd></div>
+              <div><dt>Offer</dt><dd>Giving Day Yield Report</dd></div>
+              <div><dt>Source</dt><dd>GiveCampus directory + giving day microsite scrape (public totals and donor counts)</dd></div>
+              <div><dt>Reply density</dt><dd>High. The richest personalisation in the strategy, because the dollars and donor counts are already public.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">8% TAM</span>
+          </div>
+          <h3>Tier 3: New Headcount</h3>
+          <p>An advancement requisition posted in the last 60 days: Alumni Engagement, Annual Giving, Advancement Services or Advancement Operations.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They are solving a capacity problem with a person. That hire&#39;s first year is consumed by data hygiene, event logistics and chasing address updates rather than the relationship work the job description is written around.</dd></div>
+              <div><dt>Offer</dt><dd>First-90-Days Capacity Model</dd></div>
+              <div><dt>Source</dt><dd>HigherEdJobs, CASE Career Central, AFP job board, LinkedIn Jobs</dd></div>
+              <div><dt>Reply density</dt><dd>Good, and self-refilling. A rolling window that reloads every month as new reqs post.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">20% TAM</span>
+          </div>
+          <h3>Tier 4: CRM-Rich, Engagement-Poor</h3>
+          <p>Raiser&#39;s Edge NXT, Blackbaud CRM, Salesforce or Ellucian detected, with no community platform, no third-party giving day and no open requisition.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They own the system of record but engagement is do-it-yourself: a static alumni page, a login-gated directory that is only as good as the last import, Eventbrite for events, Mailchimp for news. Records decay quietly and nobody owns the decay.</dd></div>
+              <div><dt>Offer</dt><dd>Alumni Data Decay Snapshot</dd></div>
+              <div><dt>Source</dt><dd>Donation form host detection + alumni page scrape</dd></div>
+              <div><dt>Reply density</dt><dd>Moderate. Perfect technical fit, latent pain, no competitor to displace. The largest qualified tier.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">45% TAM</span>
+          </div>
+          <h3>Tier 5: Catch-All Peer Benchmark</h3>
+          <p>Everything else in the addressable market with an alumni base and an advancement function.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Engagement is happening, but nobody can say whether it is working. There is no baseline, no peer comparison and no number to take to the board or the head of school.</dd></div>
+              <div><dt>Offer</dt><dd>Alumni Engagement Benchmark</dd></div>
+              <div><dt>Source</dt><dd>Institution registry: IPEDS, PSS, NAIS, ISC, AHP</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest per contact, largest by volume. Broadest copy, softest ask.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="04">
+        
+    <div class="section-head">
+      <p class="eyebrow">04</p>
+      <h2>Campaign experiments</h2>
+      <p class="takeaway">Angles layered on top of the cascade, each anchored to a trigger the tier already gives you. Plus five orthogonal side campaigns that sit alongside it.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Silo teardown (engagement data never reaches the CRM)</h3>
+          <p>The flagship Tier 1 angle. Two named systems that do not talk to each other, and the consequence stated as a question rather than a claim. Proof: Illinois Tech, 123,000+ engagement activities in one month.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>alumni_platform_detected is not none AND crm_detected is not none</dd></div>
+            <div><dt>AI strategy</dt><dd>Resolve the alumni subdomain, fingerprint the platform, then fingerprint the donation form host to name their CRM. Open by naming both systems in one sentence so the research is undeniable.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Niche</span>
+          </div>
+          <h3>Renewal-window takedown</h3>
+          <p>Same message as the silo teardown, sent when the buyer actually has a decision in front of them. Requires a price anchor from Almabase to land hardest.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Competitor platform detected AND platform first observed 22 to 34 months ago (Wayback Machine first-capture date)</dd></div>
+            <div><dt>AI strategy</dt><dd>Use the Internet Archive first-capture of the alumni subdomain to estimate contract start, then time the send into the 90 days before a likely renewal anniversary.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Segmentation loss (annual giving angle)</h3>
+          <p>The persona swap on an identical trigger. Proof: Thomas Aquinas College, 45% donor participation, $142K+ from 650+ donors on one record.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Competitor platform detected AND institution runs an annual fund appeal</dd></div>
+            <div><dt>AI strategy</dt><dd>Route the same trigger to the Annual Giving director rather than Alumni Relations, and reframe the silo as a segmentation problem rather than a data problem.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Public giving day numbers, benchmarked</h3>
+          <p>The single most personalised campaign in the strategy, because both numbers are public and neither required an enrichment credit.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>giving_platform_detected is not in (none, blackbaud-native) AND giving_day_total_raised is populated</dd></div>
+            <div><dt>AI strategy</dt><dd>Scrape the giving day microsite for dollars raised and donor count, then compare against peer institutions of the same alumni-base size. Lead with their own number.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Reconciliation lag (the fortnight after)</h3>
+          <p>Timing is the whole campaign. Proof: MSUM, $750K+ raised and gift reconciliation cut from four weeks to four days.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Third-party giving day detected AND crm_detected is not none</dd></div>
+            <div><dt>AI strategy</dt><dd>Anchor on the two weeks after the day, when the export gets matched by hand. Send 3 to 5 weeks after their published giving day date, while the memory is fresh.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Rented donors (retention angle)</h3>
+          <p>For schools whose giving day looks like a win. The pitch is not that it failed, it is that it did not compound. Proof: Elon, $3.6M on its leanest day in twelve years.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Third-party giving day detected AND donor_count is high relative to alumni_base</dd></div>
+            <div><dt>AI strategy</dt><dd>Reframe a successful giving day as an acquisition problem: those donors live in someone else&#39;s platform and never reach the constituent record.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>The req is the trigger</h3>
+          <p>The rolling tier. Reloads monthly with no strategy rebuild, and the JD hands you two merge fields for free.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>open_advancement_role = TRUE, posted within 60 days</dd></div>
+            <div><dt>AI strategy</dt><dd>Parse the job description for the CRM named in the requirements, then quote the role title and the CRM back in the first line.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Cheaper than the second hire</h3>
+          <p>The money rotation on the headcount tier. Proof: The Master&#39;s Seminary, 37% of the database updated in 45 days with no added headcount.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Open req AND institution has posted two or more advancement roles in 12 months</dd></div>
+            <div><dt>AI strategy</dt><dd>Target repeat hirers. The pattern proves capacity pain is structural rather than a one-off backfill.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Before the start date</h3>
+          <p>A narrow, high-relevance window that most outbound misses entirely. Anchors the First-90-Days Capacity Model directly to a real person&#39;s onboarding.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Req closed or filled within the last 30 days</dd></div>
+            <div><dt>AI strategy</dt><dd>Catch the hiring manager in the gap between offer accepted and day one, when they are actively planning the new person&#39;s first quarter.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Focused</span>
+          </div>
+          <h3>Record decay by cohort</h3>
+          <p>The largest qualified tier. Decay is invisible until it is quantified, which is exactly what the magnet does. Proof: UTEP, 3x alumni membership.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>crm_detected is not none AND alumni_directory_gated = TRUE AND no competitor platform</dd></div>
+            <div><dt>AI strategy</dt><dd>Estimate stale-record share by class-year cohort from alumni_base_size, then lead with the number rather than the concept.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>The DIY events stack</h3>
+          <p>A second entry point into the same tier for institutions where the directory looks fine but events are clearly bolted on. Proof: 21 events in 10 months, under ten minutes of setup, 4.6 out of 5 registration rating.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>event_tool_detected in (eventbrite, google-forms, wufoo) AND crm_detected is not none</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the actual event tool found on their events page. Frame the pitch around registration data that never reaches the CRM the school already pays for.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Focused</span>
+          </div>
+          <h3>Blackbaud-native framing</h3>
+          <p>The warmest available framing for the biggest tier, and the reason a stated implementation timeline is worth asking Almabase for.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>crm_detected = renxt or blackbaud-crm</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with the partnership rather than the product. TrueSync is native to the NXT instance they already run, which removes most of the perceived migration risk.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Peer cohort benchmark</h3>
+          <p>The catch-all. The magnet mirrors a real Almabase product feature (programme reports with peer comparison), which makes the offer credible rather than a pretext.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>No tier above matched. Segmented by institution_type and alumni_base_size band.</dd></div>
+            <div><dt>AI strategy</dt><dd>Group institutions into peer cohorts by type and alumni base, then offer the cohort report as the entire value of the email.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>The board question</h3>
+          <p>Copy variant for the catch-all where the reporting line runs to a board rather than a VP. Proof: Merchant Taylors&#39;, 3x annual donations and 90% alumni engagement.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>No tier above matched AND institution_type in (k12, healthcare-foundation)</dd></div>
+            <div><dt>AI strategy</dt><dd>Reframe engagement measurement as a budget-defence problem for heads of school and foundation boards, not a marketing problem.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Side campaign: new advancement leader</h3>
+          <p>One of five orthogonal side campaigns that sit alongside the cascade: new leader, capital campaign launch, milestone reunion year, CASE/bbcon conference follow-up, and Blackbaud partner co-sell. Turn these on only once the waterfall is stable.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>New VP, AVP Advancement or Director of Alumni Relations announced in the last 90 days. NOT part of the waterfall.</dd></div>
+            <div><dt>AI strategy</dt><dd>Monitor press releases and LinkedIn role changes. New leaders re-evaluate the stack in their first quarter, before the budget hardens.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="05">
+        
+    <div class="section-head">
+      <p class="eyebrow">05</p>
+      <h2>Fifteen emails, three per tier</h2>
+      <p class="takeaway">Email 1 leads on time, email 2 rotates to money, email 3 is the low-friction referral ask. Every proof point is a real, named, published Almabase result.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{institution}}</span><span>{{domain}}</span><span>{{competitor}}</span><span>{{crm}}</span><span>{{alumni_base}}</span><span>{{amount_raised}}</span><span>{{donor_count}}</span><span>{{giving_platform}}</span><span>{{role_title}}</span><span>{{event_tool}}</span><span>{{peer_type}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{institution}}, {{domain}}, {{competitor}}, {{crm}}, {{alumni_base}}, {{amount_raised}}, {{donor_count}}, {{giving_platform}}, {{role_title}}, {{event_tool}}, {{peer_type}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Platform Switch</strong>
+              <em>Engagement-to-CRM Gap Teardown</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Platform Switch steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: alumni.{{domain}}&#10;&#10;Hi {{first_name}}, I was on alumni.{{domain}} and saw {{institution}} runs {{competitor}} for the alumni community. Then I checked the giving page and gifts are posting into {{crm}}.&#10;&#10;But would it be fair to assume the two don&#39;t really talk? So when an alum RSVPs to an event, updates their employer, or opens a class newsletter, none of that ends up on the constituent record your gift officers actually work from.&#10;&#10;We built Almabase to sit on top of {{crm}} with a two-way, real-time sync. Directory, groups, events and giving in one place, every engagement action writing back to the record.&#10;&#10;Illinois Tech logged 123,000+ engagement activities in a single month once the two were connected.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the 1-page teardown of which {{competitor}} signals never reach your CRM today. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="alumni.{{domain}}" data-preview="alumni.northfield.edu">alumni.{{domain}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, I was on alumni.{{domain}} and saw {{institution}} runs {{competitor}} for the alumni community. Then I checked the giving page and gifts are posting into {{crm}}.&#10;&#10;But would it be fair to assume the two don&#39;t really talk? So when an alum RSVPs to an event, updates their employer, or opens a class newsletter, none of that ends up on the constituent record your gift officers actually work from.&#10;&#10;We built Almabase to sit on top of {{crm}} with a two-way, real-time sync. Directory, groups, events and giving in one place, every engagement action writing back to the record.&#10;&#10;Illinois Tech logged 123,000+ engagement activities in a single month once the two were connected.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the 1-page teardown of which {{competitor}} signals never reach your CRM today. No call needed." data-preview="Hi Dana, I was on alumni.northfield.edu and saw Northfield College runs Hivebrite for the alumni community. Then I checked the giving page and gifts are posting into Raiser&#39;s Edge NXT.&#10;&#10;But would it be fair to assume the two don&#39;t really talk? So when an alum RSVPs to an event, updates their employer, or opens a class newsletter, none of that ends up on the constituent record your gift officers actually work from.&#10;&#10;We built Almabase to sit on top of Raiser&#39;s Edge NXT with a two-way, real-time sync. Directory, groups, events and giving in one place, every engagement action writing back to the record.&#10;&#10;Illinois Tech logged 123,000+ engagement activities in a single month once the two were connected.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the 1-page teardown of which Hivebrite signals never reach your CRM today. No call needed.">
+                        <p>Hi {{first_name}}, I was on alumni.{{domain}} and saw {{institution}} runs {{competitor}} for the alumni community. Then I checked the giving page and gifts are posting into {{crm}}.</p><p>But would it be fair to assume the two don&#39;t really talk? So when an alum RSVPs to an event, updates their employer, or opens a class newsletter, none of that ends up on the constituent record your gift officers actually work from.</p><p>We built Almabase to sit on top of {{crm}} with a two-way, real-time sync. Directory, groups, events and giving in one place, every engagement action writing back to the record.</p><p>Illinois Tech logged 123,000+ engagement activities in a single month once the two were connected.</p><p>Reply &quot;Y&quot; and I&#39;ll send the 1-page teardown of which {{competitor}} signals never reach your CRM today. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, one more angle on this.&#10;&#10;The silo isn&#39;t just a data problem, it&#39;s a giving problem. When engagement history doesn&#39;t reach {{crm}}, annual giving can&#39;t segment on it. So the appeal goes out to all {{alumni_base}} alumni the same way, and the people who showed up all year get treated like the people who haven&#39;t opened an email since 2019.&#10;&#10;Thomas Aquinas College got to 45% donor participation, $142K+ from 650+ donors, running engagement and giving off one record.&#10;&#10;Same offer: reply &quot;Y&quot; and I&#39;ll send the teardown.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, one more angle on this.&#10;&#10;The silo isn&#39;t just a data problem, it&#39;s a giving problem. When engagement history doesn&#39;t reach {{crm}}, annual giving can&#39;t segment on it. So the appeal goes out to all {{alumni_base}} alumni the same way, and the people who showed up all year get treated like the people who haven&#39;t opened an email since 2019.&#10;&#10;Thomas Aquinas College got to 45% donor participation, $142K+ from 650+ donors, running engagement and giving off one record.&#10;&#10;Same offer: reply &quot;Y&quot; and I&#39;ll send the teardown." data-preview="Dana, one more angle on this.&#10;&#10;The silo isn&#39;t just a data problem, it&#39;s a giving problem. When engagement history doesn&#39;t reach Raiser&#39;s Edge NXT, annual giving can&#39;t segment on it. So the appeal goes out to all 24,000 alumni the same way, and the people who showed up all year get treated like the people who haven&#39;t opened an email since 2019.&#10;&#10;Thomas Aquinas College got to 45% donor participation, $142K+ from 650+ donors, running engagement and giving off one record.&#10;&#10;Same offer: reply &quot;Y&quot; and I&#39;ll send the teardown.">
+                        <p>{{first_name}}, one more angle on this.</p><p>The silo isn&#39;t just a data problem, it&#39;s a giving problem. When engagement history doesn&#39;t reach {{crm}}, annual giving can&#39;t segment on it. So the appeal goes out to all {{alumni_base}} alumni the same way, and the people who showed up all year get treated like the people who haven&#39;t opened an email since 2019.</p><p>Thomas Aquinas College got to 45% donor participation, $142K+ from 650+ donors, running engagement and giving off one record.</p><p>Same offer: reply &quot;Y&quot; and I&#39;ll send the teardown.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: quick one&#10;&#10;Hi {{first_name}}, no need for a call. Just reply yes and I&#39;ll send over the {{competitor}} to CRM gap teardown for {{institution}}.&#10;&#10;Should I send this to you, or is Advancement Services the better home for it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="quick one" data-preview="quick one">quick one</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, no need for a call. Just reply yes and I&#39;ll send over the {{competitor}} to CRM gap teardown for {{institution}}.&#10;&#10;Should I send this to you, or is Advancement Services the better home for it?" data-preview="Hi Dana, no need for a call. Just reply yes and I&#39;ll send over the Hivebrite to CRM gap teardown for Northfield College.&#10;&#10;Should I send this to you, or is Advancement Services the better home for it?">
+                        <p>Hi {{first_name}}, no need for a call. Just reply yes and I&#39;ll send over the {{competitor}} to CRM gap teardown for {{institution}}.</p><p>Should I send this to you, or is Advancement Services the better home for it?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Giving Day Silo</strong>
+              <em>Giving Day Yield Report</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Giving Day Silo steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{institution}} giving day&#10;&#10;Hi {{first_name}}, saw {{institution}}&#39;s giving day brought in {{amount_raised}} from {{donor_count}} donors on {{giving_platform}}. Strong number against a {{alumni_base}} alumni base.&#10;&#10;But would it be fair to assume the fortnight after was the expensive part? Pulling the export, matching gifts by hand, reconciling into {{crm}} before anyone could be properly thanked.&#10;&#10;We run giving days natively on the same platform as the directory and events, with gifts posting straight to {{crm}}. MSUM raised $750K+ and cut gift reconciliation from four weeks to four days.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send your Giving Day Yield Report, your public numbers benchmarked against institutions your size. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{institution}} giving day" data-preview="Northfield College giving day">{{institution}} giving day</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, saw {{institution}}&#39;s giving day brought in {{amount_raised}} from {{donor_count}} donors on {{giving_platform}}. Strong number against a {{alumni_base}} alumni base.&#10;&#10;But would it be fair to assume the fortnight after was the expensive part? Pulling the export, matching gifts by hand, reconciling into {{crm}} before anyone could be properly thanked.&#10;&#10;We run giving days natively on the same platform as the directory and events, with gifts posting straight to {{crm}}. MSUM raised $750K+ and cut gift reconciliation from four weeks to four days.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send your Giving Day Yield Report, your public numbers benchmarked against institutions your size. No call needed." data-preview="Hi Dana, saw Northfield College&#39;s giving day brought in $310,000 from 1,140 donors on GiveCampus. Strong number against a 24,000 alumni base.&#10;&#10;But would it be fair to assume the fortnight after was the expensive part? Pulling the export, matching gifts by hand, reconciling into Raiser&#39;s Edge NXT before anyone could be properly thanked.&#10;&#10;We run giving days natively on the same platform as the directory and events, with gifts posting straight to Raiser&#39;s Edge NXT. MSUM raised $750K+ and cut gift reconciliation from four weeks to four days.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send your Giving Day Yield Report, your public numbers benchmarked against institutions your size. No call needed.">
+                        <p>Hi {{first_name}}, saw {{institution}}&#39;s giving day brought in {{amount_raised}} from {{donor_count}} donors on {{giving_platform}}. Strong number against a {{alumni_base}} alumni base.</p><p>But would it be fair to assume the fortnight after was the expensive part? Pulling the export, matching gifts by hand, reconciling into {{crm}} before anyone could be properly thanked.</p><p>We run giving days natively on the same platform as the directory and events, with gifts posting straight to {{crm}}. MSUM raised $750K+ and cut gift reconciliation from four weeks to four days.</p><p>Reply &quot;Y&quot; and I&#39;ll send your Giving Day Yield Report, your public numbers benchmarked against institutions your size. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the reconciliation lag costs more than the hours.&#10;&#10;Second-gift rates fall off a cliff when the thank-you lands weeks late. And every donor you acquired on {{giving_platform}} is a donor you rented rather than kept, because they&#39;re in someone else&#39;s platform, not on your constituent record.&#10;&#10;Elon raised $3.6M on what they called their leanest giving day in twelve years, because the day ran on the same system as the rest of the year.&#10;&#10;Want the Yield Report? Just reply &quot;Y&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the reconciliation lag costs more than the hours.&#10;&#10;Second-gift rates fall off a cliff when the thank-you lands weeks late. And every donor you acquired on {{giving_platform}} is a donor you rented rather than kept, because they&#39;re in someone else&#39;s platform, not on your constituent record.&#10;&#10;Elon raised $3.6M on what they called their leanest giving day in twelve years, because the day ran on the same system as the rest of the year.&#10;&#10;Want the Yield Report? Just reply &quot;Y&quot;." data-preview="Dana, the reconciliation lag costs more than the hours.&#10;&#10;Second-gift rates fall off a cliff when the thank-you lands weeks late. And every donor you acquired on GiveCampus is a donor you rented rather than kept, because they&#39;re in someone else&#39;s platform, not on your constituent record.&#10;&#10;Elon raised $3.6M on what they called their leanest giving day in twelve years, because the day ran on the same system as the rest of the year.&#10;&#10;Want the Yield Report? Just reply &quot;Y&quot;.">
+                        <p>{{first_name}}, the reconciliation lag costs more than the hours.</p><p>Second-gift rates fall off a cliff when the thank-you lands weeks late. And every donor you acquired on {{giving_platform}} is a donor you rented rather than kept, because they&#39;re in someone else&#39;s platform, not on your constituent record.</p><p>Elon raised $3.6M on what they called their leanest giving day in twelve years, because the day ran on the same system as the rest of the year.</p><p>Want the Yield Report? Just reply &quot;Y&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: next giving day&#10;&#10;Hi {{first_name}}, no call needed. Reply yes and I&#39;ll send the Giving Day Yield Report for {{institution}}, benchmarked, with the reconciliation-hours math.&#10;&#10;Should this go to you or to whoever owns annual giving?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="next giving day" data-preview="next giving day">next giving day</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, no call needed. Reply yes and I&#39;ll send the Giving Day Yield Report for {{institution}}, benchmarked, with the reconciliation-hours math.&#10;&#10;Should this go to you or to whoever owns annual giving?" data-preview="Hi Dana, no call needed. Reply yes and I&#39;ll send the Giving Day Yield Report for Northfield College, benchmarked, with the reconciliation-hours math.&#10;&#10;Should this go to you or to whoever owns annual giving?">
+                        <p>Hi {{first_name}}, no call needed. Reply yes and I&#39;ll send the Giving Day Yield Report for {{institution}}, benchmarked, with the reconciliation-hours math.</p><p>Should this go to you or to whoever owns annual giving?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - New Headcount</strong>
+              <em>First-90-Days Capacity Model</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - New Headcount steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the {{role_title}} req&#10;&#10;Hi {{first_name}}, saw the {{role_title}} post go up for {{institution}}, and that the job description asks for {{crm}} experience.&#10;&#10;But would it be fair to assume most of that person&#39;s first year goes to data hygiene, event logistics and chasing address updates, rather than the relationship work the role is actually written around?&#10;&#10;Almabase absorbs that layer. Alumni update their own records, events go live in under ten minutes, and everything writes back to {{crm}}. One institution ran 21 events in 10 months on it and scored 4.6 out of 5 on registration experience.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the First-90-Days Capacity Model, where those hours go and which lines are automatable. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the {{role_title}} req" data-preview="the Annual Giving Manager req">the {{role_title}} req</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, saw the {{role_title}} post go up for {{institution}}, and that the job description asks for {{crm}} experience.&#10;&#10;But would it be fair to assume most of that person&#39;s first year goes to data hygiene, event logistics and chasing address updates, rather than the relationship work the role is actually written around?&#10;&#10;Almabase absorbs that layer. Alumni update their own records, events go live in under ten minutes, and everything writes back to {{crm}}. One institution ran 21 events in 10 months on it and scored 4.6 out of 5 on registration experience.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the First-90-Days Capacity Model, where those hours go and which lines are automatable. No call needed." data-preview="Hi Dana, saw the Annual Giving Manager post go up for Northfield College, and that the job description asks for Raiser&#39;s Edge NXT experience.&#10;&#10;But would it be fair to assume most of that person&#39;s first year goes to data hygiene, event logistics and chasing address updates, rather than the relationship work the role is actually written around?&#10;&#10;Almabase absorbs that layer. Alumni update their own records, events go live in under ten minutes, and everything writes back to Raiser&#39;s Edge NXT. One institution ran 21 events in 10 months on it and scored 4.6 out of 5 on registration experience.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the First-90-Days Capacity Model, where those hours go and which lines are automatable. No call needed.">
+                        <p>Hi {{first_name}}, saw the {{role_title}} post go up for {{institution}}, and that the job description asks for {{crm}} experience.</p><p>But would it be fair to assume most of that person&#39;s first year goes to data hygiene, event logistics and chasing address updates, rather than the relationship work the role is actually written around?</p><p>Almabase absorbs that layer. Alumni update their own records, events go live in under ten minutes, and everything writes back to {{crm}}. One institution ran 21 events in 10 months on it and scored 4.6 out of 5 on registration experience.</p><p>Reply &quot;Y&quot; and I&#39;ll send the First-90-Days Capacity Model, where those hours go and which lines are automatable. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, worth adding: this is usually cheaper than the second hire.&#10;&#10;The Master&#39;s Seminary got 37% of their database updated in 45 days without adding a person, because alumni did the updating. That&#39;s the work your new {{role_title}} would otherwise inherit on day one.&#10;&#10;Happy to send the capacity model, just reply &quot;Y&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, worth adding: this is usually cheaper than the second hire.&#10;&#10;The Master&#39;s Seminary got 37% of their database updated in 45 days without adding a person, because alumni did the updating. That&#39;s the work your new {{role_title}} would otherwise inherit on day one.&#10;&#10;Happy to send the capacity model, just reply &quot;Y&quot;." data-preview="Dana, worth adding: this is usually cheaper than the second hire.&#10;&#10;The Master&#39;s Seminary got 37% of their database updated in 45 days without adding a person, because alumni did the updating. That&#39;s the work your new Annual Giving Manager would otherwise inherit on day one.&#10;&#10;Happy to send the capacity model, just reply &quot;Y&quot;.">
+                        <p>{{first_name}}, worth adding: this is usually cheaper than the second hire.</p><p>The Master&#39;s Seminary got 37% of their database updated in 45 days without adding a person, because alumni did the updating. That&#39;s the work your new {{role_title}} would otherwise inherit on day one.</p><p>Happy to send the capacity model, just reply &quot;Y&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: before they start&#10;&#10;Hi {{first_name}}, no need for a call. Reply yes and I&#39;ll send the First-90-Days Capacity Model, sized to {{institution}}.&#10;&#10;Worth getting in front of the new hire&#39;s start date. Should I send it to you or to the hiring manager?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="before they start" data-preview="before they start">before they start</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, no need for a call. Reply yes and I&#39;ll send the First-90-Days Capacity Model, sized to {{institution}}.&#10;&#10;Worth getting in front of the new hire&#39;s start date. Should I send it to you or to the hiring manager?" data-preview="Hi Dana, no need for a call. Reply yes and I&#39;ll send the First-90-Days Capacity Model, sized to Northfield College.&#10;&#10;Worth getting in front of the new hire&#39;s start date. Should I send it to you or to the hiring manager?">
+                        <p>Hi {{first_name}}, no need for a call. Reply yes and I&#39;ll send the First-90-Days Capacity Model, sized to {{institution}}.</p><p>Worth getting in front of the new hire&#39;s start date. Should I send it to you or to the hiring manager?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 - CRM-Rich, Engagement-Poor</strong>
+              <em>Alumni Data Decay Snapshot</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 - CRM-Rich, Engagement-Poor steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{institution}} alumni records&#10;&#10;Hi {{first_name}}, saw {{institution}} runs gifts through {{crm}}, the alumni directory sits behind a login, and events are going out through {{event_tool}}.&#10;&#10;But would it be fair to assume the directory is only ever as good as the last import? And that a meaningful slice of the {{alumni_base}} records are now old employers and dead addresses that nobody owns fixing.&#10;&#10;Almabase puts a self-serve directory in front of alumni so they update their own records, with social sync filling the gaps, and it writes straight into the {{crm}} you already pay for. UTEP tripled alumni membership doing exactly this.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the Alumni Data Decay Snapshot for {{institution}}, estimated stale-record share by class-year cohort. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{institution}} alumni records" data-preview="Northfield College alumni records">{{institution}} alumni records</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, saw {{institution}} runs gifts through {{crm}}, the alumni directory sits behind a login, and events are going out through {{event_tool}}.&#10;&#10;But would it be fair to assume the directory is only ever as good as the last import? And that a meaningful slice of the {{alumni_base}} records are now old employers and dead addresses that nobody owns fixing.&#10;&#10;Almabase puts a self-serve directory in front of alumni so they update their own records, with social sync filling the gaps, and it writes straight into the {{crm}} you already pay for. UTEP tripled alumni membership doing exactly this.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the Alumni Data Decay Snapshot for {{institution}}, estimated stale-record share by class-year cohort. No call needed." data-preview="Hi Dana, saw Northfield College runs gifts through Raiser&#39;s Edge NXT, the alumni directory sits behind a login, and events are going out through Eventbrite.&#10;&#10;But would it be fair to assume the directory is only ever as good as the last import? And that a meaningful slice of the 24,000 records are now old employers and dead addresses that nobody owns fixing.&#10;&#10;Almabase puts a self-serve directory in front of alumni so they update their own records, with social sync filling the gaps, and it writes straight into the Raiser&#39;s Edge NXT you already pay for. UTEP tripled alumni membership doing exactly this.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the Alumni Data Decay Snapshot for Northfield College, estimated stale-record share by class-year cohort. No call needed.">
+                        <p>Hi {{first_name}}, saw {{institution}} runs gifts through {{crm}}, the alumni directory sits behind a login, and events are going out through {{event_tool}}.</p><p>But would it be fair to assume the directory is only ever as good as the last import? And that a meaningful slice of the {{alumni_base}} records are now old employers and dead addresses that nobody owns fixing.</p><p>Almabase puts a self-serve directory in front of alumni so they update their own records, with social sync filling the gaps, and it writes straight into the {{crm}} you already pay for. UTEP tripled alumni membership doing exactly this.</p><p>Reply &quot;Y&quot; and I&#39;ll send the Alumni Data Decay Snapshot for {{institution}}, estimated stale-record share by class-year cohort. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the decay shows up in the appeal.&#10;&#10;Every stale record is a solicitation that doesn&#39;t land. And the cohorts that decay fastest, the five-to-fifteen-years-out group, are the ones with the longest giving life ahead of them.&#10;&#10;The Master&#39;s Seminary recovered 37% of their database in 45 days. No new headcount, no data vendor.&#10;&#10;Reply &quot;Y&quot; for the decay snapshot.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the decay shows up in the appeal.&#10;&#10;Every stale record is a solicitation that doesn&#39;t land. And the cohorts that decay fastest, the five-to-fifteen-years-out group, are the ones with the longest giving life ahead of them.&#10;&#10;The Master&#39;s Seminary recovered 37% of their database in 45 days. No new headcount, no data vendor.&#10;&#10;Reply &quot;Y&quot; for the decay snapshot." data-preview="Dana, the decay shows up in the appeal.&#10;&#10;Every stale record is a solicitation that doesn&#39;t land. And the cohorts that decay fastest, the five-to-fifteen-years-out group, are the ones with the longest giving life ahead of them.&#10;&#10;The Master&#39;s Seminary recovered 37% of their database in 45 days. No new headcount, no data vendor.&#10;&#10;Reply &quot;Y&quot; for the decay snapshot.">
+                        <p>{{first_name}}, the decay shows up in the appeal.</p><p>Every stale record is a solicitation that doesn&#39;t land. And the cohorts that decay fastest, the five-to-fifteen-years-out group, are the ones with the longest giving life ahead of them.</p><p>The Master&#39;s Seminary recovered 37% of their database in 45 days. No new headcount, no data vendor.</p><p>Reply &quot;Y&quot; for the decay snapshot.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: record hygiene&#10;&#10;Hi {{first_name}}, no call required. Reply yes and I&#39;ll send the Alumni Data Decay Snapshot for {{institution}}.&#10;&#10;Should I send it to you, or does Advancement Services own record hygiene there?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="record hygiene" data-preview="record hygiene">record hygiene</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, no call required. Reply yes and I&#39;ll send the Alumni Data Decay Snapshot for {{institution}}.&#10;&#10;Should I send it to you, or does Advancement Services own record hygiene there?" data-preview="Hi Dana, no call required. Reply yes and I&#39;ll send the Alumni Data Decay Snapshot for Northfield College.&#10;&#10;Should I send it to you, or does Advancement Services own record hygiene there?">
+                        <p>Hi {{first_name}}, no call required. Reply yes and I&#39;ll send the Alumni Data Decay Snapshot for {{institution}}.</p><p>Should I send it to you, or does Advancement Services own record hygiene there?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 - Catch-All Peer Benchmark</strong>
+              <em>Alumni Engagement Benchmark</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 - Catch-All Peer Benchmark steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{peer_type}} benchmark&#10;&#10;Hi {{first_name}}, I&#39;ve been pulling together engagement benchmarks for {{peer_type}} with alumni bases around {{alumni_base}}, and {{institution}} came up in the cohort.&#10;&#10;But would it be fair to assume the harder question isn&#39;t what you&#39;re running, it&#39;s whether anyone can say if it&#39;s working? Most advancement teams can report gifts precisely and engagement not at all.&#10;&#10;Almabase reports engagement as a number, benchmarked monthly against peer institutions. Merchant Taylors&#39; tracked their way to 3x annual donations and 90% alumni engagement on it.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the benchmark for your cohort. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{peer_type}} benchmark" data-preview="private liberal arts colleges benchmark">{{peer_type}} benchmark</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, I&#39;ve been pulling together engagement benchmarks for {{peer_type}} with alumni bases around {{alumni_base}}, and {{institution}} came up in the cohort.&#10;&#10;But would it be fair to assume the harder question isn&#39;t what you&#39;re running, it&#39;s whether anyone can say if it&#39;s working? Most advancement teams can report gifts precisely and engagement not at all.&#10;&#10;Almabase reports engagement as a number, benchmarked monthly against peer institutions. Merchant Taylors&#39; tracked their way to 3x annual donations and 90% alumni engagement on it.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the benchmark for your cohort. No call needed." data-preview="Hi Dana, I&#39;ve been pulling together engagement benchmarks for private liberal arts colleges with alumni bases around 24,000, and Northfield College came up in the cohort.&#10;&#10;But would it be fair to assume the harder question isn&#39;t what you&#39;re running, it&#39;s whether anyone can say if it&#39;s working? Most advancement teams can report gifts precisely and engagement not at all.&#10;&#10;Almabase reports engagement as a number, benchmarked monthly against peer institutions. Merchant Taylors&#39; tracked their way to 3x annual donations and 90% alumni engagement on it.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the benchmark for your cohort. No call needed.">
+                        <p>Hi {{first_name}}, I&#39;ve been pulling together engagement benchmarks for {{peer_type}} with alumni bases around {{alumni_base}}, and {{institution}} came up in the cohort.</p><p>But would it be fair to assume the harder question isn&#39;t what you&#39;re running, it&#39;s whether anyone can say if it&#39;s working? Most advancement teams can report gifts precisely and engagement not at all.</p><p>Almabase reports engagement as a number, benchmarked monthly against peer institutions. Merchant Taylors&#39; tracked their way to 3x annual donations and 90% alumni engagement on it.</p><p>Reply &quot;Y&quot; and I&#39;ll send the benchmark for your cohort. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the reason this matters at budget time.&#10;&#10;Engagement without a number is the first line questioned by a board or a head of school. With one, it&#39;s the line that explains why giving moved. Punahou reports 7,000+ engaged alumni a month. That&#39;s a defensible figure, not a feeling.&#10;&#10;Want the cohort benchmark? Reply &quot;Y&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the reason this matters at budget time.&#10;&#10;Engagement without a number is the first line questioned by a board or a head of school. With one, it&#39;s the line that explains why giving moved. Punahou reports 7,000+ engaged alumni a month. That&#39;s a defensible figure, not a feeling.&#10;&#10;Want the cohort benchmark? Reply &quot;Y&quot;." data-preview="Dana, the reason this matters at budget time.&#10;&#10;Engagement without a number is the first line questioned by a board or a head of school. With one, it&#39;s the line that explains why giving moved. Punahou reports 7,000+ engaged alumni a month. That&#39;s a defensible figure, not a feeling.&#10;&#10;Want the cohort benchmark? Reply &quot;Y&quot;.">
+                        <p>{{first_name}}, the reason this matters at budget time.</p><p>Engagement without a number is the first line questioned by a board or a head of school. With one, it&#39;s the line that explains why giving moved. Punahou reports 7,000+ engaged alumni a month. That&#39;s a defensible figure, not a feeling.</p><p>Want the cohort benchmark? Reply &quot;Y&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: benchmark report&#10;&#10;Hi {{first_name}}, no call needed. Reply yes and I&#39;ll send the {{peer_type}} alumni engagement benchmark covering institutions your size.&#10;&#10;Should this go to you or to whoever owns alumni relations?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="benchmark report" data-preview="benchmark report">benchmark report</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, no call needed. Reply yes and I&#39;ll send the {{peer_type}} alumni engagement benchmark covering institutions your size.&#10;&#10;Should this go to you or to whoever owns alumni relations?" data-preview="Hi Dana, no call needed. Reply yes and I&#39;ll send the private liberal arts colleges alumni engagement benchmark covering institutions your size.&#10;&#10;Should this go to you or to whoever owns alumni relations?">
+                        <p>Hi {{first_name}}, no call needed. Reply yes and I&#39;ll send the {{peer_type}} alumni engagement benchmark covering institutions your size.</p><p>Should this go to you or to whoever owns alumni relations?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="06">
+        
+    <div class="section-head">
+      <p class="eyebrow">06</p>
+      <h2>Launch plan and thresholds</h2>
+      <p class="takeaway">Prove the thesis on the narrowest tier first. Five phases across twelve weeks, with reply-density rules that decide what scales and what gets cut.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Weeks 1-3, Tier 1 only, ~2,000 contacts. Fastest proof. The competitor takedown carries the strongest signal and validates the whole silo-and-sync thesis before spending on the long tail.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Weeks 3-6, add Tier 2, ~4,500 contacts. Giving day data is the richest personalisation in the strategy because the dollars and donor counts are public. Highest expected reply rate after Tier 1.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 6-9, add Tier 3, ~6,000 contacts. Turn on the rolling job board feed. It refreshes monthly, so it needs to start early enough to build a standing pipeline.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Weeks 9-12, add Tier 4, ~9,000 contacts. The largest qualified tier. Only open it once the copy is proven above, because volume at this scale punishes a weak thesis.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Week 12 onward, add Tier 5, full TAM. Catch-all at scale with the softest call to action.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Prerequisites before the first send: suppression list built from the Almabase footprint plus a CRM export; three to four secondary domains with three mailboxes each, fourteen-day warmup, 25-30 sends per mailbox per day; and the Tier 1 and Tier 2 lead magnets finished and fulfilment-ready.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>Seasonality guard: do not judge a tier on data collected in the two weeks either side of a prospect&#39;s own giving day, mid-November to early January, or mid-June to mid-July. Advancement is unreachable in those windows and a good tier will read as a failing one.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacts</strong>
+                <span>Excellent. Scale the tier, add sending capacity, and pull more of this segment into the list.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run untouched. Do not optimise a working tier.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450 to 500</strong>
+                <span>Borderline. Test one copy variant. Rotate the lead magnet first and hold everything else constant.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or reply rate under 1% after 1,500 sends</strong>
+                <span>Cut the tier and rework the trigger. The problem is almost always the signal, not the sentence.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dana","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Northfield College","northfield\\.edu","Hivebrite","Raiser's Edge NXT","24,000","\\$310,000","1,140","GiveCampus","Annual Giving Manager","Eventbrite","private liberal arts colleges"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
