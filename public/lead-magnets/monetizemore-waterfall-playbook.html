@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MonetizeMore - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-07-27</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for MonetizeMore</p>
+          <h1>Your MonetizeMore waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">One cascade, routed on a file every publisher already publishes. Built once, fed forever.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Every publisher selling programmatic ads is required to publish a plain-text file at /ads.txt. It discloses exactly who monetizes their inventory, how many demand partners they run, and whether a competitor already manages them. One HTTP request per domain returns both the qualification check and the routing signal - free, global, and maintained by the publisher themselves.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a call</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>~180k</strong>
+          <span>Qualified publishers globally (web + app)</span>
+        </div>
+        <div class="metric-card">
+          <strong>5</strong>
+          <span>Tiers, exclusively routed</span>
+        </div>
+        <div class="metric-card">
+          <strong>$0</strong>
+          <span>Enrichment cost of the routing signal</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>MonetizeMore runs ad revenue optimization and invalid-traffic protection for digital publishers: PubGuru header bidding and yield automation, plus Traffic Cop for IVT and clawback prevention. 2,000+ sites and apps, 15B+ impressions a month, $300M+ paid out to publishers.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal: ads.txt</p></div><div><span>02</span><p>Routing the market</p></div><div><span>03</span><p>The five tiers</p></div><div><span>04</span><p>Campaign experiments</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>01</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>02</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>03</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>04</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>05</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>06</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="01">
+        
+    <div class="section-head">
+      <p class="eyebrow">01</p>
+      <h2>The signal: ads.txt</h2>
+      <p class="takeaway">The publisher industry&#39;s version of a tech-detection database - except it is free, universal, and published by the prospect.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>It is mandatory. Any publisher selling programmatic inventory must host ads.txt (or app-ads.txt) or buyers cannot verify their supply.</p></div><div class="reason-card"><span>02</span><p>It names the incumbent. Competitor seat IDs and MANAGERDOMAIN lines identify a proven payer without any inference.</p></div><div class="reason-card"><span>03</span><p>It grades sophistication. One Google line means AdSense-only. Forty DIRECT lines means an in-house ad ops team running their own wrapper.</p></div><div class="reason-card"><span>04</span><p>It costs nothing and covers everywhere. One HTTP GET per domain, no vendor, no geography limit, refreshed by the publisher themselves.</p></div>
+            </div>
+            <div class="field-cloud"><span>adstxt_present</span><span>managed_partner_detected</span><span>manager_domain</span><span>ssp_line_count</span><span>prebid_detected</span><span>gam_detected</span><span>adsense_only</span><span>buys_paid_traffic</span><span>monthly_visits</span><span>visits_3mo_trend</span><span>top_vertical</span><span>platform_type</span><span>hiring_adops</span><span>contact_title_class</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>Direct /ads.txt and /app-ads.txt crawl</h3><p>The routing signal itself: SSP lines, competitor seat IDs, manager domain, line count. One request per domain, zero cost.</p></div><div class="source-card"><span>02</span><h3>Tranco Top 1M, Cloudflare Radar, Google Publisher Tag / AdSense / Prebid.js tech lists</h3><p>The seed universe - approximately 2.5M live ad-monetizing domains worldwide.</p></div><div class="source-card"><span>03</span><h3>Similarweb API (or Ahrefs / Semrush)</h3><p>Monthly visits plus a three-month trend - the proxy that enforces the $5k/month floor and the three-month consistency rule.</p></div><div class="source-card"><span>04</span><h3>On-page tag scan: Taboola, Outbrain, MGID, RevContent, Zemanta</h3><p>Identifies publishers who buy traffic, and therefore carry the highest invalid-traffic and clawback exposure.</p></div><div class="source-card"><span>05</span><h3>AppFigures / Sensor Tower, filtered to AdMob, AppLovin MAX, Unity Ads, IronSource SDKs</h3><p>The app half of the market - resolved to the developer domain, then to app-ads.txt for the same signal ladder.</p></div><div class="source-card"><span>06</span><h3>LinkedIn Sales Navigator + Apollo, then an email waterfall across AI Ark, FullEnrich and Prospeo</h3><p>One to three verified contacts per account: Head of Ad Ops, Monetization, Yield - or the owner at smaller shops.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="02">
+        
+    <div class="section-head">
+      <p class="eyebrow">02</p>
+      <h2>Routing the market</h2>
+      <p class="takeaway">Five conditions, evaluated top to bottom. Every publisher matches the first one that fits and enters exactly one campaign.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF ads.txt is missing, OR monthly visits are under 500,000, OR visits fell below 400,000 in any of the last three months</span>
+          <strong>Exclude from the market</strong>
+          <em>At $8-12 session RPM, 500k monthly pageviews is roughly $4-6k a month. The three-month look-back is what enforces the client&#39;s &#39;consistently for three months&#39; rule without asking anyone.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF ads.txt contains competitor seat IDs (Mediavine, Raptive, Ezoic, Freestar, Playwire, Snigel, Publift, Venatus, Newor) OR a MANAGERDOMAIN declaration</span>
+          <strong>Tier 1 - Managed-Partner Takedown</strong>
+          <em>They already pay for managed monetization. The decision is made, only the vendor is in question.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF NOT Tier 1, AND arbitrage tags are detected on site OR paid and social referral share exceeds 35%</span>
+          <strong>Tier 2 - Clawback and Ban-Risk</strong>
+          <em>They buy traffic, so a meaningful share of it is invalid. Deductions and clawbacks are already happening whether or not they have diagnosed why.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF NOT Tier 1 or 2, AND ads.txt has 10 or more SSP lines, AND Prebid or their own Google Ad Manager is detected</span>
+          <strong>Tier 3 - DIY Header Bidding</strong>
+          <em>They built the stack themselves. The pain is the maintenance burden and missing buying power, not the absence of a strategy.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF NOT Tier 1, 2 or 3, AND the file is AdSense-only OR has five or fewer lines</span>
+          <strong>Tier 4 - AdSense Ceiling</strong>
+          <em>One demand source and no auction pressure. The single largest untapped uplift in the entire market.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="5">
+          <span class="route-rule__num">06</span>
+          <span class="route-rule__if">IF Everything else that clears the qualification gate</span>
+          <strong>Tier 5 - Catch-All</strong>
+          <em>The setup is unknown, but at $5k a month or more there is real money on the table and no public benchmark to judge it against.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF ads.txt is missing, OR monthly visits are under 500,000, OR visits fell below 400,000 in any of the last three months -&gt; Exclude from the market (At $8-12 session RPM, 500k monthly pageviews is roughly $4-6k a month. The three-month look-back is what enforces the client&#39;s &#39;consistently for three months&#39; rule without asking anyone.)&#10;2. IF ads.txt contains competitor seat IDs (Mediavine, Raptive, Ezoic, Freestar, Playwire, Snigel, Publift, Venatus, Newor) OR a MANAGERDOMAIN declaration -&gt; Tier 1 - Managed-Partner Takedown (They already pay for managed monetization. The decision is made, only the vendor is in question.)&#10;3. IF NOT Tier 1, AND arbitrage tags are detected on site OR paid and social referral share exceeds 35% -&gt; Tier 2 - Clawback and Ban-Risk (They buy traffic, so a meaningful share of it is invalid. Deductions and clawbacks are already happening whether or not they have diagnosed why.)&#10;4. IF NOT Tier 1 or 2, AND ads.txt has 10 or more SSP lines, AND Prebid or their own Google Ad Manager is detected -&gt; Tier 3 - DIY Header Bidding (They built the stack themselves. The pain is the maintenance burden and missing buying power, not the absence of a strategy.)&#10;5. IF NOT Tier 1, 2 or 3, AND the file is AdSense-only OR has five or fewer lines -&gt; Tier 4 - AdSense Ceiling (One demand source and no auction pressure. The single largest untapped uplift in the entire market.)&#10;6. IF Everything else that clears the qualification gate -&gt; Tier 5 - Catch-All (The setup is unknown, but at $5k a month or more there is real money on the table and no public benchmark to judge it against.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF ads.txt is missing, OR monthly visits are under 500,000, OR visits fell below 400,000 in any of the last three months -&gt; Exclude from the market (At $8-12 session RPM, 500k monthly pageviews is roughly $4-6k a month. The three-month look-back is what enforces the client&#39;s &#39;consistently for three months&#39; rule without asking anyone.)
+2. IF ads.txt contains competitor seat IDs (Mediavine, Raptive, Ezoic, Freestar, Playwire, Snigel, Publift, Venatus, Newor) OR a MANAGERDOMAIN declaration -&gt; Tier 1 - Managed-Partner Takedown (They already pay for managed monetization. The decision is made, only the vendor is in question.)
+3. IF NOT Tier 1, AND arbitrage tags are detected on site OR paid and social referral share exceeds 35% -&gt; Tier 2 - Clawback and Ban-Risk (They buy traffic, so a meaningful share of it is invalid. Deductions and clawbacks are already happening whether or not they have diagnosed why.)
+4. IF NOT Tier 1 or 2, AND ads.txt has 10 or more SSP lines, AND Prebid or their own Google Ad Manager is detected -&gt; Tier 3 - DIY Header Bidding (They built the stack themselves. The pain is the maintenance burden and missing buying power, not the absence of a strategy.)
+5. IF NOT Tier 1, 2 or 3, AND the file is AdSense-only OR has five or fewer lines -&gt; Tier 4 - AdSense Ceiling (One demand source and no auction pressure. The single largest untapped uplift in the entire market.)
+6. IF Everything else that clears the qualification gate -&gt; Tier 5 - Catch-All (The setup is unknown, but at $5k a month or more there is real money on the table and no public benchmark to judge it against.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="03">
+        
+    <div class="section-head">
+      <p class="eyebrow">03</p>
+      <h2>The five tiers</h2>
+      <p class="takeaway">Strongest intent first. The last tier catches everything else, so no qualified account in the market goes unaddressed.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">12% TAM</span>
+          </div>
+          <h3>Tier 1: Managed-Partner Takedown</h3>
+          <p>Competitor seat IDs or a MANAGERDOMAIN declaration in ads.txt - Mediavine, Raptive, Ezoic, Freestar, Playwire, Snigel, Publift, Venatus or Newor.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>A proven payer, but locked into one partner&#39;s demand stack. Fixed revenue share, no visibility into what each impression actually cleared at, long lock-ins, and no ability to test their own layout without raising a ticket.</dd></div>
+              <div><dt>Offer</dt><dd>Side-by-side demand-stack teardown: their incumbent&#39;s SSP coverage vs MonetizeMore&#39;s, with a modelled RPM delta on their own traffic</dd></div>
+              <div><dt>Source</dt><dd>ads.txt seat-ID and MANAGERDOMAIN match</dd></div>
+              <div><dt>Reply density</dt><dd>Highest - proven payers with a decision already made</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">9% TAM</span>
+          </div>
+          <h3>Tier 2: Clawback and Ban-Risk</h3>
+          <p>Taboola, Outbrain, MGID or RevContent tags detected on site, or paid and social referral share above 35%.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They buy traffic, so a meaningful share of it is invalid. That means Google deductions, clawbacks they never got a straight answer on, and eventually the risk of an AdSense or Ad Manager account termination.</dd></div>
+              <div><dt>Offer</dt><dd>Free invalid-traffic exposure scan on their domain - the % flagged invalid and the monthly revenue at risk</dd></div>
+              <div><dt>Source</dt><dd>On-page arbitrage tag scan + Similarweb referral mix</dd></div>
+              <div><dt>Reply density</dt><dd>High - the pain is acute, dated, and already costing money</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">17% TAM</span>
+          </div>
+          <h3>Tier 3: DIY Header Bidding</h3>
+          <p>Ten or more SSP lines, Prebid and/or their own Google Ad Manager, and no manager domain. Reinforced where an ad ops role is open on LinkedIn.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They built the stack in-house. Someone&#39;s full-time job is maintaining prebid timeouts, floor rules and wrapper updates - and they still lack the buying power of a network running 15 billion impressions a month.</dd></div>
+              <div><dt>Offer</dt><dd>Prebid and wrapper configuration audit - timeouts, floor logic, latency and lost bids on their live setup</dd></div>
+              <div><dt>Source</dt><dd>ads.txt line count + Prebid.js detection + LinkedIn job posts</dd></div>
+              <div><dt>Reply density</dt><dd>Moderate - largest deal sizes, longest cycle, most technical buyer</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">32% TAM</span>
+          </div>
+          <h3>Tier 4: AdSense Ceiling</h3>
+          <p>AdSense-only, or five or fewer lines in ads.txt.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>A single demand source with no auction pressure. Every impression sells at whatever Google decides that day, with no competing bids and no floor strategy.</dd></div>
+              <div><dt>Offer</dt><dd>AdSense-to-header-bidding uplift model, built from their actual traffic volume and vertical</dd></div>
+              <div><dt>Source</dt><dd>ads.txt line count + Similarweb monthly visits</dd></div>
+              <div><dt>Reply density</dt><dd>Moderate - biggest uplift story, smallest average account</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">30% TAM</span>
+          </div>
+          <h3>Tier 5: Catch-All</h3>
+          <p>Everything else that clears the qualification gate: ads.txt present, 500k+ monthly visits, sustained three months.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The setup is unknown, but at $5,000 a month or more there is real money on the table and no public benchmark against which to judge it. Almost no publisher knows whether what they earn is good for their traffic, geo mix and vertical.</dd></div>
+              <div><dt>Offer</dt><dd>Vertical RPM benchmark - what publishers in their niche actually earn per 1,000 pageviews, split by geo and device</dd></div>
+              <div><dt>Source</dt><dd>Qualification gate residual</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest - broad copy, soft CTA, but 30% of the market</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="04">
+        
+    <div class="section-head">
+      <p class="eyebrow">04</p>
+      <h2>Campaign experiments</h2>
+      <p class="takeaway">The angles layered on top of the cascade, plus the orthogonal side plays that run beside it.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Incumbent Named Teardown</h3>
+          <p>The highest-intent play in the strategy. They have already decided managed monetization beats DIY; the only open question is who does it. Lead with transparency and 30-day cancellation, because lock-in is the incumbent&#39;s weakest point.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>ads.txt contains a known competitor&#39;s seat IDs or MANAGERDOMAIN</dd></div>
+            <div><dt>AI strategy</dt><dd>Parse the ads.txt and name the incumbent in the first line. The research is unfakeable - no other vendor is reading their file - and it proves the email is not a blast.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Seat-ID Removal Watch</h3>
+          <p>The single hottest signal in the entire dataset. Volume is low, so this warrants a same-week, hand-written email rather than a sequence.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>A publisher who removed a competitor&#39;s seat IDs from ads.txt in the last 30 days</dd></div>
+            <div><dt>AI strategy</dt><dd>Re-crawl the Tier 1 list monthly and diff it. A removed seat ID means they are actively churning off that partner right now.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Free IVT Exposure Scan</h3>
+          <p>The offer and the product are the same thing, so there is nothing to argue about. The Bitcoin Magazine recovery - $0 to $1,000+/day within 24 hours - is the most concrete proof asset available anywhere in this strategy.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Arbitrage tags detected, or paid + social referral share above 35%</dd></div>
+            <div><dt>AI strategy</dt><dd>Offer to run the scan and report the % flagged invalid. The magnet is the product, which shortcuts the entire proof stage.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Termination-Risk Angle</h3>
+          <p>Second-touch angle rather than an opener. It lands hardest with owners rather than ad ops specialists, because it is an existential business risk, not an optimisation.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Tier 2 publishers with the highest paid-traffic share</dd></div>
+            <div><dt>AI strategy</dt><dd>Reframe from clawbacks to account termination. Clawbacks are the cheap version of this problem; losing the AdSense or Ad Manager account is the expensive one.</dd></div>
+            <div><dt>Value</dt><dd>Reduce risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Wrapper Config Audit</h3>
+          <p>This buyer is technical and will discount a marketing percentage. The audit is peer-to-peer rather than pitch-shaped, which is why it opens a door a revenue claim would not.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>10+ SSP lines with Prebid detected and no manager domain</dd></div>
+            <div><dt>AI strategy</dt><dd>Cite their actual demand-partner count from ads.txt, then offer a teardown of timeouts, floors, latency and lost bids on their live wrapper.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Open Ad Ops Req</h3>
+          <p>Layered on the Tier 3 opener as a first-line personalisation, not a separate sequence. It turns an inference about maintenance burden into an observed fact.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Tier 3 publisher with an active Ad Ops, Programmatic or Yield job posting</dd></div>
+            <div><dt>AI strategy</dt><dd>The open role confirms both the in-house team and the fact that the workload currently exceeds it.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Uplift Model on Their Traffic</h3>
+          <p>The largest tier and the cleanest story: nobody is bidding against Google today. Emphasise that this is not a rebuild - the site, layout and AdSense relationship all stay put.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>AdSense-only ads.txt with 500k+ monthly visits</dd></div>
+            <div><dt>AI strategy</dt><dd>Model the header bidding uplift from their real traffic volume and vertical rather than quoting a generic range.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Vertical RPM Benchmark</h3>
+          <p>Softest CTA in the strategy and the widest coverage. If the benchmark shows they are under, the diagnosis narrows to one of three things - no header bidding, weak floors, or invalid traffic - each of which maps to a tier above.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>All remaining qualified publishers, grouped by vertical</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with a benchmark rather than a pitch. Publishers have no public reference point for what their inventory should earn, so the data itself is the value.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Core Update Aftermath</h3>
+          <p>A side play rather than part of the cascade. It is triggered by an external event, so it is opt-in and should only run once the waterfall is stable.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Traffic down more than 25% in the 30 days following a Google core update</dd></div>
+            <div><dt>AI strategy</dt><dd>Time-boxed to the weeks after a confirmed update. The angle writes itself: traffic dropped, so revenue per session matters more than it did last month.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>New Monetization Lead in Seat</h3>
+          <p>Runs alongside the waterfall on an orthogonal signal. Works regardless of which tier the account sits in, so it is deliberately kept out of the cascade.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>0-90 days into a new Head of Ad Ops or Monetization role</dd></div>
+            <div><dt>AI strategy</dt><dd>LinkedIn job-change trigger. New leaders are the most reversible-decision buyer in this market because they are expected to change something.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="05">
+        
+    <div class="section-head">
+      <p class="eyebrow">05</p>
+      <h2>Copy by tier</h2>
+      <p class="takeaway">Notice line, poke-the-bear, value prop, proof, low-effort CTA. Only the data and the value prop change between tiers.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company}}</span><span>{{domain}}</span><span>{{partner_name}}</span><span>{{traffic_source}}</span><span>{{ssp_count}}</span><span>{{monthly_visits}}</span><span>{{top_vertical}}</span><span>{{sender_name}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company}}, {{domain}}, {{partner_name}}, {{traffic_source}}, {{ssp_count}}, {{monthly_visits}}, {{top_vertical}}, {{sender_name}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Managed-Partner Takedown</strong>
+              <em>Demand-stack teardown vs their incumbent, with a modelled RPM delta</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Managed-Partner Takedown steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your ads.txt&#10;&#10;Hi {{first_name}},&#10;&#10;I pulled {{domain}}&#39;s ads.txt and saw {{partner_name}}&#39;s seat IDs sitting in there, so you&#39;ve already made the call that managed monetization beats doing it yourself.&#10;&#10;But would it be fair to assume you can&#39;t actually see what each impression cleared at, or test a different layout without raising a ticket?&#10;&#10;We run the same model with the publisher keeping control: your Google Ad Manager, your ads.txt, no DNS transfer, and full auction-level reporting. Publishers switching to us see a 30-150% RPM lift.&#10;&#10;We&#39;ve paid out over $300M to publishers across 2,000+ sites.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send you a side-by-side of {{partner_name}}&#39;s demand stack vs ours with a modelled RPM delta on your traffic. No call needed.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your ads.txt" data-preview="your ads.txt">your ads.txt</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;I pulled {{domain}}&#39;s ads.txt and saw {{partner_name}}&#39;s seat IDs sitting in there, so you&#39;ve already made the call that managed monetization beats doing it yourself.&#10;&#10;But would it be fair to assume you can&#39;t actually see what each impression cleared at, or test a different layout without raising a ticket?&#10;&#10;We run the same model with the publisher keeping control: your Google Ad Manager, your ads.txt, no DNS transfer, and full auction-level reporting. Publishers switching to us see a 30-150% RPM lift.&#10;&#10;We&#39;ve paid out over $300M to publishers across 2,000+ sites.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send you a side-by-side of {{partner_name}}&#39;s demand stack vs ours with a modelled RPM delta on your traffic. No call needed.&#10;&#10;{{sender_name}}" data-preview="Hi Dana,&#10;&#10;I pulled northlinemedia.com&#39;s ads.txt and saw Freestar&#39;s seat IDs sitting in there, so you&#39;ve already made the call that managed monetization beats doing it yourself.&#10;&#10;But would it be fair to assume you can&#39;t actually see what each impression cleared at, or test a different layout without raising a ticket?&#10;&#10;We run the same model with the publisher keeping control: your Google Ad Manager, your ads.txt, no DNS transfer, and full auction-level reporting. Publishers switching to us see a 30-150% RPM lift.&#10;&#10;We&#39;ve paid out over $300M to publishers across 2,000+ sites.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send you a side-by-side of Freestar&#39;s demand stack vs ours with a modelled RPM delta on your traffic. No call needed.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>I pulled {{domain}}&#39;s ads.txt and saw {{partner_name}}&#39;s seat IDs sitting in there, so you&#39;ve already made the call that managed monetization beats doing it yourself.</p><p>But would it be fair to assume you can&#39;t actually see what each impression cleared at, or test a different layout without raising a ticket?</p><p>We run the same model with the publisher keeping control: your Google Ad Manager, your ads.txt, no DNS transfer, and full auction-level reporting. Publishers switching to us see a 30-150% RPM lift.</p><p>We&#39;ve paid out over $300M to publishers across 2,000+ sites.</p><p>Reply &quot;Y&quot; and I&#39;ll send you a side-by-side of {{partner_name}}&#39;s demand stack vs ours with a modelled RPM delta on your traffic. No call needed.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Quick add. The part most publishers on {{partner_name}} don&#39;t find out until they leave is how much of the rev-share is invisible.&#10;&#10;Ours is contractual, reported at line-item level, and we&#39;re on 30-day cancellation terms. If we don&#39;t beat what you&#39;re earning now, you walk at the end of the month.&#10;&#10;Want the teardown? Just say the word.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Quick add. The part most publishers on {{partner_name}} don&#39;t find out until they leave is how much of the rev-share is invisible.&#10;&#10;Ours is contractual, reported at line-item level, and we&#39;re on 30-day cancellation terms. If we don&#39;t beat what you&#39;re earning now, you walk at the end of the month.&#10;&#10;Want the teardown? Just say the word." data-preview="Quick add. The part most publishers on Freestar don&#39;t find out until they leave is how much of the rev-share is invisible.&#10;&#10;Ours is contractual, reported at line-item level, and we&#39;re on 30-day cancellation terms. If we don&#39;t beat what you&#39;re earning now, you walk at the end of the month.&#10;&#10;Want the teardown? Just say the word.">
+                        <p>Quick add. The part most publishers on {{partner_name}} don&#39;t find out until they leave is how much of the rev-share is invisible.</p><p>Ours is contractual, reported at line-item level, and we&#39;re on 30-day cancellation terms. If we don&#39;t beat what you&#39;re earning now, you walk at the end of the month.</p><p>Want the teardown? Just say the word.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} + RPM benchmark&#10;&#10;{{first_name}}, no need for a call. Just reply yes and I&#39;ll send the demand-stack teardown for {{domain}}.&#10;&#10;Should I send this to you, or is monetization someone else&#39;s call over there?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} + RPM benchmark" data-preview="Northline Media + RPM benchmark">{{company}} + RPM benchmark</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no need for a call. Just reply yes and I&#39;ll send the demand-stack teardown for {{domain}}.&#10;&#10;Should I send this to you, or is monetization someone else&#39;s call over there?" data-preview="Dana, no need for a call. Just reply yes and I&#39;ll send the demand-stack teardown for northlinemedia.com.&#10;&#10;Should I send this to you, or is monetization someone else&#39;s call over there?">
+                        <p>{{first_name}}, no need for a call. Just reply yes and I&#39;ll send the demand-stack teardown for {{domain}}.</p><p>Should I send this to you, or is monetization someone else&#39;s call over there?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Clawback and Ban-Risk</strong>
+              <em>Free invalid-traffic exposure scan on their domain</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Clawback and Ban-Risk steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: invalid traffic on {{domain}}&#10;&#10;Hi {{first_name}},&#10;&#10;Saw {{domain}} is running {{traffic_source}}, and looking at your referral mix, a meaningful share of your sessions are coming in paid.&#10;&#10;Would it be fair to assume you&#39;ve eaten a Google deduction or a clawback in the last few months and never got a straight answer on why?&#10;&#10;That&#39;s what Traffic Cop is for. It blocks bots, scrapers, data-centre and proxy traffic and click spam before the impression is served, so the invalid traffic never enters your reporting and never gets clawed back.&#10;&#10;Bitcoin Magazine had their revenue drop to $0 from an IVT problem. Within 24 hours of the tag going live they were back over $1,000/day, and their clawbacks went to effectively zero.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll run a free invalid-traffic scan on {{domain}} and send you the % that&#39;s flagged. No call.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="invalid traffic on {{domain}}" data-preview="invalid traffic on northlinemedia.com">invalid traffic on {{domain}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Saw {{domain}} is running {{traffic_source}}, and looking at your referral mix, a meaningful share of your sessions are coming in paid.&#10;&#10;Would it be fair to assume you&#39;ve eaten a Google deduction or a clawback in the last few months and never got a straight answer on why?&#10;&#10;That&#39;s what Traffic Cop is for. It blocks bots, scrapers, data-centre and proxy traffic and click spam before the impression is served, so the invalid traffic never enters your reporting and never gets clawed back.&#10;&#10;Bitcoin Magazine had their revenue drop to $0 from an IVT problem. Within 24 hours of the tag going live they were back over $1,000/day, and their clawbacks went to effectively zero.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll run a free invalid-traffic scan on {{domain}} and send you the % that&#39;s flagged. No call.&#10;&#10;{{sender_name}}" data-preview="Hi Dana,&#10;&#10;Saw northlinemedia.com is running Taboola, and looking at your referral mix, a meaningful share of your sessions are coming in paid.&#10;&#10;Would it be fair to assume you&#39;ve eaten a Google deduction or a clawback in the last few months and never got a straight answer on why?&#10;&#10;That&#39;s what Traffic Cop is for. It blocks bots, scrapers, data-centre and proxy traffic and click spam before the impression is served, so the invalid traffic never enters your reporting and never gets clawed back.&#10;&#10;Bitcoin Magazine had their revenue drop to $0 from an IVT problem. Within 24 hours of the tag going live they were back over $1,000/day, and their clawbacks went to effectively zero.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll run a free invalid-traffic scan on northlinemedia.com and send you the % that&#39;s flagged. No call.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>Saw {{domain}} is running {{traffic_source}}, and looking at your referral mix, a meaningful share of your sessions are coming in paid.</p><p>Would it be fair to assume you&#39;ve eaten a Google deduction or a clawback in the last few months and never got a straight answer on why?</p><p>That&#39;s what Traffic Cop is for. It blocks bots, scrapers, data-centre and proxy traffic and click spam before the impression is served, so the invalid traffic never enters your reporting and never gets clawed back.</p><p>Bitcoin Magazine had their revenue drop to $0 from an IVT problem. Within 24 hours of the tag going live they were back over $1,000/day, and their clawbacks went to effectively zero.</p><p>Reply &quot;Y&quot; and I&#39;ll run a free invalid-traffic scan on {{domain}} and send you the % that&#39;s flagged. No call.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One more thing worth knowing. The clawbacks are the cheap version of this problem. The expensive version is a Google Ad Manager or AdSense account termination, and publishers who buy traffic are the ones it happens to.&#10;&#10;Traffic Cop includes account-termination protection for exactly that reason.&#10;&#10;Want the scan on {{domain}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One more thing worth knowing. The clawbacks are the cheap version of this problem. The expensive version is a Google Ad Manager or AdSense account termination, and publishers who buy traffic are the ones it happens to.&#10;&#10;Traffic Cop includes account-termination protection for exactly that reason.&#10;&#10;Want the scan on {{domain}}?" data-preview="One more thing worth knowing. The clawbacks are the cheap version of this problem. The expensive version is a Google Ad Manager or AdSense account termination, and publishers who buy traffic are the ones it happens to.&#10;&#10;Traffic Cop includes account-termination protection for exactly that reason.&#10;&#10;Want the scan on northlinemedia.com?">
+                        <p>One more thing worth knowing. The clawbacks are the cheap version of this problem. The expensive version is a Google Ad Manager or AdSense account termination, and publishers who buy traffic are the ones it happens to.</p><p>Traffic Cop includes account-termination protection for exactly that reason.</p><p>Want the scan on {{domain}}?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: scan for {{domain}}&#10;&#10;{{first_name}}, no call needed. Reply yes and I&#39;ll send the IVT scan for {{domain}}, showing what share of your traffic is invalid and what it&#39;s costing you monthly.&#10;&#10;Should I send it to you or whoever owns ad ops?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="scan for {{domain}}" data-preview="scan for northlinemedia.com">scan for {{domain}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed. Reply yes and I&#39;ll send the IVT scan for {{domain}}, showing what share of your traffic is invalid and what it&#39;s costing you monthly.&#10;&#10;Should I send it to you or whoever owns ad ops?" data-preview="Dana, no call needed. Reply yes and I&#39;ll send the IVT scan for northlinemedia.com, showing what share of your traffic is invalid and what it&#39;s costing you monthly.&#10;&#10;Should I send it to you or whoever owns ad ops?">
+                        <p>{{first_name}}, no call needed. Reply yes and I&#39;ll send the IVT scan for {{domain}}, showing what share of your traffic is invalid and what it&#39;s costing you monthly.</p><p>Should I send it to you or whoever owns ad ops?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - DIY Header Bidding</strong>
+              <em>Prebid and wrapper config audit - timeouts, floors, latency, lost bids</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - DIY Header Bidding steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your prebid setup&#10;&#10;Hi {{first_name}},&#10;&#10;{{domain}}&#39;s ads.txt has {{ssp_count}} demand partners in it and you&#39;re running your own wrapper. That&#39;s a properly built stack, not a plugin job. Also saw you&#39;ve got an ad ops role open.&#10;&#10;But would it be fair to assume someone on your team is spending real hours every week on floor rules, timeout tuning and wrapper updates, and you still can&#39;t tell how many bids you&#39;re losing to latency?&#10;&#10;PubGuru automates that layer: dynamic price floors, match-rate automation, smart refresh and continuous A/B testing, running 24/7. You keep your Google Ad Manager and your relationships. We just stop the leakage and add demand you can&#39;t get at your volume alone.&#10;&#10;We manage 2,000+ sites and 15B+ impressions a month, with 100+ ad ops specialists behind it.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send a config audit of your live wrapper: timeouts, floors, latency and lost bids. No call needed.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your prebid setup" data-preview="your prebid setup">your prebid setup</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;{{domain}}&#39;s ads.txt has {{ssp_count}} demand partners in it and you&#39;re running your own wrapper. That&#39;s a properly built stack, not a plugin job. Also saw you&#39;ve got an ad ops role open.&#10;&#10;But would it be fair to assume someone on your team is spending real hours every week on floor rules, timeout tuning and wrapper updates, and you still can&#39;t tell how many bids you&#39;re losing to latency?&#10;&#10;PubGuru automates that layer: dynamic price floors, match-rate automation, smart refresh and continuous A/B testing, running 24/7. You keep your Google Ad Manager and your relationships. We just stop the leakage and add demand you can&#39;t get at your volume alone.&#10;&#10;We manage 2,000+ sites and 15B+ impressions a month, with 100+ ad ops specialists behind it.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send a config audit of your live wrapper: timeouts, floors, latency and lost bids. No call needed.&#10;&#10;{{sender_name}}" data-preview="Hi Dana,&#10;&#10;northlinemedia.com&#39;s ads.txt has 23 demand partners in it and you&#39;re running your own wrapper. That&#39;s a properly built stack, not a plugin job. Also saw you&#39;ve got an ad ops role open.&#10;&#10;But would it be fair to assume someone on your team is spending real hours every week on floor rules, timeout tuning and wrapper updates, and you still can&#39;t tell how many bids you&#39;re losing to latency?&#10;&#10;PubGuru automates that layer: dynamic price floors, match-rate automation, smart refresh and continuous A/B testing, running 24/7. You keep your Google Ad Manager and your relationships. We just stop the leakage and add demand you can&#39;t get at your volume alone.&#10;&#10;We manage 2,000+ sites and 15B+ impressions a month, with 100+ ad ops specialists behind it.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send a config audit of your live wrapper: timeouts, floors, latency and lost bids. No call needed.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>{{domain}}&#39;s ads.txt has {{ssp_count}} demand partners in it and you&#39;re running your own wrapper. That&#39;s a properly built stack, not a plugin job. Also saw you&#39;ve got an ad ops role open.</p><p>But would it be fair to assume someone on your team is spending real hours every week on floor rules, timeout tuning and wrapper updates, and you still can&#39;t tell how many bids you&#39;re losing to latency?</p><p>PubGuru automates that layer: dynamic price floors, match-rate automation, smart refresh and continuous A/B testing, running 24/7. You keep your Google Ad Manager and your relationships. We just stop the leakage and add demand you can&#39;t get at your volume alone.</p><p>We manage 2,000+ sites and 15B+ impressions a month, with 100+ ad ops specialists behind it.</p><p>Reply &quot;Y&quot; and I&#39;ll send a config audit of your live wrapper: timeouts, floors, latency and lost bids. No call needed.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;To put a number on it, publishers who move from a self-managed wrapper onto PubGuru typically see 30-150% RPM lift, and it&#39;s mostly floor logic and demand depth, not layout tricks.&#10;&#10;The audit is free either way. Want it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="To put a number on it, publishers who move from a self-managed wrapper onto PubGuru typically see 30-150% RPM lift, and it&#39;s mostly floor logic and demand depth, not layout tricks.&#10;&#10;The audit is free either way. Want it?" data-preview="To put a number on it, publishers who move from a self-managed wrapper onto PubGuru typically see 30-150% RPM lift, and it&#39;s mostly floor logic and demand depth, not layout tricks.&#10;&#10;The audit is free either way. Want it?">
+                        <p>To put a number on it, publishers who move from a self-managed wrapper onto PubGuru typically see 30-150% RPM lift, and it&#39;s mostly floor logic and demand depth, not layout tricks.</p><p>The audit is free either way. Want it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: wrapper audit - {{domain}}&#10;&#10;{{first_name}}, no call. Reply yes and I&#39;ll send the prebid config audit for {{domain}}.&#10;&#10;Should this go to you or to whoever owns the wrapper day-to-day?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="wrapper audit - {{domain}}" data-preview="wrapper audit - northlinemedia.com">wrapper audit - {{domain}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call. Reply yes and I&#39;ll send the prebid config audit for {{domain}}.&#10;&#10;Should this go to you or to whoever owns the wrapper day-to-day?" data-preview="Dana, no call. Reply yes and I&#39;ll send the prebid config audit for northlinemedia.com.&#10;&#10;Should this go to you or to whoever owns the wrapper day-to-day?">
+                        <p>{{first_name}}, no call. Reply yes and I&#39;ll send the prebid config audit for {{domain}}.</p><p>Should this go to you or to whoever owns the wrapper day-to-day?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 - AdSense Ceiling</strong>
+              <em>AdSense-to-header-bidding uplift model on their traffic and vertical</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 - AdSense Ceiling steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{domain}} ads.txt&#10;&#10;Hi {{first_name}},&#10;&#10;Checked {{domain}}&#39;s ads.txt. It&#39;s Google and effectively nothing else, on roughly {{monthly_visits}} visits a month.&#10;&#10;Would it be fair to assume every impression is selling at whatever AdSense decides that day, with nobody bidding against it?&#10;&#10;That&#39;s the single biggest gap we see. Adding a header bidding wrapper, premium demand and Open Bidding puts 8-20 buyers in the auction for the same impression. Most publishers we onboard see at least a 30% ad revenue increase, and our average RPM lift runs 30-150%.&#10;&#10;We&#39;re a Google Certified Publishing Partner and we&#39;ve paid out $300M+ to publishers.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll model the uplift on your actual traffic and vertical and send it over. No call needed.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{domain}} ads.txt" data-preview="northlinemedia.com ads.txt">{{domain}} ads.txt</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Checked {{domain}}&#39;s ads.txt. It&#39;s Google and effectively nothing else, on roughly {{monthly_visits}} visits a month.&#10;&#10;Would it be fair to assume every impression is selling at whatever AdSense decides that day, with nobody bidding against it?&#10;&#10;That&#39;s the single biggest gap we see. Adding a header bidding wrapper, premium demand and Open Bidding puts 8-20 buyers in the auction for the same impression. Most publishers we onboard see at least a 30% ad revenue increase, and our average RPM lift runs 30-150%.&#10;&#10;We&#39;re a Google Certified Publishing Partner and we&#39;ve paid out $300M+ to publishers.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll model the uplift on your actual traffic and vertical and send it over. No call needed.&#10;&#10;{{sender_name}}" data-preview="Hi Dana,&#10;&#10;Checked northlinemedia.com&#39;s ads.txt. It&#39;s Google and effectively nothing else, on roughly 4.1M visits a month.&#10;&#10;Would it be fair to assume every impression is selling at whatever AdSense decides that day, with nobody bidding against it?&#10;&#10;That&#39;s the single biggest gap we see. Adding a header bidding wrapper, premium demand and Open Bidding puts 8-20 buyers in the auction for the same impression. Most publishers we onboard see at least a 30% ad revenue increase, and our average RPM lift runs 30-150%.&#10;&#10;We&#39;re a Google Certified Publishing Partner and we&#39;ve paid out $300M+ to publishers.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll model the uplift on your actual traffic and vertical and send it over. No call needed.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>Checked {{domain}}&#39;s ads.txt. It&#39;s Google and effectively nothing else, on roughly {{monthly_visits}} visits a month.</p><p>Would it be fair to assume every impression is selling at whatever AdSense decides that day, with nobody bidding against it?</p><p>That&#39;s the single biggest gap we see. Adding a header bidding wrapper, premium demand and Open Bidding puts 8-20 buyers in the auction for the same impression. Most publishers we onboard see at least a 30% ad revenue increase, and our average RPM lift runs 30-150%.</p><p>We&#39;re a Google Certified Publishing Partner and we&#39;ve paid out $300M+ to publishers.</p><p>Reply &quot;Y&quot; and I&#39;ll model the uplift on your actual traffic and vertical and send it over. No call needed.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Worth saying, this isn&#39;t a rebuild. You keep your site, your layout and your AdSense relationship. The wrapper sits on top and Google just becomes one bidder instead of the only bidder.&#10;&#10;Setup is on us. Want the uplift model for {{domain}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Worth saying, this isn&#39;t a rebuild. You keep your site, your layout and your AdSense relationship. The wrapper sits on top and Google just becomes one bidder instead of the only bidder.&#10;&#10;Setup is on us. Want the uplift model for {{domain}}?" data-preview="Worth saying, this isn&#39;t a rebuild. You keep your site, your layout and your AdSense relationship. The wrapper sits on top and Google just becomes one bidder instead of the only bidder.&#10;&#10;Setup is on us. Want the uplift model for northlinemedia.com?">
+                        <p>Worth saying, this isn&#39;t a rebuild. You keep your site, your layout and your AdSense relationship. The wrapper sits on top and Google just becomes one bidder instead of the only bidder.</p><p>Setup is on us. Want the uplift model for {{domain}}?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: uplift model - {{domain}}&#10;&#10;{{first_name}}, no call needed. Just reply yes and I&#39;ll send the AdSense-to-header-bidding uplift model for {{domain}}.&#10;&#10;Should I send it to you or the owner?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="uplift model - {{domain}}" data-preview="uplift model - northlinemedia.com">uplift model - {{domain}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed. Just reply yes and I&#39;ll send the AdSense-to-header-bidding uplift model for {{domain}}.&#10;&#10;Should I send it to you or the owner?" data-preview="Dana, no call needed. Just reply yes and I&#39;ll send the AdSense-to-header-bidding uplift model for northlinemedia.com.&#10;&#10;Should I send it to you or the owner?">
+                        <p>{{first_name}}, no call needed. Just reply yes and I&#39;ll send the AdSense-to-header-bidding uplift model for {{domain}}.</p><p>Should I send it to you or the owner?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 - Catch-All</strong>
+              <em>Vertical RPM benchmark by geo and device</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 - Catch-All steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: RPM benchmark - {{top_vertical}}&#10;&#10;Hi {{first_name}},&#10;&#10;I&#39;ve been going through {{top_vertical}} publishers doing {{monthly_visits}}+ visits a month, and {{domain}} came up.&#10;&#10;Would it be fair to assume you know what you earn, but not whether it&#39;s actually good for your traffic, geo mix and vertical?&#10;&#10;Almost nobody does. There&#39;s no public benchmark. We built one from 2,000+ sites and 15B+ monthly impressions, broken out by vertical, geo and device.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the {{top_vertical}} RPM benchmark plus where {{domain}} likely sits against it. Free, no call, no pitch.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="RPM benchmark - {{top_vertical}}" data-preview="RPM benchmark - finance">RPM benchmark - {{top_vertical}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;I&#39;ve been going through {{top_vertical}} publishers doing {{monthly_visits}}+ visits a month, and {{domain}} came up.&#10;&#10;Would it be fair to assume you know what you earn, but not whether it&#39;s actually good for your traffic, geo mix and vertical?&#10;&#10;Almost nobody does. There&#39;s no public benchmark. We built one from 2,000+ sites and 15B+ monthly impressions, broken out by vertical, geo and device.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the {{top_vertical}} RPM benchmark plus where {{domain}} likely sits against it. Free, no call, no pitch.&#10;&#10;{{sender_name}}" data-preview="Hi Dana,&#10;&#10;I&#39;ve been going through finance publishers doing 4.1M+ visits a month, and northlinemedia.com came up.&#10;&#10;Would it be fair to assume you know what you earn, but not whether it&#39;s actually good for your traffic, geo mix and vertical?&#10;&#10;Almost nobody does. There&#39;s no public benchmark. We built one from 2,000+ sites and 15B+ monthly impressions, broken out by vertical, geo and device.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the finance RPM benchmark plus where northlinemedia.com likely sits against it. Free, no call, no pitch.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>I&#39;ve been going through {{top_vertical}} publishers doing {{monthly_visits}}+ visits a month, and {{domain}} came up.</p><p>Would it be fair to assume you know what you earn, but not whether it&#39;s actually good for your traffic, geo mix and vertical?</p><p>Almost nobody does. There&#39;s no public benchmark. We built one from 2,000+ sites and 15B+ monthly impressions, broken out by vertical, geo and device.</p><p>Reply &quot;Y&quot; and I&#39;ll send the {{top_vertical}} RPM benchmark plus where {{domain}} likely sits against it. Free, no call, no pitch.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;If the benchmark shows you&#39;re under, the fix is usually one of three things: no header bidding, weak floors, or invalid traffic eating the revenue before it lands.&#10;&#10;We do a free ad revenue audit that tells you which one it is. Want the benchmark first?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="If the benchmark shows you&#39;re under, the fix is usually one of three things: no header bidding, weak floors, or invalid traffic eating the revenue before it lands.&#10;&#10;We do a free ad revenue audit that tells you which one it is. Want the benchmark first?" data-preview="If the benchmark shows you&#39;re under, the fix is usually one of three things: no header bidding, weak floors, or invalid traffic eating the revenue before it lands.&#10;&#10;We do a free ad revenue audit that tells you which one it is. Want the benchmark first?">
+                        <p>If the benchmark shows you&#39;re under, the fix is usually one of three things: no header bidding, weak floors, or invalid traffic eating the revenue before it lands.</p><p>We do a free ad revenue audit that tells you which one it is. Want the benchmark first?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: benchmark for {{domain}}&#10;&#10;{{first_name}}, no need for a call. Reply yes and I&#39;ll send the {{top_vertical}} RPM benchmark.&#10;&#10;Should it come to you or whoever owns monetization?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="benchmark for {{domain}}" data-preview="benchmark for northlinemedia.com">benchmark for {{domain}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no need for a call. Reply yes and I&#39;ll send the {{top_vertical}} RPM benchmark.&#10;&#10;Should it come to you or whoever owns monetization?" data-preview="Dana, no need for a call. Reply yes and I&#39;ll send the finance RPM benchmark.&#10;&#10;Should it come to you or whoever owns monetization?">
+                        <p>{{first_name}}, no need for a call. Reply yes and I&#39;ll send the {{top_vertical}} RPM benchmark.</p><p>Should it come to you or whoever owns monetization?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="06">
+        
+    <div class="section-head">
+      <p class="eyebrow">06</p>
+      <h2>Launch and thresholds</h2>
+      <p class="takeaway">Phase-rolled highest-intent first. Re-crawl monthly - tier movement is itself a buying signal.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Weeks 1-2 - Launch Tier 1, Managed-Partner Takedown. Proven payers with the clearest pain, and the fastest proof of the whole thesis.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Weeks 3-4 - Launch Tier 2, Clawback and Ban-Risk. Most urgent pain, and the free IVT scan is the strongest magnet in the set.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 5-6 - Launch Tier 4, AdSense Ceiling. Largest volume and the simplest story. This is where scale comes from.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Weeks 7-8 - Launch Tier 3, DIY Header Bidding. Longest cycle and biggest accounts, so start it once the shorter cycles are producing.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Weeks 9-10 - Launch Tier 5, Catch-All. Backfill the remaining market once the four signal tiers are calibrated.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Ongoing - Re-crawl the full ads.txt dataset monthly. Publishers move between tiers as their setup changes, and tier movement is itself a buying signal.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacts</strong>
+                <span>Excellent. Scale this tier hard.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run untouched.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450-500</strong>
+                <span>Borderline. Test one copy variant - vary the magnet or the first-line angle, hold everything else constant.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or reply rate under 1% after 1,500+ sends</strong>
+                <span>Cut the tier and rework it.</span>
+              </div>
+              <div class="threshold">
+                <strong>Fewer than 1,500 contacts available</strong>
+                <span>Do not launch. Below that there is no statistical signal to read.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a call</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dana","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Northline Media","northlinemedia\\.com","Freestar","Taboola","23","4\\.1M","finance","Alex"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
