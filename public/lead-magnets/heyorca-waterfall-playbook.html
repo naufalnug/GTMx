@@ -1,0 +1,1771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HeyOrca - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-07-27</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for HeyOrca</p>
+          <h1>Your HeyOrca waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">One priority-routed cascade across ~68,000 agency and in-house accounts — built once, then fed leads forever.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Every competitor in this category charges by the login. That means every agency using one has quietly rationed access — two or three licensed people, and clients approving posts in email threads instead of the tool being paid for. The seat tax is the pain, and it is publicly observable, because competitor partner directories are open lists of who is paying it.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>~68,000</strong>
+          <span>Addressable accounts, 100% routed</span>
+        </div>
+        <div class="metric-card">
+          <strong>$249</strong>
+          <span>Per user/mo at Sprout vs $59 per calendar</span>
+        </div>
+        <div class="metric-card">
+          <strong>60 hrs</strong>
+          <span>Saved in month one at one agency</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>HeyOrca is a social media management platform — plan, schedule, approve, publish and report across 9+ networks — priced per client calendar instead of per seat, with a branded client approval portal that needs no licence.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal</p></div><div><span>02</span><p>The routing</p></div><div><span>03</span><p>The tiers</p></div><div><span>04</span><p>The campaigns</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>01</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>02</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>03</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>04</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>05</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>06</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="01">
+        
+    <div class="section-head">
+      <p class="eyebrow">01</p>
+      <h2>The signal</h2>
+      <p class="takeaway">Social agencies publish their own qualification data — client rosters, tool stacks and hiring intent are all public, so the market list and the routing signal arrive in a single pull with zero paid enrichment.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>Competitor partner directories are public lists of agencies confirmed to be paying per seat — this is proof, not inference.</p></div><div class="reason-card"><span>02</span><p>Agencies market their client roster on their own work page. Counting logos gives you calendar count for free.</p></div><div class="reason-card"><span>03</span><p>Job posts for social roles name the required tool stack and date-stamp the hiring intent in the same document.</p></div><div class="reason-card"><span>04</span><p>No tier routes on the absence of a tool. Social platforms leave no reliable front-end fingerprint, so every trigger is something positively observed.</p></div>
+            </div>
+            <div class="field-cloud"><span>competitor_tool_detected</span><span>competitor_proof_source</span><span>open_social_role</span><span>role_title</span><span>job_post_date</span><span>client_brand_count</span><span>named_client_examples</span><span>headcount_tier</span><span>org_type</span><span>location_count</span><span>contact_title</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>Sprout Social Agency Partner directory</h3><p>Market + Tier 1 signal. A public list of agencies paying per seat — the highest-intent list in the entire strategy.</p></div><div class="source-card"><span>02</span><h3>Hootsuite, Agorapulse, Later and Sprinklr partner + case-study pages</h3><p>Market + Tier 1 signal. Same mechanic applied across the category.</p></div><div class="source-card"><span>03</span><h3>LinkedIn and Indeed job posts for social roles</h3><p>Market + Tier 1 and 2 signal. Descriptions name the tool, which can qualify Tier 1 without a directory hit.</p></div><div class="source-card"><span>04</span><h3>Clutch, Sortlist, Agency Vista, Semrush Agency Partners</h3><p>Market + Tier 3 signal. Client counts, team size, service mix and geography.</p></div><div class="source-card"><span>05</span><h3>Meta Business Partners and Google Partners directories</h3><p>Market. Verified, actively operating agencies.</p></div><div class="source-card"><span>06</span><h3>Agency website scrape of /clients, /work and /portfolio</h3><p>Tier 3 signal. Count distinct brand logos to derive calendar count.</p></div><div class="source-card"><span>07</span><h3>Apollo and LinkedIn Sales Navigator</h3><p>Market + Tier 4 signal. Headcount tier and owner or founder titles.</p></div><div class="source-card"><span>08</span><h3>Franchise, credit-union, healthcare, university and nonprofit directories</h3><p>Tier 5 market. Multi-location operations imply distributed approval pain.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="02">
+        
+    <div class="section-head">
+      <p class="eyebrow">02</p>
+      <h2>The routing</h2>
+      <p class="takeaway">Five tiers, tested top to bottom. Each account lands in the first tier it matches, and the catch-all guarantees nothing in the market is left unaddressed.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF competitor_tool_detected is not none</span>
+          <strong>Tier 1 — Per-Seat Payer</strong>
+          <em>A partner-directory listing, a case-study mention or a tool-naming job post is confirmation they are already paying by the login.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF ELSE IF open_social_role is true, posted within the last 60 days</span>
+          <strong>Tier 2 — Seat Count About to Grow</strong>
+          <em>Hiring is the single moment when licence cost and onboarding friction spike at the same time.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF ELSE IF client_brand_count is 5 or more</span>
+          <strong>Tier 3 — Multi-Calendar Operator</strong>
+          <em>Five published client brands means five separate approval loops every week. The pain here is volume, not price.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF ELSE IF org_type is agency AND headcount is under 20</span>
+          <strong>Tier 4 — Boutique</strong>
+          <em>Small enough that the spreadsheet technically still works, large enough that it has started to hurt.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF ELSE</span>
+          <strong>Tier 5 — Catch-All: In-House Multi-Brand and Remainder</strong>
+          <em>In-house teams approve across departments rather than clients, and none of those approvers will ever log into a marketing tool.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF competitor_tool_detected is not none -&gt; Tier 1 — Per-Seat Payer (A partner-directory listing, a case-study mention or a tool-naming job post is confirmation they are already paying by the login.)&#10;2. IF ELSE IF open_social_role is true, posted within the last 60 days -&gt; Tier 2 — Seat Count About to Grow (Hiring is the single moment when licence cost and onboarding friction spike at the same time.)&#10;3. IF ELSE IF client_brand_count is 5 or more -&gt; Tier 3 — Multi-Calendar Operator (Five published client brands means five separate approval loops every week. The pain here is volume, not price.)&#10;4. IF ELSE IF org_type is agency AND headcount is under 20 -&gt; Tier 4 — Boutique (Small enough that the spreadsheet technically still works, large enough that it has started to hurt.)&#10;5. IF ELSE -&gt; Tier 5 — Catch-All: In-House Multi-Brand and Remainder (In-house teams approve across departments rather than clients, and none of those approvers will ever log into a marketing tool.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF competitor_tool_detected is not none -&gt; Tier 1 — Per-Seat Payer (A partner-directory listing, a case-study mention or a tool-naming job post is confirmation they are already paying by the login.)
+2. IF ELSE IF open_social_role is true, posted within the last 60 days -&gt; Tier 2 — Seat Count About to Grow (Hiring is the single moment when licence cost and onboarding friction spike at the same time.)
+3. IF ELSE IF client_brand_count is 5 or more -&gt; Tier 3 — Multi-Calendar Operator (Five published client brands means five separate approval loops every week. The pain here is volume, not price.)
+4. IF ELSE IF org_type is agency AND headcount is under 20 -&gt; Tier 4 — Boutique (Small enough that the spreadsheet technically still works, large enough that it has started to hurt.)
+5. IF ELSE -&gt; Tier 5 — Catch-All: In-House Multi-Brand and Remainder (In-house teams approve across departments rather than clients, and none of those approvers will ever log into a marketing tool.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="03">
+        
+    <div class="section-head">
+      <p class="eyebrow">03</p>
+      <h2>The tiers</h2>
+      <p class="takeaway">Every pain is traced straight back to its trigger. Nothing here is assumed about the market, and no tier routes on the absence of a tool.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">9% TAM</span>
+          </div>
+          <h3>Tier 1: The Per-Seat Payer</h3>
+          <p>Listed in a per-seat competitor&#39;s partner directory, named in their case studies, or a live job post that requires experience with that tool.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They pay by the login. Every hire, freelancer, intern and client reviewer costs money, so they do not seat everyone. Work funnels through one or two licensed people, and clients end up reviewing in email threads and PDFs rather than in the tool being paid for.</dd></div>
+              <div><dt>Offer</dt><dd>The Seat Math Teardown — their team size and client count priced side by side against their current tool</dd></div>
+              <div><dt>Source</dt><dd>Competitor partner directories, competitor case studies, tool-naming job posts</dd></div>
+              <div><dt>Reply density</dt><dd>Highest in the waterfall — expect 1 positive reply per 120 to 180 contacted</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">11% TAM</span>
+          </div>
+          <h3>Tier 2: Seat Count About to Grow</h3>
+          <p>A live job post within the last 60 days for a social media manager, coordinator or community manager, with no confirmed competitor tool.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>A new hire means a new seat, a new onboarding, and a person who needs the brand rules for every client on day one — the voice guidelines, the approver, the quirk that lives in someone&#39;s head.</dd></div>
+              <div><dt>Offer</dt><dd>The 30-Day Social Hire Ramp Kit — onboarding checklist plus the approval SOP</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn and Indeed job posts, re-scraped weekly</dd></div>
+              <div><dt>Reply density</dt><dd>Strong — expect 1 per 180 to 260. The only time-decaying tier, so it must be refreshed weekly</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">18% TAM</span>
+          </div>
+          <h3>Tier 3: The Multi-Calendar Operator</h3>
+          <p>Five or more distinct client brands visible on their site, no competitor tool detected, not currently hiring.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Five brands means five approval loops a week. Without one system that is spreadsheets, Slack threads and a Monday morning spent chasing sign-off from clients who reply approved to the wrong post.</dd></div>
+              <div><dt>Offer</dt><dd>The Multi-Client Approval Blueprint — the structure agencies running 5 to 25 brands use</dd></div>
+              <div><dt>Source</dt><dd>Agency work-page scrape, Clutch and Sortlist rosters</dd></div>
+              <div><dt>Reply density</dt><dd>Moderate — expect 1 per 250 to 350</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">22% TAM</span>
+          </div>
+          <h3>Tier 4: The Boutique</h3>
+          <p>Agency with under 20 staff, fewer than five visible client brands, no competitor tool detected, not hiring.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The content calendar is still a Google Sheet. Approvals happen in email and direct messages, nothing is versioned, and every scheduled post is one copy-paste away from going out on the wrong account.</dd></div>
+              <div><dt>Offer</dt><dd>The Client Approval SOP — retiring the spreadsheet without annoying your clients</dd></div>
+              <div><dt>Source</dt><dd>Apollo and LinkedIn Sales Navigator headcount, agency directories</dd></div>
+              <div><dt>Reply density</dt><dd>Volume play — expect 1 per 350 to 450</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">40% TAM</span>
+          </div>
+          <h3>Tier 5: Catch-All — In-House Multi-Brand</h3>
+          <p>Everything that did not match above: in-house teams at franchises, nonprofits, universities, healthcare systems, credit unions and faith organisations, plus any remaining agency.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Approvals cross departments rather than clients. Legal, comms, regional managers and executives all need to see posts before they publish, and none of them will log into a marketing tool to say yes — so sign-off lives in email and screenshots, and content that was timely on Tuesday goes out on Friday.</dd></div>
+              <div><dt>Offer</dt><dd>The Social Approval Friction Audit — six questions showing where sign-off is leaking hours</dd></div>
+              <div><dt>Source</dt><dd>Franchise, nonprofit, education, healthcare and credit-union directories</dd></div>
+              <div><dt>Reply density</dt><dd>Broadest and softest — expect 1 per 400 to 550</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="04">
+        
+    <div class="section-head">
+      <p class="eyebrow">04</p>
+      <h2>The campaigns</h2>
+      <p class="takeaway">The waterfall carries the volume. A short bench of orthogonal side campaigns catches the moments — price changes, new client wins, renewal windows — that the cascade cannot see.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Core">
+          <div class="campaign-card__meta">
+            <span>Core</span>
+            <span>Focused</span>
+          </div>
+          <h3>Seat Math Teardown</h3>
+          <p>The strongest list in the strategy, because directory presence is proof of payment rather than inference. The offer is a genuinely personalised artifact: their headcount and client count priced against what they are on now.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Agencies appearing in a per-seat competitor&#39;s public partner directory</dd></div>
+            <div><dt>AI strategy</dt><dd>Scrape the directory, then enrich each agency with its own client-roster count from its work page. The email opens by naming both the directory listing and two of their actual client brands — research they can verify in one glance.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Core">
+          <div class="campaign-card__meta">
+            <span>Core</span>
+            <span>Focused</span>
+          </div>
+          <h3>Tool-Named Job Post</h3>
+          <p>Doubles the reachable Tier 1 population and catches agencies that pay a competitor but were never featured in its marketing.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Job posts requiring proficiency in Sprout, Hootsuite, Sprinklr, Agorapulse or Later</dd></div>
+            <div><dt>AI strategy</dt><dd>Parse the requirements section of live job posts for competitor tool names. Qualifies an agency into Tier 1 without a directory hit, and adds hiring recency on top of the seat-tax angle.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Core">
+          <div class="campaign-card__meta">
+            <span>Core</span>
+            <span>Focused</span>
+          </div>
+          <h3>New Hire Ramp</h3>
+          <p>The self-replenishing engine of the strategy. A weekly re-scrape keeps this tier permanently stocked, and accounts that go quiet simply re-route down the ladder.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Live social-role posts under 60 days old, no competitor tool detected</dd></div>
+            <div><dt>AI strategy</dt><dd>Reference the role title and how many days ago it was posted, then reframe the problem from hiring to week-one context transfer across every client brand.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Core">
+          <div class="campaign-card__meta">
+            <span>Core</span>
+            <span>Broad</span>
+          </div>
+          <h3>Five Approval Loops</h3>
+          <p>Volume, not price, is the wedge here. These agencies are not necessarily overpaying — they are drowning in sign-off threads.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Agencies with 5 or more client brands published on their work page</dd></div>
+            <div><dt>AI strategy</dt><dd>Count the logos, name two of them in the first line, and make the pain arithmetic: brands multiplied by weekly approval cycles. The 40 percent multi-calendar discount lands as a second-email commercial hook.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Core">
+          <div class="campaign-card__meta">
+            <span>Core</span>
+            <span>Broad</span>
+          </div>
+          <h3>Retire the Spreadsheet</h3>
+          <p>The free plan and card-free trial carry this tier. No demo is offered anywhere in the sequence, because this buyer will not take a call before they have tried it.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Agencies under 20 staff with fewer than five visible client brands</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with the size observation, then move from convenience to risk in email two: the spreadsheet does not fail gradually, it fails once and costs a client.</dd></div>
+            <div><dt>Value</dt><dd>Reduce risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Core">
+          <div class="campaign-card__meta">
+            <span>Core</span>
+            <span>Broad</span>
+          </div>
+          <h3>Approval Friction Audit</h3>
+          <p>The mandatory catch-all. Broadest copy, softest CTA, and the tier where the hosted audit page does the qualification work instead of the email.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>In-house multi-brand and multi-location teams, plus all remaining accounts</dd></div>
+            <div><dt>AI strategy</dt><dd>Route on org type and location count, then name the specific approver that org would realistically have — legal in healthcare, regional managers in franchise, an executive director in a nonprofit.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Niche</span>
+          </div>
+          <h3>Competitor Price-Change Reactor</h3>
+          <p>The highest-converting window in this category. Worth keeping a pre-written sequence on the shelf so it can ship the same week.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Tier 1 accounts, fired when a competitor announces a pricing or packaging change</dd></div>
+            <div><dt>AI strategy</dt><dd>A ten-day burst referencing the announcement directly. Not part of the waterfall — an orthogonal, time-boxed trigger layered on top of an existing tier.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Niche</span>
+          </div>
+          <h3>New-Business-Win Trigger</h3>
+          <p>Tiny volume, precise timing. The buying moment is created by the agency&#39;s own announcement.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Press releases and posts announcing a new client appointment</dd></div>
+            <div><dt>AI strategy</dt><dd>A new client means a new calendar is needed this month. Same-week outreach that congratulates and then offers the calendar structure for the new account.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Niche</span>
+          </div>
+          <h3>Review Reactor</h3>
+          <p>The smallest list in the entire strategy and almost certainly the highest converting. Worth checking weekly by hand.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>One-to-three-star reviews on per-seat competitors citing seat cost or approval friction</dd></div>
+            <div><dt>AI strategy</dt><dd>Mirror the language of their own review back in the first line. The prospect has already written the pain out in public.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Niche</span>
+          </div>
+          <h3>Conference Play</h3>
+          <p>Time-boxed to a two-week window either side of each event. Opt-in, and never a replacement for the cascade.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Social Media Marketing World, INBOUND and Content Marketing World exhibitor and attendee lists</dd></div>
+            <div><dt>AI strategy</dt><dd>Work the exhibitor directory rather than live event hashtags — event posts do not index in search for two to five days, so the directory is the reliable source.</dd></div>
+            <div><dt>Value</dt><dd>Build trust</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="05">
+        
+    <div class="section-head">
+      <p class="eyebrow">05</p>
+      <h2>The copy</h2>
+      <p class="takeaway">Same five-beat structure in every tier: a notice line proving real research, a poke-the-bear question, one value prop, one proof point, and a reply-only CTA. Only the data changes.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company}}</span><span>{{competitor}}</span><span>{{client_brand_count}}</span><span>{{client_1}}</span><span>{{client_2}}</span><span>{{headcount}}</span><span>{{role_title}}</span><span>{{days_ago}}</span><span>{{ops_name}}</span><span>{{location_descriptor}}</span><span>{{approver_role}}</span><span>{{sender_name}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company}}, {{competitor}}, {{client_brand_count}}, {{client_1}}, {{client_2}}, {{headcount}}, {{role_title}}, {{days_ago}}, {{ops_name}}, {{location_descriptor}}, {{approver_role}}, {{sender_name}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 — The Per-Seat Payer</strong>
+              <em>The Seat Math Teardown</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 — The Per-Seat Payer steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: seats at {{company}}&#10;&#10;Hi {{first_name}},&#10;&#10;Saw {{company}} listed in {{competitor}}&#39;s partner directory, and your work page has {{client_brand_count}} brands on it, {{client_1}} and {{client_2}} included.&#10;&#10;But would it be fair to assume not everyone on your team actually has a login? On per-seat pricing most agencies your size license two or three people and everyone else works through them, which means clients end up approving posts in email threads instead of the tool you&#39;re paying for.&#10;&#10;HeyOrca prices per client calendar instead of per seat. Unlimited users on every paid plan, and clients approve in their own branded portal without needing a licence at all.&#10;&#10;Bowda Creative Co. moved off Sprout Social for exactly this, so every teammate could finally have their own seat.&#10;&#10;Want me to run the seat math for {{company}}? Your team size, your {{client_brand_count}} brands, priced side by side against what you&#39;re on now. Reply &quot;math&quot; and I&#39;ll send it, no call needed.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="seats at {{company}}" data-preview="seats at Northline Social">seats at {{company}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Saw {{company}} listed in {{competitor}}&#39;s partner directory, and your work page has {{client_brand_count}} brands on it, {{client_1}} and {{client_2}} included.&#10;&#10;But would it be fair to assume not everyone on your team actually has a login? On per-seat pricing most agencies your size license two or three people and everyone else works through them, which means clients end up approving posts in email threads instead of the tool you&#39;re paying for.&#10;&#10;HeyOrca prices per client calendar instead of per seat. Unlimited users on every paid plan, and clients approve in their own branded portal without needing a licence at all.&#10;&#10;Bowda Creative Co. moved off Sprout Social for exactly this, so every teammate could finally have their own seat.&#10;&#10;Want me to run the seat math for {{company}}? Your team size, your {{client_brand_count}} brands, priced side by side against what you&#39;re on now. Reply &quot;math&quot; and I&#39;ll send it, no call needed.&#10;&#10;{{sender_name}}" data-preview="Hi Dana,&#10;&#10;Saw Northline Social listed in Sprout Social&#39;s partner directory, and your work page has 11 brands on it, Harbour Dental and Verdant Outdoors included.&#10;&#10;But would it be fair to assume not everyone on your team actually has a login? On per-seat pricing most agencies your size license two or three people and everyone else works through them, which means clients end up approving posts in email threads instead of the tool you&#39;re paying for.&#10;&#10;HeyOrca prices per client calendar instead of per seat. Unlimited users on every paid plan, and clients approve in their own branded portal without needing a licence at all.&#10;&#10;Bowda Creative Co. moved off Sprout Social for exactly this, so every teammate could finally have their own seat.&#10;&#10;Want me to run the seat math for Northline Social? Your team size, your 11 brands, priced side by side against what you&#39;re on now. Reply &quot;math&quot; and I&#39;ll send it, no call needed.&#10;&#10;Josh">
+                        <p>Hi {{first_name}},</p><p>Saw {{company}} listed in {{competitor}}&#39;s partner directory, and your work page has {{client_brand_count}} brands on it, {{client_1}} and {{client_2}} included.</p><p>But would it be fair to assume not everyone on your team actually has a login? On per-seat pricing most agencies your size license two or three people and everyone else works through them, which means clients end up approving posts in email threads instead of the tool you&#39;re paying for.</p><p>HeyOrca prices per client calendar instead of per seat. Unlimited users on every paid plan, and clients approve in their own branded portal without needing a licence at all.</p><p>Bowda Creative Co. moved off Sprout Social for exactly this, so every teammate could finally have their own seat.</p><p>Want me to run the seat math for {{company}}? Your team size, your {{client_brand_count}} brands, priced side by side against what you&#39;re on now. Reply &quot;math&quot; and I&#39;ll send it, no call needed.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Quick follow-up with the number, since it&#39;s usually the part that lands.&#10;&#10;Sprout starts at $249 per user, per month. HeyOrca is $59 to $149 per calendar, unlimited users, and 40 percent off once you&#39;re past five calendars.&#10;&#10;For an agency running {{client_brand_count}} brands with a team of {{headcount}}, that gap is normally the cost of a part-time coordinator.&#10;&#10;Want the teardown? Reply &quot;math&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Quick follow-up with the number, since it&#39;s usually the part that lands.&#10;&#10;Sprout starts at $249 per user, per month. HeyOrca is $59 to $149 per calendar, unlimited users, and 40 percent off once you&#39;re past five calendars.&#10;&#10;For an agency running {{client_brand_count}} brands with a team of {{headcount}}, that gap is normally the cost of a part-time coordinator.&#10;&#10;Want the teardown? Reply &quot;math&quot;." data-preview="Quick follow-up with the number, since it&#39;s usually the part that lands.&#10;&#10;Sprout starts at $249 per user, per month. HeyOrca is $59 to $149 per calendar, unlimited users, and 40 percent off once you&#39;re past five calendars.&#10;&#10;For an agency running 11 brands with a team of 9, that gap is normally the cost of a part-time coordinator.&#10;&#10;Want the teardown? Reply &quot;math&quot;.">
+                        <p>Quick follow-up with the number, since it&#39;s usually the part that lands.</p><p>Sprout starts at $249 per user, per month. HeyOrca is $59 to $149 per calendar, unlimited users, and 40 percent off once you&#39;re past five calendars.</p><p>For an agency running {{client_brand_count}} brands with a team of {{headcount}}, that gap is normally the cost of a part-time coordinator.</p><p>Want the teardown? Reply &quot;math&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: wrong person?&#10;&#10;Hi {{first_name}}, no need for a call on this one. Just reply &quot;yes&quot; and I&#39;ll send the seat-math teardown for {{company}}.&#10;&#10;Should I send it to you, or is {{ops_name}} the one who owns the tooling budget?&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="wrong person?" data-preview="wrong person?">wrong person?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, no need for a call on this one. Just reply &quot;yes&quot; and I&#39;ll send the seat-math teardown for {{company}}.&#10;&#10;Should I send it to you, or is {{ops_name}} the one who owns the tooling budget?&#10;&#10;{{sender_name}}" data-preview="Hi Dana, no need for a call on this one. Just reply &quot;yes&quot; and I&#39;ll send the seat-math teardown for Northline Social.&#10;&#10;Should I send it to you, or is Priya the one who owns the tooling budget?&#10;&#10;Josh">
+                        <p>Hi {{first_name}}, no need for a call on this one. Just reply &quot;yes&quot; and I&#39;ll send the seat-math teardown for {{company}}.</p><p>Should I send it to you, or is {{ops_name}} the one who owns the tooling budget?</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 — Seat Count About to Grow</strong>
+              <em>The 30-Day Social Hire Ramp Kit</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 — Seat Count About to Grow steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the {{role_title}} req&#10;&#10;Hi {{first_name}},&#10;&#10;Saw {{company}} is hiring a {{role_title}}, posted {{days_ago}} days ago.&#10;&#10;But would it be fair to assume the harder part isn&#39;t the hire, it&#39;s week one? New person, {{client_brand_count}} clients, and every brand has its own voice rules, its own approver, and its own &quot;please never post before 10am&quot; quirk that lives in someone&#39;s head.&#10;&#10;HeyOrca gives them a login on day one at no extra licence cost, unlimited users on every plan, and every client calendar sits in one place with approvals wired in, so nothing they schedule can go live before the client signs off.&#10;&#10;One agency owner measured 60 hours and $4,000 saved in her first 30 days on it.&#10;&#10;I put together a 30-day ramp kit for new social hires, onboarding checklist and the approval SOP. Reply &quot;ramp&quot; and I&#39;ll send it over, whether or not HeyOrca&#39;s a fit.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the {{role_title}} req" data-preview="the Social Media Coordinator req">the {{role_title}} req</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Saw {{company}} is hiring a {{role_title}}, posted {{days_ago}} days ago.&#10;&#10;But would it be fair to assume the harder part isn&#39;t the hire, it&#39;s week one? New person, {{client_brand_count}} clients, and every brand has its own voice rules, its own approver, and its own &quot;please never post before 10am&quot; quirk that lives in someone&#39;s head.&#10;&#10;HeyOrca gives them a login on day one at no extra licence cost, unlimited users on every plan, and every client calendar sits in one place with approvals wired in, so nothing they schedule can go live before the client signs off.&#10;&#10;One agency owner measured 60 hours and $4,000 saved in her first 30 days on it.&#10;&#10;I put together a 30-day ramp kit for new social hires, onboarding checklist and the approval SOP. Reply &quot;ramp&quot; and I&#39;ll send it over, whether or not HeyOrca&#39;s a fit.&#10;&#10;{{sender_name}}" data-preview="Hi Dana,&#10;&#10;Saw Northline Social is hiring a Social Media Coordinator, posted 6 days ago.&#10;&#10;But would it be fair to assume the harder part isn&#39;t the hire, it&#39;s week one? New person, 11 clients, and every brand has its own voice rules, its own approver, and its own &quot;please never post before 10am&quot; quirk that lives in someone&#39;s head.&#10;&#10;HeyOrca gives them a login on day one at no extra licence cost, unlimited users on every plan, and every client calendar sits in one place with approvals wired in, so nothing they schedule can go live before the client signs off.&#10;&#10;One agency owner measured 60 hours and $4,000 saved in her first 30 days on it.&#10;&#10;I put together a 30-day ramp kit for new social hires, onboarding checklist and the approval SOP. Reply &quot;ramp&quot; and I&#39;ll send it over, whether or not HeyOrca&#39;s a fit.&#10;&#10;Josh">
+                        <p>Hi {{first_name}},</p><p>Saw {{company}} is hiring a {{role_title}}, posted {{days_ago}} days ago.</p><p>But would it be fair to assume the harder part isn&#39;t the hire, it&#39;s week one? New person, {{client_brand_count}} clients, and every brand has its own voice rules, its own approver, and its own &quot;please never post before 10am&quot; quirk that lives in someone&#39;s head.</p><p>HeyOrca gives them a login on day one at no extra licence cost, unlimited users on every plan, and every client calendar sits in one place with approvals wired in, so nothing they schedule can go live before the client signs off.</p><p>One agency owner measured 60 hours and $4,000 saved in her first 30 days on it.</p><p>I put together a 30-day ramp kit for new social hires, onboarding checklist and the approval SOP. Reply &quot;ramp&quot; and I&#39;ll send it over, whether or not HeyOrca&#39;s a fit.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One more angle on the {{role_title}} hire.&#10;&#10;Most agencies lose the first two weeks of a new coordinator to context transfer: which client approves what, in which channel, by when.&#10;&#10;When that lives in a shared calendar with per-client approval portals instead of in Slack, that ramp is days rather than weeks.&#10;&#10;Still happy to send the ramp kit. Reply &quot;ramp&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One more angle on the {{role_title}} hire.&#10;&#10;Most agencies lose the first two weeks of a new coordinator to context transfer: which client approves what, in which channel, by when.&#10;&#10;When that lives in a shared calendar with per-client approval portals instead of in Slack, that ramp is days rather than weeks.&#10;&#10;Still happy to send the ramp kit. Reply &quot;ramp&quot;." data-preview="One more angle on the Social Media Coordinator hire.&#10;&#10;Most agencies lose the first two weeks of a new coordinator to context transfer: which client approves what, in which channel, by when.&#10;&#10;When that lives in a shared calendar with per-client approval portals instead of in Slack, that ramp is days rather than weeks.&#10;&#10;Still happy to send the ramp kit. Reply &quot;ramp&quot;.">
+                        <p>One more angle on the {{role_title}} hire.</p><p>Most agencies lose the first two weeks of a new coordinator to context transfer: which client approves what, in which channel, by when.</p><p>When that lives in a shared calendar with per-client approval portals instead of in Slack, that ramp is days rather than weeks.</p><p>Still happy to send the ramp kit. Reply &quot;ramp&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: ramp kit&#10;&#10;Hi {{first_name}}, no call needed. Reply &quot;yes&quot; and I&#39;ll send the 30-day social hire ramp kit.&#10;&#10;Should it go to you or whoever&#39;s onboarding the new {{role_title}}?&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="ramp kit" data-preview="ramp kit">ramp kit</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, no call needed. Reply &quot;yes&quot; and I&#39;ll send the 30-day social hire ramp kit.&#10;&#10;Should it go to you or whoever&#39;s onboarding the new {{role_title}}?&#10;&#10;{{sender_name}}" data-preview="Hi Dana, no call needed. Reply &quot;yes&quot; and I&#39;ll send the 30-day social hire ramp kit.&#10;&#10;Should it go to you or whoever&#39;s onboarding the new Social Media Coordinator?&#10;&#10;Josh">
+                        <p>Hi {{first_name}}, no call needed. Reply &quot;yes&quot; and I&#39;ll send the 30-day social hire ramp kit.</p><p>Should it go to you or whoever&#39;s onboarding the new {{role_title}}?</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 — The Multi-Calendar Operator</strong>
+              <em>The Multi-Client Approval Blueprint</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 — The Multi-Calendar Operator steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{client_brand_count}} brands&#10;&#10;Hi {{first_name}},&#10;&#10;Counted {{client_brand_count}} client brands on {{company}}&#39;s work page, {{client_1}}, {{client_2}} and the rest.&#10;&#10;But would it be fair to assume that&#39;s also {{client_brand_count}} separate approval loops every week? Different sheets, different Slack threads, different clients who reply &quot;approved!&quot; to the wrong post.&#10;&#10;HeyOrca gives each brand its own calendar and each client their own branded approval portal they can use without a login. Approvals stop living in your inbox, and past five calendars the pricing drops 40 percent.&#10;&#10;Agencies on HeyOrca publish 190,000+ posts a month between them, and it&#39;s a 4.8 on G2.&#10;&#10;I&#39;ve got a Multi-Client Approval Blueprint, the calendar and sign-off structure agencies running 5 to 25 brands use. Reply &quot;blueprint&quot; and it&#39;s yours.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{client_brand_count}} brands" data-preview="11 brands">{{client_brand_count}} brands</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Counted {{client_brand_count}} client brands on {{company}}&#39;s work page, {{client_1}}, {{client_2}} and the rest.&#10;&#10;But would it be fair to assume that&#39;s also {{client_brand_count}} separate approval loops every week? Different sheets, different Slack threads, different clients who reply &quot;approved!&quot; to the wrong post.&#10;&#10;HeyOrca gives each brand its own calendar and each client their own branded approval portal they can use without a login. Approvals stop living in your inbox, and past five calendars the pricing drops 40 percent.&#10;&#10;Agencies on HeyOrca publish 190,000+ posts a month between them, and it&#39;s a 4.8 on G2.&#10;&#10;I&#39;ve got a Multi-Client Approval Blueprint, the calendar and sign-off structure agencies running 5 to 25 brands use. Reply &quot;blueprint&quot; and it&#39;s yours.&#10;&#10;{{sender_name}}" data-preview="Hi Dana,&#10;&#10;Counted 11 client brands on Northline Social&#39;s work page, Harbour Dental, Verdant Outdoors and the rest.&#10;&#10;But would it be fair to assume that&#39;s also 11 separate approval loops every week? Different sheets, different Slack threads, different clients who reply &quot;approved!&quot; to the wrong post.&#10;&#10;HeyOrca gives each brand its own calendar and each client their own branded approval portal they can use without a login. Approvals stop living in your inbox, and past five calendars the pricing drops 40 percent.&#10;&#10;Agencies on HeyOrca publish 190,000+ posts a month between them, and it&#39;s a 4.8 on G2.&#10;&#10;I&#39;ve got a Multi-Client Approval Blueprint, the calendar and sign-off structure agencies running 5 to 25 brands use. Reply &quot;blueprint&quot; and it&#39;s yours.&#10;&#10;Josh">
+                        <p>Hi {{first_name}},</p><p>Counted {{client_brand_count}} client brands on {{company}}&#39;s work page, {{client_1}}, {{client_2}} and the rest.</p><p>But would it be fair to assume that&#39;s also {{client_brand_count}} separate approval loops every week? Different sheets, different Slack threads, different clients who reply &quot;approved!&quot; to the wrong post.</p><p>HeyOrca gives each brand its own calendar and each client their own branded approval portal they can use without a login. Approvals stop living in your inbox, and past five calendars the pricing drops 40 percent.</p><p>Agencies on HeyOrca publish 190,000+ posts a month between them, and it&#39;s a 4.8 on G2.</p><p>I&#39;ve got a Multi-Client Approval Blueprint, the calendar and sign-off structure agencies running 5 to 25 brands use. Reply &quot;blueprint&quot; and it&#39;s yours.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Following up with the commercial angle.&#10;&#10;At {{client_brand_count}} brands you&#39;d be past the five-calendar threshold, which is 40 percent off, and every person on your team plus every client reviewing is included at no extra cost.&#10;&#10;Most agencies at your volume are paying per seat and still running approvals in email.&#10;&#10;Want the blueprint? Reply &quot;blueprint&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Following up with the commercial angle.&#10;&#10;At {{client_brand_count}} brands you&#39;d be past the five-calendar threshold, which is 40 percent off, and every person on your team plus every client reviewing is included at no extra cost.&#10;&#10;Most agencies at your volume are paying per seat and still running approvals in email.&#10;&#10;Want the blueprint? Reply &quot;blueprint&quot;." data-preview="Following up with the commercial angle.&#10;&#10;At 11 brands you&#39;d be past the five-calendar threshold, which is 40 percent off, and every person on your team plus every client reviewing is included at no extra cost.&#10;&#10;Most agencies at your volume are paying per seat and still running approvals in email.&#10;&#10;Want the blueprint? Reply &quot;blueprint&quot;.">
+                        <p>Following up with the commercial angle.</p><p>At {{client_brand_count}} brands you&#39;d be past the five-calendar threshold, which is 40 percent off, and every person on your team plus every client reviewing is included at no extra cost.</p><p>Most agencies at your volume are paying per seat and still running approvals in email.</p><p>Want the blueprint? Reply &quot;blueprint&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: blueprint for {{company}}&#10;&#10;Hi {{first_name}}, no call required. Reply &quot;yes&quot; and I&#39;ll send the multi-client approval blueprint.&#10;&#10;You, or is {{ops_name}} the one who&#39;d own how approvals run?&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="blueprint for {{company}}" data-preview="blueprint for Northline Social">blueprint for {{company}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, no call required. Reply &quot;yes&quot; and I&#39;ll send the multi-client approval blueprint.&#10;&#10;You, or is {{ops_name}} the one who&#39;d own how approvals run?&#10;&#10;{{sender_name}}" data-preview="Hi Dana, no call required. Reply &quot;yes&quot; and I&#39;ll send the multi-client approval blueprint.&#10;&#10;You, or is Priya the one who&#39;d own how approvals run?&#10;&#10;Josh">
+                        <p>Hi {{first_name}}, no call required. Reply &quot;yes&quot; and I&#39;ll send the multi-client approval blueprint.</p><p>You, or is {{ops_name}} the one who&#39;d own how approvals run?</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 — The Boutique</strong>
+              <em>The Client Approval SOP</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 — The Boutique steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the sheet&#10;&#10;Hi {{first_name}},&#10;&#10;{{company}} looks like a {{headcount}}-person shop running social for {{client_1}} and a handful of others, which is usually the size where the content calendar is still a Google Sheet.&#10;&#10;But would it be fair to assume it&#39;s started to creak? Approvals in DMs, no version history, and every scheduled post one copy-paste away from going out on the wrong account.&#10;&#10;HeyOrca&#39;s $59 a calendar with unlimited users, so your whole team and every client reviewer is included. There&#39;s a free plan and a 14-day Pro trial, no card, if you&#39;d rather just test it than talk to anyone.&#10;&#10;46,000 people use it, and support answers in about five minutes by a human.&#10;&#10;I&#39;ll send you our Client Approval SOP either way, the process for retiring the spreadsheet without annoying your clients. Reply &quot;SOP&quot;.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the sheet" data-preview="the sheet">the sheet</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;{{company}} looks like a {{headcount}}-person shop running social for {{client_1}} and a handful of others, which is usually the size where the content calendar is still a Google Sheet.&#10;&#10;But would it be fair to assume it&#39;s started to creak? Approvals in DMs, no version history, and every scheduled post one copy-paste away from going out on the wrong account.&#10;&#10;HeyOrca&#39;s $59 a calendar with unlimited users, so your whole team and every client reviewer is included. There&#39;s a free plan and a 14-day Pro trial, no card, if you&#39;d rather just test it than talk to anyone.&#10;&#10;46,000 people use it, and support answers in about five minutes by a human.&#10;&#10;I&#39;ll send you our Client Approval SOP either way, the process for retiring the spreadsheet without annoying your clients. Reply &quot;SOP&quot;.&#10;&#10;{{sender_name}}" data-preview="Hi Dana,&#10;&#10;Northline Social looks like a 9-person shop running social for Harbour Dental and a handful of others, which is usually the size where the content calendar is still a Google Sheet.&#10;&#10;But would it be fair to assume it&#39;s started to creak? Approvals in DMs, no version history, and every scheduled post one copy-paste away from going out on the wrong account.&#10;&#10;HeyOrca&#39;s $59 a calendar with unlimited users, so your whole team and every client reviewer is included. There&#39;s a free plan and a 14-day Pro trial, no card, if you&#39;d rather just test it than talk to anyone.&#10;&#10;46,000 people use it, and support answers in about five minutes by a human.&#10;&#10;I&#39;ll send you our Client Approval SOP either way, the process for retiring the spreadsheet without annoying your clients. Reply &quot;SOP&quot;.&#10;&#10;Josh">
+                        <p>Hi {{first_name}},</p><p>{{company}} looks like a {{headcount}}-person shop running social for {{client_1}} and a handful of others, which is usually the size where the content calendar is still a Google Sheet.</p><p>But would it be fair to assume it&#39;s started to creak? Approvals in DMs, no version history, and every scheduled post one copy-paste away from going out on the wrong account.</p><p>HeyOrca&#39;s $59 a calendar with unlimited users, so your whole team and every client reviewer is included. There&#39;s a free plan and a 14-day Pro trial, no card, if you&#39;d rather just test it than talk to anyone.</p><p>46,000 people use it, and support answers in about five minutes by a human.</p><p>I&#39;ll send you our Client Approval SOP either way, the process for retiring the spreadsheet without annoying your clients. Reply &quot;SOP&quot;.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The reason I bring it up.&#10;&#10;The spreadsheet doesn&#39;t fail gradually. It fails once, a post goes out unapproved or on the wrong client&#39;s account, and you spend a week rebuilding trust.&#10;&#10;An approval step that a client actually uses is the cheapest insurance in an agency.&#10;&#10;Reply &quot;SOP&quot; and I&#39;ll send the process.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The reason I bring it up.&#10;&#10;The spreadsheet doesn&#39;t fail gradually. It fails once, a post goes out unapproved or on the wrong client&#39;s account, and you spend a week rebuilding trust.&#10;&#10;An approval step that a client actually uses is the cheapest insurance in an agency.&#10;&#10;Reply &quot;SOP&quot; and I&#39;ll send the process." data-preview="The reason I bring it up.&#10;&#10;The spreadsheet doesn&#39;t fail gradually. It fails once, a post goes out unapproved or on the wrong client&#39;s account, and you spend a week rebuilding trust.&#10;&#10;An approval step that a client actually uses is the cheapest insurance in an agency.&#10;&#10;Reply &quot;SOP&quot; and I&#39;ll send the process.">
+                        <p>The reason I bring it up.</p><p>The spreadsheet doesn&#39;t fail gradually. It fails once, a post goes out unapproved or on the wrong client&#39;s account, and you spend a week rebuilding trust.</p><p>An approval step that a client actually uses is the cheapest insurance in an agency.</p><p>Reply &quot;SOP&quot; and I&#39;ll send the process.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: SOP&#10;&#10;Hi {{first_name}}, no demo, no call. Reply &quot;yes&quot; and I&#39;ll send the client approval SOP.&#10;&#10;Should I send it to you or whoever runs content day to day?&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="SOP" data-preview="SOP">SOP</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, no demo, no call. Reply &quot;yes&quot; and I&#39;ll send the client approval SOP.&#10;&#10;Should I send it to you or whoever runs content day to day?&#10;&#10;{{sender_name}}" data-preview="Hi Dana, no demo, no call. Reply &quot;yes&quot; and I&#39;ll send the client approval SOP.&#10;&#10;Should I send it to you or whoever runs content day to day?&#10;&#10;Josh">
+                        <p>Hi {{first_name}}, no demo, no call. Reply &quot;yes&quot; and I&#39;ll send the client approval SOP.</p><p>Should I send it to you or whoever runs content day to day?</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 — Catch-All: In-House Multi-Brand</strong>
+              <em>The Social Approval Friction Audit</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 — Catch-All: In-House Multi-Brand steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: sign-off at {{company}}&#10;&#10;Hi {{first_name}},&#10;&#10;Saw {{company}} runs social across {{location_descriptor}}, which usually means posts don&#39;t just need a marketer&#39;s yes, they need {{approver_role}}&#39;s too.&#10;&#10;But would it be fair to assume none of those approvers are ever going to log into a social tool to give it? So sign-off ends up in email, screenshots and a shared doc, and the post that was timely on Tuesday goes out on Friday.&#10;&#10;HeyOrca lets stakeholders approve in a branded portal without a licence, gives every region or department its own calendar, and includes unlimited users on every plan so the whole organisation can take part.&#10;&#10;It&#39;s what Cisco, WELLA and Girl Guides of Newfoundland and Labrador use, and there&#39;s a nonprofit discount if that applies.&#10;&#10;I built a short Social Approval Friction Audit, six questions that show where sign-off is costing you hours. Reply &quot;audit&quot; and I&#39;ll send the link.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="sign-off at {{company}}" data-preview="sign-off at Northline Social">sign-off at {{company}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Saw {{company}} runs social across {{location_descriptor}}, which usually means posts don&#39;t just need a marketer&#39;s yes, they need {{approver_role}}&#39;s too.&#10;&#10;But would it be fair to assume none of those approvers are ever going to log into a social tool to give it? So sign-off ends up in email, screenshots and a shared doc, and the post that was timely on Tuesday goes out on Friday.&#10;&#10;HeyOrca lets stakeholders approve in a branded portal without a licence, gives every region or department its own calendar, and includes unlimited users on every plan so the whole organisation can take part.&#10;&#10;It&#39;s what Cisco, WELLA and Girl Guides of Newfoundland and Labrador use, and there&#39;s a nonprofit discount if that applies.&#10;&#10;I built a short Social Approval Friction Audit, six questions that show where sign-off is costing you hours. Reply &quot;audit&quot; and I&#39;ll send the link.&#10;&#10;{{sender_name}}" data-preview="Hi Dana,&#10;&#10;Saw Northline Social runs social across 34 franchise locations, which usually means posts don&#39;t just need a marketer&#39;s yes, they need legal and the regional managers&#39;s too.&#10;&#10;But would it be fair to assume none of those approvers are ever going to log into a social tool to give it? So sign-off ends up in email, screenshots and a shared doc, and the post that was timely on Tuesday goes out on Friday.&#10;&#10;HeyOrca lets stakeholders approve in a branded portal without a licence, gives every region or department its own calendar, and includes unlimited users on every plan so the whole organisation can take part.&#10;&#10;It&#39;s what Cisco, WELLA and Girl Guides of Newfoundland and Labrador use, and there&#39;s a nonprofit discount if that applies.&#10;&#10;I built a short Social Approval Friction Audit, six questions that show where sign-off is costing you hours. Reply &quot;audit&quot; and I&#39;ll send the link.&#10;&#10;Josh">
+                        <p>Hi {{first_name}},</p><p>Saw {{company}} runs social across {{location_descriptor}}, which usually means posts don&#39;t just need a marketer&#39;s yes, they need {{approver_role}}&#39;s too.</p><p>But would it be fair to assume none of those approvers are ever going to log into a social tool to give it? So sign-off ends up in email, screenshots and a shared doc, and the post that was timely on Tuesday goes out on Friday.</p><p>HeyOrca lets stakeholders approve in a branded portal without a licence, gives every region or department its own calendar, and includes unlimited users on every plan so the whole organisation can take part.</p><p>It&#39;s what Cisco, WELLA and Girl Guides of Newfoundland and Labrador use, and there&#39;s a nonprofit discount if that applies.</p><p>I built a short Social Approval Friction Audit, six questions that show where sign-off is costing you hours. Reply &quot;audit&quot; and I&#39;ll send the link.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One number on this.&#10;&#10;The cost of multi-stakeholder approval isn&#39;t the meeting, it&#39;s the delay. Most teams we talk to are publishing three to five days after the content was ready, purely because sign-off is asynchronous and invisible.&#10;&#10;Want the audit? Reply &quot;audit&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One number on this.&#10;&#10;The cost of multi-stakeholder approval isn&#39;t the meeting, it&#39;s the delay. Most teams we talk to are publishing three to five days after the content was ready, purely because sign-off is asynchronous and invisible.&#10;&#10;Want the audit? Reply &quot;audit&quot;." data-preview="One number on this.&#10;&#10;The cost of multi-stakeholder approval isn&#39;t the meeting, it&#39;s the delay. Most teams we talk to are publishing three to five days after the content was ready, purely because sign-off is asynchronous and invisible.&#10;&#10;Want the audit? Reply &quot;audit&quot;.">
+                        <p>One number on this.</p><p>The cost of multi-stakeholder approval isn&#39;t the meeting, it&#39;s the delay. Most teams we talk to are publishing three to five days after the content was ready, purely because sign-off is asynchronous and invisible.</p><p>Want the audit? Reply &quot;audit&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: approval audit&#10;&#10;Hi {{first_name}}, no call needed. Reply &quot;yes&quot; and I&#39;ll send the approval friction audit.&#10;&#10;You, or should it go to whoever owns social sign-off?&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="approval audit" data-preview="approval audit">approval audit</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, no call needed. Reply &quot;yes&quot; and I&#39;ll send the approval friction audit.&#10;&#10;You, or should it go to whoever owns social sign-off?&#10;&#10;{{sender_name}}" data-preview="Hi Dana, no call needed. Reply &quot;yes&quot; and I&#39;ll send the approval friction audit.&#10;&#10;You, or should it go to whoever owns social sign-off?&#10;&#10;Josh">
+                        <p>Hi {{first_name}}, no call needed. Reply &quot;yes&quot; and I&#39;ll send the approval friction audit.</p><p>You, or should it go to whoever owns social sign-off?</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="06">
+        
+    <div class="section-head">
+      <p class="eyebrow">06</p>
+      <h2>The launch</h2>
+      <p class="takeaway">Phase-rolled from strongest signal to weakest, so deliverability is spent proving the seat-math angle before it is spent on the long tail.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Weeks 1 to 3 — Tier 1 only. Build the partner-directory scrape across Sprout, Hootsuite, Agorapulse and Later. Target 3,000 contacts at 1,000 per week, and prove the seat-math angle before anything else is built.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Weeks 3 to 6 — Add Tier 2. Stand up the weekly job-post scrape and leave it running permanently. This is the self-replenishing engine that carries the strategy long term.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 6 to 10 — Add Tier 3. This requires the client-roster scrape, the most engineering-heavy component, so build it while Tiers 1 and 2 are already producing replies.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Weeks 10 onward — Add Tiers 4 and 5. Highest volume, lowest intent. Only switch these on once sending infrastructure is proven at Tier 1 to 3 volume, so deliverability isn&#39;t spent on the weakest lists.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Before Phase 1 — Confirm permission to name the agency behind the 60-hour, $4,000 result, confirm whether Cisco and WELLA can be named in cold copy, and confirm the 40 percent multi-calendar discount can be quoted in outbound.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Before Phase 1 — Build the five magnets (Seat Math Teardown, Ramp Kit, Approval Blueprint, Approval SOP, Friction Audit) and warm three or more domains across nine or more mailboxes for 14 days.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacted</strong>
+                <span>Excellent. Scale the tier hard and add list volume.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Leave it running untouched.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450 to 500</strong>
+                <span>Borderline. Test one copy variant — swap the lead magnet first and hold everything else constant.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or under 1% reply rate after 1,500 sends</strong>
+                <span>Failing. Cut the tier and rework it.</span>
+              </div>
+              <div class="threshold">
+                <strong>Two variants per tier, maximum</strong>
+                <span>Vary the lead magnet or the first-line research angle, never both at once, or the result can&#39;t be attributed.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dana","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Northline Social","Sprout Social","11","Harbour Dental","Verdant Outdoors","9","Social Media Coordinator","Priya","34 franchise locations","legal and the regional managers","Josh"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
