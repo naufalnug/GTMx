@@ -1,0 +1,1782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Addys - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-07-31</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Addys</p>
+          <h1>The Addys execution-gap <mark>journey</mark>.</h1>
+          <p class="hero-copy">One waterfall. Five tiers. 365,000 accounts routed on the size of the bet they have already placed.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Do not route on who has the problem. Route on what they have already bought to solve it. Problem recognition predicts a nod. Money already spent predicts a purchase, because it means the budget line, the internal champion and the procurement path all already exist.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a 20-minute walkthrough</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>365,000</strong>
+          <span>Contacts in the mapped TAM</span>
+        </div>
+        <div class="metric-card">
+          <strong>5</strong>
+          <span>Tiers, one exclusive route each</span>
+        </div>
+        <div class="metric-card">
+          <strong>15</strong>
+          <span>Emails, three per tier</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Addys is a proactive meeting agent for macOS, operated by Rena Labs. It listens with no bot in the call, extracts every action item the moment it is said, and drafts the work into Gmail, HubSpot, Notion, Linear and Slack for one tap of approval. Invite-only, 40+ live integrations.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>One thing every account in the market can be scored on</p></div><div><span>02</span><p>First match wins, and nothing is ever double-sent</p></div><div><span>03</span><p>Five tiers, hottest to coldest</p></div><div><span>04</span><p>What runs on top of the waterfall</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>The signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>The routing</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>The tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>The campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>The copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>The launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="The signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">The signal</p>
+      <h2>One thing every account in the market can be scored on</h2>
+      <p class="takeaway">What has this prospect already bought to close the gap between a meeting ending and the work starting? Rank by the size of that bet and the whole TAM sorts itself.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>Every account in the TAM can be scored on it, from a company running a full n8n programme down to someone with nothing but a busy calendar.</p></div><div class="reason-card"><span>02</span><p>It maps one to one onto how much persuasion is required. An agent buyer has already conceded that software should act. A notetaker buyer has only conceded that meetings are lossy.</p></div><div class="reason-card"><span>03</span><p>Addys published eight competitor comparison pages on 20 July 2026, four of them against agent and planning platforms. The client has already written the Tier 1 argument in its own voice.</p></div><div class="reason-card"><span>04</span><p>It is detectable at scale and entirely from public sources: partner directories, template galleries, review profiles, job-description bodies and tracking scripts.</p></div>
+            </div>
+            <div class="field-cloud"><span>agent_platform</span><span>agent_platform_evidence</span><span>agent_platform_source</span><span>notetaker_tool</span><span>notetaker_evidence</span><span>open_req_title</span><span>req_jd_pain_phrase</span><span>req_posted_days_ago</span><span>booking_link_platform</span><span>booking_link_url</span><span>exec_stack</span><span>exec_stack_evidence</span><span>meeting_role_class</span><span>mac_forward_score</span><span>mac_forward_evidence</span><span>headcount_tier</span><span>seniority</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>Zapier, Make and n8n directories; Lindy and Relay.app template galleries</h3><p>Named agent or automation platform at company level. The Tier 1 pull, and the largest single change from the previous strategy.</p></div><div class="source-card"><span>02</span><h3>Job-description body scrape (LinkedIn Jobs, Ashby, Greenhouse, Lever, Workable)</h3><p>The employer naming its own automation stack, plus a live req, a pain phrase in the company&#39;s own words, and a hiring-manager contact.</p></div><div class="source-card"><span>03</span><h3>G2 and Capterra reviewer profiles</h3><p>Named tool plus a named, budget-holding individual. Covers both the agent platforms and the notetaker set.</p></div><div class="source-card"><span>04</span><h3>Product Hunt, Chrome Web Store and Slack App Directory public reviews</h3><p>Notetaker usage attached to a named person, with a quotable line for the first sentence of the email.</p></div><div class="source-card"><span>05</span><h3>Booking-link detection: Calendly, Cal.com, HubSpot Meetings, Chili Piper, SavvyCal</h3><p>Public evidence that the prospect&#39;s calendar is open to anyone, plus the live URL.</p></div><div class="source-card"><span>06</span><h3>BuiltWith and Wappalyzer, plus job-post stack scrape</h3><p>Executable-stack membership. The specific tools Addys would write into.</p></div><div class="source-card"><span>07</span><h3>Apollo and Crunchbase</h3><p>The catch-all TAM: B2B, 10 to 500 headcount, tech, SaaS, agency, consulting, VC and recruiting across US, UK, EU, CA and AU.</p></div><div class="source-card"><span>08</span><h3>Mac-forward detection: Jamf, Kandji, Mosyle, Addigy, Rippling, hardware lines in job posts, Apple Business Manager</h3><p>A 0 to 4 qualifier score applied across every tier. Addys is macOS only, so this is a hard gate, not a preference.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="The routing">
+        
+    <div class="section-head">
+      <p class="eyebrow">The routing</p>
+      <h2>First match wins, and nothing is ever double-sent</h2>
+      <p class="takeaway">Exclusive, priority-ordered, 100% covered. Every trigger is presence-based, so nothing in this cascade depends on proving a negative.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF mac_forward_score = 0, or headcount 500+, or the company is a notetaker or meeting-agent vendor, or a GTM agency</span>
+          <strong>Suppress. Do not send.</strong>
+          <em>Addys is macOS only today. Burning sends to collect &#39;we are a Windows shop&#39; replies pollutes reply-rate data at exactly the moment a tier is being judged.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF agent_platform is not none</span>
+          <strong>Tier 1 - The Agent Buyer</strong>
+          <em>They have already bought the belief that software should do the work, and budgeted for it. The only argument left is that their agents fire on a webhook and the work starts in a conversation.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF notetaker_tool is not none</span>
+          <strong>Tier 2 - The Half-Loop Buyer</strong>
+          <em>They conceded that meetings are lossy at checkout. We only have to sell the second half of the loop, and Addys plugs into their notetaker rather than replacing it.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF open_req_title is not none and req_posted_days_ago is 45 or less</span>
+          <strong>Tier 3 - The Human Patch</strong>
+          <em>They have priced dropped follow-through at 90 to 140k a year and are recruiting someone to absorb it. The req usually names the symptom in its own words.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF booking_link_platform is not none AND exec_stack contains 2 or more of HubSpot, Notion, Linear, Slack</span>
+          <strong>Tier 4 - The Exposed Calendar</strong>
+          <em>The calendar is publicly open and the destination tools are already wired. Requiring both signals produces one strong tier instead of two mediocre ones.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="5">
+          <span class="route-rule__num">06</span>
+          <span class="route-rule__if">IF none of the above</span>
+          <strong>Tier 5 - Catch-All</strong>
+          <em>Everything remaining that is Mac-forward and meeting-heavy. Broadest copy, softest ask, and it keeps the waterfall at 100% coverage.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF mac_forward_score = 0, or headcount 500+, or the company is a notetaker or meeting-agent vendor, or a GTM agency -&gt; Suppress. Do not send. (Addys is macOS only today. Burning sends to collect &#39;we are a Windows shop&#39; replies pollutes reply-rate data at exactly the moment a tier is being judged.)&#10;2. IF agent_platform is not none -&gt; Tier 1 - The Agent Buyer (They have already bought the belief that software should do the work, and budgeted for it. The only argument left is that their agents fire on a webhook and the work starts in a conversation.)&#10;3. IF notetaker_tool is not none -&gt; Tier 2 - The Half-Loop Buyer (They conceded that meetings are lossy at checkout. We only have to sell the second half of the loop, and Addys plugs into their notetaker rather than replacing it.)&#10;4. IF open_req_title is not none and req_posted_days_ago is 45 or less -&gt; Tier 3 - The Human Patch (They have priced dropped follow-through at 90 to 140k a year and are recruiting someone to absorb it. The req usually names the symptom in its own words.)&#10;5. IF booking_link_platform is not none AND exec_stack contains 2 or more of HubSpot, Notion, Linear, Slack -&gt; Tier 4 - The Exposed Calendar (The calendar is publicly open and the destination tools are already wired. Requiring both signals produces one strong tier instead of two mediocre ones.)&#10;6. IF none of the above -&gt; Tier 5 - Catch-All (Everything remaining that is Mac-forward and meeting-heavy. Broadest copy, softest ask, and it keeps the waterfall at 100% coverage.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF mac_forward_score = 0, or headcount 500+, or the company is a notetaker or meeting-agent vendor, or a GTM agency -&gt; Suppress. Do not send. (Addys is macOS only today. Burning sends to collect &#39;we are a Windows shop&#39; replies pollutes reply-rate data at exactly the moment a tier is being judged.)
+2. IF agent_platform is not none -&gt; Tier 1 - The Agent Buyer (They have already bought the belief that software should do the work, and budgeted for it. The only argument left is that their agents fire on a webhook and the work starts in a conversation.)
+3. IF notetaker_tool is not none -&gt; Tier 2 - The Half-Loop Buyer (They conceded that meetings are lossy at checkout. We only have to sell the second half of the loop, and Addys plugs into their notetaker rather than replacing it.)
+4. IF open_req_title is not none and req_posted_days_ago is 45 or less -&gt; Tier 3 - The Human Patch (They have priced dropped follow-through at 90 to 140k a year and are recruiting someone to absorb it. The req usually names the symptom in its own words.)
+5. IF booking_link_platform is not none AND exec_stack contains 2 or more of HubSpot, Notion, Linear, Slack -&gt; Tier 4 - The Exposed Calendar (The calendar is publicly open and the destination tools are already wired. Requiring both signals produces one strong tier instead of two mediocre ones.)
+6. IF none of the above -&gt; Tier 5 - Catch-All (Everything remaining that is Mac-forward and meeting-heavy. Broadest copy, softest ask, and it keeps the waterfall at 100% coverage.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="The tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">The tiers</p>
+      <h2>Five tiers, hottest to coldest</h2>
+      <p class="takeaway">Tier 1 already runs an agent platform. Tier 5 has bought nothing but their own calendar. The persuasion load rises as you go down.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">7% TAM</span>
+          </div>
+          <h3>Tier 1: The Agent Buyer</h3>
+          <p>Runs Zapier Agents, Lindy, n8n, Make, Relay, Motion or Reclaim, evidenced by a partner directory listing, a template gallery, a review profile or the company&#39;s own job description.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They have already bought the idea that software should do the work. But every one of those automations fires on a trigger that already happened: a form submitted, a stage changed, a ticket opened. Not one of them has ever heard a sentence spoken out loud, so the work created in a meeting is still typed in by hand.</dd></div>
+              <div><dt>Offer</dt><dd>The Meeting Blind Spot - which of their automations start after the work was already decided, and the four Addys triggers that fill the gap</dd></div>
+              <div><dt>Source</dt><dd>Zapier, Make and n8n directories, Lindy and Relay galleries, G2, job-description scrape</dd></div>
+              <div><dt>Reply density</dt><dd>Highest. The budget line, the champion and the procurement path already exist.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">11% TAM</span>
+          </div>
+          <h3>Tier 2: The Half-Loop Buyer</h3>
+          <p>Publicly identifiable user of Granola, Otter, Fireflies, Fathom, Read.ai, tl;dv, Avoma or Sembly, via a review profile, a Product Hunt comment or a LinkedIn post.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They bought the half of the loop that records. Nobody sold them the half that executes. The notes are excellent and the follow-ups are still late, because somebody still has to read the recap, decide what it meant, and go do five things in five tools.</dd></div>
+              <div><dt>Offer</dt><dd>The Second Half - what happens to an action item in the twenty minutes after a call, tool by tool, with their notetaker named</dd></div>
+              <div><dt>Source</dt><dd>G2, Capterra, Product Hunt, Chrome Web Store, Slack Directory, LinkedIn keyword search</dd></div>
+              <div><dt>Reply density</dt><dd>High. A named individual with verified pain adjacency, but a smaller prior bet than Tier 1.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">6% TAM</span>
+          </div>
+          <h3>Tier 3: The Human Patch</h3>
+          <p>An open req posted within 45 days for Chief of Staff, EA to CEO, RevOps, Sales Ops, BizOps, Project Coordinator or Sales Support, where the job-description body names follow-ups, action items, meeting notes or CRM hygiene.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They have priced dropped follow-through at 90 to 140k a year and are recruiting a person to absorb it. Whoever they hire will spend their first six months chasing what got dropped between meetings rather than doing the judgment work they were hired for.</dd></div>
+              <div><dt>Offer</dt><dd>The Follow-Through Job Description - their own JD pain lines mapped to which are software problems and which genuinely need the hire</dd></div>
+              <div><dt>Source</dt><dd>Job-board JD body scrape across LinkedIn Jobs, Ashby, Greenhouse, Lever and Workable</dd></div>
+              <div><dt>Reply density</dt><dd>Good. Severity is already conceded, so the argument is only about the shape of the solution.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">24% TAM</span>
+          </div>
+          <h3>Tier 4: The Exposed Calendar</h3>
+          <p>A public Calendly, Cal.com, HubSpot Meetings, Chili Piper or SavvyCal link, AND two or more of HubSpot, Notion, Linear or Slack detected in the stack.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Their calendar is publicly open to anyone, and the tools the resulting commitments should land in are already wired up. The only missing segment in the pipe from conversation to system is a human typing.</dd></div>
+              <div><dt>Offer</dt><dd>The Last Mile - the specific handoff between &#39;call ends&#39; and &#39;HubSpot, Notion and Linear updated&#39;, and exactly where it breaks</dd></div>
+              <div><dt>Source</dt><dd>Booking-link detection plus BuiltWith and Wappalyzer plus JD stack scrape</dd></div>
+              <div><dt>Reply density</dt><dd>Moderate. No purchase has been made yet, but the destination tools prove the workflow exists.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">52% TAM</span>
+          </div>
+          <h3>Tier 5: Catch-All</h3>
+          <p>Everything remaining in the TAM with a Mac-forward score of 2 or above and a meeting-heavy role: B2B, 10 to 500 headcount, tech, SaaS, agency, consulting, VC or recruiting.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Commitments made out loud, remembered imperfectly, actioned late or not at all. Nothing has been bought to fix it, so the pain itself is what has to be sold.</dd></div>
+              <div><dt>Offer</dt><dd>The invite code itself. At the weakest signal, adding a document adds friction.</dd></div>
+              <div><dt>Source</dt><dd>Apollo and Crunchbase</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest, by design. Broadest copy, softest ask, and it keeps coverage at 100%.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="The campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">The campaigns</p>
+      <h2>What runs on top of the waterfall</h2>
+      <p class="takeaway">Five core campaigns mapped one-to-one onto the tiers, plus five side plays fired by orthogonal triggers that sit alongside the cascade.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Core">
+          <div class="campaign-card__meta">
+            <span>Core</span>
+            <span>Focused</span>
+          </div>
+          <h3>The Meeting Blind Spot</h3>
+          <p>The version 2 bet. Addys published four comparison pages against agent and planning platforms on 20 July 2026, so the argument, the framing and the verdict already exist in the client&#39;s own voice. This campaign quotes it rather than inventing it.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>agent_platform is not none, mac_forward_score 2 or above</dd></div>
+            <div><dt>AI strategy</dt><dd>Open on the exact evidence of their automation stack, lifted from the source that produced it: the JD line, the directory listing or the review quote. Then make one argument, that every one of those automations begins with a trigger that already fired.</dd></div>
+            <div><dt>Value</dt><dd>Fill the gap in a stack they already paid for</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Core">
+          <div class="campaign-card__meta">
+            <span>Core</span>
+            <span>Focused</span>
+          </div>
+          <h3>Layer On, Never Switch</h3>
+          <p>The single hardest rule in the strategy. Addys&#39;s own FAQ says it plugs into Granola and Zoom and uses their notes as context. Any copy variant that drops that line removes the tier&#39;s only real defence against &#39;we just onboarded the team onto Granola&#39; and must not ship.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>notetaker_tool is not none</dd></div>
+            <div><dt>AI strategy</dt><dd>Reference the public review or post that identified their notetaker, then commit to the compatibility claim before they can raise the objection. The phrase &#39;plugs into it&#39; must appear in email one on every send.</dd></div>
+            <div><dt>Value</dt><dd>Keep the notes, add the execution</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Core">
+          <div class="campaign-card__meta">
+            <span>Core</span>
+            <span>Niche</span>
+          </div>
+          <h3>Before The Hire Starts</h3>
+          <p>Highest perceived personalisation per unit of effort in the whole strategy, because the pain sentence is written by the prospect rather than assumed by us. Fresher reqs send first. This tier is deliberately never framed as a reason to cancel the req.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>open_req_title is not none, posted within 45 days, JD contains a follow-through pain phrase</dd></div>
+            <div><dt>AI strategy</dt><dd>Quote the exact line from their own job description back to them. Then split the role into the mechanical half Addys covers and the judgment half the hire is actually for.</dd></div>
+            <div><dt>Value</dt><dd>The hire does judgment, not chasing</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Core">
+          <div class="campaign-card__meta">
+            <span>Core</span>
+            <span>Broad</span>
+          </div>
+          <h3>The Last Mile</h3>
+          <p>The first real volume tier. Version 1 ran booking-link and stack as two separate tiers; requiring both produces one materially stronger tier and pushes single-signal leads down to the catch-all where the softer ask belongs.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>booking_link_platform is not none AND 2 or more executable-stack tools detected</dd></div>
+            <div><dt>AI strategy</dt><dd>Name both observed facts in the first sentence, the open booking link and the detected stack, then point at the human-shaped gap between them. Email two pivots to the consent angle: no bot ever appears in the participant list.</dd></div>
+            <div><dt>Value</dt><dd>Close the gap between the call and the CRM</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Core">
+          <div class="campaign-card__meta">
+            <span>Core</span>
+            <span>Broad</span>
+          </div>
+          <h3>The Twenty Minutes After</h3>
+          <p>52% of the TAM and the softest ask in the document. The invite code is the entire offer here. Adding a lead-magnet document at this signal strength adds friction rather than value.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>All remaining TAM, mac_forward_score 2 or above, meeting-heavy role class</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead on the role rather than the stack, because no purchase signal exists. Frame the pain as an execution problem rather than a memory problem, which is the opposite bet to every other tool in the category.</dd></div>
+            <div><dt>Value</dt><dd>Stop chasing what you said you&#39;d do</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Side play">
+          <div class="campaign-card__meta">
+            <span>Side play</span>
+            <span>Focused</span>
+          </div>
+          <h3>New Integration Ships</h3>
+          <p>Addys ships new integrations weekly, which makes this a permanent, renewable trigger. Not part of the waterfall, and deliberately capped at one touch.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Past non-responders whose exec_stack contains the newly launched integration</dd></div>
+            <div><dt>AI strategy</dt><dd>Fired by a product event rather than a lead attribute. When a notable integration lands, send one touch to everyone whose detected stack now has a new reason to care.</dd></div>
+            <div><dt>Value</dt><dd>A genuine reason to re-open a dead thread</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Side play">
+          <div class="campaign-card__meta">
+            <span>Side play</span>
+            <span>Focused</span>
+          </div>
+          <h3>Comparison Post Distribution</h3>
+          <p>Eight comparison posts already exist and they are strong reply-bait on their own. Attaching a pitch is what would ruin them.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Tier 1 and Tier 2 non-responders, 30 days after sequence end</dd></div>
+            <div><dt>AI strategy</dt><dd>Send the comparison page matching their detected tool, with no pitch attached at all. The asset does the arguing.</dd></div>
+            <div><dt>Value</dt><dd>Reply bait with zero ask</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Side play">
+          <div class="campaign-card__meta">
+            <span>Side play</span>
+            <span>Niche</span>
+          </div>
+          <h3>Ops Hire Lands</h3>
+          <p>The lead has already been contacted once with full context on the role. This is the only moment where the follow-up is genuinely welcome rather than merely tolerated.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>A Tier 3 req closes and the new hire appears on LinkedIn</dd></div>
+            <div><dt>AI strategy</dt><dd>Congratulate on the hire, offer codes for the new person specifically. No pitch beyond that.</dd></div>
+            <div><dt>Value</dt><dd>The warmest possible re-entry</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Side play">
+          <div class="campaign-card__meta">
+            <span>Side play</span>
+            <span>Focused</span>
+          </div>
+          <h3>Waitlist Re-Activation</h3>
+          <p>The highest-converting list Addys owns, and it costs nothing to run. It is also the succession plan for the invite-code CTA: when Addys opens to the public, this asset is what replaces the scarcity.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Joined the Addys waitlist, never redeemed a code</dd></div>
+            <div><dt>AI strategy</dt><dd>Not cold outbound at all. These people raised their hand and then fell through the gap between signing up and being issued a code.</dd></div>
+            <div><dt>Value</dt><dd>Recover demand already earned</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Side play">
+          <div class="campaign-card__meta">
+            <span>Side play</span>
+            <span>Niche</span>
+          </div>
+          <h3>Podcast And Webinar Guests</h3>
+          <p>People who publicly broadcast a heavy conversation load are self-selecting into the pain. Small volume by design, and it should never be scaled into a tier.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Public evidence of a heavy conversation load in the last 60 days</dd></div>
+            <div><dt>AI strategy</dt><dd>Personalise on the episode itself rather than on the stack. Reference something specific that was said.</dd></div>
+            <div><dt>Value</dt><dd>Very high personalisation, very low volume</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="The copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">The copy</p>
+      <h2>Fifteen emails, three per tier</h2>
+      <p class="takeaway">The invite code is the ask in every single tier. A calendar request is the highest-friction thing you can put in front of someone whose stated pain is too many meetings.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company}}</span><span>{{sender_first_name}}</span><span>{{agent_platform}}</span><span>{{agent_platform_evidence}}</span><span>{{notetaker_tool}}</span><span>{{notetaker_evidence}}</span><span>{{open_req_title}}</span><span>{{req_jd_pain_phrase}}</span><span>{{booking_link_platform}}</span><span>{{exec_stack_primary}}</span><span>{{exec_stack_list}}</span><span>{{exec_stack_evidence}}</span><span>{{meeting_role_class}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company}}, {{sender_first_name}}, {{agent_platform}}, {{agent_platform_evidence}}, {{notetaker_tool}}, {{notetaker_evidence}}, {{open_req_title}}, {{req_jd_pain_phrase}}, {{booking_link_platform}}, {{exec_stack_primary}}, {{exec_stack_list}}, {{exec_stack_evidence}}, {{meeting_role_class}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - The Agent Buyer</strong>
+              <em>The Meeting Blind Spot</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - The Agent Buyer steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your {{agent_platform}} setup&#10;&#10;Hi {{first_name}}, {{agent_platform_evidence}}.&#10;&#10;But would it be fair to assume every one of those automations starts with a trigger that already happened: a form submitted, a stage changed, a ticket opened?&#10;&#10;Which means the work that gets created in a meeting still gets typed in by hand afterwards. Your agents sit downstream of a conversation none of them can hear.&#10;&#10;Addys is a proactive meeting agent. It listens with no bot in the call, pulls out every action item, follow-up and decision the moment it is said, then drafts the work into the same tools your automations already touch: Gmail, HubSpot, Notion, Linear, Slack. You approve, it ships.&#10;&#10;It is invite-only. Reply &quot;code&quot; and I will send you one.&#10;&#10;{{sender_first_name}}, Rena Labs">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your {{agent_platform}} setup" data-preview="your Zapier Agents setup">your {{agent_platform}} setup</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, {{agent_platform_evidence}}.&#10;&#10;But would it be fair to assume every one of those automations starts with a trigger that already happened: a form submitted, a stage changed, a ticket opened?&#10;&#10;Which means the work that gets created in a meeting still gets typed in by hand afterwards. Your agents sit downstream of a conversation none of them can hear.&#10;&#10;Addys is a proactive meeting agent. It listens with no bot in the call, pulls out every action item, follow-up and decision the moment it is said, then drafts the work into the same tools your automations already touch: Gmail, HubSpot, Notion, Linear, Slack. You approve, it ships.&#10;&#10;It is invite-only. Reply &quot;code&quot; and I will send you one.&#10;&#10;{{sender_first_name}}, Rena Labs" data-preview="Hi Dana, your ops role posted last week lists &quot;own our Zapier and n8n automations&quot; in the requirements.&#10;&#10;But would it be fair to assume every one of those automations starts with a trigger that already happened: a form submitted, a stage changed, a ticket opened?&#10;&#10;Which means the work that gets created in a meeting still gets typed in by hand afterwards. Your agents sit downstream of a conversation none of them can hear.&#10;&#10;Addys is a proactive meeting agent. It listens with no bot in the call, pulls out every action item, follow-up and decision the moment it is said, then drafts the work into the same tools your automations already touch: Gmail, HubSpot, Notion, Linear, Slack. You approve, it ships.&#10;&#10;It is invite-only. Reply &quot;code&quot; and I will send you one.&#10;&#10;Alex, Rena Labs">
+                        <p>Hi {{first_name}}, {{agent_platform_evidence}}.</p><p>But would it be fair to assume every one of those automations starts with a trigger that already happened: a form submitted, a stage changed, a ticket opened?</p><p>Which means the work that gets created in a meeting still gets typed in by hand afterwards. Your agents sit downstream of a conversation none of them can hear.</p><p>Addys is a proactive meeting agent. It listens with no bot in the call, pulls out every action item, follow-up and decision the moment it is said, then drafts the work into the same tools your automations already touch: Gmail, HubSpot, Notion, Linear, Slack. You approve, it ships.</p><p>It is invite-only. Reply &quot;code&quot; and I will send you one.</p><p>{{sender_first_name}}, Rena Labs</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One more angle on this, {{first_name}}.&#10;&#10;{{agent_platform}} is very good at &quot;when X happens, do Y.&quot; The gap is that in a meeting nobody fires a webhook. Someone says &quot;I will send that over Thursday&quot; and the only record of it is a human intention.&#10;&#10;Addys treats the sentence as the trigger. Three classes of output:&#10;&#10;Auto-handled. Notes, summaries, calendar blocks. Done without asking.&#10;Needs review. Anything touching another person. Drafted, waiting on one tap.&#10;Flagged for you. Decisions only you can make. Surfaced, never buried.&#10;&#10;That third one is the part no automation platform does, because it requires deciding what is not automatable.&#10;&#10;Reply &quot;code&quot; and I will send you an invite. Mac only for now.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One more angle on this, {{first_name}}.&#10;&#10;{{agent_platform}} is very good at &quot;when X happens, do Y.&quot; The gap is that in a meeting nobody fires a webhook. Someone says &quot;I will send that over Thursday&quot; and the only record of it is a human intention.&#10;&#10;Addys treats the sentence as the trigger. Three classes of output:&#10;&#10;Auto-handled. Notes, summaries, calendar blocks. Done without asking.&#10;Needs review. Anything touching another person. Drafted, waiting on one tap.&#10;Flagged for you. Decisions only you can make. Surfaced, never buried.&#10;&#10;That third one is the part no automation platform does, because it requires deciding what is not automatable.&#10;&#10;Reply &quot;code&quot; and I will send you an invite. Mac only for now." data-preview="One more angle on this, Dana.&#10;&#10;Zapier Agents is very good at &quot;when X happens, do Y.&quot; The gap is that in a meeting nobody fires a webhook. Someone says &quot;I will send that over Thursday&quot; and the only record of it is a human intention.&#10;&#10;Addys treats the sentence as the trigger. Three classes of output:&#10;&#10;Auto-handled. Notes, summaries, calendar blocks. Done without asking.&#10;Needs review. Anything touching another person. Drafted, waiting on one tap.&#10;Flagged for you. Decisions only you can make. Surfaced, never buried.&#10;&#10;That third one is the part no automation platform does, because it requires deciding what is not automatable.&#10;&#10;Reply &quot;code&quot; and I will send you an invite. Mac only for now.">
+                        <p>One more angle on this, {{first_name}}.</p><p>{{agent_platform}} is very good at &quot;when X happens, do Y.&quot; The gap is that in a meeting nobody fires a webhook. Someone says &quot;I will send that over Thursday&quot; and the only record of it is a human intention.</p><p>Addys treats the sentence as the trigger. Three classes of output:</p><p>Auto-handled. Notes, summaries, calendar blocks. Done without asking.<br>Needs review. Anything touching another person. Drafted, waiting on one tap.<br>Flagged for you. Decisions only you can make. Surfaced, never buried.</p><p>That third one is the part no automation platform does, because it requires deciding what is not automatable.</p><p>Reply &quot;code&quot; and I will send you an invite. Mac only for now.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: worth 20 seconds?&#10;&#10;{{first_name}}, no call needed.&#10;&#10;If your team already builds agents, you are the fastest person alive to evaluate whether one that starts in a meeting is worth having.&#10;&#10;Reply &quot;yes&quot; and I will send an invite code. Should this go to you, or to whoever owns the automation stack?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="worth 20 seconds?" data-preview="worth 20 seconds?">worth 20 seconds?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed.&#10;&#10;If your team already builds agents, you are the fastest person alive to evaluate whether one that starts in a meeting is worth having.&#10;&#10;Reply &quot;yes&quot; and I will send an invite code. Should this go to you, or to whoever owns the automation stack?" data-preview="Dana, no call needed.&#10;&#10;If your team already builds agents, you are the fastest person alive to evaluate whether one that starts in a meeting is worth having.&#10;&#10;Reply &quot;yes&quot; and I will send an invite code. Should this go to you, or to whoever owns the automation stack?">
+                        <p>{{first_name}}, no call needed.</p><p>If your team already builds agents, you are the fastest person alive to evaluate whether one that starts in a meeting is worth having.</p><p>Reply &quot;yes&quot; and I will send an invite code. Should this go to you, or to whoever owns the automation stack?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - The Half-Loop Buyer</strong>
+              <em>The Second Half</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - The Half-Loop Buyer steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your {{notetaker_tool}} notes&#10;&#10;Hi {{first_name}}, saw {{notetaker_evidence}}.&#10;&#10;But would it be fair to assume the notes are excellent and the follow-ups still slip? The recap gets written, and then someone has to read it, decide what it meant, and go do five things in five tools.&#10;&#10;Addys picks up exactly there. It listens with no bot in the call, extracts every action item as it is said, then drafts the emails, updates the CRM and files the docs. You approve, it ships.&#10;&#10;And it plugs into {{notetaker_tool}}, so your existing notes become its context. Nothing to rip out, nobody to re-onboard.&#10;&#10;Invite-only. Reply &quot;code&quot; and I will send you one.&#10;&#10;{{sender_first_name}}, Rena Labs">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your {{notetaker_tool}} notes" data-preview="your Granola notes">your {{notetaker_tool}} notes</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, saw {{notetaker_evidence}}.&#10;&#10;But would it be fair to assume the notes are excellent and the follow-ups still slip? The recap gets written, and then someone has to read it, decide what it meant, and go do five things in five tools.&#10;&#10;Addys picks up exactly there. It listens with no bot in the call, extracts every action item as it is said, then drafts the emails, updates the CRM and files the docs. You approve, it ships.&#10;&#10;And it plugs into {{notetaker_tool}}, so your existing notes become its context. Nothing to rip out, nobody to re-onboard.&#10;&#10;Invite-only. Reply &quot;code&quot; and I will send you one.&#10;&#10;{{sender_first_name}}, Rena Labs" data-preview="Hi Dana, saw your G2 review of Granola from March, where you called the summaries &quot;genuinely good&quot;.&#10;&#10;But would it be fair to assume the notes are excellent and the follow-ups still slip? The recap gets written, and then someone has to read it, decide what it meant, and go do five things in five tools.&#10;&#10;Addys picks up exactly there. It listens with no bot in the call, extracts every action item as it is said, then drafts the emails, updates the CRM and files the docs. You approve, it ships.&#10;&#10;And it plugs into Granola, so your existing notes become its context. Nothing to rip out, nobody to re-onboard.&#10;&#10;Invite-only. Reply &quot;code&quot; and I will send you one.&#10;&#10;Alex, Rena Labs">
+                        <p>Hi {{first_name}}, saw {{notetaker_evidence}}.</p><p>But would it be fair to assume the notes are excellent and the follow-ups still slip? The recap gets written, and then someone has to read it, decide what it meant, and go do five things in five tools.</p><p>Addys picks up exactly there. It listens with no bot in the call, extracts every action item as it is said, then drafts the emails, updates the CRM and files the docs. You approve, it ships.</p><p>And it plugs into {{notetaker_tool}}, so your existing notes become its context. Nothing to rip out, nobody to re-onboard.</p><p>Invite-only. Reply &quot;code&quot; and I will send you one.</p><p>{{sender_first_name}}, Rena Labs</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Following up with the money version, {{first_name}}.&#10;&#10;The cost of a good notetaker is not the subscription. It is the twenty minutes after every call that a person spends turning a summary into sent emails and an updated pipeline. Multiply that by however many calls your week actually holds.&#10;&#10;Addys removes that step rather than documenting it better. Same 40+ tools you already use, one tap to approve.&#10;&#10;Still plugs into {{notetaker_tool}}. Reply &quot;code&quot; for an invite.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Following up with the money version, {{first_name}}.&#10;&#10;The cost of a good notetaker is not the subscription. It is the twenty minutes after every call that a person spends turning a summary into sent emails and an updated pipeline. Multiply that by however many calls your week actually holds.&#10;&#10;Addys removes that step rather than documenting it better. Same 40+ tools you already use, one tap to approve.&#10;&#10;Still plugs into {{notetaker_tool}}. Reply &quot;code&quot; for an invite." data-preview="Following up with the money version, Dana.&#10;&#10;The cost of a good notetaker is not the subscription. It is the twenty minutes after every call that a person spends turning a summary into sent emails and an updated pipeline. Multiply that by however many calls your week actually holds.&#10;&#10;Addys removes that step rather than documenting it better. Same 40+ tools you already use, one tap to approve.&#10;&#10;Still plugs into Granola. Reply &quot;code&quot; for an invite.">
+                        <p>Following up with the money version, {{first_name}}.</p><p>The cost of a good notetaker is not the subscription. It is the twenty minutes after every call that a person spends turning a summary into sent emails and an updated pipeline. Multiply that by however many calls your week actually holds.</p><p>Addys removes that step rather than documenting it better. Same 40+ tools you already use, one tap to approve.</p><p>Still plugs into {{notetaker_tool}}. Reply &quot;code&quot; for an invite.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: quick one&#10;&#10;{{first_name}}, no call, no demo.&#10;&#10;Reply &quot;yes&quot; and I will send an invite code. It runs alongside {{notetaker_tool}}, so it costs you nothing to find out.&#10;&#10;Should I send it to you or to whoever owns the meeting stack there?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="quick one" data-preview="quick one">quick one</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call, no demo.&#10;&#10;Reply &quot;yes&quot; and I will send an invite code. It runs alongside {{notetaker_tool}}, so it costs you nothing to find out.&#10;&#10;Should I send it to you or to whoever owns the meeting stack there?" data-preview="Dana, no call, no demo.&#10;&#10;Reply &quot;yes&quot; and I will send an invite code. It runs alongside Granola, so it costs you nothing to find out.&#10;&#10;Should I send it to you or to whoever owns the meeting stack there?">
+                        <p>{{first_name}}, no call, no demo.</p><p>Reply &quot;yes&quot; and I will send an invite code. It runs alongside {{notetaker_tool}}, so it costs you nothing to find out.</p><p>Should I send it to you or to whoever owns the meeting stack there?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - The Human Patch</strong>
+              <em>The Follow-Through Job Description</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - The Human Patch steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your {{open_req_title}} req&#10;&#10;Hi {{first_name}}, saw the {{open_req_title}} opening, and this line in it: &quot;{{req_jd_pain_phrase}}&quot;.&#10;&#10;But would it be fair to assume that whoever you hire spends their first six months just catching what gets dropped between meetings? Chasing follow-ups, updating the CRM, remembering what was promised to whom.&#10;&#10;Addys is a proactive meeting agent that does that half. It listens with no bot in the call, extracts every action item and decision as it is said, and drafts the work into Gmail, HubSpot, Notion and Slack for one-tap approval. Routine work it finishes itself. Anything involving another person waits for you. Real decisions get flagged rather than buried.&#10;&#10;Not a reason to cancel the req. A reason the hire gets to do the judgment work instead of the chasing.&#10;&#10;Invite-only. Reply &quot;code&quot; and I will send you one.&#10;&#10;{{sender_first_name}}, Rena Labs">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your {{open_req_title}} req" data-preview="your Chief of Staff req">your {{open_req_title}} req</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, saw the {{open_req_title}} opening, and this line in it: &quot;{{req_jd_pain_phrase}}&quot;.&#10;&#10;But would it be fair to assume that whoever you hire spends their first six months just catching what gets dropped between meetings? Chasing follow-ups, updating the CRM, remembering what was promised to whom.&#10;&#10;Addys is a proactive meeting agent that does that half. It listens with no bot in the call, extracts every action item and decision as it is said, and drafts the work into Gmail, HubSpot, Notion and Slack for one-tap approval. Routine work it finishes itself. Anything involving another person waits for you. Real decisions get flagged rather than buried.&#10;&#10;Not a reason to cancel the req. A reason the hire gets to do the judgment work instead of the chasing.&#10;&#10;Invite-only. Reply &quot;code&quot; and I will send you one.&#10;&#10;{{sender_first_name}}, Rena Labs" data-preview="Hi Dana, saw the Chief of Staff opening, and this line in it: &quot;make sure nothing agreed in a meeting gets dropped&quot;.&#10;&#10;But would it be fair to assume that whoever you hire spends their first six months just catching what gets dropped between meetings? Chasing follow-ups, updating the CRM, remembering what was promised to whom.&#10;&#10;Addys is a proactive meeting agent that does that half. It listens with no bot in the call, extracts every action item and decision as it is said, and drafts the work into Gmail, HubSpot, Notion and Slack for one-tap approval. Routine work it finishes itself. Anything involving another person waits for you. Real decisions get flagged rather than buried.&#10;&#10;Not a reason to cancel the req. A reason the hire gets to do the judgment work instead of the chasing.&#10;&#10;Invite-only. Reply &quot;code&quot; and I will send you one.&#10;&#10;Alex, Rena Labs">
+                        <p>Hi {{first_name}}, saw the {{open_req_title}} opening, and this line in it: &quot;{{req_jd_pain_phrase}}&quot;.</p><p>But would it be fair to assume that whoever you hire spends their first six months just catching what gets dropped between meetings? Chasing follow-ups, updating the CRM, remembering what was promised to whom.</p><p>Addys is a proactive meeting agent that does that half. It listens with no bot in the call, extracts every action item and decision as it is said, and drafts the work into Gmail, HubSpot, Notion and Slack for one-tap approval. Routine work it finishes itself. Anything involving another person waits for you. Real decisions get flagged rather than buried.</p><p>Not a reason to cancel the req. A reason the hire gets to do the judgment work instead of the chasing.</p><p>Invite-only. Reply &quot;code&quot; and I will send you one.</p><p>{{sender_first_name}}, Rena Labs</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One addition, {{first_name}}.&#10;&#10;The gap between posting that role and having someone productive in it is rarely short, and the follow-ups do not pause for it.&#10;&#10;Addys covers the mechanical half from day one and hands over cleanly when your hire starts. Same tools, same drafts, just a second pair of eyes on them.&#10;&#10;Reply &quot;code&quot; and I will send an invite. Mac only for now.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One addition, {{first_name}}.&#10;&#10;The gap between posting that role and having someone productive in it is rarely short, and the follow-ups do not pause for it.&#10;&#10;Addys covers the mechanical half from day one and hands over cleanly when your hire starts. Same tools, same drafts, just a second pair of eyes on them.&#10;&#10;Reply &quot;code&quot; and I will send an invite. Mac only for now." data-preview="One addition, Dana.&#10;&#10;The gap between posting that role and having someone productive in it is rarely short, and the follow-ups do not pause for it.&#10;&#10;Addys covers the mechanical half from day one and hands over cleanly when your hire starts. Same tools, same drafts, just a second pair of eyes on them.&#10;&#10;Reply &quot;code&quot; and I will send an invite. Mac only for now.">
+                        <p>One addition, {{first_name}}.</p><p>The gap between posting that role and having someone productive in it is rarely short, and the follow-ups do not pause for it.</p><p>Addys covers the mechanical half from day one and hands over cleanly when your hire starts. Same tools, same drafts, just a second pair of eyes on them.</p><p>Reply &quot;code&quot; and I will send an invite. Mac only for now.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: before the {{open_req_title}} starts&#10;&#10;{{first_name}}, no call needed.&#10;&#10;Reply &quot;yes&quot; and I will send an invite code, so it is already running when your {{open_req_title}} walks in.&#10;&#10;Should this go to you or to the hiring manager?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="before the {{open_req_title}} starts" data-preview="before the Chief of Staff starts">before the {{open_req_title}} starts</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed.&#10;&#10;Reply &quot;yes&quot; and I will send an invite code, so it is already running when your {{open_req_title}} walks in.&#10;&#10;Should this go to you or to the hiring manager?" data-preview="Dana, no call needed.&#10;&#10;Reply &quot;yes&quot; and I will send an invite code, so it is already running when your Chief of Staff walks in.&#10;&#10;Should this go to you or to the hiring manager?">
+                        <p>{{first_name}}, no call needed.</p><p>Reply &quot;yes&quot; and I will send an invite code, so it is already running when your {{open_req_title}} walks in.</p><p>Should this go to you or to the hiring manager?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 - The Exposed Calendar</strong>
+              <em>The Last Mile</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 - The Exposed Calendar steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} + {{exec_stack_primary}}&#10;&#10;Hi {{first_name}}, you have an open {{booking_link_platform}} link, and {{exec_stack_evidence}}.&#10;&#10;But would it be fair to assume the segment between those two things is a person? The call ends, and someone has to remember what was agreed and go type it into {{exec_stack_primary}}.&#10;&#10;Addys closes that last mile. It listens with no bot in the call, extracts every commitment as it is made, and drafts straight into {{exec_stack_list}}, with 40+ integrations live. You approve, it ships. It keeps a private memory of who you talk to and what is still open, so it acts with context rather than guesses.&#10;&#10;Invite-only download. Reply &quot;code&quot; and I will send you one.&#10;&#10;{{sender_first_name}}, Rena Labs">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} + {{exec_stack_primary}}" data-preview="Northwind Labs + HubSpot">{{company}} + {{exec_stack_primary}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, you have an open {{booking_link_platform}} link, and {{exec_stack_evidence}}.&#10;&#10;But would it be fair to assume the segment between those two things is a person? The call ends, and someone has to remember what was agreed and go type it into {{exec_stack_primary}}.&#10;&#10;Addys closes that last mile. It listens with no bot in the call, extracts every commitment as it is made, and drafts straight into {{exec_stack_list}}, with 40+ integrations live. You approve, it ships. It keeps a private memory of who you talk to and what is still open, so it acts with context rather than guesses.&#10;&#10;Invite-only download. Reply &quot;code&quot; and I will send you one.&#10;&#10;{{sender_first_name}}, Rena Labs" data-preview="Hi Dana, you have an open Calendly link, and HubSpot and Notion are both live on your site.&#10;&#10;But would it be fair to assume the segment between those two things is a person? The call ends, and someone has to remember what was agreed and go type it into HubSpot.&#10;&#10;Addys closes that last mile. It listens with no bot in the call, extracts every commitment as it is made, and drafts straight into HubSpot, Notion and Slack, with 40+ integrations live. You approve, it ships. It keeps a private memory of who you talk to and what is still open, so it acts with context rather than guesses.&#10;&#10;Invite-only download. Reply &quot;code&quot; and I will send you one.&#10;&#10;Alex, Rena Labs">
+                        <p>Hi {{first_name}}, you have an open {{booking_link_platform}} link, and {{exec_stack_evidence}}.</p><p>But would it be fair to assume the segment between those two things is a person? The call ends, and someone has to remember what was agreed and go type it into {{exec_stack_primary}}.</p><p>Addys closes that last mile. It listens with no bot in the call, extracts every commitment as it is made, and drafts straight into {{exec_stack_list}}, with 40+ integrations live. You approve, it ships. It keeps a private memory of who you talk to and what is still open, so it acts with context rather than guesses.</p><p>Invite-only download. Reply &quot;code&quot; and I will send you one.</p><p>{{sender_first_name}}, Rena Labs</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the other way to look at it.&#10;&#10;An open booking link means the volume is not yours to control. Anyone can take thirty minutes off you. What is controllable is what happens in the twenty minutes after.&#10;&#10;Addys makes that part near-zero: drafted, contextual, waiting on one tap. And no bot ever appears in the participant list, so there is no awkward artefact on a customer call.&#10;&#10;Reply &quot;code&quot; for an invite.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the other way to look at it.&#10;&#10;An open booking link means the volume is not yours to control. Anyone can take thirty minutes off you. What is controllable is what happens in the twenty minutes after.&#10;&#10;Addys makes that part near-zero: drafted, contextual, waiting on one tap. And no bot ever appears in the participant list, so there is no awkward artefact on a customer call.&#10;&#10;Reply &quot;code&quot; for an invite." data-preview="Dana, the other way to look at it.&#10;&#10;An open booking link means the volume is not yours to control. Anyone can take thirty minutes off you. What is controllable is what happens in the twenty minutes after.&#10;&#10;Addys makes that part near-zero: drafted, contextual, waiting on one tap. And no bot ever appears in the participant list, so there is no awkward artefact on a customer call.&#10;&#10;Reply &quot;code&quot; for an invite.">
+                        <p>{{first_name}}, the other way to look at it.</p><p>An open booking link means the volume is not yours to control. Anyone can take thirty minutes off you. What is controllable is what happens in the twenty minutes after.</p><p>Addys makes that part near-zero: drafted, contextual, waiting on one tap. And no bot ever appears in the participant list, so there is no awkward artefact on a customer call.</p><p>Reply &quot;code&quot; for an invite.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{first_name}}, 15 seconds&#10;&#10;No call, no demo.&#10;&#10;Reply &quot;yes&quot; and I will send you an invite code for Addys. It drafts your post-meeting work straight into {{exec_stack_primary}}.&#10;&#10;You, or someone else on the team?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{first_name}}, 15 seconds" data-preview="Dana, 15 seconds">{{first_name}}, 15 seconds</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call, no demo.&#10;&#10;Reply &quot;yes&quot; and I will send you an invite code for Addys. It drafts your post-meeting work straight into {{exec_stack_primary}}.&#10;&#10;You, or someone else on the team?" data-preview="No call, no demo.&#10;&#10;Reply &quot;yes&quot; and I will send you an invite code for Addys. It drafts your post-meeting work straight into HubSpot.&#10;&#10;You, or someone else on the team?">
+                        <p>No call, no demo.</p><p>Reply &quot;yes&quot; and I will send you an invite code for Addys. It drafts your post-meeting work straight into {{exec_stack_primary}}.</p><p>You, or someone else on the team?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 - Catch-All</strong>
+              <em>The invite code itself</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 - Catch-All steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the twenty minutes after&#10;&#10;Hi {{first_name}}, you are in {{meeting_role_class}}, so I would guess a lot of your week is conversations.&#10;&#10;Would it be fair to assume the hard part is not the meeting, but the twenty minutes after, where what you said you would do has to become things you actually did?&#10;&#10;Addys is a proactive meeting agent for Mac. It listens with no bot in the call, pulls out every action item and decision the moment it is said, and drafts the follow-up work into the tools you already use. One tap and it ships. Decisions only you can make get flagged, not buried.&#10;&#10;It is invite-only and we release codes weekly. Reply &quot;code&quot; and I will send you one.&#10;&#10;{{sender_first_name}}, Rena Labs">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the twenty minutes after" data-preview="the twenty minutes after">the twenty minutes after</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, you are in {{meeting_role_class}}, so I would guess a lot of your week is conversations.&#10;&#10;Would it be fair to assume the hard part is not the meeting, but the twenty minutes after, where what you said you would do has to become things you actually did?&#10;&#10;Addys is a proactive meeting agent for Mac. It listens with no bot in the call, pulls out every action item and decision the moment it is said, and drafts the follow-up work into the tools you already use. One tap and it ships. Decisions only you can make get flagged, not buried.&#10;&#10;It is invite-only and we release codes weekly. Reply &quot;code&quot; and I will send you one.&#10;&#10;{{sender_first_name}}, Rena Labs" data-preview="Hi Dana, you are in sales, so I would guess a lot of your week is conversations.&#10;&#10;Would it be fair to assume the hard part is not the meeting, but the twenty minutes after, where what you said you would do has to become things you actually did?&#10;&#10;Addys is a proactive meeting agent for Mac. It listens with no bot in the call, pulls out every action item and decision the moment it is said, and drafts the follow-up work into the tools you already use. One tap and it ships. Decisions only you can make get flagged, not buried.&#10;&#10;It is invite-only and we release codes weekly. Reply &quot;code&quot; and I will send you one.&#10;&#10;Alex, Rena Labs">
+                        <p>Hi {{first_name}}, you are in {{meeting_role_class}}, so I would guess a lot of your week is conversations.</p><p>Would it be fair to assume the hard part is not the meeting, but the twenty minutes after, where what you said you would do has to become things you actually did?</p><p>Addys is a proactive meeting agent for Mac. It listens with no bot in the call, pulls out every action item and decision the moment it is said, and drafts the follow-up work into the tools you already use. One tap and it ships. Decisions only you can make get flagged, not buried.</p><p>It is invite-only and we release codes weekly. Reply &quot;code&quot; and I will send you one.</p><p>{{sender_first_name}}, Rena Labs</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Quick addition, {{first_name}}.&#10;&#10;Most tools in this space help you remember the meeting better. Addys is built on the opposite bet: you do not have a memory problem, you have an execution problem. Humans are far better at judging than generating, so it generates and you judge.&#10;&#10;Reply &quot;code&quot; and I will send an invite. Mac only for now.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Quick addition, {{first_name}}.&#10;&#10;Most tools in this space help you remember the meeting better. Addys is built on the opposite bet: you do not have a memory problem, you have an execution problem. Humans are far better at judging than generating, so it generates and you judge.&#10;&#10;Reply &quot;code&quot; and I will send an invite. Mac only for now." data-preview="Quick addition, Dana.&#10;&#10;Most tools in this space help you remember the meeting better. Addys is built on the opposite bet: you do not have a memory problem, you have an execution problem. Humans are far better at judging than generating, so it generates and you judge.&#10;&#10;Reply &quot;code&quot; and I will send an invite. Mac only for now.">
+                        <p>Quick addition, {{first_name}}.</p><p>Most tools in this space help you remember the meeting better. Addys is built on the opposite bet: you do not have a memory problem, you have an execution problem. Humans are far better at judging than generating, so it generates and you judge.</p><p>Reply &quot;code&quot; and I will send an invite. Mac only for now.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: invite?&#10;&#10;{{first_name}}, no call, no demo, no deck.&#10;&#10;Reply &quot;yes&quot; and I will send you an invite code for Addys. It takes about a minute to install and it works on your next call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="invite?" data-preview="invite?">invite?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call, no demo, no deck.&#10;&#10;Reply &quot;yes&quot; and I will send you an invite code for Addys. It takes about a minute to install and it works on your next call." data-preview="Dana, no call, no demo, no deck.&#10;&#10;Reply &quot;yes&quot; and I will send you an invite code for Addys. It takes about a minute to install and it works on your next call.">
+                        <p>{{first_name}}, no call, no demo, no deck.</p><p>Reply &quot;yes&quot; and I will send you an invite code for Addys. It takes about a minute to install and it works on your next call.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="The launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">The launch</p>
+      <h2>Launch order, thresholds, and the real bottleneck</h2>
+      <p class="takeaway">Tier 1 ships first because it is the untested thesis. Sending is never the constraint. Fulfilling the invite codes same-day is.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Weeks 1-2, Tier 1, 1,500 contacts. Validate the new top-tier thesis first. This is the only genuinely new element in the strategy, so it gets proven or killed before anything else scales.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Weeks 2-4, Tier 2, 1,500 contacts. A known-good tier that also acts as a control, giving a clean read on whether &#39;size of the bet already placed&#39; beats &#39;proximity to the problem&#39;.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 4-6, Tier 3, 1,500 contacts. The highest personalisation cost in the strategy, so it launches only once fulfilment has been proven at lower volume.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Weeks 6-9, Tier 4, 3,000 contacts. The first real volume tier.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Weeks 9-12, Tier 5, 5,000+ contacts. Scale only after invite-code fulfilment is demonstrably same-day at volume.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Throughout: cap daily sending at whatever can be fulfilled the same day. A promised invite code has roughly a two-hour shelf life, and a prospect who replies and hears nothing until tomorrow is worse off than one never emailed.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacts</strong>
+                <span>Perfect. Scale the tier hard.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run untouched.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450 to 500</strong>
+                <span>Borderline. Test one copy variant and hold everything else constant.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or reply rate below 1% after 1,500+ sends</strong>
+                <span>Failing. Cut the tier and rework it.</span>
+              </div>
+              <div class="threshold">
+                <strong>Mac-disqualification replies above 5% of all replies</strong>
+                <span>Stop the list build and retune the Mac-forward score. The tier&#39;s numbers cannot be trusted until this clears.</span>
+              </div>
+              <div class="threshold">
+                <strong>Invite-code fulfilment latency above 4 hours</strong>
+                <span>Pause sending until it clears. This threshold outranks any pipeline target.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a 20-minute walkthrough</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dana","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Northwind Labs","Alex","Zapier Agents","your ops role posted last week lists \"own our Zapier and n8n automations\" in the requirements","Granola","your G2 review of Granola from March, where you called the summaries \"genuinely good\"","Chief of Staff","make sure nothing agreed in a meeting gets dropped","Calendly","HubSpot","HubSpot, Notion and Slack","HubSpot and Notion are both live on your site","sales"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
