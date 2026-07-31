@@ -1,0 +1,1931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DebtBook - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-01</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for DebtBook</p>
+          <h1>Your DebtBook waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">One priority-routed cascade across every public-sector debt issuer in the United States — built entirely from filings your buyers are legally required to publish.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> DebtBook sells into one of the only B2B markets on earth where the buyer is legally required to publish the reason they need the product. Every entity that has issued a municipal bond files with MSRB&#39;s EMMA and publishes an ACFR — a free PDF containing the sizing variable, a five-way routing signal, and the Finance Director&#39;s own name, title and direct line on the transmittal letter they personally signed. Complete TAM, real signal and verified contact data, in one document the buyer wrote themselves. The rest of the category is buying title-filtered lists.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>~22,250</strong>
+          <span>Accounts in the working universe</span>
+        </div>
+        <div class="metric-card">
+          <strong>$0</strong>
+          <span>Data cost — every source is statutory and free</span>
+        </div>
+        <div class="metric-card">
+          <strong>~9%</strong>
+          <span>Of the market DebtBook has reached so far</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Cloud treasury and accounting software purpose-built for government and nonprofit finance: debt, cash, investment, GASB 87 lease, GASB 96 subscription and contract management, with ACFR footnote generation native rather than bolted on.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The filing is the signal</p></div><div><span>02</span><p>One cascade, first match wins</p></div><div><span>03</span><p>Five tiers, ordered by visible pain</p></div><div><span>04</span><p>The campaign experiments</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>01 · Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>02 · Waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>03 · Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>04 · Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>05 · Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>06 · Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="01 · Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">01 · Signal</p>
+      <h2>The filing is the signal</h2>
+      <p class="takeaway">We do not enrich. We read the audited document the buyer publishes annually, for free, on a schedule announced in advance.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>It is statutory. Entities do not stop filing, so the list refreshes itself annually for free and decays at close to zero.</p></div><div class="reason-card"><span>02</span><p>It carries five variables at once — debt outstanding, GASB 87/96 exposure, auditor findings, filing lateness, and the signatory&#39;s contact details — from a single document.</p></div><div class="reason-card"><span>03</span><p>It is unfakeable. &#39;Your FY2025 report went up on EMMA forty-one days past the undertaking date&#39; is a sentence no competitor&#39;s sequence will ever contain.</p></div><div class="reason-card"><span>04</span><p>The moat is operational, not technical. Any competitor could read EMMA. None do, because it means parsing thousands of PDFs instead of paying an enrichment vendor.</p></div>
+            </div>
+            <div class="field-cloud"><span>Entity name, type, state</span><span>EMMA issuer ID + series list</span><span>Total outstanding long-term debt</span><span>Active series count</span><span>Latest ACFR fiscal year</span><span>ACFR filing date</span><span>Contractual undertaking deadline</span><span>Failure-to-file notice Y/N</span><span>Auditor opinion type</span><span>Material weakness / significant deficiency</span><span>New series in trailing 12 months</span><span>Refunding in trailing 12 months</span><span>Sale on calendar next 90 days</span><span>GASB 87 lease liability</span><span>GASB 96 SBITA liability (or absence)</span><span>Open finance requisition + title</span><span>Finance Director tenure</span><span>GFOA Certificate recipient</span><span>ACFR signatory name / title / phone / email</span><span>Treasury + Controller names</span><span>Email naming convention</span><span>Fiscal year end date</span><span>ERP in use (from agendas / job posts)</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>MSRB EMMA (emma.msrb.org)</h3><p>The core TAM. Every issuer, every series ever sold, every annual filing and its date, plus rating-change and failure-to-file event notices. Free, refreshed weekly.</p></div><div class="source-card"><span>02</span><h3>The ACFR PDF itself</h3><p>Outstanding debt totals, long-term debt notes, GASB 87 lease liability, GASB 96 SBITA liability or its conspicuous absence, the auditor&#39;s report and findings, and the letter of transmittal carrying the Finance Director&#39;s name, title, phone and often email.</p></div><div class="source-card"><span>03</span><h3>State debt registries</h3><p>California CDIAC Report of Final Sale and Annual Debt Transparency Report, Texas Bond Review Board, NC Local Government Commission agendas and equivalents — structured issuance data with issuer contacts already normalised.</p></div><div class="source-card"><span>04</span><h3>Bond sale calendars &amp; preliminary Official Statements</h3><p>Entities with debt about to hit the books in the next 30-90 days — the forward-looking Tier 2 trigger.</p></div><div class="source-card"><span>05</span><h3>Government job boards</h3><p>GovernmentJobs.com, state league-of-cities boards and the GFOA career centre: open reqs for Treasury Manager, Debt Manager, Controller and Accountant.</p></div><div class="source-card"><span>06</span><h3>Council, commission and board agendas</h3><p>New Finance Director appointments, interim appointments, ERP and software purchase approvals, debt authorisations — all published in advance.</p></div><div class="source-card"><span>07</span><h3>GFOA Certificate list + state auditor portals</h3><p>Reporting-maturity score, single audit findings, and in many states an explicit published list of late or delinquent filers.</p></div><div class="source-card"><span>08</span><h3>Entity finance-department directories</h3><p>Persona expansion beyond the ACFR signatory, plus the email naming convention. Public staff directories are more complete than private-sector equivalents because accessibility is often statutory.</p></div><div class="source-card"><span>09</span><h3>US Census of Governments</h3><p>Universe frame and segment sizing — roughly 90,000 local government units, the denominator that shows what has not yet been covered.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="02 · Waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">02 · Waterfall</p>
+      <h2>One cascade, first match wins</h2>
+      <p class="takeaway">Every account is tested top to bottom and routed to the first tier it matches, so each entity receives exactly one campaign.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF A failure-to-file notice exists on EMMA, OR the ACFR was posted after the undertaking deadline, OR the auditor reported a material weakness or significant deficiency touching debt, capital assets, leases or the close process</span>
+          <strong>Tier 1 — Filing Distress</strong>
+          <em>The problem is already on the record and visible to the council, the rating agencies and the bondholders. Somebody has already been asked to fix it.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF At least one new series was issued in the trailing 12 months, OR a refunding occurred, OR a sale is on the calendar within 90 days</span>
+          <strong>Tier 2 — Fresh Debt on the Books</strong>
+          <em>Every new series is a new tab, a new amortisation schedule and a new set of fund allocations. Refundings are worse — the lineage has to be tracked or the footnote quietly stops tying out.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF A GASB 87 lease liability is disclosed AND no GASB 96 SBITA liability is disclosed, or it is reported as zero</span>
+          <strong>Tier 3 — GASB 96 Exposure Gap</strong>
+          <em>They did the lease standard and stopped. The subscription inventory has never been built, because IT signs the software contracts and finance has to report them, with no handoff between.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF An open finance requisition exists, OR the Finance Director has been in seat under six months, OR the appointment is interim</span>
+          <strong>Tier 4 — Seat Just Changed Hands</strong>
+          <em>The spreadsheet&#39;s author has left or is leaving. A new director inherits a model they did not build and cannot audit. Highest openness to change of any tier.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF None of the above and outstanding debt is $10M or greater</span>
+          <strong>Tier 5 — Scale Without a System (catch-all)</strong>
+          <em>No acute event. Sequenced on the benchmark artifact and the peer proof that roughly 40% of the largest 250 municipalities and counties have already moved.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF A failure-to-file notice exists on EMMA, OR the ACFR was posted after the undertaking deadline, OR the auditor reported a material weakness or significant deficiency touching debt, capital assets, leases or the close process -&gt; Tier 1 — Filing Distress (The problem is already on the record and visible to the council, the rating agencies and the bondholders. Somebody has already been asked to fix it.)&#10;2. IF At least one new series was issued in the trailing 12 months, OR a refunding occurred, OR a sale is on the calendar within 90 days -&gt; Tier 2 — Fresh Debt on the Books (Every new series is a new tab, a new amortisation schedule and a new set of fund allocations. Refundings are worse — the lineage has to be tracked or the footnote quietly stops tying out.)&#10;3. IF A GASB 87 lease liability is disclosed AND no GASB 96 SBITA liability is disclosed, or it is reported as zero -&gt; Tier 3 — GASB 96 Exposure Gap (They did the lease standard and stopped. The subscription inventory has never been built, because IT signs the software contracts and finance has to report them, with no handoff between.)&#10;4. IF An open finance requisition exists, OR the Finance Director has been in seat under six months, OR the appointment is interim -&gt; Tier 4 — Seat Just Changed Hands (The spreadsheet&#39;s author has left or is leaving. A new director inherits a model they did not build and cannot audit. Highest openness to change of any tier.)&#10;5. IF None of the above and outstanding debt is $10M or greater -&gt; Tier 5 — Scale Without a System (catch-all) (No acute event. Sequenced on the benchmark artifact and the peer proof that roughly 40% of the largest 250 municipalities and counties have already moved.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF A failure-to-file notice exists on EMMA, OR the ACFR was posted after the undertaking deadline, OR the auditor reported a material weakness or significant deficiency touching debt, capital assets, leases or the close process -&gt; Tier 1 — Filing Distress (The problem is already on the record and visible to the council, the rating agencies and the bondholders. Somebody has already been asked to fix it.)
+2. IF At least one new series was issued in the trailing 12 months, OR a refunding occurred, OR a sale is on the calendar within 90 days -&gt; Tier 2 — Fresh Debt on the Books (Every new series is a new tab, a new amortisation schedule and a new set of fund allocations. Refundings are worse — the lineage has to be tracked or the footnote quietly stops tying out.)
+3. IF A GASB 87 lease liability is disclosed AND no GASB 96 SBITA liability is disclosed, or it is reported as zero -&gt; Tier 3 — GASB 96 Exposure Gap (They did the lease standard and stopped. The subscription inventory has never been built, because IT signs the software contracts and finance has to report them, with no handoff between.)
+4. IF An open finance requisition exists, OR the Finance Director has been in seat under six months, OR the appointment is interim -&gt; Tier 4 — Seat Just Changed Hands (The spreadsheet&#39;s author has left or is leaving. A new director inherits a model they did not build and cannot audit. Highest openness to change of any tier.)
+5. IF None of the above and outstanding debt is $10M or greater -&gt; Tier 5 — Scale Without a System (catch-all) (No acute event. Sequenced on the benchmark artifact and the peer proof that roughly 40% of the largest 250 municipalities and counties have already moved.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="03 · Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">03 · Tiers</p>
+      <h2>Five tiers, ordered by visible pain</h2>
+      <p class="takeaway">Tier 1 is small and hard. It is also where deals are shortest, because the problem is already on the public record.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">6% TAM</span>
+          </div>
+          <h3>Tier 1: Filing Distress</h3>
+          <p>Failure-to-file notice on EMMA, an ACFR posted past the undertaking deadline, or an auditor finding touching debt, leases, capital assets or the close process.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The delay is almost never the audit. It is the weeks spent reconciling debt schedules across a dozen workbooks before the auditors can even start — and the lateness is now visible to the council, the rating agencies and the bondholders.</dd></div>
+              <div><dt>Offer</dt><dd>The ACFR Footnote Rebuild — we reproduce their published long-term debt note from the underlying series and show where the two versions diverge</dd></div>
+              <div><dt>Source</dt><dd>EMMA event notices + ACFR auditor&#39;s report + undertaking deadline</dd></div>
+              <div><dt>Reply density</dt><dd>Highest in the programme. Target 7-12%.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">22% TAM</span>
+          </div>
+          <h3>Tier 2: Fresh Debt on the Books</h3>
+          <p>A new series issued in the trailing 12 months, a refunding, or a sale on the calendar within the next 90 days.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Closing the sale is the part people congratulate you for. Building the schedule, allocating debt service across funds, and tracking refunding lineage so the footnote still ties out is the part that compounds every single issuance.</dd></div>
+              <div><dt>Offer</dt><dd>The Series Schedule — a full amortisation for their newest issue, allocated to their funds, delivered before first debt service</dd></div>
+              <div><dt>Source</dt><dd>EMMA Official Statements + state registries + bond sale calendars</dd></div>
+              <div><dt>Reply density</dt><dd>High, and the most comfortable tier to write. Target 6-9%.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">18% TAM</span>
+          </div>
+          <h3>Tier 3: GASB 96 Exposure Gap</h3>
+          <p>The ACFR discloses a GASB 87 lease liability but no GASB 96 SBITA liability, or reports it as zero.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They built the lease inventory and stopped. The subscription inventory has no natural owner — IT signs the software contracts, finance has to report them — and the auditor will eventually ask.</dd></div>
+              <div><dt>Offer</dt><dd>The SBITA Discovery Checklist — the twelve contract categories that most often qualify under GASB 96 and most often get missed</dd></div>
+              <div><dt>Source</dt><dd>ACFR note disclosures, parsed</dd></div>
+              <div><dt>Reply density</dt><dd>Solid, but the most tonally sensitive tier after Tier 1. Target 5-8%.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">9% TAM</span>
+          </div>
+          <h3>Tier 4: Seat Just Changed Hands</h3>
+          <p>An open req for Treasury Manager, Debt Manager, Controller or Accountant; or a Finance Director appointed or acting within the last six months.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The debt model lives in one person&#39;s head and one person&#39;s workbook, with logic that was never written down. It works right up until the person who wrote it is not there.</dd></div>
+              <div><dt>Offer</dt><dd>The Treasury Handover Checklist — what to extract from the departing owner of the debt schedule before their last day</dd></div>
+              <div><dt>Source</dt><dd>Government job boards + council agendas and minutes</dd></div>
+              <div><dt>Reply density</dt><dd>Highest openness to change of any tier; the first ninety days are the leverage window. Target 5-8%.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">45% TAM</span>
+          </div>
+          <h3>Tier 5: Scale Without a System · catch-all</h3>
+          <p>Everything else in the working universe carrying $10M or more in outstanding debt with no observable treasury system.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>No acute event, just permanent friction. The finance team spends its capacity maintaining spreadsheets instead of on work that moves the entity forward.</dd></div>
+              <div><dt>Offer</dt><dd>The Benchmark — how peer entities of the same size and debt profile handle debt, lease and subscription reporting</dd></div>
+              <div><dt>Source</dt><dd>EMMA issuer universe + ACFR debt totals</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest, and deliberately throttled. Judged over quarters. Target 2-4%.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="04 · Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">04 · Campaigns</p>
+      <h2>The campaign experiments</h2>
+      <p class="takeaway">Twelve plays across the five tiers, plus four side channels that compound back into the cascade.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Footnote Rebuild</h3>
+          <p>The highest-intent play in the programme. The offer costs us under an hour and produces a finding the entity cannot get anywhere else. Where the two versions diverge it is almost always a refunding allocated one way in the schedule and another way in the footnote — and far better found in August than in a management letter.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>ACFR filed past the undertaking deadline, or a failure-to-file notice present on EMMA</dd></div>
+            <div><dt>AI strategy</dt><dd>Parse the published long-term debt note out of the ACFR PDF, rebuild it from the underlying series data, and open on the specific number of days late — stated neutrally, never as a criticism.</dd></div>
+            <div><dt>Value</dt><dd>File on time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Auditor Read-Access</h3>
+          <p>Anchored on City of Vista, CA — twelve hours of audit season eliminated purely from not chasing discrepancies across Excel tabs, and confidence in handing auditors direct access. Runs from its own domain pool because it is the highest-sensitivity copy in the programme.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Auditor-reported material weakness or significant deficiency touching debt, leases, capital assets or close</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead not on reporting but on the change teams say they underestimated: giving auditors their own read-only access so the audit stops running through one person&#39;s inbox.</dd></div>
+            <div><dt>Value</dt><dd>Audit survivability</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Focused</span>
+          </div>
+          <h3>New Series Schedule</h3>
+          <p>Worst case they get a clean second copy to check the municipal advisor&#39;s schedule against. Best case it is a live demonstration of the fund-allocation capability that is the actual differentiator, delivered before the first debt service payment.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>New series issued in the trailing 12 months</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the exact series and par amount from the Official Statement, then offer to build the amortisation out properly and allocate it to their funds the way the entity actually structures them.</dd></div>
+            <div><dt>Value</dt><dd>Immediate work product</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Refunding Lineage</h3>
+          <p>Excel has no way to hold refunding lineage, so people rebuild it from memory each year. This is DebtBook&#39;s sharpest structural differentiator and the one competitors adapted from corporate finance cannot match.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Refunding executed in the trailing 12 months</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with the specific failure mode of spreadsheet debt models: once a series has partially refunded another, and that one refunded something before it, the lineage has to be tracked at allocation level or the footnote quietly stops tying out.</dd></div>
+            <div><dt>Value</dt><dd>Accuracy</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Pre-Sale Intercept</h3>
+          <p>The only tier whose message is forward-looking rather than adding to the current pile, which makes it the one play that can safely run through the July-August year-end close window.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Preliminary Official Statement posted, or sale on a state board calendar within 90 days</dd></div>
+            <div><dt>AI strategy</dt><dd>Reach the debt owner before the series closes, when the mental model of &#39;where will this live&#39; is still open.</dd></div>
+            <div><dt>Value</dt><dd>Timing</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Focused</span>
+          </div>
+          <h3>SBITA Inventory Gap</h3>
+          <p>Never asserts non-compliance. Asserts an inventory gap, which is both more accurate and the only framing that survives a public-records request.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>GASB 87 lease liability disclosed, GASB 96 SBITA liability absent or zero</dd></div>
+            <div><dt>AI strategy</dt><dd>Quote their own disclosed lease liability, note the missing SBITA balance, and immediately reframe it as an ownership problem rather than an oversight — IT buys the software, finance reports it, nobody owns the handoff.</dd></div>
+            <div><dt>Value</dt><dd>Compliance completeness</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Twelve Categories Checklist</h3>
+          <p>The inventory is the hard half and it is a cross-departmental discovery exercise. Handing it over before any purchase is discussed is what earns the second conversation.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Controller / Accounting Manager persona within Tier 3 accounts</dd></div>
+            <div><dt>AI strategy</dt><dd>Offer the implementation team&#39;s own checklist of contract categories that most often qualify and get missed — ERP modules, permitting software, GIS licensing, utility billing platforms, body-camera storage.</dd></div>
+            <div><dt>Value</dt><dd>Solve the hard half free</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>New Director Ninety Days</h3>
+          <p>The first few months in a finance leadership seat are the only period where changing an inherited process is expected rather than questioned. After that it stops being someone else&#39;s process and becomes yours.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Finance Director appointed or acting within the last six months</dd></div>
+            <div><dt>AI strategy</dt><dd>Congratulate, then ask the one question that catches people: where does the debt schedule actually live, and who built it?</dd></div>
+            <div><dt>Value</dt><dd>Continuity</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Open Req Intercept</h3>
+          <p>Teams that fix the system first hire for a smaller, more attractive role — and fill it faster. Never references a named departure.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Open requisition for Treasury Manager, Debt Manager, Controller or Accountant</dd></div>
+            <div><dt>AI strategy</dt><dd>Ask the hiring manager how much of the advertised role is genuinely treasury work and how much is maintaining the workbook the last person built.</dd></div>
+            <div><dt>Value</dt><dd>Hire for a better job</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Peer Benchmark</h3>
+          <p>Peer comparison is the single most persuasive frame in public finance, because &#39;what are comparable entities doing&#39; is a question these buyers are formally asked. Throttled deliberately: this is the reputation-sensitive tier and burning it early is unrecoverable in a market this interconnected.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>$10M+ outstanding, no acute trigger</dd></div>
+            <div><dt>AI strategy</dt><dd>Open on their own debt bracket — outstanding amount and series count, both from the ACFR — and place them against the roughly 40% of the largest 250 municipalities and counties that have already moved off spreadsheets.</dd></div>
+            <div><dt>Value</dt><dd>Peer comparison</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Budget Justification Memo</h3>
+          <p>The highest-leverage asset in the entire programme. Every government buyer must write this document to buy anything, and the blocker is almost never conviction — it is the absence of a budget line and a procurement path. This play supplies both.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>All tiers, January to March budget-development window</dd></div>
+            <div><dt>AI strategy</dt><dd>Offer to write the one-page decision package with the entity&#39;s own debt and staffing figures already in it, and name the OMNIA Partners cooperative contract so the RFP objection never forms.</dd></div>
+            <div><dt>Value</dt><dd>Remove the real blocker</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Channel &amp; Event Plays</h3>
+          <p>One audit-partner relationship can be worth a hundred cold accounts. An entity mid-ERP-migration has already accepted its financial systems are changing and has just discovered the new ERP does not do debt properly — a uniquely receptive moment, announced publicly.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Audit partners, municipal advisors, GFOA and state chapter attendee lists, ERP-migration agendas</dd></div>
+            <div><dt>AI strategy</dt><dd>Four side channels that compound into the cascade: government-practice partners at regional CPA firms who audit hundreds of entities each; SEC/MSRB-registered municipal advisors who currently hand clients the Excel schedule DebtBook replaces; published conference attendee and presenter lists; and council agendas announcing ERP selections months in advance.</dd></div>
+            <div><dt>Value</dt><dd>Compounding reach</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="05 · Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">05 · Copy</p>
+      <h2>Five sequences, twenty-one emails</h2>
+      <p class="takeaway">Every email is written on the assumption it will be published — because in most states, it is a public record.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{entity}}</span><span>{{title}}</span><span>{{fy}}</span><span>{{next_fy}}</span><span>{{days_late}}</span><span>{{series_name}}</span><span>{{par_amount}}</span><span>{{month}}</span><span>{{lease_liability}}</span><span>{{req_title}}</span><span>{{peer_type}}</span><span>{{debt_outstanding}}</span><span>{{series_count}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{entity}}, {{title}}, {{fy}}, {{next_fy}}, {{days_late}}, {{series_name}}, {{par_amount}}, {{month}}, {{lease_liability}}, {{req_title}}, {{peer_type}}, {{debt_outstanding}}, {{series_count}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 — Filing Distress</strong>
+              <em>The ACFR Footnote Rebuild</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 — Filing Distress steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 5</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 12</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="3" role="tab" aria-selected="false">
+                    <span>Step 4</span>
+                    <strong>Day 24</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{entity}}&#39;s FY{{fy}} annual report&#10;&#10;{{first_name}} — I noticed {{entity}}&#39;s FY{{fy}} report went up on EMMA {{days_late}} days after the undertaking date.&#10;&#10;Not a criticism. In nearly every finance team we work with, the delay isn&#39;t the audit — it&#39;s the weeks spent reconciling debt schedules across a dozen workbooks before the auditors can even start.&#10;&#10;The Finance Director in Vista, California put a number on it: twelve hours of audit season, gone, purely from not having to chase discrepancies across Excel tabs.&#10;&#10;Is that roughly what the close looks like there, or is the bottleneck somewhere else?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{entity}}&#39;s FY{{fy}} annual report" data-preview="the City of Ridgemont&#39;s FY2025 annual report">{{entity}}&#39;s FY{{fy}} annual report</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — I noticed {{entity}}&#39;s FY{{fy}} report went up on EMMA {{days_late}} days after the undertaking date.&#10;&#10;Not a criticism. In nearly every finance team we work with, the delay isn&#39;t the audit — it&#39;s the weeks spent reconciling debt schedules across a dozen workbooks before the auditors can even start.&#10;&#10;The Finance Director in Vista, California put a number on it: twelve hours of audit season, gone, purely from not having to chase discrepancies across Excel tabs.&#10;&#10;Is that roughly what the close looks like there, or is the bottleneck somewhere else?" data-preview="Marcus — I noticed the City of Ridgemont&#39;s FY2025 report went up on EMMA 41 days after the undertaking date.&#10;&#10;Not a criticism. In nearly every finance team we work with, the delay isn&#39;t the audit — it&#39;s the weeks spent reconciling debt schedules across a dozen workbooks before the auditors can even start.&#10;&#10;The Finance Director in Vista, California put a number on it: twelve hours of audit season, gone, purely from not having to chase discrepancies across Excel tabs.&#10;&#10;Is that roughly what the close looks like there, or is the bottleneck somewhere else?">
+                        <p>{{first_name}} — I noticed {{entity}}&#39;s FY{{fy}} report went up on EMMA {{days_late}} days after the undertaking date.</p><p>Not a criticism. In nearly every finance team we work with, the delay isn&#39;t the audit — it&#39;s the weeks spent reconciling debt schedules across a dozen workbooks before the auditors can even start.</p><p>The Finance Director in Vista, California put a number on it: twelve hours of audit season, gone, purely from not having to chase discrepancies across Excel tabs.</p><p>Is that roughly what the close looks like there, or is the bottleneck somewhere else?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 5</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One specific thing, {{first_name}}.&#10;&#10;We can take your published long-term debt note, rebuild it from the underlying series, and show you where the two versions diverge. It usually takes us under an hour and it costs nothing.&#10;&#10;Most of the time they reconcile. When they don&#39;t, it&#39;s almost always a refunding that was allocated one way in the schedule and another way in the footnote — and it&#39;s much better to find that in August than in a management letter.&#10;&#10;Want me to run it for FY{{fy}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One specific thing, {{first_name}}.&#10;&#10;We can take your published long-term debt note, rebuild it from the underlying series, and show you where the two versions diverge. It usually takes us under an hour and it costs nothing.&#10;&#10;Most of the time they reconcile. When they don&#39;t, it&#39;s almost always a refunding that was allocated one way in the schedule and another way in the footnote — and it&#39;s much better to find that in August than in a management letter.&#10;&#10;Want me to run it for FY{{fy}}?" data-preview="One specific thing, Marcus.&#10;&#10;We can take your published long-term debt note, rebuild it from the underlying series, and show you where the two versions diverge. It usually takes us under an hour and it costs nothing.&#10;&#10;Most of the time they reconcile. When they don&#39;t, it&#39;s almost always a refunding that was allocated one way in the schedule and another way in the footnote — and it&#39;s much better to find that in August than in a management letter.&#10;&#10;Want me to run it for FY2025?">
+                        <p>One specific thing, {{first_name}}.</p><p>We can take your published long-term debt note, rebuild it from the underlying series, and show you where the two versions diverge. It usually takes us under an hour and it costs nothing.</p><p>Most of the time they reconcile. When they don&#39;t, it&#39;s almost always a refunding that was allocated one way in the schedule and another way in the footnote — and it&#39;s much better to find that in August than in a management letter.</p><p>Want me to run it for FY{{fy}}?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 12</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: giving auditors read access instead of spreadsheets&#10;&#10;{{first_name}} — different angle.&#10;&#10;The change most teams say they underestimated wasn&#39;t the reporting. It was giving the auditors their own read-only access, so the audit stopped running through one person&#39;s inbox.&#10;&#10;Vista&#39;s Finance Director on that: “I can feel confident giving my auditors access, knowing they will get the information they need without needing my assistance.”&#10;&#10;Short write-up of how that&#39;s set up, if it&#39;s useful.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="giving auditors read access instead of spreadsheets" data-preview="giving auditors read access instead of spreadsheets">giving auditors read access instead of spreadsheets</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — different angle.&#10;&#10;The change most teams say they underestimated wasn&#39;t the reporting. It was giving the auditors their own read-only access, so the audit stopped running through one person&#39;s inbox.&#10;&#10;Vista&#39;s Finance Director on that: “I can feel confident giving my auditors access, knowing they will get the information they need without needing my assistance.”&#10;&#10;Short write-up of how that&#39;s set up, if it&#39;s useful." data-preview="Marcus — different angle.&#10;&#10;The change most teams say they underestimated wasn&#39;t the reporting. It was giving the auditors their own read-only access, so the audit stopped running through one person&#39;s inbox.&#10;&#10;Vista&#39;s Finance Director on that: “I can feel confident giving my auditors access, knowing they will get the information they need without needing my assistance.”&#10;&#10;Short write-up of how that&#39;s set up, if it&#39;s useful.">
+                        <p>{{first_name}} — different angle.</p><p>The change most teams say they underestimated wasn&#39;t the reporting. It was giving the auditors their own read-only access, so the audit stopped running through one person&#39;s inbox.</p><p>Vista&#39;s Finance Director on that: “I can feel confident giving my auditors access, knowing they will get the information they need without needing my assistance.”</p><p>Short write-up of how that&#39;s set up, if it&#39;s useful.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="3">
+                    <div class="email-card__top">
+                      <span>Step 4 · Day 24</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: closing the loop&#10;&#10;{{first_name}} — I&#39;ll leave this here.&#10;&#10;If FY{{next_fy}} close is going to look like FY{{fy}} did, the window to change it is now, not in October.&#10;&#10;And if budget is the obstacle rather than interest: DebtBook is on the OMNIA Partners cooperative contract, so {{entity}} can purchase without running its own RFP. That removes the step most people assume makes this a next-fiscal-year conversation.&#10;&#10;Happy to send the two-page version for a budget request either way.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="closing the loop" data-preview="closing the loop">closing the loop</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — I&#39;ll leave this here.&#10;&#10;If FY{{next_fy}} close is going to look like FY{{fy}} did, the window to change it is now, not in October.&#10;&#10;And if budget is the obstacle rather than interest: DebtBook is on the OMNIA Partners cooperative contract, so {{entity}} can purchase without running its own RFP. That removes the step most people assume makes this a next-fiscal-year conversation.&#10;&#10;Happy to send the two-page version for a budget request either way." data-preview="Marcus — I&#39;ll leave this here.&#10;&#10;If FY2026 close is going to look like FY2025 did, the window to change it is now, not in October.&#10;&#10;And if budget is the obstacle rather than interest: DebtBook is on the OMNIA Partners cooperative contract, so the City of Ridgemont can purchase without running its own RFP. That removes the step most people assume makes this a next-fiscal-year conversation.&#10;&#10;Happy to send the two-page version for a budget request either way.">
+                        <p>{{first_name}} — I&#39;ll leave this here.</p><p>If FY{{next_fy}} close is going to look like FY{{fy}} did, the window to change it is now, not in October.</p><p>And if budget is the obstacle rather than interest: DebtBook is on the OMNIA Partners cooperative contract, so {{entity}} can purchase without running its own RFP. That removes the step most people assume makes this a next-fiscal-year conversation.</p><p>Happy to send the two-page version for a budget request either way.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 — Fresh Debt on the Books</strong>
+              <em>The Series Schedule, built and allocated to their funds</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 — Fresh Debt on the Books steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 10</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="3" role="tab" aria-selected="false">
+                    <span>Step 4</span>
+                    <strong>Day 18</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the {{series_name}} series&#10;&#10;{{first_name}} — saw {{entity}} closed the {{series_name}} series ({{par_amount}}) in {{month}}.&#10;&#10;Congratulations on getting it done. The part nobody congratulates you for is the next bit: building the schedule, allocating debt service across funds, and making sure it flows into the footnote correctly.&#10;&#10;How are you carrying it — the schedule the municipal advisor sent over, or something of your own?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the {{series_name}} series" data-preview="the Series 2025A GO series">the {{series_name}} series</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — saw {{entity}} closed the {{series_name}} series ({{par_amount}}) in {{month}}.&#10;&#10;Congratulations on getting it done. The part nobody congratulates you for is the next bit: building the schedule, allocating debt service across funds, and making sure it flows into the footnote correctly.&#10;&#10;How are you carrying it — the schedule the municipal advisor sent over, or something of your own?" data-preview="Marcus — saw the City of Ridgemont closed the Series 2025A GO series ($48.2M) in March.&#10;&#10;Congratulations on getting it done. The part nobody congratulates you for is the next bit: building the schedule, allocating debt service across funds, and making sure it flows into the footnote correctly.&#10;&#10;How are you carrying it — the schedule the municipal advisor sent over, or something of your own?">
+                        <p>{{first_name}} — saw {{entity}} closed the {{series_name}} series ({{par_amount}}) in {{month}}.</p><p>Congratulations on getting it done. The part nobody congratulates you for is the next bit: building the schedule, allocating debt service across funds, and making sure it flows into the footnote correctly.</p><p>How are you carrying it — the schedule the municipal advisor sent over, or something of your own?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Quick offer, {{first_name}}.&#10;&#10;We&#39;ll build {{series_name}} out properly — full amortisation, allocated to your funds the way {{entity}} actually structures them — and send it back to you before the first debt service payment. No cost, no commitment.&#10;&#10;Worst case you&#39;ve got a clean second copy to check the advisor&#39;s schedule against.&#10;&#10;Want it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Quick offer, {{first_name}}.&#10;&#10;We&#39;ll build {{series_name}} out properly — full amortisation, allocated to your funds the way {{entity}} actually structures them — and send it back to you before the first debt service payment. No cost, no commitment.&#10;&#10;Worst case you&#39;ve got a clean second copy to check the advisor&#39;s schedule against.&#10;&#10;Want it?" data-preview="Quick offer, Marcus.&#10;&#10;We&#39;ll build Series 2025A GO out properly — full amortisation, allocated to your funds the way the City of Ridgemont actually structures them — and send it back to you before the first debt service payment. No cost, no commitment.&#10;&#10;Worst case you&#39;ve got a clean second copy to check the advisor&#39;s schedule against.&#10;&#10;Want it?">
+                        <p>Quick offer, {{first_name}}.</p><p>We&#39;ll build {{series_name}} out properly — full amortisation, allocated to your funds the way {{entity}} actually structures them — and send it back to you before the first debt service payment. No cost, no commitment.</p><p>Worst case you&#39;ve got a clean second copy to check the advisor&#39;s schedule against.</p><p>Want it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 10</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: refunding lineage&#10;&#10;{{first_name}} — the thing that trips up almost every spreadsheet debt model is refundings.&#10;&#10;Once a series has partially refunded another, and that one refunded something before it, the lineage has to be tracked at the allocation level or the footnote quietly stops tying out. Excel doesn&#39;t have a way to hold that, so people rebuild it from memory each year.&#10;&#10;DebtBook was built for government treasury specifically, so refunding lineage is native rather than a workaround. Around 40% of the largest 250 municipalities and counties in the country are on it.&#10;&#10;More detail here if useful.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="refunding lineage" data-preview="refunding lineage">refunding lineage</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — the thing that trips up almost every spreadsheet debt model is refundings.&#10;&#10;Once a series has partially refunded another, and that one refunded something before it, the lineage has to be tracked at the allocation level or the footnote quietly stops tying out. Excel doesn&#39;t have a way to hold that, so people rebuild it from memory each year.&#10;&#10;DebtBook was built for government treasury specifically, so refunding lineage is native rather than a workaround. Around 40% of the largest 250 municipalities and counties in the country are on it.&#10;&#10;More detail here if useful." data-preview="Marcus — the thing that trips up almost every spreadsheet debt model is refundings.&#10;&#10;Once a series has partially refunded another, and that one refunded something before it, the lineage has to be tracked at the allocation level or the footnote quietly stops tying out. Excel doesn&#39;t have a way to hold that, so people rebuild it from memory each year.&#10;&#10;DebtBook was built for government treasury specifically, so refunding lineage is native rather than a workaround. Around 40% of the largest 250 municipalities and counties in the country are on it.&#10;&#10;More detail here if useful.">
+                        <p>{{first_name}} — the thing that trips up almost every spreadsheet debt model is refundings.</p><p>Once a series has partially refunded another, and that one refunded something before it, the lineage has to be tracked at the allocation level or the footnote quietly stops tying out. Excel doesn&#39;t have a way to hold that, so people rebuild it from memory each year.</p><p>DebtBook was built for government treasury specifically, so refunding lineage is native rather than a workaround. Around 40% of the largest 250 municipalities and counties in the country are on it.</p><p>More detail here if useful.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="3">
+                    <div class="email-card__top">
+                      <span>Step 4 · Day 18</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: before the next sale&#10;&#10;{{first_name}} — last one from me.&#10;&#10;The reason to sort this between issuances rather than during one is simple: the work compounds. Every new series added to a manual model makes the next one harder to add.&#10;&#10;If {{entity}} has another sale coming, that&#39;s the natural moment. Happy to be useful then instead — just say the word and I&#39;ll follow up closer to it.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="before the next sale" data-preview="before the next sale">before the next sale</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — last one from me.&#10;&#10;The reason to sort this between issuances rather than during one is simple: the work compounds. Every new series added to a manual model makes the next one harder to add.&#10;&#10;If {{entity}} has another sale coming, that&#39;s the natural moment. Happy to be useful then instead — just say the word and I&#39;ll follow up closer to it." data-preview="Marcus — last one from me.&#10;&#10;The reason to sort this between issuances rather than during one is simple: the work compounds. Every new series added to a manual model makes the next one harder to add.&#10;&#10;If the City of Ridgemont has another sale coming, that&#39;s the natural moment. Happy to be useful then instead — just say the word and I&#39;ll follow up closer to it.">
+                        <p>{{first_name}} — last one from me.</p><p>The reason to sort this between issuances rather than during one is simple: the work compounds. Every new series added to a manual model makes the next one harder to add.</p><p>If {{entity}} has another sale coming, that&#39;s the natural moment. Happy to be useful then instead — just say the word and I&#39;ll follow up closer to it.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 — GASB 96 Exposure Gap</strong>
+              <em>The SBITA Discovery Checklist</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 — GASB 96 Exposure Gap steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 6</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 13</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="3" role="tab" aria-selected="false">
+                    <span>Step 4</span>
+                    <strong>Day 21</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: SBITA inventory&#10;&#10;{{first_name}} — {{entity}}&#39;s FY{{fy}} statements report {{lease_liability}} in lease liability under GASB 87, which means the lease inventory got built properly.&#10;&#10;I couldn&#39;t find a corresponding SBITA balance under GASB 96. That&#39;s genuinely common, and it&#39;s usually not an oversight — it&#39;s that nobody owns it. IT signs the software contracts, finance has to report them, and there&#39;s no natural handoff between the two.&#10;&#10;Has anyone at {{entity}} been given that one yet?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="SBITA inventory" data-preview="SBITA inventory">SBITA inventory</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — {{entity}}&#39;s FY{{fy}} statements report {{lease_liability}} in lease liability under GASB 87, which means the lease inventory got built properly.&#10;&#10;I couldn&#39;t find a corresponding SBITA balance under GASB 96. That&#39;s genuinely common, and it&#39;s usually not an oversight — it&#39;s that nobody owns it. IT signs the software contracts, finance has to report them, and there&#39;s no natural handoff between the two.&#10;&#10;Has anyone at {{entity}} been given that one yet?" data-preview="Marcus — the City of Ridgemont&#39;s FY2025 statements report $6.4M in lease liability under GASB 87, which means the lease inventory got built properly.&#10;&#10;I couldn&#39;t find a corresponding SBITA balance under GASB 96. That&#39;s genuinely common, and it&#39;s usually not an oversight — it&#39;s that nobody owns it. IT signs the software contracts, finance has to report them, and there&#39;s no natural handoff between the two.&#10;&#10;Has anyone at the City of Ridgemont been given that one yet?">
+                        <p>{{first_name}} — {{entity}}&#39;s FY{{fy}} statements report {{lease_liability}} in lease liability under GASB 87, which means the lease inventory got built properly.</p><p>I couldn&#39;t find a corresponding SBITA balance under GASB 96. That&#39;s genuinely common, and it&#39;s usually not an oversight — it&#39;s that nobody owns it. IT signs the software contracts, finance has to report them, and there&#39;s no natural handoff between the two.</p><p>Has anyone at {{entity}} been given that one yet?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 6</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}} — if it&#39;s useful, we keep a checklist of the twelve contract categories that most often qualify as SBITAs and most often get missed. ERP modules, permitting software, GIS licensing, the utility billing platform, body-camera storage.&#10;&#10;It&#39;s the list our implementation team walks new clients through, and it&#39;s short.&#10;&#10;Want me to send it over? No hooks.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — if it&#39;s useful, we keep a checklist of the twelve contract categories that most often qualify as SBITAs and most often get missed. ERP modules, permitting software, GIS licensing, the utility billing platform, body-camera storage.&#10;&#10;It&#39;s the list our implementation team walks new clients through, and it&#39;s short.&#10;&#10;Want me to send it over? No hooks." data-preview="Marcus — if it&#39;s useful, we keep a checklist of the twelve contract categories that most often qualify as SBITAs and most often get missed. ERP modules, permitting software, GIS licensing, the utility billing platform, body-camera storage.&#10;&#10;It&#39;s the list our implementation team walks new clients through, and it&#39;s short.&#10;&#10;Want me to send it over? No hooks.">
+                        <p>{{first_name}} — if it&#39;s useful, we keep a checklist of the twelve contract categories that most often qualify as SBITAs and most often get missed. ERP modules, permitting software, GIS licensing, the utility billing platform, body-camera storage.</p><p>It&#39;s the list our implementation team walks new clients through, and it&#39;s short.</p><p>Want me to send it over? No hooks.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 13</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the part after the inventory&#10;&#10;{{first_name}} — the inventory is the hard half. The second half is mechanical and it&#39;s where the annual time actually goes: measurement, remeasurement when a contract changes, journal entries, and regenerating the footnote every year.&#10;&#10;DebtBook does GASB 87 and 96 in the same place as the debt, with one-click journal entries and generated footnotes. Same system, so the lease work and the subscription work stop being two separate annual projects.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the part after the inventory" data-preview="the part after the inventory">the part after the inventory</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — the inventory is the hard half. The second half is mechanical and it&#39;s where the annual time actually goes: measurement, remeasurement when a contract changes, journal entries, and regenerating the footnote every year.&#10;&#10;DebtBook does GASB 87 and 96 in the same place as the debt, with one-click journal entries and generated footnotes. Same system, so the lease work and the subscription work stop being two separate annual projects." data-preview="Marcus — the inventory is the hard half. The second half is mechanical and it&#39;s where the annual time actually goes: measurement, remeasurement when a contract changes, journal entries, and regenerating the footnote every year.&#10;&#10;DebtBook does GASB 87 and 96 in the same place as the debt, with one-click journal entries and generated footnotes. Same system, so the lease work and the subscription work stop being two separate annual projects.">
+                        <p>{{first_name}} — the inventory is the hard half. The second half is mechanical and it&#39;s where the annual time actually goes: measurement, remeasurement when a contract changes, journal entries, and regenerating the footnote every year.</p><p>DebtBook does GASB 87 and 96 in the same place as the debt, with one-click journal entries and generated footnotes. Same system, so the lease work and the subscription work stop being two separate annual projects.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="3">
+                    <div class="email-card__top">
+                      <span>Step 4 · Day 21</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: ahead of FY{{next_fy}} close&#10;&#10;{{first_name}} — closing this out.&#10;&#10;The reason to build the SBITA inventory now rather than at close is that it&#39;s a discovery exercise across departments, and departments are slowest in the fourth quarter.&#10;&#10;If you&#39;d rather just have the checklist and do it yourselves, I&#39;m still happy to send it. That offer doesn&#39;t expire.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="ahead of FY{{next_fy}} close" data-preview="ahead of FY2026 close">ahead of FY{{next_fy}} close</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — closing this out.&#10;&#10;The reason to build the SBITA inventory now rather than at close is that it&#39;s a discovery exercise across departments, and departments are slowest in the fourth quarter.&#10;&#10;If you&#39;d rather just have the checklist and do it yourselves, I&#39;m still happy to send it. That offer doesn&#39;t expire." data-preview="Marcus — closing this out.&#10;&#10;The reason to build the SBITA inventory now rather than at close is that it&#39;s a discovery exercise across departments, and departments are slowest in the fourth quarter.&#10;&#10;If you&#39;d rather just have the checklist and do it yourselves, I&#39;m still happy to send it. That offer doesn&#39;t expire.">
+                        <p>{{first_name}} — closing this out.</p><p>The reason to build the SBITA inventory now rather than at close is that it&#39;s a discovery exercise across departments, and departments are slowest in the fourth quarter.</p><p>If you&#39;d rather just have the checklist and do it yourselves, I&#39;m still happy to send it. That offer doesn&#39;t expire.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 — Seat Just Changed Hands</strong>
+              <em>The Treasury Handover Checklist</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 — Seat Just Changed Hands steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 5</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 12</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="3" role="tab" aria-selected="false">
+                    <span>Step 4</span>
+                    <strong>Day 20</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: congratulations — and one question&#10;&#10;{{first_name}} — congratulations on the {{title}} role at {{entity}}.&#10;&#10;One question I&#39;d ask in your position, and it&#39;s the one that catches people: where does the debt schedule actually live, and who built it?&#10;&#10;In most entities the honest answer is a workbook maintained by one person, with logic that was never written down. It works right up until the person who wrote it isn&#39;t there.&#10;&#10;Worth checking in the first ninety days rather than during your first audit.&#10;&#10;(Open-req variant, sent where the trigger is a vacancy rather than an appointment: “Saw {{entity}} is hiring a {{req_title}}. Worth asking before that person starts — how much of the role is genuinely treasury work, and how much is maintaining the workbook the last person built?”)">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="congratulations — and one question" data-preview="congratulations — and one question">congratulations — and one question</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — congratulations on the {{title}} role at {{entity}}.&#10;&#10;One question I&#39;d ask in your position, and it&#39;s the one that catches people: where does the debt schedule actually live, and who built it?&#10;&#10;In most entities the honest answer is a workbook maintained by one person, with logic that was never written down. It works right up until the person who wrote it isn&#39;t there.&#10;&#10;Worth checking in the first ninety days rather than during your first audit.&#10;&#10;(Open-req variant, sent where the trigger is a vacancy rather than an appointment: “Saw {{entity}} is hiring a {{req_title}}. Worth asking before that person starts — how much of the role is genuinely treasury work, and how much is maintaining the workbook the last person built?”)" data-preview="Marcus — congratulations on the Director of Finance role at the City of Ridgemont.&#10;&#10;One question I&#39;d ask in your position, and it&#39;s the one that catches people: where does the debt schedule actually live, and who built it?&#10;&#10;In most entities the honest answer is a workbook maintained by one person, with logic that was never written down. It works right up until the person who wrote it isn&#39;t there.&#10;&#10;Worth checking in the first ninety days rather than during your first audit.&#10;&#10;(Open-req variant, sent where the trigger is a vacancy rather than an appointment: “Saw the City of Ridgemont is hiring a Treasury Manager. Worth asking before that person starts — how much of the role is genuinely treasury work, and how much is maintaining the workbook the last person built?”)">
+                        <p>{{first_name}} — congratulations on the {{title}} role at {{entity}}.</p><p>One question I&#39;d ask in your position, and it&#39;s the one that catches people: where does the debt schedule actually live, and who built it?</p><p>In most entities the honest answer is a workbook maintained by one person, with logic that was never written down. It works right up until the person who wrote it isn&#39;t there.</p><p>Worth checking in the first ninety days rather than during your first audit.</p><p>(Open-req variant, sent where the trigger is a vacancy rather than an appointment: “Saw {{entity}} is hiring a {{req_title}}. Worth asking before that person starts — how much of the role is genuinely treasury work, and how much is maintaining the workbook the last person built?”)</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 5</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}} — we keep a short handover checklist for exactly this: what to get out of the person who owns the debt schedule before they&#39;re gone. Series-level assumptions, how refundings were allocated, which tabs feed the footnote, what gets manually overridden at year end.&#10;&#10;It&#39;s a page. Want it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — we keep a short handover checklist for exactly this: what to get out of the person who owns the debt schedule before they&#39;re gone. Series-level assumptions, how refundings were allocated, which tabs feed the footnote, what gets manually overridden at year end.&#10;&#10;It&#39;s a page. Want it?" data-preview="Marcus — we keep a short handover checklist for exactly this: what to get out of the person who owns the debt schedule before they&#39;re gone. Series-level assumptions, how refundings were allocated, which tabs feed the footnote, what gets manually overridden at year end.&#10;&#10;It&#39;s a page. Want it?">
+                        <p>{{first_name}} — we keep a short handover checklist for exactly this: what to get out of the person who owns the debt schedule before they&#39;re gone. Series-level assumptions, how refundings were allocated, which tabs feed the footnote, what gets manually overridden at year end.</p><p>It&#39;s a page. Want it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 12</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: institutional memory&#10;&#10;{{first_name}} — the underlying argument for a system here isn&#39;t efficiency, it&#39;s continuity.&#10;&#10;When the debt model lives in a platform, the logic is visible, the changes are logged, and the whole team has access instead of one person. The next transition costs a day instead of a fiscal year.&#10;&#10;That&#39;s most of why 2,000+ public entities have moved.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="institutional memory" data-preview="institutional memory">institutional memory</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — the underlying argument for a system here isn&#39;t efficiency, it&#39;s continuity.&#10;&#10;When the debt model lives in a platform, the logic is visible, the changes are logged, and the whole team has access instead of one person. The next transition costs a day instead of a fiscal year.&#10;&#10;That&#39;s most of why 2,000+ public entities have moved." data-preview="Marcus — the underlying argument for a system here isn&#39;t efficiency, it&#39;s continuity.&#10;&#10;When the debt model lives in a platform, the logic is visible, the changes are logged, and the whole team has access instead of one person. The next transition costs a day instead of a fiscal year.&#10;&#10;That&#39;s most of why 2,000+ public entities have moved.">
+                        <p>{{first_name}} — the underlying argument for a system here isn&#39;t efficiency, it&#39;s continuity.</p><p>When the debt model lives in a platform, the logic is visible, the changes are logged, and the whole team has access instead of one person. The next transition costs a day instead of a fiscal year.</p><p>That&#39;s most of why 2,000+ public entities have moved.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="3">
+                    <div class="email-card__top">
+                      <span>Step 4 · Day 20</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the ninety-day window&#10;&#10;{{first_name}} — last note.&#10;&#10;The first few months in a finance leadership seat are the only period where changing an inherited process is expected rather than questioned. It gets harder after that, not because the case weakens but because it becomes your process.&#10;&#10;If it&#39;s useful now, I&#39;m here. If it&#39;s a next-budget-cycle question, tell me when to come back and I will.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the ninety-day window" data-preview="the ninety-day window">the ninety-day window</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — last note.&#10;&#10;The first few months in a finance leadership seat are the only period where changing an inherited process is expected rather than questioned. It gets harder after that, not because the case weakens but because it becomes your process.&#10;&#10;If it&#39;s useful now, I&#39;m here. If it&#39;s a next-budget-cycle question, tell me when to come back and I will." data-preview="Marcus — last note.&#10;&#10;The first few months in a finance leadership seat are the only period where changing an inherited process is expected rather than questioned. It gets harder after that, not because the case weakens but because it becomes your process.&#10;&#10;If it&#39;s useful now, I&#39;m here. If it&#39;s a next-budget-cycle question, tell me when to come back and I will.">
+                        <p>{{first_name}} — last note.</p><p>The first few months in a finance leadership seat are the only period where changing an inherited process is expected rather than questioned. It gets harder after that, not because the case weakens but because it becomes your process.</p><p>If it&#39;s useful now, I&#39;m here. If it&#39;s a next-budget-cycle question, tell me when to come back and I will.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 — Scale Without a System</strong>
+              <em>The peer benchmark, plus the pre-written budget justification memo</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 — Scale Without a System steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 8</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 17</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="3" role="tab" aria-selected="false">
+                    <span>Step 4</span>
+                    <strong>Day 28</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: how {{peer_type}} of {{entity}}&#39;s size handle this&#10;&#10;{{first_name}} — {{entity}} carries roughly {{debt_outstanding}} across {{series_count}} series, which puts you in a bracket where most peers have moved debt, lease and subscription reporting off spreadsheets.&#10;&#10;Roughly 40% of the 250 largest municipalities and counties in the country now run it in one system rather than a workbook.&#10;&#10;Where does {{entity}} sit on that — still in Excel, or already moved?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="how {{peer_type}} of {{entity}}&#39;s size handle this" data-preview="how cities of the City of Ridgemont&#39;s size handle this">how {{peer_type}} of {{entity}}&#39;s size handle this</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — {{entity}} carries roughly {{debt_outstanding}} across {{series_count}} series, which puts you in a bracket where most peers have moved debt, lease and subscription reporting off spreadsheets.&#10;&#10;Roughly 40% of the 250 largest municipalities and counties in the country now run it in one system rather than a workbook.&#10;&#10;Where does {{entity}} sit on that — still in Excel, or already moved?" data-preview="Marcus — the City of Ridgemont carries roughly $312M across 19 series, which puts you in a bracket where most peers have moved debt, lease and subscription reporting off spreadsheets.&#10;&#10;Roughly 40% of the 250 largest municipalities and counties in the country now run it in one system rather than a workbook.&#10;&#10;Where does the City of Ridgemont sit on that — still in Excel, or already moved?">
+                        <p>{{first_name}} — {{entity}} carries roughly {{debt_outstanding}} across {{series_count}} series, which puts you in a bracket where most peers have moved debt, lease and subscription reporting off spreadsheets.</p><p>Roughly 40% of the 250 largest municipalities and counties in the country now run it in one system rather than a workbook.</p><p>Where does {{entity}} sit on that — still in Excel, or already moved?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}} — the honest version of the return isn&#39;t a cost saving, it&#39;s what the team does with the recovered hours.&#10;&#10;Durham&#39;s Treasury Manager: “DebtBook has saved a lot of time, especially during the budget process. We&#39;ve been able to use that time to focus on grant funding instead of just maintaining spreadsheets.”&#10;&#10;Grant capacity, in a year when grant capacity is the difference between projects happening and not. That&#39;s the trade most finance directors are actually making.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — the honest version of the return isn&#39;t a cost saving, it&#39;s what the team does with the recovered hours.&#10;&#10;Durham&#39;s Treasury Manager: “DebtBook has saved a lot of time, especially during the budget process. We&#39;ve been able to use that time to focus on grant funding instead of just maintaining spreadsheets.”&#10;&#10;Grant capacity, in a year when grant capacity is the difference between projects happening and not. That&#39;s the trade most finance directors are actually making." data-preview="Marcus — the honest version of the return isn&#39;t a cost saving, it&#39;s what the team does with the recovered hours.&#10;&#10;Durham&#39;s Treasury Manager: “DebtBook has saved a lot of time, especially during the budget process. We&#39;ve been able to use that time to focus on grant funding instead of just maintaining spreadsheets.”&#10;&#10;Grant capacity, in a year when grant capacity is the difference between projects happening and not. That&#39;s the trade most finance directors are actually making.">
+                        <p>{{first_name}} — the honest version of the return isn&#39;t a cost saving, it&#39;s what the team does with the recovered hours.</p><p>Durham&#39;s Treasury Manager: “DebtBook has saved a lot of time, especially during the budget process. We&#39;ve been able to use that time to focus on grant funding instead of just maintaining spreadsheets.”</p><p>Grant capacity, in a year when grant capacity is the difference between projects happening and not. That&#39;s the trade most finance directors are actually making.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 17</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: benchmark for entities your size&#10;&#10;{{first_name}} — put together a short benchmark on how public entities in {{entity}}&#39;s debt bracket handle debt, lease and subscription reporting — what&#39;s automated, what&#39;s still manual, and where the annual hours go.&#10;&#10;No form, no gate.&#10;&#10;Useful even if DebtBook is never the answer.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="benchmark for entities your size" data-preview="benchmark for entities your size">benchmark for entities your size</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — put together a short benchmark on how public entities in {{entity}}&#39;s debt bracket handle debt, lease and subscription reporting — what&#39;s automated, what&#39;s still manual, and where the annual hours go.&#10;&#10;No form, no gate.&#10;&#10;Useful even if DebtBook is never the answer." data-preview="Marcus — put together a short benchmark on how public entities in the City of Ridgemont&#39;s debt bracket handle debt, lease and subscription reporting — what&#39;s automated, what&#39;s still manual, and where the annual hours go.&#10;&#10;No form, no gate.&#10;&#10;Useful even if DebtBook is never the answer.">
+                        <p>{{first_name}} — put together a short benchmark on how public entities in {{entity}}&#39;s debt bracket handle debt, lease and subscription reporting — what&#39;s automated, what&#39;s still manual, and where the annual hours go.</p><p>No form, no gate.</p><p>Useful even if DebtBook is never the answer.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="3">
+                    <div class="email-card__top">
+                      <span>Step 4 · Day 28</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: budget cycle&#10;&#10;{{first_name}} — final one.&#10;&#10;Two practical notes for whenever this becomes relevant. DebtBook is on the OMNIA Partners cooperative contract, so there&#39;s no RFP to run. And if you ever need this as a line item, we&#39;ll write the budget justification with your own numbers in it — that&#39;s usually the actual blocker, not the decision.&#10;&#10;Tell me which budget cycle to come back for and I&#39;ll come back then.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="budget cycle" data-preview="budget cycle">budget cycle</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — final one.&#10;&#10;Two practical notes for whenever this becomes relevant. DebtBook is on the OMNIA Partners cooperative contract, so there&#39;s no RFP to run. And if you ever need this as a line item, we&#39;ll write the budget justification with your own numbers in it — that&#39;s usually the actual blocker, not the decision.&#10;&#10;Tell me which budget cycle to come back for and I&#39;ll come back then." data-preview="Marcus — final one.&#10;&#10;Two practical notes for whenever this becomes relevant. DebtBook is on the OMNIA Partners cooperative contract, so there&#39;s no RFP to run. And if you ever need this as a line item, we&#39;ll write the budget justification with your own numbers in it — that&#39;s usually the actual blocker, not the decision.&#10;&#10;Tell me which budget cycle to come back for and I&#39;ll come back then.">
+                        <p>{{first_name}} — final one.</p><p>Two practical notes for whenever this becomes relevant. DebtBook is on the OMNIA Partners cooperative contract, so there&#39;s no RFP to run. And if you ever need this as a line item, we&#39;ll write the budget justification with your own numbers in it — that&#39;s usually the actual blocker, not the decision.</p><p>Tell me which budget cycle to come back for and I&#39;ll come back then.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="06 · Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">06 · Launch</p>
+      <h2>Six weeks to steady state</h2>
+      <p class="takeaway">Warmup starts before everything else. Twenty-eight days of it is the critical path into government mail gateways.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Week 0 — Infrastructure. Register 4-6 dedicated sending domains (none of them debtbook.com), configure SPF, DKIM, DMARC, MTA-STS and TLS-RPT, create 12-18 mailboxes and start warmup. This runs before everything else because 28 days of warmup is the critical path into government mail gateways.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Week 1 — Core data build. EMMA issuer extraction across all fifty states. Working universe defined and deduped. State registry cross-reference for CA, TX, NC, FL and NY.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Week 2 — Enrichment from filings. ACFR PDF ingestion and parsing: debt totals, GASB 87 and 96 balances, filing dates against undertaking deadlines, auditor findings, and transmittal-letter contacts. All routing fields populated.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Week 3 — Routing and copy sign-off. Waterfall executed and tier counts reported against estimate. Copy approved by DebtBook including every bracketed figure. Artifacts built — footnote rebuild template, SBITA checklist, handover checklist, benchmark, budget justification memo.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Week 4 — Pilot. Tiers 1 and 2 only, 800 contacts, 250/day. Placement seeded into real .gov and .us municipal mailboxes, not commercial seeds. Every single reply reviewed manually.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Week 5 — Scale. Tiers 3 and 4 open, volume to 900/day. Tier 5 opens at week 6, deliberately throttled.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>Week 6+ — Operate. Monthly re-routing as filings and job posts refresh, so a Tier 5 account that posts a Treasury Manager req becomes Tier 4 with a genuinely new reason to write. Weekly placement testing. Fortnightly copy iteration on the worst-performing tier only.</p>
+              </div>
+              <div class="launch-step">
+                <span>08</span>
+                <p>Guardrails throughout — open tracking disabled entirely, no links before email three, plain text only, 20-25 sends per mailbox per day, Tier 1 on its own domain pool, and every email written on the assumption it will be read by the recipient, their director and a reporter.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>Hard bounce &gt;2.0%</strong>
+                <span>Auto-pause the offending domain immediately. Government gateways punish bounce spikes far harder than commercial ones, and recovery takes weeks.</span>
+              </div>
+              <div class="threshold">
+                <strong>Spam complaints &gt;0.08%</strong>
+                <span>Pause the tier, re-read the copy against the public-records test, and re-seed before resuming.</span>
+              </div>
+              <div class="threshold">
+                <strong>Blended reply &lt;4%</strong>
+                <span>The routing is wrong, not the copy. Re-check the ACFR parse before touching a single subject line.</span>
+              </div>
+              <div class="threshold">
+                <strong>Blended reply ≥7%</strong>
+                <span>At target. Raise volume toward the 1,800/day ceiling and open Tier 5 wider.</span>
+              </div>
+              <div class="threshold">
+                <strong>Tier 1 reply ≥12%</strong>
+                <span>Expand the trigger definition — add auditor findings on close and capital assets that were initially scoped out.</span>
+              </div>
+              <div class="threshold">
+                <strong>Tier 5 reply &lt;2%</strong>
+                <span>Throttle rather than iterate. This is the reputation-sensitive tier and it is judged over quarters, not weeks.</span>
+              </div>
+              <div class="threshold">
+                <strong>Positive replies ≥3% of contacts</strong>
+                <span>Scale the tier and pull the budget-justification offer earlier in the sequence.</span>
+              </div>
+              <div class="threshold">
+                <strong>Meetings &lt;0.8% of contacts reached</strong>
+                <span>The offer is wrong for the tier. Swap the artifact before rewriting copy.</span>
+              </div>
+              <div class="threshold">
+                <strong>Quarter one</strong>
+                <span>Steer on qualified pipeline created, never closed-won. Purchase requires a budget line and often a council agenda item, so closed revenue in the first two quarters is a lagging indicator of nothing.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Marcus","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","the City of Ridgemont","Director of Finance","2025","2026","41","Series 2025A GO","\\$48\\.2M","March","\\$6\\.4M","Treasury Manager","cities","\\$312M","19"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
