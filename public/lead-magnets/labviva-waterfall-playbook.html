@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Labviva - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-04</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Labviva</p>
+          <h1>The Labviva outbound <mark>journey</mark>.</h1>
+          <p class="hero-copy">One waterfall, five tiers, and a routing signal your market publishes for free.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Labviva is an overlay, not a replacement. That inverts the normal enterprise-procurement sales problem: the more lab-buying infrastructure an account has already bought, the easier Labviva is to buy. So we route on infrastructure committed, not on size, vertical or title, and in this market that infrastructure is published on the open web by the prospects themselves.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a working session</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>39,850</strong>
+          <span>Accounts in the routed market</span>
+        </div>
+        <div class="metric-card">
+          <strong>20%</strong>
+          <span>Average R&amp;D spend cut in year one</span>
+        </div>
+        <div class="metric-card">
+          <strong>$0</strong>
+          <span>Cost to acquire the routing signal</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Labviva is an AI-native procurement and inventory layer for life sciences that sits on top of Coupa, SAP Ariba, JAGGAER, Oracle and Dynamics, unifying 150+ supplier catalogs into one scientist-facing search.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>Research organisations publish their own procurement stack</p></div><div><span>02</span><p>One cascade, first match wins, nothing falls through</p></div><div><span>03</span><p>Five tiers, ordered by infrastructure already committed</p></div><div><span>04</span><p>The experiments that sit on top of the cascade</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>01 / Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>02 / Routing</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>03 / Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>04 / Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>05 / Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>06 / Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="01 / Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">01 / Signal</p>
+      <h2>Research organisations publish their own procurement stack</h2>
+      <p class="takeaway">The two most expensive fields to enrich in a normal B2B list, what system do they run and how fragmented is their spend, are both free here. Enrichment budget goes entirely to contact data.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>Public universities and academic medical centres are obliged to publish supplier information. Their procurement pages name the branded marketplace, BearBuy, UCIBuy, Shell Shop, eShop, which maps one-to-one to the underlying P2P platform.</p></div><div class="reason-card"><span>02</span><p>Those same pages list the full set of preferred lab suppliers with punchout catalogs, which means the fragmentation count is a number you can literally read off the page.</p></div><div class="reason-card"><span>03</span><p>Commercial biopharma publishes the same thing to a different audience, through supplier-onboarding and vendor-registration pages, because vendors must register inside the procurement platform.</p></div><div class="reason-card"><span>04</span><p>The signal is simultaneously the intent signal, the qualification signal and the objection-handling signal. An account listing six punchouts has already won the internal argument for centralised lab buying and already failed to solve comparison.</p></div>
+            </div>
+            <div class="field-cloud"><span>p2p_platform</span><span>marketplace_brand_name</span><span>punchout_supplier_list</span><span>punchout_supplier_count</span><span>procurement_page_url</span><span>diverse_spend_target_pct</span><span>diverse_spend_source_url</span><span>federal_contractor_flag</span><span>open_procurement_req</span><span>annual_nih_award_usd</span><span>nih_award_yoy_growth_pct</span><span>last_funding_round</span><span>last_funding_date</span><span>facility_expansion_event</span><span>rd_headcount</span><span>segment</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>Procurement-page crawl of .edu, .ac.uk and hospital domains</h3><p>Institutional market, the P2P platform name, and the full punchout supplier list. This is the fragmentation count and the single highest-value build in the engagement. Free, and it re-runs quarterly forever.</p></div><div class="source-card"><span>02</span><h3>NIH RePORTER, BRIMR rankings and the NSF HERD survey</h3><p>Institutional market plus R&amp;D spend size per institution, which is the budget qualifier, and year-over-year award growth, which is a Tier 4 trigger. Free and exportable.</p></div><div class="source-card"><span>03</span><h3>Crunchbase and Apollo, biotech / pharma / CRO / diagnostics at 20+ headcount</h3><p>The commercial market, funding stage, last round date and headcount. Drives Tier 4 routing for companies that never publish a procurement page.</p></div><div class="source-card"><span>04</span><h3>Supplier-diversity and ESG report scrape, plus federal subcontracting plans</h3><p>The Tier 2 trigger: a published, numeric diverse-spend commitment the organisation has to report against.</p></div><div class="source-card"><span>05</span><h3>Job boards: LinkedIn, Greenhouse, Lever and institutional HR systems</h3><p>The Tier 3 trigger. Open reqs for Procurement Analyst, Strategic Sourcing (Scientific), Lab Operations Manager, Inventory Coordinator and Research Operations, with a rolling 60-day window.</p></div><div class="source-card"><span>06</span><h3>Press and commercial real-estate announcements</h3><p>Tier 4 expansion events: a new lab lease, a facility build-out, a site opening. The moment before spend steps up.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="02 / Routing">
+        
+    <div class="section-head">
+      <p class="eyebrow">02 / Routing</p>
+      <h2>One cascade, first match wins, nothing falls through</h2>
+      <p class="takeaway">Every account exits the matrix with exactly one tier. If any account exits with no tier, the catch-all is broken and nothing sends until it is fixed.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF punchout_supplier_count is 4 or more AND p2p_platform is known</span>
+          <strong>Tier 1, Fragmentation Proven</strong>
+          <em>They bought the procurement layer, then bolted four to eight separate supplier storefronts onto it. The integration objection is already answered and the comparison problem is already proven unsolved.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF NOT Tier 1 AND (a published diverse-spend target exists OR federal_contractor_flag is true)</span>
+          <strong>Tier 2, Mandate On The Clock</strong>
+          <em>They have committed publicly to a number they must report against, but the vendor decision is made by a scientist who cannot see which supplier is certified.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF NOT Tiers 1-2 AND a procurement or lab-ops requisition was posted in the last 60 days</span>
+          <strong>Tier 3, Solving It With Headcount</strong>
+          <em>They have concluded the fix is another person doing order entry. That role gets consumed by transactional work and never reaches strategic sourcing.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF NOT Tiers 1-3 AND (Series B+ within 12 months OR a facility expansion event OR NIH award growth above 15% YoY)</span>
+          <strong>Tier 4, Spend About To Scale</strong>
+          <em>Unit economics lock in during the first year of a ramp. Setting them up front is a configuration; renegotiating after eighteen months of habits is a project.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF NOT Tiers 1-4 AND (any NIH funding OR R&amp;D headcount of 10 or more)</span>
+          <strong>Tier 5, Catch-All: The Benchmark</strong>
+          <em>No observable trigger exists, so any claim of account-specific insight would be manufactured. We trade on category data instead and let the magnet do the qualifying.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="5">
+          <span class="route-rule__num">06</span>
+          <span class="route-rule__if">IF No wet lab, no NIH funding, R&amp;D headcount under 10</span>
+          <strong>Suppress</strong>
+          <em>Outside the addressable market. There is no reagent spend to unify.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF punchout_supplier_count is 4 or more AND p2p_platform is known -&gt; Tier 1, Fragmentation Proven (They bought the procurement layer, then bolted four to eight separate supplier storefronts onto it. The integration objection is already answered and the comparison problem is already proven unsolved.)&#10;2. IF NOT Tier 1 AND (a published diverse-spend target exists OR federal_contractor_flag is true) -&gt; Tier 2, Mandate On The Clock (They have committed publicly to a number they must report against, but the vendor decision is made by a scientist who cannot see which supplier is certified.)&#10;3. IF NOT Tiers 1-2 AND a procurement or lab-ops requisition was posted in the last 60 days -&gt; Tier 3, Solving It With Headcount (They have concluded the fix is another person doing order entry. That role gets consumed by transactional work and never reaches strategic sourcing.)&#10;4. IF NOT Tiers 1-3 AND (Series B+ within 12 months OR a facility expansion event OR NIH award growth above 15% YoY) -&gt; Tier 4, Spend About To Scale (Unit economics lock in during the first year of a ramp. Setting them up front is a configuration; renegotiating after eighteen months of habits is a project.)&#10;5. IF NOT Tiers 1-4 AND (any NIH funding OR R&amp;D headcount of 10 or more) -&gt; Tier 5, Catch-All: The Benchmark (No observable trigger exists, so any claim of account-specific insight would be manufactured. We trade on category data instead and let the magnet do the qualifying.)&#10;6. IF No wet lab, no NIH funding, R&amp;D headcount under 10 -&gt; Suppress (Outside the addressable market. There is no reagent spend to unify.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF punchout_supplier_count is 4 or more AND p2p_platform is known -&gt; Tier 1, Fragmentation Proven (They bought the procurement layer, then bolted four to eight separate supplier storefronts onto it. The integration objection is already answered and the comparison problem is already proven unsolved.)
+2. IF NOT Tier 1 AND (a published diverse-spend target exists OR federal_contractor_flag is true) -&gt; Tier 2, Mandate On The Clock (They have committed publicly to a number they must report against, but the vendor decision is made by a scientist who cannot see which supplier is certified.)
+3. IF NOT Tiers 1-2 AND a procurement or lab-ops requisition was posted in the last 60 days -&gt; Tier 3, Solving It With Headcount (They have concluded the fix is another person doing order entry. That role gets consumed by transactional work and never reaches strategic sourcing.)
+4. IF NOT Tiers 1-3 AND (Series B+ within 12 months OR a facility expansion event OR NIH award growth above 15% YoY) -&gt; Tier 4, Spend About To Scale (Unit economics lock in during the first year of a ramp. Setting them up front is a configuration; renegotiating after eighteen months of habits is a project.)
+5. IF NOT Tiers 1-4 AND (any NIH funding OR R&amp;D headcount of 10 or more) -&gt; Tier 5, Catch-All: The Benchmark (No observable trigger exists, so any claim of account-specific insight would be manufactured. We trade on category data instead and let the magnet do the qualifying.)
+6. IF No wet lab, no NIH funding, R&amp;D headcount under 10 -&gt; Suppress (Outside the addressable market. There is no reagent spend to unify.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="03 / Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">03 / Tiers</p>
+      <h2>Five tiers, ordered by infrastructure already committed</h2>
+      <p class="takeaway">Tier 1 is first because the hardest objection in enterprise procurement, we just implemented JAGGAER and are not doing that again, is pre-answered by the trigger itself.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">6% TAM</span>
+          </div>
+          <h3>Tier 1: Fragmentation Proven</h3>
+          <p>Their public procurement page names a P2P platform AND lists four or more lab-supplier punchout catalogs.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They already bought the procurement layer, then bolted four to eight separate supplier storefronts onto it. A scientist inside one punchout cannot see what the same catalog number costs in the other five, so they buy by habit or bypass the system entirely. Every punchout added made the problem worse, not better.</dd></div>
+              <div><dt>Offer</dt><dd>Punchout Fragmentation Report: their named marketplace, their listed suppliers, and the duplicate-SKU overlap estimate</dd></div>
+              <div><dt>Source</dt><dd>Procurement-page crawl of .edu, .ac.uk and hospital domains</dd></div>
+              <div><dt>Reply density</dt><dd>Highest. Target 1 positive reply per 150-250 contacts. Below 1-in-350 the trigger logic is wrong, not the copy.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">4% TAM</span>
+          </div>
+          <h3>Tier 2: Mandate On The Clock</h3>
+          <p>Publishes a numeric supplier-diversity or small-business spend target or ESG supplier report, or is a federal contractor with a subcontracting plan.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They have publicly committed to a number they must report against, but the actual vendor decision is made by a scientist at a bench who has no way of knowing which supplier in the catalog is certified. The goal lives in a policy document; the spend happens inside a punchout.</dd></div>
+              <div><dt>Offer</dt><dd>Diverse-Spend Leakage Audit: where the mandate breaks between policy and the bench</dd></div>
+              <div><dt>Source</dt><dd>ESG and diversity report scrape plus federal subcontracting plans</dd></div>
+              <div><dt>Reply density</dt><dd>High. Small and finite, like Tier 1. Do not launch until copy is validated elsewhere.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">5% TAM</span>
+          </div>
+          <h3>Tier 3: Solving It With Headcount</h3>
+          <p>An open requisition posted in the last 60 days for Procurement Analyst, Strategic Sourcing (Scientific), Lab Operations Manager, Inventory Coordinator or Research Operations.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They have concluded the fix is another person doing order entry, quote-chasing and stock counts. That role gets consumed by transactional work and never reaches strategic sourcing, which is the work that actually moves the number.</dd></div>
+              <div><dt>Offer</dt><dd>Lab Procurement Hours Model: transactional hours per month by requisition volume</dd></div>
+              <div><dt>Source</dt><dd>Job-board scrape, rolling 60-day window</dd></div>
+              <div><dt>Reply density</dt><dd>Medium-high, and permanently renewing. Refresh weekly.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">14% TAM</span>
+          </div>
+          <h3>Tier 4: Spend About To Scale</h3>
+          <p>Series B or later within 12 months, or an announced new lab or facility, or NIH awards up more than 15% year over year.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Reagent and consumable spend is about to step-change, and unit economics get locked in during the first year of a new site or programme. Once scientists have twelve months of buying habits, renegotiating is a project rather than a configuration.</dd></div>
+              <div><dt>Offer</dt><dd>Year-One Spend Curve: the first twelve months of lab spend with and without a unified layer</dd></div>
+              <div><dt>Source</dt><dd>Crunchbase, press and real-estate announcements, NIH RePORTER growth</dd></div>
+              <div><dt>Reply density</dt><dd>Medium, and renewing. Mostly commercial biotech. Refresh weekly.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">71% TAM</span>
+          </div>
+          <h3>Tier 5: Catch-All: The Benchmark</h3>
+          <p>Any remaining organisation with a wet lab: NIH-funded, or R&amp;D headcount of 10 or more.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Nobody has told them what normal is. They have no way to know whether their reagent spend, price variance across suppliers or requisition cycle time is good, average or bad, so there is no trigger to act on.</dd></div>
+              <div><dt>Offer</dt><dd>Life Sciences Procurement Benchmark, gated behind a reply</dd></div>
+              <div><dt>Source</dt><dd>NIH RePORTER plus Crunchbase R&amp;D headcount</dd></div>
+              <div><dt>Reply density</dt><dd>Lower, 1-in-400 to 1-in-600, and that is fine. Judge this tier on pipeline value, not reply ratio. One UC-scale account justifies the year.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="04 / Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">04 / Campaigns</p>
+      <h2>The experiments that sit on top of the cascade</h2>
+      <p class="takeaway">Each campaign inherits its tier&#39;s trigger and pain. Only the angle and the offer change, which is what keeps the strategy durable for a year instead of a quarter.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>The Punchout Count</h3>
+          <p>The highest-intent campaign in the account. It works because the trigger pre-answers the integration objection: an account that publishes six punchouts has already won the internal argument for centralised lab buying and already discovered that adding storefronts never solves comparison.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Procurement page names a P2P platform and lists 4+ lab-supplier punchout catalogs.</dd></div>
+            <div><dt>AI strategy</dt><dd>Open with their own marketplace brand name and their own supplier list, read straight off their public page. The credibility comes from the fact that nobody else bothers to look. Then poke the gap: once a scientist is inside one punchout, they cannot see the price in the other five.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Nothing Gets Replaced</h3>
+          <p>The single most common reply to Tier 1 will be some version of we just implemented this. Handling it inside the sequence rather than on a call is what converts a reply into a meeting.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same Tier 1 population, second-touch angle.</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with the objection instead of waiting for it. Their approval workflows, contract pricing and GL coding stay untouched. Labviva is a layer above the P2P, not a replacement for it. Then attach the 20% year-one number to their scale.</dd></div>
+            <div><dt>Value</dt><dd>De-risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Policy vs The Bench</h3>
+          <p>The mandate is already on a clock and already public, which means the urgency is theirs rather than manufactured. The University of California built exactly this into its 25%-of-addressable-spend goal.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Published numeric diverse-spend target, ESG supplier report, or federal subcontracting plan.</dd></div>
+            <div><dt>AI strategy</dt><dd>Quote their own published percentage back to them, then name the structural reason it leaks: the person choosing the vendor is a scientist who cannot see which supplier is certified. The rules engine closes that at the point of requisition.</dd></div>
+            <div><dt>Value</dt><dd>Hit the mandate</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>A Query, Not A Project</h3>
+          <p>Targets the reporting burden rather than the mandate itself, which reaches a different person in the same org: the analyst who actually assembles the report.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same Tier 2 population, reporting angle.</dd></div>
+            <div><dt>AI strategy</dt><dd>Shift from hitting the number to proving it. Even when spend is going to the right suppliers, proving it usually means someone rebuilding the picture in a spreadsheet at quarter end. Continuous reporting by vendor, category, user and timeframe.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>The Role Gets Eaten</h3>
+          <p>The trigger is unambiguous and self-refreshing. It also reaches the hiring manager at the exact moment they are thinking about this problem, which is the cheapest attention in outbound.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Procurement, sourcing, lab-ops or inventory req posted in the last 60 days.</dd></div>
+            <div><dt>AI strategy</dt><dd>Reference the live req by title and posting age, then poke: most of that role&#39;s first year gets eaten by order entry, chasing quotes and counting stock, rather than the sourcing work they actually hired for.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Same Salary, Better Job</h3>
+          <p>The A/B against The Role Gets Eaten. Tests whether cost-avoidance or capability-upgrade framing lands harder with a hiring manager.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same Tier 3 population, retention angle.</dd></div>
+            <div><dt>AI strategy</dt><dd>Reframe from cost avoidance to capability upgrade. The role is 80% transactional and 20% strategic, and the 20% is what the person came for. Automate the 80% and the same salary buys sourcing capability instead of order processing.</dd></div>
+            <div><dt>Value</dt><dd>Make the hire work</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Before The Ramp</h3>
+          <p>Reaches commercial biotech that will never publish a procurement page, so no Tier 1-3 trigger can ever fire for them. This is how the strategy covers the segment that is structurally invisible.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Series B+ within 12 months, or an announced facility expansion.</dd></div>
+            <div><dt>AI strategy</dt><dd>Anchor on timing rather than magnitude. Unit economics lock in during year one of a ramp; once scientists have twelve months of buying habits, renegotiating is a project. Setting it up front is a configuration.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Award Growth</h3>
+          <p>The academic mirror of Before The Ramp. Uses free federal data as the personalisation layer, so it scales to every NIH-funded institution without any enrichment spend.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Institutions with NIH award growth above 15% year over year.</dd></div>
+            <div><dt>AI strategy</dt><dd>Open with their actual RePORTER numbers: awards up X%, total dollars, active project count. Then poke: that growth lands as more requisitions through the same process, rather than a better one.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>The Benchmark</h3>
+          <p>The volume engine and the calibration ground. It deliberately claims no account-specific insight, because manufactured insight is exactly what causes a CPO to mark a sender as spam.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Any wet lab not caught by Tiers 1-4.</dd></div>
+            <div><dt>AI strategy</dt><dd>Be honest that there is no research angle. Ask a straight question: do you know how your lab spend compares to organisations your size? Nobody does, because no public benchmark exists. Then offer the category data.</dd></div>
+            <div><dt>Value</dt><dd>Give first</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Price Variance, Blunt</h3>
+          <p>The chaos test against The Benchmark. Two entirely different copies, because no signal exists in this tier yet. Narrow to controlled tests only once a winner emerges.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same Tier 5 population, chaos-test variant.</dd></div>
+            <div><dt>AI strategy</dt><dd>One question, no setup: what is the gap between what your lab pays and the best available price for the identical catalog number? The median answer is consistently the biggest surprise in the data.</dd></div>
+            <div><dt>Value</dt><dd>Provoke</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="05 / Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">05 / Copy</p>
+      <h2>Notice line, poke, value prop, proof, reply-only CTA</h2>
+      <p class="takeaway">Every personalisation variable traces to a scraped field. If the field is missing, the account does not get that tier&#39;s email. A wrong number in the first line destroys the tier.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company}}</span><span>{{institution}}</span><span>{{marketplace_brand_name}}</span><span>{{p2p_platform}}</span><span>{{punchout_supplier_count}}</span><span>{{supplier_1}}</span><span>{{supplier_2}}</span><span>{{supplier_3}}</span><span>{{diverse_spend_target_pct}}</span><span>{{diverse_supplier_category}}</span><span>{{report_name}}</span><span>{{job_title}}</span><span>{{days_ago}}</span><span>{{round_name}}</span><span>{{round_size}}</span><span>{{funding_month}}</span><span>{{alt_dm_title}}</span><span>{{sender_name}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company}}, {{institution}}, {{marketplace_brand_name}}, {{p2p_platform}}, {{punchout_supplier_count}}, {{supplier_1}}, {{supplier_2}}, {{supplier_3}}, {{diverse_spend_target_pct}}, {{diverse_supplier_category}}, {{report_name}}, {{job_title}}, {{days_ago}}, {{round_name}}, {{round_size}}, {{funding_month}}, {{alt_dm_title}}, {{sender_name}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Fragmentation Proven</strong>
+              <em>Punchout Fragmentation Report</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Fragmentation Proven steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{marketplace_brand_name}}&#10;&#10;Hi {{first_name}},&#10;&#10;I was reading {{institution}}&#39;s procurement pages and saw {{marketplace_brand_name}} lists punchout catalogs for {{supplier_1}}, {{supplier_2}} and {{supplier_3}} - {{punchout_supplier_count}} lab suppliers in total, all running on {{p2p_platform}}.&#10;&#10;But would it be fair to assume that once a scientist is inside one of those punchouts, there&#39;s no way for them to see what the same catalog number costs in the others?&#10;&#10;That&#39;s the gap we close. Labviva sits on top of {{p2p_platform}} - nothing gets replaced - and turns those separate storefronts into one search where the scientist sees every supplier&#39;s price, lead time and stock side by side before they requisition.&#10;&#10;A $6B biopharma cut procurement time 60% in year one. A top-10 US university took 13% out of year-over-year spend.&#10;&#10;Worth me sending over the fragmentation breakdown we pulled for {{institution}}? Reply Y and it&#39;s yours, no call needed.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{marketplace_brand_name}}" data-preview="NorthBuy">{{marketplace_brand_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;I was reading {{institution}}&#39;s procurement pages and saw {{marketplace_brand_name}} lists punchout catalogs for {{supplier_1}}, {{supplier_2}} and {{supplier_3}} - {{punchout_supplier_count}} lab suppliers in total, all running on {{p2p_platform}}.&#10;&#10;But would it be fair to assume that once a scientist is inside one of those punchouts, there&#39;s no way for them to see what the same catalog number costs in the others?&#10;&#10;That&#39;s the gap we close. Labviva sits on top of {{p2p_platform}} - nothing gets replaced - and turns those separate storefronts into one search where the scientist sees every supplier&#39;s price, lead time and stock side by side before they requisition.&#10;&#10;A $6B biopharma cut procurement time 60% in year one. A top-10 US university took 13% out of year-over-year spend.&#10;&#10;Worth me sending over the fragmentation breakdown we pulled for {{institution}}? Reply Y and it&#39;s yours, no call needed.&#10;&#10;{{sender_name}}" data-preview="Hi Dana,&#10;&#10;I was reading Northgate University&#39;s procurement pages and saw NorthBuy lists punchout catalogs for Fisher Scientific, Avantor/VWR and MilliporeSigma - 6 lab suppliers in total, all running on JAGGAER.&#10;&#10;But would it be fair to assume that once a scientist is inside one of those punchouts, there&#39;s no way for them to see what the same catalog number costs in the others?&#10;&#10;That&#39;s the gap we close. Labviva sits on top of JAGGAER - nothing gets replaced - and turns those separate storefronts into one search where the scientist sees every supplier&#39;s price, lead time and stock side by side before they requisition.&#10;&#10;A $6B biopharma cut procurement time 60% in year one. A top-10 US university took 13% out of year-over-year spend.&#10;&#10;Worth me sending over the fragmentation breakdown we pulled for Northgate University? Reply Y and it&#39;s yours, no call needed.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>I was reading {{institution}}&#39;s procurement pages and saw {{marketplace_brand_name}} lists punchout catalogs for {{supplier_1}}, {{supplier_2}} and {{supplier_3}} - {{punchout_supplier_count}} lab suppliers in total, all running on {{p2p_platform}}.</p><p>But would it be fair to assume that once a scientist is inside one of those punchouts, there&#39;s no way for them to see what the same catalog number costs in the others?</p><p>That&#39;s the gap we close. Labviva sits on top of {{p2p_platform}} - nothing gets replaced - and turns those separate storefronts into one search where the scientist sees every supplier&#39;s price, lead time and stock side by side before they requisition.</p><p>A $6B biopharma cut procurement time 60% in year one. A top-10 US university took 13% out of year-over-year spend.</p><p>Worth me sending over the fragmentation breakdown we pulled for {{institution}}? Reply Y and it&#39;s yours, no call needed.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hi {{first_name}},&#10;&#10;One number to add to the above.&#10;&#10;When the same reagent is available from {{supplier_1}} and {{supplier_2}} and nobody can see both prices at once, the spread doesn&#39;t get captured, it just gets spent. Across the organisations we&#39;ve onboarded, closing that visibility gap is worth about 20% of R&amp;D spend in year one.&#10;&#10;On {{institution}}&#39;s scale that is not a rounding error.&#10;&#10;And to be clear about the lift: {{p2p_platform}} stays exactly as it is. Your approval workflows, your contract pricing, your GL coding, untouched. We&#39;re a layer above it, not a replacement for it.&#10;&#10;Still happy to send the {{institution}} breakdown. Just reply Y.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;One number to add to the above.&#10;&#10;When the same reagent is available from {{supplier_1}} and {{supplier_2}} and nobody can see both prices at once, the spread doesn&#39;t get captured, it just gets spent. Across the organisations we&#39;ve onboarded, closing that visibility gap is worth about 20% of R&amp;D spend in year one.&#10;&#10;On {{institution}}&#39;s scale that is not a rounding error.&#10;&#10;And to be clear about the lift: {{p2p_platform}} stays exactly as it is. Your approval workflows, your contract pricing, your GL coding, untouched. We&#39;re a layer above it, not a replacement for it.&#10;&#10;Still happy to send the {{institution}} breakdown. Just reply Y.&#10;&#10;{{sender_name}}" data-preview="Hi Dana,&#10;&#10;One number to add to the above.&#10;&#10;When the same reagent is available from Fisher Scientific and Avantor/VWR and nobody can see both prices at once, the spread doesn&#39;t get captured, it just gets spent. Across the organisations we&#39;ve onboarded, closing that visibility gap is worth about 20% of R&amp;D spend in year one.&#10;&#10;On Northgate University&#39;s scale that is not a rounding error.&#10;&#10;And to be clear about the lift: JAGGAER stays exactly as it is. Your approval workflows, your contract pricing, your GL coding, untouched. We&#39;re a layer above it, not a replacement for it.&#10;&#10;Still happy to send the Northgate University breakdown. Just reply Y.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>One number to add to the above.</p><p>When the same reagent is available from {{supplier_1}} and {{supplier_2}} and nobody can see both prices at once, the spread doesn&#39;t get captured, it just gets spent. Across the organisations we&#39;ve onboarded, closing that visibility gap is worth about 20% of R&amp;D spend in year one.</p><p>On {{institution}}&#39;s scale that is not a rounding error.</p><p>And to be clear about the lift: {{p2p_platform}} stays exactly as it is. Your approval workflows, your contract pricing, your GL coding, untouched. We&#39;re a layer above it, not a replacement for it.</p><p>Still happy to send the {{institution}} breakdown. Just reply Y.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: wrong person?&#10;&#10;Hi {{first_name}},&#10;&#10;No need for a call on this one.&#10;&#10;Just reply &quot;yes&quot; and I&#39;ll send the punchout fragmentation report for {{institution}} - your {{punchout_supplier_count}} listed lab suppliers, where the catalogs overlap, and where the price spread on duplicated SKUs sits.&#10;&#10;Should I send it to you, or is {{alt_dm_title}} the better person for this?&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="wrong person?" data-preview="wrong person?">wrong person?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;No need for a call on this one.&#10;&#10;Just reply &quot;yes&quot; and I&#39;ll send the punchout fragmentation report for {{institution}} - your {{punchout_supplier_count}} listed lab suppliers, where the catalogs overlap, and where the price spread on duplicated SKUs sits.&#10;&#10;Should I send it to you, or is {{alt_dm_title}} the better person for this?&#10;&#10;{{sender_name}}" data-preview="Hi Dana,&#10;&#10;No need for a call on this one.&#10;&#10;Just reply &quot;yes&quot; and I&#39;ll send the punchout fragmentation report for Northgate University - your 6 listed lab suppliers, where the catalogs overlap, and where the price spread on duplicated SKUs sits.&#10;&#10;Should I send it to you, or is your Director of Research Operations the better person for this?&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>No need for a call on this one.</p><p>Just reply &quot;yes&quot; and I&#39;ll send the punchout fragmentation report for {{institution}} - your {{punchout_supplier_count}} listed lab suppliers, where the catalogs overlap, and where the price spread on duplicated SKUs sits.</p><p>Should I send it to you, or is {{alt_dm_title}} the better person for this?</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Mandate On The Clock</strong>
+              <em>Diverse-Spend Leakage Audit</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Mandate On The Clock steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{diverse_spend_target_pct}}%&#10;&#10;Hi {{first_name}},&#10;&#10;I read {{institution}}&#39;s {{report_name}} and saw the commitment to get {{diverse_spend_target_pct}}% of addressable spend to {{diverse_supplier_category}} suppliers.&#10;&#10;But would it be fair to assume that the person actually choosing the vendor is a scientist at a bench, who has no way of knowing which supplier in the catalog is certified?&#10;&#10;That&#39;s the disconnect we fix. Labviva&#39;s rules engine surfaces and prioritises certified suppliers at the moment of requisition, inside {{p2p_platform}}, in the scientist&#39;s normal flow, and then reports the result by vendor, category and user.&#10;&#10;One organisation increased diverse-supplier spend by over 190%. The University of California built exactly this into its 25%-of-addressable-spend goal across 10 campuses, 6 academic health centres and 3 national labs.&#10;&#10;Want the audit that shows where the mandate leaks between policy and the bench? Reply Y and I&#39;ll send it.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{diverse_spend_target_pct}}%" data-preview="25%">{{diverse_spend_target_pct}}%</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;I read {{institution}}&#39;s {{report_name}} and saw the commitment to get {{diverse_spend_target_pct}}% of addressable spend to {{diverse_supplier_category}} suppliers.&#10;&#10;But would it be fair to assume that the person actually choosing the vendor is a scientist at a bench, who has no way of knowing which supplier in the catalog is certified?&#10;&#10;That&#39;s the disconnect we fix. Labviva&#39;s rules engine surfaces and prioritises certified suppliers at the moment of requisition, inside {{p2p_platform}}, in the scientist&#39;s normal flow, and then reports the result by vendor, category and user.&#10;&#10;One organisation increased diverse-supplier spend by over 190%. The University of California built exactly this into its 25%-of-addressable-spend goal across 10 campuses, 6 academic health centres and 3 national labs.&#10;&#10;Want the audit that shows where the mandate leaks between policy and the bench? Reply Y and I&#39;ll send it.&#10;&#10;{{sender_name}}" data-preview="Hi Dana,&#10;&#10;I read Northgate University&#39;s FY25 Supplier Diversity Report and saw the commitment to get 25% of addressable spend to small and diverse suppliers.&#10;&#10;But would it be fair to assume that the person actually choosing the vendor is a scientist at a bench, who has no way of knowing which supplier in the catalog is certified?&#10;&#10;That&#39;s the disconnect we fix. Labviva&#39;s rules engine surfaces and prioritises certified suppliers at the moment of requisition, inside JAGGAER, in the scientist&#39;s normal flow, and then reports the result by vendor, category and user.&#10;&#10;One organisation increased diverse-supplier spend by over 190%. The University of California built exactly this into its 25%-of-addressable-spend goal across 10 campuses, 6 academic health centres and 3 national labs.&#10;&#10;Want the audit that shows where the mandate leaks between policy and the bench? Reply Y and I&#39;ll send it.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>I read {{institution}}&#39;s {{report_name}} and saw the commitment to get {{diverse_spend_target_pct}}% of addressable spend to {{diverse_supplier_category}} suppliers.</p><p>But would it be fair to assume that the person actually choosing the vendor is a scientist at a bench, who has no way of knowing which supplier in the catalog is certified?</p><p>That&#39;s the disconnect we fix. Labviva&#39;s rules engine surfaces and prioritises certified suppliers at the moment of requisition, inside {{p2p_platform}}, in the scientist&#39;s normal flow, and then reports the result by vendor, category and user.</p><p>One organisation increased diverse-supplier spend by over 190%. The University of California built exactly this into its 25%-of-addressable-spend goal across 10 campuses, 6 academic health centres and 3 national labs.</p><p>Want the audit that shows where the mandate leaks between policy and the bench? Reply Y and I&#39;ll send it.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hi {{first_name}},&#10;&#10;The follow-on problem to the one above: even when the spend is going to the right suppliers, proving it usually means someone rebuilding the picture in a spreadsheet at quarter end.&#10;&#10;Labviva reports it continuously - spend by vendor, by category, by user, by timeframe, drillable - so the number in {{report_name}} next year is a query, not a project.&#10;&#10;Same platform, same requisition flow, no change to {{p2p_platform}}.&#10;&#10;Reply Y for the leakage audit.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;The follow-on problem to the one above: even when the spend is going to the right suppliers, proving it usually means someone rebuilding the picture in a spreadsheet at quarter end.&#10;&#10;Labviva reports it continuously - spend by vendor, by category, by user, by timeframe, drillable - so the number in {{report_name}} next year is a query, not a project.&#10;&#10;Same platform, same requisition flow, no change to {{p2p_platform}}.&#10;&#10;Reply Y for the leakage audit.&#10;&#10;{{sender_name}}" data-preview="Hi Dana,&#10;&#10;The follow-on problem to the one above: even when the spend is going to the right suppliers, proving it usually means someone rebuilding the picture in a spreadsheet at quarter end.&#10;&#10;Labviva reports it continuously - spend by vendor, by category, by user, by timeframe, drillable - so the number in FY25 Supplier Diversity Report next year is a query, not a project.&#10;&#10;Same platform, same requisition flow, no change to JAGGAER.&#10;&#10;Reply Y for the leakage audit.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>The follow-on problem to the one above: even when the spend is going to the right suppliers, proving it usually means someone rebuilding the picture in a spreadsheet at quarter end.</p><p>Labviva reports it continuously - spend by vendor, by category, by user, by timeframe, drillable - so the number in {{report_name}} next year is a query, not a project.</p><p>Same platform, same requisition flow, no change to {{p2p_platform}}.</p><p>Reply Y for the leakage audit.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: quick one, {{first_name}}&#10;&#10;No call needed - just reply &quot;yes&quot; and I&#39;ll send the diverse-spend leakage audit: the three points between your published {{diverse_spend_target_pct}}% target and the actual purchase where the routing breaks.&#10;&#10;Should this go to you or to {{alt_dm_title}}?&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="quick one, {{first_name}}" data-preview="quick one, Dana">quick one, {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed - just reply &quot;yes&quot; and I&#39;ll send the diverse-spend leakage audit: the three points between your published {{diverse_spend_target_pct}}% target and the actual purchase where the routing breaks.&#10;&#10;Should this go to you or to {{alt_dm_title}}?&#10;&#10;{{sender_name}}" data-preview="No call needed - just reply &quot;yes&quot; and I&#39;ll send the diverse-spend leakage audit: the three points between your published 25% target and the actual purchase where the routing breaks.&#10;&#10;Should this go to you or to your Director of Research Operations?&#10;&#10;Alex">
+                        <p>No call needed - just reply &quot;yes&quot; and I&#39;ll send the diverse-spend leakage audit: the three points between your published {{diverse_spend_target_pct}}% target and the actual purchase where the routing breaks.</p><p>Should this go to you or to {{alt_dm_title}}?</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Solving It With Headcount</strong>
+              <em>Lab Procurement Hours Model</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Solving It With Headcount steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the {{job_title}} req&#10;&#10;Hi {{first_name}},&#10;&#10;Saw {{company}} posted for a {{job_title}} {{days_ago}} days ago.&#10;&#10;But would it be fair to assume that most of that role&#39;s first year gets eaten by order entry, chasing quotes and counting stock, rather than the sourcing work you actually hired for?&#10;&#10;That&#39;s the part we automate. Consolidated POs, automated replenishment, demand forecasting, so the person you&#39;re hiring spends their time on supplier strategy instead of transactions.&#10;&#10;Customers save thousands of human hours a month, and cut inventory costs by up to 41%.&#10;&#10;Happy to send the model we use to estimate transactional hours by requisition volume. Reply Y and it&#39;s over, no call.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the {{job_title}} req" data-preview="the Strategic Sourcing Manager, Scientific req">the {{job_title}} req</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Saw {{company}} posted for a {{job_title}} {{days_ago}} days ago.&#10;&#10;But would it be fair to assume that most of that role&#39;s first year gets eaten by order entry, chasing quotes and counting stock, rather than the sourcing work you actually hired for?&#10;&#10;That&#39;s the part we automate. Consolidated POs, automated replenishment, demand forecasting, so the person you&#39;re hiring spends their time on supplier strategy instead of transactions.&#10;&#10;Customers save thousands of human hours a month, and cut inventory costs by up to 41%.&#10;&#10;Happy to send the model we use to estimate transactional hours by requisition volume. Reply Y and it&#39;s over, no call.&#10;&#10;{{sender_name}}" data-preview="Hi Dana,&#10;&#10;Saw Meridian Biosciences posted for a Strategic Sourcing Manager, Scientific 11 days ago.&#10;&#10;But would it be fair to assume that most of that role&#39;s first year gets eaten by order entry, chasing quotes and counting stock, rather than the sourcing work you actually hired for?&#10;&#10;That&#39;s the part we automate. Consolidated POs, automated replenishment, demand forecasting, so the person you&#39;re hiring spends their time on supplier strategy instead of transactions.&#10;&#10;Customers save thousands of human hours a month, and cut inventory costs by up to 41%.&#10;&#10;Happy to send the model we use to estimate transactional hours by requisition volume. Reply Y and it&#39;s over, no call.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>Saw {{company}} posted for a {{job_title}} {{days_ago}} days ago.</p><p>But would it be fair to assume that most of that role&#39;s first year gets eaten by order entry, chasing quotes and counting stock, rather than the sourcing work you actually hired for?</p><p>That&#39;s the part we automate. Consolidated POs, automated replenishment, demand forecasting, so the person you&#39;re hiring spends their time on supplier strategy instead of transactions.</p><p>Customers save thousands of human hours a month, and cut inventory costs by up to 41%.</p><p>Happy to send the model we use to estimate transactional hours by requisition volume. Reply Y and it&#39;s over, no call.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hi {{first_name}},&#10;&#10;Follow-up thought on the {{job_title}} hire.&#10;&#10;The reason this role is hard to retain in life sciences is that the work is 80% transactional and 20% strategic, and the 20% is what the person came for.&#10;&#10;If the transactional 80% is automated, you&#39;re hiring for a materially better job, and the same salary buys you sourcing capability instead of order processing.&#10;&#10;Reply Y for the hours model.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Follow-up thought on the {{job_title}} hire.&#10;&#10;The reason this role is hard to retain in life sciences is that the work is 80% transactional and 20% strategic, and the 20% is what the person came for.&#10;&#10;If the transactional 80% is automated, you&#39;re hiring for a materially better job, and the same salary buys you sourcing capability instead of order processing.&#10;&#10;Reply Y for the hours model.&#10;&#10;{{sender_name}}" data-preview="Hi Dana,&#10;&#10;Follow-up thought on the Strategic Sourcing Manager, Scientific hire.&#10;&#10;The reason this role is hard to retain in life sciences is that the work is 80% transactional and 20% strategic, and the 20% is what the person came for.&#10;&#10;If the transactional 80% is automated, you&#39;re hiring for a materially better job, and the same salary buys you sourcing capability instead of order processing.&#10;&#10;Reply Y for the hours model.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>Follow-up thought on the {{job_title}} hire.</p><p>The reason this role is hard to retain in life sciences is that the work is 80% transactional and 20% strategic, and the 20% is what the person came for.</p><p>If the transactional 80% is automated, you&#39;re hiring for a materially better job, and the same salary buys you sourcing capability instead of order processing.</p><p>Reply Y for the hours model.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} - procurement hours&#10;&#10;No call needed. Reply &quot;yes&quot; and I&#39;ll send the lab procurement hours model - transactional hours per month by requisition volume, and what&#39;s automatable.&#10;&#10;You, or {{alt_dm_title}}?&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} - procurement hours" data-preview="Meridian Biosciences - procurement hours">{{company}} - procurement hours</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed. Reply &quot;yes&quot; and I&#39;ll send the lab procurement hours model - transactional hours per month by requisition volume, and what&#39;s automatable.&#10;&#10;You, or {{alt_dm_title}}?&#10;&#10;{{sender_name}}" data-preview="No call needed. Reply &quot;yes&quot; and I&#39;ll send the lab procurement hours model - transactional hours per month by requisition volume, and what&#39;s automatable.&#10;&#10;You, or your Director of Research Operations?&#10;&#10;Alex">
+                        <p>No call needed. Reply &quot;yes&quot; and I&#39;ll send the lab procurement hours model - transactional hours per month by requisition volume, and what&#39;s automatable.</p><p>You, or {{alt_dm_title}}?</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 - Spend About To Scale</strong>
+              <em>Year-One Spend Curve</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 - Spend About To Scale steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: post-{{round_name}}&#10;&#10;Hi {{first_name}},&#10;&#10;Saw {{company}} closed {{round_size}} in {{funding_month}}.&#10;&#10;But would it be fair to assume reagent and consumable spend is about to step up faster than the process around it?&#10;&#10;Worth knowing: the unit economics of lab spend get locked in during the first year of a ramp. Once scientists have twelve months of buying habits, renegotiating is a project. Setting it up front is a configuration.&#10;&#10;Organisations that put a unified purchasing layer in before the ramp take an average of 20% out of R&amp;D spend in year one, and get spend visibility by category, vendor and user from day one instead of reconstructing it from spreadsheets later.&#10;&#10;Want the year-one spend curve we model for companies at your stage? Reply Y.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="post-{{round_name}}" data-preview="post-Series C">post-{{round_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Saw {{company}} closed {{round_size}} in {{funding_month}}.&#10;&#10;But would it be fair to assume reagent and consumable spend is about to step up faster than the process around it?&#10;&#10;Worth knowing: the unit economics of lab spend get locked in during the first year of a ramp. Once scientists have twelve months of buying habits, renegotiating is a project. Setting it up front is a configuration.&#10;&#10;Organisations that put a unified purchasing layer in before the ramp take an average of 20% out of R&amp;D spend in year one, and get spend visibility by category, vendor and user from day one instead of reconstructing it from spreadsheets later.&#10;&#10;Want the year-one spend curve we model for companies at your stage? Reply Y.&#10;&#10;{{sender_name}}" data-preview="Hi Dana,&#10;&#10;Saw Meridian Biosciences closed $60M in May.&#10;&#10;But would it be fair to assume reagent and consumable spend is about to step up faster than the process around it?&#10;&#10;Worth knowing: the unit economics of lab spend get locked in during the first year of a ramp. Once scientists have twelve months of buying habits, renegotiating is a project. Setting it up front is a configuration.&#10;&#10;Organisations that put a unified purchasing layer in before the ramp take an average of 20% out of R&amp;D spend in year one, and get spend visibility by category, vendor and user from day one instead of reconstructing it from spreadsheets later.&#10;&#10;Want the year-one spend curve we model for companies at your stage? Reply Y.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>Saw {{company}} closed {{round_size}} in {{funding_month}}.</p><p>But would it be fair to assume reagent and consumable spend is about to step up faster than the process around it?</p><p>Worth knowing: the unit economics of lab spend get locked in during the first year of a ramp. Once scientists have twelve months of buying habits, renegotiating is a project. Setting it up front is a configuration.</p><p>Organisations that put a unified purchasing layer in before the ramp take an average of 20% out of R&amp;D spend in year one, and get spend visibility by category, vendor and user from day one instead of reconstructing it from spreadsheets later.</p><p>Want the year-one spend curve we model for companies at your stage? Reply Y.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hi {{first_name}},&#10;&#10;The other half of a ramp that nobody budgets for: inventory.&#10;&#10;When headcount and programmes grow fast, labs over-order to avoid stockouts, and the write-offs show up eighteen months later. Automated replenishment and forecasting cut inventory costs by up to 41%.&#10;&#10;Reply Y for the spend curve, it covers both lines.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;The other half of a ramp that nobody budgets for: inventory.&#10;&#10;When headcount and programmes grow fast, labs over-order to avoid stockouts, and the write-offs show up eighteen months later. Automated replenishment and forecasting cut inventory costs by up to 41%.&#10;&#10;Reply Y for the spend curve, it covers both lines.&#10;&#10;{{sender_name}}" data-preview="Hi Dana,&#10;&#10;The other half of a ramp that nobody budgets for: inventory.&#10;&#10;When headcount and programmes grow fast, labs over-order to avoid stockouts, and the write-offs show up eighteen months later. Automated replenishment and forecasting cut inventory costs by up to 41%.&#10;&#10;Reply Y for the spend curve, it covers both lines.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>The other half of a ramp that nobody budgets for: inventory.</p><p>When headcount and programmes grow fast, labs over-order to avoid stockouts, and the write-offs show up eighteen months later. Automated replenishment and forecasting cut inventory costs by up to 41%.</p><p>Reply Y for the spend curve, it covers both lines.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: before the ramp&#10;&#10;No call needed. Reply &quot;yes&quot; and I&#39;ll send the year-one spend curve - what the first 12 months of lab spend looks like with and without a unified purchasing layer.&#10;&#10;Should I send it to you or {{alt_dm_title}}?&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="before the ramp" data-preview="before the ramp">before the ramp</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed. Reply &quot;yes&quot; and I&#39;ll send the year-one spend curve - what the first 12 months of lab spend looks like with and without a unified purchasing layer.&#10;&#10;Should I send it to you or {{alt_dm_title}}?&#10;&#10;{{sender_name}}" data-preview="No call needed. Reply &quot;yes&quot; and I&#39;ll send the year-one spend curve - what the first 12 months of lab spend looks like with and without a unified purchasing layer.&#10;&#10;Should I send it to you or your Director of Research Operations?&#10;&#10;Alex">
+                        <p>No call needed. Reply &quot;yes&quot; and I&#39;ll send the year-one spend curve - what the first 12 months of lab spend looks like with and without a unified purchasing layer.</p><p>Should I send it to you or {{alt_dm_title}}?</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 - Catch-All: The Benchmark</strong>
+              <em>Life Sciences Procurement Benchmark</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 - Catch-All: The Benchmark steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: benchmark&#10;&#10;Hi {{first_name}},&#10;&#10;Straight question, no research angle: do you know how {{company}}&#39;s lab spend compares to organisations of a similar size?&#10;&#10;Most teams don&#39;t. Not because they&#39;re not paying attention, but because there&#39;s no public benchmark for reagent price variance, supplier count or requisition cycle time. So there&#39;s never a moment where someone says that number is wrong.&#10;&#10;We see it across 150+ suppliers and organisations from single labs up to the University of California&#39;s 10 campuses, six academic health centres and three national laboratories. The median gap between what a lab pays and the best available price for the identical catalog number is consistently the biggest surprise.&#10;&#10;I put the benchmark together as a short report. Reply Y and I&#39;ll send it. No call, nothing to install.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="benchmark" data-preview="benchmark">benchmark</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Straight question, no research angle: do you know how {{company}}&#39;s lab spend compares to organisations of a similar size?&#10;&#10;Most teams don&#39;t. Not because they&#39;re not paying attention, but because there&#39;s no public benchmark for reagent price variance, supplier count or requisition cycle time. So there&#39;s never a moment where someone says that number is wrong.&#10;&#10;We see it across 150+ suppliers and organisations from single labs up to the University of California&#39;s 10 campuses, six academic health centres and three national laboratories. The median gap between what a lab pays and the best available price for the identical catalog number is consistently the biggest surprise.&#10;&#10;I put the benchmark together as a short report. Reply Y and I&#39;ll send it. No call, nothing to install.&#10;&#10;{{sender_name}}" data-preview="Hi Dana,&#10;&#10;Straight question, no research angle: do you know how Meridian Biosciences&#39;s lab spend compares to organisations of a similar size?&#10;&#10;Most teams don&#39;t. Not because they&#39;re not paying attention, but because there&#39;s no public benchmark for reagent price variance, supplier count or requisition cycle time. So there&#39;s never a moment where someone says that number is wrong.&#10;&#10;We see it across 150+ suppliers and organisations from single labs up to the University of California&#39;s 10 campuses, six academic health centres and three national laboratories. The median gap between what a lab pays and the best available price for the identical catalog number is consistently the biggest surprise.&#10;&#10;I put the benchmark together as a short report. Reply Y and I&#39;ll send it. No call, nothing to install.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>Straight question, no research angle: do you know how {{company}}&#39;s lab spend compares to organisations of a similar size?</p><p>Most teams don&#39;t. Not because they&#39;re not paying attention, but because there&#39;s no public benchmark for reagent price variance, supplier count or requisition cycle time. So there&#39;s never a moment where someone says that number is wrong.</p><p>We see it across 150+ suppliers and organisations from single labs up to the University of California&#39;s 10 campuses, six academic health centres and three national laboratories. The median gap between what a lab pays and the best available price for the identical catalog number is consistently the biggest surprise.</p><p>I put the benchmark together as a short report. Reply Y and I&#39;ll send it. No call, nothing to install.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hi {{first_name}},&#10;&#10;To be more concrete about what&#39;s in it: the organisations we work with cut R&amp;D procurement spend by an average of 20% in the first year, and one $6B biopharma cut procurement time by 60%.&#10;&#10;The benchmark shows where that comes from - price variance on identical SKUs, duplicate supplier overlap, and inventory carried against demand.&#10;&#10;If your numbers already look better than the benchmark, that&#39;s a genuinely useful thing to know too.&#10;&#10;Reply Y.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;To be more concrete about what&#39;s in it: the organisations we work with cut R&amp;D procurement spend by an average of 20% in the first year, and one $6B biopharma cut procurement time by 60%.&#10;&#10;The benchmark shows where that comes from - price variance on identical SKUs, duplicate supplier overlap, and inventory carried against demand.&#10;&#10;If your numbers already look better than the benchmark, that&#39;s a genuinely useful thing to know too.&#10;&#10;Reply Y.&#10;&#10;{{sender_name}}" data-preview="Hi Dana,&#10;&#10;To be more concrete about what&#39;s in it: the organisations we work with cut R&amp;D procurement spend by an average of 20% in the first year, and one $6B biopharma cut procurement time by 60%.&#10;&#10;The benchmark shows where that comes from - price variance on identical SKUs, duplicate supplier overlap, and inventory carried against demand.&#10;&#10;If your numbers already look better than the benchmark, that&#39;s a genuinely useful thing to know too.&#10;&#10;Reply Y.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>To be more concrete about what&#39;s in it: the organisations we work with cut R&amp;D procurement spend by an average of 20% in the first year, and one $6B biopharma cut procurement time by 60%.</p><p>The benchmark shows where that comes from - price variance on identical SKUs, duplicate supplier overlap, and inventory carried against demand.</p><p>If your numbers already look better than the benchmark, that&#39;s a genuinely useful thing to know too.</p><p>Reply Y.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}}&#10;&#10;No need for a call - just reply &quot;yes&quot; and I&#39;ll send the life sciences procurement benchmark.&#10;&#10;Should it come to you, or is {{alt_dm_title}} closer to lab purchasing?&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}}" data-preview="Meridian Biosciences">{{company}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No need for a call - just reply &quot;yes&quot; and I&#39;ll send the life sciences procurement benchmark.&#10;&#10;Should it come to you, or is {{alt_dm_title}} closer to lab purchasing?&#10;&#10;{{sender_name}}" data-preview="No need for a call - just reply &quot;yes&quot; and I&#39;ll send the life sciences procurement benchmark.&#10;&#10;Should it come to you, or is your Director of Research Operations closer to lab purchasing?&#10;&#10;Alex">
+                        <p>No need for a call - just reply &quot;yes&quot; and I&#39;ll send the life sciences procurement benchmark.</p><p>Should it come to you, or is {{alt_dm_title}} closer to lab purchasing?</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="06 / Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">06 / Launch</p>
+      <h2>Deliberately inverted, to protect the finite tiers</h2>
+      <p class="takeaway">There are roughly 2,400 Tier 1 accounts in the world and they do not renew. They get validated copy, never test copy. Tier 5 is where we calibrate.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Weeks 1-2, Build. Stand up the procurement-page crawler, join it to NIH RePORTER and BRIMR, and run contact enrichment. This produces the routing matrix. Nothing sends in this phase.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Weeks 3-5, Calibrate on Tier 5. Launch the catch-all at 4,000 contacts as a chaos test of two entirely different copies. It is the largest and most replaceable tier, it establishes the deliverability baseline on .edu and .gov, and it produces the reply data that de-risks Tier 1.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 5-8, Rolling triggers. Launch Tiers 3 and 4. Both refresh continuously, so mistakes are recoverable. This is where we confirm that trigger-based personalisation actually lifts reply rate above the Tier 5 baseline.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Weeks 8-11, The prize. Launch Tier 1, then Tier 2, and only once the personalisation lift is confirmed and the sending infrastructure is warm and clean. Start Tier 1 at 800 contacts, not all 8,400.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Week 12 onward, Steady state. All five tiers running with a weekly refresh. Tiers 1 and 2 top up as new procurement pages publish, Tiers 3 and 4 refresh weekly, Tier 5 absorbs the remainder. The ongoing work is a crawler re-run and a contact top-up, not a campaign rebuild.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacts</strong>
+                <span>Perfect. Scale the tier and add more contacts per account.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run untouched and resist the urge to optimise.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450-500</strong>
+                <span>Borderline. Test exactly one copy variant and hold everything else constant.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or reply rate under 1% after 1,500+ sends</strong>
+                <span>Failing. Cut the tier and rework the trigger, not the copy.</span>
+              </div>
+              <div class="threshold">
+                <strong>Tier 5 at 1 per 400-600</strong>
+                <span>Acceptable, and do not cut it. One UC-scale account justifies the entire year&#39;s send volume. Judge this tier on pipeline value, not reply ratio.</span>
+              </div>
+              <div class="threshold">
+                <strong>Any .edu or .gov sending</strong>
+                <span>Open tracking off, no links in email 1, slow warm ramp. Deliverability is the binding constraint here, not copy quality.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a working session</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dana","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Meridian Biosciences","Northgate University","NorthBuy","JAGGAER","Fisher Scientific","Avantor/VWR","MilliporeSigma","25","small and diverse","FY25 Supplier Diversity Report","Strategic Sourcing Manager, Scientific","11","Series C","\\$60M","May","your Director of Research Operations","Alex"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
