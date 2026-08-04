@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cavli Wireless - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-04</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Cavli Wireless</p>
+          <h1>The Cavli Wireless outbound <mark>journey</mark>.</h1>
+          <p class="hero-copy">One waterfall built on the one database that already tells you which competitor&#39;s module is on their board.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Every cellular device sold in the US must be certified by the FCC, and the filing is published in full - including the label exhibit that reads &quot;Contains FCC ID: XMR...&quot;. XMR is Quectel. RI7 is Telit. N7N is Sierra Wireless. XPY is u-blox. One free query returns the OEM, the named contact, and which competitor&#39;s module is designed into their product. It is the bill of materials of the entire US connected-device industry, published by the US government, and no enrichment vendor sells it.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a working session</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>22-35k</strong>
+          <span>US accounts with a live cellular certification</span>
+        </div>
+        <div class="metric-card">
+          <strong>6</strong>
+          <span>tiers, first-match routing, 100% coverage</span>
+        </div>
+        <div class="metric-card">
+          <strong>23 Dec 2027</strong>
+          <span>Section 5949 deadline behind Tier 1</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Cellular IoT modules (5G NR, RedCap, Cat 4, Cat 1, Cat 1bis, LPWA, automotive) with integrated eSIM, plus the Hubble connectivity and device-management platform. Made outside China, on Qualcomm silicon.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal nobody else is reading</p></div><div><span>02</span><p>How every account gets routed</p></div><div><span>03</span><p>The six tiers</p></div><div><span>04</span><p>Campaign experiments</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>01</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>02</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>03</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>04</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>05</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>06</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="01">
+        
+    <div class="section-head">
+      <p class="eyebrow">01</p>
+      <h2>The signal nobody else is reading</h2>
+      <p class="takeaway">Module attribution from federal certification filings. Free, weekly-refreshed, and impossible to buy from a list vendor.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>Modular approval rules force every host device to print the module&#39;s own FCC ID on its label and in its manual - so the competitor&#39;s part number is published, by law, in a free federal database.</p></div><div class="reason-card"><span>02</span><p>The same record hands you the applicant company, its address, the named contact on Form 731, the grant date, the certified bands and photographs of the board.</p></div><div class="reason-card"><span>03</span><p>No enrichment vendor sells module attribution. Apollo does not have it, ZoomInfo does not have it, BuiltWith does not have it. It cannot be neutralised by a competitor buying a bigger list.</p></div><div class="reason-card"><span>04</span><p>New authorisations publish weekly, already tagged with their module vendor. The market list refreshes itself with zero additional strategy work.</p></div>
+            </div>
+            <div class="field-cloud"><span>applicant_company</span><span>module_grantee_code</span><span>module_vendor_bloc</span><span>module_part_number</span><span>end_market_regulated</span><span>federal_contractor_flag</span><span>latest_grant_date</span><span>radio_generation</span><span>bands_certified</span><span>vendor_eol_match</span><span>eol_last_time_buy_date</span><span>first_cellular_cert_date</span><span>hiring_cellular_role</span><span>product_category</span><span>annual_volume_band</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>FCC Equipment Authorization database</h3><p>The market, the applicant company, the named contact, the grant date and the product type. Weekly bulk data downloads, free.</p></div><div class="source-card"><span>02</span><h3>fccid.io full-text search</h3><p>Module vendor attribution by matching the &quot;Contains FCC ID&quot; string inside manuals and label exhibits. This is the routing signal.</p></div><div class="source-card"><span>03</span><h3>Vendor EOL and product-change notices</h3><p>Which part numbers are dying and on what date. Telit, Semtech/Sierra, u-blox to Trasna, plus distributor PCN feeds.</p></div><div class="source-card"><span>04</span><h3>Covered List, DoD 1260H, FAR Section 5949 docket</h3><p>Which manufacturers carry a dated legal obligation rather than a vague concern.</p></div><div class="source-card"><span>05</span><h3>SAM.gov and USAspending</h3><p>The federal contractor flag that splits Tier 1 from Tier 2.</p></div><div class="source-card"><span>06</span><h3>Job boards keyed on part numbers and cellular firmware terms</h3><p>New-entrant and active-redesign signal for Tier 5.</p></div><div class="source-card"><span>07</span><h3>LinkedIn Sales Navigator + Apollo / AI-Ark</h3><p>Persona resolution inside the applicant company, then email and mobile append.</p></div><div class="source-card"><span>08</span><h3>ISED Canada REL and Anatel Brazil</h3><p>The identical method applied to two more markets, taking the universe past 40,000 accounts.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="02">
+        
+    <div class="section-head">
+      <p class="eyebrow">02</p>
+      <h2>How every account gets routed</h2>
+      <p class="takeaway">Six conditions tested top to bottom. First match wins. No account in the market is left unrouted.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF Module vendor is Chinese AND (regulated end market OR federal contractor)</span>
+          <strong>Tier 1 - Compliance Deadline</strong>
+          <em>Section 5949 applies to them by statute on 23 December 2027, and a module change is a 12-18 month respin and recert programme. They are already behind.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF Module vendor is Chinese (commercial end market)</span>
+          <strong>Tier 2 - Commercial De-risk</strong>
+          <em>A detected sole module is single-source by definition, on a vendor under active US government scrutiny.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF Part number matches a published end-of-life notice, OR grantee code is XPY (u-blox)</span>
+          <strong>Tier 3 - Forced Migration</strong>
+          <em>Their supplier announced the exit publicly and there is a last-time-buy date. Doing nothing means the product stops shipping.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF Radio generation is 2G-only or 3G, OR all certified bands sit on retirement schedules</span>
+          <strong>Tier 4 - Sunset Stranded</strong>
+          <em>Carriers published the sunset dates. The deployed fleet goes dark and the respin cost is already committed.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF First cellular certification within 18 months, OR hiring a cellular / embedded firmware role</span>
+          <strong>Tier 5 - First Design Cycle</strong>
+          <em>A first cellular certification means a first-time integration. They have just discovered it is four vendors and nine months, not one part number.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="5">
+          <span class="route-rule__num">06</span>
+          <span class="route-rule__if">IF Anything else with a live cellular certification</span>
+          <strong>Tier 6 - Catch-all, Second Source</strong>
+          <em>Every hardware team carries single-source component risk and almost none have a validated alternate qualified.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF Module vendor is Chinese AND (regulated end market OR federal contractor) -&gt; Tier 1 - Compliance Deadline (Section 5949 applies to them by statute on 23 December 2027, and a module change is a 12-18 month respin and recert programme. They are already behind.)&#10;2. IF Module vendor is Chinese (commercial end market) -&gt; Tier 2 - Commercial De-risk (A detected sole module is single-source by definition, on a vendor under active US government scrutiny.)&#10;3. IF Part number matches a published end-of-life notice, OR grantee code is XPY (u-blox) -&gt; Tier 3 - Forced Migration (Their supplier announced the exit publicly and there is a last-time-buy date. Doing nothing means the product stops shipping.)&#10;4. IF Radio generation is 2G-only or 3G, OR all certified bands sit on retirement schedules -&gt; Tier 4 - Sunset Stranded (Carriers published the sunset dates. The deployed fleet goes dark and the respin cost is already committed.)&#10;5. IF First cellular certification within 18 months, OR hiring a cellular / embedded firmware role -&gt; Tier 5 - First Design Cycle (A first cellular certification means a first-time integration. They have just discovered it is four vendors and nine months, not one part number.)&#10;6. IF Anything else with a live cellular certification -&gt; Tier 6 - Catch-all, Second Source (Every hardware team carries single-source component risk and almost none have a validated alternate qualified.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF Module vendor is Chinese AND (regulated end market OR federal contractor) -&gt; Tier 1 - Compliance Deadline (Section 5949 applies to them by statute on 23 December 2027, and a module change is a 12-18 month respin and recert programme. They are already behind.)
+2. IF Module vendor is Chinese (commercial end market) -&gt; Tier 2 - Commercial De-risk (A detected sole module is single-source by definition, on a vendor under active US government scrutiny.)
+3. IF Part number matches a published end-of-life notice, OR grantee code is XPY (u-blox) -&gt; Tier 3 - Forced Migration (Their supplier announced the exit publicly and there is a last-time-buy date. Doing nothing means the product stops shipping.)
+4. IF Radio generation is 2G-only or 3G, OR all certified bands sit on retirement schedules -&gt; Tier 4 - Sunset Stranded (Carriers published the sunset dates. The deployed fleet goes dark and the respin cost is already committed.)
+5. IF First cellular certification within 18 months, OR hiring a cellular / embedded firmware role -&gt; Tier 5 - First Design Cycle (A first cellular certification means a first-time integration. They have just discovered it is four vendors and nine months, not one part number.)
+6. IF Anything else with a live cellular certification -&gt; Tier 6 - Catch-all, Second Source (Every hardware team carries single-source component risk and almost none have a validated alternate qualified.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="03">
+        
+    <div class="section-head">
+      <p class="eyebrow">03</p>
+      <h2>The six tiers</h2>
+      <p class="takeaway">Two tiers carry a date the prospect cannot argue with. Those launch first.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button><button class="chip" type="button" data-filter="tier6">Tier 6</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">6-9% TAM</span>
+          </div>
+          <h3>Tier 1: Compliance Deadline</h3>
+          <p>Chinese-grantee module in the FCC filing, and a regulated or federal-contractor end market.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>A dated legal obligation under NDAA Section 5949, effective 23 December 2027, against a 12-18 month redesign and recertification cycle. Everyone affected hits the test-house queue in the same window, and slots price accordingly.</dd></div>
+              <div><dt>Offer</dt><dd>Module Swap Map - their exact part number mapped to the Cavli equivalent, with footprint and command deltas marked up</dd></div>
+              <div><dt>Source</dt><dd>FCC filing label exhibit + SAM.gov federal contractor match</dd></div>
+              <div><dt>Reply density</dt><dd>Highest in the strategy - target 1 positive reply per 150 contacts</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-orange" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">22-28% TAM</span>
+          </div>
+          <h3>Tier 2: Commercial De-risk</h3>
+          <p>Chinese-grantee module in the FCC filing, non-regulated end market.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Single-source dependency on a vendor under active US government scrutiny. Customers and procurement teams have started asking, and export controls move without warning.</dd></div>
+              <div><dt>Offer</dt><dd>Module Swap Map plus a supply-chain exposure one-pager</dd></div>
+              <div><dt>Source</dt><dd>FCC filing internal photos and label exhibit</dd></div>
+              <div><dt>Reply density</dt><dd>Largest high-intent tier - target 1 per 200-250</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">5-8% TAM</span>
+          </div>
+          <h3>Tier 3: Forced Migration</h3>
+          <p>Part number on a published EOL notice, or grantee code XPY (u-blox, which exited cellular entirely in 2025).</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Their supplier is exiting or discontinuing the line and there is a last-time-buy date on the notice. Doing nothing means the product stops shipping.</dd></div>
+              <div><dt>Offer</dt><dd>EOL Migration Clock - affected SKUs, last-time-buy dates, replacement mapping and firmware delta</dd></div>
+              <div><dt>Source</dt><dd>FCC grantee code + vendor PCN and EOL notice feeds</dd></div>
+              <div><dt>Reply density</dt><dd>Deadline-driven - target 1 per 150-200</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">7-10% TAM</span>
+          </div>
+          <h3>Tier 4: Sunset Stranded</h3>
+          <p>Certified radio generation is 2G-only or 3G, or all certified bands sit on published retirement schedules.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The deployed fleet goes dark on the sunset date. You can respin the next build, but you cannot easily reach what is already in the field - and the service revenue attached to those devices stops with them.</dd></div>
+              <div><dt>Offer</dt><dd>Sunset Exposure Report - which of their own certified SKUs sit on retiring bands, by carrier, with dates</dd></div>
+              <div><dt>Source</dt><dd>FCC certified bands and emission designators + carrier sunset schedules</dd></div>
+              <div><dt>Reply density</dt><dd>Target 1 per 250</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">8-12% TAM</span>
+          </div>
+          <h3>Tier 5: First Design Cycle</h3>
+          <p>First cellular certification within the last 18 months, or actively hiring a cellular / embedded firmware role.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They have just discovered that the module, the carrier approvals, the SIM contracts and the device-management layer are four separate vendors and about nine months, not one part number.</dd></div>
+              <div><dt>Offer</dt><dd>Connectivity Cost Model - true landed cost per device across module, certification, SIM and device management, at three volume bands</dd></div>
+              <div><dt>Source</dt><dd>FCC first-certification date + job board keyword match</dd></div>
+              <div><dt>Reply density</dt><dd>Target 1 per 300</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier6" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">06</span>
+            <span class="tier-share">38-48% TAM</span>
+          </div>
+          <h3>Tier 6: Catch-all: Second Source</h3>
+          <p>Any remaining company with a live cellular FCC grant.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Every hardware team carries single-source component risk, and almost none have a validated alternate qualified before they need one. Teams that qualify during a shortage pay whatever the broker market says.</dd></div>
+              <div><dt>Offer</dt><dd>Second-Source Checklist plus a physical evaluation kit</dd></div>
+              <div><dt>Source</dt><dd>FCC Equipment Authorization database, all remaining cellular grants</dd></div>
+              <div><dt>Reply density</dt><dd>Softest CTA - target 1 per 400-500</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="04">
+        
+    <div class="section-head">
+      <p class="eyebrow">04</p>
+      <h2>Campaign experiments</h2>
+      <p class="takeaway">Every call to action is an artefact, never a demo. Hardware buyers collect datasheets; they do not book vendor calls.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button><button class="chip" type="button" data-filter="tier6">Tier 6</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Section 5949 Countdown</h3>
+          <p>The only tier where the prospect has a statutory obligation with a date on it. Copy states the statute and the date as facts and never editorialises about China - many of these manufacturers have partners there, and the moment it reads as a political pitch it is dead.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Chinese-grantee module in the filing AND (SAM.gov federal contractor match OR regulated end market: government, defence, utility, medical, critical infrastructure)</dd></div>
+            <div><dt>AI strategy</dt><dd>Parse the label exhibit and manual PDF for the &quot;Contains FCC ID&quot; string, resolve the grantee code to the vendor, then cross-match the applicant against federal contracting records. The first line names their product, their filing number and their exact module part number.</dd></div>
+            <div><dt>Value</dt><dd>Remove a dated legal risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Recert Queue Pressure</h3>
+          <p>Run as the controlled A/B against the countdown angle. Two variants maximum per tier, everything else held constant.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same Tier 1 population, second copy variant</dd></div>
+            <div><dt>AI strategy</dt><dd>Rotate the value proposition from compliance to cost. The argument: the deadline is not the redesign, it is the recertification queue that everyone hits in the same 18 months.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Qualified Alternate</h3>
+          <p>The largest high-intent tier and the volume engine of the strategy. The pitch is procurement leverage, not geopolitics: teams that qualify a second source before they need one negotiate with their primary differently.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Chinese-grantee module in the filing, commercial end market, no federal contractor match</dd></div>
+            <div><dt>AI strategy</dt><dd>Open on the internal PCB photos and the certification date, then ask whether a qualified alternate exists. Reuses Tier 1&#39;s swap map asset, so the incremental build cost is near zero.</dd></div>
+            <div><dt>Value</dt><dd>Reduce risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Last-Time-Buy Clock</h3>
+          <p>The highest-conviction tier per contact. The pain is not argued for; it is quoted from the supplier&#39;s own notice. Positioning is explicitly the vendor that will not exit, which is why the longevity commitment number matters.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Module part number matches a published EOL or PCN notice, or grantee code XPY</dd></div>
+            <div><dt>AI strategy</dt><dd>Join the FCC-attributed part number against scraped vendor EOL feeds to surface the actual last-time-buy date, then lead with that date. The u-blox cellular exit alone - divested to Trident IoT in April 2025 and Trasna in June 2025 - creates an entire installed base with a forced redesign.</dd></div>
+            <div><dt>Value</dt><dd>Protect continuity</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Which SKUs Go Dark</h3>
+          <p>Frames the cost as lost service revenue from devices that stop reporting, not as engineering effort. Cat 1bis single-antenna is the named migration path because it keeps the RF layout change small.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Certified bands and emission designators indicate a 2G-only or 3G design, or all bands sit on retirement schedules</dd></div>
+            <div><dt>AI strategy</dt><dd>Generate a per-account exposure report directly from the band data already in the filing. The magnet is built from their own certification records, so it is unarguably specific and costs nothing to produce.</dd></div>
+            <div><dt>Value</dt><dd>Protect revenue</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>The Real Cost of Volume One</h3>
+          <p>The cheapest possible win because there is no incumbent to displace. Sells the bundle - module plus eSIM plus Hubble as one relationship - rather than the part.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>First cellular certification within 18 months, or hiring for cellular / embedded firmware roles</dd></div>
+            <div><dt>AI strategy</dt><dd>Congratulate the certification by name and date, then name the thing they have just learned the hard way: carrier certification is serialised, slow, and does not start until hardware is frozen.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier6" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Eval Kit, No Call</h3>
+          <p>Nearly half the market. Only launched once the five tiers above are calibrated and evaluation kit fulfilment is proven, because the CTA depends entirely on shipping logistics working.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Any remaining company with a live cellular FCC grant</dd></div>
+            <div><dt>AI strategy</dt><dd>Softest possible ask. One question about whether a qualified alternate exists, then a free evaluation kit with no call and no commitment.</dd></div>
+            <div><dt>Value</dt><dd>Reduce risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Design House Channel (side campaign)</h3>
+          <p>Sits alongside the waterfall rather than inside it. One design house influences dozens of bills of materials, making these the highest-leverage accounts in the entire dataset.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Design houses and ODMs appearing as agent of record across multiple FCC filings</dd></div>
+            <div><dt>AI strategy</dt><dd>FCC filings name the test laboratory and often the agent, which surfaces the firms that specify modules on behalf of many manufacturers at once.</dd></div>
+            <div><dt>Value</dt><dd>Leverage</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="05">
+        
+    <div class="section-head">
+      <p class="eyebrow">05</p>
+      <h2>The copy</h2>
+      <p class="takeaway">Three emails per tier, each opening with the filing detail - the proof this is not a blast.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company}}</span><span>{{product_name}}</span><span>{{fcc_id}}</span><span>{{module_part_number}}</span><span>{{competitor_vendor}}</span><span>{{grant_month_year}}</span><span>{{gov_customer_type}}</span><span>{{eol_or_exit_language}}</span><span>{{ltb_date}}</span><span>{{bands_list}}</span><span>{{radio_generation}}</span><span>{{product_category}}</span><span>{{hiring_line}}</span><span>{{alt_dm_title}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company}}, {{product_name}}, {{fcc_id}}, {{module_part_number}}, {{competitor_vendor}}, {{grant_month_year}}, {{gov_customer_type}}, {{eol_or_exit_language}}, {{ltb_date}}, {{bands_list}}, {{radio_generation}}, {{product_category}}, {{hiring_line}}, {{alt_dm_title}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Compliance Deadline</strong>
+              <em>Module Swap Map</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Compliance Deadline steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{module_part_number}} on the {{product_name}}&#10;&#10;{{first_name}} - I was in the FCC equipment authorisation database looking at the {{product_name}} filing ({{fcc_id}}), and the label exhibit lists &quot;Contains FCC ID: XMR...&quot;, a Quectel {{module_part_number}}. I also saw {{company}} shows up as a {{gov_customer_type}} supplier.&#10;&#10;But would it be fair to assume nobody has yet costed what the December 2027 Section 5949 deadline actually does to that bill of materials, given a module change means a board respin and a fresh FCC recert, which is realistically a 12 to 18 month program?&#10;&#10;We build cellular modules on Qualcomm silicon out of an allied supply chain, specifically designed so the migration off a Chinese module is a footprint swap rather than a re-architecture. Same AT command structure, comparable pinout on the Cat 1 and Cat 4 families.&#10;&#10;[Named customer + migration timeline achieved - pending Cavli input.]&#10;&#10;I&#39;ve mapped {{module_part_number}} to its Cavli equivalent with the footprint and AT-command deltas already marked up. Reply &quot;map&quot; and I&#39;ll send it. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{module_part_number}} on the {{product_name}}" data-preview="EG915U-NA on the NT-500 Asset Tracker">{{module_part_number}} on the {{product_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - I was in the FCC equipment authorisation database looking at the {{product_name}} filing ({{fcc_id}}), and the label exhibit lists &quot;Contains FCC ID: XMR...&quot;, a Quectel {{module_part_number}}. I also saw {{company}} shows up as a {{gov_customer_type}} supplier.&#10;&#10;But would it be fair to assume nobody has yet costed what the December 2027 Section 5949 deadline actually does to that bill of materials, given a module change means a board respin and a fresh FCC recert, which is realistically a 12 to 18 month program?&#10;&#10;We build cellular modules on Qualcomm silicon out of an allied supply chain, specifically designed so the migration off a Chinese module is a footprint swap rather than a re-architecture. Same AT command structure, comparable pinout on the Cat 1 and Cat 4 families.&#10;&#10;[Named customer + migration timeline achieved - pending Cavli input.]&#10;&#10;I&#39;ve mapped {{module_part_number}} to its Cavli equivalent with the footprint and AT-command deltas already marked up. Reply &quot;map&quot; and I&#39;ll send it. No call needed." data-preview="Dana - I was in the FCC equipment authorisation database looking at the NT-500 Asset Tracker filing (2AXMP-NT500), and the label exhibit lists &quot;Contains FCC ID: XMR...&quot;, a Quectel EG915U-NA. I also saw Northgate Telemetry shows up as a municipal utility supplier.&#10;&#10;But would it be fair to assume nobody has yet costed what the December 2027 Section 5949 deadline actually does to that bill of materials, given a module change means a board respin and a fresh FCC recert, which is realistically a 12 to 18 month program?&#10;&#10;We build cellular modules on Qualcomm silicon out of an allied supply chain, specifically designed so the migration off a Chinese module is a footprint swap rather than a re-architecture. Same AT command structure, comparable pinout on the Cat 1 and Cat 4 families.&#10;&#10;[Named customer + migration timeline achieved - pending Cavli input.]&#10;&#10;I&#39;ve mapped EG915U-NA to its Cavli equivalent with the footprint and AT-command deltas already marked up. Reply &quot;map&quot; and I&#39;ll send it. No call needed.">
+                        <p>{{first_name}} - I was in the FCC equipment authorisation database looking at the {{product_name}} filing ({{fcc_id}}), and the label exhibit lists &quot;Contains FCC ID: XMR...&quot;, a Quectel {{module_part_number}}. I also saw {{company}} shows up as a {{gov_customer_type}} supplier.</p><p>But would it be fair to assume nobody has yet costed what the December 2027 Section 5949 deadline actually does to that bill of materials, given a module change means a board respin and a fresh FCC recert, which is realistically a 12 to 18 month program?</p><p>We build cellular modules on Qualcomm silicon out of an allied supply chain, specifically designed so the migration off a Chinese module is a footprint swap rather than a re-architecture. Same AT command structure, comparable pinout on the Cat 1 and Cat 4 families.</p><p>[Named customer + migration timeline achieved - pending Cavli input.]</p><p>I&#39;ve mapped {{module_part_number}} to its Cavli equivalent with the footprint and AT-command deltas already marked up. Reply &quot;map&quot; and I&#39;ll send it. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The part most teams miss on this one: the deadline isn&#39;t the redesign, it&#39;s the recertification queue. Everyone hits it in the same 18 months, and test-house slots price accordingly.&#10;&#10;Moving early is the cheap version of this. Moving in 2027 is the expensive version.&#10;&#10;Our modules ship with eSIM integrated, so you&#39;re also collapsing the SIM-vendor relationship into the same part number instead of running a parallel procurement.&#10;&#10;Still happy to send the swap map for {{module_part_number}}, want it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The part most teams miss on this one: the deadline isn&#39;t the redesign, it&#39;s the recertification queue. Everyone hits it in the same 18 months, and test-house slots price accordingly.&#10;&#10;Moving early is the cheap version of this. Moving in 2027 is the expensive version.&#10;&#10;Our modules ship with eSIM integrated, so you&#39;re also collapsing the SIM-vendor relationship into the same part number instead of running a parallel procurement.&#10;&#10;Still happy to send the swap map for {{module_part_number}}, want it?" data-preview="The part most teams miss on this one: the deadline isn&#39;t the redesign, it&#39;s the recertification queue. Everyone hits it in the same 18 months, and test-house slots price accordingly.&#10;&#10;Moving early is the cheap version of this. Moving in 2027 is the expensive version.&#10;&#10;Our modules ship with eSIM integrated, so you&#39;re also collapsing the SIM-vendor relationship into the same part number instead of running a parallel procurement.&#10;&#10;Still happy to send the swap map for EG915U-NA, want it?">
+                        <p>The part most teams miss on this one: the deadline isn&#39;t the redesign, it&#39;s the recertification queue. Everyone hits it in the same 18 months, and test-house slots price accordingly.</p><p>Moving early is the cheap version of this. Moving in 2027 is the expensive version.</p><p>Our modules ship with eSIM integrated, so you&#39;re also collapsing the SIM-vendor relationship into the same part number instead of running a parallel procurement.</p><p>Still happy to send the swap map for {{module_part_number}}, want it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: wrong person?&#10;&#10;{{first_name}} - no need for a call. Just reply &quot;yes&quot; and I&#39;ll send the {{module_part_number}} to Cavli swap map, with the Section 5949 exposure summary for {{product_name}}.&#10;&#10;Should I send this to you, or is {{alt_dm_title}} the right person for component sourcing decisions at {{company}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="wrong person?" data-preview="wrong person?">wrong person?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - no need for a call. Just reply &quot;yes&quot; and I&#39;ll send the {{module_part_number}} to Cavli swap map, with the Section 5949 exposure summary for {{product_name}}.&#10;&#10;Should I send this to you, or is {{alt_dm_title}} the right person for component sourcing decisions at {{company}}?" data-preview="Dana - no need for a call. Just reply &quot;yes&quot; and I&#39;ll send the EG915U-NA to Cavli swap map, with the Section 5949 exposure summary for NT-500 Asset Tracker.&#10;&#10;Should I send this to you, or is your VP of Engineering the right person for component sourcing decisions at Northgate Telemetry?">
+                        <p>{{first_name}} - no need for a call. Just reply &quot;yes&quot; and I&#39;ll send the {{module_part_number}} to Cavli swap map, with the Section 5949 exposure summary for {{product_name}}.</p><p>Should I send this to you, or is {{alt_dm_title}} the right person for component sourcing decisions at {{company}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Commercial De-risk</strong>
+              <em>Module Swap Map + supply-chain exposure one-pager</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Commercial De-risk steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: second source for {{module_part_number}}?&#10;&#10;{{first_name}} - I was going through the FCC filing for {{product_name}} ({{fcc_id}}) and the internal photos show a {{competitor_vendor}} {{module_part_number}} on the board. Certified {{grant_month_year}}, so I&#39;d guess that design has a few more years to run.&#10;&#10;But would it be fair to assume there&#39;s no qualified alternate on the shelf for it, and that if that part&#39;s availability or its regulatory status changed, the fix is a respin you&#39;d be starting from zero?&#10;&#10;We make pin- and command-compatible cellular modules on Qualcomm silicon, manufactured outside China, with eSIM already in the module so you&#39;re not carrying a separate SIM vendor.&#10;&#10;[Named customer + result - pending Cavli input.]&#10;&#10;I&#39;ve already built the cross-reference from {{module_part_number}} to our equivalent. Footprint delta, AT-command delta, band coverage. Reply &quot;map&quot; and it&#39;s yours.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="second source for {{module_part_number}}?" data-preview="second source for EG915U-NA?">second source for {{module_part_number}}?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - I was going through the FCC filing for {{product_name}} ({{fcc_id}}) and the internal photos show a {{competitor_vendor}} {{module_part_number}} on the board. Certified {{grant_month_year}}, so I&#39;d guess that design has a few more years to run.&#10;&#10;But would it be fair to assume there&#39;s no qualified alternate on the shelf for it, and that if that part&#39;s availability or its regulatory status changed, the fix is a respin you&#39;d be starting from zero?&#10;&#10;We make pin- and command-compatible cellular modules on Qualcomm silicon, manufactured outside China, with eSIM already in the module so you&#39;re not carrying a separate SIM vendor.&#10;&#10;[Named customer + result - pending Cavli input.]&#10;&#10;I&#39;ve already built the cross-reference from {{module_part_number}} to our equivalent. Footprint delta, AT-command delta, band coverage. Reply &quot;map&quot; and it&#39;s yours." data-preview="Dana - I was going through the FCC filing for NT-500 Asset Tracker (2AXMP-NT500) and the internal photos show a Quectel EG915U-NA on the board. Certified March 2023, so I&#39;d guess that design has a few more years to run.&#10;&#10;But would it be fair to assume there&#39;s no qualified alternate on the shelf for it, and that if that part&#39;s availability or its regulatory status changed, the fix is a respin you&#39;d be starting from zero?&#10;&#10;We make pin- and command-compatible cellular modules on Qualcomm silicon, manufactured outside China, with eSIM already in the module so you&#39;re not carrying a separate SIM vendor.&#10;&#10;[Named customer + result - pending Cavli input.]&#10;&#10;I&#39;ve already built the cross-reference from EG915U-NA to our equivalent. Footprint delta, AT-command delta, band coverage. Reply &quot;map&quot; and it&#39;s yours.">
+                        <p>{{first_name}} - I was going through the FCC filing for {{product_name}} ({{fcc_id}}) and the internal photos show a {{competitor_vendor}} {{module_part_number}} on the board. Certified {{grant_month_year}}, so I&#39;d guess that design has a few more years to run.</p><p>But would it be fair to assume there&#39;s no qualified alternate on the shelf for it, and that if that part&#39;s availability or its regulatory status changed, the fix is a respin you&#39;d be starting from zero?</p><p>We make pin- and command-compatible cellular modules on Qualcomm silicon, manufactured outside China, with eSIM already in the module so you&#39;re not carrying a separate SIM vendor.</p><p>[Named customer + result - pending Cavli input.]</p><p>I&#39;ve already built the cross-reference from {{module_part_number}} to our equivalent. Footprint delta, AT-command delta, band coverage. Reply &quot;map&quot; and it&#39;s yours.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Different angle on this one.&#10;&#10;Teams that qualify a second source before they need one negotiate with their primary differently. Teams that qualify one during a shortage pay whatever the broker market says.&#10;&#10;Free evaluation kit, no commitment. You get the alternate qualified while it&#39;s a quiet quarter.&#10;&#10;Want me to send the cross-reference for {{module_part_number}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Different angle on this one.&#10;&#10;Teams that qualify a second source before they need one negotiate with their primary differently. Teams that qualify one during a shortage pay whatever the broker market says.&#10;&#10;Free evaluation kit, no commitment. You get the alternate qualified while it&#39;s a quiet quarter.&#10;&#10;Want me to send the cross-reference for {{module_part_number}}?" data-preview="Different angle on this one.&#10;&#10;Teams that qualify a second source before they need one negotiate with their primary differently. Teams that qualify one during a shortage pay whatever the broker market says.&#10;&#10;Free evaluation kit, no commitment. You get the alternate qualified while it&#39;s a quiet quarter.&#10;&#10;Want me to send the cross-reference for EG915U-NA?">
+                        <p>Different angle on this one.</p><p>Teams that qualify a second source before they need one negotiate with their primary differently. Teams that qualify one during a shortage pay whatever the broker market says.</p><p>Free evaluation kit, no commitment. You get the alternate qualified while it&#39;s a quiet quarter.</p><p>Want me to send the cross-reference for {{module_part_number}}?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{product_name}} module cross-ref&#10;&#10;No call needed. Reply &quot;yes&quot; and I&#39;ll send the {{module_part_number}} cross-reference plus an eval kit.&#10;&#10;Should that go to you or to whoever owns component qualification at {{company}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{product_name}} module cross-ref" data-preview="NT-500 Asset Tracker module cross-ref">{{product_name}} module cross-ref</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed. Reply &quot;yes&quot; and I&#39;ll send the {{module_part_number}} cross-reference plus an eval kit.&#10;&#10;Should that go to you or to whoever owns component qualification at {{company}}?" data-preview="No call needed. Reply &quot;yes&quot; and I&#39;ll send the EG915U-NA cross-reference plus an eval kit.&#10;&#10;Should that go to you or to whoever owns component qualification at Northgate Telemetry?">
+                        <p>No call needed. Reply &quot;yes&quot; and I&#39;ll send the {{module_part_number}} cross-reference plus an eval kit.</p><p>Should that go to you or to whoever owns component qualification at {{company}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Forced Migration</strong>
+              <em>EOL Migration Clock</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Forced Migration steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{module_part_number}} last-time-buy&#10;&#10;{{first_name}} - {{product_name}}&#39;s FCC filing ({{fcc_id}}) shows a {{competitor_vendor}} {{module_part_number}} inside. That part is on {{competitor_vendor}}&#39;s published {{eol_or_exit_language}}, with last-time-buy around {{ltb_date}}.&#10;&#10;But would it be fair to assume the plan right now is a last-time-buy bridge, and the replacement decision is still open?&#10;&#10;We make direct replacements across Cat 1, Cat 1bis and Cat 4. Qualcomm silicon, integrated eSIM, and a stated longevity commitment on the families we ship, which is the reason people migrate to us rather than to the next vendor who might exit.&#10;&#10;[Named customer who migrated off an EOL&#39;d module + timeline - pending Cavli input.]&#10;&#10;I&#39;ve built the migration mapping for {{module_part_number}}: replacement part, footprint delta, band coverage, firmware differences. Reply &quot;clock&quot; and I&#39;ll send it.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{module_part_number}} last-time-buy" data-preview="EG915U-NA last-time-buy">{{module_part_number}} last-time-buy</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - {{product_name}}&#39;s FCC filing ({{fcc_id}}) shows a {{competitor_vendor}} {{module_part_number}} inside. That part is on {{competitor_vendor}}&#39;s published {{eol_or_exit_language}}, with last-time-buy around {{ltb_date}}.&#10;&#10;But would it be fair to assume the plan right now is a last-time-buy bridge, and the replacement decision is still open?&#10;&#10;We make direct replacements across Cat 1, Cat 1bis and Cat 4. Qualcomm silicon, integrated eSIM, and a stated longevity commitment on the families we ship, which is the reason people migrate to us rather than to the next vendor who might exit.&#10;&#10;[Named customer who migrated off an EOL&#39;d module + timeline - pending Cavli input.]&#10;&#10;I&#39;ve built the migration mapping for {{module_part_number}}: replacement part, footprint delta, band coverage, firmware differences. Reply &quot;clock&quot; and I&#39;ll send it." data-preview="Dana - NT-500 Asset Tracker&#39;s FCC filing (2AXMP-NT500) shows a Quectel EG915U-NA inside. That part is on Quectel&#39;s published end-of-life notice, with last-time-buy around 31 March 2027.&#10;&#10;But would it be fair to assume the plan right now is a last-time-buy bridge, and the replacement decision is still open?&#10;&#10;We make direct replacements across Cat 1, Cat 1bis and Cat 4. Qualcomm silicon, integrated eSIM, and a stated longevity commitment on the families we ship, which is the reason people migrate to us rather than to the next vendor who might exit.&#10;&#10;[Named customer who migrated off an EOL&#39;d module + timeline - pending Cavli input.]&#10;&#10;I&#39;ve built the migration mapping for EG915U-NA: replacement part, footprint delta, band coverage, firmware differences. Reply &quot;clock&quot; and I&#39;ll send it.">
+                        <p>{{first_name}} - {{product_name}}&#39;s FCC filing ({{fcc_id}}) shows a {{competitor_vendor}} {{module_part_number}} inside. That part is on {{competitor_vendor}}&#39;s published {{eol_or_exit_language}}, with last-time-buy around {{ltb_date}}.</p><p>But would it be fair to assume the plan right now is a last-time-buy bridge, and the replacement decision is still open?</p><p>We make direct replacements across Cat 1, Cat 1bis and Cat 4. Qualcomm silicon, integrated eSIM, and a stated longevity commitment on the families we ship, which is the reason people migrate to us rather than to the next vendor who might exit.</p><p>[Named customer who migrated off an EOL&#39;d module + timeline - pending Cavli input.]</p><p>I&#39;ve built the migration mapping for {{module_part_number}}: replacement part, footprint delta, band coverage, firmware differences. Reply &quot;clock&quot; and I&#39;ll send it.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The trap in an EOL bridge buy is that it moves the problem without shrinking it. You still respin, you still recertify, you just do it later with less room.&#10;&#10;Worth knowing: because eSIM is inside our module, teams migrating to us usually collapse two projects, the module swap and the connectivity rework, into one hardware cycle instead of two.&#10;&#10;Want the migration mapping for {{module_part_number}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The trap in an EOL bridge buy is that it moves the problem without shrinking it. You still respin, you still recertify, you just do it later with less room.&#10;&#10;Worth knowing: because eSIM is inside our module, teams migrating to us usually collapse two projects, the module swap and the connectivity rework, into one hardware cycle instead of two.&#10;&#10;Want the migration mapping for {{module_part_number}}?" data-preview="The trap in an EOL bridge buy is that it moves the problem without shrinking it. You still respin, you still recertify, you just do it later with less room.&#10;&#10;Worth knowing: because eSIM is inside our module, teams migrating to us usually collapse two projects, the module swap and the connectivity rework, into one hardware cycle instead of two.&#10;&#10;Want the migration mapping for EG915U-NA?">
+                        <p>The trap in an EOL bridge buy is that it moves the problem without shrinking it. You still respin, you still recertify, you just do it later with less room.</p><p>Worth knowing: because eSIM is inside our module, teams migrating to us usually collapse two projects, the module swap and the connectivity rework, into one hardware cycle instead of two.</p><p>Want the migration mapping for {{module_part_number}}?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: migration mapping, {{product_name}}&#10;&#10;{{first_name}}, no call needed. Reply &quot;yes&quot; and I&#39;ll send the migration clock for {{module_part_number}}: LTB date, replacement part, and what changes in firmware.&#10;&#10;Is this you, or should it go to {{alt_dm_title}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="migration mapping, {{product_name}}" data-preview="migration mapping, NT-500 Asset Tracker">migration mapping, {{product_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed. Reply &quot;yes&quot; and I&#39;ll send the migration clock for {{module_part_number}}: LTB date, replacement part, and what changes in firmware.&#10;&#10;Is this you, or should it go to {{alt_dm_title}}?" data-preview="Dana, no call needed. Reply &quot;yes&quot; and I&#39;ll send the migration clock for EG915U-NA: LTB date, replacement part, and what changes in firmware.&#10;&#10;Is this you, or should it go to your VP of Engineering?">
+                        <p>{{first_name}}, no call needed. Reply &quot;yes&quot; and I&#39;ll send the migration clock for {{module_part_number}}: LTB date, replacement part, and what changes in firmware.</p><p>Is this you, or should it go to {{alt_dm_title}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 - Sunset Stranded</strong>
+              <em>Sunset Exposure Report</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 - Sunset Stranded steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{product_name}} and the 2G sunset&#10;&#10;{{first_name}} - the FCC filing for {{product_name}} ({{fcc_id}}) certifies on {{bands_list}}, which reads as a {{radio_generation}} design. Those bands are on published retirement schedules.&#10;&#10;But would it be fair to assume the units already in the field are the harder half of this problem? You can respin the next build, but you can&#39;t easily reach what&#39;s already deployed.&#10;&#10;The cleanest exit from {{radio_generation}} is LTE Cat 1bis: single antenna, so the RF layout change is small, and no Cat-M or NB carrier approval maze. Our CQ16 and C17QS families sit exactly there, with eSIM inside the module, so the next time a network changes underneath you it&#39;s a profile switch, not a truck roll.&#10;&#10;[Named customer + fleet size migrated + timeline - pending Cavli input.]&#10;&#10;I pulled which of {{company}}&#39;s certified SKUs sit on retiring bands, with the dates. Reply &quot;sunset&quot; and I&#39;ll send it.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{product_name}} and the 2G sunset" data-preview="NT-500 Asset Tracker and the 2G sunset">{{product_name}} and the 2G sunset</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - the FCC filing for {{product_name}} ({{fcc_id}}) certifies on {{bands_list}}, which reads as a {{radio_generation}} design. Those bands are on published retirement schedules.&#10;&#10;But would it be fair to assume the units already in the field are the harder half of this problem? You can respin the next build, but you can&#39;t easily reach what&#39;s already deployed.&#10;&#10;The cleanest exit from {{radio_generation}} is LTE Cat 1bis: single antenna, so the RF layout change is small, and no Cat-M or NB carrier approval maze. Our CQ16 and C17QS families sit exactly there, with eSIM inside the module, so the next time a network changes underneath you it&#39;s a profile switch, not a truck roll.&#10;&#10;[Named customer + fleet size migrated + timeline - pending Cavli input.]&#10;&#10;I pulled which of {{company}}&#39;s certified SKUs sit on retiring bands, with the dates. Reply &quot;sunset&quot; and I&#39;ll send it." data-preview="Dana - the FCC filing for NT-500 Asset Tracker (2AXMP-NT500) certifies on GSM 850 / PCS 1900, which reads as a 2G-only design. Those bands are on published retirement schedules.&#10;&#10;But would it be fair to assume the units already in the field are the harder half of this problem? You can respin the next build, but you can&#39;t easily reach what&#39;s already deployed.&#10;&#10;The cleanest exit from 2G-only is LTE Cat 1bis: single antenna, so the RF layout change is small, and no Cat-M or NB carrier approval maze. Our CQ16 and C17QS families sit exactly there, with eSIM inside the module, so the next time a network changes underneath you it&#39;s a profile switch, not a truck roll.&#10;&#10;[Named customer + fleet size migrated + timeline - pending Cavli input.]&#10;&#10;I pulled which of Northgate Telemetry&#39;s certified SKUs sit on retiring bands, with the dates. Reply &quot;sunset&quot; and I&#39;ll send it.">
+                        <p>{{first_name}} - the FCC filing for {{product_name}} ({{fcc_id}}) certifies on {{bands_list}}, which reads as a {{radio_generation}} design. Those bands are on published retirement schedules.</p><p>But would it be fair to assume the units already in the field are the harder half of this problem? You can respin the next build, but you can&#39;t easily reach what&#39;s already deployed.</p><p>The cleanest exit from {{radio_generation}} is LTE Cat 1bis: single antenna, so the RF layout change is small, and no Cat-M or NB carrier approval maze. Our CQ16 and C17QS families sit exactly there, with eSIM inside the module, so the next time a network changes underneath you it&#39;s a profile switch, not a truck roll.</p><p>[Named customer + fleet size migrated + timeline - pending Cavli input.]</p><p>I pulled which of {{company}}&#39;s certified SKUs sit on retiring bands, with the dates. Reply &quot;sunset&quot; and I&#39;ll send it.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One more thing on this: the cost of a sunset isn&#39;t the redesign, it&#39;s the service revenue attached to the devices that stop reporting.&#10;&#10;With eSIM in the module and Hubble on top, you get 40+ modem parameters per device and remote firmware updates, so the next migration is something you manage from a dashboard instead of a field programme.&#10;&#10;Want the exposure list for {{company}}&#39;s certified SKUs?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One more thing on this: the cost of a sunset isn&#39;t the redesign, it&#39;s the service revenue attached to the devices that stop reporting.&#10;&#10;With eSIM in the module and Hubble on top, you get 40+ modem parameters per device and remote firmware updates, so the next migration is something you manage from a dashboard instead of a field programme.&#10;&#10;Want the exposure list for {{company}}&#39;s certified SKUs?" data-preview="One more thing on this: the cost of a sunset isn&#39;t the redesign, it&#39;s the service revenue attached to the devices that stop reporting.&#10;&#10;With eSIM in the module and Hubble on top, you get 40+ modem parameters per device and remote firmware updates, so the next migration is something you manage from a dashboard instead of a field programme.&#10;&#10;Want the exposure list for Northgate Telemetry&#39;s certified SKUs?">
+                        <p>One more thing on this: the cost of a sunset isn&#39;t the redesign, it&#39;s the service revenue attached to the devices that stop reporting.</p><p>With eSIM in the module and Hubble on top, you get 40+ modem parameters per device and remote firmware updates, so the next migration is something you manage from a dashboard instead of a field programme.</p><p>Want the exposure list for {{company}}&#39;s certified SKUs?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: which SKUs go dark&#10;&#10;No call needed. Reply &quot;yes&quot; and I&#39;ll send the list of {{company}} SKUs on retiring bands, with dates and the Cat 1bis replacement path.&#10;&#10;Should I send it to you or to {{alt_dm_title}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="which SKUs go dark" data-preview="which SKUs go dark">which SKUs go dark</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed. Reply &quot;yes&quot; and I&#39;ll send the list of {{company}} SKUs on retiring bands, with dates and the Cat 1bis replacement path.&#10;&#10;Should I send it to you or to {{alt_dm_title}}?" data-preview="No call needed. Reply &quot;yes&quot; and I&#39;ll send the list of Northgate Telemetry SKUs on retiring bands, with dates and the Cat 1bis replacement path.&#10;&#10;Should I send it to you or to your VP of Engineering?">
+                        <p>No call needed. Reply &quot;yes&quot; and I&#39;ll send the list of {{company}} SKUs on retiring bands, with dates and the Cat 1bis replacement path.</p><p>Should I send it to you or to {{alt_dm_title}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 - First Design Cycle</strong>
+              <em>Connectivity Cost Model</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 - First Design Cycle steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{product_name}}, first cellular build?&#10;&#10;{{first_name}} - congratulations on the {{product_name}} certification ({{grant_month_year}}), it looks like {{company}}&#39;s first cellular device. {{hiring_line}}&#10;&#10;But would it be fair to assume the surprise wasn&#39;t the module? It was discovering that the module, the carrier approvals, the SIM contracts and the device-management layer are four separate vendors and about nine months.&#10;&#10;We ship the module with eSIM already inside and Hubble on top, as one commercial relationship: 180+ networks, 60+ operators, carrier approvals already done, FOTA and 40+ device parameters from day one.&#10;&#10;[Named early-stage customer + time to deployment - pending Cavli input.]&#10;&#10;I&#39;ve put together the true landed cost per device across module, certification, SIM and device management, the version nobody shows you before you commit. Reply &quot;model&quot; and I&#39;ll send it.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{product_name}}, first cellular build?" data-preview="NT-500 Asset Tracker, first cellular build?">{{product_name}}, first cellular build?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - congratulations on the {{product_name}} certification ({{grant_month_year}}), it looks like {{company}}&#39;s first cellular device. {{hiring_line}}&#10;&#10;But would it be fair to assume the surprise wasn&#39;t the module? It was discovering that the module, the carrier approvals, the SIM contracts and the device-management layer are four separate vendors and about nine months.&#10;&#10;We ship the module with eSIM already inside and Hubble on top, as one commercial relationship: 180+ networks, 60+ operators, carrier approvals already done, FOTA and 40+ device parameters from day one.&#10;&#10;[Named early-stage customer + time to deployment - pending Cavli input.]&#10;&#10;I&#39;ve put together the true landed cost per device across module, certification, SIM and device management, the version nobody shows you before you commit. Reply &quot;model&quot; and I&#39;ll send it." data-preview="Dana - congratulations on the NT-500 Asset Tracker certification (March 2023), it looks like Northgate Telemetry&#39;s first cellular device. I also saw you&#39;re hiring an embedded firmware engineer.&#10;&#10;But would it be fair to assume the surprise wasn&#39;t the module? It was discovering that the module, the carrier approvals, the SIM contracts and the device-management layer are four separate vendors and about nine months.&#10;&#10;We ship the module with eSIM already inside and Hubble on top, as one commercial relationship: 180+ networks, 60+ operators, carrier approvals already done, FOTA and 40+ device parameters from day one.&#10;&#10;[Named early-stage customer + time to deployment - pending Cavli input.]&#10;&#10;I&#39;ve put together the true landed cost per device across module, certification, SIM and device management, the version nobody shows you before you commit. Reply &quot;model&quot; and I&#39;ll send it.">
+                        <p>{{first_name}} - congratulations on the {{product_name}} certification ({{grant_month_year}}), it looks like {{company}}&#39;s first cellular device. {{hiring_line}}</p><p>But would it be fair to assume the surprise wasn&#39;t the module? It was discovering that the module, the carrier approvals, the SIM contracts and the device-management layer are four separate vendors and about nine months.</p><p>We ship the module with eSIM already inside and Hubble on top, as one commercial relationship: 180+ networks, 60+ operators, carrier approvals already done, FOTA and 40+ device parameters from day one.</p><p>[Named early-stage customer + time to deployment - pending Cavli input.]</p><p>I&#39;ve put together the true landed cost per device across module, certification, SIM and device management, the version nobody shows you before you commit. Reply &quot;model&quot; and I&#39;ll send it.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The specific thing that eats a first cellular programme is carrier certification. It&#39;s serialised, it&#39;s slow, and it doesn&#39;t start until the hardware is frozen.&#10;&#10;Because our modules carry the approvals and the eSIM already, most of that disappears from your critical path.&#10;&#10;Want the cost model? It&#39;s the one artefact that changes how teams scope volume two.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The specific thing that eats a first cellular programme is carrier certification. It&#39;s serialised, it&#39;s slow, and it doesn&#39;t start until the hardware is frozen.&#10;&#10;Because our modules carry the approvals and the eSIM already, most of that disappears from your critical path.&#10;&#10;Want the cost model? It&#39;s the one artefact that changes how teams scope volume two." data-preview="The specific thing that eats a first cellular programme is carrier certification. It&#39;s serialised, it&#39;s slow, and it doesn&#39;t start until the hardware is frozen.&#10;&#10;Because our modules carry the approvals and the eSIM already, most of that disappears from your critical path.&#10;&#10;Want the cost model? It&#39;s the one artefact that changes how teams scope volume two.">
+                        <p>The specific thing that eats a first cellular programme is carrier certification. It&#39;s serialised, it&#39;s slow, and it doesn&#39;t start until the hardware is frozen.</p><p>Because our modules carry the approvals and the eSIM already, most of that disappears from your critical path.</p><p>Want the cost model? It&#39;s the one artefact that changes how teams scope volume two.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: connectivity cost model&#10;&#10;{{first_name}} - no call. Reply &quot;yes&quot; and I&#39;ll send the per-device connectivity cost model for something in {{product_category}}&#39;s shape.&#10;&#10;You, or whoever&#39;s owning the hardware roadmap for the next revision?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="connectivity cost model" data-preview="connectivity cost model">connectivity cost model</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - no call. Reply &quot;yes&quot; and I&#39;ll send the per-device connectivity cost model for something in {{product_category}}&#39;s shape.&#10;&#10;You, or whoever&#39;s owning the hardware roadmap for the next revision?" data-preview="Dana - no call. Reply &quot;yes&quot; and I&#39;ll send the per-device connectivity cost model for something in asset tracking&#39;s shape.&#10;&#10;You, or whoever&#39;s owning the hardware roadmap for the next revision?">
+                        <p>{{first_name}} - no call. Reply &quot;yes&quot; and I&#39;ll send the per-device connectivity cost model for something in {{product_category}}&#39;s shape.</p><p>You, or whoever&#39;s owning the hardware roadmap for the next revision?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 6 - Catch-all, Second Source</strong>
+              <em>Second-Source Checklist + eval kit</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 6 - Catch-all, Second Source steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: alternate for the module in {{product_name}}&#10;&#10;{{first_name}} - I was reading the FCC filing for {{product_name}} ({{fcc_id}}). Nice bit of hardware.&#10;&#10;Simple question: is there a qualified alternate cellular module on the shelf for it, or is the current part effectively single-source?&#10;&#10;We build cellular modules, Cat 1, Cat 1bis, Cat 4, RedCap and 5G, on Qualcomm silicon, made outside China, with eSIM integrated. Most of the teams we work with qualify us as an alternate long before they ever need one.&#10;&#10;Free evaluation kit, no call, no commitment. Reply &quot;kit&quot; and I&#39;ll send one out with the second-source checklist.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="alternate for the module in {{product_name}}" data-preview="alternate for the module in NT-500 Asset Tracker">alternate for the module in {{product_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - I was reading the FCC filing for {{product_name}} ({{fcc_id}}). Nice bit of hardware.&#10;&#10;Simple question: is there a qualified alternate cellular module on the shelf for it, or is the current part effectively single-source?&#10;&#10;We build cellular modules, Cat 1, Cat 1bis, Cat 4, RedCap and 5G, on Qualcomm silicon, made outside China, with eSIM integrated. Most of the teams we work with qualify us as an alternate long before they ever need one.&#10;&#10;Free evaluation kit, no call, no commitment. Reply &quot;kit&quot; and I&#39;ll send one out with the second-source checklist." data-preview="Dana - I was reading the FCC filing for NT-500 Asset Tracker (2AXMP-NT500). Nice bit of hardware.&#10;&#10;Simple question: is there a qualified alternate cellular module on the shelf for it, or is the current part effectively single-source?&#10;&#10;We build cellular modules, Cat 1, Cat 1bis, Cat 4, RedCap and 5G, on Qualcomm silicon, made outside China, with eSIM integrated. Most of the teams we work with qualify us as an alternate long before they ever need one.&#10;&#10;Free evaluation kit, no call, no commitment. Reply &quot;kit&quot; and I&#39;ll send one out with the second-source checklist.">
+                        <p>{{first_name}} - I was reading the FCC filing for {{product_name}} ({{fcc_id}}). Nice bit of hardware.</p><p>Simple question: is there a qualified alternate cellular module on the shelf for it, or is the current part effectively single-source?</p><p>We build cellular modules, Cat 1, Cat 1bis, Cat 4, RedCap and 5G, on Qualcomm silicon, made outside China, with eSIM integrated. Most of the teams we work with qualify us as an alternate long before they ever need one.</p><p>Free evaluation kit, no call, no commitment. Reply &quot;kit&quot; and I&#39;ll send one out with the second-source checklist.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Worth adding: the eSIM is inside the module, so qualifying us also gives you a connectivity option, 180+ networks and 60+ operators, without a separate SIM procurement.&#10;&#10;The checklist is two pages: what to test, what to document, what your buyer needs to sign off. Want it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Worth adding: the eSIM is inside the module, so qualifying us also gives you a connectivity option, 180+ networks and 60+ operators, without a separate SIM procurement.&#10;&#10;The checklist is two pages: what to test, what to document, what your buyer needs to sign off. Want it?" data-preview="Worth adding: the eSIM is inside the module, so qualifying us also gives you a connectivity option, 180+ networks and 60+ operators, without a separate SIM procurement.&#10;&#10;The checklist is two pages: what to test, what to document, what your buyer needs to sign off. Want it?">
+                        <p>Worth adding: the eSIM is inside the module, so qualifying us also gives you a connectivity option, 180+ networks and 60+ operators, without a separate SIM procurement.</p><p>The checklist is two pages: what to test, what to document, what your buyer needs to sign off. Want it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: eval kit&#10;&#10;No call needed. Reply &quot;yes&quot; and I&#39;ll send an evaluation kit and the second-source checklist.&#10;&#10;Is component qualification yours at {{company}}, or should I send it to {{alt_dm_title}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="eval kit" data-preview="eval kit">eval kit</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed. Reply &quot;yes&quot; and I&#39;ll send an evaluation kit and the second-source checklist.&#10;&#10;Is component qualification yours at {{company}}, or should I send it to {{alt_dm_title}}?" data-preview="No call needed. Reply &quot;yes&quot; and I&#39;ll send an evaluation kit and the second-source checklist.&#10;&#10;Is component qualification yours at Northgate Telemetry, or should I send it to your VP of Engineering?">
+                        <p>No call needed. Reply &quot;yes&quot; and I&#39;ll send an evaluation kit and the second-source checklist.</p><p>Is component qualification yours at {{company}}, or should I send it to {{alt_dm_title}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="06">
+        
+    <div class="section-head">
+      <p class="eyebrow">06</p>
+      <h2>Launch plan and thresholds</h2>
+      <p class="takeaway">Dated tiers first. Data build in weeks 1-3, first replies by week 5.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Weeks 1-3, data build. Ingest the FCC bulk authorisation data, run document full-text matching for &quot;Contains FCC ID&quot; strings, attribute grantee codes to module vendors, and produce the true market count and tier distribution. Build the swap-map cross-reference for the top 40 competitor part numbers.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Weeks 4-7, launch Tiers 1 and 3. The two dated-deadline tiers go first: smallest volume, highest conviction, fastest proof. Target 1,500 or more contacts each before judging either.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 8-11, launch Tier 2. The largest high-intent tier, and it reuses Tier 1&#39;s swap map, so incremental build cost is near zero.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Weeks 12-15, launch Tiers 4 and 5. Requires the sunset exposure generator and the connectivity cost model to be built first.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Week 16 onward, launch Tier 6 at volume, once the five tiers above are calibrated and evaluation kit fulfilment is proven.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Ongoing: weekly certification data refresh re-scores the market automatically. New filings enter the top of the waterfall each week, and accounts re-route themselves upward as they certify new products.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>Before launch, close the proof gaps: Cavli has no public named case study or quantified migration outcome. One named migration customer carries Tiers 1, 2 and 3. Do not send copy with unfilled brackets - cut the sentence rather than soften it.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacts</strong>
+                <span>Excellent. Scale the tier and expand the source.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run untouched.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450-500</strong>
+                <span>Borderline. Test one copy variant and hold everything else constant.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or reply rate below 1% after 1,500 sends</strong>
+                <span>Cut the tier and rework the trigger.</span>
+              </div>
+              <div class="threshold">
+                <strong>Tiers 1 and 3 below 1 per 250</strong>
+                <span>Held to a higher bar. A dated obligation and a published last-time-buy date should beat this - so the fault is the copy or the persona resolution, not the signal.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a working session</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dana","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Northgate Telemetry","NT-500 Asset Tracker","2AXMP-NT500","EG915U-NA","Quectel","March 2023","municipal utility","end-of-life notice","31 March 2027","GSM 850 / PCS 1900","2G-only","asset tracking","I also saw you're hiring an embedded firmware engineer\\.","your VP of Engineering"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
