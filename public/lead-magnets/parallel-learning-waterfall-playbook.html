@@ -1,0 +1,1880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parallel Learning - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-05</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Parallel Learning</p>
+          <h1>Your Parallel Learning outbound <mark>journey</mark>.</h1>
+          <p class="hero-copy">One waterfall across every K-12 district in America, routed on public records the districts publish themselves.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Special education is the most disclosure-regulated function in American public education. Districts publish what they are buying and from whom (board minutes name the incumbent vendor, the award amount and the term end date), where they are failing (state SPP/APR reports publish LEA-level Indicator 11 - the percentage of initial evaluations completed inside the legal timeline), and who the buyer is (state DOEs publish special education director directories with work emails, because they are public records). The TAM, the routing signal and the verified contact all come from the same free sources. No competitor can buy this advantage, because it lives in the assembly, not the data.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>~20,900</strong>
+          <span>LEAs in the addressable market</span>
+        </div>
+        <div class="metric-card">
+          <strong>98%</strong>
+          <span>of students met or exceeded IEP goals</span>
+        </div>
+        <div class="metric-card">
+          <strong>$0</strong>
+          <span>enrichment cost - every signal is a public record</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Virtual special education services - psychoeducational assessments, speech-language pathology, behavioral and mental health counseling, and specialized instruction - delivered to K-12 districts through the Pathway platform by 200+ licensed providers.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal</p></div><div><span>02</span><p>The waterfall</p></div><div><span>03</span><p>The tiers</p></div><div><span>04</span><p>The campaigns</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>01</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>02</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>03</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>04</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>05</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>06</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="01">
+        
+    <div class="section-head">
+      <p class="eyebrow">01</p>
+      <h2>The signal</h2>
+      <p class="takeaway">Route on what kind of hole the district is legally obligated to fill - and read it straight out of the public record.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>It is published by law. Board minutes, procurement portals and state SPP/APR reports are open records - the signal cannot be paywalled, resold or taken away.</p></div><div class="reason-card"><span>02</span><p>It carries the contact with it. State DOE special education director directories give a verified name, title, district and work email at zero enrichment cost and near-zero bounce risk.</p></div><div class="reason-card"><span>03</span><p>It names the competitor and the clock. Public bid records show which vendor won, for how much, and when the contract expires - so the re-bid window is a date, not a guess.</p></div><div class="reason-card"><span>04</span><p>It maps one-to-one onto the product. Indicator 11 is literally the percentage of initial evaluations completed on time. A district under 100% has a state-documented backlog, which is the assessment service described in the state&#39;s own words.</p></div>
+            </div>
+            <div class="field-cloud"><span>active_rfp_sped</span><span>awarded_vendor</span><span>contract_term_end</span><span>indicator_11_pct</span><span>lea_determination</span><span>state_complaint_or_dp_decision</span><span>open_req_role</span><span>open_req_age_days</span><span>open_req_reposted</span><span>coop_membership</span><span>esser_funded_sped_positions</span><span>idea_child_count</span><span>sped_staff_fte</span><span>locale_code</span><span>state</span><span>sped_director_email</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>State DOE special education director directories</h3><p>Verified buyer name, title, district and work email. Colorado CDE, Maryland MSDE, Washington OSPI, Montana OPI and nearly every other state publish one. Free.</p></div><div class="source-card"><span>02</span><h3>BoardDocs / Simbli / Diligent Community board packets</h3><p>Approved vendor contracts, award amounts, term end dates and RFP evaluation scores - the incumbent and the renewal clock in one document.</p></div><div class="source-card"><span>03</span><h3>District procurement portals + BidNet Direct / DemandStar</h3><p>Live RFPs and recent awards for special education related services, teletherapy and psychoeducational evaluations.</p></div><div class="source-card"><span>04</span><h3>State SPP/APR district-level reports</h3><p>Indicator 11 (timely initial evaluations), Indicator 13, and annual LEA determinations - Meets Requirements, Needs Assistance, Needs Intervention.</p></div><div class="source-card"><span>05</span><h3>Frontline Recruiting, EdJoin, K12JobSpot, SchoolSpring</h3><p>Open reqs for School Psychologist, SLP and SPED Teacher - with posting date and repost history, which is the intensity dial.</p></div><div class="source-card"><span>06</span><h3>NCES Common Core of Data + EDFacts IDEA child count</h3><p>The LEA universe, enrollment, IDEA child count, locale code and staff FTE - the denominator for the caseload ratio.</p></div><div class="source-card"><span>07</span><h3>State complaint and due process decision databases</h3><p>Named LEAs with adjudicated service-delivery failures.</p></div><div class="source-card"><span>08</span><h3>Adopted budget PDFs + cooperative purchasing member lists</h3><p>ESSER-funded position hangover, SPED line items, and which LEAs can purchase through an existing vehicle without running an RFP.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="02">
+        
+    <div class="section-head">
+      <p class="eyebrow">02</p>
+      <h2>The waterfall</h2>
+      <p class="takeaway">One first-match cascade. Every LEA in the country exits with exactly one tier assignment and nothing is left uncovered.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF A live RFP for special education related services is posted, OR an awarded contract expires within the next 180 days</span>
+          <strong>Tier 1 - Open Procurement</strong>
+          <em>They are already buying this. The only question is from whom, the incumbent is named in the public record, and the decision has a date on it.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF Indicator 11 is below 100%, OR the LEA determination is anything other than Meets Requirements, OR there is a named state complaint or due process decision</span>
+          <strong>Tier 2 - Documented Service Gap</strong>
+          <em>The state has published, in its own words, that initial evaluations are running past the legal timeline. That is the assessment product, and the exposure compounds daily.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF An open req for a school psychologist, SLP or special education teacher has been live 45+ days, or has been reposted</span>
+          <strong>Tier 3 - Unfillable Role</strong>
+          <em>They have the budget and the posting and still cannot hire. The caseload did not pause - it was absorbed by staff already at capacity.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF The district is a cooperative purchasing member, OR special education positions were previously ESSER-funded</span>
+          <strong>Tier 4 - Funding and Purchasing Path</strong>
+          <em>Not a need problem, a procedure problem. They believe adding a provider means running an RFP, so they defer it another year.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF IDEA child count per special education FTE is above the state median, OR the locale code is rural or town</span>
+          <strong>Tier 5 - Structural Ratio Gap</strong>
+          <em>The math does not work. There is no local provider pool to hire from at any salary. This is geography, not budget or effort.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="5">
+          <span class="route-rule__num">06</span>
+          <span class="route-rule__if">IF None of the above</span>
+          <strong>Catch-all - Role-Based</strong>
+          <em>No individual signal, but the universal one still applies: more students qualifying every year, the same number of people to serve them. The artifact does the work here.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF A live RFP for special education related services is posted, OR an awarded contract expires within the next 180 days -&gt; Tier 1 - Open Procurement (They are already buying this. The only question is from whom, the incumbent is named in the public record, and the decision has a date on it.)&#10;2. IF Indicator 11 is below 100%, OR the LEA determination is anything other than Meets Requirements, OR there is a named state complaint or due process decision -&gt; Tier 2 - Documented Service Gap (The state has published, in its own words, that initial evaluations are running past the legal timeline. That is the assessment product, and the exposure compounds daily.)&#10;3. IF An open req for a school psychologist, SLP or special education teacher has been live 45+ days, or has been reposted -&gt; Tier 3 - Unfillable Role (They have the budget and the posting and still cannot hire. The caseload did not pause - it was absorbed by staff already at capacity.)&#10;4. IF The district is a cooperative purchasing member, OR special education positions were previously ESSER-funded -&gt; Tier 4 - Funding and Purchasing Path (Not a need problem, a procedure problem. They believe adding a provider means running an RFP, so they defer it another year.)&#10;5. IF IDEA child count per special education FTE is above the state median, OR the locale code is rural or town -&gt; Tier 5 - Structural Ratio Gap (The math does not work. There is no local provider pool to hire from at any salary. This is geography, not budget or effort.)&#10;6. IF None of the above -&gt; Catch-all - Role-Based (No individual signal, but the universal one still applies: more students qualifying every year, the same number of people to serve them. The artifact does the work here.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF A live RFP for special education related services is posted, OR an awarded contract expires within the next 180 days -&gt; Tier 1 - Open Procurement (They are already buying this. The only question is from whom, the incumbent is named in the public record, and the decision has a date on it.)
+2. IF Indicator 11 is below 100%, OR the LEA determination is anything other than Meets Requirements, OR there is a named state complaint or due process decision -&gt; Tier 2 - Documented Service Gap (The state has published, in its own words, that initial evaluations are running past the legal timeline. That is the assessment product, and the exposure compounds daily.)
+3. IF An open req for a school psychologist, SLP or special education teacher has been live 45+ days, or has been reposted -&gt; Tier 3 - Unfillable Role (They have the budget and the posting and still cannot hire. The caseload did not pause - it was absorbed by staff already at capacity.)
+4. IF The district is a cooperative purchasing member, OR special education positions were previously ESSER-funded -&gt; Tier 4 - Funding and Purchasing Path (Not a need problem, a procedure problem. They believe adding a provider means running an RFP, so they defer it another year.)
+5. IF IDEA child count per special education FTE is above the state median, OR the locale code is rural or town -&gt; Tier 5 - Structural Ratio Gap (The math does not work. There is no local provider pool to hire from at any salary. This is geography, not budget or effort.)
+6. IF None of the above -&gt; Catch-all - Role-Based (No individual signal, but the universal one still applies: more students qualifying every year, the same number of people to serve them. The artifact does the work here.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="03">
+        
+    <div class="section-head">
+      <p class="eyebrow">03</p>
+      <h2>The tiers</h2>
+      <p class="takeaway">Five signal tiers plus a mandatory catch-all, ordered by how expensive the gap is for the district to keep ignoring.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">4% TAM</span>
+          </div>
+          <h3>Tier 1: Open Procurement</h3>
+          <p>Live RFP for special education related services, teletherapy or evaluations - or an awarded contract expiring within 180 days.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They are already buying this and the only open question is from whom. Where a contract has been awarded, the incumbent is named in the board packet and the renewal window is a published date.</dd></div>
+              <div><dt>Offer</dt><dd>Bid-Ready Response Pack - scope-of-service language, provider credentialing matrix and outcomes evidence, formatted to drop into their RFP template</dd></div>
+              <div><dt>Source</dt><dd>Board packets (BoardDocs / Simbli / Diligent), district procurement portals, BidNet Direct, DemandStar</dd></div>
+              <div><dt>Reply density</dt><dd>Highest conversion in the waterfall. Judge it on bid invitations, not raw reply volume - the list is deliberately tiny and refreshes weekly.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">11% TAM</span>
+          </div>
+          <h3>Tier 2: Documented Service Gap</h3>
+          <p>Indicator 11 below 100%, an LEA determination other than Meets Requirements, or a named state complaint or due process decision.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Initial evaluations are running past the legal timeline. Every day of delay is compounding liability and a child not being served - and once services were owed but not delivered, the compensatory make-up obligation lands on top of the backlog that caused it.</dd></div>
+              <div><dt>Offer</dt><dd>Evaluation Backlog Recovery Plan - a one-page model: N students in backlog, weeks to clear at current FTE versus with surge capacity</dd></div>
+              <div><dt>Source</dt><dd>State SPP/APR district reports, LEA determination letters, state complaint decision databases</dd></div>
+              <div><dt>Reply density</dt><dd>Highest value in the waterfall and the highest risk. The tone rule is absolute: the state publishes this, here is what districts in the same position did. Peer, never prosecutor.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">22% TAM</span>
+          </div>
+          <h3>Tier 3: Unfillable Role</h3>
+          <p>Open req for a school psychologist, SLP or special education teacher aged 45+ days - or reposted.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They have the budget and the posting and still cannot hire. Meanwhile the caseload is being absorbed by people who were already over capacity, and the open line is not saving what it appears to save once make-up services and overtime land.</dd></div>
+              <div><dt>Offer</dt><dd>Coverage-vs-Hire Cost Model - the true cost of an unfilled req including comp time, contracted make-up services and compensatory exposure, against contracted virtual coverage</dd></div>
+              <div><dt>Source</dt><dd>Frontline Recruiting, EdJoin, K12JobSpot, SchoolSpring, district HR pages - tracked by posting date and repost</dd></div>
+              <div><dt>Reply density</dt><dd>Highest raw reply volume. Cleanest signal in the waterfall, and August to September is the window when the pain is loudest.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">14% TAM</span>
+          </div>
+          <h3>Tier 4: Funding &amp; Purchasing Path</h3>
+          <p>Member of a cooperative purchasing vehicle, or special education positions previously funded by ESSER.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Not a need problem - a procedure problem. They assume bringing on an outside provider means running a procurement process mid-year, which is not realistic, so the decision gets pushed to next budget cycle every budget cycle.</dd></div>
+              <div><dt>Offer</dt><dd>Procurement Path Map - the three legal routes to bring Parallel on (sub-threshold direct, co-op vehicle, full RFP) with the effort and timeline for each</dd></div>
+              <div><dt>Source</dt><dd>Cooperative purchasing member lists (BuyBoard, Sourcewell, OMNIA, AEPA, regional ESCs), adopted budget PDFs, board budget presentations</dd></div>
+              <div><dt>Reply density</dt><dd>Converts on process relief rather than need. Push it January to April, while next-year budgets are being built.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-orange" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">18% TAM</span>
+          </div>
+          <h3>Tier 5: Structural Ratio Gap</h3>
+          <p>IDEA child count per special education FTE above the state median, or a rural / town locale code.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The math does not work. There is no local provider pool to hire from at any salary, and the director has usually stopped expecting to solve it by hiring. The fallback - a contractor driving in two days a week - means students see whoever is available.</dd></div>
+              <div><dt>Offer</dt><dd>State Caseload Benchmark - where this district sits against the state median on students per specialist, by service line</dd></div>
+              <div><dt>Source</dt><dd>NCES Common Core of Data, EDFacts IDEA child count, state staffing files</dd></div>
+              <div><dt>Reply density</dt><dd>Large, stable and non-decaying. The benchmark artifact is the whole pitch - it tells them something about themselves they cannot easily calculate.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="catchall" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">06</span>
+            <span class="tier-share">31% TAM</span>
+          </div>
+          <h3>Catch-all: Role-Based</h3>
+          <p>Every remaining special education director in the target states, from the state DOE directory.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Unknown at the account level, so assume the universal one: more students qualifying every year while the number of people available to serve them has not moved.</dd></div>
+              <div><dt>Offer</dt><dd>The Special Education Capacity Report - anonymised benchmark of how districts of their size and locale are covering assessments and related services, including what they stopped doing</dd></div>
+              <div><dt>Source</dt><dd>State DOE special education director directories</dd></div>
+              <div><dt>Reply density</dt><dd>Weakest per contact and still the largest source of pipeline in absolute terms, because it is a third of the market. Softest CTA in the waterfall - the artifact does the work.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="04">
+        
+    <div class="section-head">
+      <p class="eyebrow">04</p>
+      <h2>The campaigns</h2>
+      <p class="takeaway">Each tier is a named campaign with its own trigger, its own artifact, and its own place on the district calendar.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Live Bid Entry</h3>
+          <p>The smallest and highest-converting campaign in the waterfall. The offer is not a meeting - it is the bid-ready response pack, sent whether or not Parallel ends up bidding. Worked as a live weekly queue with human review, never as a static sequence.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>An RFP for special education related services, teletherapy or psychoeducational evaluations is currently posted and open.</dd></div>
+            <div><dt>AI strategy</dt><dd>Pull the RFP number, title and close date from the district procurement portal, then read the prior-year board packet to see how related services were covered before. Open on the specific bid, not the category.</dd></div>
+            <div><dt>Value</dt><dd>Win the bid</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Renewal Window</h3>
+          <p>The rubric play is the differentiator. Districts that write an outcome requirement into scoring filter the field faster than any credentials section, and it costs them nothing - which is why it gets adopted, and why it favours the vendor with a 98% number.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>A board-approved contract with a named incumbent vendor expires within 180 days, and no re-bid has posted yet.</dd></div>
+            <div><dt>AI strategy</dt><dd>Lift the award date, vendor name, service scope and term end date straight from board minutes. Open by counting the days to the re-bid decision. Suggest one outcome requirement for the scoring rubric - IEP goal attainment or evaluation turnaround in days.</dd></div>
+            <div><dt>Value</dt><dd>Displace the incumbent</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Evaluation Backlog Surge</h3>
+          <p>Positioned as surge capacity, not headcount. The second email introduces compensatory services: once an evaluation runs long enough that services were owed and not delivered, the backlog has to be cleared and paid down at the same time. Run it April to June, into the year-end deadline crunch.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Indicator 11 below 100% in the most recent state SPP/APR district report, or an LEA determination of Needs Assistance or Needs Intervention.</dd></div>
+            <div><dt>AI strategy</dt><dd>Pull the district&#39;s Indicator 11 percentage alongside peers of the same enrollment band. Lead with the peer context, never the accusation - every district in the pull was under, and for the same structural reason.</dd></div>
+            <div><dt>Value</dt><dd>Clear the backlog</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Hold the Caseload</h3>
+          <p>The framing that lands is that the posting stays up. Parallel holds the caseload while the search continues, so nobody on the existing team carries an extra 40 students. Launched first because it is the largest unblocked tier and August to September is when the pain peaks.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Open school psychologist, SLP or special education teacher req live 45+ days, with repost history flagged as the strongest sub-signal.</dd></div>
+            <div><dt>AI strategy</dt><dd>Track posting age and repost cycle. Open on the specific role and the specific number of days - the repost is the proof the search is failing, and it is visible without asking.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>The Vacancy Is Not Free</h3>
+          <p>This is the value-prop rotation inside the Tier 3 sequence rather than a separate send. It exists because the first objection to virtual coverage is always cost, and the honest answer is that the vacancy is already being paid for.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same trigger as Hold the Caseload - run as the money-angle variant in the Day 4 rotation.</dd></div>
+            <div><dt>AI strategy</dt><dd>Reframe the open line from budget underspend to real cost: contracted make-up services, overtime for covering staff, and compensatory obligation.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Buy It Without a Bid</h3>
+          <p>Sells the procurement path before the service, because in this market the process is the blocker. Most districts&#39; first engagement lands under the direct-purchase threshold (commonly $25k to $50k) and never goes to bid at all.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>District appears on a cooperative purchasing member list (BuyBoard, Sourcewell, OMNIA, AEPA, regional ESC).</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the specific co-op the district belongs to. Most directors do not know related services can be brought on through it without a separate RFP.</dd></div>
+            <div><dt>Value</dt><dd>Remove the blocker</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>The ESSER Hole</h3>
+          <p>A dated, documented, and entirely non-accusatory opener. The district made a funding decision under a deadline; the question is simply what happened to the coverage. Push January to April while next-year budgets are live.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Special education positions coded to ESSER in a prior adopted budget - either moved to general fund or quietly dropped.</dd></div>
+            <div><dt>AI strategy</dt><dd>Read the adopted budget PDF and count the ESSER-coded special education lines, then check whether they survived into the current fiscal year.</dd></div>
+            <div><dt>Value</dt><dd>Restore capacity</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Caseload Arithmetic</h3>
+          <p>The opener explicitly absolves the director: this is not a staffing decision, there are only so many licensed school psychologists within driving distance and most already work somewhere. Continuity - the same provider, same time, every week - beats a contractor driving in twice a week.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>IDEA child count divided by special education staff FTE above the state median, or rural / town locale code.</dd></div>
+            <div><dt>AI strategy</dt><dd>Compute students-per-specialist for every district in the state from NCES and EDFacts, then hand the district its own position against the state median - a number they cannot easily calculate themselves.</dd></div>
+            <div><dt>Value</dt><dd>Solve the unsolvable</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>The Capacity Report</h3>
+          <p>Softest CTA in the waterfall: the report is free and there is nothing to sit through. This tier sets the reply-rate floor everything else is measured against, and validates the state-directory contact data end to end.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Every remaining special education director in the target states, segmented by state and enrollment band.</dd></div>
+            <div><dt>AI strategy</dt><dd>No account-level research. Segment on state and district size only, and let the benchmark report carry the value - including the evaluation-turnaround section directors go to first.</dd></div>
+            <div><dt>Value</dt><dd>Give before asking</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Co-op and ESC Multiplier (parallel motion)</h3>
+          <p>Deliberately marked as NOT part of the waterfall cascade. One contract can serve 20 to 40 member districts, which makes it the highest-leverage motion in the market - and the reason it is called out here is precisely that it does not fit the cascade and would be lost if it were forced into one.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>BOCES, ESCs and regional special education cooperatives - approximately 1,400 accounts.</dd></div>
+            <div><dt>AI strategy</dt><dd>Different buyer (co-op executive director), different motion (consortium pricing, member-district onboarding), longer cycle. Human-led, never sequenced.</dd></div>
+            <div><dt>Value</dt><dd>Multiply the contract</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="05">
+        
+    <div class="section-head">
+      <p class="eyebrow">05</p>
+      <h2>The copy</h2>
+      <p class="takeaway">Written for a public servant whose inbox is a public record. Peer tone, no compliance accusations, no demo requests.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{district}}</span><span>{{state}}</span><span>{{rfp_number}}</span><span>{{rfp_title}}</span><span>{{close_date}}</span><span>{{prior_year}}</span><span>{{procurement_contact}}</span><span>{{indicator_11_pct}}</span><span>{{superintendent}}</span><span>{{alt_contact}}</span><span>{{role}}</span><span>{{role_plural}}</span><span>{{days}}</span><span>{{month}}</span><span>{{hr_contact}}</span><span>{{coop_name}}</span><span>{{business_contact}}</span><span>{{ratio}}</span><span>{{state_median}}</span><span>{{n}}</span><span>{{radius}}</span><span>{{city}}</span><span>{{metro}}</span><span>{{enrollment_band}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{district}}, {{state}}, {{rfp_number}}, {{rfp_title}}, {{close_date}}, {{prior_year}}, {{procurement_contact}}, {{indicator_11_pct}}, {{superintendent}}, {{alt_contact}}, {{role}}, {{role_plural}}, {{days}}, {{month}}, {{hr_contact}}, {{coop_name}}, {{business_contact}}, {{ratio}}, {{state_median}}, {{n}}, {{radius}}, {{city}}, {{metro}}, {{enrollment_band}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Open Procurement</strong>
+              <em>Bid-Ready Response Pack</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Open Procurement steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{district}} RFP {{rfp_number}}&#10;&#10;{{first_name}} - I saw {{district}} posted {{rfp_title}}, closing {{close_date}}. I went back through the {{prior_year}} board packet and it looks like related services have been covered on a per-vendor basis rather than a single scope.&#10;&#10;Would it be fair to assume the hard part of this one isn&#39;t finding vendors, it&#39;s comparing them - everyone responds with credentials and nobody responds with outcomes?&#10;&#10;Parallel is a virtual special education provider: psychoeducational assessments, SLP, counselling, and specialised instruction through one licensed provider network. Last school year 98% of students we served met or exceeded their IEP goals.&#10;&#10;I&#39;ve put together our standard scope-of-service language, provider credentialing matrix, and outcomes evidence in the format most districts&#39; RFPs ask for. Reply &quot;send it&quot; and it&#39;s yours, whether or not we end up bidding. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{district}} RFP {{rfp_number}}" data-preview="Riverbend USD 214 RFP RFP 26-SPED-04">{{district}} RFP {{rfp_number}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - I saw {{district}} posted {{rfp_title}}, closing {{close_date}}. I went back through the {{prior_year}} board packet and it looks like related services have been covered on a per-vendor basis rather than a single scope.&#10;&#10;Would it be fair to assume the hard part of this one isn&#39;t finding vendors, it&#39;s comparing them - everyone responds with credentials and nobody responds with outcomes?&#10;&#10;Parallel is a virtual special education provider: psychoeducational assessments, SLP, counselling, and specialised instruction through one licensed provider network. Last school year 98% of students we served met or exceeded their IEP goals.&#10;&#10;I&#39;ve put together our standard scope-of-service language, provider credentialing matrix, and outcomes evidence in the format most districts&#39; RFPs ask for. Reply &quot;send it&quot; and it&#39;s yours, whether or not we end up bidding. No call needed." data-preview="Dana - I saw Riverbend USD 214 posted Special Education Related Services, closing September 18. I went back through the 2024-25 board packet and it looks like related services have been covered on a per-vendor basis rather than a single scope.&#10;&#10;Would it be fair to assume the hard part of this one isn&#39;t finding vendors, it&#39;s comparing them - everyone responds with credentials and nobody responds with outcomes?&#10;&#10;Parallel is a virtual special education provider: psychoeducational assessments, SLP, counselling, and specialised instruction through one licensed provider network. Last school year 98% of students we served met or exceeded their IEP goals.&#10;&#10;I&#39;ve put together our standard scope-of-service language, provider credentialing matrix, and outcomes evidence in the format most districts&#39; RFPs ask for. Reply &quot;send it&quot; and it&#39;s yours, whether or not we end up bidding. No call needed.">
+                        <p>{{first_name}} - I saw {{district}} posted {{rfp_title}}, closing {{close_date}}. I went back through the {{prior_year}} board packet and it looks like related services have been covered on a per-vendor basis rather than a single scope.</p><p>Would it be fair to assume the hard part of this one isn&#39;t finding vendors, it&#39;s comparing them - everyone responds with credentials and nobody responds with outcomes?</p><p>Parallel is a virtual special education provider: psychoeducational assessments, SLP, counselling, and specialised instruction through one licensed provider network. Last school year 98% of students we served met or exceeded their IEP goals.</p><p>I&#39;ve put together our standard scope-of-service language, provider credentialing matrix, and outcomes evidence in the format most districts&#39; RFPs ask for. Reply &quot;send it&quot; and it&#39;s yours, whether or not we end up bidding. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}} - one more thing that may be useful while {{rfp_number}} is open.&#10;&#10;The districts that get the most out of these RFPs tend to write one outcome requirement into the scoring rubric, usually IEP goal attainment or evaluation turnaround in days. It filters the field faster than any credentials section, and it costs nothing to add.&#10;&#10;Happy to send the two lines of rubric language other districts have used. Reply &quot;rubric&quot; and I&#39;ll send them over.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - one more thing that may be useful while {{rfp_number}} is open.&#10;&#10;The districts that get the most out of these RFPs tend to write one outcome requirement into the scoring rubric, usually IEP goal attainment or evaluation turnaround in days. It filters the field faster than any credentials section, and it costs nothing to add.&#10;&#10;Happy to send the two lines of rubric language other districts have used. Reply &quot;rubric&quot; and I&#39;ll send them over." data-preview="Dana - one more thing that may be useful while RFP 26-SPED-04 is open.&#10;&#10;The districts that get the most out of these RFPs tend to write one outcome requirement into the scoring rubric, usually IEP goal attainment or evaluation turnaround in days. It filters the field faster than any credentials section, and it costs nothing to add.&#10;&#10;Happy to send the two lines of rubric language other districts have used. Reply &quot;rubric&quot; and I&#39;ll send them over.">
+                        <p>{{first_name}} - one more thing that may be useful while {{rfp_number}} is open.</p><p>The districts that get the most out of these RFPs tend to write one outcome requirement into the scoring rubric, usually IEP goal attainment or evaluation turnaround in days. It filters the field faster than any credentials section, and it costs nothing to add.</p><p>Happy to send the two lines of rubric language other districts have used. Reply &quot;rubric&quot; and I&#39;ll send them over.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: right person for {{rfp_number}}?&#10;&#10;{{first_name}} - no need for a call. Just reply &quot;yes&quot; and I&#39;ll send the bid-ready response pack for {{rfp_number}}.&#10;&#10;If procurement rather than special ed is running this one, happy to send it to {{procurement_contact}} instead - just let me know which.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="right person for {{rfp_number}}?" data-preview="right person for RFP 26-SPED-04?">right person for {{rfp_number}}?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - no need for a call. Just reply &quot;yes&quot; and I&#39;ll send the bid-ready response pack for {{rfp_number}}.&#10;&#10;If procurement rather than special ed is running this one, happy to send it to {{procurement_contact}} instead - just let me know which." data-preview="Dana - no need for a call. Just reply &quot;yes&quot; and I&#39;ll send the bid-ready response pack for RFP 26-SPED-04.&#10;&#10;If procurement rather than special ed is running this one, happy to send it to your purchasing office instead - just let me know which.">
+                        <p>{{first_name}} - no need for a call. Just reply &quot;yes&quot; and I&#39;ll send the bid-ready response pack for {{rfp_number}}.</p><p>If procurement rather than special ed is running this one, happy to send it to {{procurement_contact}} instead - just let me know which.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Documented Service Gap</strong>
+              <em>Evaluation Backlog Recovery Plan</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Documented Service Gap steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: initial evaluations at {{district}}&#10;&#10;{{first_name}} - I was going through {{state}}&#39;s SPP/APR district reports and pulled the Indicator 11 numbers for districts your size. {{district}} came in at {{indicator_11_pct}}% on evaluations completed inside the timeline.&#10;&#10;I&#39;m not writing about the number - every district I pulled was under, and most of them are under for the same reason: there aren&#39;t enough school psychologists to hire, so the referrals keep arriving and the calendar doesn&#39;t move.&#10;&#10;Would it be fair to assume the backlog isn&#39;t a process problem on your end, it&#39;s an arithmetic one?&#10;&#10;Parallel runs psychoeducational assessments with licensed providers, remote, in whatever volume the backlog needs - as a surge, not a permanent headcount line. 98% of the students we served last year met or exceeded their IEP goals.&#10;&#10;I built a short model that takes a backlog number and shows how long it takes to clear at current staffing versus with surge capacity. Reply &quot;model&quot; and I&#39;ll send it. No call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="initial evaluations at {{district}}" data-preview="initial evaluations at Riverbend USD 214">initial evaluations at {{district}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - I was going through {{state}}&#39;s SPP/APR district reports and pulled the Indicator 11 numbers for districts your size. {{district}} came in at {{indicator_11_pct}}% on evaluations completed inside the timeline.&#10;&#10;I&#39;m not writing about the number - every district I pulled was under, and most of them are under for the same reason: there aren&#39;t enough school psychologists to hire, so the referrals keep arriving and the calendar doesn&#39;t move.&#10;&#10;Would it be fair to assume the backlog isn&#39;t a process problem on your end, it&#39;s an arithmetic one?&#10;&#10;Parallel runs psychoeducational assessments with licensed providers, remote, in whatever volume the backlog needs - as a surge, not a permanent headcount line. 98% of the students we served last year met or exceeded their IEP goals.&#10;&#10;I built a short model that takes a backlog number and shows how long it takes to clear at current staffing versus with surge capacity. Reply &quot;model&quot; and I&#39;ll send it. No call." data-preview="Dana - I was going through Colorado&#39;s SPP/APR district reports and pulled the Indicator 11 numbers for districts your size. Riverbend USD 214 came in at 84% on evaluations completed inside the timeline.&#10;&#10;I&#39;m not writing about the number - every district I pulled was under, and most of them are under for the same reason: there aren&#39;t enough school psychologists to hire, so the referrals keep arriving and the calendar doesn&#39;t move.&#10;&#10;Would it be fair to assume the backlog isn&#39;t a process problem on your end, it&#39;s an arithmetic one?&#10;&#10;Parallel runs psychoeducational assessments with licensed providers, remote, in whatever volume the backlog needs - as a surge, not a permanent headcount line. 98% of the students we served last year met or exceeded their IEP goals.&#10;&#10;I built a short model that takes a backlog number and shows how long it takes to clear at current staffing versus with surge capacity. Reply &quot;model&quot; and I&#39;ll send it. No call.">
+                        <p>{{first_name}} - I was going through {{state}}&#39;s SPP/APR district reports and pulled the Indicator 11 numbers for districts your size. {{district}} came in at {{indicator_11_pct}}% on evaluations completed inside the timeline.</p><p>I&#39;m not writing about the number - every district I pulled was under, and most of them are under for the same reason: there aren&#39;t enough school psychologists to hire, so the referrals keep arriving and the calendar doesn&#39;t move.</p><p>Would it be fair to assume the backlog isn&#39;t a process problem on your end, it&#39;s an arithmetic one?</p><p>Parallel runs psychoeducational assessments with licensed providers, remote, in whatever volume the backlog needs - as a surge, not a permanent headcount line. 98% of the students we served last year met or exceeded their IEP goals.</p><p>I built a short model that takes a backlog number and shows how long it takes to clear at current staffing versus with surge capacity. Reply &quot;model&quot; and I&#39;ll send it. No call.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}} - the part districts tell us they didn&#39;t see coming isn&#39;t the timeline finding itself. It&#39;s compensatory services.&#10;&#10;Once an evaluation runs long enough that services were owed and not delivered, the make-up obligation lands on top of the existing caseload - so the backlog that caused it now has to be cleared and paid down at the same time.&#10;&#10;Clearing it once, in a surge, is almost always cheaper than absorbing it twice. Reply &quot;model&quot; and I&#39;ll send the version with the compensatory line included.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - the part districts tell us they didn&#39;t see coming isn&#39;t the timeline finding itself. It&#39;s compensatory services.&#10;&#10;Once an evaluation runs long enough that services were owed and not delivered, the make-up obligation lands on top of the existing caseload - so the backlog that caused it now has to be cleared and paid down at the same time.&#10;&#10;Clearing it once, in a surge, is almost always cheaper than absorbing it twice. Reply &quot;model&quot; and I&#39;ll send the version with the compensatory line included." data-preview="Dana - the part districts tell us they didn&#39;t see coming isn&#39;t the timeline finding itself. It&#39;s compensatory services.&#10;&#10;Once an evaluation runs long enough that services were owed and not delivered, the make-up obligation lands on top of the existing caseload - so the backlog that caused it now has to be cleared and paid down at the same time.&#10;&#10;Clearing it once, in a surge, is almost always cheaper than absorbing it twice. Reply &quot;model&quot; and I&#39;ll send the version with the compensatory line included.">
+                        <p>{{first_name}} - the part districts tell us they didn&#39;t see coming isn&#39;t the timeline finding itself. It&#39;s compensatory services.</p><p>Once an evaluation runs long enough that services were owed and not delivered, the make-up obligation lands on top of the existing caseload - so the backlog that caused it now has to be cleared and paid down at the same time.</p><p>Clearing it once, in a surge, is almost always cheaper than absorbing it twice. Reply &quot;model&quot; and I&#39;ll send the version with the compensatory line included.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: should this go to you or {{superintendent}}?&#10;&#10;{{first_name}} - no call needed. Reply &quot;yes&quot; and I&#39;ll send the evaluation backlog recovery plan for a district {{district}}&#39;s size.&#10;&#10;If the evaluation timeline is being handled at the cabinet level rather than yours, happy to send it to {{alt_contact}} instead.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="should this go to you or {{superintendent}}?" data-preview="should this go to you or your superintendent?">should this go to you or {{superintendent}}?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - no call needed. Reply &quot;yes&quot; and I&#39;ll send the evaluation backlog recovery plan for a district {{district}}&#39;s size.&#10;&#10;If the evaluation timeline is being handled at the cabinet level rather than yours, happy to send it to {{alt_contact}} instead." data-preview="Dana - no call needed. Reply &quot;yes&quot; and I&#39;ll send the evaluation backlog recovery plan for a district Riverbend USD 214&#39;s size.&#10;&#10;If the evaluation timeline is being handled at the cabinet level rather than yours, happy to send it to your assistant superintendent instead.">
+                        <p>{{first_name}} - no call needed. Reply &quot;yes&quot; and I&#39;ll send the evaluation backlog recovery plan for a district {{district}}&#39;s size.</p><p>If the evaluation timeline is being handled at the cabinet level rather than yours, happy to send it to {{alt_contact}} instead.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Unfillable Role</strong>
+              <em>Coverage-vs-Hire Cost Model</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Unfillable Role steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the {{role}} posting&#10;&#10;{{first_name}} - {{district}}&#39;s {{role}} posting has been up {{days}} days. It looks like it went up in {{month}}, came down, and went back up.&#10;&#10;Would it be fair to assume the caseload didn&#39;t pause while the req was open - it just got absorbed by the people who were already at capacity?&#10;&#10;Parallel places licensed {{role_plural}} virtually, matched to {{state}} licensure, usually inside a few weeks. Districts use us to hold the caseload while the search continues - the posting stays up, the students get served, and nobody on your existing team is carrying an extra 40.&#10;&#10;I have a short cost model comparing an unfilled req against contracted virtual coverage. It includes the parts that don&#39;t show up in the salary line, like contracted make-up services. Reply &quot;costs&quot; and I&#39;ll send it.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the {{role}} posting" data-preview="the school psychologist posting">the {{role}} posting</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - {{district}}&#39;s {{role}} posting has been up {{days}} days. It looks like it went up in {{month}}, came down, and went back up.&#10;&#10;Would it be fair to assume the caseload didn&#39;t pause while the req was open - it just got absorbed by the people who were already at capacity?&#10;&#10;Parallel places licensed {{role_plural}} virtually, matched to {{state}} licensure, usually inside a few weeks. Districts use us to hold the caseload while the search continues - the posting stays up, the students get served, and nobody on your existing team is carrying an extra 40.&#10;&#10;I have a short cost model comparing an unfilled req against contracted virtual coverage. It includes the parts that don&#39;t show up in the salary line, like contracted make-up services. Reply &quot;costs&quot; and I&#39;ll send it." data-preview="Dana - Riverbend USD 214&#39;s school psychologist posting has been up 112 days. It looks like it went up in March, came down, and went back up.&#10;&#10;Would it be fair to assume the caseload didn&#39;t pause while the req was open - it just got absorbed by the people who were already at capacity?&#10;&#10;Parallel places licensed school psychologists virtually, matched to Colorado licensure, usually inside a few weeks. Districts use us to hold the caseload while the search continues - the posting stays up, the students get served, and nobody on your existing team is carrying an extra 40.&#10;&#10;I have a short cost model comparing an unfilled req against contracted virtual coverage. It includes the parts that don&#39;t show up in the salary line, like contracted make-up services. Reply &quot;costs&quot; and I&#39;ll send it.">
+                        <p>{{first_name}} - {{district}}&#39;s {{role}} posting has been up {{days}} days. It looks like it went up in {{month}}, came down, and went back up.</p><p>Would it be fair to assume the caseload didn&#39;t pause while the req was open - it just got absorbed by the people who were already at capacity?</p><p>Parallel places licensed {{role_plural}} virtually, matched to {{state}} licensure, usually inside a few weeks. Districts use us to hold the caseload while the search continues - the posting stays up, the students get served, and nobody on your existing team is carrying an extra 40.</p><p>I have a short cost model comparing an unfilled req against contracted virtual coverage. It includes the parts that don&#39;t show up in the salary line, like contracted make-up services. Reply &quot;costs&quot; and I&#39;ll send it.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}} - worth noting: the vacancy isn&#39;t saving the money it looks like it&#39;s saving.&#10;&#10;An open {{role}} line reads as budget underspend right up until it turns into contracted make-up services, overtime for the staff covering, or a compensatory obligation. Districts we work with tend to find the unfilled position costs a large share of the filled one and delivers a fraction of the coverage.&#10;&#10;Reply &quot;costs&quot; and I&#39;ll send the model with your enrolment plugged in.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - worth noting: the vacancy isn&#39;t saving the money it looks like it&#39;s saving.&#10;&#10;An open {{role}} line reads as budget underspend right up until it turns into contracted make-up services, overtime for the staff covering, or a compensatory obligation. Districts we work with tend to find the unfilled position costs a large share of the filled one and delivers a fraction of the coverage.&#10;&#10;Reply &quot;costs&quot; and I&#39;ll send the model with your enrolment plugged in." data-preview="Dana - worth noting: the vacancy isn&#39;t saving the money it looks like it&#39;s saving.&#10;&#10;An open school psychologist line reads as budget underspend right up until it turns into contracted make-up services, overtime for the staff covering, or a compensatory obligation. Districts we work with tend to find the unfilled position costs a large share of the filled one and delivers a fraction of the coverage.&#10;&#10;Reply &quot;costs&quot; and I&#39;ll send the model with your enrolment plugged in.">
+                        <p>{{first_name}} - worth noting: the vacancy isn&#39;t saving the money it looks like it&#39;s saving.</p><p>An open {{role}} line reads as budget underspend right up until it turns into contracted make-up services, overtime for the staff covering, or a compensatory obligation. Districts we work with tend to find the unfilled position costs a large share of the filled one and delivers a fraction of the coverage.</p><p>Reply &quot;costs&quot; and I&#39;ll send the model with your enrolment plugged in.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: covering the {{role}} gap at {{district}}&#10;&#10;{{first_name}} - no call needed. Reply &quot;yes&quot; and I&#39;ll send the coverage-vs-hire cost model.&#10;&#10;Should this go to you or to {{hr_contact}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="covering the {{role}} gap at {{district}}" data-preview="covering the school psychologist gap at Riverbend USD 214">covering the {{role}} gap at {{district}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - no call needed. Reply &quot;yes&quot; and I&#39;ll send the coverage-vs-hire cost model.&#10;&#10;Should this go to you or to {{hr_contact}}?" data-preview="Dana - no call needed. Reply &quot;yes&quot; and I&#39;ll send the coverage-vs-hire cost model.&#10;&#10;Should this go to you or to your HR director?">
+                        <p>{{first_name}} - no call needed. Reply &quot;yes&quot; and I&#39;ll send the coverage-vs-hire cost model.</p><p>Should this go to you or to {{hr_contact}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 - Funding &amp; Purchasing Path</strong>
+              <em>Procurement Path Map</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 - Funding &amp; Purchasing Path steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{coop_name}} + special ed services&#10;&#10;{{first_name}} - I saw {{district}} is a {{coop_name}} member. Most districts don&#39;t realise related services can be brought on through that vehicle without running a separate RFP.&#10;&#10;Would it be fair to assume adding an outside provider has been deferred less because you didn&#39;t need one and more because starting a procurement process mid-year isn&#39;t realistic?&#10;&#10;Parallel works on tiered plans with no monthly minimums, no student activation fees, and no hidden costs - which means most districts&#39; first engagement with us lands under their direct-purchase threshold and doesn&#39;t need to go to bid at all.&#10;&#10;I&#39;ve mapped the three legal routes to bring us on - sub-threshold direct, co-op vehicle, or full RFP - with the effort and timeline for each. Reply &quot;paths&quot; and I&#39;ll send it.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{coop_name}} + special ed services" data-preview="BOCES Region 4 + special ed services">{{coop_name}} + special ed services</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - I saw {{district}} is a {{coop_name}} member. Most districts don&#39;t realise related services can be brought on through that vehicle without running a separate RFP.&#10;&#10;Would it be fair to assume adding an outside provider has been deferred less because you didn&#39;t need one and more because starting a procurement process mid-year isn&#39;t realistic?&#10;&#10;Parallel works on tiered plans with no monthly minimums, no student activation fees, and no hidden costs - which means most districts&#39; first engagement with us lands under their direct-purchase threshold and doesn&#39;t need to go to bid at all.&#10;&#10;I&#39;ve mapped the three legal routes to bring us on - sub-threshold direct, co-op vehicle, or full RFP - with the effort and timeline for each. Reply &quot;paths&quot; and I&#39;ll send it." data-preview="Dana - I saw Riverbend USD 214 is a BOCES Region 4 member. Most districts don&#39;t realise related services can be brought on through that vehicle without running a separate RFP.&#10;&#10;Would it be fair to assume adding an outside provider has been deferred less because you didn&#39;t need one and more because starting a procurement process mid-year isn&#39;t realistic?&#10;&#10;Parallel works on tiered plans with no monthly minimums, no student activation fees, and no hidden costs - which means most districts&#39; first engagement with us lands under their direct-purchase threshold and doesn&#39;t need to go to bid at all.&#10;&#10;I&#39;ve mapped the three legal routes to bring us on - sub-threshold direct, co-op vehicle, or full RFP - with the effort and timeline for each. Reply &quot;paths&quot; and I&#39;ll send it.">
+                        <p>{{first_name}} - I saw {{district}} is a {{coop_name}} member. Most districts don&#39;t realise related services can be brought on through that vehicle without running a separate RFP.</p><p>Would it be fair to assume adding an outside provider has been deferred less because you didn&#39;t need one and more because starting a procurement process mid-year isn&#39;t realistic?</p><p>Parallel works on tiered plans with no monthly minimums, no student activation fees, and no hidden costs - which means most districts&#39; first engagement with us lands under their direct-purchase threshold and doesn&#39;t need to go to bid at all.</p><p>I&#39;ve mapped the three legal routes to bring us on - sub-threshold direct, co-op vehicle, or full RFP - with the effort and timeline for each. Reply &quot;paths&quot; and I&#39;ll send it.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}} - the reason I lead with the procurement path rather than the service is that in this market the process is usually the blocker, not the need.&#10;&#10;Most districts start with us on a defined block - a set number of evaluations, or coverage for one caseload - sized deliberately to sit inside what a director can authorise. If it works, it grows at the next budget cycle. If it doesn&#39;t, it ends and nothing was locked in.&#10;&#10;Reply &quot;paths&quot; and I&#39;ll send the map.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - the reason I lead with the procurement path rather than the service is that in this market the process is usually the blocker, not the need.&#10;&#10;Most districts start with us on a defined block - a set number of evaluations, or coverage for one caseload - sized deliberately to sit inside what a director can authorise. If it works, it grows at the next budget cycle. If it doesn&#39;t, it ends and nothing was locked in.&#10;&#10;Reply &quot;paths&quot; and I&#39;ll send the map." data-preview="Dana - the reason I lead with the procurement path rather than the service is that in this market the process is usually the blocker, not the need.&#10;&#10;Most districts start with us on a defined block - a set number of evaluations, or coverage for one caseload - sized deliberately to sit inside what a director can authorise. If it works, it grows at the next budget cycle. If it doesn&#39;t, it ends and nothing was locked in.&#10;&#10;Reply &quot;paths&quot; and I&#39;ll send the map.">
+                        <p>{{first_name}} - the reason I lead with the procurement path rather than the service is that in this market the process is usually the blocker, not the need.</p><p>Most districts start with us on a defined block - a set number of evaluations, or coverage for one caseload - sized deliberately to sit inside what a director can authorise. If it works, it grows at the next budget cycle. If it doesn&#39;t, it ends and nothing was locked in.</p><p>Reply &quot;paths&quot; and I&#39;ll send the map.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: who owns this at {{district}}?&#10;&#10;{{first_name}} - no call needed. Reply &quot;yes&quot; and I&#39;ll send the procurement path map.&#10;&#10;If your business official runs the threshold rules, happy to send it to {{business_contact}} as well.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="who owns this at {{district}}?" data-preview="who owns this at Riverbend USD 214?">who owns this at {{district}}?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - no call needed. Reply &quot;yes&quot; and I&#39;ll send the procurement path map.&#10;&#10;If your business official runs the threshold rules, happy to send it to {{business_contact}} as well." data-preview="Dana - no call needed. Reply &quot;yes&quot; and I&#39;ll send the procurement path map.&#10;&#10;If your business official runs the threshold rules, happy to send it to your business official as well.">
+                        <p>{{first_name}} - no call needed. Reply &quot;yes&quot; and I&#39;ll send the procurement path map.</p><p>If your business official runs the threshold rules, happy to send it to {{business_contact}} as well.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 - Structural Ratio Gap</strong>
+              <em>State Caseload Benchmark</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 - Structural Ratio Gap steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{state}} caseload numbers&#10;&#10;{{first_name}} - I pulled IDEA child count against special education staff FTE for every district in {{state}}. {{district}} is carrying roughly {{ratio}} students per specialist; the state median is {{state_median}}.&#10;&#10;I don&#39;t think that&#39;s a staffing decision. There are {{n}} school psychologists licensed within {{radius}} miles of {{city}} and most of them already work somewhere.&#10;&#10;Would it be fair to assume you&#39;ve stopped expecting to solve this by hiring?&#10;&#10;Parallel&#39;s providers are matched to {{state}} licensure rather than to a commute, which means a district in {{city}} gets the same specialist availability as one in {{metro}}. 98% of students we served last year met or exceeded their IEP goals.&#10;&#10;Reply &quot;benchmark&quot; and I&#39;ll send where {{district}} sits against the {{state}} median on students per specialist, by service line. No call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{state}} caseload numbers" data-preview="Colorado caseload numbers">{{state}} caseload numbers</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - I pulled IDEA child count against special education staff FTE for every district in {{state}}. {{district}} is carrying roughly {{ratio}} students per specialist; the state median is {{state_median}}.&#10;&#10;I don&#39;t think that&#39;s a staffing decision. There are {{n}} school psychologists licensed within {{radius}} miles of {{city}} and most of them already work somewhere.&#10;&#10;Would it be fair to assume you&#39;ve stopped expecting to solve this by hiring?&#10;&#10;Parallel&#39;s providers are matched to {{state}} licensure rather than to a commute, which means a district in {{city}} gets the same specialist availability as one in {{metro}}. 98% of students we served last year met or exceeded their IEP goals.&#10;&#10;Reply &quot;benchmark&quot; and I&#39;ll send where {{district}} sits against the {{state}} median on students per specialist, by service line. No call." data-preview="Dana - I pulled IDEA child count against special education staff FTE for every district in Colorado. Riverbend USD 214 is carrying roughly 1,340 students per specialist; the state median is 890.&#10;&#10;I don&#39;t think that&#39;s a staffing decision. There are six school psychologists licensed within 40 miles of Riverbend and most of them already work somewhere.&#10;&#10;Would it be fair to assume you&#39;ve stopped expecting to solve this by hiring?&#10;&#10;Parallel&#39;s providers are matched to Colorado licensure rather than to a commute, which means a district in Riverbend gets the same specialist availability as one in Denver. 98% of students we served last year met or exceeded their IEP goals.&#10;&#10;Reply &quot;benchmark&quot; and I&#39;ll send where Riverbend USD 214 sits against the Colorado median on students per specialist, by service line. No call.">
+                        <p>{{first_name}} - I pulled IDEA child count against special education staff FTE for every district in {{state}}. {{district}} is carrying roughly {{ratio}} students per specialist; the state median is {{state_median}}.</p><p>I don&#39;t think that&#39;s a staffing decision. There are {{n}} school psychologists licensed within {{radius}} miles of {{city}} and most of them already work somewhere.</p><p>Would it be fair to assume you&#39;ve stopped expecting to solve this by hiring?</p><p>Parallel&#39;s providers are matched to {{state}} licensure rather than to a commute, which means a district in {{city}} gets the same specialist availability as one in {{metro}}. 98% of students we served last year met or exceeded their IEP goals.</p><p>Reply &quot;benchmark&quot; and I&#39;ll send where {{district}} sits against the {{state}} median on students per specialist, by service line. No call.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}} - the thing rural directors tell us matters more than the coverage itself is continuity.&#10;&#10;When the model is a contractor driving in two days a week, the students see whoever is available. Ours is the same provider, same time, every week, tracked against the same IEP goals - because there&#39;s no drive time to schedule around.&#10;&#10;Reply &quot;benchmark&quot; and I&#39;ll send the numbers.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - the thing rural directors tell us matters more than the coverage itself is continuity.&#10;&#10;When the model is a contractor driving in two days a week, the students see whoever is available. Ours is the same provider, same time, every week, tracked against the same IEP goals - because there&#39;s no drive time to schedule around.&#10;&#10;Reply &quot;benchmark&quot; and I&#39;ll send the numbers." data-preview="Dana - the thing rural directors tell us matters more than the coverage itself is continuity.&#10;&#10;When the model is a contractor driving in two days a week, the students see whoever is available. Ours is the same provider, same time, every week, tracked against the same IEP goals - because there&#39;s no drive time to schedule around.&#10;&#10;Reply &quot;benchmark&quot; and I&#39;ll send the numbers.">
+                        <p>{{first_name}} - the thing rural directors tell us matters more than the coverage itself is continuity.</p><p>When the model is a contractor driving in two days a week, the students see whoever is available. Ours is the same provider, same time, every week, tracked against the same IEP goals - because there&#39;s no drive time to schedule around.</p><p>Reply &quot;benchmark&quot; and I&#39;ll send the numbers.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{district}} vs the {{state}} median&#10;&#10;{{first_name}} - no call needed. Reply &quot;yes&quot; and I&#39;ll send the {{state}} caseload benchmark with {{district}} marked.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{district}} vs the {{state}} median" data-preview="Riverbend USD 214 vs the Colorado median">{{district}} vs the {{state}} median</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - no call needed. Reply &quot;yes&quot; and I&#39;ll send the {{state}} caseload benchmark with {{district}} marked." data-preview="Dana - no call needed. Reply &quot;yes&quot; and I&#39;ll send the Colorado caseload benchmark with Riverbend USD 214 marked.">
+                        <p>{{first_name}} - no call needed. Reply &quot;yes&quot; and I&#39;ll send the {{state}} caseload benchmark with {{district}} marked.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Catch-all - Role-Based</strong>
+              <em>The Special Education Capacity Report</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Catch-all - Role-Based steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: how {{enrollment_band}} districts are covering related services&#10;&#10;{{first_name}} - we work with 115+ districts across 25 states on special education services, and this year we pulled together what the ones your size are actually doing to cover assessments, SLP, and counselling - including what they stopped doing.&#10;&#10;Would it be fair to assume more students are qualifying each year while the number of people available to serve them hasn&#39;t moved?&#10;&#10;Parallel provides those services virtually through licensed providers. Last school year 98% of the students we served met or exceeded their IEP goals.&#10;&#10;The report is free and there&#39;s nothing to sit through. Reply &quot;report&quot; and I&#39;ll send it.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="how {{enrollment_band}} districts are covering related services" data-preview="how 3,000-8,000 student districts are covering related services">how {{enrollment_band}} districts are covering related services</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - we work with 115+ districts across 25 states on special education services, and this year we pulled together what the ones your size are actually doing to cover assessments, SLP, and counselling - including what they stopped doing.&#10;&#10;Would it be fair to assume more students are qualifying each year while the number of people available to serve them hasn&#39;t moved?&#10;&#10;Parallel provides those services virtually through licensed providers. Last school year 98% of the students we served met or exceeded their IEP goals.&#10;&#10;The report is free and there&#39;s nothing to sit through. Reply &quot;report&quot; and I&#39;ll send it." data-preview="Dana - we work with 115+ districts across 25 states on special education services, and this year we pulled together what the ones your size are actually doing to cover assessments, SLP, and counselling - including what they stopped doing.&#10;&#10;Would it be fair to assume more students are qualifying each year while the number of people available to serve them hasn&#39;t moved?&#10;&#10;Parallel provides those services virtually through licensed providers. Last school year 98% of the students we served met or exceeded their IEP goals.&#10;&#10;The report is free and there&#39;s nothing to sit through. Reply &quot;report&quot; and I&#39;ll send it.">
+                        <p>{{first_name}} - we work with 115+ districts across 25 states on special education services, and this year we pulled together what the ones your size are actually doing to cover assessments, SLP, and counselling - including what they stopped doing.</p><p>Would it be fair to assume more students are qualifying each year while the number of people available to serve them hasn&#39;t moved?</p><p>Parallel provides those services virtually through licensed providers. Last school year 98% of the students we served met or exceeded their IEP goals.</p><p>The report is free and there&#39;s nothing to sit through. Reply &quot;report&quot; and I&#39;ll send it.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}} - the part of the report most directors go to first is the section on evaluation turnaround: what districts your size are averaging from referral to report, and what the ones at the top of the range are doing differently.&#10;&#10;Reply &quot;report&quot; and I&#39;ll send it over.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - the part of the report most directors go to first is the section on evaluation turnaround: what districts your size are averaging from referral to report, and what the ones at the top of the range are doing differently.&#10;&#10;Reply &quot;report&quot; and I&#39;ll send it over." data-preview="Dana - the part of the report most directors go to first is the section on evaluation turnaround: what districts your size are averaging from referral to report, and what the ones at the top of the range are doing differently.&#10;&#10;Reply &quot;report&quot; and I&#39;ll send it over.">
+                        <p>{{first_name}} - the part of the report most directors go to first is the section on evaluation turnaround: what districts your size are averaging from referral to report, and what the ones at the top of the range are doing differently.</p><p>Reply &quot;report&quot; and I&#39;ll send it over.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: send this to you or someone else?&#10;&#10;{{first_name}} - no need for a call. Just reply &quot;yes&quot; and I&#39;ll send the special education capacity report.&#10;&#10;If someone else at {{district}} owns related services coverage, happy to send it to them instead.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="send this to you or someone else?" data-preview="send this to you or someone else?">send this to you or someone else?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - no need for a call. Just reply &quot;yes&quot; and I&#39;ll send the special education capacity report.&#10;&#10;If someone else at {{district}} owns related services coverage, happy to send it to them instead." data-preview="Dana - no need for a call. Just reply &quot;yes&quot; and I&#39;ll send the special education capacity report.&#10;&#10;If someone else at Riverbend USD 214 owns related services coverage, happy to send it to them instead.">
+                        <p>{{first_name}} - no need for a call. Just reply &quot;yes&quot; and I&#39;ll send the special education capacity report.</p><p>If someone else at {{district}} owns related services coverage, happy to send it to them instead.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="06">
+        
+    <div class="section-head">
+      <p class="eyebrow">06</p>
+      <h2>The launch</h2>
+      <p class="takeaway">Launch the tier that is largest, cleanest and unblocked - not the one that is most valuable. Tier 3 in week one.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Weeks 1-3 - Launch Tier 3, Unfillable Role. Largest readable tier, cleanest signal, nothing blocking it, and August to September is the window when unfilled positions hurt most. Fastest path to a reply-rate baseline.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Weeks 3-5 - Launch the Catch-all, Role-Based. Establishes the floor everything else is measured against, and validates the state-directory contact data end to end.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 5-8 - Launch Tier 5 (Structural Ratio Gap) and Tier 4 (Funding &amp; Purchasing Path). Both are large, stable, non-decaying lists. Tier 4 goes live properly once the sub-threshold entry package is defined.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Weeks 8-12 - Launch Tier 2, Documented Service Gap. Highest value, highest risk. Only after a published evaluation turnaround SLA and a named district case study exist, and only after the copy is reviewed line by line against the no-accusation rule.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Rolling from week 6 - Stand up Tier 1, Open Procurement, as a live weekly queue rather than a campaign launch. Small volume, human-reviewed, highest conversion.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>From week 4 - Begin the co-op / BOCES / ESC multiplier motion alongside the waterfall. Human-led, not sequenced, highest contract value in the market.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>Ongoing - Refresh Tier 1 and Tier 3 weekly. A filled req or a closed RFP is re-routed, not re-sent. Suppress by district, not by contact. Do not send in the last two weeks of June, in July, or between December 20 and January 3.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacted</strong>
+                <span>Perfect. Scale the tier hard.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run untouched.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450-500</strong>
+                <span>Borderline. Test one copy variant and hold everything else constant.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or reply rate under 1% after 1,500+ sends</strong>
+                <span>Failing. Cut and rework the tier.</span>
+              </div>
+              <div class="threshold">
+                <strong>Opens - any number</strong>
+                <span>Ignore entirely. District firewalls pre-fetch links, so opens are meaningless here and tracking pixels on public-records correspondence are a liability. Reply rate is the only metric.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dana","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Riverbend USD 214","Colorado","RFP 26-SPED-04","Special Education Related Services","September 18","2024-25","your purchasing office","84","your superintendent","your assistant superintendent","school psychologist","school psychologists","112","March","your HR director","BOCES Region 4","your business official","1,340","890","six","40","Riverbend","Denver","3,000-8,000 student"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
