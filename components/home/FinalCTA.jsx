@@ -8,48 +8,26 @@
    #book target the nav scrolls to.
    ────────────────────────────────────────────── */
 
-import { useEffect } from 'react'
+import { useDeferredCalEmbed } from '../useDeferredCalEmbed'
 
 const CAL_NS = 'initial-consultation-call'
 const CAL_LINK = 'team/gtmx/initial-consultation-call'
 
 export default function FinalCTA() {
-  useEffect(() => {
-    // Cal.com inline embed loader (official snippet, adapted for React)
-    ;(function (C, A, L) {
-      let p = function (a, ar) { a.q.push(ar) }
-      let d = C.document
-      C.Cal = C.Cal || function () {
-        let cal = C.Cal
-        let ar = arguments
-        if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement('script')).src = A; cal.loaded = true }
-        if (ar[0] === L) {
-          const api = function () { p(api, arguments) }
-          const namespace = ar[1]
-          api.q = api.q || []
-          if (typeof namespace === 'string') { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ['initNamespace', namespace]) } else p(cal, ar)
-          return
-        }
-        p(cal, ar)
-      }
-    })(window, 'https://app.cal.com/embed/embed.js', 'init')
-
-    const Cal = window.Cal
-    Cal('init', CAL_NS, { origin: 'https://app.cal.com' })
-    Cal.config = Cal.config || {}
-    Cal.config.forwardQueryParams = true
-    Cal.ns[CAL_NS]('inline', {
-      elementOrSelector: '#cal-inline-booking',
-      config: { layout: 'month_view', useSlotsViewOnSmallScreen: 'true' },
-      calLink: CAL_LINK,
-    })
-    Cal.ns[CAL_NS]('ui', {
+  // Deferred until the booking section nears the viewport (see the hook). Same
+  // calendar, same config — just off the initial-load critical path.
+  useDeferredCalEmbed({
+    namespace: CAL_NS,
+    calLink: CAL_LINK,
+    elementId: 'cal-inline-booking',
+    forwardQueryParams: true,
+    ui: {
       theme: 'light',
       cssVarsPerTheme: { light: { 'cal-brand': '#E8552B' } },
       hideEventTypeDetails: false,
       layout: 'month_view',
-    })
-  }, [])
+    },
+  })
 
   return (
     <section className="final" id="book">

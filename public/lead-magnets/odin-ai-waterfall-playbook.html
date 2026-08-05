@@ -1,0 +1,1814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Odin AI - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-07-27</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Odin AI</p>
+          <h1>The Odin AI outbound <mark>journey</mark>.</h1>
+          <p class="hero-copy">One waterfall, routed on how far each enterprise has already committed to automation — and in which direction.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Nobody in this market still needs convincing that AI works. What they lack is a way to get an agent into production without an 18-month build, a scarce AI hire, or a $400K RPA renewal. That gap is publicly observable — in open reqs, in competitors&#39; own case studies, in trust pages — which makes it routable.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>~110K</strong>
+          <span>Enterprise accounts in TAM</span>
+        </div>
+        <div class="metric-card">
+          <strong>30 days</strong>
+          <span>From signed to 2 AI employees live</span>
+        </div>
+        <div class="metric-card">
+          <strong>1.2M+</strong>
+          <span>Hours saved across customers</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Odin AI builds custom AI employees and workflow agents that run inside an enterprise&#39;s existing systems — 200+ native integrations across ERP, CRM, HRIS and ITSM, deployable in managed cloud, VPC or fully air-gapped on-prem.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal we route on</p></div><div><span>02</span><p>The routing logic</p></div><div><span>03</span><p>Five tiers, five different wounds</p></div><div><span>04</span><p>Campaign experiments</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>01</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>02</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>03</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>04</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>05</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>06</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="01">
+        
+    <div class="section-head">
+      <p class="eyebrow">01</p>
+      <h2>The signal we route on</h2>
+      <p class="takeaway">Automation commitment is visible from the outside. Job reqs, competitor case studies and trust pages tell you exactly where an enterprise is stuck — before you ever send an email.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>Job requisitions are the highest-fidelity intent signal in enterprise automation — an open Head of AI req means budget is approved and the clock has already started.</p></div><div class="reason-card"><span>02</span><p>UiPath, Automation Anywhere and Blue Prism publish their own customer lists as case studies and partner directories. Tier 2&#39;s list is scraped from the competitor&#39;s marketing site, for free.</p></div><div class="reason-card"><span>03</span><p>Job-description body text — not titles — is where the incumbent stack gets confessed: &#39;experience with UiPath required&#39;. Scrape the body.</p></div><div class="reason-card"><span>04</span><p>Trust and security pages state deployment constraints in plain language, which turns &#39;can&#39;t send data to a third-party LLM&#39; into a routable field rather than a discovery question.</p></div>
+            </div>
+            <div class="field-cloud"><span>ai_automation_req_open</span><span>ai_req_titles</span><span>rpa_vendor_detected</span><span>rpa_evidence_type</span><span>deployment_constraint</span><span>regulated_industry</span><span>manual_ops_req_count</span><span>ops_function</span><span>ipaas_detected</span><span>headcount_tier</span><span>industry</span><span>hq_geo</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>LinkedIn Sales Navigator + LinkedIn Jobs</h3><p>The TAM by headcount, geography and industry, plus open requisitions and titles in a single pull. Primary source for Tier 1 and Tier 4.</p></div><div class="source-card"><span>02</span><h3>Indeed / Greenhouse / Lever / Workday (scraped)</h3><p>Full job-description body text — where the incumbent automation stack is named outright.</p></div><div class="source-card"><span>03</span><h3>UiPath, Automation Anywhere and Blue Prism case-study + partner directories</h3><p>A pre-qualified list of confirmed RPA buyers, published by the competitor. The highest-value single scrape in this plan.</p></div><div class="source-card"><span>04</span><h3>G2 / PeerSpot / Gartner Peer Insights reviewer profiles</h3><p>Reviewer employer, tool in use, and verbatim complaint text — which doubles as copy fuel.</p></div><div class="source-card"><span>05</span><h3>BuiltWith / Wappalyzer</h3><p>Detected tooling: Zapier, Workato, MuleSoft, Power Automate, Zendesk. Used for presence only, never absence.</p></div><div class="source-card"><span>06</span><h3>Company site scrape: /security, /trust, /careers, /investors</h3><p>Compliance posture, deployment constraints and operational headcount volume. Powers Tier 3 and Tier 4 entirely from public pages.</p></div><div class="source-card"><span>07</span><h3>Apollo + Crunchbase</h3><p>The firmographic base layer — headcount, industry, geography, funding — for assembly and de-duplication.</p></div><div class="source-card"><span>08</span><h3>Earnings calls, annual reports and press releases</h3><p>Named AI and automation initiatives at public companies. Optional, but produces the strongest possible first line.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="02">
+        
+    <div class="section-head">
+      <p class="eyebrow">02</p>
+      <h2>The routing logic</h2>
+      <p class="takeaway">First match wins, top to bottom. A company hiring an AI engineer while running UiPath routes to Tier 1 only — no account sits in two tiers, and the catch-all guarantees none sits in zero.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF An AI or automation requisition is open (Head of AI, AI Engineer, ML Ops, Intelligent Automation Lead, Agent Engineer)</span>
+          <strong>Tier 1 — Building It In-House</strong>
+          <em>Budget is approved and the clock has started, but the plan is to hire the capability rather than buy it. This is the sharpest signal in the cascade, so it is tested first.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF No open AI req, but a legacy RPA vendor is detected (UiPath, Automation Anywhere, Blue Prism, Power Automate)</span>
+          <strong>Tier 2 — RPA Incumbent</strong>
+          <em>They have already bought automation and already hit its ceiling. The pain is specific and the cost contrast is the hardest in the playbook.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF No AI req and no RPA vendor, but the account is in a regulated industry AND states a deployment or data-residency constraint</span>
+          <strong>Tier 3 — Can&#39;t Send Data Out</strong>
+          <em>The appetite exists and the blocker is architecture. Odin&#39;s on-prem and air-gapped deployment is the only value prop that matters here.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF None of the above, but three or more manual back-office requisitions are open (claims, AP/AR, contracts, KYC, credentialing, support)</span>
+          <strong>Tier 4 — Hiring the Headcount</strong>
+          <em>Volume is growing and headcount is the only lever they have. The pain is visible in the careers page and denominated in salary.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF Everything else in the defined TAM</span>
+          <strong>Tier 5 — Catch-all: The ROI Benchmark</strong>
+          <em>No visible commitment yet, but the same cost base as their peers and a board asking about AI. Lead with peer benchmark rather than with pain.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF An AI or automation requisition is open (Head of AI, AI Engineer, ML Ops, Intelligent Automation Lead, Agent Engineer) -&gt; Tier 1 — Building It In-House (Budget is approved and the clock has started, but the plan is to hire the capability rather than buy it. This is the sharpest signal in the cascade, so it is tested first.)&#10;2. IF No open AI req, but a legacy RPA vendor is detected (UiPath, Automation Anywhere, Blue Prism, Power Automate) -&gt; Tier 2 — RPA Incumbent (They have already bought automation and already hit its ceiling. The pain is specific and the cost contrast is the hardest in the playbook.)&#10;3. IF No AI req and no RPA vendor, but the account is in a regulated industry AND states a deployment or data-residency constraint -&gt; Tier 3 — Can&#39;t Send Data Out (The appetite exists and the blocker is architecture. Odin&#39;s on-prem and air-gapped deployment is the only value prop that matters here.)&#10;4. IF None of the above, but three or more manual back-office requisitions are open (claims, AP/AR, contracts, KYC, credentialing, support) -&gt; Tier 4 — Hiring the Headcount (Volume is growing and headcount is the only lever they have. The pain is visible in the careers page and denominated in salary.)&#10;5. IF Everything else in the defined TAM -&gt; Tier 5 — Catch-all: The ROI Benchmark (No visible commitment yet, but the same cost base as their peers and a board asking about AI. Lead with peer benchmark rather than with pain.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF An AI or automation requisition is open (Head of AI, AI Engineer, ML Ops, Intelligent Automation Lead, Agent Engineer) -&gt; Tier 1 — Building It In-House (Budget is approved and the clock has started, but the plan is to hire the capability rather than buy it. This is the sharpest signal in the cascade, so it is tested first.)
+2. IF No open AI req, but a legacy RPA vendor is detected (UiPath, Automation Anywhere, Blue Prism, Power Automate) -&gt; Tier 2 — RPA Incumbent (They have already bought automation and already hit its ceiling. The pain is specific and the cost contrast is the hardest in the playbook.)
+3. IF No AI req and no RPA vendor, but the account is in a regulated industry AND states a deployment or data-residency constraint -&gt; Tier 3 — Can&#39;t Send Data Out (The appetite exists and the blocker is architecture. Odin&#39;s on-prem and air-gapped deployment is the only value prop that matters here.)
+4. IF None of the above, but three or more manual back-office requisitions are open (claims, AP/AR, contracts, KYC, credentialing, support) -&gt; Tier 4 — Hiring the Headcount (Volume is growing and headcount is the only lever they have. The pain is visible in the careers page and denominated in salary.)
+5. IF Everything else in the defined TAM -&gt; Tier 5 — Catch-all: The ROI Benchmark (No visible commitment yet, but the same cost base as their peers and a board asking about AI. Lead with peer benchmark rather than with pain.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="03">
+        
+    <div class="section-head">
+      <p class="eyebrow">03</p>
+      <h2>Five tiers, five different wounds</h2>
+      <p class="takeaway">Each pain is inferred from its trigger, never invented. Each answer is something Odin already sells today at a price it already quotes.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">8% TAM</span>
+          </div>
+          <h3>Tier 1: Building It In-House</h3>
+          <p>An open requisition for a Head of AI, AI Engineer, ML Ops Engineer, Intelligent Automation Lead or Agent Engineer.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Budget is approved and the clock has started, but the plan is to hire the capability. The first agent in production is 9 to 18 months and $150K to $500K+ away, and the talent is scarce and slow to land.</dd></div>
+              <div><dt>Offer</dt><dd>AI Build-vs-Buy Cost Model — their specific open role, costed against a 30-day deployment</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Jobs + ATS board scrape (Greenhouse, Lever, Workday), enriched with Apollo firmographics</dd></div>
+              <div><dt>Reply density</dt><dd>Highest in the cascade — live budget, a named owner and a public deadline. Target 1 in 150.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">11% TAM</span>
+          </div>
+          <h3>Tier 2: RPA Incumbent</h3>
+          <p>UiPath, Automation Anywhere, Blue Prism or Power Automate confirmed through a vendor case study, job-description text, partner directory listing or public review.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>RPA automates clicks, not judgement. Bots break when a screen changes, cannot read unstructured documents, and Year One total cost across licences, bot fees and system integrators runs $80K to $400K+. Maintenance burden grows with the size of the estate.</dd></div>
+              <div><dt>Offer</dt><dd>RPA-to-Agent Migration Map — which bot categories are worth keeping and which are better rebuilt as agents</dd></div>
+              <div><dt>Source</dt><dd>Competitor case-study and partner directories, G2 and PeerSpot reviewer profiles, JD body-text scrape, BuiltWith</dd></div>
+              <div><dt>Reply density</dt><dd>Very high — pre-qualified by the competitor&#39;s own marketing. Target 1 in 180.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">6% TAM</span>
+          </div>
+          <h3>Tier 3: Can&#39;t Send Data Out</h3>
+          <p>A regulated industry combined with a trust or security page asserting on-premise deployment, data residency, or a prohibition on external model calls.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They want agents and are blocked by architecture, not appetite. Every SaaS AI vendor fails procurement at the data-egress question, so the programme stalls in security review rather than in the business case.</dd></div>
+              <div><dt>Offer</dt><dd>On-Prem Agent Deployment Checklist — the security review, answered before it starts</dd></div>
+              <div><dt>Source</dt><dd>Trust and security page scrape, regulated-industry filter, AI-governance and model-risk requisitions</dd></div>
+              <div><dt>Reply density</dt><dd>High per contact but the smallest tier and the longest cycle. Largest deal sizes. Target 1 in 200.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">19% TAM</span>
+          </div>
+          <h3>Tier 4: Hiring the Headcount</h3>
+          <p>Three or more open requisitions for manual back-office roles: claims processors, AP/AR clerks, contract reviewers, KYC analysts, credentialing specialists or support agents.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Volume is growing and the only available lever is headcount. Cost scales linearly with work, error rates scale with fatigue, and every new hire takes roughly six weeks to ramp before clearing anything.</dd></div>
+              <div><dt>Offer</dt><dd>Queue Cost Calculator — cost per file today against cost per file with an agent on it</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Jobs and ATS scrape filtered to manual ops roles, careers-page volume count, industry classification</dd></div>
+              <div><dt>Reply density</dt><dd>Moderate — the largest non-catch-all tier and the broadest proof library. Target 1 in 300.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">56% TAM</span>
+          </div>
+          <h3>Tier 5: Catch-all: The ROI Benchmark</h3>
+          <p>Every remaining account in the defined TAM — 500+ employees, in BFSI, insurance, healthcare, legal, telecom, manufacturing, media, professional services, BPO or logistics.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>No visible commitment yet, but the same back-office cost base as their peers and a board asking what the company is doing with AI. Because the pain is undifferentiated, the message leads with peer benchmark rather than with pain.</dd></div>
+              <div><dt>Offer</dt><dd>Enterprise AI Workforce ROI Benchmark — what peers in their industry actually saved</dd></div>
+              <div><dt>Source</dt><dd>Apollo and Crunchbase firmographic base layer, filtered to the TAM definition and de-duplicated against Tiers 1 to 4</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest per contact but carries the volume — 56% of the market. Target 1 in 400 to 500.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="04">
+        
+    <div class="section-head">
+      <p class="eyebrow">04</p>
+      <h2>Campaign experiments</h2>
+      <p class="takeaway">The waterfall is the engine. These are the angles layered on top of it — plus five orthogonal side campaigns that run alongside once the cascade is stable.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>The Open Req</h3>
+          <p>The sharpest campaign in the playbook. They have already decided to spend the money — the only open question is whether the first agent ships in 30 days or in three quarters. Odin&#39;s own homepage message, &#39;skip the AI hires&#39;, is written for exactly this account.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Open requisition for Head of AI, AI Engineer, ML Ops, Intelligent Automation Lead or Agent Engineer, posted within 90 days</dd></div>
+            <div><dt>AI strategy</dt><dd>Pull the exact role title and posting age from the job board. The first line names the req and its age, which proves the research was manual and makes the timing argument for us.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Stale Req (side campaign)</h3>
+          <p>Runs alongside the waterfall, not inside it. The search is the bottleneck, not the ambition — and after three months of failing to hire, that argument lands far harder than it does on day one.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>AI or automation requisition reposted, or still open after 90 days</dd></div>
+            <div><dt>AI strategy</dt><dd>Track posting age across scrapes and trigger when a req crosses the 90-day mark or is reposted. The reposting itself is the proof point.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>New AI Leader (side campaign)</h3>
+          <p>A new AI leader is under day-ninety pressure to ship something visible. Offer them the fastest possible win — a production agent inside their first quarter, rather than a roadmap.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Head of AI, Chief AI Officer or VP of Automation appointed within the last 60 days</dd></div>
+            <div><dt>AI strategy</dt><dd>Monitor title changes on LinkedIn across the TAM. Personalise on the appointment and the mandate implied by it.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Competitor Case-Study Harvest</h3>
+          <p>The highest-leverage list in the plan and it costs nothing to build. The prospect&#39;s automation programme is documented publicly, by the vendor they are about to compare us against.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Named on a UiPath, Automation Anywhere or Blue Prism case study or partner directory</dd></div>
+            <div><dt>AI strategy</dt><dd>Scrape the competitor&#39;s own customer stories, extract the company, the automated function and the publication date, then quote the specific workflow back to them.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>The Unstructured Wall</h3>
+          <p>Hiring an RPA developer to keep the estate alive is the clearest possible statement that the estate is brittle. Lead on judgement versus clicking, and on documents that never look the same twice.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>RPA detected via job-description text requiring bot maintenance or RPA developer skills</dd></div>
+            <div><dt>AI strategy</dt><dd>Use the JD&#39;s own language about maintaining, fixing or scaling bots as the notice line. Hiring to maintain bots is an admission of the maintenance burden.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>G2 Complaint Mining</h3>
+          <p>Highest-personalisation, lowest-volume version of the Tier 2 message. Use it on named target accounts where a generic send would be wasted.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Employees who left a public RPA review mentioning maintenance, cost or brittleness</dd></div>
+            <div><dt>AI strategy</dt><dd>Pull the verbatim complaint from the review and mirror its language back. The prospect describes the pain better than any copywriter can.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Renewal Window (side campaign)</h3>
+          <p>The cost comparison only converts while the decision is still open. Landing 60 days before renewal is worth more than landing 60 days after it — same message, different outcome.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>RPA contract anniversary inferred from case-study publication date or announcement press release</dd></div>
+            <div><dt>AI strategy</dt><dd>Estimate the contract anniversary from the first public mention and trigger 60 days ahead of it.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>The Procurement Wall</h3>
+          <p>Every competitor loses this account at the data-egress question. Odin does not, and saying so plainly in email one collapses a six-month security review into a 30-day deployment conversation.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Regulated industry with a trust page stating on-prem, data residency or no external model calls</dd></div>
+            <div><dt>AI strategy</dt><dd>Quote the constraint from their own security page in the first line, then answer it directly with the deployment model rather than arguing with it.</dd></div>
+            <div><dt>Value</dt><dd>Reduce risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>AI Governance Hire</h3>
+          <p>A company hiring for model risk is telling you the blocker is governance. Lead with RBAC, audit logs and isolated compute, not with speed to production.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Open requisition naming AI governance, model risk, responsible AI or AI compliance</dd></div>
+            <div><dt>AI strategy</dt><dd>Route these to Tier 3 messaging rather than Tier 1 — the hire signals a control problem, not a build problem.</dd></div>
+            <div><dt>Value</dt><dd>Reduce risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>The Queue</h3>
+          <p>Headcount is a linear answer to a compounding problem. The projected $54K+ payroll offset on a $15K package is roughly one of the reqs they have already posted, which makes the trade concrete.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Three or more open manual back-office reqs in claims, AP/AR, contracts, KYC, credentialing or support</dd></div>
+            <div><dt>AI strategy</dt><dd>Count the open reqs and name the function. The number itself is the notice line — it proves volume is outrunning the team.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Function-Matched Proof</h3>
+          <p>Same sequence, function-matched proof. The variant test here is the metric, not the body — which is the cheapest meaningful test available in this tier.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Tier 4 accounts segmented by ops_function</dd></div>
+            <div><dt>AI strategy</dt><dd>Swap the case study to match the function: contract review gets the $324K legal saving, support gets 97% routing accuracy, claims gets the 78% appeal overturn rate.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Industry ROI Benchmark</h3>
+          <p>56% of the market lives here. Lead with what peers actually saved, not with a guess at their problem, and let the benchmark surface the accounts that self-identify.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Everything remaining in the TAM, segmented by industry</dd></div>
+            <div><dt>AI strategy</dt><dd>Personalise only on industry and peer size. The asset does the work — no pain claim is made, because none can be verified for these accounts.</dd></div>
+            <div><dt>Value</dt><dd>Build trust</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Earnings-Call Mention (side campaign)</h3>
+          <p>The highest-personalisation campaign available and deliberately low volume. Reserve it for named accounts where a single reply justifies the research time.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Public company naming AI or automation on its most recent earnings call</dd></div>
+            <div><dt>AI strategy</dt><dd>Quote the exact line from the transcript back to them. Nothing signals real research like their own CFO&#39;s words.</dd></div>
+            <div><dt>Value</dt><dd>Build trust</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="05">
+        
+    <div class="section-head">
+      <p class="eyebrow">05</p>
+      <h2>The sequences</h2>
+      <p class="takeaway">Fifteen emails, one structure. Notice line, poke-the-bear, one-line value prop, named metric, then a CTA that asks for one word instead of thirty minutes.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company}}</span><span>{{sender_name}}</span><span>{{industry}}</span><span>{{ai_role_title}}</span><span>{{days_since_posting}}</span><span>{{rpa_vendor}}</span><span>{{rpa_evidence_detail}}</span><span>{{ops_function}}</span><span>{{ops_role}}</span><span>{{manual_ops_req_count}}</span><span>{{deployment_constraint_detail}}</span><span>{{peer_count}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company}}, {{sender_name}}, {{industry}}, {{ai_role_title}}, {{days_since_posting}}, {{rpa_vendor}}, {{rpa_evidence_detail}}, {{ops_function}}, {{ops_role}}, {{manual_ops_req_count}}, {{deployment_constraint_detail}}, {{peer_count}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 — Building It In-House</strong>
+              <em>AI Build-vs-Buy Cost Model</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 — Building It In-House steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the {{ai_role_title}} req&#10;&#10;Hi {{first_name}},&#10;&#10;Saw {{company}} has an open req for a {{ai_role_title}}, posted {{days_since_posting}} days ago, and it reads like the plan is to build the agent layer internally.&#10;&#10;But would it be fair to assume the first agent in production is still three quarters away? Between the search, the ramp and the build, most teams we talk to are 9 to 18 months and $150K to $500K in before anything touches a live workflow.&#10;&#10;We build the agents for you instead. Odin&#39;s Accelerator puts two custom AI employees into your actual systems in 30 days, flat $15K, while the req is still open.&#10;&#10;Average implementation across 128 enterprise deployments is 8 weeks, with a 98% success rate.&#10;&#10;Reply Y and I&#39;ll send you the build-vs-buy cost model for that specific role. No call needed.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the {{ai_role_title}} req" data-preview="the Intelligent Automation Lead req">the {{ai_role_title}} req</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Saw {{company}} has an open req for a {{ai_role_title}}, posted {{days_since_posting}} days ago, and it reads like the plan is to build the agent layer internally.&#10;&#10;But would it be fair to assume the first agent in production is still three quarters away? Between the search, the ramp and the build, most teams we talk to are 9 to 18 months and $150K to $500K in before anything touches a live workflow.&#10;&#10;We build the agents for you instead. Odin&#39;s Accelerator puts two custom AI employees into your actual systems in 30 days, flat $15K, while the req is still open.&#10;&#10;Average implementation across 128 enterprise deployments is 8 weeks, with a 98% success rate.&#10;&#10;Reply Y and I&#39;ll send you the build-vs-buy cost model for that specific role. No call needed.&#10;&#10;{{sender_name}}" data-preview="Hi Priya,&#10;&#10;Saw Northgate Financial has an open req for a Intelligent Automation Lead, posted 23 days ago, and it reads like the plan is to build the agent layer internally.&#10;&#10;But would it be fair to assume the first agent in production is still three quarters away? Between the search, the ramp and the build, most teams we talk to are 9 to 18 months and $150K to $500K in before anything touches a live workflow.&#10;&#10;We build the agents for you instead. Odin&#39;s Accelerator puts two custom AI employees into your actual systems in 30 days, flat $15K, while the req is still open.&#10;&#10;Average implementation across 128 enterprise deployments is 8 weeks, with a 98% success rate.&#10;&#10;Reply Y and I&#39;ll send you the build-vs-buy cost model for that specific role. No call needed.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>Saw {{company}} has an open req for a {{ai_role_title}}, posted {{days_since_posting}} days ago, and it reads like the plan is to build the agent layer internally.</p><p>But would it be fair to assume the first agent in production is still three quarters away? Between the search, the ramp and the build, most teams we talk to are 9 to 18 months and $150K to $500K in before anything touches a live workflow.</p><p>We build the agents for you instead. Odin&#39;s Accelerator puts two custom AI employees into your actual systems in 30 days, flat $15K, while the req is still open.</p><p>Average implementation across 128 enterprise deployments is 8 weeks, with a 98% success rate.</p><p>Reply Y and I&#39;ll send you the build-vs-buy cost model for that specific role. No call needed.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Following up with the money version of this.&#10;&#10;The req itself is $180K to $250K fully loaded in Year 1, before you&#39;ve shipped anything. Two production AI employees from us is $15K one-time, and the projected payroll offset on that package is $54K+.&#10;&#10;The hire is still worth making, for strategy. Just not for building agent number one.&#10;&#10;Want the model? One word back and it&#39;s yours.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Following up with the money version of this.&#10;&#10;The req itself is $180K to $250K fully loaded in Year 1, before you&#39;ve shipped anything. Two production AI employees from us is $15K one-time, and the projected payroll offset on that package is $54K+.&#10;&#10;The hire is still worth making, for strategy. Just not for building agent number one.&#10;&#10;Want the model? One word back and it&#39;s yours." data-preview="Following up with the money version of this.&#10;&#10;The req itself is $180K to $250K fully loaded in Year 1, before you&#39;ve shipped anything. Two production AI employees from us is $15K one-time, and the projected payroll offset on that package is $54K+.&#10;&#10;The hire is still worth making, for strategy. Just not for building agent number one.&#10;&#10;Want the model? One word back and it&#39;s yours.">
+                        <p>Following up with the money version of this.</p><p>The req itself is $180K to $250K fully loaded in Year 1, before you&#39;ve shipped anything. Two production AI employees from us is $15K one-time, and the projected payroll offset on that package is $54K+.</p><p>The hire is still worth making, for strategy. Just not for building agent number one.</p><p>Want the model? One word back and it&#39;s yours.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: wrong person?&#10;&#10;{{first_name}}, no need for a call on this. Just reply yes and I&#39;ll send the build-vs-buy model for the {{ai_role_title}} req.&#10;&#10;Should this go to you, or to whoever owns the automation roadmap?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="wrong person?" data-preview="wrong person?">wrong person?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no need for a call on this. Just reply yes and I&#39;ll send the build-vs-buy model for the {{ai_role_title}} req.&#10;&#10;Should this go to you, or to whoever owns the automation roadmap?" data-preview="Priya, no need for a call on this. Just reply yes and I&#39;ll send the build-vs-buy model for the Intelligent Automation Lead req.&#10;&#10;Should this go to you, or to whoever owns the automation roadmap?">
+                        <p>{{first_name}}, no need for a call on this. Just reply yes and I&#39;ll send the build-vs-buy model for the {{ai_role_title}} req.</p><p>Should this go to you, or to whoever owns the automation roadmap?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 — RPA Incumbent</strong>
+              <em>RPA-to-Agent Migration Map</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 — RPA Incumbent steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your {{rpa_vendor}} estate&#10;&#10;Hi {{first_name}},&#10;&#10;Came across {{rpa_evidence_detail}}, so {{company}} has real {{rpa_vendor}} coverage across {{ops_function}}.&#10;&#10;But would it be fair to assume the bots handle the clicking fine, and fall over the moment a document doesn&#39;t look like the last one? That&#39;s the wall every RPA estate hits. It automates the steps, not the judgement.&#10;&#10;Odin sits on top of what you already run. The agents read unstructured input, contracts, claims, invoices, emails, decide, then hand off to the existing bots. Nothing gets ripped out.&#10;&#10;One financial-services customer put 1M+ files through it: $22M in cost savings at a sub-0.1% error rate.&#10;&#10;Reply Y and I&#39;ll send the RPA-to-agent migration map, which of your bot categories are worth keeping and which are better off as agents. No call.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your {{rpa_vendor}} estate" data-preview="your UiPath estate">your {{rpa_vendor}} estate</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Came across {{rpa_evidence_detail}}, so {{company}} has real {{rpa_vendor}} coverage across {{ops_function}}.&#10;&#10;But would it be fair to assume the bots handle the clicking fine, and fall over the moment a document doesn&#39;t look like the last one? That&#39;s the wall every RPA estate hits. It automates the steps, not the judgement.&#10;&#10;Odin sits on top of what you already run. The agents read unstructured input, contracts, claims, invoices, emails, decide, then hand off to the existing bots. Nothing gets ripped out.&#10;&#10;One financial-services customer put 1M+ files through it: $22M in cost savings at a sub-0.1% error rate.&#10;&#10;Reply Y and I&#39;ll send the RPA-to-agent migration map, which of your bot categories are worth keeping and which are better off as agents. No call.&#10;&#10;{{sender_name}}" data-preview="Hi Priya,&#10;&#10;Came across your team&#39;s case study on UiPath&#39;s site, so Northgate Financial has real UiPath coverage across invoice processing.&#10;&#10;But would it be fair to assume the bots handle the clicking fine, and fall over the moment a document doesn&#39;t look like the last one? That&#39;s the wall every RPA estate hits. It automates the steps, not the judgement.&#10;&#10;Odin sits on top of what you already run. The agents read unstructured input, contracts, claims, invoices, emails, decide, then hand off to the existing bots. Nothing gets ripped out.&#10;&#10;One financial-services customer put 1M+ files through it: $22M in cost savings at a sub-0.1% error rate.&#10;&#10;Reply Y and I&#39;ll send the RPA-to-agent migration map, which of your bot categories are worth keeping and which are better off as agents. No call.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>Came across {{rpa_evidence_detail}}, so {{company}} has real {{rpa_vendor}} coverage across {{ops_function}}.</p><p>But would it be fair to assume the bots handle the clicking fine, and fall over the moment a document doesn&#39;t look like the last one? That&#39;s the wall every RPA estate hits. It automates the steps, not the judgement.</p><p>Odin sits on top of what you already run. The agents read unstructured input, contracts, claims, invoices, emails, decide, then hand off to the existing bots. Nothing gets ripped out.</p><p>One financial-services customer put 1M+ files through it: $22M in cost savings at a sub-0.1% error rate.</p><p>Reply Y and I&#39;ll send the RPA-to-agent migration map, which of your bot categories are worth keeping and which are better off as agents. No call.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The other half of this is the renewal.&#10;&#10;Licences plus bot fees plus the SI line usually lands between $80K and $400K in Year 1 on legacy RPA. Two custom AI employees from us is $15K flat, live in 30 days.&#10;&#10;Worth a look before the next renewal cycle rather than after it.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The other half of this is the renewal.&#10;&#10;Licences plus bot fees plus the SI line usually lands between $80K and $400K in Year 1 on legacy RPA. Two custom AI employees from us is $15K flat, live in 30 days.&#10;&#10;Worth a look before the next renewal cycle rather than after it." data-preview="The other half of this is the renewal.&#10;&#10;Licences plus bot fees plus the SI line usually lands between $80K and $400K in Year 1 on legacy RPA. Two custom AI employees from us is $15K flat, live in 30 days.&#10;&#10;Worth a look before the next renewal cycle rather than after it.">
+                        <p>The other half of this is the renewal.</p><p>Licences plus bot fees plus the SI line usually lands between $80K and $400K in Year 1 on legacy RPA. Two custom AI employees from us is $15K flat, live in 30 days.</p><p>Worth a look before the next renewal cycle rather than after it.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{rpa_vendor}} to agents&#10;&#10;No call needed, {{first_name}}. Reply yes and I&#39;ll send the migration map for the {{ops_function}} workflows.&#10;&#10;Should I send it to you or to whoever owns the {{rpa_vendor}} estate?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{rpa_vendor}} to agents" data-preview="UiPath to agents">{{rpa_vendor}} to agents</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed, {{first_name}}. Reply yes and I&#39;ll send the migration map for the {{ops_function}} workflows.&#10;&#10;Should I send it to you or to whoever owns the {{rpa_vendor}} estate?" data-preview="No call needed, Priya. Reply yes and I&#39;ll send the migration map for the invoice processing workflows.&#10;&#10;Should I send it to you or to whoever owns the UiPath estate?">
+                        <p>No call needed, {{first_name}}. Reply yes and I&#39;ll send the migration map for the {{ops_function}} workflows.</p><p>Should I send it to you or to whoever owns the {{rpa_vendor}} estate?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 — Can&#39;t Send Data Out</strong>
+              <em>On-Prem Agent Deployment Checklist</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 — Can&#39;t Send Data Out steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the data-residency problem&#10;&#10;Hi {{first_name}},&#10;&#10;Read {{company}}&#39;s security page, {{deployment_constraint_detail}}. In {{industry}} that&#39;s not negotiable, and I&#39;d assume it&#39;s already killed a couple of AI vendor evaluations for you.&#10;&#10;But would it be fair to assume the appetite is there, and it&#39;s procurement and architecture that keep stalling it, not the business case?&#10;&#10;Odin deploys inside your infrastructure, AWS, GCP, Azure, VPC, or fully air-gapped on-prem, with isolated compute, role-based agent permissions and full audit logs. HIPAA, GDPR, SOC 2 Type II, ISO 27001.&#10;&#10;A financial-services customer runs 1M+ files a year through it at a sub-0.1% error rate, in their own environment.&#10;&#10;Reply Y and I&#39;ll send the on-prem deployment checklist, the security review answered before you start it. No call.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the data-residency problem" data-preview="the data-residency problem">the data-residency problem</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Read {{company}}&#39;s security page, {{deployment_constraint_detail}}. In {{industry}} that&#39;s not negotiable, and I&#39;d assume it&#39;s already killed a couple of AI vendor evaluations for you.&#10;&#10;But would it be fair to assume the appetite is there, and it&#39;s procurement and architecture that keep stalling it, not the business case?&#10;&#10;Odin deploys inside your infrastructure, AWS, GCP, Azure, VPC, or fully air-gapped on-prem, with isolated compute, role-based agent permissions and full audit logs. HIPAA, GDPR, SOC 2 Type II, ISO 27001.&#10;&#10;A financial-services customer runs 1M+ files a year through it at a sub-0.1% error rate, in their own environment.&#10;&#10;Reply Y and I&#39;ll send the on-prem deployment checklist, the security review answered before you start it. No call.&#10;&#10;{{sender_name}}" data-preview="Hi Priya,&#10;&#10;Read Northgate Financial&#39;s security page, customer data can&#39;t be processed by third-party models. In financial services that&#39;s not negotiable, and I&#39;d assume it&#39;s already killed a couple of AI vendor evaluations for you.&#10;&#10;But would it be fair to assume the appetite is there, and it&#39;s procurement and architecture that keep stalling it, not the business case?&#10;&#10;Odin deploys inside your infrastructure, AWS, GCP, Azure, VPC, or fully air-gapped on-prem, with isolated compute, role-based agent permissions and full audit logs. HIPAA, GDPR, SOC 2 Type II, ISO 27001.&#10;&#10;A financial-services customer runs 1M+ files a year through it at a sub-0.1% error rate, in their own environment.&#10;&#10;Reply Y and I&#39;ll send the on-prem deployment checklist, the security review answered before you start it. No call.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>Read {{company}}&#39;s security page, {{deployment_constraint_detail}}. In {{industry}} that&#39;s not negotiable, and I&#39;d assume it&#39;s already killed a couple of AI vendor evaluations for you.</p><p>But would it be fair to assume the appetite is there, and it&#39;s procurement and architecture that keep stalling it, not the business case?</p><p>Odin deploys inside your infrastructure, AWS, GCP, Azure, VPC, or fully air-gapped on-prem, with isolated compute, role-based agent permissions and full audit logs. HIPAA, GDPR, SOC 2 Type II, ISO 27001.</p><p>A financial-services customer runs 1M+ files a year through it at a sub-0.1% error rate, in their own environment.</p><p>Reply Y and I&#39;ll send the on-prem deployment checklist, the security review answered before you start it. No call.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;To be concrete about what in your environment means: your data never leaves it, model calls are governed, every agent action is logged and attributable, and your super-admins control who can view, edit, approve and deploy each agent.&#10;&#10;That&#39;s usually the difference between a six-month security review and a 30-day deployment.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="To be concrete about what in your environment means: your data never leaves it, model calls are governed, every agent action is logged and attributable, and your super-admins control who can view, edit, approve and deploy each agent.&#10;&#10;That&#39;s usually the difference between a six-month security review and a 30-day deployment." data-preview="To be concrete about what in your environment means: your data never leaves it, model calls are governed, every agent action is logged and attributable, and your super-admins control who can view, edit, approve and deploy each agent.&#10;&#10;That&#39;s usually the difference between a six-month security review and a 30-day deployment.">
+                        <p>To be concrete about what in your environment means: your data never leaves it, model calls are governed, every agent action is logged and attributable, and your super-admins control who can view, edit, approve and deploy each agent.</p><p>That&#39;s usually the difference between a six-month security review and a 30-day deployment.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: air-gapped agents&#10;&#10;{{first_name}}, no call. Just reply yes and I&#39;ll send the on-prem agent deployment checklist.&#10;&#10;You, or should it go to your CISO or security architecture lead?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="air-gapped agents" data-preview="air-gapped agents">air-gapped agents</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call. Just reply yes and I&#39;ll send the on-prem agent deployment checklist.&#10;&#10;You, or should it go to your CISO or security architecture lead?" data-preview="Priya, no call. Just reply yes and I&#39;ll send the on-prem agent deployment checklist.&#10;&#10;You, or should it go to your CISO or security architecture lead?">
+                        <p>{{first_name}}, no call. Just reply yes and I&#39;ll send the on-prem agent deployment checklist.</p><p>You, or should it go to your CISO or security architecture lead?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 — Hiring the Headcount</strong>
+              <em>Queue Cost Calculator</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 — Hiring the Headcount steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{manual_ops_req_count}} {{ops_role}} reqs&#10;&#10;Hi {{first_name}},&#10;&#10;{{company}} has {{manual_ops_req_count}} open reqs for {{ops_role}} right now, which usually means {{ops_function}} volume is growing faster than the team can clear it.&#10;&#10;But would it be fair to assume each of those hires is six weeks to ramp, and the queue is still the queue at the end of it? Headcount is a linear answer to a compounding problem.&#10;&#10;Odin builds AI employees that work the queue inside your existing systems, 200+ native integrations across ERP, CRM, HRIS and ITSM, so nothing has to be re-platformed.&#10;&#10;Customers have taken 1.2M+ hours out of workflows this way. One legal team cut $324K+ a year on contract review; a support org hit 97% routing accuracy and 80% faster resolution.&#10;&#10;Reply Y and I&#39;ll send the queue cost calculator, your cost per file today vs with an agent on it. No call needed.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{manual_ops_req_count}} {{ops_role}} reqs" data-preview="4 AP Specialist reqs">{{manual_ops_req_count}} {{ops_role}} reqs</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;{{company}} has {{manual_ops_req_count}} open reqs for {{ops_role}} right now, which usually means {{ops_function}} volume is growing faster than the team can clear it.&#10;&#10;But would it be fair to assume each of those hires is six weeks to ramp, and the queue is still the queue at the end of it? Headcount is a linear answer to a compounding problem.&#10;&#10;Odin builds AI employees that work the queue inside your existing systems, 200+ native integrations across ERP, CRM, HRIS and ITSM, so nothing has to be re-platformed.&#10;&#10;Customers have taken 1.2M+ hours out of workflows this way. One legal team cut $324K+ a year on contract review; a support org hit 97% routing accuracy and 80% faster resolution.&#10;&#10;Reply Y and I&#39;ll send the queue cost calculator, your cost per file today vs with an agent on it. No call needed.&#10;&#10;{{sender_name}}" data-preview="Hi Priya,&#10;&#10;Northgate Financial has 4 open reqs for AP Specialist right now, which usually means invoice processing volume is growing faster than the team can clear it.&#10;&#10;But would it be fair to assume each of those hires is six weeks to ramp, and the queue is still the queue at the end of it? Headcount is a linear answer to a compounding problem.&#10;&#10;Odin builds AI employees that work the queue inside your existing systems, 200+ native integrations across ERP, CRM, HRIS and ITSM, so nothing has to be re-platformed.&#10;&#10;Customers have taken 1.2M+ hours out of workflows this way. One legal team cut $324K+ a year on contract review; a support org hit 97% routing accuracy and 80% faster resolution.&#10;&#10;Reply Y and I&#39;ll send the queue cost calculator, your cost per file today vs with an agent on it. No call needed.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>{{company}} has {{manual_ops_req_count}} open reqs for {{ops_role}} right now, which usually means {{ops_function}} volume is growing faster than the team can clear it.</p><p>But would it be fair to assume each of those hires is six weeks to ramp, and the queue is still the queue at the end of it? Headcount is a linear answer to a compounding problem.</p><p>Odin builds AI employees that work the queue inside your existing systems, 200+ native integrations across ERP, CRM, HRIS and ITSM, so nothing has to be re-platformed.</p><p>Customers have taken 1.2M+ hours out of workflows this way. One legal team cut $324K+ a year on contract review; a support org hit 97% routing accuracy and 80% faster resolution.</p><p>Reply Y and I&#39;ll send the queue cost calculator, your cost per file today vs with an agent on it. No call needed.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Not suggesting you stop hiring. Suggesting the next three reqs don&#39;t have to be for the same work.&#10;&#10;Two custom AI employees, live in 30 days, $15K flat. Projected payroll offset on that package is $54K+, which is roughly one of the reqs you&#39;ve already posted.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Not suggesting you stop hiring. Suggesting the next three reqs don&#39;t have to be for the same work.&#10;&#10;Two custom AI employees, live in 30 days, $15K flat. Projected payroll offset on that package is $54K+, which is roughly one of the reqs you&#39;ve already posted." data-preview="Not suggesting you stop hiring. Suggesting the next three reqs don&#39;t have to be for the same work.&#10;&#10;Two custom AI employees, live in 30 days, $15K flat. Projected payroll offset on that package is $54K+, which is roughly one of the reqs you&#39;ve already posted.">
+                        <p>Not suggesting you stop hiring. Suggesting the next three reqs don&#39;t have to be for the same work.</p><p>Two custom AI employees, live in 30 days, $15K flat. Projected payroll offset on that package is $54K+, which is roughly one of the reqs you&#39;ve already posted.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the {{ops_function}} queue&#10;&#10;No call, {{first_name}}. Reply yes and I&#39;ll send the queue cost calculator for {{ops_function}}.&#10;&#10;Is this yours, or does it sit with whoever owns {{ops_function}} operations?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the {{ops_function}} queue" data-preview="the invoice processing queue">the {{ops_function}} queue</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call, {{first_name}}. Reply yes and I&#39;ll send the queue cost calculator for {{ops_function}}.&#10;&#10;Is this yours, or does it sit with whoever owns {{ops_function}} operations?" data-preview="No call, Priya. Reply yes and I&#39;ll send the queue cost calculator for invoice processing.&#10;&#10;Is this yours, or does it sit with whoever owns invoice processing operations?">
+                        <p>No call, {{first_name}}. Reply yes and I&#39;ll send the queue cost calculator for {{ops_function}}.</p><p>Is this yours, or does it sit with whoever owns {{ops_function}} operations?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 — Catch-all: The ROI Benchmark</strong>
+              <em>Enterprise AI Workforce ROI Benchmark</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 — Catch-all: The ROI Benchmark steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{industry}} AI benchmark&#10;&#10;Hi {{first_name}},&#10;&#10;We&#39;ve deployed AI agents into {{industry}} operations at {{peer_count}}+ companies of roughly {{company}}&#39;s size, and pulled what they actually saved into one benchmark.&#10;&#10;Would it be fair to assume the board has asked what {{company}} is doing with AI, and the honest answer is still a few pilots?&#10;&#10;That&#39;s the normal state. The gap between pilot and production is almost never the model. It&#39;s that nobody has the six months to build the thing.&#10;&#10;1,200+ businesses run on Odin, and 1.2M+ hours have come out of their workflows. Average implementation is 8 weeks.&#10;&#10;Reply Y and I&#39;ll send the {{industry}} AI workforce ROI benchmark. No pitch, no call.&#10;&#10;{{sender_name}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{industry}} AI benchmark" data-preview="financial services AI benchmark">{{industry}} AI benchmark</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;We&#39;ve deployed AI agents into {{industry}} operations at {{peer_count}}+ companies of roughly {{company}}&#39;s size, and pulled what they actually saved into one benchmark.&#10;&#10;Would it be fair to assume the board has asked what {{company}} is doing with AI, and the honest answer is still a few pilots?&#10;&#10;That&#39;s the normal state. The gap between pilot and production is almost never the model. It&#39;s that nobody has the six months to build the thing.&#10;&#10;1,200+ businesses run on Odin, and 1.2M+ hours have come out of their workflows. Average implementation is 8 weeks.&#10;&#10;Reply Y and I&#39;ll send the {{industry}} AI workforce ROI benchmark. No pitch, no call.&#10;&#10;{{sender_name}}" data-preview="Hi Priya,&#10;&#10;We&#39;ve deployed AI agents into financial services operations at 40+ companies of roughly Northgate Financial&#39;s size, and pulled what they actually saved into one benchmark.&#10;&#10;Would it be fair to assume the board has asked what Northgate Financial is doing with AI, and the honest answer is still a few pilots?&#10;&#10;That&#39;s the normal state. The gap between pilot and production is almost never the model. It&#39;s that nobody has the six months to build the thing.&#10;&#10;1,200+ businesses run on Odin, and 1.2M+ hours have come out of their workflows. Average implementation is 8 weeks.&#10;&#10;Reply Y and I&#39;ll send the financial services AI workforce ROI benchmark. No pitch, no call.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>We&#39;ve deployed AI agents into {{industry}} operations at {{peer_count}}+ companies of roughly {{company}}&#39;s size, and pulled what they actually saved into one benchmark.</p><p>Would it be fair to assume the board has asked what {{company}} is doing with AI, and the honest answer is still a few pilots?</p><p>That&#39;s the normal state. The gap between pilot and production is almost never the model. It&#39;s that nobody has the six months to build the thing.</p><p>1,200+ businesses run on Odin, and 1.2M+ hours have come out of their workflows. Average implementation is 8 weeks.</p><p>Reply Y and I&#39;ll send the {{industry}} AI workforce ROI benchmark. No pitch, no call.</p><p>{{sender_name}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Two numbers from it, in case they&#39;re useful on their own.&#10;&#10;A media business unlocked $4.4M in value and 11.2K hours. A telecom took 7.5K hours a year out of financial reporting alone.&#10;&#10;Both started with a single workflow, not a transformation programme.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Two numbers from it, in case they&#39;re useful on their own.&#10;&#10;A media business unlocked $4.4M in value and 11.2K hours. A telecom took 7.5K hours a year out of financial reporting alone.&#10;&#10;Both started with a single workflow, not a transformation programme." data-preview="Two numbers from it, in case they&#39;re useful on their own.&#10;&#10;A media business unlocked $4.4M in value and 11.2K hours. A telecom took 7.5K hours a year out of financial reporting alone.&#10;&#10;Both started with a single workflow, not a transformation programme.">
+                        <p>Two numbers from it, in case they&#39;re useful on their own.</p><p>A media business unlocked $4.4M in value and 11.2K hours. A telecom took 7.5K hours a year out of financial reporting alone.</p><p>Both started with a single workflow, not a transformation programme.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: benchmark&#10;&#10;{{first_name}}, no call needed. Reply yes and I&#39;ll send the {{industry}} ROI benchmark.&#10;&#10;Should I send it to you or to whoever owns operations or transformation?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="benchmark" data-preview="benchmark">benchmark</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed. Reply yes and I&#39;ll send the {{industry}} ROI benchmark.&#10;&#10;Should I send it to you or to whoever owns operations or transformation?" data-preview="Priya, no call needed. Reply yes and I&#39;ll send the financial services ROI benchmark.&#10;&#10;Should I send it to you or to whoever owns operations or transformation?">
+                        <p>{{first_name}}, no call needed. Reply yes and I&#39;ll send the {{industry}} ROI benchmark.</p><p>Should I send it to you or to whoever owns operations or transformation?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="06">
+        
+    <div class="section-head">
+      <p class="eyebrow">06</p>
+      <h2>Launch and measurement</h2>
+      <p class="takeaway">Phase-roll the tiers, read nothing before 1,500 sends, and let one number decide whether a tier scales, holds, gets tested or gets cut.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Week 0 — Confirm the compliance list (HIPAA, GDPR, SOC 2 Type II, ISO 27001), confirm Accelerator pricing quoted in copy, and sign off the five lead magnets. Four of these block launch.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Week 1 — Build the Tier 1 list against the open-req signal. Target 34,000 contacts across ~7,600 accounts before sending anything.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 1-2 — Launch Tier 1 (Building It In-House) as a chaos test: two deliberately different Day-0 copies, everything else held constant. Sharpest signal, fastest proof.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Weeks 3-4 — Launch Tier 2 (RPA Incumbent). The list is pre-qualified by the competitors&#39; own websites and the cost contrast is the hardest in the playbook.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Weeks 5-6 — Launch Tier 4 (Hiring the Headcount), the largest non-catch-all tier, with function-matched proof metrics as the variant test.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Weeks 7-8 — Launch Tier 3 (Can&#39;t Send Data Out). Smallest tier and longest cycle, but the largest deal sizes. Run it once the first three are calibrated.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>Week 9+ — Turn on the catch-all, once the lead magnets have been validated by real replies from the tiers above.</p>
+              </div>
+              <div class="launch-step">
+                <span>08</span>
+                <p>Week 6 and every week after — Read tier performance against the thresholds. Act on nothing before 1,500 sends have landed in that tier.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacted</strong>
+                <span>Excellent. Scale this tier aggressively and expand the source query to grow the list.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run untouched — do not optimise a working tier.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450 to 500</strong>
+                <span>Borderline. Test a single copy variant, rotating the lead magnet first before touching the body.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or under 1% reply rate after 1,500+ sends</strong>
+                <span>Failing. Cut the tier and rework the trigger — the signal, not the copy, is usually what is wrong.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Priya","NextGen AI Technologies","customer support rep","6","Intercom","financial services","Maya","Northgate Financial","Alex","Intelligent Automation Lead","23","UiPath","your team's case study on UiPath's site","invoice processing","AP Specialist","4","customer data can't be processed by third-party models","40"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

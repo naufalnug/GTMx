@@ -4,8 +4,11 @@ import Footer from '../../../components/home/Footer'
 import ServiceFaq from '../../../components/home/ServiceFaq'
 import ServiceCta from '../../../components/home/ServiceCta'
 import { services } from '../../../data/services'
-import { pageMetadata } from '../../../lib/seo'
+import { pageMetadata, absoluteUrl, SITE_URL, SITE_NAME } from '../../../lib/seo'
 import './page.css'
+
+// `</script>`-safe JSON-LD serialization (matches the article route).
+const jsonLd = (obj) => JSON.stringify(obj).replace(/</g, '\\u003c')
 
 export function generateStaticParams() {
   return services.map(service => ({ slug: service.slug }))
@@ -40,8 +43,36 @@ export default async function ServicePage({ params }) {
   const stepCount = service.process.length
   const cols = stepCount <= 4 ? stepCount : 3
 
+  const url = absoluteUrl(`/services/${service.slug}`)
+  const schemas = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: service.name,
+      description: service.blurb,
+      serviceType: service.name,
+      url,
+      provider: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+        { '@type': 'ListItem', position: 2, name: service.name, item: url },
+      ],
+    },
+  ]
+
   return (
     <>
+      {schemas.map((schema, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLd(schema) }}
+        />
+      ))}
       <Navbar />
       <div className={`svc-page ${service.theme}`}>
         <main>

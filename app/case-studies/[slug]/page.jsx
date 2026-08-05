@@ -3,9 +3,12 @@ import Navbar from '../../../components/home/Navbar'
 import Footer from '../../../components/home/Footer'
 import CaseStudyCta from '../../../components/CaseStudyCta'
 import { caseStudies } from '../../../data/caseStudies'
-import { pageMetadata } from '../../../lib/seo'
+import { pageMetadata, absoluteUrl, SITE_URL, SITE_NAME } from '../../../lib/seo'
 import '../../home.css'
 import './page.css'
+
+// `</script>`-safe JSON-LD serialization (matches the article route).
+const jsonLd = (obj) => JSON.stringify(obj).replace(/</g, '\\u003c')
 
 export function generateStaticParams() {
   return caseStudies.map(study => ({
@@ -36,8 +39,40 @@ export default async function CaseStudyPage({ params }) {
   const study = caseStudies.find(s => s.slug === slug)
   if (!study) notFound()
 
+  const url = absoluteUrl(`/case-studies/${study.slug}`)
+  // Article uses only data already on the page — no publish date exists in the
+  // source, so datePublished is intentionally omitted rather than invented.
+  const schemas = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: study.headline,
+      description: study.headline,
+      about: study.company,
+      url,
+      mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+      author: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
+      publisher: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+        { '@type': 'ListItem', position: 2, name: `${study.company} Case Study`, item: url },
+      ],
+    },
+  ]
+
   return (
     <>
+      {schemas.map((schema, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLd(schema) }}
+        />
+      ))}
       <Navbar />
       <div className="dd">
         <main className="casestudy">

@@ -8,51 +8,30 @@
    Brand colour follows the page's --accent.
    ────────────────────────────────────────────── */
 
-import { useEffect } from 'react'
+import { useDeferredCalEmbed } from '../useDeferredCalEmbed'
 
 const CAL_NS = 'initial-consultation-call'
 const CAL_LINK = 'team/gtmx/initial-consultation-call'
 
 export default function ServiceCta({ serviceName }) {
-  useEffect(() => {
-    // pull the page's service accent so the calendar matches
-    const page = document.querySelector('.svc-page')
-    const accent = (page && getComputedStyle(page).getPropertyValue('--accent').trim()) || '#E8552B'
-
-    ;(function (C, A, L) {
-      let p = function (a, ar) { a.q.push(ar) }
-      let d = C.document
-      C.Cal = C.Cal || function () {
-        let cal = C.Cal
-        let ar = arguments
-        if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement('script')).src = A; cal.loaded = true }
-        if (ar[0] === L) {
-          const api = function () { p(api, arguments) }
-          const namespace = ar[1]
-          api.q = api.q || []
-          if (typeof namespace === 'string') { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ['initNamespace', namespace]) } else p(cal, ar)
-          return
-        }
-        p(cal, ar)
+  // Deferred until the booking section nears the viewport (see the hook). The
+  // accent is read from the page's --accent at load time, exactly as before.
+  useDeferredCalEmbed({
+    namespace: CAL_NS,
+    calLink: CAL_LINK,
+    elementId: 'svc-cal-embed',
+    forwardQueryParams: true,
+    ui: () => {
+      const page = document.querySelector('.svc-page')
+      const accent = (page && getComputedStyle(page).getPropertyValue('--accent').trim()) || '#E8552B'
+      return {
+        theme: 'light',
+        cssVarsPerTheme: { light: { 'cal-brand': accent } },
+        hideEventTypeDetails: false,
+        layout: 'month_view',
       }
-    })(window, 'https://app.cal.com/embed/embed.js', 'init')
-
-    const Cal = window.Cal
-    Cal('init', CAL_NS, { origin: 'https://app.cal.com' })
-    Cal.config = Cal.config || {}
-    Cal.config.forwardQueryParams = true
-    Cal.ns[CAL_NS]('inline', {
-      elementOrSelector: '#svc-cal-embed',
-      config: { layout: 'month_view', useSlotsViewOnSmallScreen: 'true' },
-      calLink: CAL_LINK,
-    })
-    Cal.ns[CAL_NS]('ui', {
-      theme: 'light',
-      cssVarsPerTheme: { light: { 'cal-brand': accent } },
-      hideEventTypeDetails: false,
-      layout: 'month_view',
-    })
-  }, [])
+    },
+  })
 
   return (
     <section className="scta" id="book">

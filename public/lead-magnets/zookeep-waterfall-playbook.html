@@ -1,0 +1,1893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZooKeep - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-07-21</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for ZooKeep</p>
+          <h1>Your ZooKeep waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">A scrollable GTMx strategy artifact for routing every Japan-hiring company into the right ZooKeep offer.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> The hiring tech a company already runs, and the state of its Japanese careers page, tells us exactly which ZooKeep offer it needs right now: a cheaper JP-native ATS, a bilingual page fix, a post-funding hiring stack, or a graduation from spreadsheets.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book the strategy call</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>12k-18k</strong>
+          <span>Japan-hiring accounts in reach</span>
+        </div>
+        <div class="metric-card">
+          <strong>5</strong>
+          <span>waterfall routes, one cascade</span>
+        </div>
+        <div class="metric-card">
+          <strong>$98/mo</strong>
+          <span>entry price, undercuts ATS 5-10x</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>ZooKeep is a Tokyo-built, bilingual (EN/JA) Applicant Tracking System paired with embedded TA / RPO. Native JP job-board integrations, bilingual career pages out of the box, and recruiters who have been in the seat. Anchored in Asia, globally compatible.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal is the hiring stack itself</p></div><div><span>02</span><p>One cascade routes the whole Japan-hiring TAM</p></div><div><span>03</span><p>Each hiring posture gets a different offer</p></div><div><span>04</span><p>Twenty-four angles layered on the waterfall</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>Waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>Email Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">Signal</p>
+      <h2>The signal is the hiring stack itself</h2>
+      <p class="takeaway">The ATS in use plus the state of the Japanese careers page reveal which ZooKeep offer a company needs now.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>BuiltWith / Wappalyzer plus a careers-page DOM scrape reveal the ATS in use (Greenhouse, Lever, Workday, none) in one pull.</p></div><div class="reason-card"><span>02</span><p>Crawling /careers against /careers/jp exposes the bilingual role gap instantly, the single sharpest ZooKeep signal.</p></div><div class="reason-card"><span>03</span><p>Crunchbase adds recent Japan funding rounds for the post-funding hiring route.</p></div><div class="reason-card"><span>04</span><p>A mandatory catch-all keeps 100% coverage of every remaining Japan-hiring company in the TAM.</p></div>
+            </div>
+            <div class="field-cloud"><span>ats_detected</span><span>jp_role_count</span><span>en_role_count</span><span>bilingual_gap</span><span>hq_country</span><span>funding_stage</span><span>funding_date_90d</span><span>careers_page_tech</span><span>ta_headcount</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>JP job boards (BizReach, Wantedly, Green, Doda)</h3><p>Companies actively hiring in Japan, role count, and bilingual flag</p></div><div class="source-card"><span>02</span><h3>LinkedIn Jobs (Japan filter)</h3><p>Catches foreign-HQ companies that skip JP-native boards</p></div><div class="source-card"><span>03</span><h3>BuiltWith / Wappalyzer</h3><p>ATS detection: Greenhouse, Lever, Workday, Ashby, SmartRecruiters, or none</p></div><div class="source-card"><span>04</span><h3>Crunchbase (Japan filter)</h3><p>Recent funding rounds, stage, investor, headcount tier</p></div><div class="source-card"><span>05</span><h3>Direct careers-page crawl</h3><p>EN vs JP role counts (bilingual gap) and careers-page tech (Notion / Typeform / Google Form)</p></div><div class="source-card"><span>06</span><h3>LinkedIn Sales Navigator</h3><p>Japan country-manager presence, recruiter-team headcount, and role tenure</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="Waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">Waterfall</p>
+      <h2>One cascade routes the whole Japan-hiring TAM</h2>
+      <p class="takeaway">Every company is tested top-to-bottom: global ATS switcher, bilingual page gap, recently funded, spreadsheet graduate, then a catch-all.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF ats_detected in {Greenhouse, Lever, Workday, Ashby, SmartRecruiters} AND jp_role_count &gt;= 3</span>
+          <strong>Tier 1</strong>
+          <em>Global ATS switcher</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF bilingual_gap = true AND jp_role_count &gt;= 1</span>
+          <strong>Tier 2</strong>
+          <em>Bilingual page audit</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF hq_country = Japan AND funding_stage in {seed, A, B} AND funding_date &lt;= 90 days ago</span>
+          <strong>Tier 3</strong>
+          <em>Recently funded startup</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF ats_detected in {none, Notion-form, Google-form, Typeform} AND jp_role_count &gt;= 1</span>
+          <strong>Tier 4</strong>
+          <em>Spreadsheet ATS graduate</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF every remaining Japan-hiring company in TAM</span>
+          <strong>Catch-all</strong>
+          <em>General Japan-hiring pitch</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF ats_detected in {Greenhouse, Lever, Workday, Ashby, SmartRecruiters} AND jp_role_count &gt;= 3 -&gt; Tier 1 (Global ATS switcher)&#10;2. IF bilingual_gap = true AND jp_role_count &gt;= 1 -&gt; Tier 2 (Bilingual page audit)&#10;3. IF hq_country = Japan AND funding_stage in {seed, A, B} AND funding_date &lt;= 90 days ago -&gt; Tier 3 (Recently funded startup)&#10;4. IF ats_detected in {none, Notion-form, Google-form, Typeform} AND jp_role_count &gt;= 1 -&gt; Tier 4 (Spreadsheet ATS graduate)&#10;5. IF every remaining Japan-hiring company in TAM -&gt; Catch-all (General Japan-hiring pitch)">Copy routing spec</button>
+            <pre id="routeCode">1. IF ats_detected in {Greenhouse, Lever, Workday, Ashby, SmartRecruiters} AND jp_role_count &gt;= 3 -&gt; Tier 1 (Global ATS switcher)
+2. IF bilingual_gap = true AND jp_role_count &gt;= 1 -&gt; Tier 2 (Bilingual page audit)
+3. IF hq_country = Japan AND funding_stage in {seed, A, B} AND funding_date &lt;= 90 days ago -&gt; Tier 3 (Recently funded startup)
+4. IF ats_detected in {none, Notion-form, Google-form, Typeform} AND jp_role_count &gt;= 1 -&gt; Tier 4 (Spreadsheet ATS graduate)
+5. IF every remaining Japan-hiring company in TAM -&gt; Catch-all (General Japan-hiring pitch)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">Tiers</p>
+      <h2>Each hiring posture gets a different offer</h2>
+      <p class="takeaway">Enterprises overpaying for a global ATS get a cost comparison. Broken JP pages get an audit. Funded startups get a hiring playbook. Spreadsheet teams get a $98 trial.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">6-10% TAM</span>
+          </div>
+          <h3>Tier 1: Global ATS Switcher</h3>
+          <p>Greenhouse / Lever / Workday / Ashby / SmartRecruiters detected, plus 3+ open Japan roles</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Paying enterprise prices for a tool that cannot post to BizReach and treats Japan as a config afterthought.</dd></div>
+              <div><dt>Offer</dt><dd>Custom ATS cost-comparison report</dd></div>
+              <div><dt>Source</dt><dd>BuiltWith / careers-page DOM</dd></div>
+              <div><dt>Reply density</dt><dd>Highest intent, target 1 positive reply / 150</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">12-18% TAM</span>
+          </div>
+          <h3>Tier 2: Bilingual Page Audit</h3>
+          <p>English careers page lists 5+ more roles than the Japanese page (bilingual gap)</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Losing Japanese applicants because the career site is broken, thin, or auto-translated in Japanese.</dd></div>
+              <div><dt>Offer</dt><dd>Free bilingual career page audit</dd></div>
+              <div><dt>Source</dt><dd>Careers-page crawl (/careers vs /careers/jp)</dd></div>
+              <div><dt>Reply density</dt><dd>Strong, the gap is visible the moment you send it</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">3-5% TAM</span>
+          </div>
+          <h3>Tier 3: Recently Funded JP Startup</h3>
+          <p>Japan-HQ company that raised seed / A / B in the last 90 days</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>About to triple headcount, but the hiring stack will not scale with the round.</dd></div>
+              <div><dt>Offer</dt><dd>First 90 Days post-funding hiring playbook</dd></div>
+              <div><dt>Source</dt><dd>Crunchbase (Japan funding recency)</dd></div>
+              <div><dt>Reply density</dt><dd>Sharp post-raise pain, target 1 / 150</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">15-22% TAM</span>
+          </div>
+          <h3>Tier 4: Spreadsheet ATS Graduate</h3>
+          <p>No real ATS detected (Notion / Google Form / Typeform careers page), plus 1+ open Japan role</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Tracking candidates manually, losing them through the cracks, no audit trail.</dd></div>
+              <div><dt>Offer</dt><dd>14-day free trial direct link (the trial is the magnet)</dd></div>
+              <div><dt>Source</dt><dd>Careers-page tech scrape</dd></div>
+              <div><dt>Reply density</dt><dd>Large pool, the offer is the hook, send at scale</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="catchall" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">50-60% TAM</span>
+          </div>
+          <h3>Catch-all: Hiring in Japan</h3>
+          <p>Every remaining Japan-hiring company not matched by a tier above</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>General Japan-hiring difficulty: 76% bilingual-hire pain, a 220,000-person IT shortage, and a global ATS treating Japan as an afterthought.</dd></div>
+              <div><dt>Offer</dt><dd>Hiring in Japan: First 90 Days playbook</dd></div>
+              <div><dt>Source</dt><dd>JP boards + LinkedIn Jobs TAM</dd></div>
+              <div><dt>Reply density</dt><dd>Broadest coverage, softest ask, 1 / 350 acceptable</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">Campaigns</p>
+      <h2>Twenty-four angles layered on the waterfall</h2>
+      <p class="takeaway">The core cascade carries the volume. Side campaigns stay time-boxed for new TA leaders, new country managers, funded raises, and founder-led plays.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Creative Ideas</h3>
+          <p>Open with &#39;I had an idea for {{company_name}}&#39; and 3 bullets specific to their open roles and current career-page state.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>TA / HR leaders at companies with a Japan presence (10-500 FTE)</dd></div>
+            <div><dt>AI strategy</dt><dd>Scrape careers page + 2 most recent JP job posts; generate 3 specific ZooKeep use cases</dd></div>
+            <div><dt>Value</dt><dd>Save 8-12 hrs/week on hiring ops</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>$98 Pre-Series A Snap (No-AI)</h3>
+          <p>Tight, founder-to-founder. Designed to send at scale with zero personalization. The offer itself is the hook.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Pre-Series A founders / first-hire ops people in Japan</dd></div>
+            <div><dt>AI strategy</dt><dd>None, static copy at scale</dd></div>
+            <div><dt>Value</dt><dd>$98/mo, EN + JP, BizReach integrated, 14-day trial</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Niche</span>
+          </div>
+          <h3>Greenhouse / Lever in Japan</h3>
+          <p>&#39;I noticed your Japan team is on Greenhouse. For Japan-only teams, the math usually does not work, here&#39;s why.&#39;</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Companies with Japan ops using Greenhouse or Lever (careers-page tech)</dd></div>
+            <div><dt>AI strategy</dt><dd>BuiltWith detection; calculate annualized cost vs ZooKeep</dd></div>
+            <div><dt>Value</dt><dd>Save $20-60K/yr plus JP-native integrations</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Niche</span>
+          </div>
+          <h3>High-Volume Hiring Enterprise</h3>
+          <p>Lead with the stat (&#39;you have 137 open roles right now&#39;). Offer a sample report off their current job page.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Japan-based companies with 100+ open roles</dd></div>
+            <div><dt>AI strategy</dt><dd>Scrape careers page, filter on req count</dd></div>
+            <div><dt>Value</dt><dd>Pipeline intelligence + automation at scale</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>APAC Multi-Country Expansion</h3>
+          <p>Differentiate from JP-only competitors (HirePlanner) on multi-country support.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>SG/KL-HQ companies hiring in Japan, or Japan-HQ hiring in SE Asia</dd></div>
+            <div><dt>AI strategy</dt><dd>Detect cross-country job postings</dd></div>
+            <div><dt>Value</dt><dd>One ATS for Japan + SE Asia</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Bilingual Career Page Audit</h3>
+          <p>Open with the specific gap (&#39;Your EN page lists 23 roles, JP page lists 8&#39;). Offer a 1-pager audit.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Companies whose careers page lists more roles in EN than JP</dd></div>
+            <div><dt>AI strategy</dt><dd>Crawl both /careers and /careers/jp, diff role counts</dd></div>
+            <div><dt>Value</dt><dd>You are losing JP applicants because your site is broken in Japanese</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Job Board Coverage Gap</h3>
+          <p>Quantify the candidate pool they are missing. ZooKeep posts to all native boards in one click.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Foreign companies posting Japan roles on LinkedIn but not BizReach/Doda/Wantedly/Green</dd></div>
+            <div><dt>AI strategy</dt><dd>Cross-check job presence LinkedIn vs JP-native boards</dd></div>
+            <div><dt>Value</dt><dd>You are missing 60% of Japan&#39;s white-collar candidate pool</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Bilingual Hire Pressure</h3>
+          <p>Reference their bilingual reqs by title. Cite the 76% JAC Group stat.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Companies with 3+ open Japan roles requiring bilingual EN/JA</dd></div>
+            <div><dt>AI strategy</dt><dd>Parse JD language requirements, count roles</dd></div>
+            <div><dt>Value</dt><dd>76% of companies struggle to hire bilingual talent</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Auto-Translated JP Page Audit</h3>
+          <p>Send 3 specific examples of awkward Japanese. Offer a free re-localization audit. Strong reciprocity.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Companies whose JP career page is clearly machine-translated</dd></div>
+            <div><dt>AI strategy</dt><dd>Crawl JP page, run language-quality scoring</dd></div>
+            <div><dt>Value</dt><dd>Your JP careers page is costing you applicants</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Recently Funded Japan Startups</h3>
+          <p>Open with the round announcement plus a stat from the press release. Pitch Growth plan + embedded TA.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Japan-HQ companies that raised seed-Series B in last 90 days</dd></div>
+            <div><dt>AI strategy</dt><dd>Crunchbase source; reference round size, lead investor, hiring plans</dd></div>
+            <div><dt>Value</dt><dd>You are about to triple headcount, your stack needs to scale</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>VC Portfolio Targeted Plays</h3>
+          <p>Personalize by VC (&#39;As a Globis-backed company&#39;). Offer a post-funding hiring playbook template.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Portfolio companies of Japan-active VCs (Globis, Coral, JAFCO, JIC, WiL)</dd></div>
+            <div><dt>AI strategy</dt><dd>Scrape VC portfolio pages, filter to portcos hiring 20+ FTE</dd></div>
+            <div><dt>Value</dt><dd>Most portcos hit a hiring wall around Series A</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Stated Hiring Plan in Press</h3>
+          <p>Quote their own announcement back to them. Offer a hiring-plan stress-test.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Companies that publicly announced a hiring plan in last 6 months</dd></div>
+            <div><dt>AI strategy</dt><dd>News / TechCrunch / PR scrape for hiring-plan language</dd></div>
+            <div><dt>Value</dt><dd>You said you are doubling the team, here&#39;s what teams under-budget</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Japan Market Entry Watch</h3>
+          <p>Open with the announcement. Pitch ZooKeep as the launch hiring stack. Link a free first-90-days playbook.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Foreign companies that opened a Japan office in the last 6 months</dd></div>
+            <div><dt>AI strategy</dt><dd>Detect via LinkedIn announcements, press, news</dd></div>
+            <div><dt>Value</dt><dd>De-risk Japan expansion: bilingual ATS + embedded recruiters day one</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Engineering Hiring Race</h3>
+          <p>Cite METI 220K talent gap. Offer a benchmark vs the market median using public data.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Japan tech companies with 10+ open engineering roles</dd></div>
+            <div><dt>AI strategy</dt><dd>Count engineering reqs, cross-reference 220K shortage stat</dd></div>
+            <div><dt>Value</dt><dd>You have 17 eng roles open, here&#39;s how others close them 30% faster</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Spreadsheet ATS Graduates</h3>
+          <p>&#39;Most pre-Series A founders are still tracking candidates in Notion. Here&#39;s the $98 fix.&#39; 14-day trial, no demo.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Pre-Series A JP startups with a Notion / Google Form / Typeform careers page</dd></div>
+            <div><dt>AI strategy</dt><dd>Look for positive signals: Notion-hosted careers, Google Form apply links</dd></div>
+            <div><dt>Value</dt><dd>Graduate from spreadsheets for $98/mo</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Focused</span>
+          </div>
+          <h3>New TA Leader Welcome</h3>
+          <p>Congratulate, name-drop the previous company, reference what they are inheriting, offer a fast-impact swap.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Started as Head/Director of TA in last 90 days at a Japan-hiring company</dd></div>
+            <div><dt>AI strategy</dt><dd>Pull start date, prior employer, count of open reqs inherited</dd></div>
+            <div><dt>Value</dt><dd>Quick wins in the first 90 days</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Niche</span>
+          </div>
+          <h3>Country Manager First 90 Days</h3>
+          <p>Peer-to-peer tone. Offer a 1:1 with Casey Abel (founder) to share what works.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Newly appointed Japan Country Managers / GMs (last 6 months)</dd></div>
+            <div><dt>AI strategy</dt><dd>LinkedIn role-change detection; pull prior background</dd></div>
+            <div><dt>Value</dt><dd>First 90 days as Japan GM: measured on your first 5 hires</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Niche</span>
+          </div>
+          <h3>Embedded TA / Bursting Capacity</h3>
+          <p>Quantify their workload (&#39;4x the healthy ratio&#39;). Pitch embedded TA service, not software.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Companies with 1 in-house recruiter and 25+ open Japan reqs</dd></div>
+            <div><dt>AI strategy</dt><dd>Count Recruiter/TA headcount on LinkedIn vs open roles</dd></div>
+            <div><dt>Value</dt><dd>Your one recruiter is drowning, burst capacity in 2 weeks</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Focused</span>
+          </div>
+          <h3>Casey Abel Founder-Led Outreach</h3>
+          <p>Peer-to-peer: &#39;15 years recruiting in Japan before building this.&#39; Highest reply rate, low volume.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Heads of TA in Casey&#39;s adjacent network (mutuals, alumni)</dd></div>
+            <div><dt>AI strategy</dt><dd>Pull mutuals and shared past employers from LinkedIn</dd></div>
+            <div><dt>Value</dt><dd>Founder-to-leader credibility</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="all" data-campaign-group="Side">
+          <div class="campaign-card__meta">
+            <span>Side</span>
+            <span>Focused</span>
+          </div>
+          <h3>Compliance &amp; Reporting (CHRO)</h3>
+          <p>Lead on data and compliance, not features. CTA: a sample report mockup using their company data.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Heads of HR / CHROs at multinational subsidiaries in Japan</dd></div>
+            <div><dt>AI strategy</dt><dd>Detect via title + company structure (parent in US/EU, JP subsidiary)</dd></div>
+            <div><dt>Value</dt><dd>Bilingual hiring data, audit-ready, in your global HRIS format</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="Email Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">Email Copy</p>
+      <h2>Copy that names a specific gap, then hands over a free audit</h2>
+      <p class="takeaway">Every sequence opens on the tier trigger, pokes the risk, states ZooKeep&#39;s value, and offers a low-friction magnet.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company_name}}</span><span>{{ats_detected}}</span><span>{{jp_role_count}}</span><span>{{en_role_count}}</span><span>{{funding_round}}</span><span>{{investor_clause}}</span><span>{{alt_decision_maker}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company_name}}, {{ats_detected}}, {{jp_role_count}}, {{en_role_count}}, {{funding_round}}, {{investor_clause}}, {{alt_decision_maker}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 — Global ATS Switcher</strong>
+              <em>Custom ATS cost-comparison report</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 — Global ATS Switcher steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3-4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7-8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{ats_detected}} in Japan&#10;&#10;{{first_name}}, saw {{company_name}} is running {{ats_detected}} for your {{jp_role_count}} open roles in Japan.&#10;&#10;Fair to assume it still can&#39;t post to BizReach or Wantedly, and the Japanese candidate experience is a bolt-on someone hacked together?&#10;&#10;ZooKeep is a bilingual ATS built in Tokyo: EN/JA career pages out of the box, one-click posting to every JP-native board, at a fraction of what {{ats_detected}} charges for a seat you can barely use in Japan.&#10;&#10;I can put together a cost breakdown for your Japan team specifically, {{ats_detected}} vs ZooKeep, plus the features you&#39;re paying for that don&#39;t work here. No call. Want it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{ats_detected}} in Japan" data-preview="Greenhouse in Japan">{{ats_detected}} in Japan</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, saw {{company_name}} is running {{ats_detected}} for your {{jp_role_count}} open roles in Japan.&#10;&#10;Fair to assume it still can&#39;t post to BizReach or Wantedly, and the Japanese candidate experience is a bolt-on someone hacked together?&#10;&#10;ZooKeep is a bilingual ATS built in Tokyo: EN/JA career pages out of the box, one-click posting to every JP-native board, at a fraction of what {{ats_detected}} charges for a seat you can barely use in Japan.&#10;&#10;I can put together a cost breakdown for your Japan team specifically, {{ats_detected}} vs ZooKeep, plus the features you&#39;re paying for that don&#39;t work here. No call. Want it?" data-preview="Yuki, saw Mercari is running Greenhouse for your 7 open roles in Japan.&#10;&#10;Fair to assume it still can&#39;t post to BizReach or Wantedly, and the Japanese candidate experience is a bolt-on someone hacked together?&#10;&#10;ZooKeep is a bilingual ATS built in Tokyo: EN/JA career pages out of the box, one-click posting to every JP-native board, at a fraction of what Greenhouse charges for a seat you can barely use in Japan.&#10;&#10;I can put together a cost breakdown for your Japan team specifically, Greenhouse vs ZooKeep, plus the features you&#39;re paying for that don&#39;t work here. No call. Want it?">
+                        <p>{{first_name}}, saw {{company_name}} is running {{ats_detected}} for your {{jp_role_count}} open roles in Japan.</p><p>Fair to assume it still can&#39;t post to BizReach or Wantedly, and the Japanese candidate experience is a bolt-on someone hacked together?</p><p>ZooKeep is a bilingual ATS built in Tokyo: EN/JA career pages out of the box, one-click posting to every JP-native board, at a fraction of what {{ats_detected}} charges for a seat you can barely use in Japan.</p><p>I can put together a cost breakdown for your Japan team specifically, {{ats_detected}} vs ZooKeep, plus the features you&#39;re paying for that don&#39;t work here. No call. Want it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3-4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, most teams on {{ats_detected}} are surprised what the Japan seats actually cost once you realize half the value (native job boards, bilingual pages, JP compliance fields) isn&#39;t usable in-market.&#10;&#10;ZooKeep replaces that with a tool built for Japan from the ground up, and the switch usually cuts the Japan line item [X]%.&#10;&#10;Reply &quot;breakdown&quot; and I&#39;ll send the side-by-side for {{company_name}}, using your current Japan headcount as the example.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, most teams on {{ats_detected}} are surprised what the Japan seats actually cost once you realize half the value (native job boards, bilingual pages, JP compliance fields) isn&#39;t usable in-market.&#10;&#10;ZooKeep replaces that with a tool built for Japan from the ground up, and the switch usually cuts the Japan line item [X]%.&#10;&#10;Reply &quot;breakdown&quot; and I&#39;ll send the side-by-side for {{company_name}}, using your current Japan headcount as the example." data-preview="Yuki, most teams on Greenhouse are surprised what the Japan seats actually cost once you realize half the value (native job boards, bilingual pages, JP compliance fields) isn&#39;t usable in-market.&#10;&#10;ZooKeep replaces that with a tool built for Japan from the ground up, and the switch usually cuts the Japan line item [X]%.&#10;&#10;Reply &quot;breakdown&quot; and I&#39;ll send the side-by-side for Mercari, using your current Japan headcount as the example.">
+                        <p>{{first_name}}, most teams on {{ats_detected}} are surprised what the Japan seats actually cost once you realize half the value (native job boards, bilingual pages, JP compliance fields) isn&#39;t usable in-market.</p><p>ZooKeep replaces that with a tool built for Japan from the ground up, and the switch usually cuts the Japan line item [X]%.</p><p>Reply &quot;breakdown&quot; and I&#39;ll send the side-by-side for {{company_name}}, using your current Japan headcount as the example.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7-8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: question for {{first_name}}&#10;&#10;{{first_name}}, no call needed on this one.&#10;&#10;Tell me roughly how many seats {{company_name}} runs on {{ats_detected}} in Japan and I&#39;ll send back the exact cost comparison plus the JP-board coverage you&#39;d gain, so you can decide on paper before anyone demos anything.&#10;&#10;Just reply &quot;yes.&quot; Should I send it to you, or is {{alt_decision_maker}} the one who owns the hiring stack?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="question for {{first_name}}" data-preview="question for Yuki">question for {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed on this one.&#10;&#10;Tell me roughly how many seats {{company_name}} runs on {{ats_detected}} in Japan and I&#39;ll send back the exact cost comparison plus the JP-board coverage you&#39;d gain, so you can decide on paper before anyone demos anything.&#10;&#10;Just reply &quot;yes.&quot; Should I send it to you, or is {{alt_decision_maker}} the one who owns the hiring stack?" data-preview="Yuki, no call needed on this one.&#10;&#10;Tell me roughly how many seats Mercari runs on Greenhouse in Japan and I&#39;ll send back the exact cost comparison plus the JP-board coverage you&#39;d gain, so you can decide on paper before anyone demos anything.&#10;&#10;Just reply &quot;yes.&quot; Should I send it to you, or is your Head of TA the one who owns the hiring stack?">
+                        <p>{{first_name}}, no call needed on this one.</p><p>Tell me roughly how many seats {{company_name}} runs on {{ats_detected}} in Japan and I&#39;ll send back the exact cost comparison plus the JP-board coverage you&#39;d gain, so you can decide on paper before anyone demos anything.</p><p>Just reply &quot;yes.&quot; Should I send it to you, or is {{alt_decision_maker}} the one who owns the hiring stack?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 — Bilingual Career Page Audit</strong>
+              <em>Free bilingual career page audit</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 — Bilingual Career Page Audit steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3-4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7-8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your JP careers page&#10;&#10;{{first_name}}, I pulled up {{company_name}}&#39;s careers site. Your English page lists {{en_role_count}} roles, the Japanese page shows {{jp_role_count}}.&#10;&#10;Fair to assume the Japanese candidates who hit that page quietly bounce, and you never see the ones you lost?&#10;&#10;ZooKeep gives you fully bilingual, native-quality career pages out of the box, so the JP experience matches the EN one instead of trailing it. In a market where 76% of companies say bilingual talent is their hardest hire, that gap is expensive.&#10;&#10;I already ran a quick audit of your page. Reply &quot;Y&quot; and I&#39;ll send it, the role gap, the awkward-Japanese flags, and 3 fixes. 30 seconds, no call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your JP careers page" data-preview="your JP careers page">your JP careers page</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, I pulled up {{company_name}}&#39;s careers site. Your English page lists {{en_role_count}} roles, the Japanese page shows {{jp_role_count}}.&#10;&#10;Fair to assume the Japanese candidates who hit that page quietly bounce, and you never see the ones you lost?&#10;&#10;ZooKeep gives you fully bilingual, native-quality career pages out of the box, so the JP experience matches the EN one instead of trailing it. In a market where 76% of companies say bilingual talent is their hardest hire, that gap is expensive.&#10;&#10;I already ran a quick audit of your page. Reply &quot;Y&quot; and I&#39;ll send it, the role gap, the awkward-Japanese flags, and 3 fixes. 30 seconds, no call." data-preview="Yuki, I pulled up Mercari&#39;s careers site. Your English page lists 23 roles, the Japanese page shows 7.&#10;&#10;Fair to assume the Japanese candidates who hit that page quietly bounce, and you never see the ones you lost?&#10;&#10;ZooKeep gives you fully bilingual, native-quality career pages out of the box, so the JP experience matches the EN one instead of trailing it. In a market where 76% of companies say bilingual talent is their hardest hire, that gap is expensive.&#10;&#10;I already ran a quick audit of your page. Reply &quot;Y&quot; and I&#39;ll send it, the role gap, the awkward-Japanese flags, and 3 fixes. 30 seconds, no call.">
+                        <p>{{first_name}}, I pulled up {{company_name}}&#39;s careers site. Your English page lists {{en_role_count}} roles, the Japanese page shows {{jp_role_count}}.</p><p>Fair to assume the Japanese candidates who hit that page quietly bounce, and you never see the ones you lost?</p><p>ZooKeep gives you fully bilingual, native-quality career pages out of the box, so the JP experience matches the EN one instead of trailing it. In a market where 76% of companies say bilingual talent is their hardest hire, that gap is expensive.</p><p>I already ran a quick audit of your page. Reply &quot;Y&quot; and I&#39;ll send it, the role gap, the awkward-Japanese flags, and 3 fixes. 30 seconds, no call.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3-4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the risk with a thin or auto-translated JP page isn&#39;t just fewer applicants, it&#39;s that your strongest bilingual candidates read it as &quot;this company doesn&#39;t really operate in Japanese&quot; and self-select out before you ever get a resume.&#10;&#10;ZooKeep&#39;s bilingual pages close that gap so you&#39;re not silently filtering out the exact people you&#39;re trying to hire.&#10;&#10;Reply &quot;audit&quot; and I&#39;ll send the breakdown of what&#39;s leaking on your JP page. No call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the risk with a thin or auto-translated JP page isn&#39;t just fewer applicants, it&#39;s that your strongest bilingual candidates read it as &quot;this company doesn&#39;t really operate in Japanese&quot; and self-select out before you ever get a resume.&#10;&#10;ZooKeep&#39;s bilingual pages close that gap so you&#39;re not silently filtering out the exact people you&#39;re trying to hire.&#10;&#10;Reply &quot;audit&quot; and I&#39;ll send the breakdown of what&#39;s leaking on your JP page. No call." data-preview="Yuki, the risk with a thin or auto-translated JP page isn&#39;t just fewer applicants, it&#39;s that your strongest bilingual candidates read it as &quot;this company doesn&#39;t really operate in Japanese&quot; and self-select out before you ever get a resume.&#10;&#10;ZooKeep&#39;s bilingual pages close that gap so you&#39;re not silently filtering out the exact people you&#39;re trying to hire.&#10;&#10;Reply &quot;audit&quot; and I&#39;ll send the breakdown of what&#39;s leaking on your JP page. No call.">
+                        <p>{{first_name}}, the risk with a thin or auto-translated JP page isn&#39;t just fewer applicants, it&#39;s that your strongest bilingual candidates read it as &quot;this company doesn&#39;t really operate in Japanese&quot; and self-select out before you ever get a resume.</p><p>ZooKeep&#39;s bilingual pages close that gap so you&#39;re not silently filtering out the exact people you&#39;re trying to hire.</p><p>Reply &quot;audit&quot; and I&#39;ll send the breakdown of what&#39;s leaking on your JP page. No call.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7-8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your Japanese page&#10;&#10;{{first_name}}, no call, promise.&#10;&#10;The audit&#39;s already built, it flags exactly where your JP careers page is costing you applicants and what to change. Want me to just send it over?&#10;&#10;Reply &quot;yes&quot; and it&#39;s yours. Are you the right person for careers-page stuff, or should I loop in {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your Japanese page" data-preview="your Japanese page">your Japanese page</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call, promise.&#10;&#10;The audit&#39;s already built, it flags exactly where your JP careers page is costing you applicants and what to change. Want me to just send it over?&#10;&#10;Reply &quot;yes&quot; and it&#39;s yours. Are you the right person for careers-page stuff, or should I loop in {{alt_decision_maker}}?" data-preview="Yuki, no call, promise.&#10;&#10;The audit&#39;s already built, it flags exactly where your JP careers page is costing you applicants and what to change. Want me to just send it over?&#10;&#10;Reply &quot;yes&quot; and it&#39;s yours. Are you the right person for careers-page stuff, or should I loop in your Head of TA?">
+                        <p>{{first_name}}, no call, promise.</p><p>The audit&#39;s already built, it flags exactly where your JP careers page is costing you applicants and what to change. Want me to just send it over?</p><p>Reply &quot;yes&quot; and it&#39;s yours. Are you the right person for careers-page stuff, or should I loop in {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 — Recently Funded JP Startup</strong>
+              <em>First 90 Days post-funding hiring playbook</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 — Recently Funded JP Startup steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3-4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7-8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: congrats on the {{funding_round}}&#10;&#10;{{first_name}}, congrats on the {{funding_round}}{{investor_clause}}.&#10;&#10;Fair to assume the plan is to grow the team fast, and that right now hiring runs through a spreadsheet and whoever has a spare hour?&#10;&#10;That&#39;s the exact point where the hiring stack becomes the bottleneck. ZooKeep is a bilingual ATS built in Tokyo, plus optional embedded recruiters, so you can go from &quot;we need to hire 20 people&quot; to an actual pipeline without building a TA function from scratch.&#10;&#10;I put together a First-90-Days-post-funding hiring playbook for JP teams, the first 5 hires, how to source bilingual, what to systematize before it breaks. Reply &quot;Y&quot; and I&#39;ll send it. Free.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="congrats on the {{funding_round}}" data-preview="congrats on the Series A">congrats on the {{funding_round}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, congrats on the {{funding_round}}{{investor_clause}}.&#10;&#10;Fair to assume the plan is to grow the team fast, and that right now hiring runs through a spreadsheet and whoever has a spare hour?&#10;&#10;That&#39;s the exact point where the hiring stack becomes the bottleneck. ZooKeep is a bilingual ATS built in Tokyo, plus optional embedded recruiters, so you can go from &quot;we need to hire 20 people&quot; to an actual pipeline without building a TA function from scratch.&#10;&#10;I put together a First-90-Days-post-funding hiring playbook for JP teams, the first 5 hires, how to source bilingual, what to systematize before it breaks. Reply &quot;Y&quot; and I&#39;ll send it. Free." data-preview="Yuki, congrats on the Series A, and the Globis round.&#10;&#10;Fair to assume the plan is to grow the team fast, and that right now hiring runs through a spreadsheet and whoever has a spare hour?&#10;&#10;That&#39;s the exact point where the hiring stack becomes the bottleneck. ZooKeep is a bilingual ATS built in Tokyo, plus optional embedded recruiters, so you can go from &quot;we need to hire 20 people&quot; to an actual pipeline without building a TA function from scratch.&#10;&#10;I put together a First-90-Days-post-funding hiring playbook for JP teams, the first 5 hires, how to source bilingual, what to systematize before it breaks. Reply &quot;Y&quot; and I&#39;ll send it. Free.">
+                        <p>{{first_name}}, congrats on the {{funding_round}}{{investor_clause}}.</p><p>Fair to assume the plan is to grow the team fast, and that right now hiring runs through a spreadsheet and whoever has a spare hour?</p><p>That&#39;s the exact point where the hiring stack becomes the bottleneck. ZooKeep is a bilingual ATS built in Tokyo, plus optional embedded recruiters, so you can go from &quot;we need to hire 20 people&quot; to an actual pipeline without building a TA function from scratch.</p><p>I put together a First-90-Days-post-funding hiring playbook for JP teams, the first 5 hires, how to source bilingual, what to systematize before it breaks. Reply &quot;Y&quot; and I&#39;ll send it. Free.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3-4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the thing most founders underestimate post-raise isn&#39;t finding candidates, it&#39;s that every hire adds coordination, and by req #10 the spreadsheet is costing you days a week and letting good people slip through.&#10;&#10;ZooKeep gives you the pipeline, the bilingual career page, and the JP-board integrations on day one, so hiring scales with the round instead of lagging it.&#10;&#10;Want the free post-funding hiring playbook? Reply &quot;playbook&quot; and it&#39;s yours.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the thing most founders underestimate post-raise isn&#39;t finding candidates, it&#39;s that every hire adds coordination, and by req #10 the spreadsheet is costing you days a week and letting good people slip through.&#10;&#10;ZooKeep gives you the pipeline, the bilingual career page, and the JP-board integrations on day one, so hiring scales with the round instead of lagging it.&#10;&#10;Want the free post-funding hiring playbook? Reply &quot;playbook&quot; and it&#39;s yours." data-preview="Yuki, the thing most founders underestimate post-raise isn&#39;t finding candidates, it&#39;s that every hire adds coordination, and by req #10 the spreadsheet is costing you days a week and letting good people slip through.&#10;&#10;ZooKeep gives you the pipeline, the bilingual career page, and the JP-board integrations on day one, so hiring scales with the round instead of lagging it.&#10;&#10;Want the free post-funding hiring playbook? Reply &quot;playbook&quot; and it&#39;s yours.">
+                        <p>{{first_name}}, the thing most founders underestimate post-raise isn&#39;t finding candidates, it&#39;s that every hire adds coordination, and by req #10 the spreadsheet is costing you days a week and letting good people slip through.</p><p>ZooKeep gives you the pipeline, the bilingual career page, and the JP-board integrations on day one, so hiring scales with the round instead of lagging it.</p><p>Want the free post-funding hiring playbook? Reply &quot;playbook&quot; and it&#39;s yours.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7-8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company_name}} first hires&#10;&#10;{{first_name}}, no call needed.&#10;&#10;Tell me the first 2-3 roles you&#39;re prioritizing after the {{funding_round}} and I&#39;ll send the playbook mapped to exactly those hires, plus how ZooKeep would run that pipeline for you.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll send it. You, or is {{alt_decision_maker}} running hiring?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company_name}} first hires" data-preview="Mercari first hires">{{company_name}} first hires</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed.&#10;&#10;Tell me the first 2-3 roles you&#39;re prioritizing after the {{funding_round}} and I&#39;ll send the playbook mapped to exactly those hires, plus how ZooKeep would run that pipeline for you.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll send it. You, or is {{alt_decision_maker}} running hiring?" data-preview="Yuki, no call needed.&#10;&#10;Tell me the first 2-3 roles you&#39;re prioritizing after the Series A and I&#39;ll send the playbook mapped to exactly those hires, plus how ZooKeep would run that pipeline for you.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll send it. You, or is your Head of TA running hiring?">
+                        <p>{{first_name}}, no call needed.</p><p>Tell me the first 2-3 roles you&#39;re prioritizing after the {{funding_round}} and I&#39;ll send the playbook mapped to exactly those hires, plus how ZooKeep would run that pipeline for you.</p><p>Reply &quot;yes&quot; and I&#39;ll send it. You, or is {{alt_decision_maker}} running hiring?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 — Spreadsheet ATS Graduate</strong>
+              <em>14-day free trial direct link</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 — Spreadsheet ATS Graduate steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3-4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7-8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: still tracking candidates in a sheet?&#10;&#10;{{first_name}}, still tracking candidates in a spreadsheet (or a Notion doc that started as one)?&#10;&#10;Fair to assume people fall through the cracks and nobody has a clean view of who&#39;s where in the pipeline.&#10;&#10;We built ZooKeep for exactly this. $98/mo flat. Bilingual EN/JP career page, BizReach + Wantedly integrated, real pipeline stages instead of a sheet. 14-day free trial, no demo required.&#10;&#10;Reply &quot;trial&quot; and I&#39;ll send you a setup link.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="still tracking candidates in a sheet?" data-preview="still tracking candidates in a sheet?">still tracking candidates in a sheet?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, still tracking candidates in a spreadsheet (or a Notion doc that started as one)?&#10;&#10;Fair to assume people fall through the cracks and nobody has a clean view of who&#39;s where in the pipeline.&#10;&#10;We built ZooKeep for exactly this. $98/mo flat. Bilingual EN/JP career page, BizReach + Wantedly integrated, real pipeline stages instead of a sheet. 14-day free trial, no demo required.&#10;&#10;Reply &quot;trial&quot; and I&#39;ll send you a setup link." data-preview="Yuki, still tracking candidates in a spreadsheet (or a Notion doc that started as one)?&#10;&#10;Fair to assume people fall through the cracks and nobody has a clean view of who&#39;s where in the pipeline.&#10;&#10;We built ZooKeep for exactly this. $98/mo flat. Bilingual EN/JP career page, BizReach + Wantedly integrated, real pipeline stages instead of a sheet. 14-day free trial, no demo required.&#10;&#10;Reply &quot;trial&quot; and I&#39;ll send you a setup link.">
+                        <p>{{first_name}}, still tracking candidates in a spreadsheet (or a Notion doc that started as one)?</p><p>Fair to assume people fall through the cracks and nobody has a clean view of who&#39;s where in the pipeline.</p><p>We built ZooKeep for exactly this. $98/mo flat. Bilingual EN/JP career page, BizReach + Wantedly integrated, real pipeline stages instead of a sheet. 14-day free trial, no demo required.</p><p>Reply &quot;trial&quot; and I&#39;ll send you a setup link.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3-4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the reason most early teams stay on a spreadsheet isn&#39;t cost, it&#39;s the fear that &quot;real ATS&quot; means a sales call, an implementation, and a bill.&#10;&#10;ZooKeep is the opposite: $98/mo, self-serve, live in an afternoon. The trial doesn&#39;t need a card.&#10;&#10;Reply &quot;trial&quot; and I&#39;ll send the link, no call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the reason most early teams stay on a spreadsheet isn&#39;t cost, it&#39;s the fear that &quot;real ATS&quot; means a sales call, an implementation, and a bill.&#10;&#10;ZooKeep is the opposite: $98/mo, self-serve, live in an afternoon. The trial doesn&#39;t need a card.&#10;&#10;Reply &quot;trial&quot; and I&#39;ll send the link, no call." data-preview="Yuki, the reason most early teams stay on a spreadsheet isn&#39;t cost, it&#39;s the fear that &quot;real ATS&quot; means a sales call, an implementation, and a bill.&#10;&#10;ZooKeep is the opposite: $98/mo, self-serve, live in an afternoon. The trial doesn&#39;t need a card.&#10;&#10;Reply &quot;trial&quot; and I&#39;ll send the link, no call.">
+                        <p>{{first_name}}, the reason most early teams stay on a spreadsheet isn&#39;t cost, it&#39;s the fear that &quot;real ATS&quot; means a sales call, an implementation, and a bill.</p><p>ZooKeep is the opposite: $98/mo, self-serve, live in an afternoon. The trial doesn&#39;t need a card.</p><p>Reply &quot;trial&quot; and I&#39;ll send the link, no call.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7-8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: 2-week trial&#10;&#10;{{first_name}}, no call, promise.&#10;&#10;Just want to get you the trial link so you can move {{company_name}}&#39;s candidates off the sheet and see if it&#39;s better. If it&#39;s not, you&#39;re out nothing.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll send it over.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="2-week trial" data-preview="2-week trial">2-week trial</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call, promise.&#10;&#10;Just want to get you the trial link so you can move {{company_name}}&#39;s candidates off the sheet and see if it&#39;s better. If it&#39;s not, you&#39;re out nothing.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll send it over." data-preview="Yuki, no call, promise.&#10;&#10;Just want to get you the trial link so you can move Mercari&#39;s candidates off the sheet and see if it&#39;s better. If it&#39;s not, you&#39;re out nothing.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll send it over.">
+                        <p>{{first_name}}, no call, promise.</p><p>Just want to get you the trial link so you can move {{company_name}}&#39;s candidates off the sheet and see if it&#39;s better. If it&#39;s not, you&#39;re out nothing.</p><p>Reply &quot;yes&quot; and I&#39;ll send it over.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Catch-All — Hiring in Japan</strong>
+              <em>Hiring in Japan: First 90 Days playbook</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Catch-All — Hiring in Japan steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3-4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7-8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: hiring in Japan?&#10;&#10;{{first_name}}, saw {{company_name}} is hiring in Japan.&#10;&#10;Fair to ask, is that running on a global ATS that treats Japan as an afterthought, and a lot of manual work in between?&#10;&#10;ZooKeep is a bilingual ATS built in Tokyo by recruiters, EN/JA career pages, native JP job-board posting, plus embedded TA if you&#39;re short on recruiters. Anchored in Asia, globally compatible. In a market with a 220,000-person IT talent shortage, the process is often what&#39;s actually slowing you down.&#10;&#10;I&#39;ve got a &quot;Hiring in Japan: First 90 Days&quot; playbook, visa basics, bilingual norms, the JP-specific gotchas most foreign teams miss. Reply &quot;Y&quot; and I&#39;ll send it. Free.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="hiring in Japan?" data-preview="hiring in Japan?">hiring in Japan?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, saw {{company_name}} is hiring in Japan.&#10;&#10;Fair to ask, is that running on a global ATS that treats Japan as an afterthought, and a lot of manual work in between?&#10;&#10;ZooKeep is a bilingual ATS built in Tokyo by recruiters, EN/JA career pages, native JP job-board posting, plus embedded TA if you&#39;re short on recruiters. Anchored in Asia, globally compatible. In a market with a 220,000-person IT talent shortage, the process is often what&#39;s actually slowing you down.&#10;&#10;I&#39;ve got a &quot;Hiring in Japan: First 90 Days&quot; playbook, visa basics, bilingual norms, the JP-specific gotchas most foreign teams miss. Reply &quot;Y&quot; and I&#39;ll send it. Free." data-preview="Yuki, saw Mercari is hiring in Japan.&#10;&#10;Fair to ask, is that running on a global ATS that treats Japan as an afterthought, and a lot of manual work in between?&#10;&#10;ZooKeep is a bilingual ATS built in Tokyo by recruiters, EN/JA career pages, native JP job-board posting, plus embedded TA if you&#39;re short on recruiters. Anchored in Asia, globally compatible. In a market with a 220,000-person IT talent shortage, the process is often what&#39;s actually slowing you down.&#10;&#10;I&#39;ve got a &quot;Hiring in Japan: First 90 Days&quot; playbook, visa basics, bilingual norms, the JP-specific gotchas most foreign teams miss. Reply &quot;Y&quot; and I&#39;ll send it. Free.">
+                        <p>{{first_name}}, saw {{company_name}} is hiring in Japan.</p><p>Fair to ask, is that running on a global ATS that treats Japan as an afterthought, and a lot of manual work in between?</p><p>ZooKeep is a bilingual ATS built in Tokyo by recruiters, EN/JA career pages, native JP job-board posting, plus embedded TA if you&#39;re short on recruiters. Anchored in Asia, globally compatible. In a market with a 220,000-person IT talent shortage, the process is often what&#39;s actually slowing you down.</p><p>I&#39;ve got a &quot;Hiring in Japan: First 90 Days&quot; playbook, visa basics, bilingual norms, the JP-specific gotchas most foreign teams miss. Reply &quot;Y&quot; and I&#39;ll send it. Free.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3-4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the part most teams underestimate about hiring in Japan isn&#39;t finding people, it&#39;s the coordination: bilingual postings, JP-native boards, keigo-correct comms, compliance fields a global ATS doesn&#39;t have.&#10;&#10;ZooKeep folds all of that into one tool built for the market, so your team spends time on candidates, not workarounds.&#10;&#10;Want the free &quot;Hiring in Japan&quot; playbook? Reply &quot;playbook&quot; and it&#39;s yours, no call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the part most teams underestimate about hiring in Japan isn&#39;t finding people, it&#39;s the coordination: bilingual postings, JP-native boards, keigo-correct comms, compliance fields a global ATS doesn&#39;t have.&#10;&#10;ZooKeep folds all of that into one tool built for the market, so your team spends time on candidates, not workarounds.&#10;&#10;Want the free &quot;Hiring in Japan&quot; playbook? Reply &quot;playbook&quot; and it&#39;s yours, no call." data-preview="Yuki, the part most teams underestimate about hiring in Japan isn&#39;t finding people, it&#39;s the coordination: bilingual postings, JP-native boards, keigo-correct comms, compliance fields a global ATS doesn&#39;t have.&#10;&#10;ZooKeep folds all of that into one tool built for the market, so your team spends time on candidates, not workarounds.&#10;&#10;Want the free &quot;Hiring in Japan&quot; playbook? Reply &quot;playbook&quot; and it&#39;s yours, no call.">
+                        <p>{{first_name}}, the part most teams underestimate about hiring in Japan isn&#39;t finding people, it&#39;s the coordination: bilingual postings, JP-native boards, keigo-correct comms, compliance fields a global ATS doesn&#39;t have.</p><p>ZooKeep folds all of that into one tool built for the market, so your team spends time on candidates, not workarounds.</p><p>Want the free &quot;Hiring in Japan&quot; playbook? Reply &quot;playbook&quot; and it&#39;s yours, no call.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7-8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company_name}} + Japan&#10;&#10;{{first_name}}, no call needed.&#10;&#10;Tell me the one role in Japan that&#39;s hardest for {{company_name}} to fill right now and I&#39;ll send the playbook plus how ZooKeep would run that specific hire.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll send it. You, or is {{alt_decision_maker}} the better person for hiring?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company_name}} + Japan" data-preview="Mercari + Japan">{{company_name}} + Japan</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed.&#10;&#10;Tell me the one role in Japan that&#39;s hardest for {{company_name}} to fill right now and I&#39;ll send the playbook plus how ZooKeep would run that specific hire.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll send it. You, or is {{alt_decision_maker}} the better person for hiring?" data-preview="Yuki, no call needed.&#10;&#10;Tell me the one role in Japan that&#39;s hardest for Mercari to fill right now and I&#39;ll send the playbook plus how ZooKeep would run that specific hire.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll send it. You, or is your Head of TA the better person for hiring?">
+                        <p>{{first_name}}, no call needed.</p><p>Tell me the one role in Japan that&#39;s hardest for {{company_name}} to fill right now and I&#39;ll send the playbook plus how ZooKeep would run that specific hire.</p><p>Reply &quot;yes&quot; and I&#39;ll send it. You, or is {{alt_decision_maker}} the better person for hiring?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">Launch</p>
+      <h2>Validate the offer before you segment</h2>
+      <p class="takeaway">Start broad with Creative Ideas and the $98 snap, then layer the highest-intent niches, then scale the winners.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Phase 1 (Days 1-30): validate the offer. Launch the broad Creative Ideas campaign and the no-AI $98 Spreadsheet Graduate snap, the two most generalizable plays that produce reply data fastest.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Phase 2 (Days 31-60): layer the highest-intent niches. Turn on Tier 1 Global ATS Switcher and Tier 2 Bilingual Page Audit once the offer is proven.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Phase 3 (Days 61-90): scale the 2-3 tiers with the best reply rates and add Tier 3 Recently Funded and the VC Portfolio play.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Judge no tier before 1,500 sends. Below that, the reply data is noise.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Build the lead-listing and routing pipeline first (2-3 weeks). Sample-QA 200 random accounts before going live to confirm routing accuracy.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply / 150 contacts</strong>
+                <span>Perfect. Scale this tier hard.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 300</strong>
+                <span>Good. Let it run.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 450-500</strong>
+                <span>Borderline. Test a copy variant.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 / 500, or reply rate &lt;1% after 1,500 sends</strong>
+                <span>Cut the tier or rework.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book the strategy call</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Yuki","Mercari","customer support rep","6","Intercom","healthcare operations","Maya","Greenhouse","7","23","Series A",", and the Globis round","your Head of TA"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signalmash - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-03</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Signalmash</p>
+          <h1>The Signalmash outbound <mark>journey</mark>.</h1>
+          <p class="hero-copy">One priority-routed waterfall across a 252,000-account US market, routed on three artifacts every company already publishes on its own website.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Signalmash does not win on price, and this strategy never asks it to. What it actually sells is the removal of telecom operational risk. So we do not hunt companies that send SMS. We hunt companies whose messaging or voice program is load-bearing enough that a carrier filter or a rejected registration costs real money, and who currently have nobody to call when it happens.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a working session</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>252,000</strong>
+          <span>US accounts in the addressable market</span>
+        </div>
+        <div class="metric-card">
+          <strong>5 tiers</strong>
+          <span>Exclusive routing, 100% TAM coverage</span>
+        </div>
+        <div class="metric-card">
+          <strong>$0</strong>
+          <span>Paid enrichment needed to route an account</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Boutique CPaaS: 10DLC, toll-free and short code SMS/MMS, RCS Business Messaging, programmable voice, elastic SIP trunking, Branded Caller ID, CCaaS and hosted PBX. Dedicated Slack channel with real engineers, white-glove 10DLC and RCS approval, direct Tier-1 carrier connections.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal: who owns the network under their messaging</p></div><div><span>02</span><p>First match wins, strictly top to bottom</p></div><div><span>03</span><p>Five campaigns, no overlap, nothing left uncovered</p></div><div><span>04</span><p>The experiments that sit on top of the waterfall</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>01 Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>02 Routing</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>03 Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>04 Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>05 Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>06 Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="01 Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">01 Signal</p>
+      <h2>The signal: who owns the network under their messaging</h2>
+      <p class="takeaway">Vertical does not predict intent in CPaaS. A healthtech platform sending four million appointment reminders has nothing in common with a twelve-location dental group, but everything in common with a fintech sending four million one-time passcodes. What predicts intent is how deeply a company has committed to programmatic communications, and who currently owns that commitment on their behalf. That is a single ladder-shaped signal, and it is readable for free.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>The phone number in a company&#39;s footer resolves, through a carrier lookup, to whoever provisions their numbers: Twilio, Bandwidth, Telnyx, Vonage, RingCentral or a legacy local carrier. That single field separates a CPaaS customer from a phone-system customer from a company with no program at all.</p></div><div class="reason-card"><span>02</span><p>The SMS consent block in a privacy policy or terms page is proof of a live, registered A2P program. Post-2024 carrier consent rules pushed nearly every legitimate sender into publishing the same handful of phrases, and they are trivially detectable.</p></div><div class="reason-card"><span>03</span><p>Careers pages and API docs name the stack outright. Twilio, SIP, 10DLC, LiveKit, Vapi or FreeSWITCH in a job requisition is a direct declaration of what a company is running and what it is struggling to staff.</p></div><div class="reason-card"><span>04</span><p>All three are free and published by the prospect on their own site, which means routing an account costs nothing. Email discovery is the only variable cost in the pipeline.</p></div>
+            </div>
+            <div class="field-cloud"><span>number_carrier</span><span>cpaas_detected</span><span>a2p_consent_language</span><span>consent_language_snippet</span><span>embeds_comms_for_customers</span><span>comms_feature_names</span><span>voice_ai_product</span><span>voice_infra_named</span><span>telephony_req_open</span><span>telephony_req_keywords</span><span>fcc_rmd_filed</span><span>negative_review_dated</span><span>published_did_present</span><span>headcount_tier</span><span>estimated_msg_volume_band</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>Carrier / OCN lookup on the published phone number</h3><p>The highest-value routing field on the list. Separates CPaaS-provisioned numbers from business-phone-system numbers from legacy carrier lines, for a fraction of a cent per lookup.</p></div><div class="source-card"><span>02</span><h3>Privacy policy, terms and SMS-terms crawl</h3><p>Proof of a live, registered A2P messaging program, plus a quotable consent snippet for personalisation.</p></div><div class="source-card"><span>03</span><h3>BuiltWith and Wappalyzer technology detections</h3><p>Competitor stack across Twilio, Plivo, Vonage, Sinch, MessageBird, Bandwidth, Telnyx and SignalWire. The core Tier 2 pool.</p></div><div class="source-card"><span>04</span><h3>Product and feature-page crawl</h3><p>Whether a company promises its own customers two-way texting, reminders or click-to-call. This is the platform flag that separates Tier 1 from Tier 2.</p></div><div class="source-card"><span>05</span><h3>Job boards: Greenhouse, Ashby, Lever, LinkedIn Jobs, Indeed</h3><p>Open telephony requisitions and the named stack inside them. Refreshed weekly.</p></div><div class="source-card"><span>06</span><h3>Voice-AI ecosystem directories: Vapi, Retell, LiveKit and Bland showcases, YC, Wellfound, Crunchbase</h3><p>The Tier 3 market: companies whose product is automated calling. Re-scraped monthly because this category is growing faster than any other segment on the list.</p></div><div class="source-card"><span>07</span><h3>FCC Robocall Mitigation Database and STIR/SHAKEN filings</h3><p>A free, public, self-declared list of organisations originating voice traffic at scale. Feeds Tier 3 and the contact-centre side campaign.</p></div><div class="source-card"><span>08</span><h3>Review and community mining: G2, Trustpilot, Capterra, Reddit, Stack Overflow</h3><p>Named accounts with documented, dated dissatisfaction with their current provider. This produces the strongest first line available anywhere in the strategy.</p></div><div class="source-card"><span>09</span><h3>Docs subdomain crawl</h3><p>Named provider inside integration docs. Webhook URLs frequently leak the provider outright.</p></div><div class="source-card"><span>10</span><h3>Apollo, LinkedIn Sales Navigator and AI Ark</h3><p>Contact layer only: titles, tenure and bio keywords. No account-level enrichment needed.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="02 Routing">
+        
+    <div class="section-head">
+      <p class="eyebrow">02 Routing</p>
+      <h2>First match wins, strictly top to bottom</h2>
+      <p class="takeaway">Each account is tested against the conditions in order and routes to the first tier it matches. A voice-AI startup running on Twilio routes to Tier 2, not Tier 3, because confirmed competitor spend is a harder buying signal than product category. A platform running on Twilio routes to Tier 1, not Tier 2, because the wholesale conversation is a materially bigger contract than a migration.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF The company promises comms features to its own customers AND a competitor CPaaS is detected</span>
+          <strong>Tier 1 - The Platform Reselling Someone Else&#39;s Network</strong>
+          <em>A platform that has made messaging a product feature but does not own the network under it is the largest contract on the board. The wholesale and operations conversation outranks a simple migration, so this test runs first.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF A competitor CPaaS is detected, or the published number resolves to Twilio, Plivo, Vonage, Sinch, Telnyx or SignalWire</span>
+          <strong>Tier 2 - Paying for a Ticket Queue</strong>
+          <em>Confirmed, live spend on a direct competitor. This is the hardest buying signal in the market and the fastest tier to prove, which is why it also launches first.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF The product is an AI voice agent or automated calling system, or an open requisition names SIP, telephony, FreeSWITCH or LiveKit, or the company appears in the FCC Robocall Mitigation Database</span>
+          <strong>Tier 3 - The AI That Has to Dial</strong>
+          <em>Their product only works if the call connects and gets answered, which makes voice infrastructure a product problem rather than a procurement problem. Small, hot and moving fast.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF A2P consent language is published, but the number resolves to a business phone system or legacy carrier</span>
+          <strong>Tier 4 - Texting Without an API</strong>
+          <em>They already text and already registered, the consent block proves it, but they are doing it through a bolt-on with throughput caps and no path to RCS. Capability gap, not a vendor complaint.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF A published business number, twenty or more employees, and none of the above</span>
+          <strong>Tier 5 - The Number Nobody Answers</strong>
+          <em>The catch-all. No messaging program at all, so the entry point is the cheapest thing Signalmash sells: getting their company name to display on outbound calls.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF The company promises comms features to its own customers AND a competitor CPaaS is detected -&gt; Tier 1 - The Platform Reselling Someone Else&#39;s Network (A platform that has made messaging a product feature but does not own the network under it is the largest contract on the board. The wholesale and operations conversation outranks a simple migration, so this test runs first.)&#10;2. IF A competitor CPaaS is detected, or the published number resolves to Twilio, Plivo, Vonage, Sinch, Telnyx or SignalWire -&gt; Tier 2 - Paying for a Ticket Queue (Confirmed, live spend on a direct competitor. This is the hardest buying signal in the market and the fastest tier to prove, which is why it also launches first.)&#10;3. IF The product is an AI voice agent or automated calling system, or an open requisition names SIP, telephony, FreeSWITCH or LiveKit, or the company appears in the FCC Robocall Mitigation Database -&gt; Tier 3 - The AI That Has to Dial (Their product only works if the call connects and gets answered, which makes voice infrastructure a product problem rather than a procurement problem. Small, hot and moving fast.)&#10;4. IF A2P consent language is published, but the number resolves to a business phone system or legacy carrier -&gt; Tier 4 - Texting Without an API (They already text and already registered, the consent block proves it, but they are doing it through a bolt-on with throughput caps and no path to RCS. Capability gap, not a vendor complaint.)&#10;5. IF A published business number, twenty or more employees, and none of the above -&gt; Tier 5 - The Number Nobody Answers (The catch-all. No messaging program at all, so the entry point is the cheapest thing Signalmash sells: getting their company name to display on outbound calls.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF The company promises comms features to its own customers AND a competitor CPaaS is detected -&gt; Tier 1 - The Platform Reselling Someone Else&#39;s Network (A platform that has made messaging a product feature but does not own the network under it is the largest contract on the board. The wholesale and operations conversation outranks a simple migration, so this test runs first.)
+2. IF A competitor CPaaS is detected, or the published number resolves to Twilio, Plivo, Vonage, Sinch, Telnyx or SignalWire -&gt; Tier 2 - Paying for a Ticket Queue (Confirmed, live spend on a direct competitor. This is the hardest buying signal in the market and the fastest tier to prove, which is why it also launches first.)
+3. IF The product is an AI voice agent or automated calling system, or an open requisition names SIP, telephony, FreeSWITCH or LiveKit, or the company appears in the FCC Robocall Mitigation Database -&gt; Tier 3 - The AI That Has to Dial (Their product only works if the call connects and gets answered, which makes voice infrastructure a product problem rather than a procurement problem. Small, hot and moving fast.)
+4. IF A2P consent language is published, but the number resolves to a business phone system or legacy carrier -&gt; Tier 4 - Texting Without an API (They already text and already registered, the consent block proves it, but they are doing it through a bolt-on with throughput caps and no path to RCS. Capability gap, not a vendor complaint.)
+5. IF A published business number, twenty or more employees, and none of the above -&gt; Tier 5 - The Number Nobody Answers (The catch-all. No messaging program at all, so the entry point is the cheapest thing Signalmash sells: getting their company name to display on outbound calls.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="03 Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">03 Tiers</p>
+      <h2>Five campaigns, no overlap, nothing left uncovered</h2>
+      <p class="takeaway">Tier 1 is the smallest and most valuable. Tier 5 is sixty percent of the market and takes the softest offer on the ladder. Every pain below is inferred directly from the trigger that routed the account, never invented, and every value proposition comes from something Signalmash actually ships.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">4% TAM</span>
+          </div>
+          <h3>Tier 1: The Platform Reselling Someone Else&#39;s Network</h3>
+          <p>Product pages promise comms features to their own customers, such as two-way texting, appointment reminders or click-to-call, AND a competitor CPaaS is detected in the stack or on the published number.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They have made messaging a product feature but they do not own the network underneath it. Every sub-account needs its own brand and campaign registration. Every carrier filter becomes their support ticket rather than their vendor&#39;s. Margin is set by somebody else&#39;s rate card, and they find out about rate changes the same day their customers do. On top of that they carry compliance, billing and tax exposure for traffic they cannot see into.</dd></div>
+              <div><dt>Offer</dt><dd>The Platform Messaging Margin and Registration Audit: their sub-account registration burden and unit economics modelled side by side</dd></div>
+              <div><dt>Source</dt><dd>Product-page crawl plus BuiltWith detection plus carrier lookup</dd></div>
+              <div><dt>Reply density</dt><dd>Highest contract value on the ladder. Estimated 1 positive reply per 150 to 200 contacts.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">17% TAM</span>
+          </div>
+          <h3>Tier 2: Paying for a Ticket Queue</h3>
+          <p>A competitor CPaaS is detected, or the published number resolves to Twilio, Plivo, Vonage, Sinch, Telnyx or SignalWire, and the company is not a platform.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Confirmed, live spend on a competitor. The pain is not the invoice, it is the wait. When a campaign gets rejected or traffic starts getting filtered, the process is to file a ticket and hope. Self-service 10DLC registration leaves teams stuck for weeks with nobody accountable, and aggregated routing means they cannot diagnose a delivery problem because they cannot see the path their traffic took.</dd></div>
+              <div><dt>Offer</dt><dd>The 10DLC Rejection Post-Mortem: the seven reasons carriers actually reject a campaign, and the exact registration fields that trigger each one</dd></div>
+              <div><dt>Source</dt><dd>BuiltWith plus carrier lookup plus dated negative reviews mined from G2, Trustpilot and Reddit</dd></div>
+              <div><dt>Reply density</dt><dd>The strongest volume tier. Estimated 1 positive reply per 150 contacts.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">1% TAM</span>
+          </div>
+          <h3>Tier 3: The AI That Has to Dial</h3>
+          <p>The product is an AI voice agent or automated calling system, or open requisitions name SIP, telephony, LiveKit or FreeSWITCH, or the company appears in the FCC Robocall Mitigation Database.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Their product only works if the call connects and gets answered. They are building on a voice layer they do not control, so concurrency ceilings throttle burst campaigns without warning, outbound numbers get spam-labelled within days of going live, and caller-reputation problems surface to their own customers as the AI not working. Most providers will not disclose the concurrent call ceiling until it is hit mid-campaign.</dd></div>
+              <div><dt>Offer</dt><dd>The Answer-Rate Teardown: why AI-dialed numbers get spam-flagged in under fourteen days, and the four controls that stop it</dd></div>
+              <div><dt>Source</dt><dd>Voice-AI directories plus Crunchbase plus job boards plus the FCC Robocall Mitigation Database</dd></div>
+              <div><dt>Reply density</dt><dd>Small, hot and fast-moving. Estimated 1 positive reply per 120 to 180 contacts.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">18% TAM</span>
+          </div>
+          <h3>Tier 4: Texting Without an API</h3>
+          <p>A2P consent language is published on the site, but the number resolves to a business phone system or legacy carrier such as RingCentral, Nextiva, Zoom, 8x8 or Dialpad, with no CPaaS anywhere.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They already send texts and have already registered, because the consent block on their terms page proves it. But they are doing it through a bolt-on inside a phone system or a marketing tool. That means throughput caps they cannot raise, no programmatic control, no path to RCS at all, and often a campaign registered under a vendor&#39;s brand rather than their own.</dd></div>
+              <div><dt>Offer</dt><dd>The RCS Readiness Check: what their current sender setup can and cannot do, and what switching on RCS actually requires</dd></div>
+              <div><dt>Source</dt><dd>Privacy and terms crawl plus carrier lookup</dd></div>
+              <div><dt>Reply density</dt><dd>Broader and softer. Estimated 1 positive reply per 250 to 350 contacts.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">60% TAM</span>
+          </div>
+          <h3>Tier 5: Catch-all: The Number Nobody Answers</h3>
+          <p>A published business number, twenty or more employees, no consent language, no CPaaS detected and no voice-AI signal.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>No messaging program at all. The pain is not a broken stack, it is that outbound calls go unanswered because the line displays as an unnamed number, and every customer notification still goes out as an email nobody opens. There is no vendor to complain about, so the copy cannot lead with a stack problem.</dd></div>
+              <div><dt>Offer</dt><dd>The Business Number Health Check: what their published line displays as on each major carrier, and what that is costing in unanswered calls</dd></div>
+              <div><dt>Source</dt><dd>Apollo plus carrier lookup plus a scrape of the published number</dd></div>
+              <div><dt>Reply density</dt><dd>Softest offer on the ladder. Estimated 1 positive reply per 400 to 500 contacts.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="04 Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">04 Campaigns</p>
+      <h2>The experiments that sit on top of the waterfall</h2>
+      <p class="takeaway">The cascade decides who gets contacted. These decide what angle they get contacted with. Filter by tier to see which experiments belong to which routing bucket, plus three side campaigns that run on orthogonal signals and are deliberately kept outside the ladder.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Registration Burden</h3>
+          <p>Leads on the operational load. Every sub-account registration and every carrier filter currently lands on their engineering team rather than their vendor&#39;s, and operations-as-a-service is the only offer in the market that takes it off them.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Platforms with comms features on the product page and a competitor CPaaS detected</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the specific feature from their own product page, then name the carrier their number resolved to. The two facts together prove we understood their architecture, not just their category.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Margin Model</h3>
+          <p>When you resell messaging you do not own, your gross margin is whatever your provider&#39;s rate card leaves you. This campaign puts a number on that for a CFO.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same pool, second angle, run as the day-three follow-up or as a standalone variant</dd></div>
+            <div><dt>AI strategy</dt><dd>Offer to model their actual blended cost against what they are billing today, using published wholesale tiers down to $0.0073, and commit to walking away if it does not beat their current spread.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Carrier Lookup Cold Open</h3>
+          <p>The default Tier 2 campaign and the highest-volume send in the strategy. Leads on support and registration turnaround, never on price.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Competitor CPaaS detected on the published number, no dated review available</dd></div>
+            <div><dt>AI strategy</dt><dd>Open with the carrier lookup result and the consent block from their own terms page. The specificity does the work: it proves research without a compliment or a fake connection.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Dated Review Cold Open</h3>
+          <p>Run head to head against the carrier-lookup open. This single comparison will teach more about the market than any subject-line test.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same pool, but a dated negative review of their current provider exists from the last twelve months</dd></div>
+            <div><dt>AI strategy</dt><dd>Quote the review, the month and the reviewer, then ask whether that is still roughly the experience. This is the strongest first line available anywhere in the strategy because the prospect wrote the pain themselves.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Aggregated Route Diagnostic</h3>
+          <p>A technical rotation off the support angle, aimed at the engineer rather than the operator.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Tier 2 accounts on the day-three follow-up</dd></div>
+            <div><dt>AI strategy</dt><dd>Explain the thing most teams do not see until it bites: when a provider hands traffic to whichever wholesale route is cheapest that hour, a delivery problem becomes undiagnosable. Contrast with direct Tier-1 connections.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Spam-Likely Teardown</h3>
+          <p>Their product metric, not ours. Keep it short and technical, with no marketing language, because this persona is a founder or infrastructure lead.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Voice-AI and automated-calling companies</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with the metric that is already keeping them up: answer rate quietly dropping without anything in the product changing. Name their product and the telephony keyword from their own job requisition.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Concurrency Ceiling</h3>
+          <p>Turns an invisible constraint into a purchasable line item, which is exactly how an infrastructure buyer wants to think about capacity.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same pool, day-three follow-up</dd></div>
+            <div><dt>AI strategy</dt><dd>Publish the CPS pricing openly in the email: free to 10, $375 for 10 to 25, $495 for 25 to 50. The transparency is itself the pitch, because most providers will not disclose the ceiling until a campaign hits it.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Capability Ceiling</h3>
+          <p>Explicitly reassures that the phone system does not have to change, which removes the objection before it is raised.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Consent language present, number resolves to a phone system or legacy carrier</dd></div>
+            <div><dt>AI strategy</dt><dd>Quote their own consent snippet back to them, then note that the number resolves to a phone system rather than an API. The gap between those two facts is the entire pitch.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>RCS Window</h3>
+          <p>The only genuinely novel capability in the strategy, and the reason Tier 4 is worth running even though the accounts are smaller.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same pool, day-four follow-up</dd></div>
+            <div><dt>AI strategy</dt><dd>Frame RCS as a timing play: logo, brand name, verified checkmark and rich cards inside the native messaging app still stand out today and will not in eighteen months.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Caller ID Display</h3>
+          <p>The softest and cheapest entry point Signalmash has. Branded Caller ID is the first thing customers notice and the easiest thing to say yes to.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Published business number, twenty or more employees, no other signal</dd></div>
+            <div><dt>AI strategy</dt><dd>Look up what their main line displays as on the major carriers and open with the finding. It is personal, specific and instantly checkable by the reader.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Notifications Nobody Opens</h3>
+          <p>Removes the two objections that kill catch-all campaigns: cost and implementation effort.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same pool, day-four follow-up</dd></div>
+            <div><dt>AI strategy</dt><dd>Point at everything they currently send customers by email, then note that the Launch plan has a zero minimum and the 10DLC registration is run for them, so there is no project to scope.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Side campaign">
+          <div class="campaign-card__meta">
+            <span>Side campaign</span>
+            <span>Focused</span>
+          </div>
+          <h3>FCC Robocall Mitigation Database sweep</h3>
+          <p>Runs alongside the waterfall rather than inside it. Time-box to one quarter and measure separately.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>BPOs and contact centres listed in the FCC database, roughly 6,800 accounts</dd></div>
+            <div><dt>AI strategy</dt><dd>A free, public, self-declared list of organisations originating voice traffic at scale. Pitch SIP trunking, contact centre and Branded Caller ID together.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Side campaign">
+          <div class="campaign-card__meta">
+            <span>Side campaign</span>
+            <span>Broad</span>
+          </div>
+          <h3>Agency and consultancy referral</h3>
+          <p>Orthogonal to the ladder and deliberately kept outside it, because the buying motion and the offer are both different.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Development shops and marketing agencies that build customer-facing applications, roughly 9,000 accounts</dd></div>
+            <div><dt>AI strategy</dt><dd>They choose the CPaaS on their clients&#39; behalf, so this is a partnership pitch, not a migration pitch. Revenue share plus a partner Slack channel.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Side campaign">
+          <div class="campaign-card__meta">
+            <span>Side campaign</span>
+            <span>Focused</span>
+          </div>
+          <h3>Funding-triggered</h3>
+          <p>Keep to thirty days post-announcement. After that the decision has usually been made and the account should fall back into the normal waterfall.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Series A and B announcements in structurally messaging-heavy categories: health tech, fintech, logistics, property tech, field services</dd></div>
+            <div><dt>AI strategy</dt><dd>Fires on the funding event rather than a stack signal, and catches the company in the narrow window where the stack is chosen once and chosen now.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="05 Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">05 Copy</p>
+      <h2>Three emails per tier, five beats each</h2>
+      <p class="takeaway">Notice line built from the artifacts we actually pulled, then a poke-the-bear question, then one sentence of value proposition, then proof, then a call to action that costs the reader nothing. Every close is a document rather than a demo, because this buyer has been pitched by every CPaaS on the market and a calendar link reads as a forty-five-minute call in exchange for nothing.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company}}</span><span>{{number_carrier}}</span><span>{{comms_feature_name}}</span><span>{{consent_snippet}}</span><span>{{voice_ai_product_description}}</span><span>{{job_title}}</span><span>{{telephony_req_keyword}}</span><span>{{competitor}}</span><span>{{reviewer_name}}</span><span>{{month}}</span><span>{{short_quote}}</span><span>{{n}}</span><span>{{alt_decision_maker}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company}}, {{number_carrier}}, {{comms_feature_name}}, {{consent_snippet}}, {{voice_ai_product_description}}, {{job_title}}, {{telephony_req_keyword}}, {{competitor}}, {{reviewer_name}}, {{month}}, {{short_quote}}, {{n}}, {{alt_decision_maker}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - The Platform Reselling Someone Else&#39;s Network</strong>
+              <em>The Platform Messaging Margin and Registration Audit</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - The Platform Reselling Someone Else&#39;s Network steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your {{comms_feature_name}} feature&#10;&#10;{{first_name}} - I was looking at {{company}}&#39;s product pages and saw you offer {{comms_feature_name}} to your customers. Then I ran a carrier lookup on your main line and it came back {{number_carrier}}.&#10;&#10;But would it be fair to assume that every time one of your customers needs their own 10DLC brand registered, or a campaign gets filtered, that lands on your engineering team rather than your vendor&#39;s?&#10;&#10;We run the network and the operations layer under platforms like yours: sub-account registration, compliance, billing, taxation and KYC handled on our side, with a shared Slack channel straight to our engineers.&#10;&#10;[Platform customer] moved {{n}} sub-accounts across and cut registration turnaround from [X] to [X].&#10;&#10;Reply Y and I&#39;ll send the platform registration and margin audit for {{company}}. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your {{comms_feature_name}} feature" data-preview="your two-way appointment texting feature">your {{comms_feature_name}} feature</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - I was looking at {{company}}&#39;s product pages and saw you offer {{comms_feature_name}} to your customers. Then I ran a carrier lookup on your main line and it came back {{number_carrier}}.&#10;&#10;But would it be fair to assume that every time one of your customers needs their own 10DLC brand registered, or a campaign gets filtered, that lands on your engineering team rather than your vendor&#39;s?&#10;&#10;We run the network and the operations layer under platforms like yours: sub-account registration, compliance, billing, taxation and KYC handled on our side, with a shared Slack channel straight to our engineers.&#10;&#10;[Platform customer] moved {{n}} sub-accounts across and cut registration turnaround from [X] to [X].&#10;&#10;Reply Y and I&#39;ll send the platform registration and margin audit for {{company}}. No call needed." data-preview="Dana - I was looking at Northlake Scheduling&#39;s product pages and saw you offer two-way appointment texting to your customers. Then I ran a carrier lookup on your main line and it came back Twilio.&#10;&#10;But would it be fair to assume that every time one of your customers needs their own 10DLC brand registered, or a campaign gets filtered, that lands on your engineering team rather than your vendor&#39;s?&#10;&#10;We run the network and the operations layer under platforms like yours: sub-account registration, compliance, billing, taxation and KYC handled on our side, with a shared Slack channel straight to our engineers.&#10;&#10;[Platform customer] moved 180 sub-accounts across and cut registration turnaround from [X] to [X].&#10;&#10;Reply Y and I&#39;ll send the platform registration and margin audit for Northlake Scheduling. No call needed.">
+                        <p>{{first_name}} - I was looking at {{company}}&#39;s product pages and saw you offer {{comms_feature_name}} to your customers. Then I ran a carrier lookup on your main line and it came back {{number_carrier}}.</p><p>But would it be fair to assume that every time one of your customers needs their own 10DLC brand registered, or a campaign gets filtered, that lands on your engineering team rather than your vendor&#39;s?</p><p>We run the network and the operations layer under platforms like yours: sub-account registration, compliance, billing, taxation and KYC handled on our side, with a shared Slack channel straight to our engineers.</p><p>[Platform customer] moved {{n}} sub-accounts across and cut registration turnaround from [X] to [X].</p><p>Reply Y and I&#39;ll send the platform registration and margin audit for {{company}}. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Following up with the other half of it, {{first_name}}.&#10;&#10;When you resell messaging you don&#39;t own, your gross margin is whatever your provider&#39;s rate card leaves you, and you find out about rate changes the same day your customers do.&#10;&#10;Our published wholesale tiers go to $0.0073 at volume, and we&#39;ll model your actual blended cost against what you&#39;re billing today. If it doesn&#39;t beat your current spread we&#39;ll tell you and go away.&#10;&#10;Want the model?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Following up with the other half of it, {{first_name}}.&#10;&#10;When you resell messaging you don&#39;t own, your gross margin is whatever your provider&#39;s rate card leaves you, and you find out about rate changes the same day your customers do.&#10;&#10;Our published wholesale tiers go to $0.0073 at volume, and we&#39;ll model your actual blended cost against what you&#39;re billing today. If it doesn&#39;t beat your current spread we&#39;ll tell you and go away.&#10;&#10;Want the model?" data-preview="Following up with the other half of it, Dana.&#10;&#10;When you resell messaging you don&#39;t own, your gross margin is whatever your provider&#39;s rate card leaves you, and you find out about rate changes the same day your customers do.&#10;&#10;Our published wholesale tiers go to $0.0073 at volume, and we&#39;ll model your actual blended cost against what you&#39;re billing today. If it doesn&#39;t beat your current spread we&#39;ll tell you and go away.&#10;&#10;Want the model?">
+                        <p>Following up with the other half of it, {{first_name}}.</p><p>When you resell messaging you don&#39;t own, your gross margin is whatever your provider&#39;s rate card leaves you, and you find out about rate changes the same day your customers do.</p><p>Our published wholesale tiers go to $0.0073 at volume, and we&#39;ll model your actual blended cost against what you&#39;re billing today. If it doesn&#39;t beat your current spread we&#39;ll tell you and go away.</p><p>Want the model?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: quick one, {{first_name}}&#10;&#10;{{first_name}} - no need for a call. Just reply yes and I&#39;ll send the platform messaging margin and registration audit for {{company}}.&#10;&#10;Should I send this to you, or is {{alt_decision_maker}} the better person?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="quick one, {{first_name}}" data-preview="quick one, Dana">quick one, {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - no need for a call. Just reply yes and I&#39;ll send the platform messaging margin and registration audit for {{company}}.&#10;&#10;Should I send this to you, or is {{alt_decision_maker}} the better person?" data-preview="Dana - no need for a call. Just reply yes and I&#39;ll send the platform messaging margin and registration audit for Northlake Scheduling.&#10;&#10;Should I send this to you, or is your Head of Engineering the better person?">
+                        <p>{{first_name}} - no need for a call. Just reply yes and I&#39;ll send the platform messaging margin and registration audit for {{company}}.</p><p>Should I send this to you, or is {{alt_decision_maker}} the better person?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Paying for a Ticket Queue</strong>
+              <em>The 10DLC Rejection Post-Mortem</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Paying for a Ticket Queue steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: 10DLC at {{company}}&#10;&#10;{{first_name}} - ran a carrier lookup on the number in {{company}}&#39;s footer and it resolved to {{number_carrier}}. Your SMS terms page also has the full consent block, so I&#39;m guessing the A2P registration is already done.&#10;&#10;But would it be fair to assume that when a campaign gets rejected or messages start getting filtered, the process is: file a ticket, then wait?&#10;&#10;Every Signalmash customer gets a dedicated Slack channel with actual engineers on it, no tiered support plans, and we run 10DLC registration end-to-end rather than handing you a form. [94%] approve first time.&#10;&#10;[Customer] switched and got [X] resolved in [X].&#10;&#10;Reply Y and I&#39;ll send the 10DLC rejection post-mortem - the seven reasons carriers actually reject, and the exact fields that trigger each one. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="10DLC at {{company}}" data-preview="10DLC at Northlake Scheduling">10DLC at {{company}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - ran a carrier lookup on the number in {{company}}&#39;s footer and it resolved to {{number_carrier}}. Your SMS terms page also has the full consent block, so I&#39;m guessing the A2P registration is already done.&#10;&#10;But would it be fair to assume that when a campaign gets rejected or messages start getting filtered, the process is: file a ticket, then wait?&#10;&#10;Every Signalmash customer gets a dedicated Slack channel with actual engineers on it, no tiered support plans, and we run 10DLC registration end-to-end rather than handing you a form. [94%] approve first time.&#10;&#10;[Customer] switched and got [X] resolved in [X].&#10;&#10;Reply Y and I&#39;ll send the 10DLC rejection post-mortem - the seven reasons carriers actually reject, and the exact fields that trigger each one. No call needed." data-preview="Dana - ran a carrier lookup on the number in Northlake Scheduling&#39;s footer and it resolved to Twilio. Your SMS terms page also has the full consent block, so I&#39;m guessing the A2P registration is already done.&#10;&#10;But would it be fair to assume that when a campaign gets rejected or messages start getting filtered, the process is: file a ticket, then wait?&#10;&#10;Every Signalmash customer gets a dedicated Slack channel with actual engineers on it, no tiered support plans, and we run 10DLC registration end-to-end rather than handing you a form. [94%] approve first time.&#10;&#10;[Customer] switched and got [X] resolved in [X].&#10;&#10;Reply Y and I&#39;ll send the 10DLC rejection post-mortem - the seven reasons carriers actually reject, and the exact fields that trigger each one. No call needed.">
+                        <p>{{first_name}} - ran a carrier lookup on the number in {{company}}&#39;s footer and it resolved to {{number_carrier}}. Your SMS terms page also has the full consent block, so I&#39;m guessing the A2P registration is already done.</p><p>But would it be fair to assume that when a campaign gets rejected or messages start getting filtered, the process is: file a ticket, then wait?</p><p>Every Signalmash customer gets a dedicated Slack channel with actual engineers on it, no tiered support plans, and we run 10DLC registration end-to-end rather than handing you a form. [94%] approve first time.</p><p>[Customer] switched and got [X] resolved in [X].</p><p>Reply Y and I&#39;ll send the 10DLC rejection post-mortem - the seven reasons carriers actually reject, and the exact fields that trigger each one. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}} - the part most teams don&#39;t see until it bites: aggregated routes.&#10;&#10;When your provider hands your traffic to whichever wholesale route is cheapest that hour, you can&#39;t diagnose a delivery problem because you can&#39;t see the path. We connect direct to Tier-1 - AT&amp;T, Verizon, T-Mobile, Bandwidth - so when something&#39;s off, there&#39;s an actual answer.&#10;&#10;Want me to send the post-mortem?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - the part most teams don&#39;t see until it bites: aggregated routes.&#10;&#10;When your provider hands your traffic to whichever wholesale route is cheapest that hour, you can&#39;t diagnose a delivery problem because you can&#39;t see the path. We connect direct to Tier-1 - AT&amp;T, Verizon, T-Mobile, Bandwidth - so when something&#39;s off, there&#39;s an actual answer.&#10;&#10;Want me to send the post-mortem?" data-preview="Dana - the part most teams don&#39;t see until it bites: aggregated routes.&#10;&#10;When your provider hands your traffic to whichever wholesale route is cheapest that hour, you can&#39;t diagnose a delivery problem because you can&#39;t see the path. We connect direct to Tier-1 - AT&amp;T, Verizon, T-Mobile, Bandwidth - so when something&#39;s off, there&#39;s an actual answer.&#10;&#10;Want me to send the post-mortem?">
+                        <p>{{first_name}} - the part most teams don&#39;t see until it bites: aggregated routes.</p><p>When your provider hands your traffic to whichever wholesale route is cheapest that hour, you can&#39;t diagnose a delivery problem because you can&#39;t see the path. We connect direct to Tier-1 - AT&amp;T, Verizon, T-Mobile, Bandwidth - so when something&#39;s off, there&#39;s an actual answer.</p><p>Want me to send the post-mortem?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} + 10DLC&#10;&#10;{{first_name}} - no call needed. Reply yes and I&#39;ll send the 10DLC rejection post-mortem.&#10;&#10;Should I send it to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} + 10DLC" data-preview="Northlake Scheduling + 10DLC">{{company}} + 10DLC</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - no call needed. Reply yes and I&#39;ll send the 10DLC rejection post-mortem.&#10;&#10;Should I send it to you or {{alt_decision_maker}}?" data-preview="Dana - no call needed. Reply yes and I&#39;ll send the 10DLC rejection post-mortem.&#10;&#10;Should I send it to you or your Head of Engineering?">
+                        <p>{{first_name}} - no call needed. Reply yes and I&#39;ll send the 10DLC rejection post-mortem.</p><p>Should I send it to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - The AI That Has to Dial</strong>
+              <em>The Answer-Rate Teardown</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - The AI That Has to Dial steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: spam-likely on {{company}}&#39;s outbound&#10;&#10;{{first_name}} - saw {{company}} is running {{voice_ai_product_description}}, and the {{job_title}} req mentions {{telephony_req_keyword}}.&#10;&#10;But would it be fair to assume the numbers you dial from start getting flagged spam-likely inside a couple of weeks, and answer rate quietly drops without anything in the product changing?&#10;&#10;We do elastic SIP with published concurrency tiers instead of an invisible ceiling, direct Tier-1 termination, and Branded Caller ID so the call displays your customer&#39;s name instead of a number.&#10;&#10;[Voice customer] took answer rate from [X]% to [X]%.&#10;&#10;Reply Y and I&#39;ll send the answer-rate teardown - why AI-dialed numbers get flagged in under 14 days and the four controls that stop it. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="spam-likely on {{company}}&#39;s outbound" data-preview="spam-likely on Northlake Scheduling&#39;s outbound">spam-likely on {{company}}&#39;s outbound</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - saw {{company}} is running {{voice_ai_product_description}}, and the {{job_title}} req mentions {{telephony_req_keyword}}.&#10;&#10;But would it be fair to assume the numbers you dial from start getting flagged spam-likely inside a couple of weeks, and answer rate quietly drops without anything in the product changing?&#10;&#10;We do elastic SIP with published concurrency tiers instead of an invisible ceiling, direct Tier-1 termination, and Branded Caller ID so the call displays your customer&#39;s name instead of a number.&#10;&#10;[Voice customer] took answer rate from [X]% to [X]%.&#10;&#10;Reply Y and I&#39;ll send the answer-rate teardown - why AI-dialed numbers get flagged in under 14 days and the four controls that stop it. No call needed." data-preview="Dana - saw Northlake Scheduling is running an AI voice agent for inbound service calls, and the Senior Backend Engineer req mentions SIP.&#10;&#10;But would it be fair to assume the numbers you dial from start getting flagged spam-likely inside a couple of weeks, and answer rate quietly drops without anything in the product changing?&#10;&#10;We do elastic SIP with published concurrency tiers instead of an invisible ceiling, direct Tier-1 termination, and Branded Caller ID so the call displays your customer&#39;s name instead of a number.&#10;&#10;[Voice customer] took answer rate from [X]% to [X]%.&#10;&#10;Reply Y and I&#39;ll send the answer-rate teardown - why AI-dialed numbers get flagged in under 14 days and the four controls that stop it. No call needed.">
+                        <p>{{first_name}} - saw {{company}} is running {{voice_ai_product_description}}, and the {{job_title}} req mentions {{telephony_req_keyword}}.</p><p>But would it be fair to assume the numbers you dial from start getting flagged spam-likely inside a couple of weeks, and answer rate quietly drops without anything in the product changing?</p><p>We do elastic SIP with published concurrency tiers instead of an invisible ceiling, direct Tier-1 termination, and Branded Caller ID so the call displays your customer&#39;s name instead of a number.</p><p>[Voice customer] took answer rate from [X]% to [X]%.</p><p>Reply Y and I&#39;ll send the answer-rate teardown - why AI-dialed numbers get flagged in under 14 days and the four controls that stop it. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}} - other thing worth knowing.&#10;&#10;Most providers won&#39;t tell you your concurrent call ceiling until you hit it mid-campaign. Ours is a line item: free to 10 CPS, $375 for 10-25, $495 for 25-50. You buy the burst capacity you need instead of discovering it isn&#39;t there.&#10;&#10;Want the teardown?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - other thing worth knowing.&#10;&#10;Most providers won&#39;t tell you your concurrent call ceiling until you hit it mid-campaign. Ours is a line item: free to 10 CPS, $375 for 10-25, $495 for 25-50. You buy the burst capacity you need instead of discovering it isn&#39;t there.&#10;&#10;Want the teardown?" data-preview="Dana - other thing worth knowing.&#10;&#10;Most providers won&#39;t tell you your concurrent call ceiling until you hit it mid-campaign. Ours is a line item: free to 10 CPS, $375 for 10-25, $495 for 25-50. You buy the burst capacity you need instead of discovering it isn&#39;t there.&#10;&#10;Want the teardown?">
+                        <p>{{first_name}} - other thing worth knowing.</p><p>Most providers won&#39;t tell you your concurrent call ceiling until you hit it mid-campaign. Ours is a line item: free to 10 CPS, $375 for 10-25, $495 for 25-50. You buy the burst capacity you need instead of discovering it isn&#39;t there.</p><p>Want the teardown?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: answer rate at {{company}}&#10;&#10;{{first_name}} - no call. Reply yes and I&#39;ll send the answer-rate teardown for {{company}}.&#10;&#10;You, or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="answer rate at {{company}}" data-preview="answer rate at Northlake Scheduling">answer rate at {{company}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - no call. Reply yes and I&#39;ll send the answer-rate teardown for {{company}}.&#10;&#10;You, or {{alt_decision_maker}}?" data-preview="Dana - no call. Reply yes and I&#39;ll send the answer-rate teardown for Northlake Scheduling.&#10;&#10;You, or your Head of Engineering?">
+                        <p>{{first_name}} - no call. Reply yes and I&#39;ll send the answer-rate teardown for {{company}}.</p><p>You, or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 - Texting Without an API</strong>
+              <em>The RCS Readiness Check</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 - Texting Without an API steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}}&#39;s text messaging setup&#10;&#10;{{first_name}} - {{company}}&#39;s terms page has the full SMS consent block - &quot;{{consent_snippet}}&quot; - so you&#39;re clearly running a registered texting program. But the number itself resolves to {{number_carrier}}, which means the texting is riding inside the phone system rather than an API.&#10;&#10;Would it be fair to assume that caps what you can actually do - no real automation, throughput limits you can&#39;t raise, and no path to RCS at all?&#10;&#10;You don&#39;t have to change your phone system. We put a real messaging API alongside it, run the toll-free verification and registration for you, and RCS Studio gets a branded campaign live in about ten minutes with automatic SMS fallback built in, no engineering work.&#10;&#10;[Customer] launched their first RCS campaign in [X] days and saw [X].&#10;&#10;Reply Y and I&#39;ll send the RCS readiness check for {{company}}. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}}&#39;s text messaging setup" data-preview="Northlake Scheduling&#39;s text messaging setup">{{company}}&#39;s text messaging setup</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - {{company}}&#39;s terms page has the full SMS consent block - &quot;{{consent_snippet}}&quot; - so you&#39;re clearly running a registered texting program. But the number itself resolves to {{number_carrier}}, which means the texting is riding inside the phone system rather than an API.&#10;&#10;Would it be fair to assume that caps what you can actually do - no real automation, throughput limits you can&#39;t raise, and no path to RCS at all?&#10;&#10;You don&#39;t have to change your phone system. We put a real messaging API alongside it, run the toll-free verification and registration for you, and RCS Studio gets a branded campaign live in about ten minutes with automatic SMS fallback built in, no engineering work.&#10;&#10;[Customer] launched their first RCS campaign in [X] days and saw [X].&#10;&#10;Reply Y and I&#39;ll send the RCS readiness check for {{company}}. No call needed." data-preview="Dana - Northlake Scheduling&#39;s terms page has the full SMS consent block - &quot;Msg &amp; data rates may apply. Reply STOP to opt out.&quot; - so you&#39;re clearly running a registered texting program. But the number itself resolves to Twilio, which means the texting is riding inside the phone system rather than an API.&#10;&#10;Would it be fair to assume that caps what you can actually do - no real automation, throughput limits you can&#39;t raise, and no path to RCS at all?&#10;&#10;You don&#39;t have to change your phone system. We put a real messaging API alongside it, run the toll-free verification and registration for you, and RCS Studio gets a branded campaign live in about ten minutes with automatic SMS fallback built in, no engineering work.&#10;&#10;[Customer] launched their first RCS campaign in [X] days and saw [X].&#10;&#10;Reply Y and I&#39;ll send the RCS readiness check for Northlake Scheduling. No call needed.">
+                        <p>{{first_name}} - {{company}}&#39;s terms page has the full SMS consent block - &quot;{{consent_snippet}}&quot; - so you&#39;re clearly running a registered texting program. But the number itself resolves to {{number_carrier}}, which means the texting is riding inside the phone system rather than an API.</p><p>Would it be fair to assume that caps what you can actually do - no real automation, throughput limits you can&#39;t raise, and no path to RCS at all?</p><p>You don&#39;t have to change your phone system. We put a real messaging API alongside it, run the toll-free verification and registration for you, and RCS Studio gets a branded campaign live in about ten minutes with automatic SMS fallback built in, no engineering work.</p><p>[Customer] launched their first RCS campaign in [X] days and saw [X].</p><p>Reply Y and I&#39;ll send the RCS readiness check for {{company}}. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}} - the reason this matters now rather than next year:&#10;&#10;RCS gives you your logo, your brand name, a verified checkmark and rich cards inside the native messaging app. Your customers see a verified sender instead of an unknown number. Right now that still stands out. In eighteen months it won&#39;t.&#10;&#10;Want the readiness check?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - the reason this matters now rather than next year:&#10;&#10;RCS gives you your logo, your brand name, a verified checkmark and rich cards inside the native messaging app. Your customers see a verified sender instead of an unknown number. Right now that still stands out. In eighteen months it won&#39;t.&#10;&#10;Want the readiness check?" data-preview="Dana - the reason this matters now rather than next year:&#10;&#10;RCS gives you your logo, your brand name, a verified checkmark and rich cards inside the native messaging app. Your customers see a verified sender instead of an unknown number. Right now that still stands out. In eighteen months it won&#39;t.&#10;&#10;Want the readiness check?">
+                        <p>{{first_name}} - the reason this matters now rather than next year:</p><p>RCS gives you your logo, your brand name, a verified checkmark and rich cards inside the native messaging app. Your customers see a verified sender instead of an unknown number. Right now that still stands out. In eighteen months it won&#39;t.</p><p>Want the readiness check?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: RCS for {{company}}&#10;&#10;{{first_name}} - no call needed. Reply yes and I&#39;ll send the RCS readiness check.&#10;&#10;Should this go to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="RCS for {{company}}" data-preview="RCS for Northlake Scheduling">RCS for {{company}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - no call needed. Reply yes and I&#39;ll send the RCS readiness check.&#10;&#10;Should this go to you or {{alt_decision_maker}}?" data-preview="Dana - no call needed. Reply yes and I&#39;ll send the RCS readiness check.&#10;&#10;Should this go to you or your Head of Engineering?">
+                        <p>{{first_name}} - no call needed. Reply yes and I&#39;ll send the RCS readiness check.</p><p>Should this go to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 - Catch-all: The Number Nobody Answers</strong>
+              <em>The Business Number Health Check</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 - Catch-all: The Number Nobody Answers steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: what {{company}}&#39;s number displays as&#10;&#10;{{first_name}} - looked up the main line on {{company}}&#39;s site. On most carriers it currently displays as just the number, with no company name attached.&#10;&#10;Would it be fair to assume a decent share of your outbound calls simply don&#39;t get picked up?&#10;&#10;Branded Caller ID attaches {{company}} to the display on the major carriers. It&#39;s the cheapest thing we sell and usually the first thing customers notice.&#10;&#10;[Customer] saw connect rate move [X]%.&#10;&#10;Reply Y and I&#39;ll send the number health check - what your line displays as on each major carrier. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="what {{company}}&#39;s number displays as" data-preview="what Northlake Scheduling&#39;s number displays as">what {{company}}&#39;s number displays as</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - looked up the main line on {{company}}&#39;s site. On most carriers it currently displays as just the number, with no company name attached.&#10;&#10;Would it be fair to assume a decent share of your outbound calls simply don&#39;t get picked up?&#10;&#10;Branded Caller ID attaches {{company}} to the display on the major carriers. It&#39;s the cheapest thing we sell and usually the first thing customers notice.&#10;&#10;[Customer] saw connect rate move [X]%.&#10;&#10;Reply Y and I&#39;ll send the number health check - what your line displays as on each major carrier. No call needed." data-preview="Dana - looked up the main line on Northlake Scheduling&#39;s site. On most carriers it currently displays as just the number, with no company name attached.&#10;&#10;Would it be fair to assume a decent share of your outbound calls simply don&#39;t get picked up?&#10;&#10;Branded Caller ID attaches Northlake Scheduling to the display on the major carriers. It&#39;s the cheapest thing we sell and usually the first thing customers notice.&#10;&#10;[Customer] saw connect rate move [X]%.&#10;&#10;Reply Y and I&#39;ll send the number health check - what your line displays as on each major carrier. No call needed.">
+                        <p>{{first_name}} - looked up the main line on {{company}}&#39;s site. On most carriers it currently displays as just the number, with no company name attached.</p><p>Would it be fair to assume a decent share of your outbound calls simply don&#39;t get picked up?</p><p>Branded Caller ID attaches {{company}} to the display on the major carriers. It&#39;s the cheapest thing we sell and usually the first thing customers notice.</p><p>[Customer] saw connect rate move [X]%.</p><p>Reply Y and I&#39;ll send the number health check - what your line displays as on each major carrier. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}} - the other half: everything you currently send customers by email.&#10;&#10;Confirmations, reminders, updates. Text gets read, email mostly doesn&#39;t. Our Launch plan has a zero minimum and we handle the 10DLC registration, so there&#39;s no project to scope.&#10;&#10;Want the number health check?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - the other half: everything you currently send customers by email.&#10;&#10;Confirmations, reminders, updates. Text gets read, email mostly doesn&#39;t. Our Launch plan has a zero minimum and we handle the 10DLC registration, so there&#39;s no project to scope.&#10;&#10;Want the number health check?" data-preview="Dana - the other half: everything you currently send customers by email.&#10;&#10;Confirmations, reminders, updates. Text gets read, email mostly doesn&#39;t. Our Launch plan has a zero minimum and we handle the 10DLC registration, so there&#39;s no project to scope.&#10;&#10;Want the number health check?">
+                        <p>{{first_name}} - the other half: everything you currently send customers by email.</p><p>Confirmations, reminders, updates. Text gets read, email mostly doesn&#39;t. Our Launch plan has a zero minimum and we handle the 10DLC registration, so there&#39;s no project to scope.</p><p>Want the number health check?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}}&#39;s main line&#10;&#10;{{first_name}} - no call needed. Reply yes and I&#39;ll send the number health check for {{company}}.&#10;&#10;You, or is {{alt_decision_maker}} better?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}}&#39;s main line" data-preview="Northlake Scheduling&#39;s main line">{{company}}&#39;s main line</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - no call needed. Reply yes and I&#39;ll send the number health check for {{company}}.&#10;&#10;You, or is {{alt_decision_maker}} better?" data-preview="Dana - no call needed. Reply yes and I&#39;ll send the number health check for Northlake Scheduling.&#10;&#10;You, or is your Head of Engineering better?">
+                        <p>{{first_name}} - no call needed. Reply yes and I&#39;ll send the number health check for {{company}}.</p><p>You, or is {{alt_decision_maker}} better?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="06 Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">06 Launch</p>
+      <h2>Launch Tier 2 first, not Tier 1</h2>
+      <p class="takeaway">Tier 2 is the largest confirmed-spend pool with the cleanest signal and the fastest route to a usable proof point. Tier 1 is worth more per deal but should wait until there is a result to put in the copy. Minimum fifteen hundred contacts before any tier is judged, because below that you cannot tell a bad tier from bad luck.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Weeks 1 to 3 - Launch Tier 2 at 1,500 contacts. Largest confirmed-spend pool, cleanest signal, fastest route to a usable proof point. Run the carrier-lookup open against the dated-review open as the first and most valuable test in the strategy.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Weeks 3 to 6 - Launch Tier 3 at 1,500 contacts. Small and time-sensitive, and the voice-AI window is open now. Re-scrape the directories monthly because this category is growing faster than any other segment on the list.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 5 to 9 - Launch Tier 1 at 1,500 contacts. Highest contract value on the ladder, but hold it until Tiers 2 and 3 have produced a proof point worth putting in the copy.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Weeks 8 to 12 - Launch Tier 4 at 2,000 contacts. Broader audience and a softer signal, and it needs the RCS asset finished before it goes out.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Week 12 onward - Launch Tier 5 at 2,500 contacts and up. Evergreen volume once the top of the ladder is stable.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Throughout - Separate sending domains for the technical buyer in Tiers 1 to 3 and the business buyer in Tiers 4 to 5, three to four mailboxes each, twenty-five to thirty sends per mailbox per day, warmed for three weeks before the first send.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>Throughout - Run a full inbox-placement audit before launch and monthly after. This client sells communications deliverability, so if their own outbound lands in spam the pitch is dead on arrival.</p>
+              </div>
+              <div class="launch-step">
+                <span>08</span>
+                <p>Throughout - Route every technical reply to a real engineer within one business day. The entire pitch is that you get a human fast, so the outbound motion itself has to prove it.</p>
+              </div>
+              <div class="launch-step">
+                <span>09</span>
+                <p>At 120 days - Return non-responders to the pool, re-scraped. Both the carrier lookup and the consent-language field change over time, and a re-scrape can promote an account up the ladder, which makes the second touch stronger than the first rather than a repeat of it.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacts</strong>
+                <span>Perfect. Scale the tier and push more volume into it.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run without changes.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450 to 500</strong>
+                <span>Borderline. Test the second copy variant before touching the targeting.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or reply rate under 1% after 1,500 sends</strong>
+                <span>Cut the tier and rework the trigger. Do not keep sending.</span>
+              </div>
+              <div class="threshold">
+                <strong>Fewer than 1,500 contacts in a tier</strong>
+                <span>Do not judge it at all. Below that volume you cannot tell a bad tier from bad luck.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a working session</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dana","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Northlake Scheduling","Twilio","two-way appointment texting","Msg & data rates may apply\\. Reply STOP to opt out\\.","an AI voice agent for inbound service calls","Senior Backend Engineer","SIP","a verified reviewer","March","took eleven days to get a straight answer on our campaign rejection","180","your Head of Engineering"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

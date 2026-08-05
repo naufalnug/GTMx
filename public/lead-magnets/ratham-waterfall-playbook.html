@@ -1,0 +1,1878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ratham - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-07-17</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Ratham</p>
+          <h1>The Ratham waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">One cascade. Every Indian enterprise that moves people. Routed on the one thing this market publishes about itself.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> India is the one market on earth that publishes its commute liability in plain text. Job descriptions state it verbatim: &quot;Night shift (US timings). Cab facility provided. Door-to-door drop for female employees.&quot; That single line proves the company runs transport at scale, is legally liable for it under the OSH Code, and has an operational surface Ratham replaces. One scrape delivers the TAM and the routing signal together.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a working session</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>~35,000</strong>
+          <span>Serviceable accounts in the Indian TAM</span>
+        </div>
+        <div class="metric-card">
+          <strong>~122,000</strong>
+          <span>Contacts across the buying committee</span>
+        </div>
+        <div class="metric-card">
+          <strong>6 tiers</strong>
+          <span>One cascade, 100% TAM coverage</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Ratham Orbit (AI routing on live traffic, shift schedules and past delay data), Ratham MoveX (3,500+ vehicles across 15 cities), and Ratham Ops (a managed team watching every trip live). Commute Simplified. Operations Streamlined.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>One signal routes the entire market</p></div><div><span>02</span><p>Build it once, add leads forever</p></div><div><span>03</span><p>Six tiers, strongest intent first</p></div><div><span>04</span><p>The experiments layered on top</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>The signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>The waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>The tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>The campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>The copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>The launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="The signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">The signal</p>
+      <h2>One signal routes the entire market</h2>
+      <p class="takeaway">How visible and how legally exposed a company&#39;s commute operation already is, judged entirely from public data.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>It is published, not inferred. Indian JDs state shift timing and transport benefits verbatim, at enormous volume, for free.</p></div><div class="reason-card"><span>02</span><p>It maps straight to liability. The OSH Code makes safe night transport for women (7PM-6AM) the employer&#39;s obligation, not the vendor&#39;s.</p></div><div class="reason-card"><span>03</span><p>It is positive, never absent. We route on what a company says about itself, so a failed tier simply falls to the next condition.</p></div><div class="reason-card"><span>04</span><p>It ladders cleanly, from &quot;already paying a competitor and still escalating&quot; down to &quot;large enough to run transport, with nothing public to show for it.&quot;</p></div>
+            </div>
+            <div class="field-cloud"><span>incumbent_etms</span><span>active_transport_rfp</span><span>shift_type</span><span>transport_benefit_stated</span><span>women_night_drop_mentioned</span><span>transport_role_signal</span><span>expansion_signal</span><span>esg_commitment</span><span>headcount_tier</span><span>city</span><span>industry</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>Naukri.com JD scrape (primary)</h3><p>The whole ladder in one field: shift timing (night / rotational / US-UK shift), transport benefit (&quot;cab facility provided&quot;, &quot;door-to-door drop&quot;), and occasionally the incumbent tool name. This is Ratham&#39;s Google-Maps-review-count equivalent.</p></div><div class="source-card"><span>02</span><h3>LinkedIn Jobs + Sales Navigator</h3><p>Enterprises 200+ headcount across the 15 target cities, plus Transport / Admin / Facilities titles present on staff.</p></div><div class="source-card"><span>03</span><h3>Careers + benefits page scrape</h3><p>&quot;Transport &amp; Commute&quot; benefit blocks, sometimes naming the rider app or ETMS vendor outright.</p></div><div class="source-card"><span>04</span><h3>Competitor rider-app reviews (Play Store / App Store)</h3><p>Employees routinely name their employer in reviews of MoveInSync, Routematic, WTI and Rego. Direct displacement proof, in their own people&#39;s words.</p></div><div class="source-card"><span>05</span><h3>Procurement portals + tender listings</h3><p>Enterprises formally re-bidding transport. The highest-intent evidence available anywhere in this market.</p></div><div class="source-card"><span>06</span><h3>Google News + LinkedIn company posts</h3><p>New GCC, new city, new campus and mass-hiring announcements, with dates.</p></div><div class="source-card"><span>07</span><h3>ESG / sustainability pages + BRSR filings</h3><p>Scope 3, EV and net-zero commitments with target years.</p></div><div class="source-card"><span>08</span><h3>Apollo + ZoomInfo</h3><p>Headcount tier, industry and city. Enrichment only, never routing.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="The waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">The waterfall</p>
+      <h2>Build it once, add leads forever</h2>
+      <p class="takeaway">Every account is tested top-to-bottom and routes to the first tier it matches. The catch-all guarantees nothing is left behind.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF headcount &lt; 200 OR city not serviced</span>
+          <strong>OUT OF TAM</strong>
+          <em>The coverage gate. An account has to be big enough to run transport and sit in one of Ratham&#39;s 15 cities to be serviceable at all.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF incumbent_etms != none OR active_transport_rfp == true</span>
+          <strong>TIER 1 — Displacement</strong>
+          <em>They bought the category and still escalate. Budget is committed, the problem is admitted, and a renewal is a live wound.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF shift_type IN (night, rotational, us-shift, uk-shift) AND transport_benefit_stated == true</span>
+          <strong>TIER 2 — Night-shift liability</strong>
+          <em>They published a commitment the OSH Code makes theirs to evidence, and almost none of them can evidence it.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF transport_role_signal == true</span>
+          <strong>TIER 3 — Headcount workaround</strong>
+          <em>The open req is the confession. They&#39;re paying a salary to be the integration layer between four vendors and a spreadsheet.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF expansion_signal != none (last 6 months)</span>
+          <strong>TIER 4 — Scale / new-site</strong>
+          <em>Commute always gets planned after the lease and the laptops. This is the window where the gap is real and known.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="5">
+          <span class="route-rule__num">06</span>
+          <span class="route-rule__if">IF esg_commitment IN (ev-fleet, scope3, net-zero)</span>
+          <strong>TIER 5 — EV / Scope 3</strong>
+          <em>They committed publicly. Commute is the Scope 3 line they&#39;re estimating because nobody measures it per trip.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="6">
+          <span class="route-rule__num">07</span>
+          <span class="route-rule__if">IF everything else</span>
+          <strong>CATCH-ALL</strong>
+          <em>43% of the TAM. Multi-vendor chaos with no public signal, invisible until it breaks. Never skip the catch-all.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF headcount &lt; 200 OR city not serviced -&gt; OUT OF TAM (The coverage gate. An account has to be big enough to run transport and sit in one of Ratham&#39;s 15 cities to be serviceable at all.)&#10;2. IF incumbent_etms != none OR active_transport_rfp == true -&gt; TIER 1 — Displacement (They bought the category and still escalate. Budget is committed, the problem is admitted, and a renewal is a live wound.)&#10;3. IF shift_type IN (night, rotational, us-shift, uk-shift) AND transport_benefit_stated == true -&gt; TIER 2 — Night-shift liability (They published a commitment the OSH Code makes theirs to evidence, and almost none of them can evidence it.)&#10;4. IF transport_role_signal == true -&gt; TIER 3 — Headcount workaround (The open req is the confession. They&#39;re paying a salary to be the integration layer between four vendors and a spreadsheet.)&#10;5. IF expansion_signal != none (last 6 months) -&gt; TIER 4 — Scale / new-site (Commute always gets planned after the lease and the laptops. This is the window where the gap is real and known.)&#10;6. IF esg_commitment IN (ev-fleet, scope3, net-zero) -&gt; TIER 5 — EV / Scope 3 (They committed publicly. Commute is the Scope 3 line they&#39;re estimating because nobody measures it per trip.)&#10;7. IF everything else -&gt; CATCH-ALL (43% of the TAM. Multi-vendor chaos with no public signal, invisible until it breaks. Never skip the catch-all.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF headcount &lt; 200 OR city not serviced -&gt; OUT OF TAM (The coverage gate. An account has to be big enough to run transport and sit in one of Ratham&#39;s 15 cities to be serviceable at all.)
+2. IF incumbent_etms != none OR active_transport_rfp == true -&gt; TIER 1 — Displacement (They bought the category and still escalate. Budget is committed, the problem is admitted, and a renewal is a live wound.)
+3. IF shift_type IN (night, rotational, us-shift, uk-shift) AND transport_benefit_stated == true -&gt; TIER 2 — Night-shift liability (They published a commitment the OSH Code makes theirs to evidence, and almost none of them can evidence it.)
+4. IF transport_role_signal == true -&gt; TIER 3 — Headcount workaround (The open req is the confession. They&#39;re paying a salary to be the integration layer between four vendors and a spreadsheet.)
+5. IF expansion_signal != none (last 6 months) -&gt; TIER 4 — Scale / new-site (Commute always gets planned after the lease and the laptops. This is the window where the gap is real and known.)
+6. IF esg_commitment IN (ev-fleet, scope3, net-zero) -&gt; TIER 5 — EV / Scope 3 (They committed publicly. Commute is the Scope 3 line they&#39;re estimating because nobody measures it per trip.)
+7. IF everything else -&gt; CATCH-ALL (43% of the TAM. Multi-vendor chaos with no public signal, invisible until it breaks. Never skip the catch-all.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="The tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">The tiers</p>
+      <h2>Six tiers, strongest intent first</h2>
+      <p class="takeaway">Every pain is inferred from its trigger. Every value prop is a real, published Ratham capability.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">6% TAM</span>
+          </div>
+          <h3>Tier 1: Displacement</h3>
+          <p>Incumbent ETMS detected (MoveInSync / Routematic / WTI / Rego), or a live transport RFP or tender</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They already bought the category and still escalate. Software without an accountable ops layer means admin is still firefighting at 11pm. Renewal is a live wound.</dd></div>
+              <div><dt>Offer</dt><dd>Commute Escalation Teardown</dd></div>
+              <div><dt>Source</dt><dd>Rider-app reviews naming the employer, procurement portals, careers and benefits pages</dd></div>
+              <div><dt>Reply density</dt><dd>Highest. Budget committed and the problem already admitted — expect 1 in 150 to 1 in 200.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-orange" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">20% TAM</span>
+          </div>
+          <h3>Tier 2: Night-shift liability</h3>
+          <p>Not Tier 1, and the JD states night / rotational / US-UK shift AND transport provided</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Under the OSH Code, safe night transport for women between 7pm and 6am is the employer&#39;s legal obligation, not the vendor&#39;s. Most run it on WhatsApp groups and trust. With no timestamped drop proof, nothing is defendable.</dd></div>
+              <div><dt>Offer</dt><dd>Night-Shift Compliance Audit</dd></div>
+              <div><dt>Source</dt><dd>Naukri + LinkedIn JD scrape</dd></div>
+              <div><dt>Reply density</dt><dd>Very high, and it&#39;s the volume tier. The sharpest inferred pain in the system — expect 1 in 150 to 1 in 200.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">13% TAM</span>
+          </div>
+          <h3>Tier 3: Headcount workaround</h3>
+          <p>Not Tiers 1-2, and hiring or employing a Transport Manager / Admin-Transport / Facilities Ops role</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They&#39;re solving a software problem with salaries. A person is manually coordinating vendors, reconciling invoices and absorbing escalations. That role is the missing product.</dd></div>
+              <div><dt>Offer</dt><dd>Transport Ops Cost Model</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Jobs + Sales Navigator title search</dd></div>
+              <div><dt>Reply density</dt><dd>Strong. The open req is a public admission of the gap — expect around 1 in 250.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">10% TAM</span>
+          </div>
+          <h3>Tier 4: Scale / new-site</h3>
+          <p>Not Tiers 1-3, and a new GCC, city, campus or mass-hiring event in the last 6 months</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Standing up commute in a new city from zero: no vendor relationships, no routes, no compliance baseline, while headcount ramps faster than the transport plan.</dd></div>
+              <div><dt>Offer</dt><dd>New-Site Commute Blueprint</dd></div>
+              <div><dt>Source</dt><dd>Google News, LinkedIn company posts, careers-page new-location detection</dd></div>
+              <div><dt>Reply density</dt><dd>Good, and sharply time-boxed. Land inside the window and it converts — expect around 1 in 300.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">8% TAM</span>
+          </div>
+          <h3>Tier 5: EV / Scope 3</h3>
+          <p>Not Tiers 1-4, and a published EV, Scope 3 or net-zero commitment</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They&#39;ve committed publicly to emissions targets. Employee commute is one of the largest and least-managed Scope 3 lines, and there&#39;s no per-trip measurement or transition plan behind the number.</dd></div>
+              <div><dt>Offer</dt><dd>Commute Emissions Baseline</dd></div>
+              <div><dt>Source</dt><dd>ESG / sustainability page scrape and BRSR filings</dd></div>
+              <div><dt>Reply density</dt><dd>Moderate. A real commitment but a slower buyer — expect around 1 in 350.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="catchall" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">06</span>
+            <span class="tier-share">43% TAM</span>
+          </div>
+          <h3>Catch-all: Everyone else</h3>
+          <p>Any remaining company: 200+ headcount, a Ratham city, a shift-relevant industry</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Multi-vendor transport chaos with no single view. Reactive coordination, disputed invoices, no data. The default state, invisible until it breaks — and nobody can state cost-per-trip without three days of work.</dd></div>
+              <div><dt>Offer</dt><dd>Free Commute Audit</dd></div>
+              <div><dt>Source</dt><dd>Apollo / ZoomInfo firmographic base</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest per contact, around 1 in 400 — and entirely acceptable, because it is 43% of the TAM.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="The campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">The campaigns</p>
+      <h2>The experiments layered on top</h2>
+      <p class="takeaway">Personalization angles and side triggers that make each send land harder.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Their Own Employees&#39; Words</h3>
+          <p>Nothing lands harder than quoting a prospect&#39;s own employees back to them. This is the single strongest opener available in the entire market, and it exists because rider apps are public and reviewers name their employer.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Incumbent ETMS detected via rider-app reviews that name the employer</dd></div>
+            <div><dt>AI strategy</dt><dd>Pull two or three verbatim reviews of their incumbent rider app that name their company, and open with them. AI clusters the complaints into a theme (late pickups, no-show cabs, app failures) so the first line is their own people describing the problem.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Niche</span>
+          </div>
+          <h3>Renewal Window Displacement</h3>
+          <p>A live RFP is the highest-intent evidence in this market: the contract question is already open and someone has been told to go find alternatives.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Live transport RFP or tender on a procurement portal</dd></div>
+            <div><dt>AI strategy</dt><dd>Time-boxed burst against the tender&#39;s closing date, anchored on the 18% pharma cost reduction as the number to put next to their renewal.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Focused</span>
+          </div>
+          <h3>The JD Line</h3>
+          <p>The backbone campaign of the whole system. They published the commitment, the Code makes it their obligation, and the proof today is a WhatsApp message and a driver&#39;s word.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>JD states night / rotational / US-UK shift AND transport provided</dd></div>
+            <div><dt>AI strategy</dt><dd>Quote their posting verbatim, then count how many roles carry the same terms. AI extracts the exact benefit sentence and the role count so the opener is undeniable, public, and theirs.</dd></div>
+            <div><dt>Value</dt><dd>Reduce risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Focused</span>
+          </div>
+          <h3>Rider Experience (chaos-test variant)</h3>
+          <p>The chaos test against the JD Line: compliance framing versus rider-experience framing, run as two completely different copies before narrowing to scientific tests.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same Tier 2 list, alternate framing</dd></div>
+            <div><dt>AI strategy</dt><dd>Drop the liability frame entirely and lead on the 40-minute wait at 2am and the route that picks up seven people first, anchored on 15% fewer trips and 80% better seat utilisation.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>The Role Is The Product</h3>
+          <p>The open req is the confession. They&#39;re not shopping for software; they&#39;re paying a salary to be the integration layer. That reframe is the whole campaign.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Open req or existing staff in Transport Manager / Admin-Transport / Facilities Ops</dd></div>
+            <div><dt>AI strategy</dt><dd>Read the JD back as a list of what no system is doing — vendor coordination, route planning, invoice reconciliation, escalation handling — then price the fully-loaded role against managed ops.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Before The Lease Dries</h3>
+          <p>Commute is always figured out after the lease and the laptops. MoveX turns a new city from a build into a switch-on, and this campaign lands in exactly that window.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>New GCC / city / campus / mass-hiring in the last 6 months</dd></div>
+            <div><dt>AI strategy</dt><dd>AI pairs the expansion announcement with the role count already posted against it, and flags how many are rotational shift — proof the commute gap is arriving before the plan is.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>The Line You&#39;re Estimating</h3>
+          <p>BRSR reporting pushed emissions commitments onto most large Indian enterprises. Commute is the biggest line they can&#39;t measure — and the fastest one to actually fix.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Published EV / Scope 3 / net-zero commitment with a target year</dd></div>
+            <div><dt>AI strategy</dt><dd>Quote their ESG page or BRSR filing with the target and the year, then ask whether commute is in that number as a real measurement or an estimate. Close on cost, not green premium.</dd></div>
+            <div><dt>Value</dt><dd>Reduce risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Cost-Per-Trip Question</h3>
+          <p>The volume tier. One question — what did a trip cost you last month — that nobody in this market can answer without three days of work, anchored on the 18% pharma reduction.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>200+ headcount, Ratham city, shift-relevant industry</dd></div>
+            <div><dt>AI strategy</dt><dd>Light personalization only — city, headcount, industry benchmark. Over-personalizing a weak signal reads as surveillance, not research. Lead with a question they genuinely cannot answer.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Side campaign">
+          <div class="campaign-card__meta">
+            <span>Side campaign</span>
+            <span>Niche</span>
+          </div>
+          <h3>New Admin / Facilities Head (NOT part of the waterfall)</h3>
+          <p>The highest-converting single trigger in this market, and explicitly a side campaign: it runs alongside the cascade on an orthogonal signal, time-boxed and opt-in. Other side triggers: competitor contract expiry, and events (NASSCOM, SHRM India, GCC summits, IFMA India) on a five-day post-event window.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>LinkedIn job-change into Head of Admin / Facilities / Workplace</dd></div>
+            <div><dt>AI strategy</dt><dd>Fire inside the 30-90 day window where every incumbent vendor gets reviewed. Congratulate, then hand over the escalation teardown on their own routes.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="The copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">The copy</p>
+      <h2>Copy for all six tiers</h2>
+      <p class="takeaway">Notice line, poke-the-bear, value prop, real metric, low-effort CTA. Every number shown is one Ratham has published.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company}}</span><span>{{city}}</span><span>{{role_title}}</span><span>{{n_night_roles}}</span><span>{{incumbent_etms}}</span><span>{{review_quote_short}}</span><span>{{transport_role_title}}</span><span>{{new_city}}</span><span>{{expansion_type}}</span><span>{{n_roles}}</span><span>{{esg_doc_name}}</span><span>{{esg_commitment_quote}}</span><span>{{esg_target_year}}</span><span>{{headcount}}</span><span>{{industry}}</span><span>{{alt_decision_maker}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company}}, {{city}}, {{role_title}}, {{n_night_roles}}, {{incumbent_etms}}, {{review_quote_short}}, {{transport_role_title}}, {{new_city}}, {{expansion_type}}, {{n_roles}}, {{esg_doc_name}}, {{esg_commitment_quote}}, {{esg_target_year}}, {{headcount}}, {{industry}}, {{alt_decision_maker}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 2 - Night-shift liability (LAUNCH FIRST)</strong>
+              <em>Night-Shift Compliance Audit</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Night-shift liability (LAUNCH FIRST) steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3-4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7-8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your {{role_title}} JD, {{city}}&#10;&#10;Hi {{first_name}},&#10;&#10;Your JD for {{role_title}} in {{city}} says night shift, cab facility provided, door-to-door drop for female employees. I checked — you&#39;ve got {{n_night_roles}} roles posted on the same terms.&#10;&#10;But would it be fair to assume that if a drop was questioned six months from now, the proof is a WhatsApp message and a driver&#39;s word?&#10;&#10;Under the OSH Code that obligation is yours, not your vendor&#39;s. Ratham Orbit timestamps every trip — GPS trail, verified driver, panic button, documented drop confirmation — and our ops team watches it live rather than reading about it the next morning.&#10;&#10;99% on-time across 15 cities, 4.8 rider rating, ISO 27001.&#10;&#10;Reply Y and I&#39;ll send a night-shift compliance audit for {{company}}: what you&#39;ve published versus what the Code expects you to evidence. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your {{role_title}} JD, {{city}}" data-preview="your Senior Process Associate JD, Pune">your {{role_title}} JD, {{city}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Your JD for {{role_title}} in {{city}} says night shift, cab facility provided, door-to-door drop for female employees. I checked — you&#39;ve got {{n_night_roles}} roles posted on the same terms.&#10;&#10;But would it be fair to assume that if a drop was questioned six months from now, the proof is a WhatsApp message and a driver&#39;s word?&#10;&#10;Under the OSH Code that obligation is yours, not your vendor&#39;s. Ratham Orbit timestamps every trip — GPS trail, verified driver, panic button, documented drop confirmation — and our ops team watches it live rather than reading about it the next morning.&#10;&#10;99% on-time across 15 cities, 4.8 rider rating, ISO 27001.&#10;&#10;Reply Y and I&#39;ll send a night-shift compliance audit for {{company}}: what you&#39;ve published versus what the Code expects you to evidence. No call needed." data-preview="Hi Priya,&#10;&#10;Your JD for Senior Process Associate in Pune says night shift, cab facility provided, door-to-door drop for female employees. I checked — you&#39;ve got 14 roles posted on the same terms.&#10;&#10;But would it be fair to assume that if a drop was questioned six months from now, the proof is a WhatsApp message and a driver&#39;s word?&#10;&#10;Under the OSH Code that obligation is yours, not your vendor&#39;s. Ratham Orbit timestamps every trip — GPS trail, verified driver, panic button, documented drop confirmation — and our ops team watches it live rather than reading about it the next morning.&#10;&#10;99% on-time across 15 cities, 4.8 rider rating, ISO 27001.&#10;&#10;Reply Y and I&#39;ll send a night-shift compliance audit for Northwind Systems: what you&#39;ve published versus what the Code expects you to evidence. No call needed.">
+                        <p>Hi {{first_name}},</p><p>Your JD for {{role_title}} in {{city}} says night shift, cab facility provided, door-to-door drop for female employees. I checked — you&#39;ve got {{n_night_roles}} roles posted on the same terms.</p><p>But would it be fair to assume that if a drop was questioned six months from now, the proof is a WhatsApp message and a driver&#39;s word?</p><p>Under the OSH Code that obligation is yours, not your vendor&#39;s. Ratham Orbit timestamps every trip — GPS trail, verified driver, panic button, documented drop confirmation — and our ops team watches it live rather than reading about it the next morning.</p><p>99% on-time across 15 cities, 4.8 rider rating, ISO 27001.</p><p>Reply Y and I&#39;ll send a night-shift compliance audit for {{company}}: what you&#39;ve published versus what the Code expects you to evidence. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3-4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the other half of this.&#10;&#10;Compliance is the floor. The part that shows up in attrition is the 40-minute wait at 2am and the route that picks up seven people before her.&#10;&#10;Orbit builds routes on live traffic, shift schedules and past delay data. A tech client cut total trips 15% and pushed seat utilisation up 80% — shorter rides, fewer cabs, same coverage.&#10;&#10;Want the audit?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the other half of this.&#10;&#10;Compliance is the floor. The part that shows up in attrition is the 40-minute wait at 2am and the route that picks up seven people before her.&#10;&#10;Orbit builds routes on live traffic, shift schedules and past delay data. A tech client cut total trips 15% and pushed seat utilisation up 80% — shorter rides, fewer cabs, same coverage.&#10;&#10;Want the audit?" data-preview="Priya, the other half of this.&#10;&#10;Compliance is the floor. The part that shows up in attrition is the 40-minute wait at 2am and the route that picks up seven people before her.&#10;&#10;Orbit builds routes on live traffic, shift schedules and past delay data. A tech client cut total trips 15% and pushed seat utilisation up 80% — shorter rides, fewer cabs, same coverage.&#10;&#10;Want the audit?">
+                        <p>{{first_name}}, the other half of this.</p><p>Compliance is the floor. The part that shows up in attrition is the 40-minute wait at 2am and the route that picks up seven people before her.</p><p>Orbit builds routes on live traffic, shift schedules and past delay data. A tech client cut total trips 15% and pushed seat utilisation up 80% — shorter rides, fewer cabs, same coverage.</p><p>Want the audit?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7-8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} night shift&#10;&#10;Hi {{first_name}},&#10;&#10;No call needed. Reply yes and I&#39;ll send the night-shift compliance audit for {{company}}.&#10;&#10;Should this go to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} night shift" data-preview="Northwind Systems night shift">{{company}} night shift</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;No call needed. Reply yes and I&#39;ll send the night-shift compliance audit for {{company}}.&#10;&#10;Should this go to you or {{alt_decision_maker}}?" data-preview="Hi Priya,&#10;&#10;No call needed. Reply yes and I&#39;ll send the night-shift compliance audit for Northwind Systems.&#10;&#10;Should this go to you or your Facilities lead?">
+                        <p>Hi {{first_name}},</p><p>No call needed. Reply yes and I&#39;ll send the night-shift compliance audit for {{company}}.</p><p>Should this go to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 1 - Displacement</strong>
+              <em>Commute Escalation Teardown</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Displacement steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3-4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7-8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} + {{incumbent_etms}}&#10;&#10;Hi {{first_name}},&#10;&#10;I was going through the {{incumbent_etms}} rider app reviews and filtered for {{company}} employees. Three from the last two months: {{review_quote_short}}.&#10;&#10;But would it be fair to assume the escalations still land on your team&#39;s WhatsApp at 11pm — because you bought software, and nobody&#39;s actually running the operation?&#10;&#10;That&#39;s the gap we close. Ratham is Orbit (AI routing on live traffic and shift data), plus MoveX (3,500+ vehicles across 15 cities), plus a managed ops team that monitors every trip and resolves the delay before your admin hears about it.&#10;&#10;A Hyderabad fintech cut admin escalations by 80% and holds 99% on-time trips at a 4.8 rider rating.&#10;&#10;Reply Y and I&#39;ll send a teardown of {{company}}&#39;s current escalation surface — your routes, where they break, what it&#39;s costing. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} + {{incumbent_etms}}" data-preview="Northwind Systems + MoveInSync">{{company}} + {{incumbent_etms}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;I was going through the {{incumbent_etms}} rider app reviews and filtered for {{company}} employees. Three from the last two months: {{review_quote_short}}.&#10;&#10;But would it be fair to assume the escalations still land on your team&#39;s WhatsApp at 11pm — because you bought software, and nobody&#39;s actually running the operation?&#10;&#10;That&#39;s the gap we close. Ratham is Orbit (AI routing on live traffic and shift data), plus MoveX (3,500+ vehicles across 15 cities), plus a managed ops team that monitors every trip and resolves the delay before your admin hears about it.&#10;&#10;A Hyderabad fintech cut admin escalations by 80% and holds 99% on-time trips at a 4.8 rider rating.&#10;&#10;Reply Y and I&#39;ll send a teardown of {{company}}&#39;s current escalation surface — your routes, where they break, what it&#39;s costing. No call needed." data-preview="Hi Priya,&#10;&#10;I was going through the MoveInSync rider app reviews and filtered for Northwind Systems employees. Three from the last two months: &quot;cab marked arrived, driver was 3km away&quot;.&#10;&#10;But would it be fair to assume the escalations still land on your team&#39;s WhatsApp at 11pm — because you bought software, and nobody&#39;s actually running the operation?&#10;&#10;That&#39;s the gap we close. Ratham is Orbit (AI routing on live traffic and shift data), plus MoveX (3,500+ vehicles across 15 cities), plus a managed ops team that monitors every trip and resolves the delay before your admin hears about it.&#10;&#10;A Hyderabad fintech cut admin escalations by 80% and holds 99% on-time trips at a 4.8 rider rating.&#10;&#10;Reply Y and I&#39;ll send a teardown of Northwind Systems&#39;s current escalation surface — your routes, where they break, what it&#39;s costing. No call needed.">
+                        <p>Hi {{first_name}},</p><p>I was going through the {{incumbent_etms}} rider app reviews and filtered for {{company}} employees. Three from the last two months: {{review_quote_short}}.</p><p>But would it be fair to assume the escalations still land on your team&#39;s WhatsApp at 11pm — because you bought software, and nobody&#39;s actually running the operation?</p><p>That&#39;s the gap we close. Ratham is Orbit (AI routing on live traffic and shift data), plus MoveX (3,500+ vehicles across 15 cities), plus a managed ops team that monitors every trip and resolves the delay before your admin hears about it.</p><p>A Hyderabad fintech cut admin escalations by 80% and holds 99% on-time trips at a 4.8 rider rating.</p><p>Reply Y and I&#39;ll send a teardown of {{company}}&#39;s current escalation surface — your routes, where they break, what it&#39;s costing. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3-4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, one more angle.&#10;&#10;Beyond the escalations: a pharma client cut transport spend 18% with us, purely from routing intelligence and centralised billing. No headcount change, no service cut.&#10;&#10;If {{company}}&#39;s {{incumbent_etms}} contract is up for renewal this year, that 18% is the number worth putting next to it.&#10;&#10;Want the teardown?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, one more angle.&#10;&#10;Beyond the escalations: a pharma client cut transport spend 18% with us, purely from routing intelligence and centralised billing. No headcount change, no service cut.&#10;&#10;If {{company}}&#39;s {{incumbent_etms}} contract is up for renewal this year, that 18% is the number worth putting next to it.&#10;&#10;Want the teardown?" data-preview="Priya, one more angle.&#10;&#10;Beyond the escalations: a pharma client cut transport spend 18% with us, purely from routing intelligence and centralised billing. No headcount change, no service cut.&#10;&#10;If Northwind Systems&#39;s MoveInSync contract is up for renewal this year, that 18% is the number worth putting next to it.&#10;&#10;Want the teardown?">
+                        <p>{{first_name}}, one more angle.</p><p>Beyond the escalations: a pharma client cut transport spend 18% with us, purely from routing intelligence and centralised billing. No headcount change, no service cut.</p><p>If {{company}}&#39;s {{incumbent_etms}} contract is up for renewal this year, that 18% is the number worth putting next to it.</p><p>Want the teardown?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7-8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: wrong person?&#10;&#10;Hi {{first_name}},&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the escalation teardown for {{company}}&#39;s routes.&#10;&#10;Should I send this to you or to {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="wrong person?" data-preview="wrong person?">wrong person?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the escalation teardown for {{company}}&#39;s routes.&#10;&#10;Should I send this to you or to {{alt_decision_maker}}?" data-preview="Hi Priya,&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the escalation teardown for Northwind Systems&#39;s routes.&#10;&#10;Should I send this to you or to your Facilities lead?">
+                        <p>Hi {{first_name}},</p><p>No need for a call. Just reply yes and I&#39;ll send the escalation teardown for {{company}}&#39;s routes.</p><p>Should I send this to you or to {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Headcount workaround</strong>
+              <em>Transport Ops Cost Model</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Headcount workaround steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3-4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7-8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{transport_role_title}} - {{city}}&#10;&#10;Hi {{first_name}},&#10;&#10;Saw {{company}} is hiring an {{transport_role_title}} in {{city}}. Reading the JD: vendor coordination, route planning, invoice reconciliation, escalation handling.&#10;&#10;But would it be fair to assume that role exists because no system is doing it — so you&#39;re paying a salary to be the integration layer between four vendors and a spreadsheet?&#10;&#10;That&#39;s what Ratham replaces. Orbit automates routing, approvals, incidents and billing; our ops team runs live monitoring. Not a tool your new hire operates — the layer that means you don&#39;t need the hire.&#10;&#10;Clients see 80% fewer admin escalations. Highradius, Bayer and Rolls-Royce run on it.&#10;&#10;Reply Y and I&#39;ll send a cost model — fully-loaded cost of that role versus managed ops at your headcount. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{transport_role_title}} - {{city}}" data-preview="Admin Manager - Transport - Pune">{{transport_role_title}} - {{city}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Saw {{company}} is hiring an {{transport_role_title}} in {{city}}. Reading the JD: vendor coordination, route planning, invoice reconciliation, escalation handling.&#10;&#10;But would it be fair to assume that role exists because no system is doing it — so you&#39;re paying a salary to be the integration layer between four vendors and a spreadsheet?&#10;&#10;That&#39;s what Ratham replaces. Orbit automates routing, approvals, incidents and billing; our ops team runs live monitoring. Not a tool your new hire operates — the layer that means you don&#39;t need the hire.&#10;&#10;Clients see 80% fewer admin escalations. Highradius, Bayer and Rolls-Royce run on it.&#10;&#10;Reply Y and I&#39;ll send a cost model — fully-loaded cost of that role versus managed ops at your headcount. No call needed." data-preview="Hi Priya,&#10;&#10;Saw Northwind Systems is hiring an Admin Manager - Transport in Pune. Reading the JD: vendor coordination, route planning, invoice reconciliation, escalation handling.&#10;&#10;But would it be fair to assume that role exists because no system is doing it — so you&#39;re paying a salary to be the integration layer between four vendors and a spreadsheet?&#10;&#10;That&#39;s what Ratham replaces. Orbit automates routing, approvals, incidents and billing; our ops team runs live monitoring. Not a tool your new hire operates — the layer that means you don&#39;t need the hire.&#10;&#10;Clients see 80% fewer admin escalations. Highradius, Bayer and Rolls-Royce run on it.&#10;&#10;Reply Y and I&#39;ll send a cost model — fully-loaded cost of that role versus managed ops at your headcount. No call needed.">
+                        <p>Hi {{first_name}},</p><p>Saw {{company}} is hiring an {{transport_role_title}} in {{city}}. Reading the JD: vendor coordination, route planning, invoice reconciliation, escalation handling.</p><p>But would it be fair to assume that role exists because no system is doing it — so you&#39;re paying a salary to be the integration layer between four vendors and a spreadsheet?</p><p>That&#39;s what Ratham replaces. Orbit automates routing, approvals, incidents and billing; our ops team runs live monitoring. Not a tool your new hire operates — the layer that means you don&#39;t need the hire.</p><p>Clients see 80% fewer admin escalations. Highradius, Bayer and Rolls-Royce run on it.</p><p>Reply Y and I&#39;ll send a cost model — fully-loaded cost of that role versus managed ops at your headcount. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3-4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, one thing the cost model doesn&#39;t capture.&#10;&#10;When transport lives in one person&#39;s head, it leaves when they do. Vendor relationships, route logic, which driver you don&#39;t put on the airport run — none of it is written down.&#10;&#10;With us it&#39;s in the platform. Handover is a login.&#10;&#10;Want the cost model?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, one thing the cost model doesn&#39;t capture.&#10;&#10;When transport lives in one person&#39;s head, it leaves when they do. Vendor relationships, route logic, which driver you don&#39;t put on the airport run — none of it is written down.&#10;&#10;With us it&#39;s in the platform. Handover is a login.&#10;&#10;Want the cost model?" data-preview="Priya, one thing the cost model doesn&#39;t capture.&#10;&#10;When transport lives in one person&#39;s head, it leaves when they do. Vendor relationships, route logic, which driver you don&#39;t put on the airport run — none of it is written down.&#10;&#10;With us it&#39;s in the platform. Handover is a login.&#10;&#10;Want the cost model?">
+                        <p>{{first_name}}, one thing the cost model doesn&#39;t capture.</p><p>When transport lives in one person&#39;s head, it leaves when they do. Vendor relationships, route logic, which driver you don&#39;t put on the airport run — none of it is written down.</p><p>With us it&#39;s in the platform. Handover is a login.</p><p>Want the cost model?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7-8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: re: {{transport_role_title}}&#10;&#10;Hi {{first_name}},&#10;&#10;No call needed — reply yes and I&#39;ll send the transport ops cost model for {{company}}.&#10;&#10;Should I send it to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="re: {{transport_role_title}}" data-preview="re: Admin Manager - Transport">re: {{transport_role_title}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;No call needed — reply yes and I&#39;ll send the transport ops cost model for {{company}}.&#10;&#10;Should I send it to you or {{alt_decision_maker}}?" data-preview="Hi Priya,&#10;&#10;No call needed — reply yes and I&#39;ll send the transport ops cost model for Northwind Systems.&#10;&#10;Should I send it to you or your Facilities lead?">
+                        <p>Hi {{first_name}},</p><p>No call needed — reply yes and I&#39;ll send the transport ops cost model for {{company}}.</p><p>Should I send it to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 - Scale / new-site</strong>
+              <em>New-Site Commute Blueprint</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 - Scale / new-site steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3-4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7-8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{new_city}} site&#10;&#10;Hi {{first_name}},&#10;&#10;Saw the {{new_city}} {{expansion_type}} announcement — and {{n_roles}} roles already posted against it, a good number on rotational shifts.&#10;&#10;But would it be fair to assume commute is being figured out after the lease and the laptops — and you&#39;re about to onboard vendors in a city where you have no relationships and no route history?&#10;&#10;That&#39;s the standing start we remove. MoveX is 3,500+ vehicles live across 15 cities, so {{new_city}} isn&#39;t a build, it&#39;s a switch-on. We&#39;ve scaled sites from 100 to 10,000+ employees.&#10;&#10;Bayer, Rolls-Royce and Highradius run commute with us.&#10;&#10;Reply Y and I&#39;ll send a commute blueprint for the {{new_city}} site — indicative routes, fleet mix, go-live timeline. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{new_city}} site" data-preview="Coimbatore site">{{new_city}} site</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Saw the {{new_city}} {{expansion_type}} announcement — and {{n_roles}} roles already posted against it, a good number on rotational shifts.&#10;&#10;But would it be fair to assume commute is being figured out after the lease and the laptops — and you&#39;re about to onboard vendors in a city where you have no relationships and no route history?&#10;&#10;That&#39;s the standing start we remove. MoveX is 3,500+ vehicles live across 15 cities, so {{new_city}} isn&#39;t a build, it&#39;s a switch-on. We&#39;ve scaled sites from 100 to 10,000+ employees.&#10;&#10;Bayer, Rolls-Royce and Highradius run commute with us.&#10;&#10;Reply Y and I&#39;ll send a commute blueprint for the {{new_city}} site — indicative routes, fleet mix, go-live timeline. No call needed." data-preview="Hi Priya,&#10;&#10;Saw the Coimbatore GCC announcement — and 60 roles already posted against it, a good number on rotational shifts.&#10;&#10;But would it be fair to assume commute is being figured out after the lease and the laptops — and you&#39;re about to onboard vendors in a city where you have no relationships and no route history?&#10;&#10;That&#39;s the standing start we remove. MoveX is 3,500+ vehicles live across 15 cities, so Coimbatore isn&#39;t a build, it&#39;s a switch-on. We&#39;ve scaled sites from 100 to 10,000+ employees.&#10;&#10;Bayer, Rolls-Royce and Highradius run commute with us.&#10;&#10;Reply Y and I&#39;ll send a commute blueprint for the Coimbatore site — indicative routes, fleet mix, go-live timeline. No call needed.">
+                        <p>Hi {{first_name}},</p><p>Saw the {{new_city}} {{expansion_type}} announcement — and {{n_roles}} roles already posted against it, a good number on rotational shifts.</p><p>But would it be fair to assume commute is being figured out after the lease and the laptops — and you&#39;re about to onboard vendors in a city where you have no relationships and no route history?</p><p>That&#39;s the standing start we remove. MoveX is 3,500+ vehicles live across 15 cities, so {{new_city}} isn&#39;t a build, it&#39;s a switch-on. We&#39;ve scaled sites from 100 to 10,000+ employees.</p><p>Bayer, Rolls-Royce and Highradius run commute with us.</p><p>Reply Y and I&#39;ll send a commute blueprint for the {{new_city}} site — indicative routes, fleet mix, go-live timeline. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3-4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, on timing.&#10;&#10;The blueprint isn&#39;t theoretical. We moved a Hyderabad fintech to a 100% EV fleet in 30 days — full transition, no service gap.&#10;&#10;If {{new_city}} goes live in the next quarter, we&#39;re inside the window.&#10;&#10;Want it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, on timing.&#10;&#10;The blueprint isn&#39;t theoretical. We moved a Hyderabad fintech to a 100% EV fleet in 30 days — full transition, no service gap.&#10;&#10;If {{new_city}} goes live in the next quarter, we&#39;re inside the window.&#10;&#10;Want it?" data-preview="Priya, on timing.&#10;&#10;The blueprint isn&#39;t theoretical. We moved a Hyderabad fintech to a 100% EV fleet in 30 days — full transition, no service gap.&#10;&#10;If Coimbatore goes live in the next quarter, we&#39;re inside the window.&#10;&#10;Want it?">
+                        <p>{{first_name}}, on timing.</p><p>The blueprint isn&#39;t theoretical. We moved a Hyderabad fintech to a 100% EV fleet in 30 days — full transition, no service gap.</p><p>If {{new_city}} goes live in the next quarter, we&#39;re inside the window.</p><p>Want it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7-8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{new_city}}&#10;&#10;Hi {{first_name}},&#10;&#10;No call needed. Reply yes and I&#39;ll send the {{new_city}} commute blueprint.&#10;&#10;Should this go to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{new_city}}" data-preview="Coimbatore">{{new_city}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;No call needed. Reply yes and I&#39;ll send the {{new_city}} commute blueprint.&#10;&#10;Should this go to you or {{alt_decision_maker}}?" data-preview="Hi Priya,&#10;&#10;No call needed. Reply yes and I&#39;ll send the Coimbatore commute blueprint.&#10;&#10;Should this go to you or your Facilities lead?">
+                        <p>Hi {{first_name}},</p><p>No call needed. Reply yes and I&#39;ll send the {{new_city}} commute blueprint.</p><p>Should this go to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 - EV / Scope 3</strong>
+              <em>Commute Emissions Baseline</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 - EV / Scope 3 steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3-4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7-8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} Scope 3&#10;&#10;Hi {{first_name}},&#10;&#10;Read {{company}}&#39;s {{esg_doc_name}} — {{esg_commitment_quote}} by {{esg_target_year}}.&#10;&#10;But would it be fair to assume employee commute is in that number as an estimate, because nobody&#39;s actually measuring it per trip?&#10;&#10;Commute is one of the biggest and least-managed Scope 3 lines, and it&#39;s the one you can fix fastest. Ratham runs EVs across the fleet and Orbit reports emissions per trip — so ESG reporting becomes a data pull, not a project.&#10;&#10;We took a leading Hyderabad fintech to a 100% EV fleet in 30 days.&#10;&#10;Reply Y and I&#39;ll send a commute emissions baseline for {{company}} — estimated footprint and the EV transition path. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} Scope 3" data-preview="Northwind Systems Scope 3">{{company}} Scope 3</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Read {{company}}&#39;s {{esg_doc_name}} — {{esg_commitment_quote}} by {{esg_target_year}}.&#10;&#10;But would it be fair to assume employee commute is in that number as an estimate, because nobody&#39;s actually measuring it per trip?&#10;&#10;Commute is one of the biggest and least-managed Scope 3 lines, and it&#39;s the one you can fix fastest. Ratham runs EVs across the fleet and Orbit reports emissions per trip — so ESG reporting becomes a data pull, not a project.&#10;&#10;We took a leading Hyderabad fintech to a 100% EV fleet in 30 days.&#10;&#10;Reply Y and I&#39;ll send a commute emissions baseline for {{company}} — estimated footprint and the EV transition path. No call needed." data-preview="Hi Priya,&#10;&#10;Read Northwind Systems&#39;s FY25 BRSR filing — net-zero across owned operations by 2030.&#10;&#10;But would it be fair to assume employee commute is in that number as an estimate, because nobody&#39;s actually measuring it per trip?&#10;&#10;Commute is one of the biggest and least-managed Scope 3 lines, and it&#39;s the one you can fix fastest. Ratham runs EVs across the fleet and Orbit reports emissions per trip — so ESG reporting becomes a data pull, not a project.&#10;&#10;We took a leading Hyderabad fintech to a 100% EV fleet in 30 days.&#10;&#10;Reply Y and I&#39;ll send a commute emissions baseline for Northwind Systems — estimated footprint and the EV transition path. No call needed.">
+                        <p>Hi {{first_name}},</p><p>Read {{company}}&#39;s {{esg_doc_name}} — {{esg_commitment_quote}} by {{esg_target_year}}.</p><p>But would it be fair to assume employee commute is in that number as an estimate, because nobody&#39;s actually measuring it per trip?</p><p>Commute is one of the biggest and least-managed Scope 3 lines, and it&#39;s the one you can fix fastest. Ratham runs EVs across the fleet and Orbit reports emissions per trip — so ESG reporting becomes a data pull, not a project.</p><p>We took a leading Hyderabad fintech to a 100% EV fleet in 30 days.</p><p>Reply Y and I&#39;ll send a commute emissions baseline for {{company}} — estimated footprint and the EV transition path. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3-4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the part that makes this an easy internal sell.&#10;&#10;This isn&#39;t a green premium. The same routing intelligence cut a pharma client&#39;s transport cost 18%. The EV transition rode along with it.&#10;&#10;Emissions down, spend down, same service. Want the baseline?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the part that makes this an easy internal sell.&#10;&#10;This isn&#39;t a green premium. The same routing intelligence cut a pharma client&#39;s transport cost 18%. The EV transition rode along with it.&#10;&#10;Emissions down, spend down, same service. Want the baseline?" data-preview="Priya, the part that makes this an easy internal sell.&#10;&#10;This isn&#39;t a green premium. The same routing intelligence cut a pharma client&#39;s transport cost 18%. The EV transition rode along with it.&#10;&#10;Emissions down, spend down, same service. Want the baseline?">
+                        <p>{{first_name}}, the part that makes this an easy internal sell.</p><p>This isn&#39;t a green premium. The same routing intelligence cut a pharma client&#39;s transport cost 18%. The EV transition rode along with it.</p><p>Emissions down, spend down, same service. Want the baseline?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7-8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: commute emissions&#10;&#10;Hi {{first_name}},&#10;&#10;No call needed — reply yes and I&#39;ll send {{company}}&#39;s commute emissions baseline.&#10;&#10;Should I send it to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="commute emissions" data-preview="commute emissions">commute emissions</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;No call needed — reply yes and I&#39;ll send {{company}}&#39;s commute emissions baseline.&#10;&#10;Should I send it to you or {{alt_decision_maker}}?" data-preview="Hi Priya,&#10;&#10;No call needed — reply yes and I&#39;ll send Northwind Systems&#39;s commute emissions baseline.&#10;&#10;Should I send it to you or your Facilities lead?">
+                        <p>Hi {{first_name}},</p><p>No call needed — reply yes and I&#39;ll send {{company}}&#39;s commute emissions baseline.</p><p>Should I send it to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Catch-all - Everyone else</strong>
+              <em>Free Commute Audit</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Catch-all - Everyone else steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3-4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7-8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: commute, {{city}}&#10;&#10;Hi {{first_name}},&#10;&#10;You&#39;re running {{headcount}}+ people out of {{city}} in {{industry}}, which almost always means a handful of transport vendors, a few WhatsApp groups, and invoices nobody can fully reconcile.&#10;&#10;But would it be fair to assume nobody can tell you cost-per-trip this month without three days of work?&#10;&#10;We&#39;re Ratham — one platform for employee commute across 15 cities. Live routes, on-time cabs, compliant drivers, one bill.&#10;&#10;A pharma client cut transport cost 18% on routing intelligence and centralised billing alone. 99% on-time, 4.8 rider rating.&#10;&#10;Reply Y and I&#39;ll send a free commute audit — your routes, likely utilisation, and cost-per-trip versus the {{industry}} benchmark. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="commute, {{city}}" data-preview="commute, Pune">commute, {{city}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;You&#39;re running {{headcount}}+ people out of {{city}} in {{industry}}, which almost always means a handful of transport vendors, a few WhatsApp groups, and invoices nobody can fully reconcile.&#10;&#10;But would it be fair to assume nobody can tell you cost-per-trip this month without three days of work?&#10;&#10;We&#39;re Ratham — one platform for employee commute across 15 cities. Live routes, on-time cabs, compliant drivers, one bill.&#10;&#10;A pharma client cut transport cost 18% on routing intelligence and centralised billing alone. 99% on-time, 4.8 rider rating.&#10;&#10;Reply Y and I&#39;ll send a free commute audit — your routes, likely utilisation, and cost-per-trip versus the {{industry}} benchmark. No call needed." data-preview="Hi Priya,&#10;&#10;You&#39;re running 1,200+ people out of Pune in pharma, which almost always means a handful of transport vendors, a few WhatsApp groups, and invoices nobody can fully reconcile.&#10;&#10;But would it be fair to assume nobody can tell you cost-per-trip this month without three days of work?&#10;&#10;We&#39;re Ratham — one platform for employee commute across 15 cities. Live routes, on-time cabs, compliant drivers, one bill.&#10;&#10;A pharma client cut transport cost 18% on routing intelligence and centralised billing alone. 99% on-time, 4.8 rider rating.&#10;&#10;Reply Y and I&#39;ll send a free commute audit — your routes, likely utilisation, and cost-per-trip versus the pharma benchmark. No call needed.">
+                        <p>Hi {{first_name}},</p><p>You&#39;re running {{headcount}}+ people out of {{city}} in {{industry}}, which almost always means a handful of transport vendors, a few WhatsApp groups, and invoices nobody can fully reconcile.</p><p>But would it be fair to assume nobody can tell you cost-per-trip this month without three days of work?</p><p>We&#39;re Ratham — one platform for employee commute across 15 cities. Live routes, on-time cabs, compliant drivers, one bill.</p><p>A pharma client cut transport cost 18% on routing intelligence and centralised billing alone. 99% on-time, 4.8 rider rating.</p><p>Reply Y and I&#39;ll send a free commute audit — your routes, likely utilisation, and cost-per-trip versus the {{industry}} benchmark. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3-4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the cost angle is the easy one. The one that actually bites:&#10;&#10;Every late cab becomes an admin escalation, and every escalation eats an hour of someone senior&#39;s day. Clients cut those by 80% with us — because our ops team catches the delay before your team hears about it.&#10;&#10;Want the audit?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the cost angle is the easy one. The one that actually bites:&#10;&#10;Every late cab becomes an admin escalation, and every escalation eats an hour of someone senior&#39;s day. Clients cut those by 80% with us — because our ops team catches the delay before your team hears about it.&#10;&#10;Want the audit?" data-preview="Priya, the cost angle is the easy one. The one that actually bites:&#10;&#10;Every late cab becomes an admin escalation, and every escalation eats an hour of someone senior&#39;s day. Clients cut those by 80% with us — because our ops team catches the delay before your team hears about it.&#10;&#10;Want the audit?">
+                        <p>{{first_name}}, the cost angle is the easy one. The one that actually bites:</p><p>Every late cab becomes an admin escalation, and every escalation eats an hour of someone senior&#39;s day. Clients cut those by 80% with us — because our ops team catches the delay before your team hears about it.</p><p>Want the audit?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7-8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} commute&#10;&#10;Hi {{first_name}},&#10;&#10;No call needed. Reply yes and I&#39;ll send the free commute audit for {{company}}.&#10;&#10;Should I send this to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} commute" data-preview="Northwind Systems commute">{{company}} commute</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;No call needed. Reply yes and I&#39;ll send the free commute audit for {{company}}.&#10;&#10;Should I send this to you or {{alt_decision_maker}}?" data-preview="Hi Priya,&#10;&#10;No call needed. Reply yes and I&#39;ll send the free commute audit for Northwind Systems.&#10;&#10;Should I send this to you or your Facilities lead?">
+                        <p>Hi {{first_name}},</p><p>No call needed. Reply yes and I&#39;ll send the free commute audit for {{company}}.</p><p>Should I send this to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="The launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">The launch</p>
+      <h2>Phase-rolled, read at 1,500 sends</h2>
+      <p class="takeaway">Tier 2 goes first — the Naukri scrape is the backbone, so it&#39;s live on day one at full volume.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Weeks 1-2 — Tier 2 only. The biggest signal-carrying tier at 24,500 contacts, the sharpest inferred pain, and the cheapest to source. Normally the highest-intent tier launches first; here it doesn&#39;t, because the Naukri JD scrape is the backbone of the entire system and is live on day one at full volume.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Weeks 3-4 — add Tier 1. Smaller list, highest intent, but it depends on app-store review and procurement scraping that takes a sprint to build. We launch what&#39;s already standing, and Tier 1 follows two weeks later.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 5-6 — add Tiers 3 and 4, once the Naukri and LinkedIn pipeline is stable and proven.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Weeks 7-8 — add Tier 5 and the Catch-all. Broadest and softest, and they run forever underneath everything else.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>In parallel from day one — warm 4-6 secondary domains at 20-25 sends per inbox per day. Warmup has a two-week lead time, so it starts alongside the list build, never after it.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Send Tuesday to Thursday, 10:00-11:30 or 15:00-16:30 IST. Avoid Mondays — that&#39;s escalation day for admin teams, the one day they&#39;re least able to read a cold email.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>Layer LinkedIn connect-and-note on Tiers 1-3 only. Indian admin and facilities buyers are unusually active on LinkedIn, and a soft connect two days ahead of the email measurably lifts replies. WhatsApp stays strictly post-reply.</p>
+              </div>
+              <div class="launch-step">
+                <span>08</span>
+                <p>Two things needed from Ratham to go live: confirm the 15 operating cities and any industry exclusions, and confirm whether Highradius, Bayer and Rolls-Royce are cleared for cold copy or must stay anonymised.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply / 150 contacts</strong>
+                <span>Perfect. Scale that tier immediately.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 300</strong>
+                <span>Good. Let it run untouched.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 450-500</strong>
+                <span>Borderline. Test one copy variant, one variable at a time.</span>
+              </div>
+              <div class="threshold">
+                <strong>Past 1 / 500, or under 1% reply after 1,500+ sends</strong>
+                <span>Cut the tier and rework the trigger.</span>
+              </div>
+              <div class="threshold">
+                <strong>Under 1,500 sends</strong>
+                <span>Read nothing. Not enough signal to tell a working tier from an unlucky one.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a working session</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Priya","NextGen AI Technologies","customer support rep","6","Intercom","pharma","Maya","Northwind Systems","Pune","Senior Process Associate","14","MoveInSync","\"cab marked arrived, driver was 3km away\"","Admin Manager - Transport","Coimbatore","GCC","60","FY25 BRSR filing","net-zero across owned operations","2030","1,200","your Facilities lead"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

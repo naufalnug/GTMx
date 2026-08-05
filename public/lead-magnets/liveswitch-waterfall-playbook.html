@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LiveSwitch - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-07-30</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for LiveSwitch</p>
+          <h1>Your LiveSwitch waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">One cascade, routed on how a company produces an estimate today.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Every home-service and moving company publicly tells you how it produces an estimate, on its own website. That single answer is both the segmentation and the pain point, so the waterfall costs nothing to route and never needs rebuilding.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a working session</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>~180k</strong>
+          <span>Qualified accounts after the price floor</span>
+        </div>
+        <div class="metric-card">
+          <strong>5</strong>
+          <span>Campaigns covering 100% of the market</span>
+        </div>
+        <div class="metric-card">
+          <strong>$0</strong>
+          <span>Enrichment cost per routed account</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>LiveSwitch Contact: browser-based live video calls and customer-recorded capture, organised against the job record, with AI reporting. No app download for the homeowner.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>Estimate-production method is the routing axis</p></div><div><span>02</span><p>First-match routing, top to bottom</p></div><div><span>03</span><p>Five tiers, ordered by proximity to a buying decision</p></div><div><span>04</span><p>What each tier actually runs</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>01 Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>02 Waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>03 Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>04 Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>05 Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>06 Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="01 Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">01 Signal</p>
+      <h2>Estimate-production method is the routing axis</h2>
+      <p class="takeaway">Trade category is how we list the market. How they quote is how we route it.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>Observable for 100% of the market. Every service business publishes how to get a quote, so there is no account we cannot classify.</p></div><div class="reason-card"><span>02</span><p>Free to detect. The signal comes from the prospect&#39;s own HTML and public job posts. No data vendor, no intent platform, no enrichment credits.</p></div><div class="reason-card"><span>03</span><p>Maps straight onto LiveSwitch&#39;s value props: replace the truck roll, integrate to the system of record, add capacity without hiring.</p></div><div class="reason-card"><span>04</span><p>The method implies the pain. We never have to invent a pain point, only name the cost the method already creates.</p></div>
+            </div>
+            <div class="field-cloud"><span>company_name</span><span>domain</span><span>metro</span><span>trade_category</span><span>virtual_survey_tool</span><span>hiring_estimator_role</span><span>fsm_platform</span><span>in_home_estimate_phrase</span><span>review_count</span><span>reviews_last_90d</span><span>location_count</span><span>service_areas</span><span>contact_title_tier</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>Google Maps, 40 categories x top 350 US/CA metros</h3><p>The market core: name, category, website, phone, review count, review recency, service-area vs storefront flag. ~620,000 raw listings.</p></div><div class="source-card"><span>02</span><h3>Website HTML scrape on each domain</h3><p>The primary routing signal: booking-widget fingerprints, powered-by footers, quote-request paths, page schema, estimate language, third-party survey-tool embeds.</p></div><div class="source-card"><span>03</span><h3>Indeed + LinkedIn Jobs, rolling 45-day window</h3><p>Hiring intent: estimator, surveyor, sales consultant, move coordinator, project estimator roles.</p></div><div class="source-card"><span>04</span><h3>Field-service platform partner directories</h3><p>Confirms platform membership where the site scrape is ambiguous. Also stands alone as a clean list.</p></div><div class="source-card"><span>05</span><h3>LinkedIn Sales Navigator</h3><p>Contact layer only. Identifies the right person at an account that has already been routed.</p></div><div class="source-card"><span>06</span><h3>Ai Ark waterfall enrichment</h3><p>Verified email and mobile for the selected contact.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="02 Waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">02 Waterfall</p>
+      <h2>First-match routing, top to bottom</h2>
+      <p class="takeaway">Every qualified account exits with exactly one tier. No overlaps, no gaps.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF Account has a website AND 50+ Google reviews AND 3+ reviews in the last 90 days</span>
+          <strong>Enters the market. Everything below this floor is excluded, not routed.</strong>
+          <em>LiveSwitch&#39;s 2-seat minimum puts entry value near $3.3k/yr. A business doing fewer than a couple of reviewed jobs a month cannot buy it. This floor removes ~55% of raw map output before a single email is written.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF A competitor virtual-survey or AI-survey tool is detected on the site</span>
+          <strong>Tier 1 - Already Virtual</strong>
+          <em>Budget exists and the thesis is already sold. The pitch has to be about what their current tool cannot do, never about trying virtual estimates.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF Otherwise, a live estimator / surveyor / sales consultant job post in the last 45 days</span>
+          <strong>Tier 2 - Hiring the Fix</strong>
+          <em>An approved budget aimed directly at estimating capacity. They are solving it with headcount instead of software.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF Otherwise, a field-service platform is detected (ServiceTitan, Jobber, Housecall Pro, SmartMoving, Supermove, Movegistics, Chariot)</span>
+          <strong>Tier 3 - System of Record</strong>
+          <em>They buy operational software and have standardised jobs in one place. The visual half of the job never reaches it.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF Otherwise, the site advertises free in-home or on-site estimates</span>
+          <strong>Tier 4 - Truck Roll</strong>
+          <em>A public commitment to visiting every prospect who asks. Pain is present, evidence of budget is not.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="5">
+          <span class="route-rule__num">06</span>
+          <span class="route-rule__if">IF Otherwise</span>
+          <strong>Tier 5 - Catch-All</strong>
+          <em>Real job volume and nothing else visible. Copy stays deliberately conservative because volume is all we know.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF Account has a website AND 50+ Google reviews AND 3+ reviews in the last 90 days -&gt; Enters the market. Everything below this floor is excluded, not routed. (LiveSwitch&#39;s 2-seat minimum puts entry value near $3.3k/yr. A business doing fewer than a couple of reviewed jobs a month cannot buy it. This floor removes ~55% of raw map output before a single email is written.)&#10;2. IF A competitor virtual-survey or AI-survey tool is detected on the site -&gt; Tier 1 - Already Virtual (Budget exists and the thesis is already sold. The pitch has to be about what their current tool cannot do, never about trying virtual estimates.)&#10;3. IF Otherwise, a live estimator / surveyor / sales consultant job post in the last 45 days -&gt; Tier 2 - Hiring the Fix (An approved budget aimed directly at estimating capacity. They are solving it with headcount instead of software.)&#10;4. IF Otherwise, a field-service platform is detected (ServiceTitan, Jobber, Housecall Pro, SmartMoving, Supermove, Movegistics, Chariot) -&gt; Tier 3 - System of Record (They buy operational software and have standardised jobs in one place. The visual half of the job never reaches it.)&#10;5. IF Otherwise, the site advertises free in-home or on-site estimates -&gt; Tier 4 - Truck Roll (A public commitment to visiting every prospect who asks. Pain is present, evidence of budget is not.)&#10;6. IF Otherwise -&gt; Tier 5 - Catch-All (Real job volume and nothing else visible. Copy stays deliberately conservative because volume is all we know.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF Account has a website AND 50+ Google reviews AND 3+ reviews in the last 90 days -&gt; Enters the market. Everything below this floor is excluded, not routed. (LiveSwitch&#39;s 2-seat minimum puts entry value near $3.3k/yr. A business doing fewer than a couple of reviewed jobs a month cannot buy it. This floor removes ~55% of raw map output before a single email is written.)
+2. IF A competitor virtual-survey or AI-survey tool is detected on the site -&gt; Tier 1 - Already Virtual (Budget exists and the thesis is already sold. The pitch has to be about what their current tool cannot do, never about trying virtual estimates.)
+3. IF Otherwise, a live estimator / surveyor / sales consultant job post in the last 45 days -&gt; Tier 2 - Hiring the Fix (An approved budget aimed directly at estimating capacity. They are solving it with headcount instead of software.)
+4. IF Otherwise, a field-service platform is detected (ServiceTitan, Jobber, Housecall Pro, SmartMoving, Supermove, Movegistics, Chariot) -&gt; Tier 3 - System of Record (They buy operational software and have standardised jobs in one place. The visual half of the job never reaches it.)
+5. IF Otherwise, the site advertises free in-home or on-site estimates -&gt; Tier 4 - Truck Roll (A public commitment to visiting every prospect who asks. Pain is present, evidence of budget is not.)
+6. IF Otherwise -&gt; Tier 5 - Catch-All (Real job volume and nothing else visible. Copy stays deliberately conservative because volume is all we know.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="03 Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">03 Tiers</p>
+      <h2>Five tiers, ordered by proximity to a buying decision</h2>
+      <p class="takeaway">Tier 1 has already bought the thesis. Tier 5 has volume and nothing else visible.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">~1.5% TAM</span>
+          </div>
+          <h3>Tier 1: Already Virtual</h3>
+          <p>A competitor virtual-survey or AI-survey tool detected on the website (embedded vendor script, or virtual-survey language linked to a third-party booking domain).</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The limits of the tool they already have. AI-only surveys are transactional with no human on the call at the moment of sale, are typically priced per survey, and are scoped to one job type. The rest of the business still runs on truck rolls and customer texts to a rep&#39;s personal phone.</dd></div>
+              <div><dt>Offer</dt><dd>Live-versus-AI-survey teardown: where each model wins, and the job types an AI survey tool will not cover</dd></div>
+              <div><dt>Source</dt><dd>Website scrape - vendor script/iframe fingerprints</dd></div>
+              <div><dt>Reply density</dt><dd>Highest conviction in the strategy. Smallest list, most sophisticated buyer, fastest honest read on the message.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">~4% TAM</span>
+          </div>
+          <h3>Tier 2: Hiring the Fix</h3>
+          <p>A live job post in the last 45 days for an estimator, surveyor, sales consultant, project estimator or move coordinator.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They are solving an estimating-capacity problem with headcount. That is a fully loaded salary plus a vehicle plus 60 to 90 days of ramp, for capacity that video could unlock from the team they already have. An estimator can only be in one driveway at a time.</dd></div>
+              <div><dt>Offer</dt><dd>Estimator Capacity Calculator: how many extra quotes a week the current team could run before the hire is genuinely needed</dd></div>
+              <div><dt>Source</dt><dd>Indeed + LinkedIn Jobs, rolling 45-day refresh</dd></div>
+              <div><dt>Reply density</dt><dd>High. Rolling rather than static - replenishes at roughly 1,600 to 2,000 net-new accounts a month.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">~22% TAM</span>
+          </div>
+          <h3>Tier 3: System of Record</h3>
+          <p>A field-service platform is detected (ServiceTitan, Jobber, Housecall Pro, SmartMoving, Supermove, Movegistics, Chariot) and no virtual-survey tool is present.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The visual half of the job never reaches the system they already standardised on. Photos arrive as customer texts to a rep&#39;s personal phone. Nothing is attached to the job record, nothing is searchable three weeks later, and the estimate still requires someone on site.</dd></div>
+              <div><dt>Offer</dt><dd>A 90-second walkthrough recorded inside their own platform - one asset per platform</dd></div>
+              <div><dt>Source</dt><dd>Website scrape + platform partner directories</dd></div>
+              <div><dt>Reply density</dt><dd>The volume engine. Sub-segmented by platform so the asset always matches what the prospect actually runs.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">~31% TAM</span>
+          </div>
+          <h3>Tier 4: Truck Roll</h3>
+          <p>The site advertises free in-home or on-site estimates, with no platform detected, no survey tool and no hiring signal.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Every quote costs drive time, fuel and a paid hour of a skilled person. Most of those quotes do not close, so the unsold-estimate cost is pure margin loss - and it caps how many opportunities a day they can even look at. Every hour in the truck is an hour not quoting.</dd></div>
+              <div><dt>Offer</dt><dd>Truck Roll Cost Calculator: what unsold on-site estimates cost per month</dd></div>
+              <div><dt>Source</dt><dd>Website scrape - verbatim estimate-language phrase match</dd></div>
+              <div><dt>Reply density</dt><dd>Moderate. The largest single tier - strong pain, weaker evidence of budget.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">~41.5% TAM</span>
+          </div>
+          <h3>Tier 5: Catch-All</h3>
+          <p>Everything else above the qualification floor: 50+ reviews, at least 3 in the last 90 days, no other signal visible.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Deliberately conservative, because volume is all we know. They are busy, the office is the bottleneck, and quoting is manual - someone describes a job over the phone, guesses, then sends someone out to look anyway.</dd></div>
+              <div><dt>Offer</dt><dd>2026 Home Services Estimating Benchmark Report, built from LiveSwitch&#39;s own operator survey data</dd></div>
+              <div><dt>Source</dt><dd>Google Maps - review count and recency</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest, by design. Softest copy and softest CTA - but this is the other 40 percent of the market.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="04 Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">04 Campaigns</p>
+      <h2>What each tier actually runs</h2>
+      <p class="takeaway">Same five campaigns run unchanged across all 40+ trade categories.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Live vs AI - the half your tool does not cover</h3>
+          <p>The highest-conviction list in the strategy and the smallest. These buyers have already spent money on the thesis, so this tier gives the fastest honest read on whether the message lands with a sophisticated audience.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Competitor AI-survey vendor script detected on domain. Concentrated in moving and relocation.</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the specific tool in the subject line, then poke at scope rather than quality. The trigger proves they believe in virtual estimates, so the only credible angle is what the tool cannot reach: change orders, damage claims, crew questions from site. Personalise on trade category and metro to prove the research is real.</dd></div>
+            <div><dt>Value</dt><dd>Do more with what you already believe in</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Cost shape - per-survey pricing versus flat seats</h3>
+          <p>Runs as the Day 3 thread on the same sequence rather than a separate send. Deliberately avoids head-to-head outcome claims until a named displacement reference exists.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same list, second value prop in the threaded follow-up.</dd></div>
+            <div><dt>AI strategy</dt><dd>Rotate from capability to economics. Per-survey pricing means the tool gets more expensive exactly when they are busiest, so teams ration it to the big jobs. Flat seat pricing makes the cheap four-minute is-this-worth-a-truck calls free, which is usually where the margin actually is.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Before you fill the req</h3>
+          <p>A rolling queue rather than a static list, refreshed every 45 days. Start the job-post scrape in week 1 regardless of launch date so the queue is replenishing by the time the tier goes live.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Live estimator or surveyor job post within 45 days, above the review floor.</dd></div>
+            <div><dt>AI strategy</dt><dd>Open on the exact job title from the post plus review velocity, which together prove quote volume is outrunning the team. Then reframe the constraint from people to drive time. The comparison writes itself: a fully loaded hire north of $70k versus two seats at roughly $250/mo, live the same afternoon.</dd></div>
+            <div><dt>Value</dt><dd>Add capacity without adding headcount</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Focused</span>
+          </div>
+          <h3>Platform-native video (one variant per platform)</h3>
+          <p>22 percent of the market and the clearest structural advantage LiveSwitch has. A generic walkthrough will underperform a platform-specific one by a wide margin.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Field-service platform detected, no survey tool. Sub-segmented into seven platform lists.</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with the platform they run, positioned as with rather than versus - they like their system of record. The poke is that the pictures never make it in. The asset is a 90-second walkthrough recorded inside their own platform, which is the single highest-leverage asset in the whole strategy.</dd></div>
+            <div><dt>Value</dt><dd>Save time and make the job record complete</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>What your unsold estimates cost</h3>
+          <p>The largest single tier. Held until sending infrastructure is warmed enough to carry the volume without putting the earlier tiers at risk.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Verbatim in-home or on-site estimate phrase on the site, nothing else detected.</dd></div>
+            <div><dt>AI strategy</dt><dd>Quote their own estimate-promise language back to them in the first line, then attach the cost: drive time, fuel and a skilled hour on quotes that mostly do not close. Follow up on the inverse - the jobs they never got to look at because someone was in a truck.</dd></div>
+            <div><dt>Value</dt><dd>Stop paying full price for quotes that do not close</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Benchmark report (chaos test)</h3>
+          <p>Launches last, after the benchmark report is published. Its copy is the broadest, so it benefits most from whatever the first three phases teach us.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>All remaining qualified accounts. 50+ reviews, active in the last 90 days.</dd></div>
+            <div><dt>AI strategy</dt><dd>Open on review volume as proof the phone is ringing, then infer only that the office is the bottleneck. Because there is no prior signal to reason from, this tier opens with two structurally different emails rather than two variants of the same one, then narrows to single-variable testing once a winner emerges.</dd></div>
+            <div><dt>Value</dt><dd>See the job before you commit anyone to it</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="05 Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">05 Copy</p>
+      <h2>Three emails per tier</h2>
+      <p class="takeaway">Every CTA asks for a one-word reply in exchange for an asset. No booking links.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company}}</span><span>{{category}}</span><span>{{metro}}</span><span>{{tool}}</span><span>{{fsm}}</span><span>{{job_title}}</span><span>{{estimate_phrase}}</span><span>{{review_count}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company}}, {{category}}, {{metro}}, {{tool}}, {{fsm}}, {{job_title}}, {{estimate_phrase}}, {{review_count}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Already Virtual</strong>
+              <em>Live-versus-AI-survey teardown</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Already Virtual steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{tool}} question&#10;&#10;Hi {{first_name}} - saw {{company}} is running {{tool}} for virtual surveys, which already puts you ahead of most {{category}} companies in {{metro}} still driving to every quote.&#10;&#10;But would it be fair to assume it only covers the survey itself, and the rest of the job (change orders, damage claims, crew questions from site) still comes in as texts to somebody&#39;s personal phone?&#10;&#10;We built LiveSwitch for the live half of that: a browser link the customer taps, no app, your rep actually on the call building the relationship. It works for every job type, not just the initial survey. Flat per seat, unlimited calls.&#10;&#10;One SmartMoving customer doubled the estimates they run per day after adding it.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the side-by-side of where AI surveys win and where a live call wins. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{tool}} question" data-preview="Yembo question">{{tool}} question</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}} - saw {{company}} is running {{tool}} for virtual surveys, which already puts you ahead of most {{category}} companies in {{metro}} still driving to every quote.&#10;&#10;But would it be fair to assume it only covers the survey itself, and the rest of the job (change orders, damage claims, crew questions from site) still comes in as texts to somebody&#39;s personal phone?&#10;&#10;We built LiveSwitch for the live half of that: a browser link the customer taps, no app, your rep actually on the call building the relationship. It works for every job type, not just the initial survey. Flat per seat, unlimited calls.&#10;&#10;One SmartMoving customer doubled the estimates they run per day after adding it.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the side-by-side of where AI surveys win and where a live call wins. No call needed." data-preview="Hi Dave - saw Northline Moving is running Yembo for virtual surveys, which already puts you ahead of most moving companies in Columbus still driving to every quote.&#10;&#10;But would it be fair to assume it only covers the survey itself, and the rest of the job (change orders, damage claims, crew questions from site) still comes in as texts to somebody&#39;s personal phone?&#10;&#10;We built LiveSwitch for the live half of that: a browser link the customer taps, no app, your rep actually on the call building the relationship. It works for every job type, not just the initial survey. Flat per seat, unlimited calls.&#10;&#10;One SmartMoving customer doubled the estimates they run per day after adding it.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the side-by-side of where AI surveys win and where a live call wins. No call needed.">
+                        <p>Hi {{first_name}} - saw {{company}} is running {{tool}} for virtual surveys, which already puts you ahead of most {{category}} companies in {{metro}} still driving to every quote.</p><p>But would it be fair to assume it only covers the survey itself, and the rest of the job (change orders, damage claims, crew questions from site) still comes in as texts to somebody&#39;s personal phone?</p><p>We built LiveSwitch for the live half of that: a browser link the customer taps, no app, your rep actually on the call building the relationship. It works for every job type, not just the initial survey. Flat per seat, unlimited calls.</p><p>One SmartMoving customer doubled the estimates they run per day after adding it.</p><p>Reply &quot;Y&quot; and I&#39;ll send the side-by-side of where AI surveys win and where a live call wins. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}} - the other half of this is cost shape.&#10;&#10;Per-survey pricing means the tool gets more expensive exactly when you&#39;re busiest, so people ration it to the big jobs. Flat seat pricing means the cheap four-minute calls, the is-this-even-worth-a-truck ones, become free. That&#39;s usually where the margin is.&#10;&#10;LiveSwitch customers average a 214 percent rate of return.&#10;&#10;Want the teardown? Just reply.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - the other half of this is cost shape.&#10;&#10;Per-survey pricing means the tool gets more expensive exactly when you&#39;re busiest, so people ration it to the big jobs. Flat seat pricing means the cheap four-minute calls, the is-this-even-worth-a-truck ones, become free. That&#39;s usually where the margin is.&#10;&#10;LiveSwitch customers average a 214 percent rate of return.&#10;&#10;Want the teardown? Just reply." data-preview="Dave - the other half of this is cost shape.&#10;&#10;Per-survey pricing means the tool gets more expensive exactly when you&#39;re busiest, so people ration it to the big jobs. Flat seat pricing means the cheap four-minute calls, the is-this-even-worth-a-truck ones, become free. That&#39;s usually where the margin is.&#10;&#10;LiveSwitch customers average a 214 percent rate of return.&#10;&#10;Want the teardown? Just reply.">
+                        <p>{{first_name}} - the other half of this is cost shape.</p><p>Per-survey pricing means the tool gets more expensive exactly when you&#39;re busiest, so people ration it to the big jobs. Flat seat pricing means the cheap four-minute calls, the is-this-even-worth-a-truck ones, become free. That&#39;s usually where the margin is.</p><p>LiveSwitch customers average a 214 percent rate of return.</p><p>Want the teardown? Just reply.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: wrong person?&#10;&#10;Hi {{first_name}} - no need for a call. Just reply &quot;yes&quot; and I&#39;ll send the live-versus-AI-survey teardown for {{category}}.&#10;&#10;Should I send this to you, or is someone else at {{company}} owning the survey process now?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="wrong person?" data-preview="wrong person?">wrong person?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}} - no need for a call. Just reply &quot;yes&quot; and I&#39;ll send the live-versus-AI-survey teardown for {{category}}.&#10;&#10;Should I send this to you, or is someone else at {{company}} owning the survey process now?" data-preview="Hi Dave - no need for a call. Just reply &quot;yes&quot; and I&#39;ll send the live-versus-AI-survey teardown for moving.&#10;&#10;Should I send this to you, or is someone else at Northline Moving owning the survey process now?">
+                        <p>Hi {{first_name}} - no need for a call. Just reply &quot;yes&quot; and I&#39;ll send the live-versus-AI-survey teardown for {{category}}.</p><p>Should I send this to you, or is someone else at {{company}} owning the survey process now?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Hiring the Fix</strong>
+              <em>Estimator Capacity Calculator</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Hiring the Fix steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your {{job_title}} req&#10;&#10;{{first_name}} - saw {{company}} has a {{job_title}} role open, and with {{review_count}} reviews and how fast they&#39;re coming in, it looks like the quote volume is genuinely outrunning the team.&#10;&#10;But before that seat is filled, would it be fair to assume the constraint isn&#39;t people, it&#39;s drive time? An estimator can only be in one driveway at a time.&#10;&#10;That&#39;s what we fix. LiveSwitch lets your existing team quote on live video: one link, no app for the homeowner. A plumbing company using it reported seeing 30 to 40 percent more jobs without adding staff.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send you a calculator that shows how many extra quotes a week your current team could run before you&#39;d actually need the hire. No call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your {{job_title}} req" data-preview="your Move Estimator req">your {{job_title}} req</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - saw {{company}} has a {{job_title}} role open, and with {{review_count}} reviews and how fast they&#39;re coming in, it looks like the quote volume is genuinely outrunning the team.&#10;&#10;But before that seat is filled, would it be fair to assume the constraint isn&#39;t people, it&#39;s drive time? An estimator can only be in one driveway at a time.&#10;&#10;That&#39;s what we fix. LiveSwitch lets your existing team quote on live video: one link, no app for the homeowner. A plumbing company using it reported seeing 30 to 40 percent more jobs without adding staff.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send you a calculator that shows how many extra quotes a week your current team could run before you&#39;d actually need the hire. No call." data-preview="Dave - saw Northline Moving has a Move Estimator role open, and with 312 reviews and how fast they&#39;re coming in, it looks like the quote volume is genuinely outrunning the team.&#10;&#10;But before that seat is filled, would it be fair to assume the constraint isn&#39;t people, it&#39;s drive time? An estimator can only be in one driveway at a time.&#10;&#10;That&#39;s what we fix. LiveSwitch lets your existing team quote on live video: one link, no app for the homeowner. A plumbing company using it reported seeing 30 to 40 percent more jobs without adding staff.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send you a calculator that shows how many extra quotes a week your current team could run before you&#39;d actually need the hire. No call.">
+                        <p>{{first_name}} - saw {{company}} has a {{job_title}} role open, and with {{review_count}} reviews and how fast they&#39;re coming in, it looks like the quote volume is genuinely outrunning the team.</p><p>But before that seat is filled, would it be fair to assume the constraint isn&#39;t people, it&#39;s drive time? An estimator can only be in one driveway at a time.</p><p>That&#39;s what we fix. LiveSwitch lets your existing team quote on live video: one link, no app for the homeowner. A plumbing company using it reported seeing 30 to 40 percent more jobs without adding staff.</p><p>Reply &quot;Y&quot; and I&#39;ll send you a calculator that shows how many extra quotes a week your current team could run before you&#39;d actually need the hire. No call.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Quick money version, {{first_name}}:&#10;&#10;A {{job_title}} is somewhere north of $70k fully loaded once you add the truck, the fuel and 60 to 90 days of ramp. Two LiveSwitch seats run about $250 a month each and are live the same afternoon.&#10;&#10;Worst case you fill the role anyway and the new hire quotes twice as fast on day one.&#10;&#10;Want the calculator?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Quick money version, {{first_name}}:&#10;&#10;A {{job_title}} is somewhere north of $70k fully loaded once you add the truck, the fuel and 60 to 90 days of ramp. Two LiveSwitch seats run about $250 a month each and are live the same afternoon.&#10;&#10;Worst case you fill the role anyway and the new hire quotes twice as fast on day one.&#10;&#10;Want the calculator?" data-preview="Quick money version, Dave:&#10;&#10;A Move Estimator is somewhere north of $70k fully loaded once you add the truck, the fuel and 60 to 90 days of ramp. Two LiveSwitch seats run about $250 a month each and are live the same afternoon.&#10;&#10;Worst case you fill the role anyway and the new hire quotes twice as fast on day one.&#10;&#10;Want the calculator?">
+                        <p>Quick money version, {{first_name}}:</p><p>A {{job_title}} is somewhere north of $70k fully loaded once you add the truck, the fuel and 60 to 90 days of ramp. Two LiveSwitch seats run about $250 a month each and are live the same afternoon.</p><p>Worst case you fill the role anyway and the new hire quotes twice as fast on day one.</p><p>Want the calculator?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: re: capacity&#10;&#10;{{first_name}} - no call needed. Reply &quot;yes&quot; and I&#39;ll send the estimator capacity calculator over.&#10;&#10;Should this go to you or whoever owns hiring at {{company}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="re: capacity" data-preview="re: capacity">re: capacity</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - no call needed. Reply &quot;yes&quot; and I&#39;ll send the estimator capacity calculator over.&#10;&#10;Should this go to you or whoever owns hiring at {{company}}?" data-preview="Dave - no call needed. Reply &quot;yes&quot; and I&#39;ll send the estimator capacity calculator over.&#10;&#10;Should this go to you or whoever owns hiring at Northline Moving?">
+                        <p>{{first_name}} - no call needed. Reply &quot;yes&quot; and I&#39;ll send the estimator capacity calculator over.</p><p>Should this go to you or whoever owns hiring at {{company}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - System of Record</strong>
+              <em>90-second walkthrough inside their own platform</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - System of Record steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{fsm}} + video&#10;&#10;Hi {{first_name}} - noticed {{company}} books through {{fsm}}, so your jobs, customers and estimates are already in one place. Most {{category}} companies in {{metro}} aren&#39;t that organised.&#10;&#10;But would it be fair to assume the pictures never make it in? Customer texts a photo to a rep, rep describes it back to the office, and nothing&#39;s attached to the job record when someone needs it three weeks later.&#10;&#10;LiveSwitch plugs straight into {{fsm}}. Start or request a video right from the job, and every recording, photo and AI report syncs back to that record automatically. Nothing sits in a camera roll.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send a 90-second walkthrough recorded inside {{fsm}} itself, so you can see exactly where it shows up. No call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{fsm}} + video" data-preview="ServiceTitan + video">{{fsm}} + video</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}} - noticed {{company}} books through {{fsm}}, so your jobs, customers and estimates are already in one place. Most {{category}} companies in {{metro}} aren&#39;t that organised.&#10;&#10;But would it be fair to assume the pictures never make it in? Customer texts a photo to a rep, rep describes it back to the office, and nothing&#39;s attached to the job record when someone needs it three weeks later.&#10;&#10;LiveSwitch plugs straight into {{fsm}}. Start or request a video right from the job, and every recording, photo and AI report syncs back to that record automatically. Nothing sits in a camera roll.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send a 90-second walkthrough recorded inside {{fsm}} itself, so you can see exactly where it shows up. No call." data-preview="Hi Dave - noticed Northline Moving books through ServiceTitan, so your jobs, customers and estimates are already in one place. Most moving companies in Columbus aren&#39;t that organised.&#10;&#10;But would it be fair to assume the pictures never make it in? Customer texts a photo to a rep, rep describes it back to the office, and nothing&#39;s attached to the job record when someone needs it three weeks later.&#10;&#10;LiveSwitch plugs straight into ServiceTitan. Start or request a video right from the job, and every recording, photo and AI report syncs back to that record automatically. Nothing sits in a camera roll.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send a 90-second walkthrough recorded inside ServiceTitan itself, so you can see exactly where it shows up. No call.">
+                        <p>Hi {{first_name}} - noticed {{company}} books through {{fsm}}, so your jobs, customers and estimates are already in one place. Most {{category}} companies in {{metro}} aren&#39;t that organised.</p><p>But would it be fair to assume the pictures never make it in? Customer texts a photo to a rep, rep describes it back to the office, and nothing&#39;s attached to the job record when someone needs it three weeks later.</p><p>LiveSwitch plugs straight into {{fsm}}. Start or request a video right from the job, and every recording, photo and AI report syncs back to that record automatically. Nothing sits in a camera roll.</p><p>Reply &quot;Y&quot; and I&#39;ll send a 90-second walkthrough recorded inside {{fsm}} itself, so you can see exactly where it shows up. No call.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}} - worth adding the speed number.&#10;&#10;Van Express Moving went from 30 minutes per estimate to 12 after switching the first look to video. Same system of record, same process, less than half the time per opportunity.&#10;&#10;Want the {{fsm}} walkthrough?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - worth adding the speed number.&#10;&#10;Van Express Moving went from 30 minutes per estimate to 12 after switching the first look to video. Same system of record, same process, less than half the time per opportunity.&#10;&#10;Want the {{fsm}} walkthrough?" data-preview="Dave - worth adding the speed number.&#10;&#10;Van Express Moving went from 30 minutes per estimate to 12 after switching the first look to video. Same system of record, same process, less than half the time per opportunity.&#10;&#10;Want the ServiceTitan walkthrough?">
+                        <p>{{first_name}} - worth adding the speed number.</p><p>Van Express Moving went from 30 minutes per estimate to 12 after switching the first look to video. Same system of record, same process, less than half the time per opportunity.</p><p>Want the {{fsm}} walkthrough?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{fsm}} walkthrough&#10;&#10;{{first_name}} - no call, no demo. Reply &quot;yes&quot; and the 90-second {{fsm}} walkthrough is yours.&#10;&#10;Should I send it to you or to whoever admins {{fsm}} at {{company}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{fsm}} walkthrough" data-preview="ServiceTitan walkthrough">{{fsm}} walkthrough</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - no call, no demo. Reply &quot;yes&quot; and the 90-second {{fsm}} walkthrough is yours.&#10;&#10;Should I send it to you or to whoever admins {{fsm}} at {{company}}?" data-preview="Dave - no call, no demo. Reply &quot;yes&quot; and the 90-second ServiceTitan walkthrough is yours.&#10;&#10;Should I send it to you or to whoever admins ServiceTitan at Northline Moving?">
+                        <p>{{first_name}} - no call, no demo. Reply &quot;yes&quot; and the 90-second {{fsm}} walkthrough is yours.</p><p>Should I send it to you or to whoever admins {{fsm}} at {{company}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 - Truck Roll</strong>
+              <em>Truck Roll Cost Calculator</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 - Truck Roll steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: free estimates&#10;&#10;Hi {{first_name}} - {{company}}&#39;s site offers {{estimate_phrase}}, and across a service area your size that&#39;s a real commitment: drive time, fuel and a skilled hour for every single one.&#10;&#10;But would it be fair to assume most of those don&#39;t close, and you&#39;re paying full price for the ones that don&#39;t?&#10;&#10;LiveSwitch turns the first look into a video call. One link, no app for the customer, and you only roll a truck on the jobs worth rolling for. Van Express Moving cut estimates from 30 minutes to 12.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send you a calculator for what your unsold on-site estimates are costing per month. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="free estimates" data-preview="free estimates">free estimates</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}} - {{company}}&#39;s site offers {{estimate_phrase}}, and across a service area your size that&#39;s a real commitment: drive time, fuel and a skilled hour for every single one.&#10;&#10;But would it be fair to assume most of those don&#39;t close, and you&#39;re paying full price for the ones that don&#39;t?&#10;&#10;LiveSwitch turns the first look into a video call. One link, no app for the customer, and you only roll a truck on the jobs worth rolling for. Van Express Moving cut estimates from 30 minutes to 12.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send you a calculator for what your unsold on-site estimates are costing per month. No call needed." data-preview="Hi Dave - Northline Moving&#39;s site offers free in-home estimates, and across a service area your size that&#39;s a real commitment: drive time, fuel and a skilled hour for every single one.&#10;&#10;But would it be fair to assume most of those don&#39;t close, and you&#39;re paying full price for the ones that don&#39;t?&#10;&#10;LiveSwitch turns the first look into a video call. One link, no app for the customer, and you only roll a truck on the jobs worth rolling for. Van Express Moving cut estimates from 30 minutes to 12.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send you a calculator for what your unsold on-site estimates are costing per month. No call needed.">
+                        <p>Hi {{first_name}} - {{company}}&#39;s site offers {{estimate_phrase}}, and across a service area your size that&#39;s a real commitment: drive time, fuel and a skilled hour for every single one.</p><p>But would it be fair to assume most of those don&#39;t close, and you&#39;re paying full price for the ones that don&#39;t?</p><p>LiveSwitch turns the first look into a video call. One link, no app for the customer, and you only roll a truck on the jobs worth rolling for. Van Express Moving cut estimates from 30 minutes to 12.</p><p>Reply &quot;Y&quot; and I&#39;ll send you a calculator for what your unsold on-site estimates are costing per month. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}} - the flip side of that number is the jobs you never got to look at.&#10;&#10;Every hour in the truck is an hour not quoting. Companies on LiveSwitch average a 214 percent rate of return, mostly from seeing more opportunities with the same people.&#10;&#10;Want the calculator?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - the flip side of that number is the jobs you never got to look at.&#10;&#10;Every hour in the truck is an hour not quoting. Companies on LiveSwitch average a 214 percent rate of return, mostly from seeing more opportunities with the same people.&#10;&#10;Want the calculator?" data-preview="Dave - the flip side of that number is the jobs you never got to look at.&#10;&#10;Every hour in the truck is an hour not quoting. Companies on LiveSwitch average a 214 percent rate of return, mostly from seeing more opportunities with the same people.&#10;&#10;Want the calculator?">
+                        <p>{{first_name}} - the flip side of that number is the jobs you never got to look at.</p><p>Every hour in the truck is an hour not quoting. Companies on LiveSwitch average a 214 percent rate of return, mostly from seeing more opportunities with the same people.</p><p>Want the calculator?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: estimate costs&#10;&#10;{{first_name}} - no call. Reply &quot;yes&quot; and I&#39;ll send the truck-roll cost calculator.&#10;&#10;Are you the right person for how {{company}} handles estimates, or should I send it to someone else?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="estimate costs" data-preview="estimate costs">estimate costs</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - no call. Reply &quot;yes&quot; and I&#39;ll send the truck-roll cost calculator.&#10;&#10;Are you the right person for how {{company}} handles estimates, or should I send it to someone else?" data-preview="Dave - no call. Reply &quot;yes&quot; and I&#39;ll send the truck-roll cost calculator.&#10;&#10;Are you the right person for how Northline Moving handles estimates, or should I send it to someone else?">
+                        <p>{{first_name}} - no call. Reply &quot;yes&quot; and I&#39;ll send the truck-roll cost calculator.</p><p>Are you the right person for how {{company}} handles estimates, or should I send it to someone else?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 - Catch-All</strong>
+              <em>2026 Home Services Estimating Benchmark Report</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 - Catch-All steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: quick one for {{company}}&#10;&#10;Hi {{first_name}} - {{review_count}} reviews for a {{category}} company in {{metro}} means the phone is ringing. That&#39;s the good problem.&#10;&#10;But would it be fair to assume the office is the bottleneck? Someone describing a job over the phone, then guessing, then sending someone out to look anyway.&#10;&#10;LiveSwitch is a link you text a customer. They tap it, their camera opens, no app to download, and you see the job in about four minutes. Everything&#39;s saved against the customer.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send our 2026 benchmark report on how {{category}} companies are estimating this year. No call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="quick one for {{company}}" data-preview="quick one for Northline Moving">quick one for {{company}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}} - {{review_count}} reviews for a {{category}} company in {{metro}} means the phone is ringing. That&#39;s the good problem.&#10;&#10;But would it be fair to assume the office is the bottleneck? Someone describing a job over the phone, then guessing, then sending someone out to look anyway.&#10;&#10;LiveSwitch is a link you text a customer. They tap it, their camera opens, no app to download, and you see the job in about four minutes. Everything&#39;s saved against the customer.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send our 2026 benchmark report on how {{category}} companies are estimating this year. No call." data-preview="Hi Dave - 312 reviews for a moving company in Columbus means the phone is ringing. That&#39;s the good problem.&#10;&#10;But would it be fair to assume the office is the bottleneck? Someone describing a job over the phone, then guessing, then sending someone out to look anyway.&#10;&#10;LiveSwitch is a link you text a customer. They tap it, their camera opens, no app to download, and you see the job in about four minutes. Everything&#39;s saved against the customer.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send our 2026 benchmark report on how moving companies are estimating this year. No call.">
+                        <p>Hi {{first_name}} - {{review_count}} reviews for a {{category}} company in {{metro}} means the phone is ringing. That&#39;s the good problem.</p><p>But would it be fair to assume the office is the bottleneck? Someone describing a job over the phone, then guessing, then sending someone out to look anyway.</p><p>LiveSwitch is a link you text a customer. They tap it, their camera opens, no app to download, and you see the job in about four minutes. Everything&#39;s saved against the customer.</p><p>Reply &quot;Y&quot; and I&#39;ll send our 2026 benchmark report on how {{category}} companies are estimating this year. No call.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}} - one stat from that report: 58 percent of service businesses are seeing more inquiries than last year, and staffing is the number one thing stopping them converting those inquiries.&#10;&#10;Seeing the job before you commit anyone to it is the cheapest way to break that. Want the report?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - one stat from that report: 58 percent of service businesses are seeing more inquiries than last year, and staffing is the number one thing stopping them converting those inquiries.&#10;&#10;Seeing the job before you commit anyone to it is the cheapest way to break that. Want the report?" data-preview="Dave - one stat from that report: 58 percent of service businesses are seeing more inquiries than last year, and staffing is the number one thing stopping them converting those inquiries.&#10;&#10;Seeing the job before you commit anyone to it is the cheapest way to break that. Want the report?">
+                        <p>{{first_name}} - one stat from that report: 58 percent of service businesses are seeing more inquiries than last year, and staffing is the number one thing stopping them converting those inquiries.</p><p>Seeing the job before you commit anyone to it is the cheapest way to break that. Want the report?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: benchmark report&#10;&#10;{{first_name}} - no call needed, just reply &quot;yes&quot; and I&#39;ll send the 2026 estimating benchmark for {{category}}.&#10;&#10;Should I send it to you, or is there someone else at {{company}} who&#39;d get more out of it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="benchmark report" data-preview="benchmark report">benchmark report</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - no call needed, just reply &quot;yes&quot; and I&#39;ll send the 2026 estimating benchmark for {{category}}.&#10;&#10;Should I send it to you, or is there someone else at {{company}} who&#39;d get more out of it?" data-preview="Dave - no call needed, just reply &quot;yes&quot; and I&#39;ll send the 2026 estimating benchmark for moving.&#10;&#10;Should I send it to you, or is there someone else at Northline Moving who&#39;d get more out of it?">
+                        <p>{{first_name}} - no call needed, just reply &quot;yes&quot; and I&#39;ll send the 2026 estimating benchmark for {{category}}.</p><p>Should I send it to you, or is there someone else at {{company}} who&#39;d get more out of it?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="06 Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">06 Launch</p>
+      <h2>Four phases over seven weeks</h2>
+      <p class="takeaway">Tier 1 and Tier 3 launch together: a message read and a scale read in the same fortnight.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Weeks 1-2: launch Tier 1 and Tier 3 together. Tier 1 is the smallest list and the most sophisticated audience, so it gives the fastest honest read on whether the message lands. Tier 3 is the volume engine and its seven platform walkthroughs need to be in production early. Running both gives a message read and a scale read in the same fortnight.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Week 1 (parallel): start the 45-day job-post scrape immediately, regardless of when Tier 2 launches, so the rolling queue is already replenishing by the time the tier goes live.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 3-4: launch Tier 2 once the Estimator Capacity Calculator exists.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Weeks 5-6: launch Tier 4. The largest list, held until sending infrastructure is warmed enough to carry the volume without putting the earlier tiers at risk.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Week 7 onward: launch Tier 5 after the 2026 Estimating Benchmark Report is published. Its copy is the broadest, so it benefits most from whatever the first three phases teach us.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Throughout: phase-roll sending domains alongside tiers. High-volume tiers never share domains with the tiers proving the message.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>Testing discipline: two variants maximum per tier. Vary the lead magnet or the research angle in the opening line, and hold subject line, structure and CTA constant so any difference is attributable to one thing. Tier 5 is the exception and opens with a chaos test of two structurally different emails.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacts</strong>
+                <span>Excellent. Scale the tier - expand metros and trade categories before touching the copy.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Leave it running untouched.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450 to 500</strong>
+                <span>Borderline. Test one variant - change the lead magnet or the research angle, hold everything else constant.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or reply rate under 1% after 1,500 sends</strong>
+                <span>Failing. Cut the tier and rework it from the trigger up.</span>
+              </div>
+              <div class="threshold">
+                <strong>Bounce rate above 2% on a sending domain</strong>
+                <span>Hygiene guardrail. Pause the domain, not the campaign. No performance conclusion is drawn until this is clean.</span>
+              </div>
+              <div class="threshold">
+                <strong>Negative-sentiment replies above 1.5% of total replies</strong>
+                <span>Hygiene guardrail. Rework the opening line before judging the tier.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a working session</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dave","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Northline Moving","moving","Columbus","Yembo","ServiceTitan","Move Estimator","free in-home estimates","312"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
