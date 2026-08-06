@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CommerceV3 - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-06</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for CommerceV3</p>
+          <h1>Your CommerceV3 waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">One signal. Five tiers. The entire commerce TAM routed by how visible a brand is inside AI answers.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> The thing CommerceV3 sells is also the best outbound signal in the category. Whether a brand gets cited by ChatGPT, Perplexity and AI Overviews is publicly measurable, free to compute on all 40,000 accounts, and impossible to buy from any data vendor. So we route the market on AI-visibility state, not on vertical, and the same sweep that scores an account produces the personalised artifact we send it.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>~40,000</strong>
+          <span>Qualified US/CA commerce accounts</span>
+        </div>
+        <div class="metric-card">
+          <strong>$0</strong>
+          <span>Enrichment cost of the routing signal</span>
+        </div>
+        <div class="metric-card">
+          <strong>5 tiers</strong>
+          <span>Exclusive routing, 100% TAM coverage</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>AI-native eCommerce growth platform. One senior pod and one platform replacing five to eight vendors, across GEO, AEO, Agentic CRO, AI UGC, programmatic SEO, paid media and platform engineering. $999 to $2,999 a month, month to month, 24-hour onboarding.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal nobody can buy</p></div><div><span>02</span><p>How the market gets routed</p></div><div><span>03</span><p>Five tiers, five different sales</p></div><div><span>04</span><p>The campaign set</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>01</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>02</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>03</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>04</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>05</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>06</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="01">
+        
+    <div class="section-head">
+      <p class="eyebrow">01</p>
+      <h2>The signal nobody can buy</h2>
+      <p class="takeaway">AI-visibility state is measurable on every account for free, it maps one-to-one onto the CommerceV3 service ladder, and no competitor can purchase the list underneath it.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>It is unbuyable. No provider sells the field &quot;is this brand cited in ChatGPT for its category&#39;s buying questions&quot;. Apollo cannot, Clay cannot, ZoomInfo cannot. The list is structurally unavailable to every competitor.</p></div><div class="reason-card"><span>02</span><p>It is free. Query the answer engines, parse the cited domains, read the prospect&#39;s own robots.txt and page source. No per-record cost, so the economics hold at 40,000 accounts exactly as well as at 400.</p></div><div class="reason-card"><span>03</span><p>The signal is the lead magnet. The same sweep that assigns a tier also produces the personalised artifact offered in the email. One pipeline, two jobs, marginal cost of a bespoke magnet near zero.</p></div><div class="reason-card"><span>04</span><p>It is undeniable. &quot;You appear in zero of the ten buying questions in your category, your competitor appears in six.&quot; The prospect can verify it in thirty seconds by opening ChatGPT, which is exactly the behaviour we want.</p></div>
+            </div>
+            <div class="field-cloud"><span>platform</span><span>vertical</span><span>blocks_ai_crawlers</span><span>ai_citation_count</span><span>competitors_cited</span><span>citation_source_type</span><span>schema_types</span><span>has_llms_txt</span><span>cro_tool_detected</span><span>active_ad_count</span><span>surface_ratio</span><span>vendor_count</span><span>hiring_growth_role</span><span>est_monthly_revenue</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>BuiltWith platform directories</h3><p>TAM base. Shopify Plus, high-traffic Shopify and BigCommerce Enterprise across US and Canada, with domain, platform and full tech stack.</p></div><div class="source-card"><span>02</span><h3>Apollo</h3><p>Contact layer. eCommerce, retail and CPG companies at 10 to 500 headcount, with titles and headcount bands for persona routing.</p></div><div class="source-card"><span>03</span><h3>AI answer-engine citation sweep</h3><p>The routing signal. Ten category buying questions per vertical, run against ChatGPT Search, Perplexity, Google AI Overviews and Gemini, parsed for which domains get cited.</p></div><div class="source-card"><span>04</span><h3>robots.txt and llms.txt fetch</h3><p>Which AI crawlers a brand blocks (GPTBot, OAI-SearchBot, PerplexityBot, ClaudeBot, Google-Extended) and whether an llms.txt exists at all.</p></div><div class="source-card"><span>05</span><h3>Page-source JSON-LD parse</h3><p>Product, FAQPage, Organization and Review schema presence on the homepage and product pages. Reads AEO readiness directly.</p></div><div class="source-card"><span>06</span><h3>sitemap.xml against SKU count</h3><p>Surface ratio. How many indexable pages exist per product, which exposes a catalog with no long-tail or comparison surface.</p></div><div class="source-card"><span>07</span><h3>Script-tag detection</h3><p>Whether a testing tool is running at all. Intelligems, Visually, Shoplift, Optimizely, VWO, Convert, Dynamic Yield.</p></div><div class="source-card"><span>08</span><h3>Meta Ad Library API</h3><p>Active creative count and format mix, which proves paid spend without asking for it and flags whether UGC is already in the mix.</p></div><div class="source-card"><span>09</span><h3>Martech vendor count from page source</h3><p>Vendor sprawl score for the catch-all tier, counted from the tags firing on their own site plus any open growth roles.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="02">
+        
+    <div class="section-head">
+      <p class="eyebrow">02</p>
+      <h2>How the market gets routed</h2>
+      <p class="takeaway">Every account is tested top to bottom and lands in the first tier it matches. No account occupies two tiers, no account occupies zero, and the catch-all guarantees complete coverage.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF robots.txt blocks GPTBot, OAI-SearchBot, PerplexityBot, ClaudeBot or Google-Extended AND the brand is cited in zero of the ten category questions</span>
+          <strong>Tier 1 - Locked Out</strong>
+          <em>They are excluded from the fastest-growing discovery surface in commerce by a configuration file nobody has opened since the theme was installed. Mechanically true, instantly fixable, and almost always news to them.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF Not Tier 1, AND zero citations, AND two or more named direct competitors are cited across the same ten questions</span>
+          <strong>Tier 2 - Beaten to the Answer</strong>
+          <em>This is not a traffic problem, it is a recommendation problem, and it has a name attached to it. The strongest emotional trigger in the cascade.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF Not Tier 1 or 2, AND at least one citation, AND the citation is sourced from third parties OR there is no Product schema OR there is no llms.txt</span>
+          <strong>Tier 3 - Cited but Uncontrolled</strong>
+          <em>The engines describe the brand using somebody else&#39;s words. The presence is accidental, unowned, and one competitor push away from vanishing.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF Not Tier 1 to 3, AND ten or more active Meta creatives, AND either no testing tool detected OR fewer than three indexable pages per SKU</span>
+          <strong>Tier 4 - Buying Demand You Cannot Convert</strong>
+          <em>Auction-priced traffic landing on a page nobody has tested and a catalog with no long-tail surface. The leak is downstream of the spend, which is why the spend keeps looking like the problem.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF Everything else in the qualified TAM</span>
+          <strong>Tier 5 - Stack Tax (catch-all)</strong>
+          <em>A competent operation spread across five to eight vendors, each with an invoice, a reporting cadence and a share of the blame. The coordination tax stays invisible until somebody totals it.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF robots.txt blocks GPTBot, OAI-SearchBot, PerplexityBot, ClaudeBot or Google-Extended AND the brand is cited in zero of the ten category questions -&gt; Tier 1 - Locked Out (They are excluded from the fastest-growing discovery surface in commerce by a configuration file nobody has opened since the theme was installed. Mechanically true, instantly fixable, and almost always news to them.)&#10;2. IF Not Tier 1, AND zero citations, AND two or more named direct competitors are cited across the same ten questions -&gt; Tier 2 - Beaten to the Answer (This is not a traffic problem, it is a recommendation problem, and it has a name attached to it. The strongest emotional trigger in the cascade.)&#10;3. IF Not Tier 1 or 2, AND at least one citation, AND the citation is sourced from third parties OR there is no Product schema OR there is no llms.txt -&gt; Tier 3 - Cited but Uncontrolled (The engines describe the brand using somebody else&#39;s words. The presence is accidental, unowned, and one competitor push away from vanishing.)&#10;4. IF Not Tier 1 to 3, AND ten or more active Meta creatives, AND either no testing tool detected OR fewer than three indexable pages per SKU -&gt; Tier 4 - Buying Demand You Cannot Convert (Auction-priced traffic landing on a page nobody has tested and a catalog with no long-tail surface. The leak is downstream of the spend, which is why the spend keeps looking like the problem.)&#10;5. IF Everything else in the qualified TAM -&gt; Tier 5 - Stack Tax (catch-all) (A competent operation spread across five to eight vendors, each with an invoice, a reporting cadence and a share of the blame. The coordination tax stays invisible until somebody totals it.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF robots.txt blocks GPTBot, OAI-SearchBot, PerplexityBot, ClaudeBot or Google-Extended AND the brand is cited in zero of the ten category questions -&gt; Tier 1 - Locked Out (They are excluded from the fastest-growing discovery surface in commerce by a configuration file nobody has opened since the theme was installed. Mechanically true, instantly fixable, and almost always news to them.)
+2. IF Not Tier 1, AND zero citations, AND two or more named direct competitors are cited across the same ten questions -&gt; Tier 2 - Beaten to the Answer (This is not a traffic problem, it is a recommendation problem, and it has a name attached to it. The strongest emotional trigger in the cascade.)
+3. IF Not Tier 1 or 2, AND at least one citation, AND the citation is sourced from third parties OR there is no Product schema OR there is no llms.txt -&gt; Tier 3 - Cited but Uncontrolled (The engines describe the brand using somebody else&#39;s words. The presence is accidental, unowned, and one competitor push away from vanishing.)
+4. IF Not Tier 1 to 3, AND ten or more active Meta creatives, AND either no testing tool detected OR fewer than three indexable pages per SKU -&gt; Tier 4 - Buying Demand You Cannot Convert (Auction-priced traffic landing on a page nobody has tested and a catalog with no long-tail surface. The leak is downstream of the spend, which is why the spend keeps looking like the problem.)
+5. IF Everything else in the qualified TAM -&gt; Tier 5 - Stack Tax (catch-all) (A competent operation spread across five to eight vendors, each with an invoice, a reporting cadence and a share of the blame. The coordination tax stays invisible until somebody totals it.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="03">
+        
+    <div class="section-head">
+      <p class="eyebrow">03</p>
+      <h2>Five tiers, five different sales</h2>
+      <p class="takeaway">Each rung of the signal sells a different rung of the stack: crawler remediation, GEO, AEO, Agentic CRO, then consolidation economics for everyone else.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">~6% TAM</span>
+          </div>
+          <h3>Tier 1: Locked Out</h3>
+          <p>robots.txt blocks GPTBot, PerplexityBot, ClaudeBot or Google-Extended, and the brand is cited in zero of the ten category questions.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They are excluded from the fastest-growing discovery surface in commerce by a config file nobody has looked at since the theme was installed. Self-inflicted, invisible, and fixable in fifteen minutes.</dd></div>
+              <div><dt>Offer</dt><dd>AI Crawler Lockout Report - the exact blocked bots, the lines causing it, the fix, and the ten questions they are currently absent from</dd></div>
+              <div><dt>Source</dt><dd>robots.txt fetch plus the citation sweep</dd></div>
+              <div><dt>Reply density</dt><dd>Very high per contact. Smallest list in the cascade and the most urgent, because brands do eventually fix robots.txt on their own.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">~16% TAM</span>
+          </div>
+          <h3>Tier 2: Beaten to the Answer</h3>
+          <p>Not Tier 1. Zero citations while two or more named direct competitors are cited across the same ten buying questions.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>A named rival is being recommended by the system that increasingly makes the purchase decision, inside the exact questions their buyers ask. Nobody on their team owns that surface, because it sits between the SEO agency and the content person and belongs to neither.</dd></div>
+              <div><dt>Offer</dt><dd>Category Answer Map - all ten questions, every brand cited, citation share by competitor, and the gap list</dd></div>
+              <div><dt>Source</dt><dd>AI answer-engine citation sweep</dd></div>
+              <div><dt>Reply density</dt><dd>Expected highest in the cascade. The artifact names a real competitor inside a real query, which is the hardest thing in the set to ignore.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">~19% TAM</span>
+          </div>
+          <h3>Tier 3: Cited but Uncontrolled</h3>
+          <p>Not Tier 1 or 2. At least one citation, but sourced from third parties, or no Product schema on product pages, or no llms.txt on the domain.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The answer engines describe their brand using somebody else&#39;s words - a forum thread, an affiliate roundup, a three-year-old review. They cannot edit it, did not approve it, and will not be alerted when a competitor replaces them.</dd></div>
+              <div><dt>Offer</dt><dd>Entity Control Report - what the engines currently say the brand is, where they are sourcing it from, and every schema gap on the site</dd></div>
+              <div><dt>Source</dt><dd>Citation sweep plus JSON-LD schema parse</dd></div>
+              <div><dt>Reply density</dt><dd>Moderate. Needs the sharpest artifact in the set, because the pain is real but less visceral than being beaten by a named rival.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">~17% TAM</span>
+          </div>
+          <h3>Tier 4: Buying Demand You Cannot Convert</h3>
+          <p>Not Tier 1 to 3. Ten or more active Meta creatives, and either no testing tool detected on the site or fewer than three indexable pages per SKU.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Paying auction prices for traffic and landing it on a page nobody has tested, against a catalog with no long-tail surface. The landing experience has not changed in months because changing it means a dev ticket and a queue.</dd></div>
+              <div><dt>Offer</dt><dd>Ad-to-Answer Leak Report - live creative set, untested landing paths, surface-ratio score, and the three tests to run first</dd></div>
+              <div><dt>Source</dt><dd>Meta Ad Library, script-tag CRO detection, sitemap-to-SKU ratio</dd></div>
+              <div><dt>Reply density</dt><dd>Moderate to good. Different buyer motivation from the AI tiers, which usefully diversifies the reply mix.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">~42% TAM</span>
+          </div>
+          <h3>Tier 5: Stack Tax (catch-all)</h3>
+          <p>Every remaining account in the qualified TAM.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Running a competent operation across five to eight separate vendors, each with an invoice, a reporting cadence and a slice of the blame. The hard part is not any single vendor, it is the Tuesday where the SEO agency, the media buyer and the dev partner all have a different explanation for the same number.</dd></div>
+              <div><dt>Offer</dt><dd>Stack &amp; Spend Teardown - every vendor detected on their site with an estimated monthly cost against each</dd></div>
+              <div><dt>Source</dt><dd>Page-source martech vendor detection</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest per contact and largest by volume, which is exactly what a catch-all is for. Runs indefinitely underneath everything else.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="04">
+        
+    <div class="section-head">
+      <p class="eyebrow">04</p>
+      <h2>The campaign set</h2>
+      <p class="takeaway">Five core campaigns inside the waterfall plus four opt-in side campaigns triggered by orthogonal events. The side campaigns run only once the cascade is stable.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Core">
+          <div class="campaign-card__meta">
+            <span>Core</span>
+            <span>Niche</span>
+          </div>
+          <h3>Crawler Lockout</h3>
+          <p>The most urgent and smallest tier. The pitch writes itself because the problem is mechanical rather than debatable, and the fix takes fifteen minutes while the citations take ninety days. Burn this list early, because brands do eventually fix robots.txt without us.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>robots.txt disallows at least one major AI crawler AND zero citations across the ten category questions.</dd></div>
+            <div><dt>AI strategy</dt><dd>Fetch robots.txt on every domain in the TAM and diff it against the current list of AI user agents. Pair the blocked-bot list with that account&#39;s citation sweep so the email can state both the cause and the effect in two sentences.</dd></div>
+            <div><dt>Value</dt><dd>Fix the cause</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Core">
+          <div class="campaign-card__meta">
+            <span>Core</span>
+            <span>Focused</span>
+          </div>
+          <h3>Category Answer Map</h3>
+          <p>The flagship. This tier converts on a specific, verifiable, slightly humiliating fact that the reader can confirm in their own ChatGPT window in thirty seconds. Launch first, capped at 1,500 contacts while the named-proof gap is being closed.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Zero citations while two or more named direct competitors appear across the same ten buying questions.</dd></div>
+            <div><dt>AI strategy</dt><dd>Run the ten standard buying questions for the account&#39;s vertical against four answer engines, record every cited domain, and rank competitors by citation share. The email names the two strongest rivals and the count of questions each of them won.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Core">
+          <div class="campaign-card__meta">
+            <span>Core</span>
+            <span>Focused</span>
+          </div>
+          <h3>Entity Control</h3>
+          <p>Sells defensibility rather than discovery. A citation you do not own is a citation you can lose, and you will not get an alert when a competitor publishes properly structured content against the same question. Needs the sharpest artifact in the set, so it launches after the report pipeline has matured.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Cited at least once, but from third-party sources, or missing Product schema, or missing llms.txt.</dd></div>
+            <div><dt>AI strategy</dt><dd>Capture the actual sentence the engines use to describe the brand and the URL they cite it from, then diff the site&#39;s JSON-LD against the schema types the category needs. The email quotes the description back to them.</dd></div>
+            <div><dt>Value</dt><dd>Protect the position</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Core">
+          <div class="campaign-card__meta">
+            <span>Core</span>
+            <span>Focused</span>
+          </div>
+          <h3>Ad-to-Answer Leak</h3>
+          <p>Ties spend the prospect has already approved to a leak they have not quantified. Every point of conversion rate applies to 100% of the traffic they are already paying for, which is the only lever that improves paid, organic and AI-referred revenue simultaneously.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Ten or more active Meta creatives, and either no testing tool detected or fewer than three indexable pages per SKU.</dd></div>
+            <div><dt>AI strategy</dt><dd>Pull the live creative count from the Meta Ad Library, check the landing paths for any testing-tool script, and compute the sitemap-to-SKU ratio. Two independently verified halves: spend is real, and the conversion layer underneath it is not there.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Core">
+          <div class="campaign-card__meta">
+            <span>Core</span>
+            <span>Broad</span>
+          </div>
+          <h3>Stack &amp; Spend Teardown</h3>
+          <p>The volume engine. Leads on the coordination tax rather than the invoices, because five vendors means five reporting cadences and five sets of context to re-explain every quarter. The month-to-month terms and fourteen-day money back do the objection handling before the objection forms.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Everything that did not match Tiers 1 to 4. Roughly 42% of the market.</dd></div>
+            <div><dt>AI strategy</dt><dd>Count the distinct martech vendors firing in the page source, attach a public price estimate to each, and total it. The teardown is genuinely useful whether or not they ever reply, which is the correct shape for a catch-all offer.</dd></div>
+            <div><dt>Value</dt><dd>Save money and time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Side campaign">
+          <div class="campaign-card__meta">
+            <span>Side campaign</span>
+            <span>Niche</span>
+          </div>
+          <h3>Agency churn window</h3>
+          <p>Not part of the waterfall. Orthogonal trigger, no exclusive routing, time-boxed. The 24-hour onboarding claim is the whole pitch here, because the prospect&#39;s problem is a gap in coverage starting right now.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Agency-of-record badge disappears from the footer, or a growth lead publicly posts about starting a search.</dd></div>
+            <div><dt>AI strategy</dt><dd>Monitor footer and credits changes across the TAM, plus LinkedIn posts from growth leads mentioning an agency search. Ten-day window from detection.</dd></div>
+            <div><dt>Value</dt><dd>Timing</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Side campaign">
+          <div class="campaign-card__meta">
+            <span>Side campaign</span>
+            <span>Niche</span>
+          </div>
+          <h3>Replatform in progress</h3>
+          <p>Not part of the waterfall. The argument is economic rather than urgent: doing this during the rebuild costs a fraction of doing it as a retrofit six months later.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>BuiltWith shows a platform change inside the last 90 days.</dd></div>
+            <div><dt>AI strategy</dt><dd>Watch platform-change events on the TAM. Every schema, URL and content surface is already in flux during a replatform, so the marginal cost of doing GEO and AEO properly is at its lowest point.</dd></div>
+            <div><dt>Value</dt><dd>Cheapest moment</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Side campaign">
+          <div class="campaign-card__meta">
+            <span>Side campaign</span>
+            <span>Niche</span>
+          </div>
+          <h3>New growth leader</h3>
+          <p>Not part of the waterfall. New operators buy, because they need a visible early win and they have not yet inherited loyalty to the incumbent vendors.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>New Head of Growth or Head of Ecommerce inside their first 60 days.</dd></div>
+            <div><dt>AI strategy</dt><dd>Title-change monitoring across the TAM. Send the audit as free ammunition for their first board update rather than as a service pitch.</dd></div>
+            <div><dt>Value</dt><dd>Make them look good</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Side campaign">
+          <div class="campaign-card__meta">
+            <span>Side campaign</span>
+            <span>Broad</span>
+          </div>
+          <h3>Funding announcement</h3>
+          <p>Not part of the waterfall. Works because the trigger supplies both the budget and the mandate in a single public event.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Funding round announced inside CommerceV3&#39;s nine verticals.</dd></div>
+            <div><dt>AI strategy</dt><dd>Pair the raise with that account&#39;s citation gap. They just raised money to grow demand, and here is the demand surface they are entirely absent from.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="05">
+        
+    <div class="section-head">
+      <p class="eyebrow">05</p>
+      <h2>The copy</h2>
+      <p class="takeaway">Three emails per tier. Every notice line comes from that account&#39;s own sweep row, every pain is inferred from the trigger, and every CTA is a one-word reply rather than a call.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{company}}</span><span>{{vertical}}</span><span>{{sample_query}}</span><span>{{competitor_1}}</span><span>{{competitor_2}}</span><span>{{n1}}</span><span>{{n2}}</span><span>{{citation_source}}</span><span>{{active_ad_count}}</span><span>{{vendor_count}}</span><span>{{alt_contact}}</span>
+          <button class="copy-btn" type="button" data-copy="{{company}}, {{vertical}}, {{sample_query}}, {{competitor_1}}, {{competitor_2}}, {{n1}}, {{n2}}, {{citation_source}}, {{active_ad_count}}, {{vendor_count}}, {{alt_contact}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Locked Out</strong>
+              <em>AI Crawler Lockout Report</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Locked Out steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your robots.txt&#10;&#10;Ran a crawler check across {{vertical}} brands on Shopify this week and {{company}} came back blocking GPTBot and PerplexityBot in your robots.txt.&#10;&#10;But would it be fair to assume nobody chose that, it came with the theme or a plugin and has just sat there?&#10;&#10;The practical effect is that when someone asks ChatGPT &quot;{{sample_query}}&quot;, you are not eligible to be the answer. We checked 10 of those questions for your category. You appear in zero of them.&#10;&#10;We fix the access issue in the first 24 hours and then run citation engineering on top. Our brands earned 12,847 AI citations last month.&#10;&#10;Reply &quot;report&quot; and I will send you the exact lines blocking you and the 10 questions you are missing from. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your robots.txt" data-preview="your robots.txt">your robots.txt</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Ran a crawler check across {{vertical}} brands on Shopify this week and {{company}} came back blocking GPTBot and PerplexityBot in your robots.txt.&#10;&#10;But would it be fair to assume nobody chose that, it came with the theme or a plugin and has just sat there?&#10;&#10;The practical effect is that when someone asks ChatGPT &quot;{{sample_query}}&quot;, you are not eligible to be the answer. We checked 10 of those questions for your category. You appear in zero of them.&#10;&#10;We fix the access issue in the first 24 hours and then run citation engineering on top. Our brands earned 12,847 AI citations last month.&#10;&#10;Reply &quot;report&quot; and I will send you the exact lines blocking you and the 10 questions you are missing from. No call needed." data-preview="Ran a crawler check across clean beauty brands on Shopify this week and Northbay Skin came back blocking GPTBot and PerplexityBot in your robots.txt.&#10;&#10;But would it be fair to assume nobody chose that, it came with the theme or a plugin and has just sat there?&#10;&#10;The practical effect is that when someone asks ChatGPT &quot;best vitamin C serum for sensitive skin&quot;, you are not eligible to be the answer. We checked 10 of those questions for your category. You appear in zero of them.&#10;&#10;We fix the access issue in the first 24 hours and then run citation engineering on top. Our brands earned 12,847 AI citations last month.&#10;&#10;Reply &quot;report&quot; and I will send you the exact lines blocking you and the 10 questions you are missing from. No call needed.">
+                        <p>Ran a crawler check across {{vertical}} brands on Shopify this week and {{company}} came back blocking GPTBot and PerplexityBot in your robots.txt.</p><p>But would it be fair to assume nobody chose that, it came with the theme or a plugin and has just sat there?</p><p>The practical effect is that when someone asks ChatGPT &quot;{{sample_query}}&quot;, you are not eligible to be the answer. We checked 10 of those questions for your category. You appear in zero of them.</p><p>We fix the access issue in the first 24 hours and then run citation engineering on top. Our brands earned 12,847 AI citations last month.</p><p>Reply &quot;report&quot; and I will send you the exact lines blocking you and the 10 questions you are missing from. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Following up on this, worth adding the money side.&#10;&#10;The brands we unblock and then optimise pull AI-referred traffic that converts materially better than paid, because the buyer arrives already recommended rather than interrupted. That traffic costs nothing per click.&#10;&#10;Right now that channel is switched off at your end by a text file.&#10;&#10;Still happy to send the report, just reply &quot;report&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Following up on this, worth adding the money side.&#10;&#10;The brands we unblock and then optimise pull AI-referred traffic that converts materially better than paid, because the buyer arrives already recommended rather than interrupted. That traffic costs nothing per click.&#10;&#10;Right now that channel is switched off at your end by a text file.&#10;&#10;Still happy to send the report, just reply &quot;report&quot;." data-preview="Following up on this, worth adding the money side.&#10;&#10;The brands we unblock and then optimise pull AI-referred traffic that converts materially better than paid, because the buyer arrives already recommended rather than interrupted. That traffic costs nothing per click.&#10;&#10;Right now that channel is switched off at your end by a text file.&#10;&#10;Still happy to send the report, just reply &quot;report&quot;.">
+                        <p>Following up on this, worth adding the money side.</p><p>The brands we unblock and then optimise pull AI-referred traffic that converts materially better than paid, because the buyer arrives already recommended rather than interrupted. That traffic costs nothing per click.</p><p>Right now that channel is switched off at your end by a text file.</p><p>Still happy to send the report, just reply &quot;report&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: quick one&#10;&#10;No need for a call. Just reply yes and I will send the crawler lockout report for {{company}}: the blocked bots, the fix, and the 10 category questions you are absent from.&#10;&#10;Should I send it to you, or is {{alt_contact}} the better person for this?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="quick one" data-preview="quick one">quick one</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No need for a call. Just reply yes and I will send the crawler lockout report for {{company}}: the blocked bots, the fix, and the 10 category questions you are absent from.&#10;&#10;Should I send it to you, or is {{alt_contact}} the better person for this?" data-preview="No need for a call. Just reply yes and I will send the crawler lockout report for Northbay Skin: the blocked bots, the fix, and the 10 category questions you are absent from.&#10;&#10;Should I send it to you, or is your head of ecom the better person for this?">
+                        <p>No need for a call. Just reply yes and I will send the crawler lockout report for {{company}}: the blocked bots, the fix, and the 10 category questions you are absent from.</p><p>Should I send it to you, or is {{alt_contact}} the better person for this?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Beaten to the Answer</strong>
+              <em>Category Answer Map</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Beaten to the Answer steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{competitor_1}} keeps coming up&#10;&#10;I asked ChatGPT and Perplexity the 10 questions a {{vertical}} buyer actually asks before purchasing, things like &quot;{{sample_query}}&quot;.&#10;&#10;{{competitor_1}} was cited in {{n1}} of them. {{competitor_2}} in {{n2}}. {{company}} came up in zero.&#10;&#10;But would it be fair to assume nobody on your team is actually assigned to that surface, it is sitting between the SEO agency and the content person and belongs to neither?&#10;&#10;That is the entire thing we do. Citation engineering, not ranking. Our brands earned 12,847 AI citations last month across {{vertical}} and 8 other categories.&#10;&#10;Reply &quot;map&quot; and I will send you the full answer map: all 10 questions, every brand cited, and where the gap is. Takes me two minutes to pull, no call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{competitor_1}} keeps coming up" data-preview="Lumen Botanics keeps coming up">{{competitor_1}} keeps coming up</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="I asked ChatGPT and Perplexity the 10 questions a {{vertical}} buyer actually asks before purchasing, things like &quot;{{sample_query}}&quot;.&#10;&#10;{{competitor_1}} was cited in {{n1}} of them. {{competitor_2}} in {{n2}}. {{company}} came up in zero.&#10;&#10;But would it be fair to assume nobody on your team is actually assigned to that surface, it is sitting between the SEO agency and the content person and belongs to neither?&#10;&#10;That is the entire thing we do. Citation engineering, not ranking. Our brands earned 12,847 AI citations last month across {{vertical}} and 8 other categories.&#10;&#10;Reply &quot;map&quot; and I will send you the full answer map: all 10 questions, every brand cited, and where the gap is. Takes me two minutes to pull, no call needed." data-preview="I asked ChatGPT and Perplexity the 10 questions a clean beauty buyer actually asks before purchasing, things like &quot;best vitamin C serum for sensitive skin&quot;.&#10;&#10;Lumen Botanics was cited in 6 of them. Verdant Co in 4. Northbay Skin came up in zero.&#10;&#10;But would it be fair to assume nobody on your team is actually assigned to that surface, it is sitting between the SEO agency and the content person and belongs to neither?&#10;&#10;That is the entire thing we do. Citation engineering, not ranking. Our brands earned 12,847 AI citations last month across clean beauty and 8 other categories.&#10;&#10;Reply &quot;map&quot; and I will send you the full answer map: all 10 questions, every brand cited, and where the gap is. Takes me two minutes to pull, no call needed.">
+                        <p>I asked ChatGPT and Perplexity the 10 questions a {{vertical}} buyer actually asks before purchasing, things like &quot;{{sample_query}}&quot;.</p><p>{{competitor_1}} was cited in {{n1}} of them. {{competitor_2}} in {{n2}}. {{company}} came up in zero.</p><p>But would it be fair to assume nobody on your team is actually assigned to that surface, it is sitting between the SEO agency and the content person and belongs to neither?</p><p>That is the entire thing we do. Citation engineering, not ranking. Our brands earned 12,847 AI citations last month across {{vertical}} and 8 other categories.</p><p>Reply &quot;map&quot; and I will send you the full answer map: all 10 questions, every brand cited, and where the gap is. Takes me two minutes to pull, no call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One more angle on this.&#10;&#10;The reason it matters commercially: a buyer who arrives from an AI recommendation has already been told you are the right answer. They do not need to be convinced, only checked out. That is the cheapest revenue in the business and it is currently going to {{competitor_1}}.&#10;&#10;We drove $47M in incremental GMV across the portfolio last year, a growing share of it from exactly this.&#10;&#10;Map is still ready when you want it.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One more angle on this.&#10;&#10;The reason it matters commercially: a buyer who arrives from an AI recommendation has already been told you are the right answer. They do not need to be convinced, only checked out. That is the cheapest revenue in the business and it is currently going to {{competitor_1}}.&#10;&#10;We drove $47M in incremental GMV across the portfolio last year, a growing share of it from exactly this.&#10;&#10;Map is still ready when you want it." data-preview="One more angle on this.&#10;&#10;The reason it matters commercially: a buyer who arrives from an AI recommendation has already been told you are the right answer. They do not need to be convinced, only checked out. That is the cheapest revenue in the business and it is currently going to Lumen Botanics.&#10;&#10;We drove $47M in incremental GMV across the portfolio last year, a growing share of it from exactly this.&#10;&#10;Map is still ready when you want it.">
+                        <p>One more angle on this.</p><p>The reason it matters commercially: a buyer who arrives from an AI recommendation has already been told you are the right answer. They do not need to be convinced, only checked out. That is the cheapest revenue in the business and it is currently going to {{competitor_1}}.</p><p>We drove $47M in incremental GMV across the portfolio last year, a growing share of it from exactly this.</p><p>Map is still ready when you want it.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: worth 2 minutes&#10;&#10;Open ChatGPT and ask it &quot;{{sample_query}}&quot;. I think you will find {{competitor_1}} in the answer and not {{company}}.&#10;&#10;No need for a call. Reply yes and I will send the full answer map for your category.&#10;&#10;Should this go to you or {{alt_contact}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="worth 2 minutes" data-preview="worth 2 minutes">worth 2 minutes</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Open ChatGPT and ask it &quot;{{sample_query}}&quot;. I think you will find {{competitor_1}} in the answer and not {{company}}.&#10;&#10;No need for a call. Reply yes and I will send the full answer map for your category.&#10;&#10;Should this go to you or {{alt_contact}}?" data-preview="Open ChatGPT and ask it &quot;best vitamin C serum for sensitive skin&quot;. I think you will find Lumen Botanics in the answer and not Northbay Skin.&#10;&#10;No need for a call. Reply yes and I will send the full answer map for your category.&#10;&#10;Should this go to you or your head of ecom?">
+                        <p>Open ChatGPT and ask it &quot;{{sample_query}}&quot;. I think you will find {{competitor_1}} in the answer and not {{company}}.</p><p>No need for a call. Reply yes and I will send the full answer map for your category.</p><p>Should this go to you or {{alt_contact}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Cited but Uncontrolled</strong>
+              <em>Entity Control Report</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Cited but Uncontrolled steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: what AI says about you&#10;&#10;{{company}} does show up when I ask the answer engines about {{vertical}}, but the citation is coming from {{citation_source}}, not from your site. Your product pages have no Product schema and there is no llms.txt on the domain.&#10;&#10;But would it be fair to assume that means the description AI gives of your brand is not one you wrote, or approved, or can update?&#10;&#10;That is the gap we close. Structured content and entity control, so the answer engines quote your language instead of a three-year-old roundup post.&#10;&#10;Reply &quot;entity&quot; and I will send you the report: what the engines currently say {{company}} is, where they are pulling it from, and every schema gap on the site.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="what AI says about you" data-preview="what AI says about you">what AI says about you</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{company}} does show up when I ask the answer engines about {{vertical}}, but the citation is coming from {{citation_source}}, not from your site. Your product pages have no Product schema and there is no llms.txt on the domain.&#10;&#10;But would it be fair to assume that means the description AI gives of your brand is not one you wrote, or approved, or can update?&#10;&#10;That is the gap we close. Structured content and entity control, so the answer engines quote your language instead of a three-year-old roundup post.&#10;&#10;Reply &quot;entity&quot; and I will send you the report: what the engines currently say {{company}} is, where they are pulling it from, and every schema gap on the site." data-preview="Northbay Skin does show up when I ask the answer engines about clean beauty, but the citation is coming from a 2023 Reddit thread, not from your site. Your product pages have no Product schema and there is no llms.txt on the domain.&#10;&#10;But would it be fair to assume that means the description AI gives of your brand is not one you wrote, or approved, or can update?&#10;&#10;That is the gap we close. Structured content and entity control, so the answer engines quote your language instead of a three-year-old roundup post.&#10;&#10;Reply &quot;entity&quot; and I will send you the report: what the engines currently say Northbay Skin is, where they are pulling it from, and every schema gap on the site.">
+                        <p>{{company}} does show up when I ask the answer engines about {{vertical}}, but the citation is coming from {{citation_source}}, not from your site. Your product pages have no Product schema and there is no llms.txt on the domain.</p><p>But would it be fair to assume that means the description AI gives of your brand is not one you wrote, or approved, or can update?</p><p>That is the gap we close. Structured content and entity control, so the answer engines quote your language instead of a three-year-old roundup post.</p><p>Reply &quot;entity&quot; and I will send you the report: what the engines currently say {{company}} is, where they are pulling it from, and every schema gap on the site.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Adding the risk side of this.&#10;&#10;A citation you do not own is a citation you can lose. When a competitor publishes properly structured content against the same question, they replace you, and you will not get an alert when it happens.&#10;&#10;Owning the source makes the position defensible instead of borrowed.&#10;&#10;Report is ready whenever, just reply &quot;entity&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Adding the risk side of this.&#10;&#10;A citation you do not own is a citation you can lose. When a competitor publishes properly structured content against the same question, they replace you, and you will not get an alert when it happens.&#10;&#10;Owning the source makes the position defensible instead of borrowed.&#10;&#10;Report is ready whenever, just reply &quot;entity&quot;." data-preview="Adding the risk side of this.&#10;&#10;A citation you do not own is a citation you can lose. When a competitor publishes properly structured content against the same question, they replace you, and you will not get an alert when it happens.&#10;&#10;Owning the source makes the position defensible instead of borrowed.&#10;&#10;Report is ready whenever, just reply &quot;entity&quot;.">
+                        <p>Adding the risk side of this.</p><p>A citation you do not own is a citation you can lose. When a competitor publishes properly structured content against the same question, they replace you, and you will not get an alert when it happens.</p><p>Owning the source makes the position defensible instead of borrowed.</p><p>Report is ready whenever, just reply &quot;entity&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: quick one&#10;&#10;No call needed. Reply yes and I will send the entity control report for {{company}}: what AI says you are, who it is sourcing that from, and the schema gaps letting it happen.&#10;&#10;You or {{alt_contact}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="quick one" data-preview="quick one">quick one</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed. Reply yes and I will send the entity control report for {{company}}: what AI says you are, who it is sourcing that from, and the schema gaps letting it happen.&#10;&#10;You or {{alt_contact}}?" data-preview="No call needed. Reply yes and I will send the entity control report for Northbay Skin: what AI says you are, who it is sourcing that from, and the schema gaps letting it happen.&#10;&#10;You or your head of ecom?">
+                        <p>No call needed. Reply yes and I will send the entity control report for {{company}}: what AI says you are, who it is sourcing that from, and the schema gaps letting it happen.</p><p>You or {{alt_contact}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 - Buying Demand You Cannot Convert</strong>
+              <em>Ad-to-Answer Leak Report</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 - Buying Demand You Cannot Convert steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{active_ad_count}} live creatives&#10;&#10;Meta&#39;s ad library shows {{company}} running {{active_ad_count}} active creatives right now. Went to look at where they land and could not find any testing tool on the site, no Intelligems, no Shoplift, nothing.&#10;&#10;But would it be fair to assume the landing experience has been more or less the same for a while, because changing it means a dev ticket and a queue?&#10;&#10;We run 200+ tests a week with winners promoted within hours, and produce creative at $2.18 apiece, 30 brand-locked variants from a single script in six hours.&#10;&#10;Reply &quot;leak&quot; and I will send you the teardown: your live creative set, the untested paths they land on, and the three tests I would run first.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{active_ad_count}} live creatives" data-preview="34 live creatives">{{active_ad_count}} live creatives</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Meta&#39;s ad library shows {{company}} running {{active_ad_count}} active creatives right now. Went to look at where they land and could not find any testing tool on the site, no Intelligems, no Shoplift, nothing.&#10;&#10;But would it be fair to assume the landing experience has been more or less the same for a while, because changing it means a dev ticket and a queue?&#10;&#10;We run 200+ tests a week with winners promoted within hours, and produce creative at $2.18 apiece, 30 brand-locked variants from a single script in six hours.&#10;&#10;Reply &quot;leak&quot; and I will send you the teardown: your live creative set, the untested paths they land on, and the three tests I would run first." data-preview="Meta&#39;s ad library shows Northbay Skin running 34 active creatives right now. Went to look at where they land and could not find any testing tool on the site, no Intelligems, no Shoplift, nothing.&#10;&#10;But would it be fair to assume the landing experience has been more or less the same for a while, because changing it means a dev ticket and a queue?&#10;&#10;We run 200+ tests a week with winners promoted within hours, and produce creative at $2.18 apiece, 30 brand-locked variants from a single script in six hours.&#10;&#10;Reply &quot;leak&quot; and I will send you the teardown: your live creative set, the untested paths they land on, and the three tests I would run first.">
+                        <p>Meta&#39;s ad library shows {{company}} running {{active_ad_count}} active creatives right now. Went to look at where they land and could not find any testing tool on the site, no Intelligems, no Shoplift, nothing.</p><p>But would it be fair to assume the landing experience has been more or less the same for a while, because changing it means a dev ticket and a queue?</p><p>We run 200+ tests a week with winners promoted within hours, and produce creative at $2.18 apiece, 30 brand-locked variants from a single script in six hours.</p><p>Reply &quot;leak&quot; and I will send you the teardown: your live creative set, the untested paths they land on, and the three tests I would run first.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Simplest version of the maths here.&#10;&#10;Every point of conversion rate you gain applies to 100% of the traffic you are already paying for. It is the only lever in the business that improves paid, organic and AI-referred revenue at the same time.&#10;&#10;In beauty we are seeing 3.4x ROAS lift, and +38% LTV in health, mostly from the post-click side rather than the buying side.&#10;&#10;Teardown is ready, just reply &quot;leak&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Simplest version of the maths here.&#10;&#10;Every point of conversion rate you gain applies to 100% of the traffic you are already paying for. It is the only lever in the business that improves paid, organic and AI-referred revenue at the same time.&#10;&#10;In beauty we are seeing 3.4x ROAS lift, and +38% LTV in health, mostly from the post-click side rather than the buying side.&#10;&#10;Teardown is ready, just reply &quot;leak&quot;." data-preview="Simplest version of the maths here.&#10;&#10;Every point of conversion rate you gain applies to 100% of the traffic you are already paying for. It is the only lever in the business that improves paid, organic and AI-referred revenue at the same time.&#10;&#10;In beauty we are seeing 3.4x ROAS lift, and +38% LTV in health, mostly from the post-click side rather than the buying side.&#10;&#10;Teardown is ready, just reply &quot;leak&quot;.">
+                        <p>Simplest version of the maths here.</p><p>Every point of conversion rate you gain applies to 100% of the traffic you are already paying for. It is the only lever in the business that improves paid, organic and AI-referred revenue at the same time.</p><p>In beauty we are seeing 3.4x ROAS lift, and +38% LTV in health, mostly from the post-click side rather than the buying side.</p><p>Teardown is ready, just reply &quot;leak&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: quick one&#10;&#10;No need for a call. Reply yes and I will send the ad-to-answer leak report for {{company}}: creatives, landing paths, and the first three tests.&#10;&#10;Should I send it to you or {{alt_contact}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="quick one" data-preview="quick one">quick one</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No need for a call. Reply yes and I will send the ad-to-answer leak report for {{company}}: creatives, landing paths, and the first three tests.&#10;&#10;Should I send it to you or {{alt_contact}}?" data-preview="No need for a call. Reply yes and I will send the ad-to-answer leak report for Northbay Skin: creatives, landing paths, and the first three tests.&#10;&#10;Should I send it to you or your head of ecom?">
+                        <p>No need for a call. Reply yes and I will send the ad-to-answer leak report for {{company}}: creatives, landing paths, and the first three tests.</p><p>Should I send it to you or {{alt_contact}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 - Stack Tax (catch-all)</strong>
+              <em>Stack &amp; Spend Teardown</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 - Stack Tax (catch-all) steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{vendor_count}} vendors&#10;&#10;Went through the page source on {{company}} and counted {{vendor_count}} separate martech vendors firing on the site, plus whoever is running your paid and creative.&#10;&#10;But would it be fair to assume the hardest part is not any single one of them, it is the Tuesday where the SEO agency, the media buyer and the dev partner all have a different explanation for the same number?&#10;&#10;We consolidate that into one senior pod on one platform. Typical brands run roughly $10,400 a month across that stack. We start at $999 and top out at $2,999, month to month, no setup fee, cancel any time.&#10;&#10;Reply &quot;teardown&quot; and I will send you the vendor list we detected with an estimated monthly cost against each. Useful even if you never speak to us.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{vendor_count}} vendors" data-preview="7 vendors">{{vendor_count}} vendors</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Went through the page source on {{company}} and counted {{vendor_count}} separate martech vendors firing on the site, plus whoever is running your paid and creative.&#10;&#10;But would it be fair to assume the hardest part is not any single one of them, it is the Tuesday where the SEO agency, the media buyer and the dev partner all have a different explanation for the same number?&#10;&#10;We consolidate that into one senior pod on one platform. Typical brands run roughly $10,400 a month across that stack. We start at $999 and top out at $2,999, month to month, no setup fee, cancel any time.&#10;&#10;Reply &quot;teardown&quot; and I will send you the vendor list we detected with an estimated monthly cost against each. Useful even if you never speak to us." data-preview="Went through the page source on Northbay Skin and counted 7 separate martech vendors firing on the site, plus whoever is running your paid and creative.&#10;&#10;But would it be fair to assume the hardest part is not any single one of them, it is the Tuesday where the SEO agency, the media buyer and the dev partner all have a different explanation for the same number?&#10;&#10;We consolidate that into one senior pod on one platform. Typical brands run roughly $10,400 a month across that stack. We start at $999 and top out at $2,999, month to month, no setup fee, cancel any time.&#10;&#10;Reply &quot;teardown&quot; and I will send you the vendor list we detected with an estimated monthly cost against each. Useful even if you never speak to us.">
+                        <p>Went through the page source on {{company}} and counted {{vendor_count}} separate martech vendors firing on the site, plus whoever is running your paid and creative.</p><p>But would it be fair to assume the hardest part is not any single one of them, it is the Tuesday where the SEO agency, the media buyer and the dev partner all have a different explanation for the same number?</p><p>We consolidate that into one senior pod on one platform. Typical brands run roughly $10,400 a month across that stack. We start at $999 and top out at $2,999, month to month, no setup fee, cancel any time.</p><p>Reply &quot;teardown&quot; and I will send you the vendor list we detected with an estimated monthly cost against each. Useful even if you never speak to us.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The part most people underestimate is not the invoices, it is the calendar. Five vendors is five reporting cadences, five onboardings, five sets of context to re-explain every quarter.&#10;&#10;One pod, one dashboard, one invoice. 24-hour onboarding and 14 days money back if month one does not deliver what we said it would.&#10;&#10;Happy to send the teardown either way.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The part most people underestimate is not the invoices, it is the calendar. Five vendors is five reporting cadences, five onboardings, five sets of context to re-explain every quarter.&#10;&#10;One pod, one dashboard, one invoice. 24-hour onboarding and 14 days money back if month one does not deliver what we said it would.&#10;&#10;Happy to send the teardown either way." data-preview="The part most people underestimate is not the invoices, it is the calendar. Five vendors is five reporting cadences, five onboardings, five sets of context to re-explain every quarter.&#10;&#10;One pod, one dashboard, one invoice. 24-hour onboarding and 14 days money back if month one does not deliver what we said it would.&#10;&#10;Happy to send the teardown either way.">
+                        <p>The part most people underestimate is not the invoices, it is the calendar. Five vendors is five reporting cadences, five onboardings, five sets of context to re-explain every quarter.</p><p>One pod, one dashboard, one invoice. 24-hour onboarding and 14 days money back if month one does not deliver what we said it would.</p><p>Happy to send the teardown either way.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: quick one&#10;&#10;No call needed. Just reply yes and I will send the stack teardown for {{company}}: vendors detected and estimated spend against each.&#10;&#10;Should this go to you or {{alt_contact}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="quick one" data-preview="quick one">quick one</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed. Just reply yes and I will send the stack teardown for {{company}}: vendors detected and estimated spend against each.&#10;&#10;Should this go to you or {{alt_contact}}?" data-preview="No call needed. Just reply yes and I will send the stack teardown for Northbay Skin: vendors detected and estimated spend against each.&#10;&#10;Should this go to you or your head of ecom?">
+                        <p>No call needed. Just reply yes and I will send the stack teardown for {{company}}: vendors detected and estimated spend against each.</p><p>Should this go to you or {{alt_contact}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="06">
+        
+    <div class="section-head">
+      <p class="eyebrow">06</p>
+      <h2>Launch sequence</h2>
+      <p class="takeaway">Tier 2 opens at capped volume to prove the flagship signal, Tier 1 follows while it is still fresh, and the catch-all becomes the permanent volume engine from week ten.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Week 0 - Run the citation sweep clean across a 200-account sample and confirm artifact generation end to end in under four working hours. If the sweep is not reliable, nothing downstream is.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Week 0 - Stand up the reply-handling procedure: who sends the artifact, in what format, and what the follow-up is once it has been opened. The artifact goes out as a link, not an attachment, with no call request attached.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Week 0 - Clear at least one named-brand proof point for use in cold email, or make an explicit decision to launch without one. CommerceV3 currently publishes strong aggregate numbers and zero named customers.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Week 0 - Warm sending infrastructure to 2,000 contacts a week. Open tracking off, reply and link tracking on.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Weeks 1 to 2 - Launch Tier 2, Beaten to the Answer, capped at 1,500 contacts. Strongest artifact and clearest pain, deliberately capped while the named-proof gap closes.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Weeks 3 to 4 - Launch Tier 1, Locked Out, at the full 4,800 contacts. Smallest and most urgent tier, worth burning while it is fresh because brands do fix robots.txt.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>Weeks 5 to 6 - Launch Tier 4, Buying Demand, at 2,000 a week. Different buyer motivation, which diversifies the reply mix away from AI visibility alone.</p>
+              </div>
+              <div class="launch-step">
+                <span>08</span>
+                <p>Weeks 7 to 9 - Launch Tier 3, Cited but Uncontrolled, at 2,000 a week, once the report pipeline has matured enough to produce the sharpest artifact in the set.</p>
+              </div>
+              <div class="launch-step">
+                <span>09</span>
+                <p>Week 10 onward - Open Tier 5, Stack Tax, on remaining capacity as the permanent volume engine running underneath everything else.</p>
+              </div>
+              <div class="launch-step">
+                <span>10</span>
+                <p>Every 90 days - Re-run the citation sweep across the whole TAM. Accounts move up as they fix things and down as competitors overtake them, regenerating fresh personalised outreach without buying a single new lead.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacts</strong>
+                <span>Perfect. Scale the tier hard and pull volume forward from later phases.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run untouched and do not fiddle with the copy.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450 to 500</strong>
+                <span>Borderline. Test one copy variant only, varying either the lead magnet or the notice line, never both at once.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or reply rate under 1% after 1,500 sends</strong>
+                <span>Dead. Cut the tier and rework the trigger rather than rewriting the email.</span>
+              </div>
+              <div class="threshold">
+                <strong>Two copy variants per tier, maximum</strong>
+                <span>A fresh tier starts with a chaos test of two genuinely different emails. Once a winner emerges, switch to scientific tests holding everything constant but one variable.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dana","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Northbay Skin","clean beauty","best vitamin C serum for sensitive skin","Lumen Botanics","Verdant Co","4","a 2023 Reddit thread","34","7","your head of ecom"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
