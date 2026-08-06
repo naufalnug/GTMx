@@ -1,0 +1,1816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CometChat - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-06</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for CometChat</p>
+          <h1>The CometChat outbound <mark>journey</mark>.</h1>
+          <p class="hero-copy">One priority-routed waterfall across ~60,000 accounts, built entirely on signals your prospects ship inside their own apps.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Chat infrastructure is one of the very few categories of software a company cannot hide. The client SDK ships inside the product and its network endpoints are declared in the app&#39;s own code. So the right way to segment this market isn&#39;t by vertical — it&#39;s by the current state of each company&#39;s real-time conversation layer, and how visibly it&#39;s straining.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>~60,000</strong>
+          <span>Routed accounts in the addressable market</span>
+        </div>
+        <div class="metric-card">
+          <strong>~285,000</strong>
+          <span>Contacts across five exclusive tiers</span>
+        </div>
+        <div class="metric-card">
+          <strong>$0</strong>
+          <span>Enrichment cost to route — every signal is public</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>In-app chat, voice and video SDKs with prebuilt UI Kits, plus a full-stack AI agent platform — agent dock, agent-ready UI, two-way guardrails, moderation, notifications and analytics.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal nobody can hide</p></div><div><span>02</span><p>How every lead gets routed</p></div><div><span>03</span><p>Five tiers, hottest to coolest</p></div><div><span>04</span><p>The experiments inside each tier</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>01</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>02</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>03</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>04</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>05</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>06</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="01">
+        
+    <div class="section-head">
+      <p class="eyebrow">01</p>
+      <h2>The signal nobody can hide</h2>
+      <p class="takeaway">Vertical tells you why a company might want a conversation layer. It tells you nothing about whether they can buy one this quarter. The state of their real-time layer tells you both.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>The SDK ships inside the product. A decompiled Android bundle or a CSP connect-src header names the incumbent vendor with certainty — no guessing, no vendor database.</p></div><div class="reason-card"><span>02</span><p>It&#39;s a genuine ladder, not a set of categories. Renting the layer, shipping an agent without a front end, owning a socket layer, leaking conversations off-platform, never having considered it.</p></div><div class="reason-card"><span>03</span><p>It costs nothing to refresh. Store crawls, APK grabs, changelogs, job boards and review corpora are all free, so the routing layer doesn&#39;t degrade as the list grows.</p></div><div class="reason-card"><span>04</span><p>Nobody else is working it. Every CometChat competitor sells primarily into mobile, and web-only detection tools are blind there. The APK grep is an unbuyable list.</p></div>
+            </div>
+            <div class="field-cloud"><span>chat_vendor_detected</span><span>vendor_detection_surface</span><span>rtc_vendor_detected</span><span>homegrown_stack_detected</span><span>eng_blog_chat_post</span><span>ai_agent_shipped</span><span>ai_agent_evidence</span><span>ai_agent_ship_date</span><span>open_req_realtime_infra</span><span>open_req_ai_engineer</span><span>review_comm_complaint_pct</span><span>review_comm_quote</span><span>offplatform_workaround_documented</span><span>multiparty_model</span><span>vertical</span><span>mau_proxy_band</span><span>platforms_shipped</span><span>regulated_flag</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>APK decompile + package grep</h3><p>The core asset. Pull the Android build, decompile the DEX, grep for com.sendbird, io.getstream, io.agora, com.pubnub, com.twilio, com.pusher, io.ably. Named vendor detection on mobile, where web-only tools see nothing. Free.</p></div><div class="source-card"><span>02</span><h3>CSP connect-src + JS bundle scan</h3><p>The same detection on the web side: sendbird.com, stream-io-api.com, chat.twilio.com, pubnub.com, agora.io, pusher.com, ably.io, firebaseio.com, firestore.googleapis.com. Free.</p></div><div class="source-card"><span>03</span><h3>App Store + Google Play review corpora</h3><p>Twelve months of reviews, keyword-filtered against a communication lexicon. Tier 4&#39;s entire trigger, plus quotable first lines in the prospect&#39;s own users&#39; words. Free.</p></div><div class="source-card"><span>04</span><h3>Changelogs, release notes, Product Hunt, press</h3><p>Tier 2&#39;s trigger with a date attached: a user-facing AI agent that shipped or was publicly announced in the last twelve months. Free.</p></div><div class="source-card"><span>05</span><h3>ATS job boards (Greenhouse, Lever, Ashby) + LinkedIn Jobs</h3><p>Secondary triggers for Tiers 2 and 3 — real-time, WebSocket, messaging infrastructure and AI engineer reqs — plus a recency stamp from req age. Free.</p></div><div class="source-card"><span>06</span><h3>Engineering blogs + public GitHub orgs</h3><p>Tier 3 confirmation and the strongest personalisation line in the cascade. &quot;Read your post on moving off Firestore for the message table&quot; is not a line anyone fakes at scale. Free.</p></div><div class="source-card"><span>07</span><h3>App Store / Play category crawls</h3><p>The core mobile market: app, publisher, category, rating, review volume, download band, across Social, Dating, Medical, Education, Business, Shopping, Lifestyle and Games.</p></div><div class="source-card"><span>08</span><h3>SimilarWeb + app download bands</h3><p>The MAU proxy. Deal-size weighting and the input to every cost model the campaigns promise.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="02">
+        
+    <div class="section-head">
+      <p class="eyebrow">02</p>
+      <h2>How every lead gets routed</h2>
+      <p class="takeaway">First match wins. Every account in the market exits with exactly one tier, and the catch-all guarantees nothing is left on the table.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF chat_vendor_detected = cometchat</span>
+          <strong>Suppress</strong>
+          <em>Existing customer. Never tiered, never sent to.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF A named third-party chat or RTC vendor is detected in the shipped app</span>
+          <strong>Tier 1 — Renting the Layer</strong>
+          <em>Budget is proven, the buyer is identified, and a renewal date exists. The strongest commercial signal in the market outranks everything below it.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF NOT Tier 1, and a user-facing AI agent shipped or was announced in the last 12 months (or an AI engineer req is open on a multi-party product)</span>
+          <strong>Tier 2 — The Agent Without a Surface</strong>
+          <em>An agent that shipped 90 days ago means money is being spent on conversational surface area right now. Recency of commitment beats depth of commitment — which is why this sits above the homegrown tier.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF NOT Tier 1 or 2, and a homegrown real-time stack is detected (Firebase, socket.io, Pusher, Ably, Centrifugo, custom WebSocket), or a real-time infra req is open, or they&#39;ve blogged about building their own chat</span>
+          <strong>Tier 3 — Owning the Layer</strong>
+          <em>They already decided chat matters enough to build it. The argument is never whether, only who maintains it.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF NOT Tier 1 to 3, and 3%+ of the last 12 months of app store reviews mention not being able to reach the other side, or the help centre documents an off-platform workaround</span>
+          <strong>Tier 4 — The Conversation Is Leaking</strong>
+          <em>The pain is documented publicly by their own users. No proof asset needed — the personalisation is the proof.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="5">
+          <span class="route-rule__num">06</span>
+          <span class="route-rule__if">IF Everything else in the market with user accounts and more than one party</span>
+          <strong>Tier 5 — Multi-Party Product, No Layer</strong>
+          <em>The mandatory catch-all. No signal either way, but the structural need is there, and this is where the twelve-month durability of the strategy lives.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF chat_vendor_detected = cometchat -&gt; Suppress (Existing customer. Never tiered, never sent to.)&#10;2. IF A named third-party chat or RTC vendor is detected in the shipped app -&gt; Tier 1 — Renting the Layer (Budget is proven, the buyer is identified, and a renewal date exists. The strongest commercial signal in the market outranks everything below it.)&#10;3. IF NOT Tier 1, and a user-facing AI agent shipped or was announced in the last 12 months (or an AI engineer req is open on a multi-party product) -&gt; Tier 2 — The Agent Without a Surface (An agent that shipped 90 days ago means money is being spent on conversational surface area right now. Recency of commitment beats depth of commitment — which is why this sits above the homegrown tier.)&#10;4. IF NOT Tier 1 or 2, and a homegrown real-time stack is detected (Firebase, socket.io, Pusher, Ably, Centrifugo, custom WebSocket), or a real-time infra req is open, or they&#39;ve blogged about building their own chat -&gt; Tier 3 — Owning the Layer (They already decided chat matters enough to build it. The argument is never whether, only who maintains it.)&#10;5. IF NOT Tier 1 to 3, and 3%+ of the last 12 months of app store reviews mention not being able to reach the other side, or the help centre documents an off-platform workaround -&gt; Tier 4 — The Conversation Is Leaking (The pain is documented publicly by their own users. No proof asset needed — the personalisation is the proof.)&#10;6. IF Everything else in the market with user accounts and more than one party -&gt; Tier 5 — Multi-Party Product, No Layer (The mandatory catch-all. No signal either way, but the structural need is there, and this is where the twelve-month durability of the strategy lives.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF chat_vendor_detected = cometchat -&gt; Suppress (Existing customer. Never tiered, never sent to.)
+2. IF A named third-party chat or RTC vendor is detected in the shipped app -&gt; Tier 1 — Renting the Layer (Budget is proven, the buyer is identified, and a renewal date exists. The strongest commercial signal in the market outranks everything below it.)
+3. IF NOT Tier 1, and a user-facing AI agent shipped or was announced in the last 12 months (or an AI engineer req is open on a multi-party product) -&gt; Tier 2 — The Agent Without a Surface (An agent that shipped 90 days ago means money is being spent on conversational surface area right now. Recency of commitment beats depth of commitment — which is why this sits above the homegrown tier.)
+4. IF NOT Tier 1 or 2, and a homegrown real-time stack is detected (Firebase, socket.io, Pusher, Ably, Centrifugo, custom WebSocket), or a real-time infra req is open, or they&#39;ve blogged about building their own chat -&gt; Tier 3 — Owning the Layer (They already decided chat matters enough to build it. The argument is never whether, only who maintains it.)
+5. IF NOT Tier 1 to 3, and 3%+ of the last 12 months of app store reviews mention not being able to reach the other side, or the help centre documents an off-platform workaround -&gt; Tier 4 — The Conversation Is Leaking (The pain is documented publicly by their own users. No proof asset needed — the personalisation is the proof.)
+6. IF Everything else in the market with user accounts and more than one party -&gt; Tier 5 — Multi-Party Product, No Layer (The mandatory catch-all. No signal either way, but the structural need is there, and this is where the twelve-month durability of the strategy lives.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="03">
+        
+    <div class="section-head">
+      <p class="eyebrow">03</p>
+      <h2>Five tiers, hottest to coolest</h2>
+      <p class="takeaway">Ordered by how much a company has already committed to conversation as a surface — and how visibly that commitment is costing them.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">~7% TAM</span>
+          </div>
+          <h3>Tier 1: Renting the Layer</h3>
+          <p>A named third-party chat or RTC vendor detected in the shipped app — Sendbird, Stream, Twilio Conversations, PubNub, Agora, Pusher, Ably, TalkJS, ZEGOCLOUD or MirrorFly.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They already decided chat is worth paying for, so the argument is never &quot;why chat&quot;. The pain is what the invoice does as they grow: MAU overages, concurrent-connection charges billed on top, calling sold as a separate product with a separate line, message-retention caps that quietly delete history, and 8x5 support when the outage is at 2am. The bigger they get, the worse the deal gets.</dd></div>
+              <div><dt>Offer</dt><dd>Chat Infrastructure Cost Model — their MAU band and concurrency modelled line by line against their current vendor&#39;s published rate card, with the calling line item separated out, plus a migration map by platform</dd></div>
+              <div><dt>Source</dt><dd>APK package grep, CSP and bundle scan, BuiltWith</dd></div>
+              <div><dt>Reply density</dt><dd>Highest in the cascade. Budget proven, buyer identified, renewal date exists. Also the longest cycle — displacement waits for a contract end, so track &quot;deferred with a date&quot; as a win.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">~11% TAM</span>
+          </div>
+          <h3>Tier 2: The Agent Without a Surface</h3>
+          <p>NOT Tier 1, and a user-facing AI assistant shipped or publicly announced in the last 12 months via changelog, release notes, Product Hunt, press or a live /ai route. Or an open AI-engineer req on a multi-party product.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They built the agent. The agent works in a terminal. What&#39;s left is the part nobody budgeted for: streaming responses with thinking states, inline citations, retries, fallback when the model refuses, moderation of what the agent says rather than just what users say, RBAC, notifications to bring people back, and analytics that report resolution rate rather than token spend. That&#39;s six months of glue code, and it&#39;s why the agent is still behind a feature flag.</dd></div>
+              <div><dt>Offer</dt><dd>Agent Surface Gap Audit — the eleven things that sit between a working agent and a shipped one, scored against what they&#39;ve actually shipped</dd></div>
+              <div><dt>Source</dt><dd>Changelog, Product Hunt and press scrape; ATS job boards</dd></div>
+              <div><dt>Reply density</dt><dd>Strong and fast. Newest budget, least entrenched vendor, highest differentiation. The trigger decays quickly, so refresh monthly or the list goes stale.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">~17% TAM</span>
+          </div>
+          <h3>Tier 3: Owning the Layer</h3>
+          <p>NOT Tier 1 or 2, and a homegrown real-time stack detected (Firebase RTDB or Firestore, socket.io, Pusher, Ably, Centrifugo, custom WebSocket), or an open req for real-time and messaging infrastructure, or an engineering blog post about building or scaling their own chat.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They built it because it looked like a weekend of WebSockets, and it was. Then came typing indicators, read receipts, offline delivery, push wake-up, reconnection, message ordering, media handling, moderation, GDPR deletion requests and a second region. It now costs a named engineer permanently and it&#39;s nobody&#39;s roadmap item. Firebase specifically: the bill goes non-linear at scale, there&#39;s no moderation, and there&#39;s no calling — so video means a second vendor.</dd></div>
+              <div><dt>Offer</dt><dd>Build-vs-Buy Ledger — engineer-months and runtime cost of owning chat at their MAU band, itemised against the features they haven&#39;t built yet</dd></div>
+              <div><dt>Source</dt><dd>APK and CSP scan, ATS boards, engineering blogs, GitHub</dd></div>
+              <div><dt>Reply density</dt><dd>Good, and the best volume-to-quality ratio in the cascade. Purest engineer audience here — blunt technical copy outperforms polished copy, and the sentiment guardrail matters most in this tier.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">~13% TAM</span>
+          </div>
+          <h3>Tier 4: The Conversation Is Leaking</h3>
+          <p>NOT Tier 1 to 3, and at least 3% of the last 12 months of App Store and Play reviews match the communication lexicon (&quot;can&#39;t message&quot;, &quot;no way to contact&quot;, &quot;chat doesn&#39;t work&quot;, &quot;had to give my number&quot;), or the help centre documents an off-platform contact workaround.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The product needs two parties to talk and has no supported way for them to do it, so they&#39;re doing it on WhatsApp, SMS and personal email. Which means no audit trail when something goes wrong, no safety layer, no record for a dispute, no data on the highest-intent moment in the product — and, the one the CEO cares about, a direct channel between the two sides that routes around the platform entirely.</dd></div>
+              <div><dt>Offer</dt><dd>Conversation Leakage Report — their own 12 months of reviews categorised, with the percentage touching communication, the verbatims, and the off-platform workaround their own help centre publishes</dd></div>
+              <div><dt>Source</dt><dd>App Store and Play review corpora, help-centre scrape</dd></div>
+              <div><dt>Reply density</dt><dd>Strong on reply rate, weaker on deal size — these are typically smaller accounts. Best first line in the whole waterfall, because it&#39;s the prospect&#39;s own users doing the talking.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">~52% TAM</span>
+          </div>
+          <h3>Tier 5: Multi-Party Product, No Layer (catch-all)</h3>
+          <p>Everything else in the market. Any product with user accounts and more than one party who would benefit from talking to each other.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>No visible signal either way, but the structural need is there: buyers and sellers, patients and clinicians, tutors and students, teams and clients. Whatever they&#39;re doing today is either nothing or email — and the reason is never that it&#39;s a bad idea, it&#39;s that it&#39;s never the most important thing on the roadmap.</dd></div>
+              <div><dt>Offer</dt><dd>The In-App Communication Benchmark — what a shipped conversation layer looks like in their vertical in 2026, as a feature-parity checklist they can score themselves against</dd></div>
+              <div><dt>Source</dt><dd>Store category crawls, BuiltWith, Apollo</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest per-send, highest absolute volume. This is where the twelve-month durability of the strategy lives — switch it on once the four sharp tiers have shown which framing travels.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="04">
+        
+    <div class="section-head">
+      <p class="eyebrow">04</p>
+      <h2>The experiments inside each tier</h2>
+      <p class="takeaway">Two variants per tier, structure held constant, exactly one thing varied. Plus four side campaigns that sit outside the cascade.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Vendor Displacement — cost framing</h3>
+          <p>Leads with what the invoice does at scale: MAU overages, concurrent connections billed on top, calling on its own line. The counter is one SKU, zero overages on Enterprise, and 10% concurrency included instead of 5%. Every actual number lives in the cost model, never in the email.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>chat_vendor_detected is not none, MAU proxy band 10k+</dd></div>
+            <div><dt>AI strategy</dt><dd>Open by naming the detected vendor AND the surface it was found on — &quot;pulled the Android build apart, Sendbird is in there&quot;. The specificity is the entire credibility of the email; a generic &quot;I see you use Sendbird&quot; reads as a data-vendor blast.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Vendor Displacement — contract framing</h3>
+          <p>The scientific test against the cost variant. What we learn: whether the CTO is annoyed about the bill or about the vendor. Also the safer variant to run first, since it needs no substantiated price comparison.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same list, split 50/50 against the cost variant</dd></div>
+            <div><dt>AI strategy</dt><dd>Drop price entirely and attack the shape of the contract instead: calling is a second integration, message history quietly ages out, support is 8x5 when the incident is at 2am.</dd></div>
+            <div><dt>Value</dt><dd>Reduce risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Agent Surface Gap — build-cost framing</h3>
+          <p>The argument is never that their agent is bad. It&#39;s that the model was the easy part and the surface around it is six months of glue code. The Agent Dock pitch is explicitly non-destructive: plug the existing agent in, rebuild nothing.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>ai_agent_shipped = true, ship date within 180 days</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the agent, name where it was announced, name how many days ago. Then list the specific unbuilt surface — streaming with thinking states, citations, retries, refusal handling, agent-output moderation, resolution analytics.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Agent Surface Gap — liability framing</h3>
+          <p>Two-way guardrails with fallback logic and a policy a non-engineer can edit is usually the unlock for shipping to everyone rather than 5%. What we learn: whether the agent is stuck on effort or on liability.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same list, split against the build-cost variant</dd></div>
+            <div><dt>AI strategy</dt><dd>Reframe from effort to exposure: the reason most user-facing agents stay behind a feature flag isn&#39;t quality, it&#39;s that nobody owns what happens when it says something it shouldn&#39;t, to a customer, in writing.</dd></div>
+            <div><dt>Value</dt><dd>Reduce risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Maintenance Tax</h3>
+          <p>The chronology does the work: it started as a weekend of WebSockets, then came offline delivery, push wake-up, reconnection, message ordering, moderation, GDPR deletes, a second region. It now costs a named engineer permanently and it&#39;s on nobody&#39;s roadmap.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>homegrown_stack_detected is not none, or a real-time infra req is open</dd></div>
+            <div><dt>AI strategy</dt><dd>Personalise off the engineering blog post, the GitHub repo, or the job req body — in that order of preference. If none of the three exist, fall back to the stack name alone. Never invent a blog post.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>One Command (coding-agent led)</h3>
+          <p>A genuine chaos test — two completely different arguments to the same list. This is the most differentiated thing CometChat can say to an engineer and it currently appears in only one tier. If it wins clearly here, lift it into Tiers 1 and 5.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same list, split against the maintenance-tax variant</dd></div>
+            <div><dt>AI strategy</dt><dd>Skip the pain entirely and lead with the shortcut: one command through Claude Code, Cursor or 30+ other coding agents, prebuilt UI Kits, a working chat surface in an afternoon. No call, no contract, judge it by looking.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Leakage — safety and record framing</h3>
+          <p>The conversations are still happening, just on WhatsApp and personal numbers — which means no record when a dispute comes in, no safety layer, and no data on the highest-intent moment in the product. Compliance clause swaps by vertical: HIPAA for telehealth, COPPA for under-13.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>review_comm_complaint_pct &gt;= 3.0</dd></div>
+            <div><dt>AI strategy</dt><dd>Open with the percentage and one verbatim review of 25 words or fewer. Public reviews only, never name the reviewer, never quote a review naming a staff member, paraphrase anything abusive.</dd></div>
+            <div><dt>Value</dt><dd>Reduce risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Leakage — disintermediation framing</h3>
+          <p>Keeping the conversation in-app is a retention feature that happens to look like a support feature. What we learn: whether the product lead responds to the support queue or to the churn number.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same list, split against the safety variant</dd></div>
+            <div><dt>AI strategy</dt><dd>Reframe from operational pain to commercial pain, in one line: once the buyer has the seller&#39;s number, transaction two doesn&#39;t have to happen on your platform.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Two Parties, One Product</h3>
+          <p>The softest send in the cascade and the highest volume. Leads on the free tier to 100 MAU with every feature unlocked, so scoping costs an afternoon rather than a sprint. Expect a meaningful share of these to self-serve rather than book — instrument that or the tier looks like it failed.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>multiparty_model = true, no signal in any tier above</dd></div>
+            <div><dt>AI strategy</dt><dd>Identify the two party nouns correctly from the product page — buyer and seller, patient and care team, tutor and student, host and guest. Never say &quot;users&quot;. If the two parties can&#39;t be identified confidently, the account isn&#39;t in the market.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>A Week to Build, a Quarter to Finish</h3>
+          <p>What we learn: whether cold, unsignalled prospects respond to possibility or to warning. Cheapest test in the strategy and the answer transfers to every other broad send.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same list, split against the two-parties variant</dd></div>
+            <div><dt>AI strategy</dt><dd>Warn rather than offer. The teams that build this themselves almost all say the same thing afterwards, and naming that in advance is more memorable than a feature list.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Side campaign — vendor EOL and repricing windfalls</h3>
+          <p>The highest-ROI item in the strategy and the only part where being three days late costs the whole opportunity. This category has form — Twilio ended Programmable Chat in favour of Conversations and sunset Twilio Live. Each announcement creates a two to six week window where a named, already-detected population is forced to re-evaluate. Sits outside the cascade; runs opportunistically from week one.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Any competitor deprecation, sunset or pricing change, matched against the Tier 1 detection list</dd></div>
+            <div><dt>AI strategy</dt><dd>Monitor competitor changelogs, status pages, developer forums and pricing pages weekly. When one fires, pull the matching slice of the Tier 1 list and run a time-boxed campaign within 72 hours.</dd></div>
+            <div><dt>Value</dt><dd>Reduce risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Side campaign — new CTO or VP Engineering, 0 to 90 days</h3>
+          <p>A new CTO at a company already paying a competitor is the single highest-conversion contact in the entire dataset. Low volume, evergreen, monthly refresh. Sits outside the cascade because tenure is orthogonal to conversation-layer state — but it multiplies against Tier 1.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>LinkedIn tenure change, cross-referenced against the Tier 1 vendor detection list</dd></div>
+            <div><dt>AI strategy</dt><dd>A new technical leader is auditing vendor spend and looking for a first win. Trigger off the tenure change, not the company.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="05">
+        
+    <div class="section-head">
+      <p class="eyebrow">05</p>
+      <h2>The copy, tier by tier</h2>
+      <p class="takeaway">Five beats every time: notice line, poke-the-bear, value prop tied to the poke, proof, low-effort CTA. Only the data and the proof change.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company}}</span><span>{{sender}}</span><span>{{detected_vendor}}</span><span>{{rtc_vendor}}</span><span>{{platform}}</span><span>{{frameworks}}</span><span>{{homegrown_stack}}</span><span>{{personalisation_line}}</span><span>{{agent_name}}</span><span>{{agent_evidence_phrase}}</span><span>{{days_since_ship}}</span><span>{{party_a}}</span><span>{{party_b}}</span><span>{{dispute_noun}}</span><span>{{review_comm_complaint_pct}}</span><span>{{review_comm_quote}}</span><span>{{workaround_source}}</span><span>{{compliance_clause}}</span><span>{{vertical}}</span><span>{{eng_lead_name}}</span><span>{{ai_lead_name}}</span><span>{{ops_lead_name}}</span><span>{{product_lead_name}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company}}, {{sender}}, {{detected_vendor}}, {{rtc_vendor}}, {{platform}}, {{frameworks}}, {{homegrown_stack}}, {{personalisation_line}}, {{agent_name}}, {{agent_evidence_phrase}}, {{days_since_ship}}, {{party_a}}, {{party_b}}, {{dispute_noun}}, {{review_comm_complaint_pct}}, {{review_comm_quote}}, {{workaround_source}}, {{compliance_clause}}, {{vertical}}, {{eng_lead_name}}, {{ai_lead_name}}, {{ops_lead_name}}, {{product_lead_name}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 — Renting the Layer</strong>
+              <em>Chat Infrastructure Cost Model + migration map</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 — Renting the Layer steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{detected_vendor}} in the {{platform}} build&#10;&#10;Hi {{first_name}},&#10;&#10;I was looking at how {{company}} handles {{party_a}} to {{party_b}} messaging and pulled the {{platform}} build apart. {{detected_vendor}} is in there, with {{rtc_vendor}} handling calling separately.&#10;&#10;But would it be fair to assume the invoice is the part that gets worse as you grow, rather than the product? Overages on MAU, concurrent connections billed on top, and calling on its own line, so the better the feature performs, the more the bill outruns the plan.&#10;&#10;We do chat, voice and video as one thing, with zero overages on Enterprise and no separate calling contract. Unlimited messages, storage and files. No retention tiers, no bandwidth line. And because the UI Kits are prebuilt for {{frameworks}}, moving is a swap at the UI layer rather than a rebuild.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the cost model we built for {{detected_vendor}} customers at your MAU band. Your numbers, their published rates, ours next to it. No call needed.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{detected_vendor}} in the {{platform}} build" data-preview="Sendbird in the Android build">{{detected_vendor}} in the {{platform}} build</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;I was looking at how {{company}} handles {{party_a}} to {{party_b}} messaging and pulled the {{platform}} build apart. {{detected_vendor}} is in there, with {{rtc_vendor}} handling calling separately.&#10;&#10;But would it be fair to assume the invoice is the part that gets worse as you grow, rather than the product? Overages on MAU, concurrent connections billed on top, and calling on its own line, so the better the feature performs, the more the bill outruns the plan.&#10;&#10;We do chat, voice and video as one thing, with zero overages on Enterprise and no separate calling contract. Unlimited messages, storage and files. No retention tiers, no bandwidth line. And because the UI Kits are prebuilt for {{frameworks}}, moving is a swap at the UI layer rather than a rebuild.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the cost model we built for {{detected_vendor}} customers at your MAU band. Your numbers, their published rates, ours next to it. No call needed.&#10;&#10;{{sender}}" data-preview="Hi Priya,&#10;&#10;I was looking at how Northfield Care handles patient to care team messaging and pulled the Android build apart. Sendbird is in there, with Agora handling calling separately.&#10;&#10;But would it be fair to assume the invoice is the part that gets worse as you grow, rather than the product? Overages on MAU, concurrent connections billed on top, and calling on its own line, so the better the feature performs, the more the bill outruns the plan.&#10;&#10;We do chat, voice and video as one thing, with zero overages on Enterprise and no separate calling contract. Unlimited messages, storage and files. No retention tiers, no bandwidth line. And because the UI Kits are prebuilt for React Native and iOS, moving is a swap at the UI layer rather than a rebuild.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the cost model we built for Sendbird customers at your MAU band. Your numbers, their published rates, ours next to it. No call needed.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>I was looking at how {{company}} handles {{party_a}} to {{party_b}} messaging and pulled the {{platform}} build apart. {{detected_vendor}} is in there, with {{rtc_vendor}} handling calling separately.</p><p>But would it be fair to assume the invoice is the part that gets worse as you grow, rather than the product? Overages on MAU, concurrent connections billed on top, and calling on its own line, so the better the feature performs, the more the bill outruns the plan.</p><p>We do chat, voice and video as one thing, with zero overages on Enterprise and no separate calling contract. Unlimited messages, storage and files. No retention tiers, no bandwidth line. And because the UI Kits are prebuilt for {{frameworks}}, moving is a swap at the UI layer rather than a rebuild.</p><p>Reply &quot;Y&quot; and I&#39;ll send the cost model we built for {{detected_vendor}} customers at your MAU band. Your numbers, their published rates, ours next to it. No call needed.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Following up with the version that isn&#39;t about price.&#10;&#10;The thing most teams on {{detected_vendor}} tell us they actually resent isn&#39;t the rate. It&#39;s that calling is a second integration, message history quietly ages out, and support is 8x5 when the incident is at 2am. Ours is one SDK, unlimited retention, 24x5, and onboarding is included rather than an add-on.&#10;&#10;Cost model&#39;s still yours if you want it. Reply &quot;Y&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Following up with the version that isn&#39;t about price.&#10;&#10;The thing most teams on {{detected_vendor}} tell us they actually resent isn&#39;t the rate. It&#39;s that calling is a second integration, message history quietly ages out, and support is 8x5 when the incident is at 2am. Ours is one SDK, unlimited retention, 24x5, and onboarding is included rather than an add-on.&#10;&#10;Cost model&#39;s still yours if you want it. Reply &quot;Y&quot;." data-preview="Following up with the version that isn&#39;t about price.&#10;&#10;The thing most teams on Sendbird tell us they actually resent isn&#39;t the rate. It&#39;s that calling is a second integration, message history quietly ages out, and support is 8x5 when the incident is at 2am. Ours is one SDK, unlimited retention, 24x5, and onboarding is included rather than an add-on.&#10;&#10;Cost model&#39;s still yours if you want it. Reply &quot;Y&quot;.">
+                        <p>Following up with the version that isn&#39;t about price.</p><p>The thing most teams on {{detected_vendor}} tell us they actually resent isn&#39;t the rate. It&#39;s that calling is a second integration, message history quietly ages out, and support is 8x5 when the incident is at 2am. Ours is one SDK, unlimited retention, 24x5, and onboarding is included rather than an add-on.</p><p>Cost model&#39;s still yours if you want it. Reply &quot;Y&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: when&#39;s the renewal?&#10;&#10;{{first_name}} — no call needed on this one. Just reply yes and I&#39;ll send the {{detected_vendor}} cost model and the migration map for {{frameworks}}.&#10;&#10;Worth knowing roughly when your renewal lands, since that&#39;s usually the only date that matters here. Should I send this to you or {{eng_lead_name}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="when&#39;s the renewal?" data-preview="when&#39;s the renewal?">when&#39;s the renewal?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — no call needed on this one. Just reply yes and I&#39;ll send the {{detected_vendor}} cost model and the migration map for {{frameworks}}.&#10;&#10;Worth knowing roughly when your renewal lands, since that&#39;s usually the only date that matters here. Should I send this to you or {{eng_lead_name}}?" data-preview="Priya — no call needed on this one. Just reply yes and I&#39;ll send the Sendbird cost model and the migration map for React Native and iOS.&#10;&#10;Worth knowing roughly when your renewal lands, since that&#39;s usually the only date that matters here. Should I send this to you or Sam?">
+                        <p>{{first_name}} — no call needed on this one. Just reply yes and I&#39;ll send the {{detected_vendor}} cost model and the migration map for {{frameworks}}.</p><p>Worth knowing roughly when your renewal lands, since that&#39;s usually the only date that matters here. Should I send this to you or {{eng_lead_name}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 — The Agent Without a Surface</strong>
+              <em>Agent Surface Gap Audit</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 — The Agent Without a Surface steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the {{agent_name}} launch&#10;&#10;Hi {{first_name}},&#10;&#10;Saw {{company}} shipped {{agent_name}} — {{agent_evidence_phrase}}, {{days_since_ship}} days ago.&#10;&#10;But would it be fair to assume the model was the easy part? That what&#39;s actually eating the roadmap now is streaming with thinking states, citations, retries, what happens when it refuses, moderating what the agent says rather than what users say, and analytics that tell you the resolution rate rather than the token spend.&#10;&#10;That&#39;s the entire product we built. Our Agent Dock plugs your existing agent into a production chat UI, so nothing gets rebuilt. Streaming, rich rendering, voice, inline citations with expandable reasoning, two-way guardrails through a visual policy builder, RBAC, CSAM detection, and analytics on resolution rate, fallback frequency, retries and latency.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the agent surface gap audit. The eleven things between a working agent and a shipped one, scored against what {{agent_name}} does today. Takes me ten minutes, no call.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the {{agent_name}} launch" data-preview="the Northfield Assist launch">the {{agent_name}} launch</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Saw {{company}} shipped {{agent_name}} — {{agent_evidence_phrase}}, {{days_since_ship}} days ago.&#10;&#10;But would it be fair to assume the model was the easy part? That what&#39;s actually eating the roadmap now is streaming with thinking states, citations, retries, what happens when it refuses, moderating what the agent says rather than what users say, and analytics that tell you the resolution rate rather than the token spend.&#10;&#10;That&#39;s the entire product we built. Our Agent Dock plugs your existing agent into a production chat UI, so nothing gets rebuilt. Streaming, rich rendering, voice, inline citations with expandable reasoning, two-way guardrails through a visual policy builder, RBAC, CSAM detection, and analytics on resolution rate, fallback frequency, retries and latency.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the agent surface gap audit. The eleven things between a working agent and a shipped one, scored against what {{agent_name}} does today. Takes me ten minutes, no call.&#10;&#10;{{sender}}" data-preview="Hi Priya,&#10;&#10;Saw Northfield Care shipped Northfield Assist — saw it in your December changelog, 74 days ago.&#10;&#10;But would it be fair to assume the model was the easy part? That what&#39;s actually eating the roadmap now is streaming with thinking states, citations, retries, what happens when it refuses, moderating what the agent says rather than what users say, and analytics that tell you the resolution rate rather than the token spend.&#10;&#10;That&#39;s the entire product we built. Our Agent Dock plugs your existing agent into a production chat UI, so nothing gets rebuilt. Streaming, rich rendering, voice, inline citations with expandable reasoning, two-way guardrails through a visual policy builder, RBAC, CSAM detection, and analytics on resolution rate, fallback frequency, retries and latency.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the agent surface gap audit. The eleven things between a working agent and a shipped one, scored against what Northfield Assist does today. Takes me ten minutes, no call.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>Saw {{company}} shipped {{agent_name}} — {{agent_evidence_phrase}}, {{days_since_ship}} days ago.</p><p>But would it be fair to assume the model was the easy part? That what&#39;s actually eating the roadmap now is streaming with thinking states, citations, retries, what happens when it refuses, moderating what the agent says rather than what users say, and analytics that tell you the resolution rate rather than the token spend.</p><p>That&#39;s the entire product we built. Our Agent Dock plugs your existing agent into a production chat UI, so nothing gets rebuilt. Streaming, rich rendering, voice, inline citations with expandable reasoning, two-way guardrails through a visual policy builder, RBAC, CSAM detection, and analytics on resolution rate, fallback frequency, retries and latency.</p><p>Reply &quot;Y&quot; and I&#39;ll send the agent surface gap audit. The eleven things between a working agent and a shipped one, scored against what {{agent_name}} does today. Takes me ten minutes, no call.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Shorter follow-up, different angle.&#10;&#10;The reason most user-facing agents stay behind a feature flag isn&#39;t quality. It&#39;s that nobody owns what happens when it says something it shouldn&#39;t, to a customer, in writing. Guardrails on the agent&#39;s output, with fallback logic and a policy a non-engineer can edit, is usually the unlock for shipping it to everyone rather than 5%.&#10;&#10;Gap audit&#39;s yours. Reply &quot;Y&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Shorter follow-up, different angle.&#10;&#10;The reason most user-facing agents stay behind a feature flag isn&#39;t quality. It&#39;s that nobody owns what happens when it says something it shouldn&#39;t, to a customer, in writing. Guardrails on the agent&#39;s output, with fallback logic and a policy a non-engineer can edit, is usually the unlock for shipping it to everyone rather than 5%.&#10;&#10;Gap audit&#39;s yours. Reply &quot;Y&quot;." data-preview="Shorter follow-up, different angle.&#10;&#10;The reason most user-facing agents stay behind a feature flag isn&#39;t quality. It&#39;s that nobody owns what happens when it says something it shouldn&#39;t, to a customer, in writing. Guardrails on the agent&#39;s output, with fallback logic and a policy a non-engineer can edit, is usually the unlock for shipping it to everyone rather than 5%.&#10;&#10;Gap audit&#39;s yours. Reply &quot;Y&quot;.">
+                        <p>Shorter follow-up, different angle.</p><p>The reason most user-facing agents stay behind a feature flag isn&#39;t quality. It&#39;s that nobody owns what happens when it says something it shouldn&#39;t, to a customer, in writing. Guardrails on the agent&#39;s output, with fallback logic and a policy a non-engineer can edit, is usually the unlock for shipping it to everyone rather than 5%.</p><p>Gap audit&#39;s yours. Reply &quot;Y&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{agent_name}} — quick one&#10;&#10;{{first_name}} — no need for a call. Reply yes and I&#39;ll send the agent surface gap audit for {{agent_name}}.&#10;&#10;Should that go to you, or is {{ai_lead_name}} the right person for it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{agent_name}} — quick one" data-preview="Northfield Assist — quick one">{{agent_name}} — quick one</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — no need for a call. Reply yes and I&#39;ll send the agent surface gap audit for {{agent_name}}.&#10;&#10;Should that go to you, or is {{ai_lead_name}} the right person for it?" data-preview="Priya — no need for a call. Reply yes and I&#39;ll send the agent surface gap audit for Northfield Assist.&#10;&#10;Should that go to you, or is Dev the right person for it?">
+                        <p>{{first_name}} — no need for a call. Reply yes and I&#39;ll send the agent surface gap audit for {{agent_name}}.</p><p>Should that go to you, or is {{ai_lead_name}} the right person for it?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 — Owning the Layer</strong>
+              <em>Build-vs-Buy Ledger</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 — Owning the Layer steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{homegrown_stack}} + chat&#10;&#10;Hi {{first_name}},&#10;&#10;{{personalisation_line}} — {{homegrown_stack}} doing the real-time work behind {{company}}&#39;s messaging.&#10;&#10;But would it be fair to assume it started as a weekend of WebSockets and now costs you a named engineer? Typing indicators were fine. Then it was offline delivery, push wake-up, reconnection, message ordering, media, moderation, GDPR deletes, a second region. And none of it is on anyone&#39;s roadmap.&#10;&#10;Ours is 7ms median, 99.999% uptime across 35+ edge locations, with moderation, push, email, SMS and analytics already in the platform. And the install is genuinely one command through Claude Code, Cursor or 30+ other coding agents, with prebuilt UI Kits for {{frameworks}}. A working chat surface in an afternoon.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the build-vs-buy ledger for your scale. Engineer-months and runtime cost of owning it, against the list of features you haven&#39;t built yet. No call.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{homegrown_stack}} + chat" data-preview="Firestore + socket.io + chat">{{homegrown_stack}} + chat</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;{{personalisation_line}} — {{homegrown_stack}} doing the real-time work behind {{company}}&#39;s messaging.&#10;&#10;But would it be fair to assume it started as a weekend of WebSockets and now costs you a named engineer? Typing indicators were fine. Then it was offline delivery, push wake-up, reconnection, message ordering, media, moderation, GDPR deletes, a second region. And none of it is on anyone&#39;s roadmap.&#10;&#10;Ours is 7ms median, 99.999% uptime across 35+ edge locations, with moderation, push, email, SMS and analytics already in the platform. And the install is genuinely one command through Claude Code, Cursor or 30+ other coding agents, with prebuilt UI Kits for {{frameworks}}. A working chat surface in an afternoon.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the build-vs-buy ledger for your scale. Engineer-months and runtime cost of owning it, against the list of features you haven&#39;t built yet. No call.&#10;&#10;{{sender}}" data-preview="Hi Priya,&#10;&#10;Read your engineering post on moving the message table off Firestore — Firestore + socket.io doing the real-time work behind Northfield Care&#39;s messaging.&#10;&#10;But would it be fair to assume it started as a weekend of WebSockets and now costs you a named engineer? Typing indicators were fine. Then it was offline delivery, push wake-up, reconnection, message ordering, media, moderation, GDPR deletes, a second region. And none of it is on anyone&#39;s roadmap.&#10;&#10;Ours is 7ms median, 99.999% uptime across 35+ edge locations, with moderation, push, email, SMS and analytics already in the platform. And the install is genuinely one command through Claude Code, Cursor or 30+ other coding agents, with prebuilt UI Kits for React Native and iOS. A working chat surface in an afternoon.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the build-vs-buy ledger for your scale. Engineer-months and runtime cost of owning it, against the list of features you haven&#39;t built yet. No call.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>{{personalisation_line}} — {{homegrown_stack}} doing the real-time work behind {{company}}&#39;s messaging.</p><p>But would it be fair to assume it started as a weekend of WebSockets and now costs you a named engineer? Typing indicators were fine. Then it was offline delivery, push wake-up, reconnection, message ordering, media, moderation, GDPR deletes, a second region. And none of it is on anyone&#39;s roadmap.</p><p>Ours is 7ms median, 99.999% uptime across 35+ edge locations, with moderation, push, email, SMS and analytics already in the platform. And the install is genuinely one command through Claude Code, Cursor or 30+ other coding agents, with prebuilt UI Kits for {{frameworks}}. A working chat surface in an afternoon.</p><p>Reply &quot;Y&quot; and I&#39;ll send the build-vs-buy ledger for your scale. Engineer-months and runtime cost of owning it, against the list of features you haven&#39;t built yet. No call.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One more angle and I&#39;ll leave it.&#10;&#10;Homegrown chat usually doesn&#39;t fail. It just stops growing. Video needs a second vendor, moderation needs a third, and the 99.9% you can honestly claim is a different number from the one your enterprise deals are asking for.&#10;&#10;If it&#39;s easier to judge by looking, one command in a coding agent gets you a working surface without a call or a contract. Ledger&#39;s yours too. Reply &quot;Y&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One more angle and I&#39;ll leave it.&#10;&#10;Homegrown chat usually doesn&#39;t fail. It just stops growing. Video needs a second vendor, moderation needs a third, and the 99.9% you can honestly claim is a different number from the one your enterprise deals are asking for.&#10;&#10;If it&#39;s easier to judge by looking, one command in a coding agent gets you a working surface without a call or a contract. Ledger&#39;s yours too. Reply &quot;Y&quot;." data-preview="One more angle and I&#39;ll leave it.&#10;&#10;Homegrown chat usually doesn&#39;t fail. It just stops growing. Video needs a second vendor, moderation needs a third, and the 99.9% you can honestly claim is a different number from the one your enterprise deals are asking for.&#10;&#10;If it&#39;s easier to judge by looking, one command in a coding agent gets you a working surface without a call or a contract. Ledger&#39;s yours too. Reply &quot;Y&quot;.">
+                        <p>One more angle and I&#39;ll leave it.</p><p>Homegrown chat usually doesn&#39;t fail. It just stops growing. Video needs a second vendor, moderation needs a third, and the 99.9% you can honestly claim is a different number from the one your enterprise deals are asking for.</p><p>If it&#39;s easier to judge by looking, one command in a coding agent gets you a working surface without a call or a contract. Ledger&#39;s yours too. Reply &quot;Y&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: who owns the socket layer?&#10;&#10;{{first_name}} — genuinely just curious who ends up owning the real-time layer at {{company}} these days.&#10;&#10;Either way, no call needed. Reply yes and I&#39;ll send the build-vs-buy ledger. You, or is {{eng_lead_name}} the better person?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="who owns the socket layer?" data-preview="who owns the socket layer?">who owns the socket layer?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — genuinely just curious who ends up owning the real-time layer at {{company}} these days.&#10;&#10;Either way, no call needed. Reply yes and I&#39;ll send the build-vs-buy ledger. You, or is {{eng_lead_name}} the better person?" data-preview="Priya — genuinely just curious who ends up owning the real-time layer at Northfield Care these days.&#10;&#10;Either way, no call needed. Reply yes and I&#39;ll send the build-vs-buy ledger. You, or is Sam the better person?">
+                        <p>{{first_name}} — genuinely just curious who ends up owning the real-time layer at {{company}} these days.</p><p>Either way, no call needed. Reply yes and I&#39;ll send the build-vs-buy ledger. You, or is {{eng_lead_name}} the better person?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 — The Conversation Is Leaking</strong>
+              <em>Conversation Leakage Report</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 — The Conversation Is Leaking steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: what your {{party_a}}s are saying in the reviews&#10;&#10;Hi {{first_name}},&#10;&#10;I pulled the last 12 months of {{company}}&#39;s App Store and Play reviews. {{review_comm_complaint_pct}}% of them are about not being able to reach the other side. One of them, roughly: &quot;{{review_comm_quote}}&quot;.&#10;&#10;But would it be fair to assume those conversations are still happening, just on WhatsApp and personal numbers? Which means no record when a {{dispute_noun}} comes in, no safety layer, no data on the highest-intent moment in the product, and a direct line between {{party_a}} and {{party_b}} that routes around you entirely.&#10;&#10;We build the in-app version of that: 1:1, group, voice and video, with moderation, multi-tenancy and unlimited history, and {{compliance_clause}} where you need it.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the leakage report. Your reviews categorised, the verbatims, and the off-platform workaround {{workaround_source}} currently tells people to use. No call needed.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="what your {{party_a}}s are saying in the reviews" data-preview="what your patients are saying in the reviews">what your {{party_a}}s are saying in the reviews</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;I pulled the last 12 months of {{company}}&#39;s App Store and Play reviews. {{review_comm_complaint_pct}}% of them are about not being able to reach the other side. One of them, roughly: &quot;{{review_comm_quote}}&quot;.&#10;&#10;But would it be fair to assume those conversations are still happening, just on WhatsApp and personal numbers? Which means no record when a {{dispute_noun}} comes in, no safety layer, no data on the highest-intent moment in the product, and a direct line between {{party_a}} and {{party_b}} that routes around you entirely.&#10;&#10;We build the in-app version of that: 1:1, group, voice and video, with moderation, multi-tenancy and unlimited history, and {{compliance_clause}} where you need it.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the leakage report. Your reviews categorised, the verbatims, and the off-platform workaround {{workaround_source}} currently tells people to use. No call needed.&#10;&#10;{{sender}}" data-preview="Hi Priya,&#10;&#10;I pulled the last 12 months of Northfield Care&#39;s App Store and Play reviews. 6.2% of them are about not being able to reach the other side. One of them, roughly: &quot;no way to message the clinic back, I had to give them my personal number&quot;.&#10;&#10;But would it be fair to assume those conversations are still happening, just on WhatsApp and personal numbers? Which means no record when a complaint comes in, no safety layer, no data on the highest-intent moment in the product, and a direct line between patient and care team that routes around you entirely.&#10;&#10;We build the in-app version of that: 1:1, group, voice and video, with moderation, multi-tenancy and unlimited history, and HIPAA with a BAA where you need it.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the leakage report. Your reviews categorised, the verbatims, and the off-platform workaround your help centre currently tells people to use. No call needed.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>I pulled the last 12 months of {{company}}&#39;s App Store and Play reviews. {{review_comm_complaint_pct}}% of them are about not being able to reach the other side. One of them, roughly: &quot;{{review_comm_quote}}&quot;.</p><p>But would it be fair to assume those conversations are still happening, just on WhatsApp and personal numbers? Which means no record when a {{dispute_noun}} comes in, no safety layer, no data on the highest-intent moment in the product, and a direct line between {{party_a}} and {{party_b}} that routes around you entirely.</p><p>We build the in-app version of that: 1:1, group, voice and video, with moderation, multi-tenancy and unlimited history, and {{compliance_clause}} where you need it.</p><p>Reply &quot;Y&quot; and I&#39;ll send the leakage report. Your reviews categorised, the verbatims, and the off-platform workaround {{workaround_source}} currently tells people to use. No call needed.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The commercial version of the last email, since it&#39;s the one that usually lands.&#10;&#10;Every conversation that leaves the platform is a relationship that no longer needs the platform. Once {{party_a}} has {{party_b}}&#39;s number, the second transaction doesn&#39;t have to happen on {{company}}.&#10;&#10;Keeping it in-app is a retention feature that happens to look like a support feature.&#10;&#10;Report&#39;s yours if you want it. Reply &quot;Y&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The commercial version of the last email, since it&#39;s the one that usually lands.&#10;&#10;Every conversation that leaves the platform is a relationship that no longer needs the platform. Once {{party_a}} has {{party_b}}&#39;s number, the second transaction doesn&#39;t have to happen on {{company}}.&#10;&#10;Keeping it in-app is a retention feature that happens to look like a support feature.&#10;&#10;Report&#39;s yours if you want it. Reply &quot;Y&quot;." data-preview="The commercial version of the last email, since it&#39;s the one that usually lands.&#10;&#10;Every conversation that leaves the platform is a relationship that no longer needs the platform. Once patient has care team&#39;s number, the second transaction doesn&#39;t have to happen on Northfield Care.&#10;&#10;Keeping it in-app is a retention feature that happens to look like a support feature.&#10;&#10;Report&#39;s yours if you want it. Reply &quot;Y&quot;.">
+                        <p>The commercial version of the last email, since it&#39;s the one that usually lands.</p><p>Every conversation that leaves the platform is a relationship that no longer needs the platform. Once {{party_a}} has {{party_b}}&#39;s number, the second transaction doesn&#39;t have to happen on {{company}}.</p><p>Keeping it in-app is a retention feature that happens to look like a support feature.</p><p>Report&#39;s yours if you want it. Reply &quot;Y&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: send it over?&#10;&#10;{{first_name}} — no call needed. Reply yes and I&#39;ll send the conversation leakage report for {{company}}. Your own reviews, categorised.&#10;&#10;Should this go to you or {{ops_lead_name}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="send it over?" data-preview="send it over?">send it over?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — no call needed. Reply yes and I&#39;ll send the conversation leakage report for {{company}}. Your own reviews, categorised.&#10;&#10;Should this go to you or {{ops_lead_name}}?" data-preview="Priya — no call needed. Reply yes and I&#39;ll send the conversation leakage report for Northfield Care. Your own reviews, categorised.&#10;&#10;Should this go to you or Maya?">
+                        <p>{{first_name}} — no call needed. Reply yes and I&#39;ll send the conversation leakage report for {{company}}. Your own reviews, categorised.</p><p>Should this go to you or {{ops_lead_name}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 — Multi-Party Product, No Layer</strong>
+              <em>The In-App Communication Benchmark</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 — Multi-Party Product, No Layer steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{party_a}} and {{party_b}}&#10;&#10;Hi {{first_name}},&#10;&#10;{{company}} puts {{party_a}}s and {{party_b}}s in the same product, which is usually the point at which someone asks whether they should be able to talk to each other inside it.&#10;&#10;But would it be fair to assume the answer so far has been &quot;not this quarter&quot;? It&#39;s never the most important thing on the roadmap, and it&#39;s always bigger than it looks once someone scopes it.&#10;&#10;That&#39;s the reason we exist. 113,000+ apps run chat, voice and video on us across 163 countries, with moderation and compliance already handled — ISO, SOC 2, GDPR, {{compliance_clause}}. Free to 100 monthly users with every feature unlocked, so scoping it costs an afternoon rather than a sprint.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the in-app communication benchmark for {{vertical}}. What a shipped conversation layer looks like in 2026, as a checklist you can score yourselves against. No call.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{party_a}} and {{party_b}}" data-preview="patient and care team">{{party_a}} and {{party_b}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;{{company}} puts {{party_a}}s and {{party_b}}s in the same product, which is usually the point at which someone asks whether they should be able to talk to each other inside it.&#10;&#10;But would it be fair to assume the answer so far has been &quot;not this quarter&quot;? It&#39;s never the most important thing on the roadmap, and it&#39;s always bigger than it looks once someone scopes it.&#10;&#10;That&#39;s the reason we exist. 113,000+ apps run chat, voice and video on us across 163 countries, with moderation and compliance already handled — ISO, SOC 2, GDPR, {{compliance_clause}}. Free to 100 monthly users with every feature unlocked, so scoping it costs an afternoon rather than a sprint.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the in-app communication benchmark for {{vertical}}. What a shipped conversation layer looks like in 2026, as a checklist you can score yourselves against. No call.&#10;&#10;{{sender}}" data-preview="Hi Priya,&#10;&#10;Northfield Care puts patients and care teams in the same product, which is usually the point at which someone asks whether they should be able to talk to each other inside it.&#10;&#10;But would it be fair to assume the answer so far has been &quot;not this quarter&quot;? It&#39;s never the most important thing on the roadmap, and it&#39;s always bigger than it looks once someone scopes it.&#10;&#10;That&#39;s the reason we exist. 113,000+ apps run chat, voice and video on us across 163 countries, with moderation and compliance already handled — ISO, SOC 2, GDPR, HIPAA with a BAA. Free to 100 monthly users with every feature unlocked, so scoping it costs an afternoon rather than a sprint.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the in-app communication benchmark for telehealth. What a shipped conversation layer looks like in 2026, as a checklist you can score yourselves against. No call.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>{{company}} puts {{party_a}}s and {{party_b}}s in the same product, which is usually the point at which someone asks whether they should be able to talk to each other inside it.</p><p>But would it be fair to assume the answer so far has been &quot;not this quarter&quot;? It&#39;s never the most important thing on the roadmap, and it&#39;s always bigger than it looks once someone scopes it.</p><p>That&#39;s the reason we exist. 113,000+ apps run chat, voice and video on us across 163 countries, with moderation and compliance already handled — ISO, SOC 2, GDPR, {{compliance_clause}}. Free to 100 monthly users with every feature unlocked, so scoping it costs an afternoon rather than a sprint.</p><p>Reply &quot;Y&quot; and I&#39;ll send the in-app communication benchmark for {{vertical}}. What a shipped conversation layer looks like in 2026, as a checklist you can score yourselves against. No call.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Shorter version.&#10;&#10;The teams that build this themselves almost all say the same thing afterwards: the chat worked in a week, and then it took a quarter. Typing indicators, offline delivery, push, moderation, deletion requests, a second region.&#10;&#10;Prebuilt UI Kits for {{frameworks}}, one command to install. Benchmark&#39;s yours. Reply &quot;Y&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Shorter version.&#10;&#10;The teams that build this themselves almost all say the same thing afterwards: the chat worked in a week, and then it took a quarter. Typing indicators, offline delivery, push, moderation, deletion requests, a second region.&#10;&#10;Prebuilt UI Kits for {{frameworks}}, one command to install. Benchmark&#39;s yours. Reply &quot;Y&quot;." data-preview="Shorter version.&#10;&#10;The teams that build this themselves almost all say the same thing afterwards: the chat worked in a week, and then it took a quarter. Typing indicators, offline delivery, push, moderation, deletion requests, a second region.&#10;&#10;Prebuilt UI Kits for React Native and iOS, one command to install. Benchmark&#39;s yours. Reply &quot;Y&quot;.">
+                        <p>Shorter version.</p><p>The teams that build this themselves almost all say the same thing afterwards: the chat worked in a week, and then it took a quarter. Typing indicators, offline delivery, push, moderation, deletion requests, a second region.</p><p>Prebuilt UI Kits for {{frameworks}}, one command to install. Benchmark&#39;s yours. Reply &quot;Y&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: worth a look?&#10;&#10;{{first_name}} — no need for a call. Just reply yes and I&#39;ll send the {{vertical}} in-app communication benchmark.&#10;&#10;Should I send it to you, or is {{product_lead_name}} the right person?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="worth a look?" data-preview="worth a look?">worth a look?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — no need for a call. Just reply yes and I&#39;ll send the {{vertical}} in-app communication benchmark.&#10;&#10;Should I send it to you, or is {{product_lead_name}} the right person?" data-preview="Priya — no need for a call. Just reply yes and I&#39;ll send the telehealth in-app communication benchmark.&#10;&#10;Should I send it to you, or is Jordan the right person?">
+                        <p>{{first_name}} — no need for a call. Just reply yes and I&#39;ll send the {{vertical}} in-app communication benchmark.</p><p>Should I send it to you, or is {{product_lead_name}} the right person?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="06">
+        
+    <div class="section-head">
+      <p class="eyebrow">06</p>
+      <h2>Sequencing and what good looks like</h2>
+      <p class="takeaway">Tier 1 first for proof, Tier 3 second for volume. The constraint here is sending capacity, not market size — so sequencing is a real decision.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Weeks 1-3 — Launch Tier 1, Renting the Layer. Highest intent, proven budget, cleanest displacement argument, and the vendor-detection line is the most credible first sentence in the strategy. Two proof gaps block it: there&#39;s no published migration-time figure behind &quot;moving is a UI swap, not a rebuild&quot;, and the competitor price comparison needs a dated, captured rate card before it goes into a client-facing cost model. Close both before send one, or run the contract-framing variant only.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Weeks 3-6 — Launch Tier 3, Owning the Layer. The largest sharp tier at roughly 51,000 contacts, and it validates the coding-agent hook, which is the most differentiated thing CometChat owns. Run the chaos test here from day one: maintenance-tax framing against one-command framing.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 6-9 — Launch Tier 4, The Conversation Is Leaking. Needs no new proof asset, because the personalisation is the proof — it&#39;s the prospect&#39;s own users talking. Slot it in as soon as the review-scrape pipeline is stable.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Weeks 9-12 — Launch Tier 2, The Agent Without a Surface. Highest differentiation in the whole strategy, but there&#39;s no named agent-platform customer yet, so the proof beat is empty. Launch when there is one, or when CometChat signs off on a stated estimate. Refresh the trigger monthly — it decays fastest of the five.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Week 12+ — Switch on the Tier 5 catch-all, then layer the side campaigns. The volume engine goes live once the four sharp tiers have shown which framing travels. The one exception: the vendor EOL and repricing campaign runs opportunistically from week one, whenever a competitor announcement fires.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Infrastructure baseline — six to eight sending domains, three mailboxes each, 14-day warmup before first send, 20 to 25 sends per mailbox per day at steady state. Roughly 12,000 to 15,000 sends a month against ~285,000 routed contacts, so list exhaustion is not a risk on any realistic horizon. Sequencing discipline is what determines the outcome.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>Suppression, non-negotiable — every existing CometChat customer, every account where the detected vendor is CometChat, every free-tier signup, all partner and reseller accounts, and all of Germany (UWG section 7 makes unsolicited B2B email unlawful there without prior consent).</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacted</strong>
+                <span>Perfect. Scale the tier and add contacts before touching the copy.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run untouched.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450 to 500</strong>
+                <span>Borderline. Test the second copy variant. Do not rebuild the tier.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or reply rate under 1% after 1,500+ sends</strong>
+                <span>Failing. Cut and rework — the trigger is usually wrong, not the copy.</span>
+              </div>
+              <div class="threshold">
+                <strong>Tier 1 replies that say &quot;we&#39;re locked in until Q2&quot;</strong>
+                <span>Count these. A deferred reply with a date is a qualified pipeline entry, and it won&#39;t show up in a reply-rate dashboard as a win. Without a separate metric, Tier 1 gets cut for the wrong reason.</span>
+              </div>
+              <div class="threshold">
+                <strong>Self-serve signups from Tiers 3, 4 and 5</strong>
+                <span>Instrument them. A meaningful share of these prospects will skip the reply and go straight to the free tier. That&#39;s real revenue attributable to outbound and it is otherwise invisible.</span>
+              </div>
+              <div class="threshold">
+                <strong>Negative sentiment above 0.5% of replies</strong>
+                <span>Pause the tier regardless of reply rate. Engineers are vocal and public about bad outbound. This applies hardest to Tier 3.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Priya","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Northfield Care","Alex","Sendbird","Agora","Android","React Native and iOS","Firestore \\+ socket\\.io","Read your engineering post on moving the message table off Firestore","Northfield Assist","saw it in your December changelog","74","patient","care team","complaint","6\\.2","no way to message the clinic back, I had to give them my personal number","your help centre","HIPAA with a BAA","telehealth","Sam","Dev","Jordan"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
