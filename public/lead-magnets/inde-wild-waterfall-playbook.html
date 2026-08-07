@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>indē wild - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-08</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for indē wild</p>
+          <h1>The indē wild outbound <mark>journey</mark>.</h1>
+          <p class="hero-copy">A partner-led distribution and demand engine for the road from $12M to $20M.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Doors don&#39;t grow revenue, rate of sale does. The gap between $12M and $20M isn&#39;t a fourth marketing channel — it&#39;s a third revenue engine: every shelf that isn&#39;t Sephora, and every professional who already performs the ritual but has nothing to sell the client afterwards.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>112,600</strong>
+          <span>Addressable accounts</span>
+        </div>
+        <div class="metric-card">
+          <strong>6</strong>
+          <span>Campaigns, built once</span>
+        </div>
+        <div class="metric-card">
+          <strong>$0</strong>
+          <span>Enrichment cost for the routing signal</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>indē wild makes Ayurvedistry™ skincare, haircare and lip care. Champi is the #1 selling prestige hair oil on India&#39;s largest beauty retailer, and in March 2026 the brand became the first homegrown Indian beauty brand to launch at Sephora US across 178 doors.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>What they already sell, or already do with their hands</p></div><div><span>02</span><p>One cascade, first match wins</p></div><div><span>03</span><p>Six tiers, from proven buyer to cold shelf</p></div><div><span>04</span><p>What each campaign actually does</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>The signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>The routing</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>The tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>The plays</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>The copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>The rollout</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="The signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">The signal</p>
+      <h2>What they already sell, or already do with their hands</h2>
+      <p class="takeaway">A retailer&#39;s brand index is purchase-history intent sitting in public HTML. No data vendor sells it, and it costs nothing to read.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>Every beauty retailer publishes a Shop by Brand page. If it lists Fable &amp; Mane, Ranavat or Kulfi, that buyer has already spent real money proving the category turns.</p></div><div class="reason-card"><span>02</span><p>That is purchase-history intent. No data vendor sells it, and it cannot be faked or bought around.</p></div><div class="reason-card"><span>03</span><p>The same principle runs down the ladder: a salon&#39;s published service menu on Fresha or Booksy names the ritual they already perform, and a bridal artist&#39;s public work shows what&#39;s already in their kit.</p></div><div class="reason-card"><span>04</span><p>Every field the waterfall routes on is scraped from public HTML or free government data. Enrichment cost is zero, so the unit economics hold at 112,600 accounts.</p></div>
+            </div>
+            <div class="field-cloud"><span>account_type</span><span>door_count</span><span>adjacent_brand_stocked</span><span>hero_category_stocked</span><span>service_menu_keywords</span><span>retail_shelf_present</span><span>sa_index (catchment decile)</span><span>bridal_flag</span><span>follower_count</span><span>contact_role</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>Retailer brand-index scrape</h3><p>The market and the signal in one pull. Every retailer from Ulta down to a single-door apothecary publishes an A-Z brand page — it names exactly which adjacent Ayurvedic and South-Asian-founded brands they already stock.</p></div><div class="source-card"><span>02</span><h3>Google Maps / Places by category × metro</h3><p>Beauty supply, apothecary, day spa, hair salon, threading studio, med spa, Ayurveda clinic and South Asian grocery, with category, review count, website and service keywords.</p></div><div class="source-card"><span>03</span><h3>Booking-platform menu scrape (Fresha, Booksy, Vagaro, StyleSeat, Square)</h3><p>Public service menus naming hair oil treatment, scalp treatment, Indian head massage, champi, abhyanga, shirodhara, bridal hair and South Asian bridal.</p></div><div class="source-card"><span>04</span><h3>US Census ACS / UK ONS / StatCan</h3><p>South Asian population index by postcode. Free, public, and the basis for the catchment decile that routes Tier 3.</p></div><div class="source-card"><span>05</span><h3>Instagram bio and hashtag harvest</h3><p>Bridal and professional artists via #southasianbridal, #indianbridalmakeup and #desibride plus city, with follower count and booking link.</p></div><div class="source-card"><span>06</span><h3>Apollo / LinkedIn Sales Navigator</h3><p>Contact layer only — Buyer, Merchandiser, Category Manager, Head of Buying, Owner — mapped onto accounts the scrapes already produced.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="The routing">
+        
+    <div class="section-head">
+      <p class="eyebrow">The routing</p>
+      <h2>One cascade, first match wins</h2>
+      <p class="takeaway">Every account is tested top-down and routes to exactly one campaign. The final tier catches everything else, so no account in the market is left unaddressed.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF door_count ≥ 10 or account is a distributor, AND the brand index already lists an adjacent Ayurvedic or South-Asian-founded brand</span>
+          <strong>Tier 1 — Proven Category, Missing Brand</strong>
+          <em>They bet on the category and it turned. The shelf has a proven segment with no #1 SKU in it, and their competitor set just got the Sephora-validated one.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF NOT Tier 1, AND the brand index lists an adjacent brand</span>
+          <strong>Tier 2 — Already Sells the Category</strong>
+          <em>They&#39;ve already paid to educate their customer on Ayurvedic haircare and are sending the sell-through to a brand with no clinical file behind it.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF NOT Tier 1 or 2, AND independent retailer / grocery-beauty / wellness clinic, AND no adjacent brand stocked, AND catchment in the top 3 deciles for South Asian population</span>
+          <strong>Tier 3 — Demand Walks Past the Door</strong>
+          <em>The demand is in their postcode and it&#39;s being ordered on Amazon and Nykaa instead of walking into the store.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF NOT Tier 1-3, AND the published service menu names an oil, scalp, champi, abhyanga, shirodhara or bridal-hair service, AND a retail shelf is present</span>
+          <strong>Tier 4 — You Do the Ritual, You Don&#39;t Sell It</strong>
+          <em>They perform the treatment, the client asks what was used, and the answer generates zero revenue. Service margin is capped by chair hours. Retail margin isn&#39;t.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF NOT Tier 1-4, AND the account is a professional or bridal artist</span>
+          <strong>Tier 5 — The Kit Buyer</strong>
+          <em>Buying the kit at full retail, one bride at a time, and posting the results for free.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="5">
+          <span class="route-rule__num">06</span>
+          <span class="route-rule__if">IF Everything else in the beauty and wellness retail universe</span>
+          <strong>Tier 6 — Catch-All: Tester Kit</strong>
+          <em>No signal. Weakest intent, broadest copy, softest ask — a free tester kit with no order attached.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF door_count ≥ 10 or account is a distributor, AND the brand index already lists an adjacent Ayurvedic or South-Asian-founded brand -&gt; Tier 1 — Proven Category, Missing Brand (They bet on the category and it turned. The shelf has a proven segment with no #1 SKU in it, and their competitor set just got the Sephora-validated one.)&#10;2. IF NOT Tier 1, AND the brand index lists an adjacent brand -&gt; Tier 2 — Already Sells the Category (They&#39;ve already paid to educate their customer on Ayurvedic haircare and are sending the sell-through to a brand with no clinical file behind it.)&#10;3. IF NOT Tier 1 or 2, AND independent retailer / grocery-beauty / wellness clinic, AND no adjacent brand stocked, AND catchment in the top 3 deciles for South Asian population -&gt; Tier 3 — Demand Walks Past the Door (The demand is in their postcode and it&#39;s being ordered on Amazon and Nykaa instead of walking into the store.)&#10;4. IF NOT Tier 1-3, AND the published service menu names an oil, scalp, champi, abhyanga, shirodhara or bridal-hair service, AND a retail shelf is present -&gt; Tier 4 — You Do the Ritual, You Don&#39;t Sell It (They perform the treatment, the client asks what was used, and the answer generates zero revenue. Service margin is capped by chair hours. Retail margin isn&#39;t.)&#10;5. IF NOT Tier 1-4, AND the account is a professional or bridal artist -&gt; Tier 5 — The Kit Buyer (Buying the kit at full retail, one bride at a time, and posting the results for free.)&#10;6. IF Everything else in the beauty and wellness retail universe -&gt; Tier 6 — Catch-All: Tester Kit (No signal. Weakest intent, broadest copy, softest ask — a free tester kit with no order attached.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF door_count ≥ 10 or account is a distributor, AND the brand index already lists an adjacent Ayurvedic or South-Asian-founded brand -&gt; Tier 1 — Proven Category, Missing Brand (They bet on the category and it turned. The shelf has a proven segment with no #1 SKU in it, and their competitor set just got the Sephora-validated one.)
+2. IF NOT Tier 1, AND the brand index lists an adjacent brand -&gt; Tier 2 — Already Sells the Category (They&#39;ve already paid to educate their customer on Ayurvedic haircare and are sending the sell-through to a brand with no clinical file behind it.)
+3. IF NOT Tier 1 or 2, AND independent retailer / grocery-beauty / wellness clinic, AND no adjacent brand stocked, AND catchment in the top 3 deciles for South Asian population -&gt; Tier 3 — Demand Walks Past the Door (The demand is in their postcode and it&#39;s being ordered on Amazon and Nykaa instead of walking into the store.)
+4. IF NOT Tier 1-3, AND the published service menu names an oil, scalp, champi, abhyanga, shirodhara or bridal-hair service, AND a retail shelf is present -&gt; Tier 4 — You Do the Ritual, You Don&#39;t Sell It (They perform the treatment, the client asks what was used, and the answer generates zero revenue. Service margin is capped by chair hours. Retail margin isn&#39;t.)
+5. IF NOT Tier 1-4, AND the account is a professional or bridal artist -&gt; Tier 5 — The Kit Buyer (Buying the kit at full retail, one bride at a time, and posting the results for free.)
+6. IF Everything else in the beauty and wellness retail universe -&gt; Tier 6 — Catch-All: Tester Kit (No signal. Weakest intent, broadest copy, softest ask — a free tester kit with no order attached.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="The tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">The tiers</p>
+      <h2>Six tiers, from proven buyer to cold shelf</h2>
+      <p class="takeaway">Each tier&#39;s pain is inferred from its trigger, never invented. If a retailer already stocks Fable &amp; Mane, the pain is a proven category with no #1 SKU in it.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button><button class="chip" type="button" data-filter="tier6">Tier 6</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">0.3% TAM</span>
+          </div>
+          <h3>Tier 1: Proven Category, Missing Brand</h3>
+          <p>Ten or more doors, or a distributor, and the brand index already carries an Ayurvedic or South-Asian-founded brand.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They bet on the category and it turned. Their shelf now has a proven segment with no #1 SKU in it — and their competitor set just got the Sephora-validated one.</dd></div>
+              <div><dt>Offer</dt><dd>Ayurvedic Shelf Report — their catchment demand index, the adjacent brands they already carry, and where the SKU gap sits</dd></div>
+              <div><dt>Source</dt><dd>Retailer brand-index scrape + Apollo buyer titles</dd></div>
+              <div><dt>Reply density</dt><dd>Exempt from reply-rate scoring. ~350 accounts worldwide, run hybrid at 40/month and measured on buyer meetings booked.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-orange" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">2% TAM</span>
+          </div>
+          <h3>Tier 2: Already Sells the Category</h3>
+          <p>Any door count, and the brand index lists an adjacent brand.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They&#39;ve already spent money educating their customer on Ayurvedic haircare, and they&#39;re sending that sell-through to a brand with no clinical file behind it.</dd></div>
+              <div><dt>Offer</dt><dd>Shelf report (lite) plus a tester set</dd></div>
+              <div><dt>Source</dt><dd>Brand-index scrape + Google Maps</dd></div>
+              <div><dt>Reply density</dt><dd>Strong. Warmest scaled tier — the customer is already educated.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">9% TAM</span>
+          </div>
+          <h3>Tier 3: Demand Walks Past the Door</h3>
+          <p>Beauty retail, grocery-beauty or wellness clinic, no adjacent brand stocked, catchment in the top three deciles for South Asian population.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The demand is in their postcode and it&#39;s being ordered on Amazon and Nykaa instead of walking into their store. They&#39;re the only shelf in the neighbourhood not carrying it.</dd></div>
+              <div><dt>Offer</dt><dd>Catchment Demand Snapshot — South Asian population index and category search volume for their five-mile radius</dd></div>
+              <div><dt>Source</dt><dd>Google Maps × ACS / ONS / StatCan catchment index</dd></div>
+              <div><dt>Reply density</dt><dd>Moderate. The snapshot does the persuading — the number is about their street, not our brand.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">19% TAM</span>
+          </div>
+          <h3>Tier 4: You Do the Ritual, You Don&#39;t Sell It</h3>
+          <p>The published service menu contains an oil, scalp, champi, abhyanga, shirodhara or bridal-hair service, and the location has a retail shelf.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They perform the treatment, the client asks what was used on their hair, and the answer generates zero revenue. Service margin is capped by chair hours. Retail margin isn&#39;t.</dd></div>
+              <div><dt>Offer</dt><dd>Treatment-to-Take-Home Calculator — retail attach revenue modelled on their existing service volume</dd></div>
+              <div><dt>Source</dt><dd>Fresha / Booksy / Vagaro / StyleSeat menu scrape</dd></div>
+              <div><dt>Reply density</dt><dd>Highest of the scaled tiers. Shortest distance between trigger and pain — they are literally already performing the treatment.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">30% TAM</span>
+          </div>
+          <h3>Tier 5: The Kit Buyer</h3>
+          <p>Professional or bridal artist, no retail shelf.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Buying the kit at full retail, one bride at a time, and posting the results for free.</dd></div>
+              <div><dt>Offer</dt><dd>Pro Artist Kit application and affiliate terms</dd></div>
+              <div><dt>Source</dt><dd>Instagram bio / hashtag harvest + Google Maps</dd></div>
+              <div><dt>Reply density</dt><dd>High raw reply rate, low revenue per reply. Measure on activated artists × kit reorder rate, not replies.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier6" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">06</span>
+            <span class="tier-share">40% TAM</span>
+          </div>
+          <h3>Tier 6: Catch-All: Tester Kit</h3>
+          <p>Everything remaining in the beauty and wellness retail universe.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>No signal. Weakest intent, broadest copy, softest ask.</dd></div>
+              <div><dt>Offer</dt><dd>Free tester kit, no wholesale commitment</dd></div>
+              <div><dt>Source</dt><dd>All sources, residual</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest. Launches last, only once the copy has been proven upstream.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="The plays">
+        
+    <div class="section-head">
+      <p class="eyebrow">The plays</p>
+      <h2>What each campaign actually does</h2>
+      <p class="takeaway">Same structure across all six. Only the observation and the proof change.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button><button class="chip" type="button" data-filter="tier6">Tier 6</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>The Ayurvedic Shelf Report</h3>
+          <p>The highest-value tier in the strategy and the only one run manually. Judged on buyer meetings booked, not reply rate — at ~350 accounts worldwide it will never produce statistically meaningful reply data, and judging it that way would lead to cutting the best tier.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Multi-door retailers and distributors whose brand A-Z already lists Fable &amp; Mane, Ranavat, Kulfi, Live Tinted, Forest Essentials, Sahajan, Mango People, Prados or Vasa.</dd></div>
+            <div><dt>AI strategy</dt><dd>Scrape the brand index, then build one report per retailer by hand: their catchment demand index, the adjacent brands they already carry, and where the hair-oil facing is missing. Founder-signed email plus a LinkedIn touch on the buyer. Hard-capped at 40 accounts a month so research quality never drops.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>The Oil Next To Theirs</h3>
+          <p>Warmest scaled tier. Runs before Tier 3 specifically so the retail copy is proven on 2,400 accounts before it&#39;s spent on 9,800.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Any retailer, any door count, whose brand index lists an adjacent Ayurvedic or South-Asian-founded brand and no indē wild.</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the adjacent brand in the first line. The observation proves research and the implication does the selling: your customer is already educated on this category, and one brand is answering for the whole hair-oil slot.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Catchment Demand Snapshot</h3>
+          <p>The pitch is leakage: the demand exists in their catchment and is currently being ordered on Amazon and Nykaa. Sweetened with founder-led launch content geotagged to the store.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Independent beauty retail, grocery-beauty and wellness clinics with no adjacent brand on shelf, in the top three deciles for South Asian population.</dd></div>
+            <div><dt>AI strategy</dt><dd>Join Google Maps against free census ancestry tables to produce a per-store demand snapshot for a five-mile radius. The persuasive number is about their street, not the brand — which is why it gets read.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Treatment To Take-Home</h3>
+          <p>Launches first despite not being the highest-value tier. 21,000 accounts, a clean scrapeable signal, and no dependency on a wholesale program existing yet — the fastest possible proof of the whole thesis.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Salons and spas whose published booking-platform menu names an oil, scalp, champi, abhyanga, shirodhara or bridal-hair service, and that sell take-home product.</dd></div>
+            <div><dt>AI strategy</dt><dd>Scrape the service menu and quote their own service name back at them. Then model the retail attach revenue their existing service volume would produce. The calculator is the magnet.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Pro Artist Program</h3>
+          <p>Highest volume and lowest value per win. Cannot launch until the pro artist program actually exists — see the gaps. Measured on activated artists and kit reorder rate.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Bridal and professional makeup and hair artists with no retail shelf, harvested from #southasianbridal, #indianbridalmakeup and #desibride plus city.</dd></div>
+            <div><dt>AI strategy</dt><dd>Open on their actual bridal work, then name the economics they&#39;re living with: kit bought at full retail, content posted for free. Offer kit pricing, seeding and affiliate on posts they were already going to make.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier6" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Tester Kit, No Order</h3>
+          <p>The catch-all exists so no account in the 112,600 is left unaddressed. Launches last, once upstream copy has proven which proof points land.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>All remaining accounts in the beauty and wellness retail universe that matched none of the tiers above.</dd></div>
+            <div><dt>AI strategy</dt><dd>Remove every point of friction. No order, no MOQ, no call — reply with an address and a tester kit ships. The product argues its own case with the strongest single proof point available.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="The copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">The copy</p>
+      <h2>Three touches per tier</h2>
+      <p class="takeaway">Observation, poke, one sentence of value, one named number, and an ask that costs the reader nothing.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{retailer}}</span><span>{{adjacent_brand}}</span><span>{{door_count}}</span><span>{{review_count}}</span><span>{{n}}</span><span>{{city}}</span><span>{{neighbourhood}}</span><span>{{decile}}</span><span>{{service_name}}</span><span>{{business_name}}</span><span>{{observation}}</span><span>{{account_type}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{retailer}}, {{adjacent_brand}}, {{door_count}}, {{review_count}}, {{n}}, {{city}}, {{neighbourhood}}, {{decile}}, {{service_name}}, {{business_name}}, {{observation}}, {{account_type}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 — Proven Category, Missing Brand</strong>
+              <em>Ayurvedic Shelf Report</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 — Proven Category, Missing Brand steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your Ayurvedic set&#10;&#10;Hi {{first_name}} — went through the brand index on {{retailer}} and saw you&#39;re already carrying {{adjacent_brand}} across {{door_count}} doors. Then I checked what&#39;s next to it and there&#39;s no hair oil in the set.&#10;&#10;But would it be fair to assume the Ayurvedic segment is turning better than the shelf space you&#39;ve given it, and the reason you haven&#39;t extended it is that nothing in the category has come with a clinical file attached?&#10;&#10;We&#39;re indē wild. Champi is the #1 selling prestige hair oil on India&#39;s largest beauty retailer, we sell a bottle a minute globally, and in March we became the first homegrown Indian beauty brand to launch at Sephora US — 178 doors.&#10;&#10;The part that matters for you: our founder does $4.1M in annual media impact value to 2.9M followers, and we point that at retail partners&#39; doors, not just our .com.&#10;&#10;I built you an Ayurvedic Shelf Report — your catchment demand index, the adjacent brands you already carry, and where the SKU gap sits. Reply Y and I&#39;ll send it. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your Ayurvedic set" data-preview="your Ayurvedic set">your Ayurvedic set</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}} — went through the brand index on {{retailer}} and saw you&#39;re already carrying {{adjacent_brand}} across {{door_count}} doors. Then I checked what&#39;s next to it and there&#39;s no hair oil in the set.&#10;&#10;But would it be fair to assume the Ayurvedic segment is turning better than the shelf space you&#39;ve given it, and the reason you haven&#39;t extended it is that nothing in the category has come with a clinical file attached?&#10;&#10;We&#39;re indē wild. Champi is the #1 selling prestige hair oil on India&#39;s largest beauty retailer, we sell a bottle a minute globally, and in March we became the first homegrown Indian beauty brand to launch at Sephora US — 178 doors.&#10;&#10;The part that matters for you: our founder does $4.1M in annual media impact value to 2.9M followers, and we point that at retail partners&#39; doors, not just our .com.&#10;&#10;I built you an Ayurvedic Shelf Report — your catchment demand index, the adjacent brands you already carry, and where the SKU gap sits. Reply Y and I&#39;ll send it. No call needed." data-preview="Hi Priya — went through the brand index on Bluemercury and saw you&#39;re already carrying Fable &amp; Mane across 170 doors. Then I checked what&#39;s next to it and there&#39;s no hair oil in the set.&#10;&#10;But would it be fair to assume the Ayurvedic segment is turning better than the shelf space you&#39;ve given it, and the reason you haven&#39;t extended it is that nothing in the category has come with a clinical file attached?&#10;&#10;We&#39;re indē wild. Champi is the #1 selling prestige hair oil on India&#39;s largest beauty retailer, we sell a bottle a minute globally, and in March we became the first homegrown Indian beauty brand to launch at Sephora US — 178 doors.&#10;&#10;The part that matters for you: our founder does $4.1M in annual media impact value to 2.9M followers, and we point that at retail partners&#39; doors, not just our .com.&#10;&#10;I built you an Ayurvedic Shelf Report — your catchment demand index, the adjacent brands you already carry, and where the SKU gap sits. Reply Y and I&#39;ll send it. No call needed.">
+                        <p>Hi {{first_name}} — went through the brand index on {{retailer}} and saw you&#39;re already carrying {{adjacent_brand}} across {{door_count}} doors. Then I checked what&#39;s next to it and there&#39;s no hair oil in the set.</p><p>But would it be fair to assume the Ayurvedic segment is turning better than the shelf space you&#39;ve given it, and the reason you haven&#39;t extended it is that nothing in the category has come with a clinical file attached?</p><p>We&#39;re indē wild. Champi is the #1 selling prestige hair oil on India&#39;s largest beauty retailer, we sell a bottle a minute globally, and in March we became the first homegrown Indian beauty brand to launch at Sephora US — 178 doors.</p><p>The part that matters for you: our founder does $4.1M in annual media impact value to 2.9M followers, and we point that at retail partners&#39; doors, not just our .com.</p><p>I built you an Ayurvedic Shelf Report — your catchment demand index, the adjacent brands you already carry, and where the SKU gap sits. Reply Y and I&#39;ll send it. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Following up with the de-risked version, {{first_name}}.&#10;&#10;You don&#39;t have to take a category bet on us. 100% of subjects saw 50% less hair fall in 28 days under dermatological supervision, we&#39;re 4.7 stars across {{review_count}} reviews, and Unilever Ventures led our last round specifically to fund retail expansion.&#10;&#10;Happy to start you on a single-SKU test in your top {{n}} doors and let rate-of-sale make the argument.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Following up with the de-risked version, {{first_name}}.&#10;&#10;You don&#39;t have to take a category bet on us. 100% of subjects saw 50% less hair fall in 28 days under dermatological supervision, we&#39;re 4.7 stars across {{review_count}} reviews, and Unilever Ventures led our last round specifically to fund retail expansion.&#10;&#10;Happy to start you on a single-SKU test in your top {{n}} doors and let rate-of-sale make the argument." data-preview="Following up with the de-risked version, Priya.&#10;&#10;You don&#39;t have to take a category bet on us. 100% of subjects saw 50% less hair fall in 28 days under dermatological supervision, we&#39;re 4.7 stars across 424 reviews, and Unilever Ventures led our last round specifically to fund retail expansion.&#10;&#10;Happy to start you on a single-SKU test in your top 20 doors and let rate-of-sale make the argument.">
+                        <p>Following up with the de-risked version, {{first_name}}.</p><p>You don&#39;t have to take a category bet on us. 100% of subjects saw 50% less hair fall in 28 days under dermatological supervision, we&#39;re 4.7 stars across {{review_count}} reviews, and Unilever Ventures led our last round specifically to fund retail expansion.</p><p>Happy to start you on a single-SKU test in your top {{n}} doors and let rate-of-sale make the argument.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: shelf report for {{retailer}}&#10;&#10;{{first_name}} — no need for a call. Just reply yes and I&#39;ll send the Ayurvedic Shelf Report for {{retailer}}.&#10;&#10;Should I send this to you or to whoever owns haircare buying?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="shelf report for {{retailer}}" data-preview="shelf report for Bluemercury">shelf report for {{retailer}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — no need for a call. Just reply yes and I&#39;ll send the Ayurvedic Shelf Report for {{retailer}}.&#10;&#10;Should I send this to you or to whoever owns haircare buying?" data-preview="Priya — no need for a call. Just reply yes and I&#39;ll send the Ayurvedic Shelf Report for Bluemercury.&#10;&#10;Should I send this to you or to whoever owns haircare buying?">
+                        <p>{{first_name}} — no need for a call. Just reply yes and I&#39;ll send the Ayurvedic Shelf Report for {{retailer}}.</p><p>Should I send this to you or to whoever owns haircare buying?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 — Already Sells the Category</strong>
+              <em>Shelf report (lite) + tester set</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 — Already Sells the Category steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the oil next to {{adjacent_brand}}&#10;&#10;Hi {{first_name}} — saw {{adjacent_brand}} on your shelf. That tells me your customer already understands Ayurvedic haircare, which most stores are still explaining from scratch.&#10;&#10;But would it be fair to assume the hair oil slot is the one doing the volume, and you&#39;ve only got one brand answering for it?&#10;&#10;We&#39;re indē wild — Champi sells a bottle a minute globally and just launched into 178 Sephora US doors. It&#39;s the same customer you&#39;ve already educated, with a derm-supervised clinical file behind it: 100% saw 50% less hair fall in 28 days.&#10;&#10;I put together a short shelf report on what you&#39;re carrying and where the gap is. Reply Y and I&#39;ll send it over.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the oil next to {{adjacent_brand}}" data-preview="the oil next to Fable &amp; Mane">the oil next to {{adjacent_brand}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}} — saw {{adjacent_brand}} on your shelf. That tells me your customer already understands Ayurvedic haircare, which most stores are still explaining from scratch.&#10;&#10;But would it be fair to assume the hair oil slot is the one doing the volume, and you&#39;ve only got one brand answering for it?&#10;&#10;We&#39;re indē wild — Champi sells a bottle a minute globally and just launched into 178 Sephora US doors. It&#39;s the same customer you&#39;ve already educated, with a derm-supervised clinical file behind it: 100% saw 50% less hair fall in 28 days.&#10;&#10;I put together a short shelf report on what you&#39;re carrying and where the gap is. Reply Y and I&#39;ll send it over." data-preview="Hi Priya — saw Fable &amp; Mane on your shelf. That tells me your customer already understands Ayurvedic haircare, which most stores are still explaining from scratch.&#10;&#10;But would it be fair to assume the hair oil slot is the one doing the volume, and you&#39;ve only got one brand answering for it?&#10;&#10;We&#39;re indē wild — Champi sells a bottle a minute globally and just launched into 178 Sephora US doors. It&#39;s the same customer you&#39;ve already educated, with a derm-supervised clinical file behind it: 100% saw 50% less hair fall in 28 days.&#10;&#10;I put together a short shelf report on what you&#39;re carrying and where the gap is. Reply Y and I&#39;ll send it over.">
+                        <p>Hi {{first_name}} — saw {{adjacent_brand}} on your shelf. That tells me your customer already understands Ayurvedic haircare, which most stores are still explaining from scratch.</p><p>But would it be fair to assume the hair oil slot is the one doing the volume, and you&#39;ve only got one brand answering for it?</p><p>We&#39;re indē wild — Champi sells a bottle a minute globally and just launched into 178 Sephora US doors. It&#39;s the same customer you&#39;ve already educated, with a derm-supervised clinical file behind it: 100% saw 50% less hair fall in 28 days.</p><p>I put together a short shelf report on what you&#39;re carrying and where the gap is. Reply Y and I&#39;ll send it over.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Different angle, {{first_name}} — the money one.&#10;&#10;We do a low-MOQ launch pack so this isn&#39;t a working-capital decision. You&#39;re testing one facing, not committing a category.&#10;&#10;$12M ARR last year growing 677% quarter over quarter, and Unilever Ventures funded the retail expansion. Want the wholesale sheet?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Different angle, {{first_name}} — the money one.&#10;&#10;We do a low-MOQ launch pack so this isn&#39;t a working-capital decision. You&#39;re testing one facing, not committing a category.&#10;&#10;$12M ARR last year growing 677% quarter over quarter, and Unilever Ventures funded the retail expansion. Want the wholesale sheet?" data-preview="Different angle, Priya — the money one.&#10;&#10;We do a low-MOQ launch pack so this isn&#39;t a working-capital decision. You&#39;re testing one facing, not committing a category.&#10;&#10;$12M ARR last year growing 677% quarter over quarter, and Unilever Ventures funded the retail expansion. Want the wholesale sheet?">
+                        <p>Different angle, {{first_name}} — the money one.</p><p>We do a low-MOQ launch pack so this isn&#39;t a working-capital decision. You&#39;re testing one facing, not committing a category.</p><p>$12M ARR last year growing 677% quarter over quarter, and Unilever Ventures funded the retail expansion. Want the wholesale sheet?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: quick one&#10;&#10;No need for a call — just reply yes and I&#39;ll send the wholesale sheet and a tester set.&#10;&#10;Should that come to you or whoever handles buying?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="quick one" data-preview="quick one">quick one</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No need for a call — just reply yes and I&#39;ll send the wholesale sheet and a tester set.&#10;&#10;Should that come to you or whoever handles buying?" data-preview="No need for a call — just reply yes and I&#39;ll send the wholesale sheet and a tester set.&#10;&#10;Should that come to you or whoever handles buying?">
+                        <p>No need for a call — just reply yes and I&#39;ll send the wholesale sheet and a tester set.</p><p>Should that come to you or whoever handles buying?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 — Demand Walks Past the Door</strong>
+              <em>Catchment Demand Snapshot</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 — Demand Walks Past the Door steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{city}} + Ayurvedic haircare&#10;&#10;Hi {{first_name}} — {{neighbourhood}} sits in the top {{decile}} of the country for South Asian population, and I went through your shelf and couldn&#39;t find an Ayurvedic hair or scalp line on it.&#10;&#10;But would it be fair to assume that demand isn&#39;t disappearing — it&#39;s just being ordered on Amazon instead of walking into your store?&#10;&#10;We&#39;re indē wild. Champi is the #1 prestige hair oil on India&#39;s biggest beauty retailer, and in March we became the first homegrown Indian brand at Sephora US.&#10;&#10;I pulled a catchment demand snapshot for your 5-mile radius — population index and local search volume for the category. Reply Y and I&#39;ll send it.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{city}} + Ayurvedic haircare" data-preview="Edison, NJ + Ayurvedic haircare">{{city}} + Ayurvedic haircare</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}} — {{neighbourhood}} sits in the top {{decile}} of the country for South Asian population, and I went through your shelf and couldn&#39;t find an Ayurvedic hair or scalp line on it.&#10;&#10;But would it be fair to assume that demand isn&#39;t disappearing — it&#39;s just being ordered on Amazon instead of walking into your store?&#10;&#10;We&#39;re indē wild. Champi is the #1 prestige hair oil on India&#39;s biggest beauty retailer, and in March we became the first homegrown Indian brand at Sephora US.&#10;&#10;I pulled a catchment demand snapshot for your 5-mile radius — population index and local search volume for the category. Reply Y and I&#39;ll send it." data-preview="Hi Priya — Oak Tree Road sits in the top 1% of the country for South Asian population, and I went through your shelf and couldn&#39;t find an Ayurvedic hair or scalp line on it.&#10;&#10;But would it be fair to assume that demand isn&#39;t disappearing — it&#39;s just being ordered on Amazon instead of walking into your store?&#10;&#10;We&#39;re indē wild. Champi is the #1 prestige hair oil on India&#39;s biggest beauty retailer, and in March we became the first homegrown Indian brand at Sephora US.&#10;&#10;I pulled a catchment demand snapshot for your 5-mile radius — population index and local search volume for the category. Reply Y and I&#39;ll send it.">
+                        <p>Hi {{first_name}} — {{neighbourhood}} sits in the top {{decile}} of the country for South Asian population, and I went through your shelf and couldn&#39;t find an Ayurvedic hair or scalp line on it.</p><p>But would it be fair to assume that demand isn&#39;t disappearing — it&#39;s just being ordered on Amazon instead of walking into your store?</p><p>We&#39;re indē wild. Champi is the #1 prestige hair oil on India&#39;s biggest beauty retailer, and in March we became the first homegrown Indian brand at Sephora US.</p><p>I pulled a catchment demand snapshot for your 5-mile radius — population index and local search volume for the category. Reply Y and I&#39;ll send it.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}} — the version where you don&#39;t carry the risk.&#10;&#10;Category-entry pack: three facings, hero oil plus lip plus serum. And when a partner opens, our founder&#39;s audience — 2.9M, $4.1M media impact value in 2025 — gets pointed at the store, geotagged.&#10;&#10;You&#39;d be the only shelf in {{neighbourhood}} carrying it.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — the version where you don&#39;t carry the risk.&#10;&#10;Category-entry pack: three facings, hero oil plus lip plus serum. And when a partner opens, our founder&#39;s audience — 2.9M, $4.1M media impact value in 2025 — gets pointed at the store, geotagged.&#10;&#10;You&#39;d be the only shelf in {{neighbourhood}} carrying it." data-preview="Priya — the version where you don&#39;t carry the risk.&#10;&#10;Category-entry pack: three facings, hero oil plus lip plus serum. And when a partner opens, our founder&#39;s audience — 2.9M, $4.1M media impact value in 2025 — gets pointed at the store, geotagged.&#10;&#10;You&#39;d be the only shelf in Oak Tree Road carrying it.">
+                        <p>{{first_name}} — the version where you don&#39;t carry the risk.</p><p>Category-entry pack: three facings, hero oil plus lip plus serum. And when a partner opens, our founder&#39;s audience — 2.9M, $4.1M media impact value in 2025 — gets pointed at the store, geotagged.</p><p>You&#39;d be the only shelf in {{neighbourhood}} carrying it.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: demand snapshot for {{city}}&#10;&#10;No call needed. Reply yes and I&#39;ll send the catchment snapshot for {{city}}.&#10;&#10;Should I send it to you or to whoever picks the brands?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="demand snapshot for {{city}}" data-preview="demand snapshot for Edison, NJ">demand snapshot for {{city}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed. Reply yes and I&#39;ll send the catchment snapshot for {{city}}.&#10;&#10;Should I send it to you or to whoever picks the brands?" data-preview="No call needed. Reply yes and I&#39;ll send the catchment snapshot for Edison, NJ.&#10;&#10;Should I send it to you or to whoever picks the brands?">
+                        <p>No call needed. Reply yes and I&#39;ll send the catchment snapshot for {{city}}.</p><p>Should I send it to you or to whoever picks the brands?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 — You Do the Ritual, You Don&#39;t Sell It</strong>
+              <em>Treatment-to-Take-Home Calculator</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 — You Do the Ritual, You Don&#39;t Sell It steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your {{service_name}}&#10;&#10;Hi {{first_name}} — saw {{service_name}} on your menu at {{business_name}}. You&#39;re already doing the treatment.&#10;&#10;But would it be fair to assume that when a client asks &quot;what did you use on my hair?&quot;, the answer doesn&#39;t make you any money?&#10;&#10;We&#39;re indē wild. Champi is the take-home version of the ritual you already perform — 100% of subjects saw 50% less hair fall in 28 days, and we sell a bottle a minute globally. Backbar pricing plus retail margin.&#10;&#10;I ran the numbers on what retail attach would add to your existing service volume. Reply Y and I&#39;ll send the calculator. No call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your {{service_name}}" data-preview="your Indian Head Massage">your {{service_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}} — saw {{service_name}} on your menu at {{business_name}}. You&#39;re already doing the treatment.&#10;&#10;But would it be fair to assume that when a client asks &quot;what did you use on my hair?&quot;, the answer doesn&#39;t make you any money?&#10;&#10;We&#39;re indē wild. Champi is the take-home version of the ritual you already perform — 100% of subjects saw 50% less hair fall in 28 days, and we sell a bottle a minute globally. Backbar pricing plus retail margin.&#10;&#10;I ran the numbers on what retail attach would add to your existing service volume. Reply Y and I&#39;ll send the calculator. No call." data-preview="Hi Priya — saw Indian Head Massage on your menu at Lotus Hair Studio. You&#39;re already doing the treatment.&#10;&#10;But would it be fair to assume that when a client asks &quot;what did you use on my hair?&quot;, the answer doesn&#39;t make you any money?&#10;&#10;We&#39;re indē wild. Champi is the take-home version of the ritual you already perform — 100% of subjects saw 50% less hair fall in 28 days, and we sell a bottle a minute globally. Backbar pricing plus retail margin.&#10;&#10;I ran the numbers on what retail attach would add to your existing service volume. Reply Y and I&#39;ll send the calculator. No call.">
+                        <p>Hi {{first_name}} — saw {{service_name}} on your menu at {{business_name}}. You&#39;re already doing the treatment.</p><p>But would it be fair to assume that when a client asks &quot;what did you use on my hair?&quot;, the answer doesn&#39;t make you any money?</p><p>We&#39;re indē wild. Champi is the take-home version of the ritual you already perform — 100% of subjects saw 50% less hair fall in 28 days, and we sell a bottle a minute globally. Backbar pricing plus retail margin.</p><p>I ran the numbers on what retail attach would add to your existing service volume. Reply Y and I&#39;ll send the calculator. No call.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}} — the ceiling problem.&#10;&#10;Service revenue is capped by chair hours. Retail isn&#39;t. One shelf behind the desk, one SKU your clients already asked about.&#10;&#10;We just launched into 178 Sephora US doors, so your clients will start recognising it whether or not you&#39;re the one selling it.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — the ceiling problem.&#10;&#10;Service revenue is capped by chair hours. Retail isn&#39;t. One shelf behind the desk, one SKU your clients already asked about.&#10;&#10;We just launched into 178 Sephora US doors, so your clients will start recognising it whether or not you&#39;re the one selling it." data-preview="Priya — the ceiling problem.&#10;&#10;Service revenue is capped by chair hours. Retail isn&#39;t. One shelf behind the desk, one SKU your clients already asked about.&#10;&#10;We just launched into 178 Sephora US doors, so your clients will start recognising it whether or not you&#39;re the one selling it.">
+                        <p>{{first_name}} — the ceiling problem.</p><p>Service revenue is capped by chair hours. Retail isn&#39;t. One shelf behind the desk, one SKU your clients already asked about.</p><p>We just launched into 178 Sephora US doors, so your clients will start recognising it whether or not you&#39;re the one selling it.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: take-home calculator&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the treatment-to-take-home calculator for {{business_name}}.&#10;&#10;Should I send it to you or to whoever runs retail there?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="take-home calculator" data-preview="take-home calculator">take-home calculator</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No need for a call. Just reply yes and I&#39;ll send the treatment-to-take-home calculator for {{business_name}}.&#10;&#10;Should I send it to you or to whoever runs retail there?" data-preview="No need for a call. Just reply yes and I&#39;ll send the treatment-to-take-home calculator for Lotus Hair Studio.&#10;&#10;Should I send it to you or to whoever runs retail there?">
+                        <p>No need for a call. Just reply yes and I&#39;ll send the treatment-to-take-home calculator for {{business_name}}.</p><p>Should I send it to you or to whoever runs retail there?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 — The Kit Buyer</strong>
+              <em>Pro Artist Kit + affiliate terms</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 — The Kit Buyer steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your bridal kit&#10;&#10;Hi {{first_name}} — been through your bridal work. {{observation}}.&#10;&#10;But would it be fair to assume you&#39;re buying your kit at full retail, one bride at a time, and posting the results for free?&#10;&#10;We&#39;re indē wild — first homegrown Indian beauty brand at Sephora US. Our Dewy Lip and Champi are already kit staples for South Asian bridal.&#10;&#10;We&#39;re opening a pro artist program: kit pricing, seeding, and affiliate on the content you&#39;re already making. Reply Y and I&#39;ll send the terms.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your bridal kit" data-preview="your bridal kit">your bridal kit</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}} — been through your bridal work. {{observation}}.&#10;&#10;But would it be fair to assume you&#39;re buying your kit at full retail, one bride at a time, and posting the results for free?&#10;&#10;We&#39;re indē wild — first homegrown Indian beauty brand at Sephora US. Our Dewy Lip and Champi are already kit staples for South Asian bridal.&#10;&#10;We&#39;re opening a pro artist program: kit pricing, seeding, and affiliate on the content you&#39;re already making. Reply Y and I&#39;ll send the terms." data-preview="Hi Priya — been through your bridal work. the Sangeet set you posted last month.&#10;&#10;But would it be fair to assume you&#39;re buying your kit at full retail, one bride at a time, and posting the results for free?&#10;&#10;We&#39;re indē wild — first homegrown Indian beauty brand at Sephora US. Our Dewy Lip and Champi are already kit staples for South Asian bridal.&#10;&#10;We&#39;re opening a pro artist program: kit pricing, seeding, and affiliate on the content you&#39;re already making. Reply Y and I&#39;ll send the terms.">
+                        <p>Hi {{first_name}} — been through your bridal work. {{observation}}.</p><p>But would it be fair to assume you&#39;re buying your kit at full retail, one bride at a time, and posting the results for free?</p><p>We&#39;re indē wild — first homegrown Indian beauty brand at Sephora US. Our Dewy Lip and Champi are already kit staples for South Asian bridal.</p><p>We&#39;re opening a pro artist program: kit pricing, seeding, and affiliate on the content you&#39;re already making. Reply Y and I&#39;ll send the terms.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}} — short version: you get the kit at pro pricing, and you get paid on the posts you were going to make anyway.&#10;&#10;Want me to send the application?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — short version: you get the kit at pro pricing, and you get paid on the posts you were going to make anyway.&#10;&#10;Want me to send the application?" data-preview="Priya — short version: you get the kit at pro pricing, and you get paid on the posts you were going to make anyway.&#10;&#10;Want me to send the application?">
+                        <p>{{first_name}} — short version: you get the kit at pro pricing, and you get paid on the posts you were going to make anyway.</p><p>Want me to send the application?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: pro artist program&#10;&#10;No call needed. Reply yes and I&#39;ll send the pro artist terms.&#10;&#10;Should I send them here or to your booking email?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="pro artist program" data-preview="pro artist program">pro artist program</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed. Reply yes and I&#39;ll send the pro artist terms.&#10;&#10;Should I send them here or to your booking email?" data-preview="No call needed. Reply yes and I&#39;ll send the pro artist terms.&#10;&#10;Should I send them here or to your booking email?">
+                        <p>No call needed. Reply yes and I&#39;ll send the pro artist terms.</p><p>Should I send them here or to your booking email?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 6 — Catch-All: Tester Kit</strong>
+              <em>Free tester kit, no MOQ</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 6 — Catch-All: Tester Kit steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: tester kit, no order&#10;&#10;Hi {{first_name}} — we&#39;re indē wild. In March we became the first homegrown Indian beauty brand to launch at Sephora US, 178 doors.&#10;&#10;Not asking you to place an order. We&#39;re sending tester kits to {{account_type}} in {{city}} so the product can make its own case — Champi sells a bottle a minute globally and 100% of clinical subjects saw 50% less hair fall in 28 days.&#10;&#10;Reply Y with an address and I&#39;ll get one out. No wholesale commitment.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="tester kit, no order" data-preview="tester kit, no order">tester kit, no order</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}} — we&#39;re indē wild. In March we became the first homegrown Indian beauty brand to launch at Sephora US, 178 doors.&#10;&#10;Not asking you to place an order. We&#39;re sending tester kits to {{account_type}} in {{city}} so the product can make its own case — Champi sells a bottle a minute globally and 100% of clinical subjects saw 50% less hair fall in 28 days.&#10;&#10;Reply Y with an address and I&#39;ll get one out. No wholesale commitment." data-preview="Hi Priya — we&#39;re indē wild. In March we became the first homegrown Indian beauty brand to launch at Sephora US, 178 doors.&#10;&#10;Not asking you to place an order. We&#39;re sending tester kits to salons in Edison, NJ so the product can make its own case — Champi sells a bottle a minute globally and 100% of clinical subjects saw 50% less hair fall in 28 days.&#10;&#10;Reply Y with an address and I&#39;ll get one out. No wholesale commitment.">
+                        <p>Hi {{first_name}} — we&#39;re indē wild. In March we became the first homegrown Indian beauty brand to launch at Sephora US, 178 doors.</p><p>Not asking you to place an order. We&#39;re sending tester kits to {{account_type}} in {{city}} so the product can make its own case — Champi sells a bottle a minute globally and 100% of clinical subjects saw 50% less hair fall in 28 days.</p><p>Reply Y with an address and I&#39;ll get one out. No wholesale commitment.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}} — still happy to send the kit. Free, no order, no call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — still happy to send the kit. Free, no order, no call." data-preview="Priya — still happy to send the kit. Free, no order, no call.">
+                        <p>{{first_name}} — still happy to send the kit. Free, no order, no call.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: tester kit&#10;&#10;Reply yes with a shipping address and it&#39;s on the way.&#10;&#10;Should I send it to you or someone else there?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="tester kit" data-preview="tester kit">tester kit</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Reply yes with a shipping address and it&#39;s on the way.&#10;&#10;Should I send it to you or someone else there?" data-preview="Reply yes with a shipping address and it&#39;s on the way.&#10;&#10;Should I send it to you or someone else there?">
+                        <p>Reply yes with a shipping address and it&#39;s on the way.</p><p>Should I send it to you or someone else there?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="The rollout">
+        
+    <div class="section-head">
+      <p class="eyebrow">The rollout</p>
+      <h2>Learn on the cheap tier, spend on the expensive one</h2>
+      <p class="takeaway">Tier 4 launches first — 21,000 accounts and no dependency on a wholesale program existing yet. Tier 1 is the most valuable and runs manually, capped at 40 accounts a month.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Weeks 1-3 — Launch Tier 4 (You Do the Ritual). Counter-intuitive but correct: 21,000 accounts, a clean scrapeable signal, and the shortest distance between trigger and pain. It&#39;s also the only major tier that doesn&#39;t depend on a wholesale program existing yet.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Weeks 2-5 — Run Tier 1 in parallel, hybrid and manual, capped at 40 accounts a month. Founder-signed email, hand-built Shelf Report, LinkedIn touch on the buyer. Highest revenue per win, so it should never absorb unproven copy.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 4-7 — Launch Tier 2, then Tier 3. Tier 2 first because it&#39;s smaller and warmer: prove the retail copy on 2,400 accounts before spending Tier 3&#39;s 9,800 on it.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Weeks 7-10 — Launch Tier 5 (The Kit Buyer). Highest volume, lowest value per win. Blocked until the pro artist program actually exists.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Week 10 onward — Launch Tier 6, the catch-all. Only spend the remaining 45,000 accounts once the copy has been proven upstream.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Before anything ships: build a one-page wholesale sheet and a one-page pro artist program. These are operational gaps, not copy gaps, and they gate roughly 60% of the addressable market.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacted</strong>
+                <span>Excellent. Scale the tier and add leads aggressively.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run unchanged.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450-500</strong>
+                <span>Borderline. Test a copy variant before adding volume.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or under 1% reply rate after 1,500 sends</strong>
+                <span>Failing. Cut the tier and rework the angle.</span>
+              </div>
+              <div class="threshold">
+                <strong>Tier 1 (any rate)</strong>
+                <span>Exempt. At ~350 accounts worldwide it will never produce meaningful reply data. Measure on buyer meetings booked instead.</span>
+              </div>
+              <div class="threshold">
+                <strong>Tier 5 (any rate)</strong>
+                <span>Exempt. High reply rate, low revenue per reply. Measure on activated artists × kit reorder rate.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Priya","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Bluemercury","Fable & Mane","170","424","20","Edison, NJ","Oak Tree Road","1%","Indian Head Massage","Lotus Hair Studio","the Sangeet set you posted last month","salons"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
