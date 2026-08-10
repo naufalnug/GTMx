@@ -1,0 +1,1771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShipCube - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-11</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for ShipCube</p>
+          <h1>The ShipCube waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">One observable signal routes every US ecommerce brand into exactly one campaign — and keeps routing them for years.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Almost every 3PL can pick and pack a box in America. Very few can put your inventory on a shelf in Dubai, Riyadh and Amsterdam under the same agreement, in under two weeks, with no minimum and no contract. That gap is the entire strategy — every tier below is a different distance from it.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a 20-minute walkthrough</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>~50,000</strong>
+          <span>Contactable US brands in the routed TAM</span>
+        </div>
+        <div class="metric-card">
+          <strong>11 days</strong>
+          <span>To add a new market on the existing agreement</span>
+        </div>
+        <div class="metric-card">
+          <strong>5 tiers</strong>
+          <span>One cascade, 100% market coverage</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>AI-native cross-border 3PL. Four US facilities plus Dubai, Riyadh, Amsterdam and New Delhi on one agreement. 12-day onboarding, no minimums, month-to-month, 99% order accuracy.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal</p></div><div><span>02</span><p>The routing</p></div><div><span>03</span><p>The five tiers</p></div><div><span>04</span><p>The campaigns</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>01</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>02</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>03</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>04</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>05</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>06</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="01">
+        
+    <div class="section-head">
+      <p class="eyebrow">01</p>
+      <h2>The signal</h2>
+      <p class="takeaway">Fulfilment and market posture. Every physical-goods brand publicly answers where it ships to and where it ships from. Cross those two and you get an ordered ladder of how far a brand has travelled from garage-packing to multi-node distribution — and exactly where it is stuck.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>It is free to read. The country selector, the shipping policy, the checkout rate response, the customs record and the job board are all public.</p></div><div class="reason-card"><span>02</span><p>It cannot be faked. A brand either ships to the UAE or it does not, and a bill of lading either names a 3PL or names the brand&#39;s own dock.</p></div><div class="reason-card"><span>03</span><p>It changes slowly. Fulfilment posture moves once or twice a year, so a list built this quarter is still accurate next quarter.</p></div><div class="reason-card"><span>04</span><p>It maps one-to-one onto what ShipCube actually sells. Every rung on the ladder has a matching capability, so no tier requires an invented promise.</p></div>
+            </div>
+            <div class="field-cloud"><span>crossborder_app_detected</span><span>localized_market_present</span><span>ships_to_ae</span><span>ships_to_sa</span><span>ships_to_nl</span><span>intl_rate_usd</span><span>intl_transit_promise</span><span>gcc_reseller_listing</span><span>social_demand_quotes</span><span>incumbent_3pl</span><span>container_cadence</span><span>fulfilment_job_posted</span><span>ships_from_own_address</span><span>est_monthly_orders</span><span>category</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>Store Leads / BuiltWith Shopify index</h3><p>The base universe. Filtered to US, physical goods, estimated revenue above $1M — roughly 1,000 orders a month, ShipCube&#39;s practical floor. Also delivers the tech-stack detections that drive Tier 1.</p></div><div class="source-card"><span>02</span><h3>Storefront page-source scrape</h3><p>Homepage plus the shipping and refund policy pages. Reveals cross-border checkout JavaScript (Global-e, Zonos, Passport, ESW, Reach, Flow), the country and currency selector contents, transit-time promises, and any ships-from copy.</p></div><div class="source-card"><span>03</span><h3>Shopify shipping-rate probe</h3><p>A direct rate request against AE, SA, NL, DE and GB. Gives a definitive answer to whether the store ships to a market and what it charges — the exact number that opens the Tier 1 email.</p></div><div class="source-card"><span>04</span><h3>US bill-of-lading records (ImportYeti)</h3><p>The unbuyable one. Consignee and notify party on inbound containers reveal whether freight lands at the brand&#39;s own address (self-fulfilling) or at a named 3PL&#39;s dock (incumbent identified by name), plus container cadence as a volume proxy. Free, from a US federal disclosure.</p></div><div class="source-card"><span>05</span><h3>Job boards</h3><p>Careers page, LinkedIn Jobs and Indeed, keyword-matched for warehouse associate, fulfilment, pick pack, shipping coordinator, logistics manager and 3PL. Confirms in-house fulfilment and signals scale-up intent.</p></div><div class="source-card"><span>06</span><h3>Gulf marketplace reseller sweep</h3><p>The second unbuyable one. A brand-name search on Noon.com, Amazon.ae, Namshi and Ounass finds third-party sellers listing the brand&#39;s SKUs in a market the brand does not serve — public, dated, screenshot-able proof of unserved demand.</p></div><div class="source-card"><span>07</span><h3>Social demand sweep</h3><p>Instagram and TikTok comments on the last 20 posts, keyword-matched for Dubai, UAE, KSA, Saudi, Kuwait, Qatar and ship-to. Produces verbatim customer requests that can be quoted directly in the email.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="02">
+        
+    <div class="section-head">
+      <p class="eyebrow">02</p>
+      <h2>The routing</h2>
+      <p class="takeaway">First match wins. Each brand is tested top to bottom and stops at the first tier it satisfies, so no brand receives two pitches and no brand is left uncovered.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF A cross-border checkout app is detected (Global-e, Zonos, Passport, ESW, Reach, Flow), OR a localized currency or country-specific market is live</span>
+          <strong>Tier 1 — Committed Globalist</strong>
+          <em>They have already paid to solve duties and checkout. That is proven budget and proven international intent, which makes this the highest-value list in the cascade.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF NOT Tier 1, AND a Gulf or EU reseller is listing their SKUs, OR two or more public customers have asked whether the brand ships to the region</span>
+          <strong>Tier 2 — Proven Unserved Demand</strong>
+          <em>Demand exists, is dated, and is being monetised by somebody else. This is the sharpest emotional trigger in the ladder because the loss is already happening.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF NOT Tier 1 or 2, AND a named 3PL appears as consignee or notify party on their US import records</span>
+          <strong>Tier 3 — Single-Node Incumbent</strong>
+          <em>Fulfilment is handled, so this is not a do-you-need-a-3PL conversation. The pain is structural: one node, a contract, and no international answer.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF NOT Tier 1, 2 or 3, AND freight lands at their own address, OR they are hiring warehouse and fulfilment staff</span>
+          <strong>Tier 4 — Self-Fulfilling &amp; Scaling</strong>
+          <em>They fulfil in-house and it is scaling. Every extra hundred orders a month costs a person rather than a margin point.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF Everything else — any remaining US physical-goods brand above $1M</span>
+          <strong>Tier 5 — Catch-All</strong>
+          <em>No visible acute pain. Fulfilment is fine, which usually means unexamined. The catch-all is mandatory: without it the waterfall leaves market on the table.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF A cross-border checkout app is detected (Global-e, Zonos, Passport, ESW, Reach, Flow), OR a localized currency or country-specific market is live -&gt; Tier 1 — Committed Globalist (They have already paid to solve duties and checkout. That is proven budget and proven international intent, which makes this the highest-value list in the cascade.)&#10;2. IF NOT Tier 1, AND a Gulf or EU reseller is listing their SKUs, OR two or more public customers have asked whether the brand ships to the region -&gt; Tier 2 — Proven Unserved Demand (Demand exists, is dated, and is being monetised by somebody else. This is the sharpest emotional trigger in the ladder because the loss is already happening.)&#10;3. IF NOT Tier 1 or 2, AND a named 3PL appears as consignee or notify party on their US import records -&gt; Tier 3 — Single-Node Incumbent (Fulfilment is handled, so this is not a do-you-need-a-3PL conversation. The pain is structural: one node, a contract, and no international answer.)&#10;4. IF NOT Tier 1, 2 or 3, AND freight lands at their own address, OR they are hiring warehouse and fulfilment staff -&gt; Tier 4 — Self-Fulfilling &amp; Scaling (They fulfil in-house and it is scaling. Every extra hundred orders a month costs a person rather than a margin point.)&#10;5. IF Everything else — any remaining US physical-goods brand above $1M -&gt; Tier 5 — Catch-All (No visible acute pain. Fulfilment is fine, which usually means unexamined. The catch-all is mandatory: without it the waterfall leaves market on the table.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF A cross-border checkout app is detected (Global-e, Zonos, Passport, ESW, Reach, Flow), OR a localized currency or country-specific market is live -&gt; Tier 1 — Committed Globalist (They have already paid to solve duties and checkout. That is proven budget and proven international intent, which makes this the highest-value list in the cascade.)
+2. IF NOT Tier 1, AND a Gulf or EU reseller is listing their SKUs, OR two or more public customers have asked whether the brand ships to the region -&gt; Tier 2 — Proven Unserved Demand (Demand exists, is dated, and is being monetised by somebody else. This is the sharpest emotional trigger in the ladder because the loss is already happening.)
+3. IF NOT Tier 1 or 2, AND a named 3PL appears as consignee or notify party on their US import records -&gt; Tier 3 — Single-Node Incumbent (Fulfilment is handled, so this is not a do-you-need-a-3PL conversation. The pain is structural: one node, a contract, and no international answer.)
+4. IF NOT Tier 1, 2 or 3, AND freight lands at their own address, OR they are hiring warehouse and fulfilment staff -&gt; Tier 4 — Self-Fulfilling &amp; Scaling (They fulfil in-house and it is scaling. Every extra hundred orders a month costs a person rather than a margin point.)
+5. IF Everything else — any remaining US physical-goods brand above $1M -&gt; Tier 5 — Catch-All (No visible acute pain. Fulfilment is fine, which usually means unexamined. The catch-all is mandatory: without it the waterfall leaves market on the table.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="03">
+        
+    <div class="section-head">
+      <p class="eyebrow">03</p>
+      <h2>The five tiers</h2>
+      <p class="takeaway">Tier 1 is the smallest and richest. The catch-all is the volume engine. Pain is inferred from the trigger in every case, never invented, and every value proposition maps to something ShipCube operates today.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">6% TAM</span>
+          </div>
+          <h3>Tier 1: Committed Globalist</h3>
+          <p>Cross-border checkout app detected (Global-e, Zonos, Passport, ESW) or a localized currency and market already live.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They have already paid to solve duties and checkout. They have not solved the shelf. Every international order still flies from one US node: 8 to 14 day transit, $28 to $45 parcel, duty surprises, and a returns process that barely functions.</dd></div>
+              <div><dt>Offer</dt><dd>Cross-Border Margin Leak Teardown — their top 10 SKUs modelled US-ship against in-market stock, landed cost side by side</dd></div>
+              <div><dt>Source</dt><dd>Storefront JavaScript detection plus a live shipping-rate probe against AE, SA and NL</dd></div>
+              <div><dt>Reply density</dt><dd>High. Proven budget and proven intent, on a small list.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-orange" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">9% TAM</span>
+          </div>
+          <h3>Tier 2: Proven Unserved Demand</h3>
+          <p>A Gulf or EU reseller is listing their SKUs, or two or more public customers have asked whether they ship there — and the storefront does not.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Demand exists, is dated, and is being monetised by somebody else. A grey-market reseller is taking the margin, controlling the customer, and setting the price of their brand in that market.</dd></div>
+              <div><dt>Offer</dt><dd>Gulf Demand Dossier — screenshots of every reseller listing and customer request found, with a market-entry cost model</dd></div>
+              <div><dt>Source</dt><dd>Noon.com, Amazon.ae, Namshi and Ounass sweep plus an Instagram and TikTok comment scrape</dd></div>
+              <div><dt>Reply density</dt><dd>Highest in the cascade. The reseller screenshot does the selling.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">22% TAM</span>
+          </div>
+          <h3>Tier 3: Single-Node Incumbent</h3>
+          <p>A named 3PL appears as consignee or notify party on their US customs import records.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Locked into a US-only 3PL. Long contract, volume minimums, one node, and no international answer. Every new market means a new vendor, a new integration and a new contract.</dd></div>
+              <div><dt>Offer</dt><dd>3PL Contract Stress Test — a 12-point checklist for auditing minimums, LTL true-ups, storage escalators and the exit clause</dd></div>
+              <div><dt>Source</dt><dd>US bill-of-lading records via ImportYeti</dd></div>
+              <div><dt>Reply density</dt><dd>Moderate. Real switching friction and a long nurture.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">18% TAM</span>
+          </div>
+          <h3>Tier 4: Self-Fulfilling &amp; Scaling</h3>
+          <p>Freight lands at their own address rather than a 3PL, or they are actively hiring warehouse and fulfilment staff.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Founders and marketers are packing boxes. Every order added costs headcount rather than margin. Peak season is a personnel crisis. Growth is capped by floor space, not by demand.</dd></div>
+              <div><dt>Offer</dt><dd>Break-Even Calculator — the order volume at which in-house pick and pack costs more than outsourcing, run on their real numbers</dd></div>
+              <div><dt>Source</dt><dd>Import records cross-referenced with careers page and LinkedIn job postings</dd></div>
+              <div><dt>Reply density</dt><dd>Good. Acute operational pain, smaller deal size, fastest close.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">45% TAM</span>
+          </div>
+          <h3>Tier 5: Catch-All</h3>
+          <p>Every remaining US physical-goods brand above $1M in estimated revenue.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>No visible acute pain. Fulfilment is fine, which usually means unexamined. They have never benchmarked their cost per order against the market.</dd></div>
+              <div><dt>Offer</dt><dd>2026 DTC Fulfilment Rate Benchmark — cost per order by volume band and category</dd></div>
+              <div><dt>Source</dt><dd>Store Leads base universe</dd></div>
+              <div><dt>Reply density</dt><dd>Lower by design. The benchmark magnet carries it.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="04">
+        
+    <div class="section-head">
+      <p class="eyebrow">04</p>
+      <h2>The campaigns</h2>
+      <p class="takeaway">Ten angles across the five tiers, each anchored to a publicly observable artefact: a checkout rate quote, a reseller listing, a customs bill of lading, a warehouse job posting.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>The rate quote teardown</h3>
+          <p>The sharpest version of the Tier 1 pitch. The brand has solved duties and checkout but is still flying every parcel from a single US node, and the quoted rate proves it in one line.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Cross-border checkout app detected AND the live rate probe returns a UAE quote above $25</dd></div>
+            <div><dt>AI strategy</dt><dd>Probe the store&#39;s own checkout for a UAE shipping rate and transit promise, then open the email with the exact number the brand quotes its own customers. Nothing persuades an operator faster than their own price list.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Localized market, centralized stock</h3>
+          <p>Targets brands who have already made the strategic decision to sell into a market. The ask is not whether to expand, only whether to expand properly.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>AED, SAR or EUR currency live, or a country-specific domain, but no in-market fulfilment</dd></div>
+            <div><dt>AI strategy</dt><dd>Detect the localized storefront in page source and reframe it as a half-finished expansion. They built the shopfront for the market and never built the warehouse behind it.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Someone else is selling you in Dubai</h3>
+          <p>The single strongest trigger in the cascade. The loss is already happening, it is dated, and it is visible in a screenshot the founder has usually never seen.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Third-party reseller listing found on Noon, Amazon.ae, Namshi or Ounass, and the storefront does not ship to the UAE</dd></div>
+            <div><dt>AI strategy</dt><dd>Screenshot the reseller listing with its price, then contrast it against the brand&#39;s own blocked checkout. The email leads with evidence rather than an argument.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Your customers are asking in the comments</h3>
+          <p>Runs where no reseller has appeared yet. The demand signal is softer than a marketplace listing but far more personal, and it makes the first line unmistakably researched.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Two or more public comments requesting Gulf shipping in the last 12 months</dd></div>
+            <div><dt>AI strategy</dt><dd>Quote the customer verbatim, with the count. Demand expressed in the brand&#39;s own comment section is impossible to dismiss as vendor speculation.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>We know who your 3PL is</h3>
+          <p>The frame is additive throughout. ShipCube runs alongside the incumbent on a single SKU line or a single market, so nothing gets ripped out and no internal fight is required to say yes.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Named 3PL on the bill of lading, with two or more containers in the trailing 12 months</dd></div>
+            <div><dt>AI strategy</dt><dd>Open by naming the incumbent and the container count from public customs records, then explicitly disqualify the obvious pitch: this is not a do-you-need-a-3PL email. Credibility is bought with the disqualification.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>The contract stress test</h3>
+          <p>The value rotation for Tier 3&#39;s second touch. Month-to-month with no minimum is a structural difference the incumbent cannot match without repricing its whole book.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Any Tier 3 account, with no cross-border signal present</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with the terms rather than the network. Most 3PL agreements in this bracket run 12 to 24 months with a monthly minimum that bills whether the brand ships or not.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Who&#39;s packing the boxes</h3>
+          <p>The fastest-closing tier. No minimum volume and $100 setup mean the decision is small, reversible and does not need a board conversation.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Freight consigned to the brand&#39;s own address AND an open warehouse or fulfilment role</dd></div>
+            <div><dt>AI strategy</dt><dd>Pair the two artefacts in the first line — freight landing at their own dock and a live pick-pack job posting. Two independent public facts read as research; one reads as a guess.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Q4 is a staffing problem</h3>
+          <p>Twelve days to live is the entire pitch here. The window between recognising the problem and needing it solved is short, and ShipCube fits inside it.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Any Tier 4 account, sent August through October</dd></div>
+            <div><dt>AI strategy</dt><dd>Seasonal reframe of the same pain. Peak season converts an abstract cost question into a concrete calendar problem the founder is already worrying about.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Cost per order benchmark</h3>
+          <p>The volume engine. Published rate card plus 50 million packages of data give ShipCube standing to publish a benchmark, and the magnet is genuinely useful whether or not they ever switch.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>All remaining US physical-goods brands above $1M</dd></div>
+            <div><dt>AI strategy</dt><dd>Ask a question rather than make a claim. Most operators do not know their fully-loaded cost per order, and the honest admission that fulfilment only gets examined when it breaks earns the reply.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Transparent pricing</h3>
+          <p>The chaos-test counterpart to the benchmark angle. One asks a question, the other answers one before it is asked.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Any Tier 5 account, second variant</dd></div>
+            <div><dt>AI strategy</dt><dd>Publish the actual rate card in the email body — $0.80 to $1.25 receive, $0.20 to $0.25 pick, $17 to $25 pallet. In a category that hides pricing behind a discovery call, showing the number is the differentiator.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="05">
+        
+    <div class="section-head">
+      <p class="eyebrow">05</p>
+      <h2>The copy</h2>
+      <p class="takeaway">One framework held constant across all five tiers, so a difference in reply rate tells you something about the segment rather than about the writing. Every CTA is reply-with-a-word. None of them ask for a call.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company}}</span><span>{{domain}}</span><span>{{sender}}</span><span>{{crossborder_app}}</span><span>{{intl_rate}}</span><span>{{intl_transit_promise}}</span><span>{{us_warehouse_state}}</span><span>{{est_monthly_orders}}</span><span>{{product_name}}</span><span>{{marketplace}}</span><span>{{reseller_price}}</span><span>{{social_demand_quote}}</span><span>{{social_demand_quote_count}}</span><span>{{market}}</span><span>{{incumbent_3pl}}</span><span>{{container_count}}</span><span>{{company_address_city}}</span><span>{{job_title}}</span><span>{{breakeven_volume}}</span><span>{{category}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company}}, {{domain}}, {{sender}}, {{crossborder_app}}, {{intl_rate}}, {{intl_transit_promise}}, {{us_warehouse_state}}, {{est_monthly_orders}}, {{product_name}}, {{marketplace}}, {{reseller_price}}, {{social_demand_quote}}, {{social_demand_quote_count}}, {{market}}, {{incumbent_3pl}}, {{container_count}}, {{company_address_city}}, {{job_title}}, {{breakeven_volume}}, {{category}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 — Committed Globalist</strong>
+              <em>Cross-Border Margin Leak Teardown</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 — Committed Globalist steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} into the UAE&#10;&#10;Hi {{first_name}},&#10;&#10;I was on {{domain}} and saw you&#39;re running {{crossborder_app}} at checkout, and that you&#39;ll quote a UAE customer {{intl_rate}} with a {{intl_transit_promise}} delivery window.&#10;&#10;But would it be fair to assume the duties problem is solved and the distance problem isn&#39;t? You&#39;ve made international buyable, but every one of those orders still flies out of {{us_warehouse_state}}.&#10;&#10;We hold 50,000 sq ft in Dubai, 50,000 in Riyadh and 50,000 in Amsterdam. Your inventory sits in-market and ships domestically, on the same agreement, with no new contract per country.&#10;&#10;A skincare brand we onboarded went live in 9 days and cut shipping cost 38%.&#10;&#10;Want me to model your top 10 SKUs, US-ship against in-market stock, landed cost side by side? Reply &quot;SKUs&quot; and I&#39;ll send it over. No call needed.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} into the UAE" data-preview="Northbank Supply into the UAE">{{company}} into the UAE</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;I was on {{domain}} and saw you&#39;re running {{crossborder_app}} at checkout, and that you&#39;ll quote a UAE customer {{intl_rate}} with a {{intl_transit_promise}} delivery window.&#10;&#10;But would it be fair to assume the duties problem is solved and the distance problem isn&#39;t? You&#39;ve made international buyable, but every one of those orders still flies out of {{us_warehouse_state}}.&#10;&#10;We hold 50,000 sq ft in Dubai, 50,000 in Riyadh and 50,000 in Amsterdam. Your inventory sits in-market and ships domestically, on the same agreement, with no new contract per country.&#10;&#10;A skincare brand we onboarded went live in 9 days and cut shipping cost 38%.&#10;&#10;Want me to model your top 10 SKUs, US-ship against in-market stock, landed cost side by side? Reply &quot;SKUs&quot; and I&#39;ll send it over. No call needed.&#10;&#10;{{sender}}" data-preview="Hi Maya,&#10;&#10;I was on northbanksupply.com and saw you&#39;re running Zonos at checkout, and that you&#39;ll quote a UAE customer $38 with a 10 to 21 business day delivery window.&#10;&#10;But would it be fair to assume the duties problem is solved and the distance problem isn&#39;t? You&#39;ve made international buyable, but every one of those orders still flies out of New Jersey.&#10;&#10;We hold 50,000 sq ft in Dubai, 50,000 in Riyadh and 50,000 in Amsterdam. Your inventory sits in-market and ships domestically, on the same agreement, with no new contract per country.&#10;&#10;A skincare brand we onboarded went live in 9 days and cut shipping cost 38%.&#10;&#10;Want me to model your top 10 SKUs, US-ship against in-market stock, landed cost side by side? Reply &quot;SKUs&quot; and I&#39;ll send it over. No call needed.&#10;&#10;Hooner">
+                        <p>Hi {{first_name}},</p><p>I was on {{domain}} and saw you&#39;re running {{crossborder_app}} at checkout, and that you&#39;ll quote a UAE customer {{intl_rate}} with a {{intl_transit_promise}} delivery window.</p><p>But would it be fair to assume the duties problem is solved and the distance problem isn&#39;t? You&#39;ve made international buyable, but every one of those orders still flies out of {{us_warehouse_state}}.</p><p>We hold 50,000 sq ft in Dubai, 50,000 in Riyadh and 50,000 in Amsterdam. Your inventory sits in-market and ships domestically, on the same agreement, with no new contract per country.</p><p>A skincare brand we onboarded went live in 9 days and cut shipping cost 38%.</p><p>Want me to model your top 10 SKUs, US-ship against in-market stock, landed cost side by side? Reply &quot;SKUs&quot; and I&#39;ll send it over. No call needed.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Quick follow-up with the number that usually decides this.&#10;&#10;On a {{intl_rate}} parcel, in-market stock typically takes 55 to 70% out of the shipping line and removes the duty surprise that drives cross-border refunds. At {{est_monthly_orders}} orders a month with even a 10% international mix, that&#39;s real margin sitting in transit costs.&#10;&#10;The teardown takes me about 20 minutes to build. Want it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Quick follow-up with the number that usually decides this.&#10;&#10;On a {{intl_rate}} parcel, in-market stock typically takes 55 to 70% out of the shipping line and removes the duty surprise that drives cross-border refunds. At {{est_monthly_orders}} orders a month with even a 10% international mix, that&#39;s real margin sitting in transit costs.&#10;&#10;The teardown takes me about 20 minutes to build. Want it?" data-preview="Quick follow-up with the number that usually decides this.&#10;&#10;On a $38 parcel, in-market stock typically takes 55 to 70% out of the shipping line and removes the duty surprise that drives cross-border refunds. At 6,200 orders a month with even a 10% international mix, that&#39;s real margin sitting in transit costs.&#10;&#10;The teardown takes me about 20 minutes to build. Want it?">
+                        <p>Quick follow-up with the number that usually decides this.</p><p>On a {{intl_rate}} parcel, in-market stock typically takes 55 to 70% out of the shipping line and removes the duty surprise that drives cross-border refunds. At {{est_monthly_orders}} orders a month with even a 10% international mix, that&#39;s real margin sitting in transit costs.</p><p>The teardown takes me about 20 minutes to build. Want it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: wrong person?&#10;&#10;{{first_name}}, no need for a call. Just reply &quot;yes&quot; and I&#39;ll send the cross-border margin teardown for {{company}}.&#10;&#10;Should I send this to you, or is your Head of Ops the right person?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="wrong person?" data-preview="wrong person?">wrong person?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no need for a call. Just reply &quot;yes&quot; and I&#39;ll send the cross-border margin teardown for {{company}}.&#10;&#10;Should I send this to you, or is your Head of Ops the right person?" data-preview="Maya, no need for a call. Just reply &quot;yes&quot; and I&#39;ll send the cross-border margin teardown for Northbank Supply.&#10;&#10;Should I send this to you, or is your Head of Ops the right person?">
+                        <p>{{first_name}}, no need for a call. Just reply &quot;yes&quot; and I&#39;ll send the cross-border margin teardown for {{company}}.</p><p>Should I send this to you, or is your Head of Ops the right person?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 — Proven Unserved Demand</strong>
+              <em>Gulf Demand Dossier</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 — Proven Unserved Demand steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: someone&#39;s selling {{company}} in Dubai&#10;&#10;Hi {{first_name}},&#10;&#10;I found {{product_name}} listed on {{marketplace}} by a third-party seller at {{reseller_price}}, and your checkout doesn&#39;t ship to the UAE at all. {{social_demand_quote_count}} people asked about it in your comments this year: &quot;{{social_demand_quote}}&quot;.&#10;&#10;But would it be fair to assume nobody&#39;s had the bandwidth to actually stand up the Gulf, so someone else is doing it for you, at their price, with their customer relationship?&#10;&#10;We already hold warehouses in Dubai and Riyadh. A fashion brand we work with added Saudi Arabia in 11 days on their existing agreement. No new contract, no new vendor.&#10;&#10;I pulled every reseller listing and customer request I could find for {{company}} into a short dossier. Reply &quot;Gulf&quot; and it&#39;s yours.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="someone&#39;s selling {{company}} in Dubai" data-preview="someone&#39;s selling Northbank Supply in Dubai">someone&#39;s selling {{company}} in Dubai</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;I found {{product_name}} listed on {{marketplace}} by a third-party seller at {{reseller_price}}, and your checkout doesn&#39;t ship to the UAE at all. {{social_demand_quote_count}} people asked about it in your comments this year: &quot;{{social_demand_quote}}&quot;.&#10;&#10;But would it be fair to assume nobody&#39;s had the bandwidth to actually stand up the Gulf, so someone else is doing it for you, at their price, with their customer relationship?&#10;&#10;We already hold warehouses in Dubai and Riyadh. A fashion brand we work with added Saudi Arabia in 11 days on their existing agreement. No new contract, no new vendor.&#10;&#10;I pulled every reseller listing and customer request I could find for {{company}} into a short dossier. Reply &quot;Gulf&quot; and it&#39;s yours.&#10;&#10;{{sender}}" data-preview="Hi Maya,&#10;&#10;I found the Barrier Repair Serum listed on Noon.com by a third-party seller at AED 249, and your checkout doesn&#39;t ship to the UAE at all. 14 people asked about it in your comments this year: &quot;please ship to Dubai!! been waiting a year&quot;.&#10;&#10;But would it be fair to assume nobody&#39;s had the bandwidth to actually stand up the Gulf, so someone else is doing it for you, at their price, with their customer relationship?&#10;&#10;We already hold warehouses in Dubai and Riyadh. A fashion brand we work with added Saudi Arabia in 11 days on their existing agreement. No new contract, no new vendor.&#10;&#10;I pulled every reseller listing and customer request I could find for Northbank Supply into a short dossier. Reply &quot;Gulf&quot; and it&#39;s yours.&#10;&#10;Hooner">
+                        <p>Hi {{first_name}},</p><p>I found {{product_name}} listed on {{marketplace}} by a third-party seller at {{reseller_price}}, and your checkout doesn&#39;t ship to the UAE at all. {{social_demand_quote_count}} people asked about it in your comments this year: &quot;{{social_demand_quote}}&quot;.</p><p>But would it be fair to assume nobody&#39;s had the bandwidth to actually stand up the Gulf, so someone else is doing it for you, at their price, with their customer relationship?</p><p>We already hold warehouses in Dubai and Riyadh. A fashion brand we work with added Saudi Arabia in 11 days on their existing agreement. No new contract, no new vendor.</p><p>I pulled every reseller listing and customer request I could find for {{company}} into a short dossier. Reply &quot;Gulf&quot; and it&#39;s yours.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The part most founders react to isn&#39;t the lost revenue. It&#39;s the loss of control.&#10;&#10;Right now a reseller in {{market}} sets your price, writes your product page, handles your returns and owns your customer&#39;s email address. You can&#39;t run a launch there, you can&#39;t fix a bad experience there, and you can&#39;t stop them.&#10;&#10;The dossier shows exactly who&#39;s doing it. Want me to send it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The part most founders react to isn&#39;t the lost revenue. It&#39;s the loss of control.&#10;&#10;Right now a reseller in {{market}} sets your price, writes your product page, handles your returns and owns your customer&#39;s email address. You can&#39;t run a launch there, you can&#39;t fix a bad experience there, and you can&#39;t stop them.&#10;&#10;The dossier shows exactly who&#39;s doing it. Want me to send it?" data-preview="The part most founders react to isn&#39;t the lost revenue. It&#39;s the loss of control.&#10;&#10;Right now a reseller in the UAE sets your price, writes your product page, handles your returns and owns your customer&#39;s email address. You can&#39;t run a launch there, you can&#39;t fix a bad experience there, and you can&#39;t stop them.&#10;&#10;The dossier shows exactly who&#39;s doing it. Want me to send it?">
+                        <p>The part most founders react to isn&#39;t the lost revenue. It&#39;s the loss of control.</p><p>Right now a reseller in {{market}} sets your price, writes your product page, handles your returns and owns your customer&#39;s email address. You can&#39;t run a launch there, you can&#39;t fix a bad experience there, and you can&#39;t stop them.</p><p>The dossier shows exactly who&#39;s doing it. Want me to send it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{market}}, last note&#10;&#10;No call needed, {{first_name}}. Reply &quot;yes&quot; and I&#39;ll send the Gulf demand dossier for {{company}}: every listing and request I found, plus what in-market fulfilment would cost.&#10;&#10;You, or someone else on the team?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{market}}, last note" data-preview="the UAE, last note">{{market}}, last note</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed, {{first_name}}. Reply &quot;yes&quot; and I&#39;ll send the Gulf demand dossier for {{company}}: every listing and request I found, plus what in-market fulfilment would cost.&#10;&#10;You, or someone else on the team?" data-preview="No call needed, Maya. Reply &quot;yes&quot; and I&#39;ll send the Gulf demand dossier for Northbank Supply: every listing and request I found, plus what in-market fulfilment would cost.&#10;&#10;You, or someone else on the team?">
+                        <p>No call needed, {{first_name}}. Reply &quot;yes&quot; and I&#39;ll send the Gulf demand dossier for {{company}}: every listing and request I found, plus what in-market fulfilment would cost.</p><p>You, or someone else on the team?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 — Single-Node Incumbent</strong>
+              <em>3PL Contract Stress Test</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 — Single-Node Incumbent steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{incumbent_3pl}} and {{company}}&#10;&#10;Hi {{first_name}},&#10;&#10;Your inbound containers this year cleared customs consigned to {{incumbent_3pl}}, {{container_count}} of them. So I&#39;ll assume fulfilment is handled and this isn&#39;t a &quot;do you need a 3PL&quot; email.&#10;&#10;But would it be fair to assume that when you want a second market, it means a new vendor, a new integration and a new contract, because {{incumbent_3pl}} can&#39;t put stock in Dubai or Amsterdam for you?&#10;&#10;ShipCube runs four US facilities plus Dubai, Riyadh, Amsterdam and New Delhi on one agreement, month-to-month, no minimums. 99% order accuracy, 98.7% on-time. Most brands start by running a single SKU line or a single market alongside their incumbent. Nothing gets ripped out.&#10;&#10;I wrote a 12-point stress test for auditing a 3PL agreement: minimums, storage escalators, LTL true-ups, exit clause. Reply &quot;audit&quot; and I&#39;ll send it.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{incumbent_3pl}} and {{company}}" data-preview="a Chicago 3PL and Northbank Supply">{{incumbent_3pl}} and {{company}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Your inbound containers this year cleared customs consigned to {{incumbent_3pl}}, {{container_count}} of them. So I&#39;ll assume fulfilment is handled and this isn&#39;t a &quot;do you need a 3PL&quot; email.&#10;&#10;But would it be fair to assume that when you want a second market, it means a new vendor, a new integration and a new contract, because {{incumbent_3pl}} can&#39;t put stock in Dubai or Amsterdam for you?&#10;&#10;ShipCube runs four US facilities plus Dubai, Riyadh, Amsterdam and New Delhi on one agreement, month-to-month, no minimums. 99% order accuracy, 98.7% on-time. Most brands start by running a single SKU line or a single market alongside their incumbent. Nothing gets ripped out.&#10;&#10;I wrote a 12-point stress test for auditing a 3PL agreement: minimums, storage escalators, LTL true-ups, exit clause. Reply &quot;audit&quot; and I&#39;ll send it.&#10;&#10;{{sender}}" data-preview="Hi Maya,&#10;&#10;Your inbound containers this year cleared customs consigned to a Chicago 3PL, 7 of them. So I&#39;ll assume fulfilment is handled and this isn&#39;t a &quot;do you need a 3PL&quot; email.&#10;&#10;But would it be fair to assume that when you want a second market, it means a new vendor, a new integration and a new contract, because a Chicago 3PL can&#39;t put stock in Dubai or Amsterdam for you?&#10;&#10;ShipCube runs four US facilities plus Dubai, Riyadh, Amsterdam and New Delhi on one agreement, month-to-month, no minimums. 99% order accuracy, 98.7% on-time. Most brands start by running a single SKU line or a single market alongside their incumbent. Nothing gets ripped out.&#10;&#10;I wrote a 12-point stress test for auditing a 3PL agreement: minimums, storage escalators, LTL true-ups, exit clause. Reply &quot;audit&quot; and I&#39;ll send it.&#10;&#10;Hooner">
+                        <p>Hi {{first_name}},</p><p>Your inbound containers this year cleared customs consigned to {{incumbent_3pl}}, {{container_count}} of them. So I&#39;ll assume fulfilment is handled and this isn&#39;t a &quot;do you need a 3PL&quot; email.</p><p>But would it be fair to assume that when you want a second market, it means a new vendor, a new integration and a new contract, because {{incumbent_3pl}} can&#39;t put stock in Dubai or Amsterdam for you?</p><p>ShipCube runs four US facilities plus Dubai, Riyadh, Amsterdam and New Delhi on one agreement, month-to-month, no minimums. 99% order accuracy, 98.7% on-time. Most brands start by running a single SKU line or a single market alongside their incumbent. Nothing gets ripped out.</p><p>I wrote a 12-point stress test for auditing a 3PL agreement: minimums, storage escalators, LTL true-ups, exit clause. Reply &quot;audit&quot; and I&#39;ll send it.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One thing worth checking in your current agreement: the notice period and the volume minimum.&#10;&#10;Most 3PL contracts in this bracket run 12 to 24 months with a monthly minimum that keeps billing whether you ship or not. Ours is month-to-month with no minimum, which mostly matters because it means we have to keep earning it.&#10;&#10;Stress test still available if useful.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One thing worth checking in your current agreement: the notice period and the volume minimum.&#10;&#10;Most 3PL contracts in this bracket run 12 to 24 months with a monthly minimum that keeps billing whether you ship or not. Ours is month-to-month with no minimum, which mostly matters because it means we have to keep earning it.&#10;&#10;Stress test still available if useful." data-preview="One thing worth checking in your current agreement: the notice period and the volume minimum.&#10;&#10;Most 3PL contracts in this bracket run 12 to 24 months with a monthly minimum that keeps billing whether you ship or not. Ours is month-to-month with no minimum, which mostly matters because it means we have to keep earning it.&#10;&#10;Stress test still available if useful.">
+                        <p>One thing worth checking in your current agreement: the notice period and the volume minimum.</p><p>Most 3PL contracts in this bracket run 12 to 24 months with a monthly minimum that keeps billing whether you ship or not. Ours is month-to-month with no minimum, which mostly matters because it means we have to keep earning it.</p><p>Stress test still available if useful.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: re: fulfilment&#10;&#10;{{first_name}}, not asking for a call. Reply &quot;yes&quot; and I&#39;ll send the 3PL contract stress test.&#10;&#10;Should this go to you, or to whoever owns the {{incumbent_3pl}} relationship?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="re: fulfilment" data-preview="re: fulfilment">re: fulfilment</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, not asking for a call. Reply &quot;yes&quot; and I&#39;ll send the 3PL contract stress test.&#10;&#10;Should this go to you, or to whoever owns the {{incumbent_3pl}} relationship?" data-preview="Maya, not asking for a call. Reply &quot;yes&quot; and I&#39;ll send the 3PL contract stress test.&#10;&#10;Should this go to you, or to whoever owns the a Chicago 3PL relationship?">
+                        <p>{{first_name}}, not asking for a call. Reply &quot;yes&quot; and I&#39;ll send the 3PL contract stress test.</p><p>Should this go to you, or to whoever owns the {{incumbent_3pl}} relationship?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 — Self-Fulfilling &amp; Scaling</strong>
+              <em>Break-Even Calculator</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 — Self-Fulfilling &amp; Scaling steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: who&#39;s packing the boxes?&#10;&#10;Hi {{first_name}},&#10;&#10;Two things: your import records show freight landing at {{company_address_city}} rather than a 3PL, and you&#39;ve got a {{job_title}} role open.&#10;&#10;But would it be fair to assume that every extra hundred orders a month currently costs you a person rather than a margin point, and that Q4 is a staffing problem rather than a growth problem?&#10;&#10;ShipCube has no minimum volume, $100 setup, and 12-day average onboarding across more than 30 platform integrations. Brands move at {{est_monthly_orders}} orders a month specifically so the founders stop touching boxes.&#10;&#10;I built a break-even calculator: the order volume at which in-house pick and pack costs more than outsourcing. Reply &quot;math&quot; and I&#39;ll run it on your numbers.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="who&#39;s packing the boxes?" data-preview="who&#39;s packing the boxes?">who&#39;s packing the boxes?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Two things: your import records show freight landing at {{company_address_city}} rather than a 3PL, and you&#39;ve got a {{job_title}} role open.&#10;&#10;But would it be fair to assume that every extra hundred orders a month currently costs you a person rather than a margin point, and that Q4 is a staffing problem rather than a growth problem?&#10;&#10;ShipCube has no minimum volume, $100 setup, and 12-day average onboarding across more than 30 platform integrations. Brands move at {{est_monthly_orders}} orders a month specifically so the founders stop touching boxes.&#10;&#10;I built a break-even calculator: the order volume at which in-house pick and pack costs more than outsourcing. Reply &quot;math&quot; and I&#39;ll run it on your numbers.&#10;&#10;{{sender}}" data-preview="Hi Maya,&#10;&#10;Two things: your import records show freight landing at Portland, OR rather than a 3PL, and you&#39;ve got a Warehouse Associate role open.&#10;&#10;But would it be fair to assume that every extra hundred orders a month currently costs you a person rather than a margin point, and that Q4 is a staffing problem rather than a growth problem?&#10;&#10;ShipCube has no minimum volume, $100 setup, and 12-day average onboarding across more than 30 platform integrations. Brands move at 6,200 orders a month specifically so the founders stop touching boxes.&#10;&#10;I built a break-even calculator: the order volume at which in-house pick and pack costs more than outsourcing. Reply &quot;math&quot; and I&#39;ll run it on your numbers.&#10;&#10;Hooner">
+                        <p>Hi {{first_name}},</p><p>Two things: your import records show freight landing at {{company_address_city}} rather than a 3PL, and you&#39;ve got a {{job_title}} role open.</p><p>But would it be fair to assume that every extra hundred orders a month currently costs you a person rather than a margin point, and that Q4 is a staffing problem rather than a growth problem?</p><p>ShipCube has no minimum volume, $100 setup, and 12-day average onboarding across more than 30 platform integrations. Brands move at {{est_monthly_orders}} orders a month specifically so the founders stop touching boxes.</p><p>I built a break-even calculator: the order volume at which in-house pick and pack costs more than outsourcing. Reply &quot;math&quot; and I&#39;ll run it on your numbers.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The cost side is usually a wash until about {{breakeven_volume}} orders a month. The part that isn&#39;t a wash is the calendar.&#10;&#10;Twelve days to live, no minimum, month-to-month. If it doesn&#39;t work you leave. Most brands run one SKU line through us first.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The cost side is usually a wash until about {{breakeven_volume}} orders a month. The part that isn&#39;t a wash is the calendar.&#10;&#10;Twelve days to live, no minimum, month-to-month. If it doesn&#39;t work you leave. Most brands run one SKU line through us first." data-preview="The cost side is usually a wash until about 2,000 orders a month. The part that isn&#39;t a wash is the calendar.&#10;&#10;Twelve days to live, no minimum, month-to-month. If it doesn&#39;t work you leave. Most brands run one SKU line through us first.">
+                        <p>The cost side is usually a wash until about {{breakeven_volume}} orders a month. The part that isn&#39;t a wash is the calendar.</p><p>Twelve days to live, no minimum, month-to-month. If it doesn&#39;t work you leave. Most brands run one SKU line through us first.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: Q4&#10;&#10;{{first_name}}, no call needed. Reply &quot;yes&quot; and I&#39;ll send the break-even math for {{company}}.&#10;&#10;If it says stay in-house, it says stay in-house.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="Q4" data-preview="Q4">Q4</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed. Reply &quot;yes&quot; and I&#39;ll send the break-even math for {{company}}.&#10;&#10;If it says stay in-house, it says stay in-house." data-preview="Maya, no call needed. Reply &quot;yes&quot; and I&#39;ll send the break-even math for Northbank Supply.&#10;&#10;If it says stay in-house, it says stay in-house.">
+                        <p>{{first_name}}, no call needed. Reply &quot;yes&quot; and I&#39;ll send the break-even math for {{company}}.</p><p>If it says stay in-house, it says stay in-house.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 — Catch-All</strong>
+              <em>2026 DTC Fulfilment Rate Benchmark</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 — Catch-All steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: cost per order&#10;&#10;Hi {{first_name}},&#10;&#10;Straight question. Do you know your fully-loaded cost per order, and how it compares to brands doing {{est_monthly_orders}} a month in {{category}}?&#10;&#10;Most brands don&#39;t, because fulfilment only gets examined when it breaks.&#10;&#10;We publish our rate card openly ($0.80 to $1.25 receive, $0.20 to $0.25 pick, $17 to $25 pallet) and we&#39;ve shipped more than 50 million packages, so we have a decent view of the benchmark.&#10;&#10;I put the 2026 numbers into a one-pager by volume band and category. Reply &quot;benchmark&quot; and I&#39;ll send it. Genuinely no pitch attached.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="cost per order" data-preview="cost per order">cost per order</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Straight question. Do you know your fully-loaded cost per order, and how it compares to brands doing {{est_monthly_orders}} a month in {{category}}?&#10;&#10;Most brands don&#39;t, because fulfilment only gets examined when it breaks.&#10;&#10;We publish our rate card openly ($0.80 to $1.25 receive, $0.20 to $0.25 pick, $17 to $25 pallet) and we&#39;ve shipped more than 50 million packages, so we have a decent view of the benchmark.&#10;&#10;I put the 2026 numbers into a one-pager by volume band and category. Reply &quot;benchmark&quot; and I&#39;ll send it. Genuinely no pitch attached.&#10;&#10;{{sender}}" data-preview="Hi Maya,&#10;&#10;Straight question. Do you know your fully-loaded cost per order, and how it compares to brands doing 6,200 a month in skincare?&#10;&#10;Most brands don&#39;t, because fulfilment only gets examined when it breaks.&#10;&#10;We publish our rate card openly ($0.80 to $1.25 receive, $0.20 to $0.25 pick, $17 to $25 pallet) and we&#39;ve shipped more than 50 million packages, so we have a decent view of the benchmark.&#10;&#10;I put the 2026 numbers into a one-pager by volume band and category. Reply &quot;benchmark&quot; and I&#39;ll send it. Genuinely no pitch attached.&#10;&#10;Hooner">
+                        <p>Hi {{first_name}},</p><p>Straight question. Do you know your fully-loaded cost per order, and how it compares to brands doing {{est_monthly_orders}} a month in {{category}}?</p><p>Most brands don&#39;t, because fulfilment only gets examined when it breaks.</p><p>We publish our rate card openly ($0.80 to $1.25 receive, $0.20 to $0.25 pick, $17 to $25 pallet) and we&#39;ve shipped more than 50 million packages, so we have a decent view of the benchmark.</p><p>I put the 2026 numbers into a one-pager by volume band and category. Reply &quot;benchmark&quot; and I&#39;ll send it. Genuinely no pitch attached.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The benchmark tends to surprise people in one of two directions: either they&#39;re overpaying on storage, or they&#39;re overpaying on the parcel spend and blaming storage.&#10;&#10;Want the one-pager?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The benchmark tends to surprise people in one of two directions: either they&#39;re overpaying on storage, or they&#39;re overpaying on the parcel spend and blaming storage.&#10;&#10;Want the one-pager?" data-preview="The benchmark tends to surprise people in one of two directions: either they&#39;re overpaying on storage, or they&#39;re overpaying on the parcel spend and blaming storage.&#10;&#10;Want the one-pager?">
+                        <p>The benchmark tends to surprise people in one of two directions: either they&#39;re overpaying on storage, or they&#39;re overpaying on the parcel spend and blaming storage.</p><p>Want the one-pager?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: benchmark&#10;&#10;No call, {{first_name}}. Reply &quot;yes&quot; and the 2026 fulfilment benchmark is yours.&#10;&#10;You, or whoever owns ops?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="benchmark" data-preview="benchmark">benchmark</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call, {{first_name}}. Reply &quot;yes&quot; and the 2026 fulfilment benchmark is yours.&#10;&#10;You, or whoever owns ops?" data-preview="No call, Maya. Reply &quot;yes&quot; and the 2026 fulfilment benchmark is yours.&#10;&#10;You, or whoever owns ops?">
+                        <p>No call, {{first_name}}. Reply &quot;yes&quot; and the 2026 fulfilment benchmark is yours.</p><p>You, or whoever owns ops?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="06">
+        
+    <div class="section-head">
+      <p class="eyebrow">06</p>
+      <h2>The launch</h2>
+      <p class="takeaway">Tier 2 launches first, ahead of the richer Tier 1. Loss beats capability in cold outbound, and burning a 3,000-account list on unvalidated copy is the expensive mistake.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Weeks 1 to 3 — Launch Tier 2, Proven Unserved Demand, at 1,500 contacts. Not Tier 1. It has the sharpest trigger, the most quotable email, and it validates the reseller-sweep pipeline at the lowest cost. Tier 1 is the higher-value list but it is only ~3,000 accounts and its message is a capability argument, where Tier 2&#39;s is a loss argument backed by a screenshot. Loss outperforms capability in cold outbound, and burning the small rich list on unvalidated copy is the expensive mistake.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Weeks 3 to 5 — Launch Tier 1, Committed Globalist, at 1,500 contacts, using the cross-border narrative Tier 2 has now proved.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 5 to 8 — Launch Tier 4, Self-Fulfilling &amp; Scaling, at 3,000 contacts. Fastest close and smallest deal size, so it builds early logo count and reply volume while Tier 1 and 2 deals mature.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Weeks 8 to 11 — Launch Tier 3, Single-Node Incumbent, at 4,000 contacts. Longest cycle, and it should only start once there are named cross-border references to point at.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Week 11 onward — Launch Tier 5, the catch-all, at 6,000+ per month. This is the volume engine and it runs indefinitely on the benchmark magnet.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Infrastructure throughout — separate sending domains per tier group, with Tiers 1 and 2 on one and Tiers 3, 4 and 5 on another, so a catch-all volume push can never damage the deliverability of the highest-value tiers. Three mailboxes per domain, 30 to 40 sends per mailbox per day at steady state, two-week warmup before any tier goes live.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>Before launch — resolve two blockers. Every ShipCube case study is currently anonymous, and there is no named performance reference for the Dubai, Riyadh or Amsterdam nodes, which is exactly what Tiers 1 and 2 rest on. A first name plus category plus metric is enough if full logo rights are not available.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacted</strong>
+                <span>Perfect. Scale the tier hard and add list volume as fast as the pipeline can build it.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run untouched and resist the urge to optimise a working tier.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450 to 500</strong>
+                <span>Borderline. Ship one copy variant and hold subject-line style, sequence timing and CTA constant so the comparison means something.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or reply rate below 1% after 1,500 sends</strong>
+                <span>Cut the tier and rework it. Two variants per tier is the maximum before a rebuild.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a 20-minute walkthrough</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Maya","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Northbank Supply","northbanksupply\\.com","Hooner","Zonos","\\$38","10 to 21 business day","New Jersey","6,200","the Barrier Repair Serum","Noon\\.com","AED 249","please ship to Dubai!! been waiting a year","14","the UAE","a Chicago 3PL","7","Portland, OR","Warehouse Associate","2,000","skincare"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
