@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bloc - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-10</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Bloc</p>
+          <h1>The Bloc outbound <mark>journey</mark>.</h1>
+          <p class="hero-copy">One cascade that reads the public record and knows which of Bloc&#39;s five answers an organisation needs — before the first sentence is written.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Space is one of the very few things a business buys where the trigger event is a matter of public record before the buyer starts shopping. Planning consents, demolition approvals, land listings, incorporation filings and government tenders all publish, for free, the moment an organisation&#39;s relationship to physical space is about to change. Bloc does not need to guess who needs space. It can read it.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a working session</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>76,000</strong>
+          <span>Qualified accounts in the routed TAM</span>
+        </div>
+        <div class="metric-card">
+          <strong>GBP 0</strong>
+          <span>Enrichment cost of the routing signal</span>
+        </div>
+        <div class="metric-card">
+          <strong>6 tiers</strong>
+          <span>Exclusive routing, 100% TAM coverage</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Bloc rents studios, workshops and storage across four London sites, manufactures modular buildings from GBP 1,095, designs and operates space schemes for landowners, and ships rapid-deploy accommodation worldwide. Five revenue lines, one customer question.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal nobody can buy</p></div><div><span>02</span><p>How a lead is routed</p></div><div><span>03</span><p>Six tiers, five revenue lines</p></div><div><span>04</span><p>The campaign set</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>01</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>02</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>03</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>04</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>05</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>06</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="01">
+        
+    <div class="section-head">
+      <p class="eyebrow">01</p>
+      <h2>The signal nobody can buy</h2>
+      <p class="takeaway">Every competitor is emailing the same generic London SME list. The join that powers this cascade — occupier multiplied by consented redevelopment — does not exist as a purchasable field from any vendor, and costs nothing to produce.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>It is filed and dated. Planning consents, demolition approvals and tender notices carry a public reference number and a decision date, so every email has a verifiable reason to exist.</p></div><div class="reason-card"><span>02</span><p>It cannot be purchased. No vendor sells the field &#39;this business occupies an address that just received demolition consent&#39;. Apollo cannot, Clay cannot, ZoomInfo cannot.</p></div><div class="reason-card"><span>03</span><p>It costs nothing. The GLA Planning London Datahub covers all 35 London boroughs on an open JSON API, and Companies House is a free API. Routing 76,000 accounts costs GBP 0.</p></div><div class="reason-card"><span>04</span><p>It replenishes itself. Councils publish planning decisions every week, permanently, so three of the six tiers refill without anyone rebuilding the strategy.</p></div>
+            </div>
+            <div class="field-cloud"><span>planning_ref</span><span>application_type</span><span>application_status</span><span>decision_date</span><span>site_address</span><span>site_postcode</span><span>is_occupier_at_consented_site</span><span>land_listing_type</span><span>listing_age_days</span><span>company_number</span><span>company_type</span><span>registered_office_is_residential</span><span>sic_code</span><span>incorporation_date</span><span>distance_to_nearest_bloc_site_mi</span><span>tender_ref</span><span>tender_category</span><span>ta_placement_trend</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>Planning London Datahub (GLA)</h3><p>Live feed of every development proposal across all 35 London planning authorities: applicant, agent, site address, description, decision and dates. Free open dataset with a guest-read JSON API. This is the unlock.</p></div><div class="source-card"><span>02</span><h3>Local authority planning portals</h3><p>The same fields outside London via weekly published lists, needed for Home Counties and national modular demand. Free, per council.</p></div><div class="source-card"><span>03</span><h3>Companies House API</h3><p>Registered office address, SIC code, incorporation date, officers, filing history and company type. Supplies both the Tier 4 trigger and the PECR compliance gate. Free.</p></div><div class="source-card"><span>04</span><h3>Contracts Finder + Find a Tender</h3><p>UK public-sector notices for temporary accommodation, welfare units, modular classrooms, site cabins and emergency housing. Free.</p></div><div class="source-card"><span>05</span><h3>Rightmove Commercial, Novaloca, Realla, EG</h3><p>Yards, open-storage land and development plots, with listing age and the owner or agent attached. Free listing data.</p></div><div class="source-card"><span>06</span><h3>MHCLG statutory homelessness tables</h3><p>Which local authorities have rising temporary-accommodation placements and a budget problem to go with them. Free.</p></div><div class="source-card"><span>07</span><h3>Google Maps + site scrape</h3><p>Confirms an occupier is physically at an address and calculates its distance from the four Bloc sites. Free.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="02">
+        
+    <div class="section-head">
+      <p class="eyebrow">02</p>
+      <h2>How a lead is routed</h2>
+      <p class="takeaway">A compliance gate runs first, then six conditions are tested top to bottom. Each account routes to the first tier it matches. Nobody appears twice, nobody is left out.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF Company type is a sole trader or unincorporated partnership</span>
+          <strong>EXCLUDE from email entirely — route to LinkedIn, direct mail or paid</strong>
+          <em>Under PECR these are individual subscribers requiring prior consent. Limited companies, LLPs, PLCs and public bodies are corporate subscribers and may be emailed for B2B marketing with a working opt-out. Companies House supplies this field natively, so the gate is free — and it matters most in Tier 4, where home-registered businesses are exactly the population most likely to be unincorporated.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF Approved planning consent in the last 12 months for a temporary building, modular unit, container or welfare unit</span>
+          <strong>Tier 1 — Consented Modular Need</strong>
+          <em>They have permission and a deadline. They are collecting quotes right now, and the default route offered to them is a hire agreement on a long minimum term.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF ELSE IF a yard, open-storage plot, development site or car park has been publicly listed for more than 90 days without letting</span>
+          <strong>Tier 2 — Land Doing Nothing</strong>
+          <em>The land is not letting as land. It earns close to nothing while it waits for a tenant who may never arrive. This is the highest-ACV tier in the cascade.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF ELSE IF the account occupies an address with approved demolition or change-of-use consent, within 12 miles of a Bloc site</span>
+          <strong>Tier 3 — Displaced by Redevelopment</strong>
+          <em>The building is coming down. There is a hard move-out date and months of unpriced uncertainty about where the workshop and the stock go. This is the join no competitor can buy.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF ELSE IF a limited company with a residential registered office, a maker / creative / e-commerce / food SIC, incorporated 12 to 48 months ago, within 6 miles of a Bloc site</span>
+          <strong>Tier 4 — Outgrowing the Spare Room</strong>
+          <em>The business has outgrown the home it was started in. Stock, kit and mess have become a domestic problem, and every proper studio wants a deposit and three years.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="5">
+          <span class="route-rule__num">06</span>
+          <span class="route-rule__if">IF ELSE IF a live tender for temporary accommodation, welfare units, modular classrooms, emergency housing or site accommodation — or a public body with rising temporary-accommodation placements — or an international-relief charity</span>
+          <strong>Tier 5 — Public &amp; Humanitarian Buyers</strong>
+          <em>The requirement is urgent, the delivery window is short, and conventional build cannot meet it.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="6">
+          <span class="route-rule__num">07</span>
+          <span class="route-rule__if">IF ELSE — every remaining limited company inside the M25 with a space-consuming SIC code</span>
+          <strong>Catch-all — London Space Consumers</strong>
+          <em>No filed event, but space cost is a permanent London problem and almost nobody re-tests the rate they signed on. &#39;We will beat any quote&#39; is Bloc&#39;s strongest existing claim and needs no research beat at all.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF Company type is a sole trader or unincorporated partnership -&gt; EXCLUDE from email entirely — route to LinkedIn, direct mail or paid (Under PECR these are individual subscribers requiring prior consent. Limited companies, LLPs, PLCs and public bodies are corporate subscribers and may be emailed for B2B marketing with a working opt-out. Companies House supplies this field natively, so the gate is free — and it matters most in Tier 4, where home-registered businesses are exactly the population most likely to be unincorporated.)&#10;2. IF Approved planning consent in the last 12 months for a temporary building, modular unit, container or welfare unit -&gt; Tier 1 — Consented Modular Need (They have permission and a deadline. They are collecting quotes right now, and the default route offered to them is a hire agreement on a long minimum term.)&#10;3. IF ELSE IF a yard, open-storage plot, development site or car park has been publicly listed for more than 90 days without letting -&gt; Tier 2 — Land Doing Nothing (The land is not letting as land. It earns close to nothing while it waits for a tenant who may never arrive. This is the highest-ACV tier in the cascade.)&#10;4. IF ELSE IF the account occupies an address with approved demolition or change-of-use consent, within 12 miles of a Bloc site -&gt; Tier 3 — Displaced by Redevelopment (The building is coming down. There is a hard move-out date and months of unpriced uncertainty about where the workshop and the stock go. This is the join no competitor can buy.)&#10;5. IF ELSE IF a limited company with a residential registered office, a maker / creative / e-commerce / food SIC, incorporated 12 to 48 months ago, within 6 miles of a Bloc site -&gt; Tier 4 — Outgrowing the Spare Room (The business has outgrown the home it was started in. Stock, kit and mess have become a domestic problem, and every proper studio wants a deposit and three years.)&#10;6. IF ELSE IF a live tender for temporary accommodation, welfare units, modular classrooms, emergency housing or site accommodation — or a public body with rising temporary-accommodation placements — or an international-relief charity -&gt; Tier 5 — Public &amp; Humanitarian Buyers (The requirement is urgent, the delivery window is short, and conventional build cannot meet it.)&#10;7. IF ELSE — every remaining limited company inside the M25 with a space-consuming SIC code -&gt; Catch-all — London Space Consumers (No filed event, but space cost is a permanent London problem and almost nobody re-tests the rate they signed on. &#39;We will beat any quote&#39; is Bloc&#39;s strongest existing claim and needs no research beat at all.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF Company type is a sole trader or unincorporated partnership -&gt; EXCLUDE from email entirely — route to LinkedIn, direct mail or paid (Under PECR these are individual subscribers requiring prior consent. Limited companies, LLPs, PLCs and public bodies are corporate subscribers and may be emailed for B2B marketing with a working opt-out. Companies House supplies this field natively, so the gate is free — and it matters most in Tier 4, where home-registered businesses are exactly the population most likely to be unincorporated.)
+2. IF Approved planning consent in the last 12 months for a temporary building, modular unit, container or welfare unit -&gt; Tier 1 — Consented Modular Need (They have permission and a deadline. They are collecting quotes right now, and the default route offered to them is a hire agreement on a long minimum term.)
+3. IF ELSE IF a yard, open-storage plot, development site or car park has been publicly listed for more than 90 days without letting -&gt; Tier 2 — Land Doing Nothing (The land is not letting as land. It earns close to nothing while it waits for a tenant who may never arrive. This is the highest-ACV tier in the cascade.)
+4. IF ELSE IF the account occupies an address with approved demolition or change-of-use consent, within 12 miles of a Bloc site -&gt; Tier 3 — Displaced by Redevelopment (The building is coming down. There is a hard move-out date and months of unpriced uncertainty about where the workshop and the stock go. This is the join no competitor can buy.)
+5. IF ELSE IF a limited company with a residential registered office, a maker / creative / e-commerce / food SIC, incorporated 12 to 48 months ago, within 6 miles of a Bloc site -&gt; Tier 4 — Outgrowing the Spare Room (The business has outgrown the home it was started in. Stock, kit and mess have become a domestic problem, and every proper studio wants a deposit and three years.)
+6. IF ELSE IF a live tender for temporary accommodation, welfare units, modular classrooms, emergency housing or site accommodation — or a public body with rising temporary-accommodation placements — or an international-relief charity -&gt; Tier 5 — Public &amp; Humanitarian Buyers (The requirement is urgent, the delivery window is short, and conventional build cannot meet it.)
+7. IF ELSE — every remaining limited company inside the M25 with a space-consuming SIC code -&gt; Catch-all — London Space Consumers (No filed event, but space cost is a permanent London problem and almost nobody re-tests the rate they signed on. &#39;We will beat any quote&#39; is Bloc&#39;s strongest existing claim and needs no research beat at all.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="03">
+        
+    <div class="section-head">
+      <p class="eyebrow">03</p>
+      <h2>Six tiers, five revenue lines</h2>
+      <p class="takeaway">The public record does not just say who to contact. It says which of Bloc&#39;s five products to sell them, so every reply lands on something that already exists at a price that is already published.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button><button class="chip" type="button" data-filter="tier6">Catch-all</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">4.6% TAM</span>
+          </div>
+          <h3>Tier 1: Consented Modular Need</h3>
+          <p>Planning consent approved in the last 12 months for a temporary building, modular unit, container or welfare unit.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They have permission and a deadline. They are getting quotes right now, and the default route offered to them is a hire agreement on a long minimum term — where they will have paid for the unit twice over before the consent expires.</dd></div>
+              <div><dt>Offer</dt><dd>Buy-versus-hire breakeven sheet, calculated on their exact consented unit specification</dd></div>
+              <div><dt>Source</dt><dd>Planning London Datahub + local authority planning portals</dd></div>
+              <div><dt>Reply density</dt><dd>Highest intent in the cascade — a consent is as close to a purchase order as public data gets. Launches in phase 4, once the proof gaps are closed.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">5.3% TAM</span>
+          </div>
+          <h3>Tier 2: Land Doing Nothing</h3>
+          <p>A yard, open-storage plot, development site or car park publicly listed for more than 90 days without letting.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The land is not letting as land. It earns close to nothing while it waits for a tenant with a use case that pays properly — and the enquiries coming in all want it as bare land at bare-land rates.</dd></div>
+              <div><dt>Offer</dt><dd>Site yield model — rental income per square foot if converted, using Bloc&#39;s own published rate card</dd></div>
+              <div><dt>Source</dt><dd>Rightmove Commercial, Novaloca, Realla, EG — listing age and owner attached</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest volume, highest ACV. Judge this tier on pipeline value, not reply ratio — it can run at 1 positive per 800 and still be the most profitable campaign in the programme.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">7.9% TAM</span>
+          </div>
+          <h3>Tier 3: Displaced by Redevelopment</h3>
+          <p>Occupier at an address that has received approved demolition or change-of-use consent, within 12 miles of a Bloc site.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The building is coming down. There is a hard move-out date and, usually, months of unpriced uncertainty. The hard part is not finding somewhere — it is finding somewhere that takes the workshop and the stuff without signing five years to get it.</dd></div>
+              <div><dt>Offer</dt><dd>Relocation options sheet — every Bloc unit that fits their footprint, priced, with distance from their current address</dd></div>
+              <div><dt>Source</dt><dd>Planning London Datahub joined to occupier data — the unbuyable signal</dd></div>
+              <div><dt>Reply density</dt><dd>Sharpest trigger and the hardest deadline in the cascade. Launches first because it sells rentable space at published prices and needs no new proof.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">32.9% TAM</span>
+          </div>
+          <h3>Tier 4: Outgrowing the Spare Room</h3>
+          <p>Limited company, residential registered office, maker / creative / e-commerce / food SIC, incorporated 12 to 48 months ago, within 6 miles of a Bloc site.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The business has outgrown the home it was started in. Stock, kit and mess have become a domestic problem — and the reason they have not moved out is that every proper studio wants a deposit, a dilapidations clause and three years.</dd></div>
+              <div><dt>Offer</dt><dd>&#39;The GBP 100 Week&#39; — what 200 sq ft in Hackney Wick or Woolwich actually gets you, priced against a self-storage unit a fraction of the size</dd></div>
+              <div><dt>Source</dt><dd>Companies House — registered office, SIC, incorporation date, company type</dd></div>
+              <div><dt>Reply density</dt><dd>The largest tier that can launch without closing a proof gap. Volume validation for the whole programme. Note the PECR gate bites hardest here.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">3.3% TAM</span>
+          </div>
+          <h3>Tier 5: Public &amp; Humanitarian Buyers</h3>
+          <p>Live tender for temporary accommodation, welfare units or modular classrooms; or a council with rising temporary-accommodation placements; or an international-relief charity.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The requirement is urgent, the delivery window is short, and conventional build cannot meet it. The constraint is less budget than the ability to place units without a large skilled team on the ground.</dd></div>
+              <div><dt>Offer</dt><dd>Rapid-deployment spec pack — unit specifications, stacking and structural limits, lead times and shipping</dd></div>
+              <div><dt>Source</dt><dd>Contracts Finder + Find a Tender + MHCLG statutory homelessness tables</dd></div>
+              <div><dt>Reply density</dt><dd>Longest cycle, largest contracts. Requires procurement literacy: capability information for the file, never a nudge inside a live competition.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier6" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">06</span>
+            <span class="tier-share">46.0% TAM</span>
+          </div>
+          <h3>Catch-all: London Space Consumers</h3>
+          <p>Everything remaining: any limited company inside the M25 with a space-consuming SIC code.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>No filed event. But space cost is a permanent London problem, and almost nobody re-tests the rate they signed on — the introductory rate they were quoted is rarely the rate they are on now.</dd></div>
+              <div><dt>Offer</dt><dd>Beat-your-quote check — send the current invoice, Bloc comes back under it or says stay put</dd></div>
+              <div><dt>Source</dt><dd>Companies House SIC + postcode filter across the M25</dd></div>
+              <div><dt>Reply density</dt><dd>Broadest copy, softest CTA. The reply is the discovery call — it is self-qualifying and needs no research beat.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="04">
+        
+    <div class="section-head">
+      <p class="eyebrow">04</p>
+      <h2>The campaign set</h2>
+      <p class="takeaway">Six waterfall campaigns plus four time-boxed side plays that sit alongside the cascade and run only once it is stable.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button><button class="chip" type="button" data-filter="tier6">Catch-all</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Consent-to-Quote Intercept</h3>
+          <p>Intercepts the buyer in the two-week window between consent and quote collection, when the only options they have been shown are hire agreements. Bloc manufactures, so it competes on ownership economics rather than on weekly rate.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Approved planning consent, last 12 months, application type contains temporary building / modular / container / welfare unit. Contact = named applicant or agent on the filing.</dd></div>
+            <div><dt>AI strategy</dt><dd>Parse the consent description to extract the unit type, dimensions and intended use, then generate a buy-versus-hire breakeven at that exact specification. The email quotes the planning reference and decision month, which is unforgeable by a competitor working from a bought list.</dd></div>
+            <div><dt>Value</dt><dd>Own the asset instead of renting it</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Idle Land Yield Model</h3>
+          <p>The highest-ACV play in the programme. Bloc is one of very few operators that can credibly pitch this, because it has designed, built AND managed exactly this kind of scheme across four of its own sites since 2013. Manufacturers do not operate; operators do not manufacture.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Yard, open storage, development plot or car park listed 90+ days on Rightmove Commercial, Novaloca, Realla or EG. Contact = landowner director or named letting agent, plus asset or estates manager.</dd></div>
+            <div><dt>AI strategy</dt><dd>Compute what the plot would earn converted, using Bloc&#39;s published rate card and the plot&#39;s stated square footage, against the ground rent it earns today. The artifact is a one-page yield model addressed to that specific site.</dd></div>
+            <div><dt>Value</dt><dd>Turn dead ground into rent per square foot</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Consented Demolition Relocation</h3>
+          <p>The sharpest trigger available to any London space operator, and structurally unavailable to competitors. Tone discipline is mandatory — being displaced by a developer is stressful, so the email is a helpful neighbour and never an opportunist. No urgency language, no countdowns.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Approved demolition or change-of-use consent, joined to businesses currently registered or physically trading at that address, within 12 miles of a Bloc site.</dd></div>
+            <div><dt>AI strategy</dt><dd>The join is the whole campaign: planning consent gives the address and the date, Companies House and Maps give the occupiers. Generate a relocation options sheet listing every Bloc unit that fits their footprint, priced, with drive distance from their current address.</dd></div>
+            <div><dt>Value</dt><dd>One move, not two</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Home-Registered Maker Graduation</h3>
+          <p>The volume engine of the cascade at ~25,000 accounts. The PECR gate is load-bearing here — home-registered businesses are the population most likely to be sole traders, who cannot be emailed without consent, so company_type must be enforced before any send.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Ltd company, registered office matches a residential address, SIC in the maker / creative / e-commerce / food-production set, incorporated 12 to 48 months ago, within 6 miles of Hackney Wick or Woolwich.</dd></div>
+            <div><dt>AI strategy</dt><dd>Match the SIC code to the craft noun and the nearest site, then price 200 sq ft against what a self-storage chain charges for a fraction of the room. Concrete beats abstract: the artifact shows what GBP 100 a week physically looks like.</dd></div>
+            <div><dt>Value</dt><dd>Get the business out of the house</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Rapid-Deploy Capability Note</h3>
+          <p>Longest cycle and largest contracts in the programme. Currently gated on proof: Tier 5 sells a humanitarian capability with no public evidence it has been exercised, and no published lead time. Both are fixable with a single client input.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Live or recent notices on Contracts Finder and Find a Tender for temporary accommodation, welfare units, modular classrooms, emergency housing or site accommodation; plus councils with a rising temporary-accommodation placement trend.</dd></div>
+            <div><dt>AI strategy</dt><dd>Reference the published notice, then offer a capability pack for the file rather than a response to the competition. Procurement-safe by construction: it commits the buyer to nothing and positions Bloc ahead of the next requirement rather than inside the current one.</dd></div>
+            <div><dt>Value</dt><dd>Deliverable when conventional build is not</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier6" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Beat Your Quote</h3>
+          <p>Attacks the self-storage ratchet: most London storage is sold on a promotional rate that steps up at month four and again at month twelve, so the number the customer agreed is rarely the number they are paying. Bloc&#39;s published rate does not do that.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Every remaining Ltd company inside the M25 with a space-consuming SIC. Contact = operations, facilities or office manager, with founder as secondary.</dd></div>
+            <div><dt>AI strategy</dt><dd>No research beat required. Lead with distance to the nearest two sites and the guarantee, then ask for one number — the current monthly figure and square footage. The reply IS the discovery call, and answering it honestly (including telling people to stay put) is what makes the campaign credible.</dd></div>
+            <div><dt>Value</dt><dd>Stop overpaying for the same square footage</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier6" data-campaign-group="Side play">
+          <div class="campaign-card__meta">
+            <span>Side play</span>
+            <span>Niche</span>
+          </div>
+          <h3>Film &amp; TV Production Slate (side campaign)</h3>
+          <p>NOT part of the waterfall. Productions need space on a short, fixed, non-negotiable window and are not price sensitive. Time-boxed and opt-in — runs only once the cascade is stable.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Production announcements and filming permits for London shoots.</dd></div>
+            <div><dt>AI strategy</dt><dd>Trigger on the announced shoot window and offer location storage, unit bases and set-build workshop space for that fixed period.</dd></div>
+            <div><dt>Value</dt><dd>Fixed-window space, no lease</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier6" data-campaign-group="Side play">
+          <div class="campaign-card__meta">
+            <span>Side play</span>
+            <span>Niche</span>
+          </div>
+          <h3>Insolvency &amp; Closure Releases (side campaign)</h3>
+          <p>NOT part of the waterfall. Handle with care on tone — this is a distressed audience and the message should be practical and unemotional.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Gazette insolvency and closure notices for London retail and hospitality.</dd></div>
+            <div><dt>AI strategy</dt><dd>Administration releases fixtures, stock and equipment that must be moved within weeks. Trigger on the notice and offer immediate container storage with vehicle access.</dd></div>
+            <div><dt>Value</dt><dd>Somewhere for it to go, this week</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier6" data-campaign-group="Side play">
+          <div class="campaign-card__meta">
+            <span>Side play</span>
+            <span>Focused</span>
+          </div>
+          <h3>Events Season Welfare &amp; Cold Storage (side campaign)</h3>
+          <p>NOT part of the waterfall. Fully repeatable year on year, and one of the few campaigns where the same accounts can be re-contacted annually with a genuinely fresh reason.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Licensing applications and temporary event notices, April to September.</dd></div>
+            <div><dt>AI strategy</dt><dd>Seasonal and predictable. Trigger on the licence application and offer containers, refrigerated units and welfare cabins for the event window.</dd></div>
+            <div><dt>Value</dt><dd>Recurring seasonal demand</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier6" data-campaign-group="Side play">
+          <div class="campaign-card__meta">
+            <span>Side play</span>
+            <span>Focused</span>
+          </div>
+          <h3>Existing-Tenant Expansion (side campaign)</h3>
+          <p>NOT part of the waterfall, and currently not being run at all. Zero acquisition cost, an existing relationship, and a prospect already on site. Worth building before anything else in this list.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Internal — Bloc tenants who have outgrown a 200 sq ft unit.</dd></div>
+            <div><dt>AI strategy</dt><dd>Not outbound at all. Trigger on tenure and unit size from Bloc&#39;s own records and offer the next size up, or a storage unit on the same site.</dd></div>
+            <div><dt>Value</dt><dd>Cheapest revenue in the business</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="05">
+        
+    <div class="section-head">
+      <p class="eyebrow">05</p>
+      <h2>The copy</h2>
+      <p class="takeaway">One five-beat framework, six sets of data points. The notice line quotes the filed record specifically, which is exactly what a competitor cannot forge.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company_name}}</span><span>{{sender}}</span><span>{{council}}</span><span>{{planning_ref}}</span><span>{{decision_month}}</span><span>{{unit_description}}</span><span>{{site_address}}</span><span>{{building_name}}</span><span>{{scheme_type}}</span><span>{{land_type}}</span><span>{{listing_age_months}}</span><span>{{area}}</span><span>{{company_age}}</span><span>{{craft_noun}}</span><span>{{nearest_site}}</span><span>{{distance}}</span><span>{{organisation}}</span><span>{{tender_subject}}</span><span>{{tender_context}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company_name}}, {{sender}}, {{council}}, {{planning_ref}}, {{decision_month}}, {{unit_description}}, {{site_address}}, {{building_name}}, {{scheme_type}}, {{land_type}}, {{listing_age_months}}, {{area}}, {{company_age}}, {{craft_noun}}, {{nearest_site}}, {{distance}}, {{organisation}}, {{tender_subject}}, {{tender_context}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 — Consented Modular Need</strong>
+              <em>Buy-versus-hire breakeven sheet at their consented spec</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 — Consented Modular Need steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the unit for {{planning_ref}}&#10;&#10;Hi {{first_name}},&#10;&#10;I saw {{council}} approved {{planning_ref}} last {{decision_month}} — the {{unit_description}} at {{site_address}}.&#10;&#10;But would it be fair to assume the quotes coming back are hire agreements on a long minimum term, where you have paid for the unit twice over by the time the consent expires?&#10;&#10;We manufacture them. A Bloc unit starts at GBP 1,095 and arrives with insulation, electrics, heating and air conditioning already installed — you buy it once, and it is an asset instead of a line item.&#10;&#10;We have been designing and building these since 2013, and operating them ourselves in East London the whole time.&#10;&#10;Reply &quot;sheet&quot; and I will send the buy-versus-hire breakeven for a unit at your consented spec. No call needed.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the unit for {{planning_ref}}" data-preview="the unit for PA/26/01847">the unit for {{planning_ref}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;I saw {{council}} approved {{planning_ref}} last {{decision_month}} — the {{unit_description}} at {{site_address}}.&#10;&#10;But would it be fair to assume the quotes coming back are hire agreements on a long minimum term, where you have paid for the unit twice over by the time the consent expires?&#10;&#10;We manufacture them. A Bloc unit starts at GBP 1,095 and arrives with insulation, electrics, heating and air conditioning already installed — you buy it once, and it is an asset instead of a line item.&#10;&#10;We have been designing and building these since 2013, and operating them ourselves in East London the whole time.&#10;&#10;Reply &quot;sheet&quot; and I will send the buy-versus-hire breakeven for a unit at your consented spec. No call needed.&#10;&#10;{{sender}}" data-preview="Hi Priya,&#10;&#10;I saw Tower Hamlets approved PA/26/01847 last March — the two-storey modular site office at Fish Island Yard, E3.&#10;&#10;But would it be fair to assume the quotes coming back are hire agreements on a long minimum term, where you have paid for the unit twice over by the time the consent expires?&#10;&#10;We manufacture them. A Bloc unit starts at GBP 1,095 and arrives with insulation, electrics, heating and air conditioning already installed — you buy it once, and it is an asset instead of a line item.&#10;&#10;We have been designing and building these since 2013, and operating them ourselves in East London the whole time.&#10;&#10;Reply &quot;sheet&quot; and I will send the buy-versus-hire breakeven for a unit at your consented spec. No call needed.&#10;&#10;Sam">
+                        <p>Hi {{first_name}},</p><p>I saw {{council}} approved {{planning_ref}} last {{decision_month}} — the {{unit_description}} at {{site_address}}.</p><p>But would it be fair to assume the quotes coming back are hire agreements on a long minimum term, where you have paid for the unit twice over by the time the consent expires?</p><p>We manufacture them. A Bloc unit starts at GBP 1,095 and arrives with insulation, electrics, heating and air conditioning already installed — you buy it once, and it is an asset instead of a line item.</p><p>We have been designing and building these since 2013, and operating them ourselves in East London the whole time.</p><p>Reply &quot;sheet&quot; and I will send the buy-versus-hire breakeven for a unit at your consented spec. No call needed.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Quick follow-up with the other half of it.&#10;&#10;Hire is an operating cost you never stop paying. A bought unit is yours at the end of the scheme — you redeploy it to the next site, or you sell it on. Ours are rated to stack seven high, so the same units carry across projects instead of being handed back.&#10;&#10;Still happy to send the breakeven sheet for {{planning_ref}} — just say the word.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Quick follow-up with the other half of it.&#10;&#10;Hire is an operating cost you never stop paying. A bought unit is yours at the end of the scheme — you redeploy it to the next site, or you sell it on. Ours are rated to stack seven high, so the same units carry across projects instead of being handed back.&#10;&#10;Still happy to send the breakeven sheet for {{planning_ref}} — just say the word." data-preview="Quick follow-up with the other half of it.&#10;&#10;Hire is an operating cost you never stop paying. A bought unit is yours at the end of the scheme — you redeploy it to the next site, or you sell it on. Ours are rated to stack seven high, so the same units carry across projects instead of being handed back.&#10;&#10;Still happy to send the breakeven sheet for PA/26/01847 — just say the word.">
+                        <p>Quick follow-up with the other half of it.</p><p>Hire is an operating cost you never stop paying. A bought unit is yours at the end of the scheme — you redeploy it to the next site, or you sell it on. Ours are rated to stack seven high, so the same units carry across projects instead of being handed back.</p><p>Still happy to send the breakeven sheet for {{planning_ref}} — just say the word.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: wrong person?&#10;&#10;Hi {{first_name}},&#10;&#10;No need for a call. Just reply &quot;yes&quot; and I will send the buy-versus-hire breakeven for the {{unit_description}} at {{site_address}}.&#10;&#10;Should I send this to you, or to whoever is handling procurement for the site?&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="wrong person?" data-preview="wrong person?">wrong person?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;No need for a call. Just reply &quot;yes&quot; and I will send the buy-versus-hire breakeven for the {{unit_description}} at {{site_address}}.&#10;&#10;Should I send this to you, or to whoever is handling procurement for the site?&#10;&#10;{{sender}}" data-preview="Hi Priya,&#10;&#10;No need for a call. Just reply &quot;yes&quot; and I will send the buy-versus-hire breakeven for the two-storey modular site office at Fish Island Yard, E3.&#10;&#10;Should I send this to you, or to whoever is handling procurement for the site?&#10;&#10;Sam">
+                        <p>Hi {{first_name}},</p><p>No need for a call. Just reply &quot;yes&quot; and I will send the buy-versus-hire breakeven for the {{unit_description}} at {{site_address}}.</p><p>Should I send this to you, or to whoever is handling procurement for the site?</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 — Land Doing Nothing</strong>
+              <em>Site yield model at Bloc&#39;s published rate card</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 — Land Doing Nothing steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{site_address}}&#10;&#10;Hi {{first_name}},&#10;&#10;Your {{land_type}} at {{site_address}} has been listed {{listing_age_months}} months now. I know the plot — it is a good one.&#10;&#10;But would it be fair to assume the enquiries you are getting want it as bare land at bare-land rates, and you are waiting on a tenant with a use case that pays properly?&#10;&#10;There is a third option most landowners are never shown. We build the space, and it lets by the square foot instead of by the acre — a studio community of rent-paying tenants, a self-storage operation, or a mix of the two. Bloc has designed, built and managed exactly this since 2013, across four of our own London sites.&#10;&#10;Reply &quot;model&quot; and I will send a yield model for {{site_address}} at our published rate card — what the plot earns converted, against what it earns sitting there. No call needed.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{site_address}}" data-preview="Fish Island Yard, E3">{{site_address}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Your {{land_type}} at {{site_address}} has been listed {{listing_age_months}} months now. I know the plot — it is a good one.&#10;&#10;But would it be fair to assume the enquiries you are getting want it as bare land at bare-land rates, and you are waiting on a tenant with a use case that pays properly?&#10;&#10;There is a third option most landowners are never shown. We build the space, and it lets by the square foot instead of by the acre — a studio community of rent-paying tenants, a self-storage operation, or a mix of the two. Bloc has designed, built and managed exactly this since 2013, across four of our own London sites.&#10;&#10;Reply &quot;model&quot; and I will send a yield model for {{site_address}} at our published rate card — what the plot earns converted, against what it earns sitting there. No call needed.&#10;&#10;{{sender}}" data-preview="Hi Priya,&#10;&#10;Your open storage yard at Fish Island Yard, E3 has been listed seven months now. I know the plot — it is a good one.&#10;&#10;But would it be fair to assume the enquiries you are getting want it as bare land at bare-land rates, and you are waiting on a tenant with a use case that pays properly?&#10;&#10;There is a third option most landowners are never shown. We build the space, and it lets by the square foot instead of by the acre — a studio community of rent-paying tenants, a self-storage operation, or a mix of the two. Bloc has designed, built and managed exactly this since 2013, across four of our own London sites.&#10;&#10;Reply &quot;model&quot; and I will send a yield model for Fish Island Yard, E3 at our published rate card — what the plot earns converted, against what it earns sitting there. No call needed.&#10;&#10;Sam">
+                        <p>Hi {{first_name}},</p><p>Your {{land_type}} at {{site_address}} has been listed {{listing_age_months}} months now. I know the plot — it is a good one.</p><p>But would it be fair to assume the enquiries you are getting want it as bare land at bare-land rates, and you are waiting on a tenant with a use case that pays properly?</p><p>There is a third option most landowners are never shown. We build the space, and it lets by the square foot instead of by the acre — a studio community of rent-paying tenants, a self-storage operation, or a mix of the two. Bloc has designed, built and managed exactly this since 2013, across four of our own London sites.</p><p>Reply &quot;model&quot; and I will send a yield model for {{site_address}} at our published rate card — what the plot earns converted, against what it earns sitting there. No call needed.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One thing worth adding: this does not have to be capital out of your pocket.&#10;&#10;We can supply and you operate, or we design, build and manage it and you take the income. The units are modular, so the scheme scales with demand rather than committing you on day one — and if the land is needed for something else later, they come off it.&#10;&#10;The yield model for {{site_address}} is ready whenever you want it.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One thing worth adding: this does not have to be capital out of your pocket.&#10;&#10;We can supply and you operate, or we design, build and manage it and you take the income. The units are modular, so the scheme scales with demand rather than committing you on day one — and if the land is needed for something else later, they come off it.&#10;&#10;The yield model for {{site_address}} is ready whenever you want it." data-preview="One thing worth adding: this does not have to be capital out of your pocket.&#10;&#10;We can supply and you operate, or we design, build and manage it and you take the income. The units are modular, so the scheme scales with demand rather than committing you on day one — and if the land is needed for something else later, they come off it.&#10;&#10;The yield model for Fish Island Yard, E3 is ready whenever you want it.">
+                        <p>One thing worth adding: this does not have to be capital out of your pocket.</p><p>We can supply and you operate, or we design, build and manage it and you take the income. The units are modular, so the scheme scales with demand rather than committing you on day one — and if the land is needed for something else later, they come off it.</p><p>The yield model for {{site_address}} is ready whenever you want it.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{site_address}} — one number&#10;&#10;Hi {{first_name}},&#10;&#10;No call needed. Reply &quot;yes&quot; and I will send the yield model for {{site_address}} — income per square foot converted, against the ground rent it earns today.&#10;&#10;Should this go to you, or to whoever handles the asset side?&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{site_address}} — one number" data-preview="Fish Island Yard, E3 — one number">{{site_address}} — one number</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;No call needed. Reply &quot;yes&quot; and I will send the yield model for {{site_address}} — income per square foot converted, against the ground rent it earns today.&#10;&#10;Should this go to you, or to whoever handles the asset side?&#10;&#10;{{sender}}" data-preview="Hi Priya,&#10;&#10;No call needed. Reply &quot;yes&quot; and I will send the yield model for Fish Island Yard, E3 — income per square foot converted, against the ground rent it earns today.&#10;&#10;Should this go to you, or to whoever handles the asset side?&#10;&#10;Sam">
+                        <p>Hi {{first_name}},</p><p>No call needed. Reply &quot;yes&quot; and I will send the yield model for {{site_address}} — income per square foot converted, against the ground rent it earns today.</p><p>Should this go to you, or to whoever handles the asset side?</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 — Displaced by Redevelopment</strong>
+              <em>Relocation options sheet, priced, with distance from their address</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 — Displaced by Redevelopment steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{building_name}}&#10;&#10;Hi {{first_name}},&#10;&#10;I saw {{council}} approved the {{scheme_type}} at {{site_address}} — which, if you are still in the building, means a date.&#10;&#10;But would it be fair to assume the harder part is not finding somewhere, it is finding somewhere that takes the workshop and the stuff, without signing five years to get it?&#10;&#10;We run four sites in East and South London — studios, workshops and soundproofed rooms from 200 to 2,000 sq ft, with storage units on the same site so the move happens once. From GBP 100 +VAT a week, 24 hour access, flexible terms.&#10;&#10;No hidden costs and no sales calls — that is not a line, it is on our website.&#10;&#10;Reply &quot;options&quot; and I will send what we have that fits your footprint, priced, with the distance from {{site_address}}. Even if you go elsewhere, it is a useful benchmark.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{building_name}}" data-preview="Rothbury Works">{{building_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;I saw {{council}} approved the {{scheme_type}} at {{site_address}} — which, if you are still in the building, means a date.&#10;&#10;But would it be fair to assume the harder part is not finding somewhere, it is finding somewhere that takes the workshop and the stuff, without signing five years to get it?&#10;&#10;We run four sites in East and South London — studios, workshops and soundproofed rooms from 200 to 2,000 sq ft, with storage units on the same site so the move happens once. From GBP 100 +VAT a week, 24 hour access, flexible terms.&#10;&#10;No hidden costs and no sales calls — that is not a line, it is on our website.&#10;&#10;Reply &quot;options&quot; and I will send what we have that fits your footprint, priced, with the distance from {{site_address}}. Even if you go elsewhere, it is a useful benchmark.&#10;&#10;{{sender}}" data-preview="Hi Priya,&#10;&#10;I saw Tower Hamlets approved the demolition and residential redevelopment at Fish Island Yard, E3 — which, if you are still in the building, means a date.&#10;&#10;But would it be fair to assume the harder part is not finding somewhere, it is finding somewhere that takes the workshop and the stuff, without signing five years to get it?&#10;&#10;We run four sites in East and South London — studios, workshops and soundproofed rooms from 200 to 2,000 sq ft, with storage units on the same site so the move happens once. From GBP 100 +VAT a week, 24 hour access, flexible terms.&#10;&#10;No hidden costs and no sales calls — that is not a line, it is on our website.&#10;&#10;Reply &quot;options&quot; and I will send what we have that fits your footprint, priced, with the distance from Fish Island Yard, E3. Even if you go elsewhere, it is a useful benchmark.&#10;&#10;Sam">
+                        <p>Hi {{first_name}},</p><p>I saw {{council}} approved the {{scheme_type}} at {{site_address}} — which, if you are still in the building, means a date.</p><p>But would it be fair to assume the harder part is not finding somewhere, it is finding somewhere that takes the workshop and the stuff, without signing five years to get it?</p><p>We run four sites in East and South London — studios, workshops and soundproofed rooms from 200 to 2,000 sq ft, with storage units on the same site so the move happens once. From GBP 100 +VAT a week, 24 hour access, flexible terms.</p><p>No hidden costs and no sales calls — that is not a line, it is on our website.</p><p>Reply &quot;options&quot; and I will send what we have that fits your footprint, priced, with the distance from {{site_address}}. Even if you go elsewhere, it is a useful benchmark.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Adding the practical bit.&#10;&#10;The thing that usually catches people out in a forced move is the gap — the new space is not ready when the old one closes. We can hold storage on the same site as the studio, so kit and stock go into a container while the space is fitted out, and nothing ends up on a pavement.&#10;&#10;Options sheet for {{site_address}} is there whenever you want it.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Adding the practical bit.&#10;&#10;The thing that usually catches people out in a forced move is the gap — the new space is not ready when the old one closes. We can hold storage on the same site as the studio, so kit and stock go into a container while the space is fitted out, and nothing ends up on a pavement.&#10;&#10;Options sheet for {{site_address}} is there whenever you want it." data-preview="Adding the practical bit.&#10;&#10;The thing that usually catches people out in a forced move is the gap — the new space is not ready when the old one closes. We can hold storage on the same site as the studio, so kit and stock go into a container while the space is fitted out, and nothing ends up on a pavement.&#10;&#10;Options sheet for Fish Island Yard, E3 is there whenever you want it.">
+                        <p>Adding the practical bit.</p><p>The thing that usually catches people out in a forced move is the gap — the new space is not ready when the old one closes. We can hold storage on the same site as the studio, so kit and stock go into a container while the space is fitted out, and nothing ends up on a pavement.</p><p>Options sheet for {{site_address}} is there whenever you want it.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: still looking?&#10;&#10;Hi {{first_name}},&#10;&#10;No call needed. Reply &quot;yes&quot; and I will send the relocation options sheet — every unit we have that fits, priced, with distance from {{site_address}}.&#10;&#10;Should I send it to you, or to whoever is handling the move?&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="still looking?" data-preview="still looking?">still looking?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;No call needed. Reply &quot;yes&quot; and I will send the relocation options sheet — every unit we have that fits, priced, with distance from {{site_address}}.&#10;&#10;Should I send it to you, or to whoever is handling the move?&#10;&#10;{{sender}}" data-preview="Hi Priya,&#10;&#10;No call needed. Reply &quot;yes&quot; and I will send the relocation options sheet — every unit we have that fits, priced, with distance from Fish Island Yard, E3.&#10;&#10;Should I send it to you, or to whoever is handling the move?&#10;&#10;Sam">
+                        <p>Hi {{first_name}},</p><p>No call needed. Reply &quot;yes&quot; and I will send the relocation options sheet — every unit we have that fits, priced, with distance from {{site_address}}.</p><p>Should I send it to you, or to whoever is handling the move?</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 — Outgrowing the Spare Room</strong>
+              <em>&#39;The GBP 100 Week&#39; — what 200 sq ft actually gets you</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 — Outgrowing the Spare Room steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: running {{company_name}} from {{area}}&#10;&#10;Hi {{first_name}},&#10;&#10;{{company_name}} has been going {{company_age}} years and is still registered at a residential address in {{area}} — which usually means the {{craft_noun}} is happening somewhere it was never meant to happen.&#10;&#10;But would it be fair to assume the reason you have not moved out is that every proper studio you have looked at wants a deposit, a dilapidations clause and three years?&#10;&#10;Ours is GBP 100 +VAT a week for 200 sq ft in {{nearest_site}}. Large windows, high ceilings, 24 hour access, shared kitchen and roof terrace, flexible terms. If you only need the stock out of the house, a storage unit starts at GBP 20 +VAT a week on the same site.&#10;&#10;We have been running studio space in East London since 2013, and there are no sales calls in the process — you view it, you take it.&#10;&#10;Reply &quot;100&quot; and I will send what 200 sq ft actually looks like at {{nearest_site}}, priced against what you would pay a self-storage chain for a fraction of the room.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="running {{company_name}} from {{area}}" data-preview="running Northfield Ceramics Ltd from Walthamstow">running {{company_name}} from {{area}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;{{company_name}} has been going {{company_age}} years and is still registered at a residential address in {{area}} — which usually means the {{craft_noun}} is happening somewhere it was never meant to happen.&#10;&#10;But would it be fair to assume the reason you have not moved out is that every proper studio you have looked at wants a deposit, a dilapidations clause and three years?&#10;&#10;Ours is GBP 100 +VAT a week for 200 sq ft in {{nearest_site}}. Large windows, high ceilings, 24 hour access, shared kitchen and roof terrace, flexible terms. If you only need the stock out of the house, a storage unit starts at GBP 20 +VAT a week on the same site.&#10;&#10;We have been running studio space in East London since 2013, and there are no sales calls in the process — you view it, you take it.&#10;&#10;Reply &quot;100&quot; and I will send what 200 sq ft actually looks like at {{nearest_site}}, priced against what you would pay a self-storage chain for a fraction of the room.&#10;&#10;{{sender}}" data-preview="Hi Priya,&#10;&#10;Northfield Ceramics Ltd has been going three years and is still registered at a residential address in Walthamstow — which usually means the kiln work is happening somewhere it was never meant to happen.&#10;&#10;But would it be fair to assume the reason you have not moved out is that every proper studio you have looked at wants a deposit, a dilapidations clause and three years?&#10;&#10;Ours is GBP 100 +VAT a week for 200 sq ft in Hackney Wick. Large windows, high ceilings, 24 hour access, shared kitchen and roof terrace, flexible terms. If you only need the stock out of the house, a storage unit starts at GBP 20 +VAT a week on the same site.&#10;&#10;We have been running studio space in East London since 2013, and there are no sales calls in the process — you view it, you take it.&#10;&#10;Reply &quot;100&quot; and I will send what 200 sq ft actually looks like at Hackney Wick, priced against what you would pay a self-storage chain for a fraction of the room.&#10;&#10;Sam">
+                        <p>Hi {{first_name}},</p><p>{{company_name}} has been going {{company_age}} years and is still registered at a residential address in {{area}} — which usually means the {{craft_noun}} is happening somewhere it was never meant to happen.</p><p>But would it be fair to assume the reason you have not moved out is that every proper studio you have looked at wants a deposit, a dilapidations clause and three years?</p><p>Ours is GBP 100 +VAT a week for 200 sq ft in {{nearest_site}}. Large windows, high ceilings, 24 hour access, shared kitchen and roof terrace, flexible terms. If you only need the stock out of the house, a storage unit starts at GBP 20 +VAT a week on the same site.</p><p>We have been running studio space in East London since 2013, and there are no sales calls in the process — you view it, you take it.</p><p>Reply &quot;100&quot; and I will send what 200 sq ft actually looks like at {{nearest_site}}, priced against what you would pay a self-storage chain for a fraction of the room.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The other half of this is what it does to the business rather than to the house.&#10;&#10;Clients can come to a studio. Couriers have somewhere to deliver to. You can hire someone. And if it is noise you have been working around, we have properly soundproofed rooms in dedicated music buildings, so you are not negotiating with neighbours at 11pm.&#10;&#10;Happy to send the {{nearest_site}} breakdown whenever.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The other half of this is what it does to the business rather than to the house.&#10;&#10;Clients can come to a studio. Couriers have somewhere to deliver to. You can hire someone. And if it is noise you have been working around, we have properly soundproofed rooms in dedicated music buildings, so you are not negotiating with neighbours at 11pm.&#10;&#10;Happy to send the {{nearest_site}} breakdown whenever." data-preview="The other half of this is what it does to the business rather than to the house.&#10;&#10;Clients can come to a studio. Couriers have somewhere to deliver to. You can hire someone. And if it is noise you have been working around, we have properly soundproofed rooms in dedicated music buildings, so you are not negotiating with neighbours at 11pm.&#10;&#10;Happy to send the Hackney Wick breakdown whenever.">
+                        <p>The other half of this is what it does to the business rather than to the house.</p><p>Clients can come to a studio. Couriers have somewhere to deliver to. You can hire someone. And if it is noise you have been working around, we have properly soundproofed rooms in dedicated music buildings, so you are not negotiating with neighbours at 11pm.</p><p>Happy to send the {{nearest_site}} breakdown whenever.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: quick one&#10;&#10;Hi {{first_name}},&#10;&#10;No call, no pitch. Reply &quot;yes&quot; and I will send what GBP 100 +VAT a week gets you at {{nearest_site}}, with the storage rates alongside it.&#10;&#10;If you are not the one who would make that call at {{company_name}}, who is?&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="quick one" data-preview="quick one">quick one</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;No call, no pitch. Reply &quot;yes&quot; and I will send what GBP 100 +VAT a week gets you at {{nearest_site}}, with the storage rates alongside it.&#10;&#10;If you are not the one who would make that call at {{company_name}}, who is?&#10;&#10;{{sender}}" data-preview="Hi Priya,&#10;&#10;No call, no pitch. Reply &quot;yes&quot; and I will send what GBP 100 +VAT a week gets you at Hackney Wick, with the storage rates alongside it.&#10;&#10;If you are not the one who would make that call at Northfield Ceramics Ltd, who is?&#10;&#10;Sam">
+                        <p>Hi {{first_name}},</p><p>No call, no pitch. Reply &quot;yes&quot; and I will send what GBP 100 +VAT a week gets you at {{nearest_site}}, with the storage rates alongside it.</p><p>If you are not the one who would make that call at {{company_name}}, who is?</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 — Public &amp; Humanitarian Buyers</strong>
+              <em>Rapid-deployment spec pack — specs, stacking limits, lead times, shipping</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 — Public &amp; Humanitarian Buyers steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: rapid-deploy accommodation capability — {{organisation}}&#10;&#10;Hi {{first_name}},&#10;&#10;I saw {{organisation}}&#39;s notice for {{tender_subject}} {{tender_context}}.&#10;&#10;This is a capability note rather than a response to a live competition — but would it be fair to assume the constraint is less budget than delivery window, and the need to place units without a large skilled team on the ground?&#10;&#10;Bloc Spaces are manufactured, insulated, fire-resistant units that arrive with electrics, heating and air conditioning installed. They can be arranged in rows or stacked up to seven high subject to ground conditions, and they can be deployed by a small team. We ship worldwide.&#10;&#10;We have been designing, building and operating these since 2013.&#10;&#10;Reply &quot;spec&quot; and I will send the rapid-deployment pack — unit specifications, stacking and structural limits, lead times and shipping arrangements — for your records ahead of any future requirement.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="rapid-deploy accommodation capability — {{organisation}}" data-preview="rapid-deploy accommodation capability — a London borough council">rapid-deploy accommodation capability — {{organisation}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;I saw {{organisation}}&#39;s notice for {{tender_subject}} {{tender_context}}.&#10;&#10;This is a capability note rather than a response to a live competition — but would it be fair to assume the constraint is less budget than delivery window, and the need to place units without a large skilled team on the ground?&#10;&#10;Bloc Spaces are manufactured, insulated, fire-resistant units that arrive with electrics, heating and air conditioning installed. They can be arranged in rows or stacked up to seven high subject to ground conditions, and they can be deployed by a small team. We ship worldwide.&#10;&#10;We have been designing, building and operating these since 2013.&#10;&#10;Reply &quot;spec&quot; and I will send the rapid-deployment pack — unit specifications, stacking and structural limits, lead times and shipping arrangements — for your records ahead of any future requirement.&#10;&#10;{{sender}}" data-preview="Hi Priya,&#10;&#10;I saw a London borough council&#39;s notice for temporary accommodation units published on Contracts Finder last month.&#10;&#10;This is a capability note rather than a response to a live competition — but would it be fair to assume the constraint is less budget than delivery window, and the need to place units without a large skilled team on the ground?&#10;&#10;Bloc Spaces are manufactured, insulated, fire-resistant units that arrive with electrics, heating and air conditioning installed. They can be arranged in rows or stacked up to seven high subject to ground conditions, and they can be deployed by a small team. We ship worldwide.&#10;&#10;We have been designing, building and operating these since 2013.&#10;&#10;Reply &quot;spec&quot; and I will send the rapid-deployment pack — unit specifications, stacking and structural limits, lead times and shipping arrangements — for your records ahead of any future requirement.&#10;&#10;Sam">
+                        <p>Hi {{first_name}},</p><p>I saw {{organisation}}&#39;s notice for {{tender_subject}} {{tender_context}}.</p><p>This is a capability note rather than a response to a live competition — but would it be fair to assume the constraint is less budget than delivery window, and the need to place units without a large skilled team on the ground?</p><p>Bloc Spaces are manufactured, insulated, fire-resistant units that arrive with electrics, heating and air conditioning installed. They can be arranged in rows or stacked up to seven high subject to ground conditions, and they can be deployed by a small team. We ship worldwide.</p><p>We have been designing, building and operating these since 2013.</p><p>Reply &quot;spec&quot; and I will send the rapid-deployment pack — unit specifications, stacking and structural limits, lead times and shipping arrangements — for your records ahead of any future requirement.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Worth adding on flexibility, since requirements rarely stay still.&#10;&#10;The same range covers accommodation for individuals and families, administrative or medical workspace, and plain storage — so a site can be reconfigured as the situation on the ground changes, without a second procurement.&#10;&#10;The spec pack is ready whenever it is useful.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Worth adding on flexibility, since requirements rarely stay still.&#10;&#10;The same range covers accommodation for individuals and families, administrative or medical workspace, and plain storage — so a site can be reconfigured as the situation on the ground changes, without a second procurement.&#10;&#10;The spec pack is ready whenever it is useful." data-preview="Worth adding on flexibility, since requirements rarely stay still.&#10;&#10;The same range covers accommodation for individuals and families, administrative or medical workspace, and plain storage — so a site can be reconfigured as the situation on the ground changes, without a second procurement.&#10;&#10;The spec pack is ready whenever it is useful.">
+                        <p>Worth adding on flexibility, since requirements rarely stay still.</p><p>The same range covers accommodation for individuals and families, administrative or medical workspace, and plain storage — so a site can be reconfigured as the situation on the ground changes, without a second procurement.</p><p>The spec pack is ready whenever it is useful.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: for the file&#10;&#10;Hi {{first_name}},&#10;&#10;No call needed. Reply &quot;yes&quot; and I will send the rapid-deployment spec pack for {{organisation}}&#39;s records.&#10;&#10;If capability documents should go to a category manager or a framework contact instead, point me at them and I will send it there.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="for the file" data-preview="for the file">for the file</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;No call needed. Reply &quot;yes&quot; and I will send the rapid-deployment spec pack for {{organisation}}&#39;s records.&#10;&#10;If capability documents should go to a category manager or a framework contact instead, point me at them and I will send it there.&#10;&#10;{{sender}}" data-preview="Hi Priya,&#10;&#10;No call needed. Reply &quot;yes&quot; and I will send the rapid-deployment spec pack for a London borough council&#39;s records.&#10;&#10;If capability documents should go to a category manager or a framework contact instead, point me at them and I will send it there.&#10;&#10;Sam">
+                        <p>Hi {{first_name}},</p><p>No call needed. Reply &quot;yes&quot; and I will send the rapid-deployment spec pack for {{organisation}}&#39;s records.</p><p>If capability documents should go to a category manager or a framework contact instead, point me at them and I will send it there.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Catch-all — London Space Consumers</strong>
+              <em>Beat-your-quote check — send the invoice, we come under it or say stay put</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Catch-all — London Space Consumers steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: what are you paying per sq ft?&#10;&#10;Hi {{first_name}},&#10;&#10;You are in {{area}}, which puts {{company_name}} inside about {{distance}} miles of two of our sites.&#10;&#10;But would it be fair to assume that whatever you are paying for storage or workshop space, you have not re-tested it since you signed — and the introductory rate you were quoted is not the rate you are on now?&#10;&#10;We run the lowest cost storage in London and we will beat any quote in writing. Containers and lock-ups from GBP 20 +VAT a week across Docklands, Hackney Wick, Woolwich and Battersea. Studios and workshops from GBP 100 +VAT a week. No hidden costs, no sales calls, no time-limited rates.&#10;&#10;Reply with your current monthly figure and the size you have, and I will come back under it — or tell you honestly that you are already on a good deal and to stay where you are.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="what are you paying per sq ft?" data-preview="what are you paying per sq ft?">what are you paying per sq ft?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;You are in {{area}}, which puts {{company_name}} inside about {{distance}} miles of two of our sites.&#10;&#10;But would it be fair to assume that whatever you are paying for storage or workshop space, you have not re-tested it since you signed — and the introductory rate you were quoted is not the rate you are on now?&#10;&#10;We run the lowest cost storage in London and we will beat any quote in writing. Containers and lock-ups from GBP 20 +VAT a week across Docklands, Hackney Wick, Woolwich and Battersea. Studios and workshops from GBP 100 +VAT a week. No hidden costs, no sales calls, no time-limited rates.&#10;&#10;Reply with your current monthly figure and the size you have, and I will come back under it — or tell you honestly that you are already on a good deal and to stay where you are.&#10;&#10;{{sender}}" data-preview="Hi Priya,&#10;&#10;You are in Walthamstow, which puts Northfield Ceramics Ltd inside about four miles of two of our sites.&#10;&#10;But would it be fair to assume that whatever you are paying for storage or workshop space, you have not re-tested it since you signed — and the introductory rate you were quoted is not the rate you are on now?&#10;&#10;We run the lowest cost storage in London and we will beat any quote in writing. Containers and lock-ups from GBP 20 +VAT a week across Docklands, Hackney Wick, Woolwich and Battersea. Studios and workshops from GBP 100 +VAT a week. No hidden costs, no sales calls, no time-limited rates.&#10;&#10;Reply with your current monthly figure and the size you have, and I will come back under it — or tell you honestly that you are already on a good deal and to stay where you are.&#10;&#10;Sam">
+                        <p>Hi {{first_name}},</p><p>You are in {{area}}, which puts {{company_name}} inside about {{distance}} miles of two of our sites.</p><p>But would it be fair to assume that whatever you are paying for storage or workshop space, you have not re-tested it since you signed — and the introductory rate you were quoted is not the rate you are on now?</p><p>We run the lowest cost storage in London and we will beat any quote in writing. Containers and lock-ups from GBP 20 +VAT a week across Docklands, Hackney Wick, Woolwich and Battersea. Studios and workshops from GBP 100 +VAT a week. No hidden costs, no sales calls, no time-limited rates.</p><p>Reply with your current monthly figure and the size you have, and I will come back under it — or tell you honestly that you are already on a good deal and to stay where you are.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The bit that actually costs people money is the ratchet.&#10;&#10;Most self-storage in London is sold on a promotional rate that steps up at month four and again at month twelve, so the number you agreed is rarely the number you are paying. Ours does not do that — the published rate is the rate, and the terms stay flexible.&#10;&#10;Send me the figure and I will check it either way.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The bit that actually costs people money is the ratchet.&#10;&#10;Most self-storage in London is sold on a promotional rate that steps up at month four and again at month twelve, so the number you agreed is rarely the number you are paying. Ours does not do that — the published rate is the rate, and the terms stay flexible.&#10;&#10;Send me the figure and I will check it either way." data-preview="The bit that actually costs people money is the ratchet.&#10;&#10;Most self-storage in London is sold on a promotional rate that steps up at month four and again at month twelve, so the number you agreed is rarely the number you are paying. Ours does not do that — the published rate is the rate, and the terms stay flexible.&#10;&#10;Send me the figure and I will check it either way.">
+                        <p>The bit that actually costs people money is the ratchet.</p><p>Most self-storage in London is sold on a promotional rate that steps up at month four and again at month twelve, so the number you agreed is rarely the number you are paying. Ours does not do that — the published rate is the rate, and the terms stay flexible.</p><p>Send me the figure and I will check it either way.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: beat your quote&#10;&#10;Hi {{first_name}},&#10;&#10;No call needed. Reply with what you pay now and the square footage, and I will either beat it in writing or tell you to stay put.&#10;&#10;If space and facilities sit with someone else at {{company_name}}, who should I send this to?&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="beat your quote" data-preview="beat your quote">beat your quote</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;No call needed. Reply with what you pay now and the square footage, and I will either beat it in writing or tell you to stay put.&#10;&#10;If space and facilities sit with someone else at {{company_name}}, who should I send this to?&#10;&#10;{{sender}}" data-preview="Hi Priya,&#10;&#10;No call needed. Reply with what you pay now and the square footage, and I will either beat it in writing or tell you to stay put.&#10;&#10;If space and facilities sit with someone else at Northfield Ceramics Ltd, who should I send this to?&#10;&#10;Sam">
+                        <p>Hi {{first_name}},</p><p>No call needed. Reply with what you pay now and the square footage, and I will either beat it in writing or tell you to stay put.</p><p>If space and facilities sit with someone else at {{company_name}}, who should I send this to?</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="06">
+        
+    <div class="section-head">
+      <p class="eyebrow">06</p>
+      <h2>Launch sequence</h2>
+      <p class="takeaway">Sequenced by what can be proven today, not by intent strength. Tier 3 launches first because it needs nothing Bloc does not already have on its website.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Week 0 — Prerequisites. Planning London Datahub pull running clean across a 500-record sample with the occupier join confirmed end to end. Companies House company_type wired into the routing pass so the PECR gate is enforced before any send. Reply-handling procedure live: who sends the relocation options sheet, in what format, and what happens once it lands. Sending infrastructure warmed to 2,000 a week with opt-out and sender identity verified on every template.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Weeks 1-3 — Tier 3, Displaced by Redevelopment, capped at 1,500 contacts. Sharpest trigger, hardest deadline, and it sells rentable space at prices already published, so it needs no new proof. This is the fastest possible read on whether planning-data routing produces replies at all.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 3-6 — Tier 4, Outgrowing the Spare Room, 2,000 contacts. The largest tier that can launch without closing a proof gap. Volume validation, and the first real test of the PECR gate at scale.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Weeks 6-9 — Catch-all, London Space Consumers, 2,500 contacts. &#39;We will beat any quote&#39; is Bloc&#39;s strongest existing claim and needs no research beat, so this tier proves whether volume alone converts.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Weeks 9-12 — Tier 1, Consented Modular Need, 1,500 contacts. Launches only once proof gaps 1 and 3 are closed: one named build and a published delivery lead time. Highest intent in the cascade.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Weeks 12-16 — Tier 2, Land Doing Nothing, 1,500 contacts. Launches once proof gap 5 is closed with one named commercial scheme. Highest ACV in the programme and worth waiting to do properly.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>Week 16+ — Tier 5, Public &amp; Humanitarian, 1,500 contacts. Launches once gaps 3 and 4 are closed. Longest cycle, largest contracts, and the tier most damaged by launching without evidence.</p>
+              </div>
+              <div class="launch-step">
+                <span>08</span>
+                <p>Proof gaps to close in parallel, in priority order: (1) one named client or case study, (2) an occupancy or tenant-retention figure for the four London sites, (3) a published delivery lead time for Bloc Spaces units, (4) one humanitarian deployment reference, (5) one completed commercial scheme named. Items 1 to 5 are launch blockers for Tiers 1, 2 and 5. Tiers 3, 4 and the catch-all need none of them.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacts</strong>
+                <span>Perfect. Scale the tier and increase its share of weekly volume.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run untouched.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450-500</strong>
+                <span>Borderline. Test exactly one copy variant — vary the lead magnet or the notice-line research angle and hold everything else constant.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or reply rate under 1% after 1,500 sends</strong>
+                <span>Cut and rework the tier. Do not judge any tier on fewer than 1,500 contacts sent.</span>
+              </div>
+              <div class="threshold">
+                <strong>Tier 2 only — 1 per 800</strong>
+                <span>Still viable. The tiers do not share an average deal size, so they should not share a bar. A Tier 4 reply is worth GBP 100 a week; a Tier 2 reply is worth a designed, built and operated scheme. Judge Tier 2 on pipeline value, not reply ratio.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a working session</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Priya","Northfield Ceramics Ltd","customer support rep","6","Intercom","healthcare operations","Maya","Sam","Tower Hamlets","PA/26/01847","March","two-storey modular site office","Fish Island Yard, E3","Rothbury Works","demolition and residential redevelopment","open storage yard","seven","Walthamstow","three","kiln work","Hackney Wick","four","a London borough council","temporary accommodation units","published on Contracts Finder last month"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
