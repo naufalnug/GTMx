@@ -135,19 +135,23 @@ export default function CompaniesTable({ companies = [], generatedAt }) {
                   </tr>
                 ) : (
                   pageRows.map((c, i) => (
-                    <tr key={c.domain}>
+                    <tr key={`${c.company}-${i}`}>
                       <td className="ctable__num ctable__muted">
                         {safePage * PAGE_SIZE + i + 1}
                       </td>
                       <td className="ctable__name">{c.company}</td>
                       <td className="comptable-domain">
-                        <a
-                          href={`https://${c.domain}`}
-                          target="_blank"
-                          rel="noreferrer noopener"
-                        >
-                          {c.domain}
-                        </a>
+                        {c.domain ? (
+                          <a
+                            href={`https://${c.domain}`}
+                            target="_blank"
+                            rel="noreferrer noopener"
+                          >
+                            {c.domain}
+                          </a>
+                        ) : (
+                          <span className="ctable__muted">personal email</span>
+                        )}
                       </td>
                       <td className="ctable__num ctable__muted">{formatInt(c.contacts)}</td>
                       <td className="ctable__num">{formatInt(c.emailsSent)}</td>

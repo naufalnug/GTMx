@@ -162,25 +162,48 @@ create index if not exists idx_contacts_client_domain on contacts (client, sourc
 -- contacted leads in `contacts`; the dashboard re-aggregates across sources for
 -- the 'all' view. Representative company name = the most common non-null label
 -- for the domain (ties broken alphabetically).
+-- "Companies we've emailed" rolls up by COMPANY (the contact's employer), not by
+-- email domain: a large share of contacts are reached on personal/ISP inboxes
+-- (gmail, yahoo, comcast, …), and grouping those by domain collapses many real
+-- companies into fake "gmail.com" rows. `domain` here is a representative
+-- corporate email domain for the company (its most common non-personal sender
+-- domain), or null when we only have personal emails for that company.
 create or replace view companies as
 select
   client,
   source,
-  domain,
+  -- Representative corporate domain: the company's most common non-personal
+  -- sender domain, but only when it's a MAJORITY of that company's contacts (a
+  -- real corporate domain dominates; a stray .edu/ISP address from a personal-
+  -- email-sourced company does not). Null otherwise → shown as "personal email".
   (
-    select c2.company
-    from contacts c2
-    where c2.client = c.client and c2.source = c.source and c2.domain = c.domain
-      and c2.company is not null
-    group by c2.company
-    order by count(*) desc, c2.company
-    limit 1
-  ) as company,
+    select t.dom from (
+      select split_part(c2.email, '@', 2) as dom, count(*) as n
+      from contacts c2
+      where c2.client = c.client and c2.source = c.source and c2.company = c.company
+        and c2.email is not null and c2.email <> ''
+        and split_part(c2.email, '@', 2) not in (
+          'gmail.com','yahoo.com','hotmail.com','outlook.com','icloud.com','aol.com',
+          'protonmail.com','proton.me','ymail.com','live.com','msn.com','me.com','mac.com',
+          'comcast.net','att.net','verizon.net','sbcglobal.net','charter.net','cox.net',
+          'bellsouth.net','earthlink.net','frontier.com','aim.com','gmx.com','mail.com',
+          'pacbell.net','ameritech.net','windstream.net','roadrunner.com','optonline.net'
+        )
+      group by split_part(c2.email, '@', 2)
+      order by n desc, dom
+      limit 1
+    ) t
+    where t.n * 2 >= (
+      select count(*) from contacts c3
+      where c3.client = c.client and c3.source = c.source and c3.company = c.company
+    )
+  ) as domain,
+  company,
   sum(emails_sent)::bigint as emails_sent,
   count(*)::bigint         as contacts
 from contacts c
-where domain is not null and domain <> ''
-group by client, source, domain;
+where company is not null and company <> ''
+group by client, source, company;
 
 -- ── crm_pushed_replies ledger ───────────────────────────────────────────────
 -- Idempotency ledger for the EmailBison -> Twenty CRM pipeline (lib/crmPush.js).
