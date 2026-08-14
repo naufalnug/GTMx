@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tailwind - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-14</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Tailwind</p>
+          <h1>Your Tailwind waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">One priority-routed cascade over ~246,000 accounts, routed on data Pinterest publishes for free.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Pinterest is the only major platform where the prospect&#39;s entire performance surface is public, unauthenticated and machine-readable, and where the search index itself tells you who is losing. Domain verification status, the date of the last Pin, and who owns the top results for the term a brand sells under are all readable without a login. That single read replaces an enrichment budget, and it produces the personalisation and the lead magnet in the same act.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a working session</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>246,000</strong>
+          <span>Routable accounts mapped to one cascade</span>
+        </div>
+        <div class="metric-card">
+          <strong>$0</strong>
+          <span>Enrichment spend. Pinterest publishes the signal</span>
+        </div>
+        <div class="metric-card">
+          <strong>0</strong>
+          <span>Emails in the programme that ask for a call</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Pinterest growth platform: keyword research scored on trends and search volume (Resonance Score), Pins generated automatically from the customer&#39;s own website (SmartPin), optimised scheduling, AI copy, and Turbo, a creator network that seeds engagement on top-performing Pins. Pinterest&#39;s longest-standing developer partner, since 2012.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The gap Pinterest publishes for free</p></div><div><span>02</span><p>One cascade, first match wins</p></div><div><span>03</span><p>Five tiers, 100% coverage</p></div><div><span>04</span><p>What actually gets sent</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>01 / Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>02 / Routing</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>03 / Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>04 / Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>05 / Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>06 / Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="01 / Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">01 / Signal</p>
+      <h2>The gap Pinterest publishes for free</h2>
+      <p class="takeaway">Three unauthenticated reads, joined, give you the market and the routing signal in one pull. No API key, no login, no enrichment vendor in the critical path.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>Domain verification status is public and is proof of past commercial intent. They put the tag on the site, then stopped. You can name the exact date.</p></div><div class="reason-card"><span>02</span><p>Pinterest search is a free competitive oracle. Query the term a brand sells under and see whether they own it or a competitor does.</p></div><div class="reason-card"><span>03</span><p>Display-ad stacks publish minimum-session thresholds, so detecting the script proves a traffic floor without buying a single traffic-estimation credit.</p></div><div class="reason-card"><span>04</span><p>It is behavioural, not firmographic, so no enrichment vendor sells it, and it changes every week rather than every quarter.</p></div>
+            </div>
+            <div class="field-cloud"><span>domain_verified</span><span>last_pin_days</span><span>pin_count</span><span>board_count</span><span>follower_count</span><span>head_keyword</span><span>ranks_top20_own_keyword</span><span>competitor_owning_keyword</span><span>pinterest_tag_installed</span><span>ecommerce_platform</span><span>ad_stack</span><span>cms</span><span>pinterest_service_declared</span><span>client_brand_count</span><span>vertical</span><span>hq_country</span><span>entity_type</span><span>existing_tailwind_user</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>Pinterest public profile</h3><p>Followers, Pins, boards, bio, linked site, domain verification status, join date, country. Unauthenticated, no API key.</p></div><div class="source-card"><span>02</span><h3>Pinterest Pin feed</h3><p>Most-recent Pin date, which becomes the dormancy clock, plus posting cadence.</p></div><div class="source-card"><span>03</span><h3>Pinterest search results</h3><p>Who ranks for a given keyword. The competitive oracle, and the thing that generates the lead magnet.</p></div><div class="source-card"><span>04</span><h3>Prospect page source</h3><p>One HTTP GET returns the p:domain_verify tag, the Pinterest tag, the ecommerce platform, the display-ad stack and og:image inventory.</p></div><div class="source-card"><span>05</span><h3>Shopify / BigCommerce / Woo footprint</h3><p>Ecommerce market sizing by Pinterest-native vertical.</p></div><div class="source-card"><span>06</span><h3>Pinterest bio and LinkedIn headline sweep</h3><p>Pinterest Managers, Strategists and VAs who declare the service themselves, in public.</p></div><div class="source-card"><span>07</span><h3>Agency services and portfolio pages</h3><p>Named client brands, and therefore seat count per operator.</p></div><div class="source-card"><span>08</span><h3>Apollo / Clearbit</h3><p>Contact name, role and email. Backfill only. Never determines a tier.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="02 / Routing">
+        
+    <div class="section-head">
+      <p class="eyebrow">02 / Routing</p>
+      <h2>One cascade, first match wins</h2>
+      <p class="takeaway">Every account is tested top to bottom and lands in exactly one campaign. The top of the waterfall is set by revenue per account, not signal strength, because pricing is per Pinterest account.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF Existing Tailwind user, Canada, Germany, Austria, EU sole traders, UK non-registered entities, or under 50 followers and 25 Pins</span>
+          <strong>SUPPRESS before routing</strong>
+          <em>Existing users are a warm database, not cold outbound. CASL and UWG section 7 bar the excluded geographies outright, and PECR treats sole traders as individuals, which matters because most UK creators and Pinterest VAs are sole traders.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF Sells Pinterest management as a service, or runs three or more Pinterest profiles</span>
+          <strong>TIER 1 - Portfolio Operator</strong>
+          <em>Pricing is per Pinterest account, so one operator carries 10 to 40 seats plus a recurring affiliate line. Revenue per account, not signal strength, sets the top of this waterfall.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF Domain verified on Pinterest AND no Pin in more than 90 days</span>
+          <strong>TIER 2 - Claimed &amp; Stalled</strong>
+          <em>Verification is work. They did it, which proves the intent was real, and then they stopped. Something organisational ended it, not a strategic decision.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF Pinned within 90 days AND absent from the top 20 for their own head keyword AND a named competitor ranks</span>
+          <strong>TIER 3 - Active but Outranked</strong>
+          <em>They are doing the work and still losing the result. That is not an effort problem, it is a keyword problem, which is exactly what the product fixes.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF Display-ad stack detected, or 50,000+ monthly sessions, with a thin Pinterest surface</span>
+          <strong>TIER 4 - Traffic-Rich, Pinterest-Thin</strong>
+          <em>The ad script proves a revenue-relevant traffic floor for free, and identifies publishers whose revenue is a direct function of sessions.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="5">
+          <span class="route-rule__num">06</span>
+          <span class="route-rule__if">IF Everything else in a Pinterest-native vertical</span>
+          <strong>TIER 5 - Pinterest-Native, Pinterest-Absent (catch-all)</strong>
+          <em>Nobody is left behind, but this is the tier that stops paying for itself first, so it runs at capped volume and is the first cut when spend is constrained.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF Existing Tailwind user, Canada, Germany, Austria, EU sole traders, UK non-registered entities, or under 50 followers and 25 Pins -&gt; SUPPRESS before routing (Existing users are a warm database, not cold outbound. CASL and UWG section 7 bar the excluded geographies outright, and PECR treats sole traders as individuals, which matters because most UK creators and Pinterest VAs are sole traders.)&#10;2. IF Sells Pinterest management as a service, or runs three or more Pinterest profiles -&gt; TIER 1 - Portfolio Operator (Pricing is per Pinterest account, so one operator carries 10 to 40 seats plus a recurring affiliate line. Revenue per account, not signal strength, sets the top of this waterfall.)&#10;3. IF Domain verified on Pinterest AND no Pin in more than 90 days -&gt; TIER 2 - Claimed &amp; Stalled (Verification is work. They did it, which proves the intent was real, and then they stopped. Something organisational ended it, not a strategic decision.)&#10;4. IF Pinned within 90 days AND absent from the top 20 for their own head keyword AND a named competitor ranks -&gt; TIER 3 - Active but Outranked (They are doing the work and still losing the result. That is not an effort problem, it is a keyword problem, which is exactly what the product fixes.)&#10;5. IF Display-ad stack detected, or 50,000+ monthly sessions, with a thin Pinterest surface -&gt; TIER 4 - Traffic-Rich, Pinterest-Thin (The ad script proves a revenue-relevant traffic floor for free, and identifies publishers whose revenue is a direct function of sessions.)&#10;6. IF Everything else in a Pinterest-native vertical -&gt; TIER 5 - Pinterest-Native, Pinterest-Absent (catch-all) (Nobody is left behind, but this is the tier that stops paying for itself first, so it runs at capped volume and is the first cut when spend is constrained.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF Existing Tailwind user, Canada, Germany, Austria, EU sole traders, UK non-registered entities, or under 50 followers and 25 Pins -&gt; SUPPRESS before routing (Existing users are a warm database, not cold outbound. CASL and UWG section 7 bar the excluded geographies outright, and PECR treats sole traders as individuals, which matters because most UK creators and Pinterest VAs are sole traders.)
+2. IF Sells Pinterest management as a service, or runs three or more Pinterest profiles -&gt; TIER 1 - Portfolio Operator (Pricing is per Pinterest account, so one operator carries 10 to 40 seats plus a recurring affiliate line. Revenue per account, not signal strength, sets the top of this waterfall.)
+3. IF Domain verified on Pinterest AND no Pin in more than 90 days -&gt; TIER 2 - Claimed &amp; Stalled (Verification is work. They did it, which proves the intent was real, and then they stopped. Something organisational ended it, not a strategic decision.)
+4. IF Pinned within 90 days AND absent from the top 20 for their own head keyword AND a named competitor ranks -&gt; TIER 3 - Active but Outranked (They are doing the work and still losing the result. That is not an effort problem, it is a keyword problem, which is exactly what the product fixes.)
+5. IF Display-ad stack detected, or 50,000+ monthly sessions, with a thin Pinterest surface -&gt; TIER 4 - Traffic-Rich, Pinterest-Thin (The ad script proves a revenue-relevant traffic floor for free, and identifies publishers whose revenue is a direct function of sessions.)
+6. IF Everything else in a Pinterest-native vertical -&gt; TIER 5 - Pinterest-Native, Pinterest-Absent (catch-all) (Nobody is left behind, but this is the tier that stops paying for itself first, so it runs at capped volume and is the first cut when spend is constrained.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="03 / Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">03 / Tiers</p>
+      <h2>Five tiers, 100% coverage</h2>
+      <p class="takeaway">Thin and hot at the top, broad at the bottom. Unlike most waterfalls, the economic value here is even more concentrated at the top than the reply rate is.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">2.4% TAM</span>
+          </div>
+          <h3>Tier 1: Portfolio Operator</h3>
+          <p>Declares Pinterest management as a service, or runs three or more Pinterest profiles</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Capacity is capped by production hours per client. Keyword research, Pin design and scheduling is the same job repeated once per client, so client twelve costs a hire rather than a margin. A margin problem, not a demand problem.</dd></div>
+              <div><dt>Offer</dt><dd>Portfolio Capacity Audit across three of their named client brands</dd></div>
+              <div><dt>Source</dt><dd>Pinterest bio sweep, LinkedIn headline search, agency portfolio page scrape</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest volume, highest value. One yes carries 10 to 40 paid Pinterest accounts plus a recurring affiliate line</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">13.8% TAM</span>
+          </div>
+          <h3>Tier 2: Claimed &amp; Stalled</h3>
+          <p>Domain verified on Pinterest, but no Pin in 90 or more days</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Someone owned Pinterest, did the claim work, then left or was reassigned. The claim, the Rich Pins and the product catalog are all still live and producing nothing, while the old Pins quietly keep earning.</dd></div>
+              <div><dt>Offer</dt><dd>Dormancy Report: which existing Pins are still being saved, plus ten live category keywords</dd></div>
+              <div><dt>Source</dt><dd>Pinterest profile scrape, Pin feed recency, page-source verification tag</dd></div>
+              <div><dt>Reply density</dt><dd>Highest in the programme. The trigger is undeniable, dated and non-accusatory</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">11.4% TAM</span>
+          </div>
+          <h3>Tier 3: Active but Outranked</h3>
+          <p>Pinned in the last 90 days, absent from the top 20 for their own head keyword, while a named competitor ranks</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They are doing the work and still losing the search result. That is not an effort problem, it is a keyword problem. The most demoralising and most fixable state on Pinterest.</dd></div>
+              <div><dt>Offer</dt><dd>Keyword Gap Report: five category terms, who owns each, three winnable ones</dd></div>
+              <div><dt>Source</dt><dd>Pinterest search results joined to the profile and page-source read</dd></div>
+              <div><dt>Reply density</dt><dd>Strong. The most engineering-intensive tier, and the most convincing personalisation in the programme</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">17.9% TAM</span>
+          </div>
+          <h3>Tier 4: Traffic-Rich, Pinterest-Thin</h3>
+          <p>Display-ad stack detected, or 50,000+ monthly sessions, with a thin Pinterest surface</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Revenue is a direct function of sessions, and search traffic has become the least predictable input in the business. Pinterest is the diversification they know they need and have no hours for.</dd></div>
+              <div><dt>Offer</dt><dd>Traffic Diversification Report on their five biggest published topics</dd></div>
+              <div><dt>Source</dt><dd>Page-source ad-stack detection, which proves a traffic floor for free</dd></div>
+              <div><dt>Reply density</dt><dd>Solid. The cheapest large tier to qualify, because the whole trigger is one line of page source</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">54.5% TAM</span>
+          </div>
+          <h3>Tier 5: Pinterest-Native, Pinterest-Absent</h3>
+          <p>Catch-all. A business in a Pinterest-native vertical with no meaningful Pinterest surface</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They have filed Pinterest under social media, meaning posting, chasing followers and keeping a calendar fed, when it is a visual search engine where content compounds for months instead of dying in a day.</dd></div>
+              <div><dt>Offer</dt><dd>Vertical Pinterest Trend Brief for the current quarter</dd></div>
+              <div><dt>Source</dt><dd>Ecommerce platform footprint by vertical, plus the profile read</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest. Runs at capped volume and is the first cut when send capacity is constrained</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="04 / Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">04 / Campaigns</p>
+      <h2>What actually gets sent</h2>
+      <p class="takeaway">Each experiment is anchored to a tier and to a signal that was read, not inferred. If the field is missing, the lead is held back rather than given a fallback.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Capacity Ceiling</h3>
+          <p>Opens on the client count, pokes at hours rather than demand, and offers a capacity read across three of their own accounts. The most valuable single yes in the programme.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Agency or freelancer site listing three or more named Pinterest clients on a services or portfolio page</dd></div>
+            <div><dt>AI strategy</dt><dd>Scrape the portfolio page for client brand names, then run the profile and search read on three of them. The email names the actual clients, so the research is visibly real rather than templated.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Affiliate Economics</h3>
+          <p>The A/B partner to Capacity Ceiling. This test also answers a real product question for Tailwind: is Tier 1 an affiliate motion or does it justify building a partner tier?</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same list, second variant. Operators whose site emphasises retainer pricing or packaged monthly plans</dd></div>
+            <div><dt>AI strategy</dt><dd>Reframe the tool from a cost line to a revenue line. Plans are priced per Pinterest account and the affiliate programme pays 15% recurring, rising to 25% above $5k a month, plus a per-content bonus.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Verified, Then Quiet</h3>
+          <p>The sharpest email in the programme because the trigger is dated, undeniable and blames nobody. Launches first.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>domain_verified true AND last_pin_days over 90 AND an ecommerce platform detected</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the exact date they stopped, then point at the Pins still live and still being served. The premise is that the account is probably still sending traffic with nobody touching it.</dd></div>
+            <div><dt>Value</dt><dd>Recover value</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Restart Cost, Not Start Cost</h3>
+          <p>The payload A/B for Tier 2. Same trigger, different centre of gravity: what you still have versus what you are missing.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same list, payload variant. Weighted to stores with a large existing Pin count</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead on the ten keywords their category is being searched under this month rather than on their dormant Pins, testing whether forward-looking demand beats backward-looking recovery.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Keyword Gap</h3>
+          <p>The hero campaign for personalisation. You do not have to argue that a problem exists; you show a competitor ranking for their own product term.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Pinned within 90 days AND not in the top 20 for their head keyword AND a named competitor holds positions</dd></div>
+            <div><dt>AI strategy</dt><dd>Run Pinterest search on the term the brand sells under, capture who owns the top results, and open on the fact that the prospect is not among them. The research is the deliverable.</dd></div>
+            <div><dt>Value</dt><dd>Win share</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>More Pins Won&#39;t Fix It</h3>
+          <p>Holds the body constant and varies only the subject, so the result is attributable.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same list, subject-line variant naming only the keyword rather than the competitor</dd></div>
+            <div><dt>AI strategy</dt><dd>Test whether naming the competitor lifts or suppresses reply rate. Some buyers engage on rivalry, others read it as a scare tactic, and this is the cleanest way to find out.</dd></div>
+            <div><dt>Value</dt><dd>Win share</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Traffic Concentration</h3>
+          <p>The cheapest large tier to qualify. One page-source regex both sizes the prospect and identifies why they care.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Mediavine, Raptive, AdThrive or Ezoic detected in page source, with a thin Pinterest surface</dd></div>
+            <div><dt>AI strategy</dt><dd>The ad script proves a session floor for free, because these networks publish minimum-traffic requirements for membership. Open on the fact that sessions are the revenue line, then on concentration as risk.</dd></div>
+            <div><dt>Value</dt><dd>Reduce risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Zero New Content</h3>
+          <p>Carries the Turbo proof stated as underlying frequencies rather than the headline ratio, per the copy guardrail.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same list, weighted to WordPress sites with a large published archive</dd></div>
+            <div><dt>AI strategy</dt><dd>Remove the production objection before it is raised. Website sync generates the Pins from posts that already exist, so the channel does not cost new content.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Search, Not Social</h3>
+          <p>Chaos-test variant A for the catch-all. Structurally different from variant B rather than a tweak, because there is no prior signal to narrow from.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Pinterest-native vertical, no meaningful Pinterest surface, no other tier matched</dd></div>
+            <div><dt>AI strategy</dt><dd>Reframe the channel category. Pinterest is a visual search engine where content keeps surfacing for months, which is why it suits home, food, wedding, beauty, fashion, kids, DIY and travel better than almost any other category.</dd></div>
+            <div><dt>Value</dt><dd>Reframe</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Quarterly Trend Brief</h3>
+          <p>The softest send in the programme, and the one most likely to survive a sceptical, tool-literate audience.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same list, variant B. Seasonally weighted to the Pinterest Predicts window from November to January</dd></div>
+            <div><dt>AI strategy</dt><dd>Skip the pitch entirely and lead with the asset. The brief is useful whether or not they ever buy, and a fair number of recipients use it to brief a freelancer.</dd></div>
+            <div><dt>Value</dt><dd>Give first</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="05 / Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">05 / Copy</p>
+      <h2>Fifteen emails, five sequences</h2>
+      <p class="takeaway">Notice line, poke-the-bear question, value prop, proof, low-effort give. Every CTA is a give. No tier asks for a call, because nobody books a demo to evaluate an $18 tool.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{brand}}</span><span>{{domain}}</span><span>{{vertical}}</span><span>{{last_pin_date}}</span><span>{{months_dormant}}</span><span>{{pin_count}}</span><span>{{recent_pin_count}}</span><span>{{ecommerce_platform}}</span><span>{{head_keyword}}</span><span>{{competitor_owning_keyword}}</span><span>{{competitor_pin_positions}}</span><span>{{ad_stack}}</span><span>{{cms}}</span><span>{{post_count}}</span><span>{{client_brand_count}}</span><span>{{client_brand_1}}</span><span>{{client_brand_2}}</span><span>{{client_brand_3}}</span>
+          <button class="copy-btn" type="button" data-copy="{{brand}}, {{domain}}, {{vertical}}, {{last_pin_date}}, {{months_dormant}}, {{pin_count}}, {{recent_pin_count}}, {{ecommerce_platform}}, {{head_keyword}}, {{competitor_owning_keyword}}, {{competitor_pin_positions}}, {{ad_stack}}, {{cms}}, {{post_count}}, {{client_brand_count}}, {{client_brand_1}}, {{client_brand_2}}, {{client_brand_3}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Portfolio Operator</strong>
+              <em>Portfolio Capacity Audit across three named client brands</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Portfolio Operator steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{client_brand_count}} Pinterest accounts&#10;&#10;Saw you run Pinterest for {{client_brand_1}}, {{client_brand_2}} and {{client_brand_3}} - {{client_brand_count}} accounts on the site in total.&#10;&#10;But would it be fair to assume the ceiling isn&#39;t demand, it&#39;s hours? Keyword research, Pin design and scheduling per client is roughly the same job repeated {{client_brand_count}} times, and the next client costs a hire rather than a margin.&#10;&#10;Tailwind generates Pins directly from each client&#39;s site and schedules them, so the recurring production work stops scaling with the client count. We&#39;ve been Pinterest&#39;s developer partner since 2012 and customers publish over 1.5M Pins a month through us.&#10;&#10;Reply &quot;audit&quot; and I&#39;ll send a capacity read on three of your clients: where each is being outranked, and how many Pins a month the account actually needs versus what it&#39;s getting. No call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{client_brand_count}} Pinterest accounts" data-preview="9 Pinterest accounts">{{client_brand_count}} Pinterest accounts</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Saw you run Pinterest for {{client_brand_1}}, {{client_brand_2}} and {{client_brand_3}} - {{client_brand_count}} accounts on the site in total.&#10;&#10;But would it be fair to assume the ceiling isn&#39;t demand, it&#39;s hours? Keyword research, Pin design and scheduling per client is roughly the same job repeated {{client_brand_count}} times, and the next client costs a hire rather than a margin.&#10;&#10;Tailwind generates Pins directly from each client&#39;s site and schedules them, so the recurring production work stops scaling with the client count. We&#39;ve been Pinterest&#39;s developer partner since 2012 and customers publish over 1.5M Pins a month through us.&#10;&#10;Reply &quot;audit&quot; and I&#39;ll send a capacity read on three of your clients: where each is being outranked, and how many Pins a month the account actually needs versus what it&#39;s getting. No call." data-preview="Saw you run Pinterest for Wilder &amp; Oak, Poppy Lane and The Slow Kitchen - 9 accounts on the site in total.&#10;&#10;But would it be fair to assume the ceiling isn&#39;t demand, it&#39;s hours? Keyword research, Pin design and scheduling per client is roughly the same job repeated 9 times, and the next client costs a hire rather than a margin.&#10;&#10;Tailwind generates Pins directly from each client&#39;s site and schedules them, so the recurring production work stops scaling with the client count. We&#39;ve been Pinterest&#39;s developer partner since 2012 and customers publish over 1.5M Pins a month through us.&#10;&#10;Reply &quot;audit&quot; and I&#39;ll send a capacity read on three of your clients: where each is being outranked, and how many Pins a month the account actually needs versus what it&#39;s getting. No call.">
+                        <p>Saw you run Pinterest for {{client_brand_1}}, {{client_brand_2}} and {{client_brand_3}} - {{client_brand_count}} accounts on the site in total.</p><p>But would it be fair to assume the ceiling isn&#39;t demand, it&#39;s hours? Keyword research, Pin design and scheduling per client is roughly the same job repeated {{client_brand_count}} times, and the next client costs a hire rather than a margin.</p><p>Tailwind generates Pins directly from each client&#39;s site and schedules them, so the recurring production work stops scaling with the client count. We&#39;ve been Pinterest&#39;s developer partner since 2012 and customers publish over 1.5M Pins a month through us.</p><p>Reply &quot;audit&quot; and I&#39;ll send a capacity read on three of your clients: where each is being outranked, and how many Pins a month the account actually needs versus what it&#39;s getting. No call.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Other half of this, which is the part most agencies miss: plans are priced per Pinterest account, and our affiliate programme pays 15% recurring on every account you place, rising to 25% once you&#39;re past $5k/mo, plus a content bonus.&#10;&#10;So the tool that removes the production work also turns your client book into a recurring line rather than a cost.&#10;&#10;Want the capacity read on those three accounts first?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Other half of this, which is the part most agencies miss: plans are priced per Pinterest account, and our affiliate programme pays 15% recurring on every account you place, rising to 25% once you&#39;re past $5k/mo, plus a content bonus.&#10;&#10;So the tool that removes the production work also turns your client book into a recurring line rather than a cost.&#10;&#10;Want the capacity read on those three accounts first?" data-preview="Other half of this, which is the part most agencies miss: plans are priced per Pinterest account, and our affiliate programme pays 15% recurring on every account you place, rising to 25% once you&#39;re past $5k/mo, plus a content bonus.&#10;&#10;So the tool that removes the production work also turns your client book into a recurring line rather than a cost.&#10;&#10;Want the capacity read on those three accounts first?">
+                        <p>Other half of this, which is the part most agencies miss: plans are priced per Pinterest account, and our affiliate programme pays 15% recurring on every account you place, rising to 25% once you&#39;re past $5k/mo, plus a content bonus.</p><p>So the tool that removes the production work also turns your client book into a recurring line rather than a cost.</p><p>Want the capacity read on those three accounts first?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: capacity read - you or your ops lead?&#10;&#10;No call needed. Just reply yes and I&#39;ll send the Pinterest capacity read across three of your client accounts.&#10;&#10;Should that go to you, or whoever runs delivery?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="capacity read - you or your ops lead?" data-preview="capacity read - you or your ops lead?">capacity read - you or your ops lead?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed. Just reply yes and I&#39;ll send the Pinterest capacity read across three of your client accounts.&#10;&#10;Should that go to you, or whoever runs delivery?" data-preview="No call needed. Just reply yes and I&#39;ll send the Pinterest capacity read across three of your client accounts.&#10;&#10;Should that go to you, or whoever runs delivery?">
+                        <p>No call needed. Just reply yes and I&#39;ll send the Pinterest capacity read across three of your client accounts.</p><p>Should that go to you, or whoever runs delivery?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Claimed &amp; Stalled</strong>
+              <em>Dormancy Report plus ten live category keywords</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Claimed &amp; Stalled steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{domain}} - verified, then quiet&#10;&#10;{{brand}} verified {{domain}} on Pinterest - the tag&#39;s still in your site&#39;s source - and then the last Pin went up {{last_pin_date}}, about {{months_dormant}} months ago.&#10;&#10;The part worth checking: the {{pin_count}} Pins from before that are still live, and Pinterest is still serving them. Pins don&#39;t expire the way feed posts do; they keep surfacing in search long after they&#39;re published. So the account is very likely still sending you traffic with nobody touching it.&#10;&#10;Would it be fair to assume Pinterest stopped because whoever owned it moved on, rather than because it stopped working?&#10;&#10;Restarting isn&#39;t the same job as starting - the domain claim, the Rich Pins and the {{ecommerce_platform}} catalog are already done. Tailwind generates new Pins from {{domain}} and schedules them, so it runs without anyone owning it day to day.&#10;&#10;Reply &quot;dormant&quot; and I&#39;ll send your dormancy read: which existing Pins are still being saved, plus the 10 keywords {{vertical}} is being searched under this month. No call, no signup needed to get it.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{domain}} - verified, then quiet" data-preview="wilderandoak.com - verified, then quiet">{{domain}} - verified, then quiet</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{brand}} verified {{domain}} on Pinterest - the tag&#39;s still in your site&#39;s source - and then the last Pin went up {{last_pin_date}}, about {{months_dormant}} months ago.&#10;&#10;The part worth checking: the {{pin_count}} Pins from before that are still live, and Pinterest is still serving them. Pins don&#39;t expire the way feed posts do; they keep surfacing in search long after they&#39;re published. So the account is very likely still sending you traffic with nobody touching it.&#10;&#10;Would it be fair to assume Pinterest stopped because whoever owned it moved on, rather than because it stopped working?&#10;&#10;Restarting isn&#39;t the same job as starting - the domain claim, the Rich Pins and the {{ecommerce_platform}} catalog are already done. Tailwind generates new Pins from {{domain}} and schedules them, so it runs without anyone owning it day to day.&#10;&#10;Reply &quot;dormant&quot; and I&#39;ll send your dormancy read: which existing Pins are still being saved, plus the 10 keywords {{vertical}} is being searched under this month. No call, no signup needed to get it." data-preview="Wilder &amp; Oak verified wilderandoak.com on Pinterest - the tag&#39;s still in your site&#39;s source - and then the last Pin went up 14 March 2025, about 17 months ago.&#10;&#10;The part worth checking: the 1,240 Pins from before that are still live, and Pinterest is still serving them. Pins don&#39;t expire the way feed posts do; they keep surfacing in search long after they&#39;re published. So the account is very likely still sending you traffic with nobody touching it.&#10;&#10;Would it be fair to assume Pinterest stopped because whoever owned it moved on, rather than because it stopped working?&#10;&#10;Restarting isn&#39;t the same job as starting - the domain claim, the Rich Pins and the Shopify catalog are already done. Tailwind generates new Pins from wilderandoak.com and schedules them, so it runs without anyone owning it day to day.&#10;&#10;Reply &quot;dormant&quot; and I&#39;ll send your dormancy read: which existing Pins are still being saved, plus the 10 keywords home decor is being searched under this month. No call, no signup needed to get it.">
+                        <p>{{brand}} verified {{domain}} on Pinterest - the tag&#39;s still in your site&#39;s source - and then the last Pin went up {{last_pin_date}}, about {{months_dormant}} months ago.</p><p>The part worth checking: the {{pin_count}} Pins from before that are still live, and Pinterest is still serving them. Pins don&#39;t expire the way feed posts do; they keep surfacing in search long after they&#39;re published. So the account is very likely still sending you traffic with nobody touching it.</p><p>Would it be fair to assume Pinterest stopped because whoever owned it moved on, rather than because it stopped working?</p><p>Restarting isn&#39;t the same job as starting - the domain claim, the Rich Pins and the {{ecommerce_platform}} catalog are already done. Tailwind generates new Pins from {{domain}} and schedules them, so it runs without anyone owning it day to day.</p><p>Reply &quot;dormant&quot; and I&#39;ll send your dormancy read: which existing Pins are still being saved, plus the 10 keywords {{vertical}} is being searched under this month. No call, no signup needed to get it.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One more thing from the read: {{competitor_owning_keyword}} currently owns the top Pins for &quot;{{head_keyword}}&quot; - a term you already sell under and used to Pin against.&#10;&#10;That position isn&#39;t held by budget. It&#39;s held by whoever kept publishing.&#10;&#10;Still happy to send the dormancy read either way.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One more thing from the read: {{competitor_owning_keyword}} currently owns the top Pins for &quot;{{head_keyword}}&quot; - a term you already sell under and used to Pin against.&#10;&#10;That position isn&#39;t held by budget. It&#39;s held by whoever kept publishing.&#10;&#10;Still happy to send the dormancy read either way." data-preview="One more thing from the read: Hearth &amp; Field currently owns the top Pins for &quot;linen bedding&quot; - a term you already sell under and used to Pin against.&#10;&#10;That position isn&#39;t held by budget. It&#39;s held by whoever kept publishing.&#10;&#10;Still happy to send the dormancy read either way.">
+                        <p>One more thing from the read: {{competitor_owning_keyword}} currently owns the top Pins for &quot;{{head_keyword}}&quot; - a term you already sell under and used to Pin against.</p><p>That position isn&#39;t held by budget. It&#39;s held by whoever kept publishing.</p><p>Still happy to send the dormancy read either way.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{brand}} Pinterest - you or marketing?&#10;&#10;No call needed - reply yes and I&#39;ll send the dormancy read for {{domain}}.&#10;&#10;Should this go to you, or whoever picked up Pinterest after {{last_pin_date}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{brand}} Pinterest - you or marketing?" data-preview="Wilder &amp; Oak Pinterest - you or marketing?">{{brand}} Pinterest - you or marketing?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed - reply yes and I&#39;ll send the dormancy read for {{domain}}.&#10;&#10;Should this go to you, or whoever picked up Pinterest after {{last_pin_date}}?" data-preview="No call needed - reply yes and I&#39;ll send the dormancy read for wilderandoak.com.&#10;&#10;Should this go to you, or whoever picked up Pinterest after 14 March 2025?">
+                        <p>No call needed - reply yes and I&#39;ll send the dormancy read for {{domain}}.</p><p>Should this go to you, or whoever picked up Pinterest after {{last_pin_date}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Active but Outranked</strong>
+              <em>Keyword Gap Report: five terms, who owns each, three winnable</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Active but Outranked steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &quot;{{head_keyword}}&quot; on Pinterest&#10;&#10;{{brand}} has Pinned {{recent_pin_count}} times in the last 90 days - consistent, current, clearly someone&#39;s job.&#10;&#10;But search &quot;{{head_keyword}}&quot; on Pinterest and you&#39;re not in the top 20. {{competitor_owning_keyword}} holds {{competitor_pin_positions}} of the top results.&#10;&#10;Would it be fair to assume the assumption has been that more Pins fixes this? Because at your posting rate it usually doesn&#39;t - the constraint is which terms you&#39;re Pinning against, not how many.&#10;&#10;Tailwind scores keywords on trends, audience signals and search volume together, so you can see which terms you can realistically take instead of competing for the one everyone else already owns.&#10;&#10;Reply &quot;gap&quot; and I&#39;ll send your keyword gap report: the 5 terms {{vertical}} is actually searched under, who owns each, and the 3 with real volume you&#39;re positioned to win. No call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="&quot;{{head_keyword}}&quot; on Pinterest" data-preview="&quot;linen bedding&quot; on Pinterest">&quot;{{head_keyword}}&quot; on Pinterest</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{brand}} has Pinned {{recent_pin_count}} times in the last 90 days - consistent, current, clearly someone&#39;s job.&#10;&#10;But search &quot;{{head_keyword}}&quot; on Pinterest and you&#39;re not in the top 20. {{competitor_owning_keyword}} holds {{competitor_pin_positions}} of the top results.&#10;&#10;Would it be fair to assume the assumption has been that more Pins fixes this? Because at your posting rate it usually doesn&#39;t - the constraint is which terms you&#39;re Pinning against, not how many.&#10;&#10;Tailwind scores keywords on trends, audience signals and search volume together, so you can see which terms you can realistically take instead of competing for the one everyone else already owns.&#10;&#10;Reply &quot;gap&quot; and I&#39;ll send your keyword gap report: the 5 terms {{vertical}} is actually searched under, who owns each, and the 3 with real volume you&#39;re positioned to win. No call." data-preview="Wilder &amp; Oak has Pinned 68 times in the last 90 days - consistent, current, clearly someone&#39;s job.&#10;&#10;But search &quot;linen bedding&quot; on Pinterest and you&#39;re not in the top 20. Hearth &amp; Field holds 6 of the top results.&#10;&#10;Would it be fair to assume the assumption has been that more Pins fixes this? Because at your posting rate it usually doesn&#39;t - the constraint is which terms you&#39;re Pinning against, not how many.&#10;&#10;Tailwind scores keywords on trends, audience signals and search volume together, so you can see which terms you can realistically take instead of competing for the one everyone else already owns.&#10;&#10;Reply &quot;gap&quot; and I&#39;ll send your keyword gap report: the 5 terms home decor is actually searched under, who owns each, and the 3 with real volume you&#39;re positioned to win. No call.">
+                        <p>{{brand}} has Pinned {{recent_pin_count}} times in the last 90 days - consistent, current, clearly someone&#39;s job.</p><p>But search &quot;{{head_keyword}}&quot; on Pinterest and you&#39;re not in the top 20. {{competitor_owning_keyword}} holds {{competitor_pin_positions}} of the top results.</p><p>Would it be fair to assume the assumption has been that more Pins fixes this? Because at your posting rate it usually doesn&#39;t - the constraint is which terms you&#39;re Pinning against, not how many.</p><p>Tailwind scores keywords on trends, audience signals and search volume together, so you can see which terms you can realistically take instead of competing for the one everyone else already owns.</p><p>Reply &quot;gap&quot; and I&#39;ll send your keyword gap report: the 5 terms {{vertical}} is actually searched under, who owns each, and the 3 with real volume you&#39;re positioned to win. No call.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The reason this one is worth fixing rather than out-publishing: Pinterest results compound. A Pin that ranks keeps earning for months, which is why {{competitor_owning_keyword}} is hard to displace on &quot;{{head_keyword}}&quot; and why the winnable terms are worth more than they look.&#10;&#10;Every week you Pin against terms you can&#39;t win is a week of compounding you don&#39;t get back.&#10;&#10;Want the gap report?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The reason this one is worth fixing rather than out-publishing: Pinterest results compound. A Pin that ranks keeps earning for months, which is why {{competitor_owning_keyword}} is hard to displace on &quot;{{head_keyword}}&quot; and why the winnable terms are worth more than they look.&#10;&#10;Every week you Pin against terms you can&#39;t win is a week of compounding you don&#39;t get back.&#10;&#10;Want the gap report?" data-preview="The reason this one is worth fixing rather than out-publishing: Pinterest results compound. A Pin that ranks keeps earning for months, which is why Hearth &amp; Field is hard to displace on &quot;linen bedding&quot; and why the winnable terms are worth more than they look.&#10;&#10;Every week you Pin against terms you can&#39;t win is a week of compounding you don&#39;t get back.&#10;&#10;Want the gap report?">
+                        <p>The reason this one is worth fixing rather than out-publishing: Pinterest results compound. A Pin that ranks keeps earning for months, which is why {{competitor_owning_keyword}} is hard to displace on &quot;{{head_keyword}}&quot; and why the winnable terms are worth more than they look.</p><p>Every week you Pin against terms you can&#39;t win is a week of compounding you don&#39;t get back.</p><p>Want the gap report?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{vertical}} keyword gap - you or your Pinterest lead?&#10;&#10;No call needed. Reply yes and I&#39;ll send the keyword gap report for {{brand}}.&#10;&#10;You, or whoever&#39;s running the Pinterest account?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{vertical}} keyword gap - you or your Pinterest lead?" data-preview="home decor keyword gap - you or your Pinterest lead?">{{vertical}} keyword gap - you or your Pinterest lead?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed. Reply yes and I&#39;ll send the keyword gap report for {{brand}}.&#10;&#10;You, or whoever&#39;s running the Pinterest account?" data-preview="No call needed. Reply yes and I&#39;ll send the keyword gap report for Wilder &amp; Oak.&#10;&#10;You, or whoever&#39;s running the Pinterest account?">
+                        <p>No call needed. Reply yes and I&#39;ll send the keyword gap report for {{brand}}.</p><p>You, or whoever&#39;s running the Pinterest account?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 - Traffic-Rich, Pinterest-Thin</strong>
+              <em>Traffic Diversification Report on their five biggest topics</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 - Traffic-Rich, Pinterest-Thin steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{domain}} traffic mix&#10;&#10;{{brand}} runs {{ad_stack}}, which means sessions are the revenue line, not a vanity metric.&#10;&#10;Which also means the traffic mix is the risk. Would it be fair to assume the majority still arrives from one source you don&#39;t control, and that Pinterest has been on the list for a while without ever making it to the top of it?&#10;&#10;The reason it never gets done is production - nobody wants to design Pins for {{post_count}} existing posts. Tailwind syncs to {{cms}} and generates the Pins from the posts that already exist, so the channel doesn&#39;t cost new content.&#10;&#10;On distribution: across a five-month beta of 6,500 Pins from 1,900 creators, Pins run through Turbo hit 10,000 impressions about 1 in 14 times, against 1 in 56 outside it - averaging 106 outbound clicks each.&#10;&#10;Reply &quot;mix&quot; and I&#39;ll send a diversification read: Pinterest search demand for your 5 biggest published topics, and who&#39;s currently capturing it. No call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{domain}} traffic mix" data-preview="wilderandoak.com traffic mix">{{domain}} traffic mix</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{brand}} runs {{ad_stack}}, which means sessions are the revenue line, not a vanity metric.&#10;&#10;Which also means the traffic mix is the risk. Would it be fair to assume the majority still arrives from one source you don&#39;t control, and that Pinterest has been on the list for a while without ever making it to the top of it?&#10;&#10;The reason it never gets done is production - nobody wants to design Pins for {{post_count}} existing posts. Tailwind syncs to {{cms}} and generates the Pins from the posts that already exist, so the channel doesn&#39;t cost new content.&#10;&#10;On distribution: across a five-month beta of 6,500 Pins from 1,900 creators, Pins run through Turbo hit 10,000 impressions about 1 in 14 times, against 1 in 56 outside it - averaging 106 outbound clicks each.&#10;&#10;Reply &quot;mix&quot; and I&#39;ll send a diversification read: Pinterest search demand for your 5 biggest published topics, and who&#39;s currently capturing it. No call." data-preview="Wilder &amp; Oak runs Mediavine, which means sessions are the revenue line, not a vanity metric.&#10;&#10;Which also means the traffic mix is the risk. Would it be fair to assume the majority still arrives from one source you don&#39;t control, and that Pinterest has been on the list for a while without ever making it to the top of it?&#10;&#10;The reason it never gets done is production - nobody wants to design Pins for 412 existing posts. Tailwind syncs to WordPress and generates the Pins from the posts that already exist, so the channel doesn&#39;t cost new content.&#10;&#10;On distribution: across a five-month beta of 6,500 Pins from 1,900 creators, Pins run through Turbo hit 10,000 impressions about 1 in 14 times, against 1 in 56 outside it - averaging 106 outbound clicks each.&#10;&#10;Reply &quot;mix&quot; and I&#39;ll send a diversification read: Pinterest search demand for your 5 biggest published topics, and who&#39;s currently capturing it. No call.">
+                        <p>{{brand}} runs {{ad_stack}}, which means sessions are the revenue line, not a vanity metric.</p><p>Which also means the traffic mix is the risk. Would it be fair to assume the majority still arrives from one source you don&#39;t control, and that Pinterest has been on the list for a while without ever making it to the top of it?</p><p>The reason it never gets done is production - nobody wants to design Pins for {{post_count}} existing posts. Tailwind syncs to {{cms}} and generates the Pins from the posts that already exist, so the channel doesn&#39;t cost new content.</p><p>On distribution: across a five-month beta of 6,500 Pins from 1,900 creators, Pins run through Turbo hit 10,000 impressions about 1 in 14 times, against 1 in 56 outside it - averaging 106 outbound clicks each.</p><p>Reply &quot;mix&quot; and I&#39;ll send a diversification read: Pinterest search demand for your 5 biggest published topics, and who&#39;s currently capturing it. No call.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Worth adding why Pinterest specifically, rather than another social channel: a Pin keeps returning traffic for months after it&#39;s published. It behaves like an index entry, not a post.&#10;&#10;For a site monetised on sessions, that&#39;s the difference between a channel you have to feed daily and one that accrues.&#10;&#10;Want the read on your top 5 topics?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Worth adding why Pinterest specifically, rather than another social channel: a Pin keeps returning traffic for months after it&#39;s published. It behaves like an index entry, not a post.&#10;&#10;For a site monetised on sessions, that&#39;s the difference between a channel you have to feed daily and one that accrues.&#10;&#10;Want the read on your top 5 topics?" data-preview="Worth adding why Pinterest specifically, rather than another social channel: a Pin keeps returning traffic for months after it&#39;s published. It behaves like an index entry, not a post.&#10;&#10;For a site monetised on sessions, that&#39;s the difference between a channel you have to feed daily and one that accrues.&#10;&#10;Want the read on your top 5 topics?">
+                        <p>Worth adding why Pinterest specifically, rather than another social channel: a Pin keeps returning traffic for months after it&#39;s published. It behaves like an index entry, not a post.</p><p>For a site monetised on sessions, that&#39;s the difference between a channel you have to feed daily and one that accrues.</p><p>Want the read on your top 5 topics?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: traffic read for {{domain}}&#10;&#10;No call needed - reply yes and I&#39;ll send the Pinterest demand read on your five biggest topics.&#10;&#10;Should that go to you or whoever owns traffic?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="traffic read for {{domain}}" data-preview="traffic read for wilderandoak.com">traffic read for {{domain}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed - reply yes and I&#39;ll send the Pinterest demand read on your five biggest topics.&#10;&#10;Should that go to you or whoever owns traffic?" data-preview="No call needed - reply yes and I&#39;ll send the Pinterest demand read on your five biggest topics.&#10;&#10;Should that go to you or whoever owns traffic?">
+                        <p>No call needed - reply yes and I&#39;ll send the Pinterest demand read on your five biggest topics.</p><p>Should that go to you or whoever owns traffic?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 - Pinterest-Native, Pinterest-Absent (catch-all)</strong>
+              <em>Vertical Pinterest Trend Brief for the current quarter</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 - Pinterest-Native, Pinterest-Absent (catch-all) steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 10</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{vertical}} on Pinterest&#10;&#10;Quick one, and it&#39;s not a social media pitch.&#10;&#10;{{brand}} sells in {{vertical}}, which is one of the categories people actively search Pinterest for - with intent, ahead of buying. But there&#39;s no real {{brand}} surface there for those searches to land on.&#10;&#10;Would it be fair to assume Pinterest has been filed under social - post, chase followers, keep a calendar fed - rather than under search?&#10;&#10;That&#39;s the reframe. It&#39;s a visual search engine where content keeps surfacing for months rather than dying in a day, which is why it suits {{vertical}} better than almost any other category.&#10;&#10;Reply &quot;brief&quot; and I&#39;ll send the {{vertical}} trend brief: what your category is being searched for this quarter and which terms are still open. Free, no signup.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{vertical}} on Pinterest" data-preview="home decor on Pinterest">{{vertical}} on Pinterest</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Quick one, and it&#39;s not a social media pitch.&#10;&#10;{{brand}} sells in {{vertical}}, which is one of the categories people actively search Pinterest for - with intent, ahead of buying. But there&#39;s no real {{brand}} surface there for those searches to land on.&#10;&#10;Would it be fair to assume Pinterest has been filed under social - post, chase followers, keep a calendar fed - rather than under search?&#10;&#10;That&#39;s the reframe. It&#39;s a visual search engine where content keeps surfacing for months rather than dying in a day, which is why it suits {{vertical}} better than almost any other category.&#10;&#10;Reply &quot;brief&quot; and I&#39;ll send the {{vertical}} trend brief: what your category is being searched for this quarter and which terms are still open. Free, no signup." data-preview="Quick one, and it&#39;s not a social media pitch.&#10;&#10;Wilder &amp; Oak sells in home decor, which is one of the categories people actively search Pinterest for - with intent, ahead of buying. But there&#39;s no real Wilder &amp; Oak surface there for those searches to land on.&#10;&#10;Would it be fair to assume Pinterest has been filed under social - post, chase followers, keep a calendar fed - rather than under search?&#10;&#10;That&#39;s the reframe. It&#39;s a visual search engine where content keeps surfacing for months rather than dying in a day, which is why it suits home decor better than almost any other category.&#10;&#10;Reply &quot;brief&quot; and I&#39;ll send the home decor trend brief: what your category is being searched for this quarter and which terms are still open. Free, no signup.">
+                        <p>Quick one, and it&#39;s not a social media pitch.</p><p>{{brand}} sells in {{vertical}}, which is one of the categories people actively search Pinterest for - with intent, ahead of buying. But there&#39;s no real {{brand}} surface there for those searches to land on.</p><p>Would it be fair to assume Pinterest has been filed under social - post, chase followers, keep a calendar fed - rather than under search?</p><p>That&#39;s the reframe. It&#39;s a visual search engine where content keeps surfacing for months rather than dying in a day, which is why it suits {{vertical}} better than almost any other category.</p><p>Reply &quot;brief&quot; and I&#39;ll send the {{vertical}} trend brief: what your category is being searched for this quarter and which terms are still open. Free, no signup.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Worth saying: the brief is yours regardless, and the plan we&#39;d point you to is free with no card.&#10;&#10;Happy to send it whenever.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Worth saying: the brief is yours regardless, and the plan we&#39;d point you to is free with no card.&#10;&#10;Happy to send it whenever." data-preview="Worth saying: the brief is yours regardless, and the plan we&#39;d point you to is free with no card.&#10;&#10;Happy to send it whenever.">
+                        <p>Worth saying: the brief is yours regardless, and the plan we&#39;d point you to is free with no card.</p><p>Happy to send it whenever.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 10</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{vertical}} brief - you or marketing?&#10;&#10;No call needed. Reply yes and I&#39;ll send the {{vertical}} Pinterest brief.&#10;&#10;Should that go to you or whoever owns marketing?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{vertical}} brief - you or marketing?" data-preview="home decor brief - you or marketing?">{{vertical}} brief - you or marketing?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed. Reply yes and I&#39;ll send the {{vertical}} Pinterest brief.&#10;&#10;Should that go to you or whoever owns marketing?" data-preview="No call needed. Reply yes and I&#39;ll send the home decor Pinterest brief.&#10;&#10;Should that go to you or whoever owns marketing?">
+                        <p>No call needed. Reply yes and I&#39;ll send the {{vertical}} Pinterest brief.</p><p>Should that go to you or whoever owns marketing?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="06 / Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">06 / Launch</p>
+      <h2>Tier 2 first, deliberately</h2>
+      <p class="takeaway">The default says launch the hottest tier first. Here Tier 2 goes first: largest high-signal list, no search-join engineering, offer deliverable on day one.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Weeks 0 to 2. Build infrastructure: 23 sending domains, 90 mailboxes, full warmup. Never send from tailwindapp.com, because it carries high-volume transactional mail and reputation damage there is a product incident, not a marketing setback.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Weeks 0 to 2. Build the Pinterest profile-scrape pipeline and template report fulfilment, so every offer is deliverable inside 24 hours. Suppress the existing free-user database before a single send.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Week 3. Launch Tier 2, Claimed &amp; Stalled. Sharpest personalisation, no new engineering, offer deliverable on day one. This is the deliberate deviation from launching the hottest tier first.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Week 4. Add Tier 4, Traffic-Rich. Ad-stack detection is a one-line page-source check, which makes it the largest cheap-to-qualify list in the programme.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Week 6. Add Tier 3, Active but Outranked, once the Pinterest search join is automated. Build that join during weeks 3 to 5 while Tier 2 is already running.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Week 7. Add Tier 1, Portfolio Operator, once the partner and affiliate motion is decided. Highest value per yes, so it is worth waiting to do properly rather than launching it early and badly.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>Week 9. Add Tier 5, the catch-all, running both chaos-test variants at capped volume. Roughly 50% of send capacity should sit on Tiers 1 and 2, 30% on Tiers 3 and 4, and no more than 20% here.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacts</strong>
+                <span>Perfect. Scale the tier.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450 to 500</strong>
+                <span>Borderline. Test one copy variant, holding everything else constant.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or under 1% reply after 1,500+ sends</strong>
+                <span>Cut the tier and rework it.</span>
+              </div>
+              <div class="threshold">
+                <strong>Spam complaints above 0.08%</strong>
+                <span>Stop the tier immediately. This audience is tool-literate and reports aggressively.</span>
+              </div>
+              <div class="threshold">
+                <strong>Cost per activated free account above blended paid CAC</strong>
+                <span>The real scorecard. At $17.99 to $29.98 a month this programme is a paid-acquisition channel, not a meetings channel.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a working session</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dana","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Wilder & Oak","wilderandoak\\.com","home decor","14 March 2025","17","1,240","68","Shopify","linen bedding","Hearth & Field","Mediavine","WordPress","412","9","Poppy Lane","The Slow Kitchen"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
