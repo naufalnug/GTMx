@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bubba&#39;s LA - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-14</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Bubba&#39;s LA</p>
+          <h1>The Bubba&#39;s LA outbound <mark>journey</mark>.</h1>
+          <p class="hero-copy">One waterfall that finds the moment a hero visual gets commissioned, before the brief goes out.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Nobody wakes up wanting a $40k animation. They wake up with a date, and a hero visual that doesn&#39;t exist yet. Both of Bubba&#39;s best-fit verticals are legally required to publish dated filings before anything ships, so that date is public months before the brief is written.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a working session</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>41,500</strong>
+          <span>Qualified accounts in the market</span>
+        </div>
+        <div class="metric-card">
+          <strong>$0</strong>
+          <span>Enrichment spend, every signal is public</span>
+        </div>
+        <div class="metric-card">
+          <strong>13 wks</strong>
+          <span>To the full cascade running</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Craft-led motion design and CGI studio in Burbank. Motion-control tabletop, 3D product build, VFX, title design, live action. Nike, McCafe, Fendi, Cup Noodles, Disney Channel, Tubi.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal nobody has packaged</p></div><div><span>02</span><p>Gate first, then route</p></div><div><span>03</span><p>Four tiers, one question</p></div><div><span>04</span><p>The experiments on top</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>01</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>02</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>03</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>04</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>05</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>06</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="01">
+        
+    <div class="section-head">
+      <p class="eyebrow">01</p>
+      <h2>The signal nobody has packaged</h2>
+      <p class="takeaway">Four public, dated, legally-mandated filings tell you a hero visual is about to be commissioned. No vendor sells this list, because it doesn&#39;t exist as a product.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>Every US alcoholic beverage needs a public label approval before it ships. The registry is free, needs no login, is searchable by date, and publishes the approved artwork about 48 hours after clearance.</p></div><div class="reason-card"><span>02</span><p>A fresh approval means the packaging is final, the ship date is locked, and no motion asset exists yet. That is the highest-intent moment in the entire food and beverage calendar.</p></div><div class="reason-card"><span>03</span><p>It hands over the personalisation too. We can reference the actual approved label, by product name, before the brand&#39;s own agency has finished the deck.</p></div><div class="reason-card"><span>04</span><p>None of it can be bought. There is no data vendor selling label approvals as a creative-services prospect list, so no competing studio is working the same window.</p></div>
+            </div>
+            <div class="field-cloud"><span>label_approvals_last_180d</span><span>prior_approval_count</span><span>product_names_filed</span><span>itu_trademark_last_270d</span><span>trademark_class</span><span>tradeshow_new_product_120d</span><span>active_ad_count</span><span>oldest_active_creative_days</span><span>motion_share_of_creative</span><span>cgi_detected</span><span>producer_req_open_90d</span><span>new_business_win_90d</span><span>open_creative_reqs</span><span>film_commission_allocation</span><span>distribution_tier</span><span>headcount</span><span>funding_total</span><span>product_shippable_to_burbank</span><span>account_type</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>TTB Public COLA Registry</h3><p>The alcohol and beverage market, the new-product trigger, the approval date, and the approved label artwork. Free, no registration, searchable by date range.</p></div><div class="source-card"><span>02</span><h3>USPTO Trademark Search</h3><p>Packaged goods and non-alcoholic food and beverage. Section 1(b) intent-to-use filings mean the product does not exist yet but is coming.</p></div><div class="source-card"><span>03</span><h3>Meta Ad Library</h3><p>Whether they are spending, how old the oldest running creative is, and whether the set is motion or flat photography. Free, no login.</p></div><div class="source-card"><span>04</span><h3>California Film Commission</h3><p>The approved-projects list from a $3.75bn, five-year tax credit programme. Names the production company, the project, and the allocation.</p></div><div class="source-card"><span>05</span><h3>Trade show new-product showcases</h3><p>Expo West, Summer Fancy Food, NACS, Bar Convent Brooklyn. A dated launch calendar with the brands attached.</p></div><div class="source-card"><span>06</span><h3>Job posts and agency press pages</h3><p>Producer and 3D artist requisitions, plus publicly announced new business wins. Both mean production volume just outran the team.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="02">
+        
+    <div class="section-head">
+      <p class="eyebrow">02</p>
+      <h2>Gate first, then route</h2>
+      <p class="takeaway">A $25k floor means most of the world is not a prospect. Filter the market before routing it, then test every survivor against one ladder, top to bottom.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF The account fails the qualification gate: under 25 staff brand-side, no distribution, no funding, no live ads, or it is another studio or production company</span>
+          <strong>Discard. Do not send.</strong>
+          <em>A $25k floor means routing accounts who cannot fund it burns sends and drags every tier&#39;s numbers down. Rival studios are peers, not prospects.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF A label approval cleared in the last 180 days at a producer with prior approval history, OR an intent-to-use trademark was filed in the last 270 days at 15+ headcount, OR they appeared in a trade show new-product showcase in the last 120 days</span>
+          <strong>Tier 1, Launch Filed No Film</strong>
+          <em>The artwork is locked and the hero film is not. This is a legally-filed, dated declaration that a product is coming and its visuals do not exist yet.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF NOT Tier 1, AND there are 6 or more active ads, AND the oldest running creative is 90+ days old, AND motion is under 25% of the set or no CGI is detectable</span>
+          <strong>Tier 2, Paying to Distribute Stale Creative</strong>
+          <em>The media budget is already committed. The creative is the bottleneck, not the spend, and refresh currently means recolouring the same photograph.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF NOT Tier 1 or 2, AND a producer or 3D requisition opened in the last 90 days, OR a new business win was announced in the last 90 days, OR three or more creative requisitions are open at once</span>
+          <strong>Tier 3, Volume Outran the Team</strong>
+          <em>Headcount is a 90-day fix for a two-week problem. Overflow is going to whoever answers first with a reel that matches the account.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF Everything else that cleared the gate</span>
+          <strong>Tier 4, the catch-all</strong>
+          <em>No dated trigger fired, but their own site shows a static-dominant visual mix. Skipping this tier would leave 56% of the qualified market unrouted.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF The account fails the qualification gate: under 25 staff brand-side, no distribution, no funding, no live ads, or it is another studio or production company -&gt; Discard. Do not send. (A $25k floor means routing accounts who cannot fund it burns sends and drags every tier&#39;s numbers down. Rival studios are peers, not prospects.)&#10;2. IF A label approval cleared in the last 180 days at a producer with prior approval history, OR an intent-to-use trademark was filed in the last 270 days at 15+ headcount, OR they appeared in a trade show new-product showcase in the last 120 days -&gt; Tier 1, Launch Filed No Film (The artwork is locked and the hero film is not. This is a legally-filed, dated declaration that a product is coming and its visuals do not exist yet.)&#10;3. IF NOT Tier 1, AND there are 6 or more active ads, AND the oldest running creative is 90+ days old, AND motion is under 25% of the set or no CGI is detectable -&gt; Tier 2, Paying to Distribute Stale Creative (The media budget is already committed. The creative is the bottleneck, not the spend, and refresh currently means recolouring the same photograph.)&#10;4. IF NOT Tier 1 or 2, AND a producer or 3D requisition opened in the last 90 days, OR a new business win was announced in the last 90 days, OR three or more creative requisitions are open at once -&gt; Tier 3, Volume Outran the Team (Headcount is a 90-day fix for a two-week problem. Overflow is going to whoever answers first with a reel that matches the account.)&#10;5. IF Everything else that cleared the gate -&gt; Tier 4, the catch-all (No dated trigger fired, but their own site shows a static-dominant visual mix. Skipping this tier would leave 56% of the qualified market unrouted.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF The account fails the qualification gate: under 25 staff brand-side, no distribution, no funding, no live ads, or it is another studio or production company -&gt; Discard. Do not send. (A $25k floor means routing accounts who cannot fund it burns sends and drags every tier&#39;s numbers down. Rival studios are peers, not prospects.)
+2. IF A label approval cleared in the last 180 days at a producer with prior approval history, OR an intent-to-use trademark was filed in the last 270 days at 15+ headcount, OR they appeared in a trade show new-product showcase in the last 120 days -&gt; Tier 1, Launch Filed No Film (The artwork is locked and the hero film is not. This is a legally-filed, dated declaration that a product is coming and its visuals do not exist yet.)
+3. IF NOT Tier 1, AND there are 6 or more active ads, AND the oldest running creative is 90+ days old, AND motion is under 25% of the set or no CGI is detectable -&gt; Tier 2, Paying to Distribute Stale Creative (The media budget is already committed. The creative is the bottleneck, not the spend, and refresh currently means recolouring the same photograph.)
+4. IF NOT Tier 1 or 2, AND a producer or 3D requisition opened in the last 90 days, OR a new business win was announced in the last 90 days, OR three or more creative requisitions are open at once -&gt; Tier 3, Volume Outran the Team (Headcount is a 90-day fix for a two-week problem. Overflow is going to whoever answers first with a reel that matches the account.)
+5. IF Everything else that cleared the gate -&gt; Tier 4, the catch-all (No dated trigger fired, but their own site shows a static-dominant visual mix. Skipping this tier would leave 56% of the qualified market unrouted.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="03">
+        
+    <div class="section-head">
+      <p class="eyebrow">03</p>
+      <h2>Four tiers, one question</h2>
+      <p class="takeaway">How close is this account to commissioning a hero visual? Tier 1 is a legally-filed answer. Tier 4 is an educated read. Nothing is left unrouted.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">~8% TAM</span>
+          </div>
+          <h3>Tier 1: Launch Filed, No Film</h3>
+          <p>A label approval cleared in the last 180 days at a producer with prior filing history, an intent-to-use trademark filed in the last 270 days by a company with 15+ staff, or a named appearance in a trade show new-product showcase in the last 120 days.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The packaging artwork is final and the ship date is locked, but no motion asset exists. Retail point-of-sale, Amazon A+ pages, paid social and the launch film all need hero product visuals, and the existing flat photography cannot carry a launch.</dd></div>
+              <div><dt>Offer</dt><dd>Launch Visual Gap Report: their approved label, three hero frames built from it, and the map of six assets one shoot day would deliver</dd></div>
+              <div><dt>Source</dt><dd>TTB Public COLA Registry, USPTO intent-to-use filings, trade show new-product showcases</dd></div>
+              <div><dt>Reply density</dt><dd>Highest in the cascade. Smallest list, dated intent, and the personalisation writes itself off the filing.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">~22% TAM</span>
+          </div>
+          <h3>Tier 2: Paying to Distribute Stale Creative</h3>
+          <p>Six or more active ads, the oldest still running for 90 days or more, and either under 25 percent motion or no CGI product work detectable anywhere in the set.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Media budget is already committed. Static flat-lay in a motion-first feed means decaying click-through and climbing cost per acquisition, and by the time it is obvious they are eight weeks from having anything new to swap in.</dd></div>
+              <div><dt>Offer</dt><dd>Creative Fatigue Teardown: a grid of their live ads with days-live per creative, motion share, the three placements bleeding hardest, and the variants we would cut to replace them</dd></div>
+              <div><dt>Source</dt><dd>Meta Ad Library sweep, free and no login required</dd></div>
+              <div><dt>Reply density</dt><dd>Middle of the pack, but the largest addressable volume with a genuine signal behind it.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">~14% TAM</span>
+          </div>
+          <h3>Tier 3: Volume Outran the Team</h3>
+          <p>An open producer or 3D requisition in the last 90 days, a publicly announced new business win in the last 90 days, or three or more creative requisitions open simultaneously.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The work landed before the team did. Between now and a hire starting, the executive producer is handing overflow to whoever answers fastest with a reel that matches the account.</dd></div>
+              <div><dt>Offer</dt><dd>Overflow Capacity One-Pager: live availability window, day-rate bands, the motion-control rig spec, and three reels matched to the accounts they actually service</dd></div>
+              <div><dt>Source</dt><dd>Job posts, agency careers pages, agency press pages and company posts</dd></div>
+              <div><dt>Reply density</dt><dd>Best lifetime economics in the document. An agency that buys once buys four more times a year.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">~56% TAM</span>
+          </div>
+          <h3>Tier 4: Catch-all</h3>
+          <p>Everything else that clears the qualification gate. This tier is not optional; without it the waterfall leaves more than half its market unrouted.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>No dated trigger fired, but their own site and social show a static-dominant visual mix. The product is the hero of the category and the visuals treat it like a stock photograph.</dd></div>
+              <div><dt>Offer</dt><dd>The 60-Second Product Test: send one product, get back a single motion frame concept and a shot list. No charge and no call.</dd></div>
+              <div><dt>Source</dt><dd>The gated market minus every tier above it, plus a visual-mix read off their own site</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest per contact, highest absolute volume. Softest possible ask to compensate.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="04">
+        
+    <div class="section-head">
+      <p class="eyebrow">04</p>
+      <h2>The experiments on top</h2>
+      <p class="takeaway">The cascade is the spine. These are the angles tested inside it, plus four side campaigns deliberately kept outside it.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Label Approval, 30 Days Fresh</h3>
+          <p>The sharpest version of Tier 1. A 30-day window means the artwork is signed off and the creative conversation is happening internally right now, but the vendor has almost certainly not been chosen.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Label approval cleared in the last 30 days, producer has 3+ prior approvals</dd></div>
+            <div><dt>AI strategy</dt><dd>Pull the daily approval feed, read the fanciful name and the approved artwork, and open on a specific visual detail of the label. The email references a document the prospect knows is real and assumes nobody else has read.</dd></div>
+            <div><dt>Value</dt><dd>Arrive before the brief</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Intent-to-Use, Nine Months Out</h3>
+          <p>Lower urgency than a fresh approval but a longer runway, which suits a studio that needs lead time. Also reaches the packaged-goods brands a beverage-only signal would miss entirely.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Section 1(b) trademark filed in food, staples or beverage classes in the last 270 days, applicant has 15+ staff</dd></div>
+            <div><dt>AI strategy</dt><dd>Catch non-alcoholic launches, which file no label approval. Earlier in the cycle than a COLA, so the copy shifts from &#39;the film isn&#39;t booked&#39; to &#39;when you brief this out&#39;.</dd></div>
+            <div><dt>Value</dt><dd>Get on the list early</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Trade Show New-Product Showcase</h3>
+          <p>A seasonal spike rather than an always-on feed. Worth timing the send to land two to three weeks after the show closes, when the follow-up scramble starts.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Named in an Expo West, Summer Fancy Food, NACS or Bar Convent Brooklyn new-product listing in the last 120 days</dd></div>
+            <div><dt>AI strategy</dt><dd>The showcase entry is a public commitment to a launch with a date attached. Reference the show by name; it proves a human read the list rather than scraped a database.</dd></div>
+            <div><dt>Value</dt><dd>Arrive before the brief</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Focused</span>
+          </div>
+          <h3>Days-Live Teardown</h3>
+          <p>The research artefact and the offer are the same object, which is why this tier scales. The sweep that qualifies the account also produces the thing we send when they reply.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Oldest active creative 90+ days live, six or more ads running</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with the exact number of days their top creative has been running. It is a fact they know but have never seen written down by an outsider, which is what makes it land.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Motion Share Under 25%</h3>
+          <p>Softer than the fatigue angle and easier to say yes to, because it critiques the mix rather than the work. Good chaos-test partner against the days-live variant.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Under a quarter of active creative is motion, in a category where competitors are motion-first</dd></div>
+            <div><dt>AI strategy</dt><dd>Frame it as a format gap rather than a quality problem. Nobody defends a static ad set once you show them the share number next to the category norm.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Library, Not Asset</h3>
+          <p>The highest-leverage reframe in the document for performance buyers, because it converts a project cost into a cost-per-asset they can defend to finance.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Ecommerce and performance-led brands with heavy paid social</dd></div>
+            <div><dt>AI strategy</dt><dd>Reframe the purchase entirely. They think they are buying one film for $40k; the pitch is that they are buying twenty-plus variants off a single build, which changes the unit maths.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>The Producer Requisition</h3>
+          <p>The cleanest agency-side trigger there is. Job posts are reliably detectable, unlike tech stack absence, so this tier does not depend on inference.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Integrated, senior or executive producer role posted in the last 90 days</dd></div>
+            <div><dt>AI strategy</dt><dd>Open on the requisition and the gap it implies. A hire is 90 days out; the work is already in the building. Offer the bench, not the pitch.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>New Business Win Congratulations</h3>
+          <p>Short window and high relevance. Send inside three weeks of the announcement or the moment has passed and the resourcing decision is already made.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Publicly announced client win in the last 90 days</dd></div>
+            <div><dt>AI strategy</dt><dd>Congratulate, then immediately name the consequence: new account, new volume, existing team. The congratulation earns the second sentence.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>One Spot, Fixed Scope</h3>
+          <p>The follow-up angle that converts hesitation into a trial. One spot, one scope, fixed price. Lose one job or gain a bench.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Agencies that opened but did not reply to the capacity pitch</dd></div>
+            <div><dt>AI strategy</dt><dd>De-risk explicitly. Producers hesitate on a new studio mid-flight because the client is live and there is no room to be wrong. Shrink the first commitment until the risk is trivial.</dd></div>
+            <div><dt>Value</dt><dd>Reduce risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>The 60-Second Product Test</h3>
+          <p>The softest CTA in the playbook, doing the most work. With 56% of the market here, the conversion mechanism has to be a free artefact rather than a calendar link.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Any gated account that fired no trigger</dd></div>
+            <div><dt>AI strategy</dt><dd>Do not sell. Ask for one product name and return a free motion frame concept and a shot list. The ask is smaller than a meeting, so it clears the bar for people with no active need.</dd></div>
+            <div><dt>Value</dt><dd>See it first</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Photogenic and Still</h3>
+          <p>Works because it is true and specific to their brand. Requires a real look at the site, which is what separates this from every other studio email in the inbox.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Static-dominant visual mix on their own site and social</dd></div>
+            <div><dt>AI strategy</dt><dd>Observe rather than diagnose. Note that the product is genuinely photogenic and that almost everything showing it is a still. It reads as taste, not as criticism.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>CGI-Only, No Shipping</h3>
+          <p>A one-field switch applied at copy assembly. Motion-control needs the product in Burbank; CGI does not, so geography changes the offer rather than the routing.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>International accounts, or products that cannot practically ship to Burbank</dd></div>
+            <div><dt>AI strategy</dt><dd>Switch the offer, not the tier. Drop tabletop entirely and pitch a pure CGI product build from label art and dielines, which has no geographic constraint.</dd></div>
+            <div><dt>Value</dt><dd>Remove a blocker</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Side campaign">
+          <div class="campaign-card__meta">
+            <span>Side campaign</span>
+            <span>Niche</span>
+          </div>
+          <h3>SIDE: Entertainment and Title Design</h3>
+          <p>Deliberately outside the waterfall. The buyer is a post supervisor or on-air creative director and the signal sits on a different ladder, so folding it in would break the routing.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Film Commission allocation letter issued with a shoot start inside 120 days, or an announced premiere three to six months out</dd></div>
+            <div><dt>AI strategy</dt><dd>Credential-led rather than problem-led. Disney Channel and Tubi are already in the reel, so the pitch is the work, not a diagnosis. Fires on quarterly allocation announcements.</dd></div>
+            <div><dt>Value</dt><dd>Credibility</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Side campaign">
+          <div class="campaign-card__meta">
+            <span>Side campaign</span>
+            <span>Niche</span>
+          </div>
+          <h3>SIDE: Motion-Control Rental Displacement</h3>
+          <p>Always on, low volume, Los Angeles only. Depends entirely on the rig being owned in-house rather than accessed through a partner, which is an open question.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>LA production companies and agencies whose credits, BTS posts or job listings name a motion-control rental house or operator</dd></div>
+            <div><dt>AI strategy</dt><dd>Purely commercial, no creative persuasion required. They are renting a rig, a stage, an operator and a post house separately; this is one purchase order for all four.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Side campaign">
+          <div class="campaign-card__meta">
+            <span>Side campaign</span>
+            <span>Focused</span>
+          </div>
+          <h3>SIDE: Alumni and Job-Change Reactivation</h3>
+          <p>Run this first. It costs nothing, carries no deliverability risk, and should be running manually during the three weeks it takes to warm sending infrastructure. Expect the highest reply rate of anything here.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Past clients, plus prior contacts who have since changed employer</dd></div>
+            <div><dt>AI strategy</dt><dd>You hired us at your last company. Here is what we have built since. Sent by hand, from a real inbox, by someone they already know.</dd></div>
+            <div><dt>Value</dt><dd>Warmest possible</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="05">
+        
+    <div class="section-head">
+      <p class="eyebrow">05</p>
+      <h2>Copy written to the signal</h2>
+      <p class="takeaway">Three emails per tier. Every CTA is a reply for an asset, never a call. Producers book vendors; they do not take discovery calls.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company}}</span><span>{{product_name}}</span><span>{{approval_date}}</span><span>{{label_detail}}</span><span>{{active_ad_count}}</span><span>{{days_live}}</span><span>{{motion_share}}</span><span>{{role_title}}</span><span>{{days_since_post}}</span><span>{{hero_sku}}</span><span>{{specific_observation}}</span><span>{{other_dm_title}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company}}, {{product_name}}, {{approval_date}}, {{label_detail}}, {{active_ad_count}}, {{days_live}}, {{motion_share}}, {{role_title}}, {{days_since_post}}, {{hero_sku}}, {{specific_observation}}, {{other_dm_title}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Launch Filed, No Film</strong>
+              <em>Launch Visual Gap Report</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Launch Filed, No Film steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{product_name}}&#10;&#10;Hi {{first_name}} - your label approval for {{product_name}} cleared on {{approval_date}}, so I went and looked at the approved artwork. The {{label_detail}} is going to read beautifully in motion.&#10;&#10;But would it be fair to assume the artwork is locked and the hero film isn&#39;t, and that whoever ends up shooting it is going to be doing it under a ship date?&#10;&#10;We&#39;re a motion-control tabletop and CGI studio in Burbank. We build the product hero straight off the approved label art, so the bottle on screen is the bottle on shelf, frame for frame.&#10;&#10;Nike, McCafe, Fendi and Cup Noodles have all had us do exactly this.&#10;&#10;Want me to send the Launch Visual Gap Report for {{product_name}}? Three hero frames built from your label, plus the six assets one shoot day would deliver. Reply &quot;send it&quot; - no call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{product_name}}" data-preview="Nightgrove Yuzu Spritz">{{product_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}} - your label approval for {{product_name}} cleared on {{approval_date}}, so I went and looked at the approved artwork. The {{label_detail}} is going to read beautifully in motion.&#10;&#10;But would it be fair to assume the artwork is locked and the hero film isn&#39;t, and that whoever ends up shooting it is going to be doing it under a ship date?&#10;&#10;We&#39;re a motion-control tabletop and CGI studio in Burbank. We build the product hero straight off the approved label art, so the bottle on screen is the bottle on shelf, frame for frame.&#10;&#10;Nike, McCafe, Fendi and Cup Noodles have all had us do exactly this.&#10;&#10;Want me to send the Launch Visual Gap Report for {{product_name}}? Three hero frames built from your label, plus the six assets one shoot day would deliver. Reply &quot;send it&quot; - no call needed." data-preview="Hi Dana - your label approval for Nightgrove Yuzu Spritz cleared on July 29, so I went and looked at the approved artwork. The foil on the yuzu illustration is going to read beautifully in motion.&#10;&#10;But would it be fair to assume the artwork is locked and the hero film isn&#39;t, and that whoever ends up shooting it is going to be doing it under a ship date?&#10;&#10;We&#39;re a motion-control tabletop and CGI studio in Burbank. We build the product hero straight off the approved label art, so the bottle on screen is the bottle on shelf, frame for frame.&#10;&#10;Nike, McCafe, Fendi and Cup Noodles have all had us do exactly this.&#10;&#10;Want me to send the Launch Visual Gap Report for Nightgrove Yuzu Spritz? Three hero frames built from your label, plus the six assets one shoot day would deliver. Reply &quot;send it&quot; - no call needed.">
+                        <p>Hi {{first_name}} - your label approval for {{product_name}} cleared on {{approval_date}}, so I went and looked at the approved artwork. The {{label_detail}} is going to read beautifully in motion.</p><p>But would it be fair to assume the artwork is locked and the hero film isn&#39;t, and that whoever ends up shooting it is going to be doing it under a ship date?</p><p>We&#39;re a motion-control tabletop and CGI studio in Burbank. We build the product hero straight off the approved label art, so the bottle on screen is the bottle on shelf, frame for frame.</p><p>Nike, McCafe, Fendi and Cup Noodles have all had us do exactly this.</p><p>Want me to send the Launch Visual Gap Report for {{product_name}}? Three hero frames built from your label, plus the six assets one shoot day would deliver. Reply &quot;send it&quot; - no call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One more thing worth knowing before you brief this out.&#10;&#10;Most launches book the film, then book a separate stills day, then pay an editor to cut socials from footage that wasn&#39;t shot for vertical. Three vendors, three purchase orders, three schedules.&#10;&#10;We shoot it once on the robot and deliver the 30, the cutdowns, the verticals, the Amazon A+ loop and the retail point-of-sale animation off the same build. One purchase order.&#10;&#10;Still happy to send the Gap Report on {{product_name}}. Want it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One more thing worth knowing before you brief this out.&#10;&#10;Most launches book the film, then book a separate stills day, then pay an editor to cut socials from footage that wasn&#39;t shot for vertical. Three vendors, three purchase orders, three schedules.&#10;&#10;We shoot it once on the robot and deliver the 30, the cutdowns, the verticals, the Amazon A+ loop and the retail point-of-sale animation off the same build. One purchase order.&#10;&#10;Still happy to send the Gap Report on {{product_name}}. Want it?" data-preview="One more thing worth knowing before you brief this out.&#10;&#10;Most launches book the film, then book a separate stills day, then pay an editor to cut socials from footage that wasn&#39;t shot for vertical. Three vendors, three purchase orders, three schedules.&#10;&#10;We shoot it once on the robot and deliver the 30, the cutdowns, the verticals, the Amazon A+ loop and the retail point-of-sale animation off the same build. One purchase order.&#10;&#10;Still happy to send the Gap Report on Nightgrove Yuzu Spritz. Want it?">
+                        <p>One more thing worth knowing before you brief this out.</p><p>Most launches book the film, then book a separate stills day, then pay an editor to cut socials from footage that wasn&#39;t shot for vertical. Three vendors, three purchase orders, three schedules.</p><p>We shoot it once on the robot and deliver the 30, the cutdowns, the verticals, the Amazon A+ loop and the retail point-of-sale animation off the same build. One purchase order.</p><p>Still happy to send the Gap Report on {{product_name}}. Want it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: re: {{product_name}}&#10;&#10;{{first_name}} - no need for a call on this.&#10;&#10;Just reply yes and I&#39;ll send the Launch Visual Gap Report for {{product_name}}.&#10;&#10;Should I send it to you, or is {{other_dm_title}} the right person for launch creative?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="re: {{product_name}}" data-preview="re: Nightgrove Yuzu Spritz">re: {{product_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - no need for a call on this.&#10;&#10;Just reply yes and I&#39;ll send the Launch Visual Gap Report for {{product_name}}.&#10;&#10;Should I send it to you, or is {{other_dm_title}} the right person for launch creative?" data-preview="Dana - no need for a call on this.&#10;&#10;Just reply yes and I&#39;ll send the Launch Visual Gap Report for Nightgrove Yuzu Spritz.&#10;&#10;Should I send it to you, or is your Creative Director the right person for launch creative?">
+                        <p>{{first_name}} - no need for a call on this.</p><p>Just reply yes and I&#39;ll send the Launch Visual Gap Report for {{product_name}}.</p><p>Should I send it to you, or is {{other_dm_title}} the right person for launch creative?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Paying to Distribute Stale Creative</strong>
+              <em>Creative Fatigue Teardown</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Paying to Distribute Stale Creative steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}}&#39;s top ad, {{days_live}} days&#10;&#10;Hi {{first_name}} - I went through {{company}}&#39;s active ads. You&#39;ve got {{active_ad_count}} running, and the one that&#39;s been live longest has been up {{days_live}} days. {{motion_share}}% of what&#39;s running is motion.&#10;&#10;But would it be fair to assume the refresh cycle is the bottleneck, not the budget - that new creative means a new shoot, and a new shoot means six weeks?&#10;&#10;We&#39;re a motion-control and CGI product studio in Burbank. One build gives you twenty or more distinct motion variants, so refreshing creative stops being a re-shoot decision and starts being an export.&#10;&#10;Nike, McCafe and Cup Noodles all run on work we&#39;ve made.&#10;&#10;I already pulled your live ads into a Creative Fatigue Teardown: days-live per creative, motion share, and the three placements bleeding hardest. Reply &quot;send it&quot; and it&#39;s yours.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}}&#39;s top ad, {{days_live}} days" data-preview="Nightgrove Beverage Co.&#39;s top ad, 142 days">{{company}}&#39;s top ad, {{days_live}} days</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}} - I went through {{company}}&#39;s active ads. You&#39;ve got {{active_ad_count}} running, and the one that&#39;s been live longest has been up {{days_live}} days. {{motion_share}}% of what&#39;s running is motion.&#10;&#10;But would it be fair to assume the refresh cycle is the bottleneck, not the budget - that new creative means a new shoot, and a new shoot means six weeks?&#10;&#10;We&#39;re a motion-control and CGI product studio in Burbank. One build gives you twenty or more distinct motion variants, so refreshing creative stops being a re-shoot decision and starts being an export.&#10;&#10;Nike, McCafe and Cup Noodles all run on work we&#39;ve made.&#10;&#10;I already pulled your live ads into a Creative Fatigue Teardown: days-live per creative, motion share, and the three placements bleeding hardest. Reply &quot;send it&quot; and it&#39;s yours." data-preview="Hi Dana - I went through Nightgrove Beverage Co.&#39;s active ads. You&#39;ve got 14 running, and the one that&#39;s been live longest has been up 142 days. 9% of what&#39;s running is motion.&#10;&#10;But would it be fair to assume the refresh cycle is the bottleneck, not the budget - that new creative means a new shoot, and a new shoot means six weeks?&#10;&#10;We&#39;re a motion-control and CGI product studio in Burbank. One build gives you twenty or more distinct motion variants, so refreshing creative stops being a re-shoot decision and starts being an export.&#10;&#10;Nike, McCafe and Cup Noodles all run on work we&#39;ve made.&#10;&#10;I already pulled your live ads into a Creative Fatigue Teardown: days-live per creative, motion share, and the three placements bleeding hardest. Reply &quot;send it&quot; and it&#39;s yours.">
+                        <p>Hi {{first_name}} - I went through {{company}}&#39;s active ads. You&#39;ve got {{active_ad_count}} running, and the one that&#39;s been live longest has been up {{days_live}} days. {{motion_share}}% of what&#39;s running is motion.</p><p>But would it be fair to assume the refresh cycle is the bottleneck, not the budget - that new creative means a new shoot, and a new shoot means six weeks?</p><p>We&#39;re a motion-control and CGI product studio in Burbank. One build gives you twenty or more distinct motion variants, so refreshing creative stops being a re-shoot decision and starts being an export.</p><p>Nike, McCafe and Cup Noodles all run on work we&#39;ve made.</p><p>I already pulled your live ads into a Creative Fatigue Teardown: days-live per creative, motion share, and the three placements bleeding hardest. Reply &quot;send it&quot; and it&#39;s yours.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Following up on the ads.&#10;&#10;The thing that usually bites here isn&#39;t cost per acquisition drifting up. It&#39;s that by the time it&#39;s obvious, you&#39;re eight weeks away from having anything new to swap in.&#10;&#10;A motion-control or CGI build gets ahead of that. You hold a library, and you&#39;re refreshing weekly instead of quarterly.&#10;&#10;Teardown&#39;s still sitting here for {{company}}. Want me to send it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Following up on the ads.&#10;&#10;The thing that usually bites here isn&#39;t cost per acquisition drifting up. It&#39;s that by the time it&#39;s obvious, you&#39;re eight weeks away from having anything new to swap in.&#10;&#10;A motion-control or CGI build gets ahead of that. You hold a library, and you&#39;re refreshing weekly instead of quarterly.&#10;&#10;Teardown&#39;s still sitting here for {{company}}. Want me to send it?" data-preview="Following up on the ads.&#10;&#10;The thing that usually bites here isn&#39;t cost per acquisition drifting up. It&#39;s that by the time it&#39;s obvious, you&#39;re eight weeks away from having anything new to swap in.&#10;&#10;A motion-control or CGI build gets ahead of that. You hold a library, and you&#39;re refreshing weekly instead of quarterly.&#10;&#10;Teardown&#39;s still sitting here for Nightgrove Beverage Co.. Want me to send it?">
+                        <p>Following up on the ads.</p><p>The thing that usually bites here isn&#39;t cost per acquisition drifting up. It&#39;s that by the time it&#39;s obvious, you&#39;re eight weeks away from having anything new to swap in.</p><p>A motion-control or CGI build gets ahead of that. You hold a library, and you&#39;re refreshing weekly instead of quarterly.</p><p>Teardown&#39;s still sitting here for {{company}}. Want me to send it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} creative teardown&#10;&#10;No call needed, {{first_name}}.&#10;&#10;Reply yes and I&#39;ll send the teardown of {{company}}&#39;s live ads.&#10;&#10;Should this go to you, or to whoever owns paid creative?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} creative teardown" data-preview="Nightgrove Beverage Co. creative teardown">{{company}} creative teardown</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed, {{first_name}}.&#10;&#10;Reply yes and I&#39;ll send the teardown of {{company}}&#39;s live ads.&#10;&#10;Should this go to you, or to whoever owns paid creative?" data-preview="No call needed, Dana.&#10;&#10;Reply yes and I&#39;ll send the teardown of Nightgrove Beverage Co.&#39;s live ads.&#10;&#10;Should this go to you, or to whoever owns paid creative?">
+                        <p>No call needed, {{first_name}}.</p><p>Reply yes and I&#39;ll send the teardown of {{company}}&#39;s live ads.</p><p>Should this go to you, or to whoever owns paid creative?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Volume Outran the Team</strong>
+              <em>Overflow Capacity One-Pager</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Volume Outran the Team steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the {{role_title}} req&#10;&#10;Hi {{first_name}} - saw {{company}} posted for a {{role_title}} {{days_since_post}} days ago, and the news about the win. Congrats either way.&#10;&#10;But would it be fair to assume the work landed before the team did, and that between now and a hire starting, overflow is going to whoever picks up the phone with the right reel?&#10;&#10;We&#39;re a small-on-purpose motion design and CGI studio in Burbank. We take a board to finished frames, white-label or credited, and we run our own motion-control rig, so tabletop doesn&#39;t need a third vendor and a second purchase order.&#10;&#10;Cannes Lions and a Grand Prix for Good on the shelf. Nike, Fendi and Disney Channel in the reel.&#10;&#10;Want the Overflow Capacity One-Pager? Current availability, day-rate bands, rig spec, and three reels matched to your accounts. Reply &quot;send it&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the {{role_title}} req" data-preview="the Senior Integrated Producer req">the {{role_title}} req</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}} - saw {{company}} posted for a {{role_title}} {{days_since_post}} days ago, and the news about the win. Congrats either way.&#10;&#10;But would it be fair to assume the work landed before the team did, and that between now and a hire starting, overflow is going to whoever picks up the phone with the right reel?&#10;&#10;We&#39;re a small-on-purpose motion design and CGI studio in Burbank. We take a board to finished frames, white-label or credited, and we run our own motion-control rig, so tabletop doesn&#39;t need a third vendor and a second purchase order.&#10;&#10;Cannes Lions and a Grand Prix for Good on the shelf. Nike, Fendi and Disney Channel in the reel.&#10;&#10;Want the Overflow Capacity One-Pager? Current availability, day-rate bands, rig spec, and three reels matched to your accounts. Reply &quot;send it&quot;." data-preview="Hi Dana - saw Nightgrove Beverage Co. posted for a Senior Integrated Producer 11 days ago, and the news about the win. Congrats either way.&#10;&#10;But would it be fair to assume the work landed before the team did, and that between now and a hire starting, overflow is going to whoever picks up the phone with the right reel?&#10;&#10;We&#39;re a small-on-purpose motion design and CGI studio in Burbank. We take a board to finished frames, white-label or credited, and we run our own motion-control rig, so tabletop doesn&#39;t need a third vendor and a second purchase order.&#10;&#10;Cannes Lions and a Grand Prix for Good on the shelf. Nike, Fendi and Disney Channel in the reel.&#10;&#10;Want the Overflow Capacity One-Pager? Current availability, day-rate bands, rig spec, and three reels matched to your accounts. Reply &quot;send it&quot;.">
+                        <p>Hi {{first_name}} - saw {{company}} posted for a {{role_title}} {{days_since_post}} days ago, and the news about the win. Congrats either way.</p><p>But would it be fair to assume the work landed before the team did, and that between now and a hire starting, overflow is going to whoever picks up the phone with the right reel?</p><p>We&#39;re a small-on-purpose motion design and CGI studio in Burbank. We take a board to finished frames, white-label or credited, and we run our own motion-control rig, so tabletop doesn&#39;t need a third vendor and a second purchase order.</p><p>Cannes Lions and a Grand Prix for Good on the shelf. Nike, Fendi and Disney Channel in the reel.</p><p>Want the Overflow Capacity One-Pager? Current availability, day-rate bands, rig spec, and three reels matched to your accounts. Reply &quot;send it&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Quick add.&#10;&#10;The reason producers usually hesitate on a new studio mid-flight is risk. Unknown vendor, live client, no room to be wrong.&#10;&#10;So the way we start is small. One spot, one scope, fixed. If it goes well you&#39;ve got a bench. If it doesn&#39;t, you&#39;ve lost one job, not an account.&#10;&#10;One-pager&#39;s ready when you want it.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Quick add.&#10;&#10;The reason producers usually hesitate on a new studio mid-flight is risk. Unknown vendor, live client, no room to be wrong.&#10;&#10;So the way we start is small. One spot, one scope, fixed. If it goes well you&#39;ve got a bench. If it doesn&#39;t, you&#39;ve lost one job, not an account.&#10;&#10;One-pager&#39;s ready when you want it." data-preview="Quick add.&#10;&#10;The reason producers usually hesitate on a new studio mid-flight is risk. Unknown vendor, live client, no room to be wrong.&#10;&#10;So the way we start is small. One spot, one scope, fixed. If it goes well you&#39;ve got a bench. If it doesn&#39;t, you&#39;ve lost one job, not an account.&#10;&#10;One-pager&#39;s ready when you want it.">
+                        <p>Quick add.</p><p>The reason producers usually hesitate on a new studio mid-flight is risk. Unknown vendor, live client, no room to be wrong.</p><p>So the way we start is small. One spot, one scope, fixed. If it goes well you&#39;ve got a bench. If it doesn&#39;t, you&#39;ve lost one job, not an account.</p><p>One-pager&#39;s ready when you want it.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: overflow bench&#10;&#10;{{first_name}} - no call needed.&#10;&#10;Reply yes and I&#39;ll send the capacity one-pager and three reels cut to your client list.&#10;&#10;Should I send it to you or to your Head of Production?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="overflow bench" data-preview="overflow bench">overflow bench</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - no call needed.&#10;&#10;Reply yes and I&#39;ll send the capacity one-pager and three reels cut to your client list.&#10;&#10;Should I send it to you or to your Head of Production?" data-preview="Dana - no call needed.&#10;&#10;Reply yes and I&#39;ll send the capacity one-pager and three reels cut to your client list.&#10;&#10;Should I send it to you or to your Head of Production?">
+                        <p>{{first_name}} - no call needed.</p><p>Reply yes and I&#39;ll send the capacity one-pager and three reels cut to your client list.</p><p>Should I send it to you or to your Head of Production?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 - Catch-all</strong>
+              <em>The 60-Second Product Test</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 - Catch-all steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your {{hero_sku}}&#10;&#10;Hi {{first_name}} - spent a while on {{company}}&#39;s site. {{specific_observation}}. The product itself is genuinely photogenic, and almost everything showing it is a still.&#10;&#10;But would it be fair to assume motion has stayed on the &quot;when we have budget&quot; list rather than the &quot;this quarter&quot; list?&#10;&#10;We&#39;re a craft-led motion design and CGI studio in Burbank, small on purpose. Nike&#39;s Story of Air Max, McCafe, Fendi, Cup Noodles.&#10;&#10;Here&#39;s an easy way to see what it&#39;d look like: tell me one product and I&#39;ll send back a single motion frame concept and a shot list. Free, and it takes us about a day.&#10;&#10;Which one?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your {{hero_sku}}" data-preview="your Yuzu Spritz 4-pack">your {{hero_sku}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}} - spent a while on {{company}}&#39;s site. {{specific_observation}}. The product itself is genuinely photogenic, and almost everything showing it is a still.&#10;&#10;But would it be fair to assume motion has stayed on the &quot;when we have budget&quot; list rather than the &quot;this quarter&quot; list?&#10;&#10;We&#39;re a craft-led motion design and CGI studio in Burbank, small on purpose. Nike&#39;s Story of Air Max, McCafe, Fendi, Cup Noodles.&#10;&#10;Here&#39;s an easy way to see what it&#39;d look like: tell me one product and I&#39;ll send back a single motion frame concept and a shot list. Free, and it takes us about a day.&#10;&#10;Which one?" data-preview="Hi Dana - spent a while on Nightgrove Beverage Co.&#39;s site. the whole range is shot flat-lay on the same grey sweep. The product itself is genuinely photogenic, and almost everything showing it is a still.&#10;&#10;But would it be fair to assume motion has stayed on the &quot;when we have budget&quot; list rather than the &quot;this quarter&quot; list?&#10;&#10;We&#39;re a craft-led motion design and CGI studio in Burbank, small on purpose. Nike&#39;s Story of Air Max, McCafe, Fendi, Cup Noodles.&#10;&#10;Here&#39;s an easy way to see what it&#39;d look like: tell me one product and I&#39;ll send back a single motion frame concept and a shot list. Free, and it takes us about a day.&#10;&#10;Which one?">
+                        <p>Hi {{first_name}} - spent a while on {{company}}&#39;s site. {{specific_observation}}. The product itself is genuinely photogenic, and almost everything showing it is a still.</p><p>But would it be fair to assume motion has stayed on the &quot;when we have budget&quot; list rather than the &quot;this quarter&quot; list?</p><p>We&#39;re a craft-led motion design and CGI studio in Burbank, small on purpose. Nike&#39;s Story of Air Max, McCafe, Fendi, Cup Noodles.</p><p>Here&#39;s an easy way to see what it&#39;d look like: tell me one product and I&#39;ll send back a single motion frame concept and a shot list. Free, and it takes us about a day.</p><p>Which one?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Still happy to do the frame concept on {{company}}&#39;s {{hero_sku}}.&#10;&#10;To be clear about what it is: not a proposal, not a deck. One frame and a shot list showing how your product moves. People usually pin it up and argue about it, which is the point.&#10;&#10;Want it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Still happy to do the frame concept on {{company}}&#39;s {{hero_sku}}.&#10;&#10;To be clear about what it is: not a proposal, not a deck. One frame and a shot list showing how your product moves. People usually pin it up and argue about it, which is the point.&#10;&#10;Want it?" data-preview="Still happy to do the frame concept on Nightgrove Beverage Co.&#39;s Yuzu Spritz 4-pack.&#10;&#10;To be clear about what it is: not a proposal, not a deck. One frame and a shot list showing how your product moves. People usually pin it up and argue about it, which is the point.&#10;&#10;Want it?">
+                        <p>Still happy to do the frame concept on {{company}}&#39;s {{hero_sku}}.</p><p>To be clear about what it is: not a proposal, not a deck. One frame and a shot list showing how your product moves. People usually pin it up and argue about it, which is the point.</p><p>Want it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: one frame&#10;&#10;{{first_name}} - no call, no deck.&#10;&#10;Reply with one product and I&#39;ll send back a motion frame concept for it.&#10;&#10;If creative sits with someone else at {{company}}, point me at them and I&#39;ll go direct.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="one frame" data-preview="one frame">one frame</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} - no call, no deck.&#10;&#10;Reply with one product and I&#39;ll send back a motion frame concept for it.&#10;&#10;If creative sits with someone else at {{company}}, point me at them and I&#39;ll go direct." data-preview="Dana - no call, no deck.&#10;&#10;Reply with one product and I&#39;ll send back a motion frame concept for it.&#10;&#10;If creative sits with someone else at Nightgrove Beverage Co., point me at them and I&#39;ll go direct.">
+                        <p>{{first_name}} - no call, no deck.</p><p>Reply with one product and I&#39;ll send back a motion frame concept for it.</p><p>If creative sits with someone else at {{company}}, point me at them and I&#39;ll go direct.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="06">
+        
+    <div class="section-head">
+      <p class="eyebrow">06</p>
+      <h2>Thirteen weeks, phased</h2>
+      <p class="takeaway">Warm the infrastructure while reactivation runs by hand. Tier 1 proves the thesis. Tier 3 compounds. Tier 2 scales. Tier 4 runs underneath forever.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Weeks 0 to 3. Warm four to six sending domains with three mailboxes each, ramping to 25 to 30 sends per mailbox per day. Never send from bubbas.la itself. Open tracking stays off.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Weeks 0 to 3, in parallel. Run the alumni and job-change reactivation by hand from a real inbox. Zero deliverability risk, and the most likely source of revenue in month one.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 0 to 3, in parallel. Close the two launch blockers: one real outcome metric from one past project, and a yes or no on whether the motion-control rig is owned in-house.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Weeks 3 to 6. Tier 1 only, around 600 contacts per week. Smallest and sharpest list, proves the thesis fastest, and produces the case study every other tier needs.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Weeks 6 to 9. Add Tier 3. Agencies are repeat buyers, so one win compounds into several jobs a year. Better lifetime economics than Tier 2 despite a list a third of the size.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Weeks 9 to 13. Add Tier 2, but only once the Creative Fatigue Teardown is productised down to roughly twenty minutes of analyst time per account. At an hour each the unit economics fail across nine thousand accounts.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>Week 13 onward. Tier 4 at full volume underneath everything else, and layer the entertainment side campaign onto the next Film Commission allocation window.</p>
+              </div>
+              <div class="launch-step">
+                <span>08</span>
+                <p>Ongoing. A daily label-approval pull and a weekly ad-library sweep. That is the entire maintenance cost of the cascade.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacted</strong>
+                <span>Excellent. Scale this tier hard and feed it more list.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Leave it alone and let it run untouched.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450 to 500</strong>
+                <span>Borderline. Test one copy variant, changing the lead magnet or the notice-line angle only. Hold everything else constant.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or under 1% reply rate after 1,500 sends</strong>
+                <span>Failing. Cut the tier and rework the trigger, not the copy.</span>
+              </div>
+              <div class="threshold">
+                <strong>Median first project under $25,000</strong>
+                <span>The qualification gate is too loose. Tighten the distribution, funding and headcount filters before adding volume.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a working session</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dana","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Nightgrove Beverage Co\\.","Nightgrove Yuzu Spritz","July 29","foil on the yuzu illustration","14","142","9","Senior Integrated Producer","11","Yuzu Spritz 4-pack","the whole range is shot flat-lay on the same grey sweep","your Creative Director"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
