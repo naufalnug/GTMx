@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proto Hologram - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-14</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Proto Hologram</p>
+          <h1>The Proto Hologram outbound <mark>journey</mark>.</h1>
+          <p class="hero-copy">One priority-routed cascade across every physical space in North America, built on a signal nobody sells.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Every competitor in this category sells a box, which means every competitor has to convince a buyer to find new capital for a new object. Proto is the only vendor with an appliance that upgrades the screens a prospect already paid for. That single fact turns the cold opener from &quot;buy a $50,000 hologram&quot; into &quot;make the screens you already own talk back&quot; - a capex fight becomes an upgrade to a budget line that already exists and already has an owner. So ProtoPlayer leads and Luma follows.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a working session</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>67,400</strong>
+          <span>Qualified accounts, US + Canada</span>
+        </div>
+        <div class="metric-card">
+          <strong>168k</strong>
+          <span>Contacts at 2.5 per account</span>
+        </div>
+        <div class="metric-card">
+          <strong>5</strong>
+          <span>Campaigns, built once, 100% coverage</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Proto sells physical AI: patented holographic hardware, ProtoOS, photorealistic multilingual avatars and a perception engine, deployed into real spaces with no wearables. Three SKUs: Luma (86&quot; life-size, ~$29k-$65k, buy/lease/rent), M2 (tabletop, ~$6,900 self-serve), and ProtoPlayer, an edge appliance that plugs into displays a prospect already owns.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>One question routes the entire market</p></div><div><span>02</span><p>The corpus nobody prospects from</p></div><div><span>03</span><p>Five tiers, first match wins</p></div><div><span>04</span><p>What each tier actually argues</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>Data</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">Signal</p>
+      <h2>One question routes the entire market</h2>
+      <p class="takeaway">Segmenting Proto by vertical looks obvious and is the trap. Verticals are orthogonal, an account can qualify for four at once, and you end up maintaining eight campaigns that decay together. One commitment ladder replaces all of them.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>It ladders. &quot;Already bought a hologram&quot; down to &quot;owns a building with footfall and hasn&#39;t thought about this yet&quot; is a genuine priority order, not a set of parallel buckets.</p></div><div class="reason-card"><span>02</span><p>It cuts across verticals instead of along them. A 40-screen network in a hospital lobby and a 40-screen network in a mall have the same pain and the same answer, so vertical becomes a merge field rather than a campaign.</p></div><div class="reason-card"><span>03</span><p>Every value proposition Proto already ships maps to exactly one rung. ProtoPlayer to installed screens, always-on avatars to unstaffed counters, Luma rental to a date on the calendar.</p></div><div class="reason-card"><span>04</span><p>It is answerable for free, for every account, from public pages - so the unit economics of list building never break.</p></div>
+            </div>
+            <div class="field-cloud"><span>holo_or_avatar_deployment_detected</span><span>competitor_vendor</span><span>signage_network_detected</span><span>signage_source</span><span>screen_count_estimate</span><span>signage_cms_vendor</span><span>frontline_open_reqs_90d</span><span>frontline_role_type</span><span>dated_moment</span><span>exhibitor_show_name</span><span>venue_type</span><span>location_count</span><span>annual_footfall_estimate</span><span>regulated_flag</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>AV integrator case studies</h3><p>Diversified, AVI-SPL, Solutionz, Electrosonic, Ford AV, CCS, Sensory Interactive, Adrenaline, Almo Pro A/V, IVCi. Each page names the client, the venue, what was installed and roughly when. This is the primary unlock: Apollo cannot produce this list and neither can ZoomInfo.</p></div><div class="source-card"><span>02</span><h3>Signage software vendor customer pages</h3><p>BrightSign, Scala, Poppulo (Four Winds Interactive), Spectrio, Raydiant, Enplug, Yodeck, Navori, 22Miles. Named customers plus the CMS they run, which sharpens the Tier 2 first line.</p></div><div class="source-card"><span>03</span><h3>Display OEM case studies</h3><p>Samsung Business, LG Business, Sony Pro, Planar, Daktronics. Large-format and video-wall deployments, by name.</p></div><div class="source-card"><span>04</span><h3>AV trade press</h3><p>Digital Signage Today, rAVe Publications, Commercial Integrator, AV Magazine, Sixteen:Nine. Named install stories published weekly, so the Tier 2 list refreshes itself without any strategy work.</p></div><div class="source-card"><span>05</span><h3>Trade show exhibitor directories</h3><p>NRF Big Show, HIMSS, InfoComm, Digital Signage Experience, IAAPA Expo, CES, ICSC, EDUCAUSE, HLTH. Free, public, and pre-qualifying for three things at once: booth budget, a footfall target and a fixed date. Repopulates Tier 4 every quarter.</p></div><div class="source-card"><span>06</span><h3>Job boards</h3><p>LinkedIn, Indeed, Greenhouse, Workday. Two distinct reads: reqs for the roles that manage screens (Tier 2 confirmation), and high-volume frontline reqs for the counter roles Proto offloads (Tier 3). A company hiring 40 guest services associates has told you its counter is understaffed.</p></div><div class="source-card"><span>07</span><h3>Page source and BuiltWith</h3><p>Soul Machines, UneeQ, D-ID, Synthesia, Hour One, Sierra, Ada, Intercom Fin. Detection proves the account already built an avatar persona and wired it to a knowledge base - Proto&#39;s job is then only to move it off the webpage and into the room.</p></div><div class="source-card"><span>08</span><h3>Competitor case studies and press</h3><p>Holoconnects, ARHT Media, Hypervsn, Base Hologram, VNTANA, MDH Hologram. Named deployments, which is a direct Tier 1 feed.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="Data">
+        
+    <div class="section-head">
+      <p class="eyebrow">Data</p>
+      <h2>The corpus nobody prospects from</h2>
+      <p class="takeaway">No vendor sells a list of companies with installed screen networks. But AV integrators publish their client work by name, with the venue and the install described, because it is their own marketing. That corpus is the market and the routing signal in one free pull.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF A hologram, AI avatar or virtual host is already deployed - competitor install, own press release, or web avatar vendor in page source</span>
+          <strong>Tier 1, Platform versus Activation</strong>
+          <em>The concept is already sold internally. What they bought is either a rented one-off with no OS, no CMS and no analytics, or a 2D avatar on a webpage where nobody is standing. Proven concept, stranded deployment.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF Not Tier 1, and an installed digital signage or AV display network is confirmed</span>
+          <strong>Tier 2, ProtoPlayer</strong>
+          <em>They own the glass and pay monthly for the loop, but the screens broadcast and nothing comes back. Sunk capital producing zero interaction data - and ProtoPlayer upgrades it over HDMI without touching capex.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF Not Tier 1 or 2, and three or more live open reqs in 90 days for public-facing frontline presence roles</span>
+          <strong>Tier 3, The counter you cannot staff</strong>
+          <em>The requisition volume is the confession. Coverage is business hours in a building open longer than that, and multilingual coverage is effectively unhirable.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF Not Tier 1 to 3, and a dated public moment falls two to nine months out</span>
+          <strong>Tier 4, The moment on the calendar</strong>
+          <em>They have a date, a footfall target and a space that will look like everyone else&#39;s. They need earned media, not more impressions - and rental keeps it off the capital budget.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF Everything else inside the TAM gate</span>
+          <strong>Tier 5, Catch-all</strong>
+          <em>Every dollar of digital transformation went to the website and the app. The one place the highest-intent people physically stand has no AI in it and no measurement layer at all.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF A hologram, AI avatar or virtual host is already deployed - competitor install, own press release, or web avatar vendor in page source -&gt; Tier 1, Platform versus Activation (The concept is already sold internally. What they bought is either a rented one-off with no OS, no CMS and no analytics, or a 2D avatar on a webpage where nobody is standing. Proven concept, stranded deployment.)&#10;2. IF Not Tier 1, and an installed digital signage or AV display network is confirmed -&gt; Tier 2, ProtoPlayer (They own the glass and pay monthly for the loop, but the screens broadcast and nothing comes back. Sunk capital producing zero interaction data - and ProtoPlayer upgrades it over HDMI without touching capex.)&#10;3. IF Not Tier 1 or 2, and three or more live open reqs in 90 days for public-facing frontline presence roles -&gt; Tier 3, The counter you cannot staff (The requisition volume is the confession. Coverage is business hours in a building open longer than that, and multilingual coverage is effectively unhirable.)&#10;4. IF Not Tier 1 to 3, and a dated public moment falls two to nine months out -&gt; Tier 4, The moment on the calendar (They have a date, a footfall target and a space that will look like everyone else&#39;s. They need earned media, not more impressions - and rental keeps it off the capital budget.)&#10;5. IF Everything else inside the TAM gate -&gt; Tier 5, Catch-all (Every dollar of digital transformation went to the website and the app. The one place the highest-intent people physically stand has no AI in it and no measurement layer at all.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF A hologram, AI avatar or virtual host is already deployed - competitor install, own press release, or web avatar vendor in page source -&gt; Tier 1, Platform versus Activation (The concept is already sold internally. What they bought is either a rented one-off with no OS, no CMS and no analytics, or a 2D avatar on a webpage where nobody is standing. Proven concept, stranded deployment.)
+2. IF Not Tier 1, and an installed digital signage or AV display network is confirmed -&gt; Tier 2, ProtoPlayer (They own the glass and pay monthly for the loop, but the screens broadcast and nothing comes back. Sunk capital producing zero interaction data - and ProtoPlayer upgrades it over HDMI without touching capex.)
+3. IF Not Tier 1 or 2, and three or more live open reqs in 90 days for public-facing frontline presence roles -&gt; Tier 3, The counter you cannot staff (The requisition volume is the confession. Coverage is business hours in a building open longer than that, and multilingual coverage is effectively unhirable.)
+4. IF Not Tier 1 to 3, and a dated public moment falls two to nine months out -&gt; Tier 4, The moment on the calendar (They have a date, a footfall target and a space that will look like everyone else&#39;s. They need earned media, not more impressions - and rental keeps it off the capital budget.)
+5. IF Everything else inside the TAM gate -&gt; Tier 5, Catch-all (Every dollar of digital transformation went to the website and the app. The one place the highest-intent people physically stand has no AI in it and no measurement layer at all.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">Tiers</p>
+      <h2>Five tiers, first match wins</h2>
+      <p class="takeaway">Conditions are evaluated top to bottom. Every account exits with exactly one tier, and the catch-all absorbs the remaining 40,000 so coverage is 100%.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">2% TAM</span>
+          </div>
+          <h3>Tier 1: Platform versus Activation</h3>
+          <p>Has publicly deployed a hologram, AI avatar or virtual host - a competitor install (Holoconnects, ARHT, Hypervsn, Base, VNTANA), their own press release, or a web avatar vendor detected in page source.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They already sold the concept internally and proved it works. But what they bought is either a rented one-off activation - no operating system, no content management, no perception engine, no analytics, gone the day the truck leaves - or a 2D avatar trapped on a webpage where nobody is physically standing. The concept is proven. The deployment is stranded.</dd></div>
+              <div><dt>Offer</dt><dd>Platform versus Activation teardown, plus a live beam session - we beam them into their own boardroom</dd></div>
+              <div><dt>Source</dt><dd>Competitor case-study and press pages, client press releases, BuiltWith and page-source avatar-vendor detection</dd></div>
+              <div><dt>Reply density</dt><dd>Highest intent in the market, but the scarcest list - 1,350 accounts is the entire competitor-displacement universe in North America</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">12% TAM</span>
+          </div>
+          <h3>Tier 2: ProtoPlayer, the screens they already own</h3>
+          <p>Not Tier 1, and an installed digital signage or AV display network is confirmed from an integrator case study, a vendor customer page, trade press or a signage job req.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They own the glass and pay monthly for the content loop, but the screens broadcast and nothing comes back. Nobody answers a question, nobody measures who stopped, and somebody&#39;s actual job is feeding a content calendar no one watches. Sunk capital generating zero interaction data.</dd></div>
+              <div><dt>Offer</dt><dd>Screen Network Intelligence Audit - they send locations and display types, we return which screens are ProtoPlayer-eligible and the upgrade path</dd></div>
+              <div><dt>Source</dt><dd>Integrator case studies (Diversified, AVI-SPL, Solutionz, Electrosonic, Ford AV, CCS), vendor customer pages (BrightSign, Scala, Poppulo, Spectrio, Raydiant), AV trade press, signage job reqs</dd></div>
+              <div><dt>Reply density</dt><dd>The workhorse and the launch tier - deep list, and the lowest-friction offer Proto owns</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">15% TAM</span>
+          </div>
+          <h3>Tier 3: The counter you cannot staff</h3>
+          <p>Not Tier 1 or 2, and three or more live open reqs in 90 days for public-facing frontline presence roles - concierge, guest services, patient access, front desk, brand ambassador, box office, information desk.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They cannot staff the counter. Coverage runs to business hours in a building that is open longer than that, hiring someone who covers a second language on top of everything else is close to impossible, and turnover means retraining every quarter. The requisition volume is the confession.</dd></div>
+              <div><dt>Offer</dt><dd>Counter Coverage Map - the repeat questions at a desk like theirs, and which close without a human</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn, Indeed, Greenhouse and Workday req scrapes, plus public statements on wait times or reduced hours</dd></div>
+              <div><dt>Reply density</dt><dd>Highest-volume operational pain in the strategy - expect the strongest response from health systems and airports</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">11% TAM</span>
+          </div>
+          <h3>Tier 4: The moment on the calendar</h3>
+          <p>Not Tier 1 to 3, and a dated public moment two to nine months out - flagship opening, exhibit launch, conference booth, season launch or campus event.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They have a date, a footfall target, and a space that is going to look like everyone else&#39;s. What they actually need is earned media, not more impressions.</dd></div>
+              <div><dt>Offer</dt><dd>Activation Press Brief - the earned-media pattern from recent Proto activations plus the rental figure for their date</dd></div>
+              <div><dt>Source</dt><dd>Trade show exhibitor directories (NRF, HIMSS, InfoComm, DSE, IAAPA, CES, ICSC, EDUCAUSE, HLTH), store-opening and exhibit announcements, agency-of-record news</dd></div>
+              <div><dt>Reply density</dt><dd>Time-boxed and genuinely urgent, because the date is real - and the list repopulates every quarter on its own</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">60% TAM</span>
+          </div>
+          <h3>Tier 5: Catch-all: no AI in the building</h3>
+          <p>Every remaining account inside the TAM gate - at least one public-facing physical space, clearing five or more locations, or 50,000 annual visitors to one site, or 250 employees on site.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Every dollar of their digital transformation went to the website and the app. The building - the one place where the highest-intent people are physically standing - has no AI in it and no measurement layer at all.</dd></div>
+              <div><dt>Offer</dt><dd>40-second beam video plus the M2 self-serve path</dd></div>
+              <div><dt>Source</dt><dd>Apollo, Crunchbase and industry directories filtered to the TAM gate</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest per-send, but 60% of the market and the only tier with a price a single person can approve</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">Campaigns</p>
+      <h2>What each tier actually argues</h2>
+      <p class="takeaway">Pain is inferred only from the trigger, never invented. Value propositions come only from capabilities Proto already ships.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>The unit went back</h3>
+          <p>The trigger implies a very specific pain: the concept is proven and the hardware is gone. Open on the activation by name, then ask whether the unit went back. The pitch is not the display, it is everything underneath it - OS, CMS, analytics, an avatar wired to their own knowledge base - and the fact that Proto can be owned rather than rented.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Named in a Holoconnects, ARHT, Hypervsn, Base or VNTANA case study, or ran their own announced hologram activation in the last 18 months</dd></div>
+            <div><dt>AI strategy</dt><dd>Scrape the competitor&#39;s own case-study and press pages, then pull the executive quoted in the announcement - that person already staked internal credibility on the concept working, which makes them the single warmest recipient in the entire market.</dd></div>
+            <div><dt>Value</dt><dd>Make it permanent</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>The avatar is on the wrong surface</h3>
+          <p>This is the cheapest yes in Tier 1, because there is no new concept to sell and no new content to build. ProtoPlayer can put the avatar they already own onto a screen they already own.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Soul Machines, UneeQ, D-ID, Synthesia, Hour One, Sierra or Ada detected in page source, with no physical deployment found</dd></div>
+            <div><dt>AI strategy</dt><dd>Detection proves the hard part is already done - the persona is built, the knowledge base is connected, and someone owns the budget for it. The argument is purely about surface: the avatar exists where nobody is standing.</dd></div>
+            <div><dt>Value</dt><dd>Put it where the footfall is</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Screen Network Intelligence Audit</h3>
+          <p>The flagship campaign and the launch tier. The offer asks for no capital, no rip-out and no new budget line - it upgrades a line item that already exists and already has an owner. The audit is a genuine deliverable: send locations and display types, get back which screens are ProtoPlayer-eligible.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Named in an AV integrator case study, a signage vendor customer page or AV trade press, with an estimated screen count of 10 or more</dd></div>
+            <div><dt>AI strategy</dt><dd>The integrator&#39;s own marketing gives the first line for free - the venue, the screen count, the CMS, sometimes the install date. Personalisation costs nothing because the case study wrote it. Lead with the specific detail, then ask whether the screens are still running a loop.</dd></div>
+            <div><dt>Value</dt><dd>Make sunk capex earn</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Screens that finally report back</h3>
+          <p>Runs as the second copy variant against the same list. Where the AV owner hears &quot;no rip-out,&quot; the media owner hears &quot;who approached, what they asked, what they did next.&quot; Same appliance, entirely different reason to reply.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same Tier 2 list, routed to in-store media, retail media network and workplace technology owners rather than AV operations</dd></div>
+            <div><dt>AI strategy</dt><dd>Same trigger, different buyer and a different argument. This persona is measured on attribution, so the pitch is not the AI conversation - it is that display becomes measurable the way the website already is.</dd></div>
+            <div><dt>Value</dt><dd>Measure the room</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Focused</span>
+          </div>
+          <h3>The requisition volume is the confession</h3>
+          <p>Positioned explicitly as a floor under the team, never a replacement for it - which matters enormously when the recipient owns the people. Multilingual coverage is the sharpest edge, because it is the one gap they cannot hire their way out of.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Three or more open frontline presence reqs in 90 days, with the oldest req age captured as a personalisation field</dd></div>
+            <div><dt>AI strategy</dt><dd>Req age does the work: a role open 60+ days is not a hiring plan, it is a hiring failure. Cite the count and the age, then reframe the problem from hiring to coverage - the desk is staffed when it can be staffed, and the building is open longer than that.</dd></div>
+            <div><dt>Value</dt><dd>Cover the hours you cannot hire for</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Focused</span>
+          </div>
+          <h3>Regulated intake and wayfinding</h3>
+          <p>The strongest expected response in the strategy, because patient access and terminal wayfinding are chronically understaffed and the precedents are directly comparable - LaGuardia&#39;s Bridget and West Cancer Center.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Tier 3 accounts with regulated_flag true - health systems, airports, public universities and government venues</dd></div>
+            <div><dt>AI strategy</dt><dd>Same trigger, compliance-led copy. HIPAA compliance is stated as fact and nothing beyond it is implied. No urgency framing, no scarcity, and open tracking off on government and public-institution domains.</dd></div>
+            <div><dt>Value</dt><dd>Compliant always-on presence</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Hold a unit for the date</h3>
+          <p>Rental removes the capital decision entirely, which collapses the sales cycle from a committee to a marketing budget. The proof here is Proto&#39;s strongest: named activations at Lionsgate, Warner Bros., Skechers and WWE, with coverage in Rolling Stone, Forbes, the BBC and USA Today.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Exhibitor directories and opening announcements, filtered to dates two to nine months out</dd></div>
+            <div><dt>AI strategy</dt><dd>The date is the personalisation and the deadline in one. Open on the specific event, poke at the assumption that the plan is a big screen and a video, then make availability the only time-sensitive element - which it genuinely is.</dd></div>
+            <div><dt>Value</dt><dd>Get written about</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>The AI you built does not exist in your building</h3>
+          <p>The volume engine. The CTA asks for nothing but a reply to receive a 40-second video, and the offer is the only one Proto has that a single person can approve without a capital cycle or an integration project.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Everything remaining inside the TAM gate, roughly 40,400 accounts</dd></div>
+            <div><dt>AI strategy</dt><dd>No trigger to cite, so the opener leans on one genuine observation about their space plus a reframe that is true of almost every company in the market. The M2 price is the mechanism - $6,900 is below most discretionary approval thresholds.</dd></div>
+            <div><dt>Value</dt><dd>A real deployment without a committee</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">Copy</p>
+      <h2>Fifteen emails, five sequences</h2>
+      <p class="takeaway">Notice line, poke-the-bear question, value prop, proof, low-effort CTA. Day 0, day 3-4 threaded with a rotated value prop, day 7-8 on a new thread with the referral-out close.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company}}</span><span>{{screen_count_band}}</span><span>{{integrator_or_vendor}}</span><span>{{venue_or_location_count}}</span><span>{{specific_detail_from_case_study}}</span><span>{{relevant_named_logo}}</span><span>{{likely_av_or_ops_owner}}</span><span>{{activation_name}}</span><span>{{venue}}</span><span>{{vendor}}</span><span>{{likely_innovation_owner}}</span><span>{{frontline_role_type}}</span><span>{{req_count}}</span><span>{{location_count}}</span><span>{{oldest_req_age}}</span><span>{{language_pair}}</span><span>{{HIPAA_line_if_regulated}}</span><span>{{venue_type}}</span><span>{{likely_ops_owner}}</span><span>{{event_or_opening_name}}</span><span>{{exhibiting_at_or_opening}}</span><span>{{month}}</span><span>{{personalised_observation_about_their_space}}</span><span>{{likely_marketing_or_innovation_owner}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company}}, {{screen_count_band}}, {{integrator_or_vendor}}, {{venue_or_location_count}}, {{specific_detail_from_case_study}}, {{relevant_named_logo}}, {{likely_av_or_ops_owner}}, {{activation_name}}, {{venue}}, {{vendor}}, {{likely_innovation_owner}}, {{frontline_role_type}}, {{req_count}}, {{location_count}}, {{oldest_req_age}}, {{language_pair}}, {{HIPAA_line_if_regulated}}, {{venue_type}}, {{likely_ops_owner}}, {{event_or_opening_name}}, {{exhibiting_at_or_opening}}, {{month}}, {{personalised_observation_about_their_space}}, {{likely_marketing_or_innovation_owner}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 2 - ProtoPlayer (launch tier)</strong>
+              <em>Screen Network Intelligence Audit</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - ProtoPlayer (launch tier) steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your {{screen_count_band}} screens&#10;&#10;Saw the {{integrator_or_vendor}} write-up on the rollout across {{venue_or_location_count}}, {{specific_detail_from_case_study}}.&#10;&#10;But would it be fair to assume those screens are still running a content loop? As in, they play, nobody answers back, and you&#39;ve got no read on who actually stopped to look.&#10;&#10;We make an edge appliance called ProtoPlayer. It goes in over HDMI on displays you already own and turns them into an AI interface that notices someone is standing there and starts the conversation. Same glass, same mounts, no rip-out, no new capex line. It also gives you audience analytics on screens that have never produced a single data point.&#10;&#10;We&#39;re the physical AI layer behind deployments at {{relevant_named_logo}}, and we showed the retail version with AWS and Cisco at NRF.&#10;&#10;Reply &quot;screens&quot; and I&#39;ll send back which of your display types are ProtoPlayer-eligible. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your {{screen_count_band}} screens" data-preview="your 60-odd screens">your {{screen_count_band}} screens</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Saw the {{integrator_or_vendor}} write-up on the rollout across {{venue_or_location_count}}, {{specific_detail_from_case_study}}.&#10;&#10;But would it be fair to assume those screens are still running a content loop? As in, they play, nobody answers back, and you&#39;ve got no read on who actually stopped to look.&#10;&#10;We make an edge appliance called ProtoPlayer. It goes in over HDMI on displays you already own and turns them into an AI interface that notices someone is standing there and starts the conversation. Same glass, same mounts, no rip-out, no new capex line. It also gives you audience analytics on screens that have never produced a single data point.&#10;&#10;We&#39;re the physical AI layer behind deployments at {{relevant_named_logo}}, and we showed the retail version with AWS and Cisco at NRF.&#10;&#10;Reply &quot;screens&quot; and I&#39;ll send back which of your display types are ProtoPlayer-eligible. No call needed." data-preview="Saw the Diversified write-up on the rollout across the 14 clinic lobbies, the video wall in the main atrium.&#10;&#10;But would it be fair to assume those screens are still running a content loop? As in, they play, nobody answers back, and you&#39;ve got no read on who actually stopped to look.&#10;&#10;We make an edge appliance called ProtoPlayer. It goes in over HDMI on displays you already own and turns them into an AI interface that notices someone is standing there and starts the conversation. Same glass, same mounts, no rip-out, no new capex line. It also gives you audience analytics on screens that have never produced a single data point.&#10;&#10;We&#39;re the physical AI layer behind deployments at West Cancer Center, and we showed the retail version with AWS and Cisco at NRF.&#10;&#10;Reply &quot;screens&quot; and I&#39;ll send back which of your display types are ProtoPlayer-eligible. No call needed.">
+                        <p>Saw the {{integrator_or_vendor}} write-up on the rollout across {{venue_or_location_count}}, {{specific_detail_from_case_study}}.</p><p>But would it be fair to assume those screens are still running a content loop? As in, they play, nobody answers back, and you&#39;ve got no read on who actually stopped to look.</p><p>We make an edge appliance called ProtoPlayer. It goes in over HDMI on displays you already own and turns them into an AI interface that notices someone is standing there and starts the conversation. Same glass, same mounts, no rip-out, no new capex line. It also gives you audience analytics on screens that have never produced a single data point.</p><p>We&#39;re the physical AI layer behind deployments at {{relevant_named_logo}}, and we showed the retail version with AWS and Cisco at NRF.</p><p>Reply &quot;screens&quot; and I&#39;ll send back which of your display types are ProtoPlayer-eligible. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One more angle on this.&#10;&#10;The part most teams don&#39;t expect: the screens stop being a cost line.&#10;&#10;Right now someone owns a content calendar for {{venue_or_location_count}} and the only metric available is that it played. Once ProtoPlayer is on them, every screen reports who approached, what they asked and what they did next, which is the first time in-store display gets measured the way the website does.&#10;&#10;Worth 10 minutes on which locations to pilot?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One more angle on this.&#10;&#10;The part most teams don&#39;t expect: the screens stop being a cost line.&#10;&#10;Right now someone owns a content calendar for {{venue_or_location_count}} and the only metric available is that it played. Once ProtoPlayer is on them, every screen reports who approached, what they asked and what they did next, which is the first time in-store display gets measured the way the website does.&#10;&#10;Worth 10 minutes on which locations to pilot?" data-preview="One more angle on this.&#10;&#10;The part most teams don&#39;t expect: the screens stop being a cost line.&#10;&#10;Right now someone owns a content calendar for the 14 clinic lobbies and the only metric available is that it played. Once ProtoPlayer is on them, every screen reports who approached, what they asked and what they did next, which is the first time in-store display gets measured the way the website does.&#10;&#10;Worth 10 minutes on which locations to pilot?">
+                        <p>One more angle on this.</p><p>The part most teams don&#39;t expect: the screens stop being a cost line.</p><p>Right now someone owns a content calendar for {{venue_or_location_count}} and the only metric available is that it played. Once ProtoPlayer is on them, every screen reports who approached, what they asked and what they did next, which is the first time in-store display gets measured the way the website does.</p><p>Worth 10 minutes on which locations to pilot?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} screens&#10;&#10;{{first_name}}, no need for a call.&#10;&#10;Just reply yes and I&#39;ll send the Screen Network Intelligence Audit: your display types, which are ProtoPlayer-eligible, and what the upgrade path looks like.&#10;&#10;Should I send it to you, or is {{likely_av_or_ops_owner}} the better person?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} screens" data-preview="Northgate Health screens">{{company}} screens</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no need for a call.&#10;&#10;Just reply yes and I&#39;ll send the Screen Network Intelligence Audit: your display types, which are ProtoPlayer-eligible, and what the upgrade path looks like.&#10;&#10;Should I send it to you, or is {{likely_av_or_ops_owner}} the better person?" data-preview="Dana, no need for a call.&#10;&#10;Just reply yes and I&#39;ll send the Screen Network Intelligence Audit: your display types, which are ProtoPlayer-eligible, and what the upgrade path looks like.&#10;&#10;Should I send it to you, or is your AV technology manager the better person?">
+                        <p>{{first_name}}, no need for a call.</p><p>Just reply yes and I&#39;ll send the Screen Network Intelligence Audit: your display types, which are ProtoPlayer-eligible, and what the upgrade path looks like.</p><p>Should I send it to you, or is {{likely_av_or_ops_owner}} the better person?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 1 - Platform versus Activation</strong>
+              <em>Platform versus Activation teardown + live beam session</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Platform versus Activation steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the {{activation_name}} unit&#10;&#10;Saw the {{activation_name}} at {{venue}}, and then found the {{vendor}} write-up behind it.&#10;&#10;But would it be fair to assume that once the run ended, the unit went back? So you proved the concept internally, and now there&#39;s nothing in the building and no data from the people who stopped.&#10;&#10;That&#39;s the gap we fill. Proto isn&#39;t a rental, it&#39;s the platform underneath: ProtoOS, a holographic CMS, conversational AI wired to your own knowledge base and your LLM of choice, live beaming, and real-time audience analytics. SOC-2 and HIPAA compliant, and available to buy, lease or rent depending on how permanent you want it.&#10;&#10;120+ organisations run on it, including {{relevant_named_logo}}.&#10;&#10;Reply &quot;teardown&quot; and I&#39;ll send the one-pager on what a rented activation structurally can&#39;t do that an owned deployment can. No call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the {{activation_name}} unit" data-preview="the the holographic lobby host unit">the {{activation_name}} unit</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Saw the {{activation_name}} at {{venue}}, and then found the {{vendor}} write-up behind it.&#10;&#10;But would it be fair to assume that once the run ended, the unit went back? So you proved the concept internally, and now there&#39;s nothing in the building and no data from the people who stopped.&#10;&#10;That&#39;s the gap we fill. Proto isn&#39;t a rental, it&#39;s the platform underneath: ProtoOS, a holographic CMS, conversational AI wired to your own knowledge base and your LLM of choice, live beaming, and real-time audience analytics. SOC-2 and HIPAA compliant, and available to buy, lease or rent depending on how permanent you want it.&#10;&#10;120+ organisations run on it, including {{relevant_named_logo}}.&#10;&#10;Reply &quot;teardown&quot; and I&#39;ll send the one-pager on what a rented activation structurally can&#39;t do that an owned deployment can. No call." data-preview="Saw the the holographic lobby host at the downtown campus, and then found the Holoconnects write-up behind it.&#10;&#10;But would it be fair to assume that once the run ended, the unit went back? So you proved the concept internally, and now there&#39;s nothing in the building and no data from the people who stopped.&#10;&#10;That&#39;s the gap we fill. Proto isn&#39;t a rental, it&#39;s the platform underneath: ProtoOS, a holographic CMS, conversational AI wired to your own knowledge base and your LLM of choice, live beaming, and real-time audience analytics. SOC-2 and HIPAA compliant, and available to buy, lease or rent depending on how permanent you want it.&#10;&#10;120+ organisations run on it, including West Cancer Center.&#10;&#10;Reply &quot;teardown&quot; and I&#39;ll send the one-pager on what a rented activation structurally can&#39;t do that an owned deployment can. No call.">
+                        <p>Saw the {{activation_name}} at {{venue}}, and then found the {{vendor}} write-up behind it.</p><p>But would it be fair to assume that once the run ended, the unit went back? So you proved the concept internally, and now there&#39;s nothing in the building and no data from the people who stopped.</p><p>That&#39;s the gap we fill. Proto isn&#39;t a rental, it&#39;s the platform underneath: ProtoOS, a holographic CMS, conversational AI wired to your own knowledge base and your LLM of choice, live beaming, and real-time audience analytics. SOC-2 and HIPAA compliant, and available to buy, lease or rent depending on how permanent you want it.</p><p>120+ organisations run on it, including {{relevant_named_logo}}.</p><p>Reply &quot;teardown&quot; and I&#39;ll send the one-pager on what a rented activation structurally can&#39;t do that an owned deployment can. No call.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Following up with the commercial angle rather than the tech one.&#10;&#10;An activation is a line item that resets every time. A deployment is an asset. The avatar you already built keeps working, the content updates through the CMS instead of through a vendor, and the analytics compound instead of ending when the truck leaves.&#10;&#10;And if you&#39;d rather not touch hardware at all, ProtoPlayer puts the same avatar onto displays you already own, over HDMI.&#10;&#10;Want me to send what that looks like for {{venue}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Following up with the commercial angle rather than the tech one.&#10;&#10;An activation is a line item that resets every time. A deployment is an asset. The avatar you already built keeps working, the content updates through the CMS instead of through a vendor, and the analytics compound instead of ending when the truck leaves.&#10;&#10;And if you&#39;d rather not touch hardware at all, ProtoPlayer puts the same avatar onto displays you already own, over HDMI.&#10;&#10;Want me to send what that looks like for {{venue}}?" data-preview="Following up with the commercial angle rather than the tech one.&#10;&#10;An activation is a line item that resets every time. A deployment is an asset. The avatar you already built keeps working, the content updates through the CMS instead of through a vendor, and the analytics compound instead of ending when the truck leaves.&#10;&#10;And if you&#39;d rather not touch hardware at all, ProtoPlayer puts the same avatar onto displays you already own, over HDMI.&#10;&#10;Want me to send what that looks like for the downtown campus?">
+                        <p>Following up with the commercial angle rather than the tech one.</p><p>An activation is a line item that resets every time. A deployment is an asset. The avatar you already built keeps working, the content updates through the CMS instead of through a vendor, and the analytics compound instead of ending when the truck leaves.</p><p>And if you&#39;d rather not touch hardware at all, ProtoPlayer puts the same avatar onto displays you already own, over HDMI.</p><p>Want me to send what that looks like for {{venue}}?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} and Proto&#10;&#10;{{first_name}}, easiest version of this: no call, and we don&#39;t send a deck.&#10;&#10;Reply yes and we&#39;ll beam you into your own boardroom so you can judge the presence quality yourself, and I&#39;ll include the platform versus activation teardown.&#10;&#10;Should that go to you or {{likely_innovation_owner}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} and Proto" data-preview="Northgate Health and Proto">{{company}} and Proto</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, easiest version of this: no call, and we don&#39;t send a deck.&#10;&#10;Reply yes and we&#39;ll beam you into your own boardroom so you can judge the presence quality yourself, and I&#39;ll include the platform versus activation teardown.&#10;&#10;Should that go to you or {{likely_innovation_owner}}?" data-preview="Dana, easiest version of this: no call, and we don&#39;t send a deck.&#10;&#10;Reply yes and we&#39;ll beam you into your own boardroom so you can judge the presence quality yourself, and I&#39;ll include the platform versus activation teardown.&#10;&#10;Should that go to you or your Chief Innovation Officer?">
+                        <p>{{first_name}}, easiest version of this: no call, and we don&#39;t send a deck.</p><p>Reply yes and we&#39;ll beam you into your own boardroom so you can judge the presence quality yourself, and I&#39;ll include the platform versus activation teardown.</p><p>Should that go to you or {{likely_innovation_owner}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - The counter you cannot staff</strong>
+              <em>Counter Coverage Map</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - The counter you cannot staff steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{frontline_role_type}}, {{req_count}} open&#10;&#10;Noticed {{company}} has {{req_count}} openings live for {{frontline_role_type}} across {{location_count}}, with {{oldest_req_age}} on the oldest one.&#10;&#10;But would it be fair to assume the problem isn&#39;t really the hiring, it&#39;s the coverage? The desk is staffed when you can staff it, the building is open longer than that, and hiring someone who covers {{language_pair}} on top of everything else is close to impossible.&#10;&#10;We put an always-on AI presence at the counter. Life-size, multilingual, wearable-free, connected to your own knowledge base. It handles the repeat questions and escalates the rest to your team. It&#39;s what LaGuardia does with Bridget at the terminal, and what Yamagata Bank runs in branch.&#10;&#10;{{HIPAA_line_if_regulated}}&#10;&#10;Reply &quot;counter&quot; and I&#39;ll send the coverage map: the repeat questions at a desk like yours, and which of them close without a human. No call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{frontline_role_type}}, {{req_count}} open" data-preview="Patient Access Representative, 7 open">{{frontline_role_type}}, {{req_count}} open</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Noticed {{company}} has {{req_count}} openings live for {{frontline_role_type}} across {{location_count}}, with {{oldest_req_age}} on the oldest one.&#10;&#10;But would it be fair to assume the problem isn&#39;t really the hiring, it&#39;s the coverage? The desk is staffed when you can staff it, the building is open longer than that, and hiring someone who covers {{language_pair}} on top of everything else is close to impossible.&#10;&#10;We put an always-on AI presence at the counter. Life-size, multilingual, wearable-free, connected to your own knowledge base. It handles the repeat questions and escalates the rest to your team. It&#39;s what LaGuardia does with Bridget at the terminal, and what Yamagata Bank runs in branch.&#10;&#10;{{HIPAA_line_if_regulated}}&#10;&#10;Reply &quot;counter&quot; and I&#39;ll send the coverage map: the repeat questions at a desk like yours, and which of them close without a human. No call." data-preview="Noticed Northgate Health has 7 openings live for Patient Access Representative across 5 sites, with 83 days on the oldest one.&#10;&#10;But would it be fair to assume the problem isn&#39;t really the hiring, it&#39;s the coverage? The desk is staffed when you can staff it, the building is open longer than that, and hiring someone who covers English and Spanish on top of everything else is close to impossible.&#10;&#10;We put an always-on AI presence at the counter. Life-size, multilingual, wearable-free, connected to your own knowledge base. It handles the repeat questions and escalates the rest to your team. It&#39;s what LaGuardia does with Bridget at the terminal, and what Yamagata Bank runs in branch.&#10;&#10;We&#39;re HIPAA compliant, and the deployment sits behind your own knowledge base rather than ours.&#10;&#10;Reply &quot;counter&quot; and I&#39;ll send the coverage map: the repeat questions at a desk like yours, and which of them close without a human. No call.">
+                        <p>Noticed {{company}} has {{req_count}} openings live for {{frontline_role_type}} across {{location_count}}, with {{oldest_req_age}} on the oldest one.</p><p>But would it be fair to assume the problem isn&#39;t really the hiring, it&#39;s the coverage? The desk is staffed when you can staff it, the building is open longer than that, and hiring someone who covers {{language_pair}} on top of everything else is close to impossible.</p><p>We put an always-on AI presence at the counter. Life-size, multilingual, wearable-free, connected to your own knowledge base. It handles the repeat questions and escalates the rest to your team. It&#39;s what LaGuardia does with Bridget at the terminal, and what Yamagata Bank runs in branch.</p><p>{{HIPAA_line_if_regulated}}</p><p>Reply &quot;counter&quot; and I&#39;ll send the coverage map: the repeat questions at a desk like yours, and which of them close without a human. No call.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The cost side, since that&#39;s usually the real question.&#10;&#10;{{req_count}} open reqs at {{frontline_role_type}} is a recurring number. It isn&#39;t a one-time fill, it&#39;s a replacement rate. The unit doesn&#39;t turn over, doesn&#39;t need retraining each quarter, and covers the hours you currently can&#39;t.&#10;&#10;Not a replacement for your team. A floor under it.&#10;&#10;Worth a look at one site?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The cost side, since that&#39;s usually the real question.&#10;&#10;{{req_count}} open reqs at {{frontline_role_type}} is a recurring number. It isn&#39;t a one-time fill, it&#39;s a replacement rate. The unit doesn&#39;t turn over, doesn&#39;t need retraining each quarter, and covers the hours you currently can&#39;t.&#10;&#10;Not a replacement for your team. A floor under it.&#10;&#10;Worth a look at one site?" data-preview="The cost side, since that&#39;s usually the real question.&#10;&#10;7 open reqs at Patient Access Representative is a recurring number. It isn&#39;t a one-time fill, it&#39;s a replacement rate. The unit doesn&#39;t turn over, doesn&#39;t need retraining each quarter, and covers the hours you currently can&#39;t.&#10;&#10;Not a replacement for your team. A floor under it.&#10;&#10;Worth a look at one site?">
+                        <p>The cost side, since that&#39;s usually the real question.</p><p>{{req_count}} open reqs at {{frontline_role_type}} is a recurring number. It isn&#39;t a one-time fill, it&#39;s a replacement rate. The unit doesn&#39;t turn over, doesn&#39;t need retraining each quarter, and covers the hours you currently can&#39;t.</p><p>Not a replacement for your team. A floor under it.</p><p>Worth a look at one site?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} front desk&#10;&#10;{{first_name}}, no call needed.&#10;&#10;Reply yes and I&#39;ll send the Counter Coverage Map for {{venue_type}}: the questions an always-on avatar closes on its own, and what stays with your team.&#10;&#10;You, or is {{likely_ops_owner}} closer to this?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} front desk" data-preview="Northgate Health front desk">{{company}} front desk</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed.&#10;&#10;Reply yes and I&#39;ll send the Counter Coverage Map for {{venue_type}}: the questions an always-on avatar closes on its own, and what stays with your team.&#10;&#10;You, or is {{likely_ops_owner}} closer to this?" data-preview="Dana, no call needed.&#10;&#10;Reply yes and I&#39;ll send the Counter Coverage Map for clinic lobby: the questions an always-on avatar closes on its own, and what stays with your team.&#10;&#10;You, or is your Director of Patient Access closer to this?">
+                        <p>{{first_name}}, no call needed.</p><p>Reply yes and I&#39;ll send the Counter Coverage Map for {{venue_type}}: the questions an always-on avatar closes on its own, and what stays with your team.</p><p>You, or is {{likely_ops_owner}} closer to this?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 - The moment on the calendar</strong>
+              <em>Activation Press Brief + rental availability</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 - The moment on the calendar steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{event_or_opening_name}}&#10;&#10;Saw {{company}} is {{exhibiting_at_or_opening}} {{event_or_opening_name}} in {{month}}.&#10;&#10;But would it be fair to assume the plan is a big screen and a video? Which works, right up until the six booths around you do the same thing.&#10;&#10;We rent Lumas for exactly this. Life-size holographic presence, no headsets, and it tends to be the thing that gets written about. Lionsgate ran us across 15 theatres, Warner Bros. and Snapchat across 47 malls, Skechers put Howie Mandel in the Manhattan Beach flagship, and Proto activations have been covered in Rolling Stone, Forbes, the BBC and USA Today.&#10;&#10;Rental, so it doesn&#39;t touch capex.&#10;&#10;Reply &quot;brief&quot; and I&#39;ll send the press pattern from our last few activations plus the rental number for {{month}}. No call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{event_or_opening_name}}" data-preview="the Riverside campus opening">{{event_or_opening_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Saw {{company}} is {{exhibiting_at_or_opening}} {{event_or_opening_name}} in {{month}}.&#10;&#10;But would it be fair to assume the plan is a big screen and a video? Which works, right up until the six booths around you do the same thing.&#10;&#10;We rent Lumas for exactly this. Life-size holographic presence, no headsets, and it tends to be the thing that gets written about. Lionsgate ran us across 15 theatres, Warner Bros. and Snapchat across 47 malls, Skechers put Howie Mandel in the Manhattan Beach flagship, and Proto activations have been covered in Rolling Stone, Forbes, the BBC and USA Today.&#10;&#10;Rental, so it doesn&#39;t touch capex.&#10;&#10;Reply &quot;brief&quot; and I&#39;ll send the press pattern from our last few activations plus the rental number for {{month}}. No call." data-preview="Saw Northgate Health is opening the Riverside campus opening in November.&#10;&#10;But would it be fair to assume the plan is a big screen and a video? Which works, right up until the six booths around you do the same thing.&#10;&#10;We rent Lumas for exactly this. Life-size holographic presence, no headsets, and it tends to be the thing that gets written about. Lionsgate ran us across 15 theatres, Warner Bros. and Snapchat across 47 malls, Skechers put Howie Mandel in the Manhattan Beach flagship, and Proto activations have been covered in Rolling Stone, Forbes, the BBC and USA Today.&#10;&#10;Rental, so it doesn&#39;t touch capex.&#10;&#10;Reply &quot;brief&quot; and I&#39;ll send the press pattern from our last few activations plus the rental number for November. No call.">
+                        <p>Saw {{company}} is {{exhibiting_at_or_opening}} {{event_or_opening_name}} in {{month}}.</p><p>But would it be fair to assume the plan is a big screen and a video? Which works, right up until the six booths around you do the same thing.</p><p>We rent Lumas for exactly this. Life-size holographic presence, no headsets, and it tends to be the thing that gets written about. Lionsgate ran us across 15 theatres, Warner Bros. and Snapchat across 47 malls, Skechers put Howie Mandel in the Manhattan Beach flagship, and Proto activations have been covered in Rolling Stone, Forbes, the BBC and USA Today.</p><p>Rental, so it doesn&#39;t touch capex.</p><p>Reply &quot;brief&quot; and I&#39;ll send the press pattern from our last few activations plus the rental number for {{month}}. No call.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The practical bit, since {{month}} isn&#39;t far off.&#10;&#10;It ships in a case, we handle install and on-site, and it runs off standard power. You can beam a live person into the space from anywhere, or run an AI avatar of your spokesperson, or both across the same day.&#10;&#10;If you want to hold a unit for {{month}}, that&#39;s the only time-sensitive part.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The practical bit, since {{month}} isn&#39;t far off.&#10;&#10;It ships in a case, we handle install and on-site, and it runs off standard power. You can beam a live person into the space from anywhere, or run an AI avatar of your spokesperson, or both across the same day.&#10;&#10;If you want to hold a unit for {{month}}, that&#39;s the only time-sensitive part." data-preview="The practical bit, since November isn&#39;t far off.&#10;&#10;It ships in a case, we handle install and on-site, and it runs off standard power. You can beam a live person into the space from anywhere, or run an AI avatar of your spokesperson, or both across the same day.&#10;&#10;If you want to hold a unit for November, that&#39;s the only time-sensitive part.">
+                        <p>The practical bit, since {{month}} isn&#39;t far off.</p><p>It ships in a case, we handle install and on-site, and it runs off standard power. You can beam a live person into the space from anywhere, or run an AI avatar of your spokesperson, or both across the same day.</p><p>If you want to hold a unit for {{month}}, that&#39;s the only time-sensitive part.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{event_or_opening_name}}, holding a unit?&#10;&#10;{{first_name}}, no call.&#10;&#10;Reply yes and I&#39;ll send the activation brief and the {{month}} rental availability.&#10;&#10;Should that go to you or whoever owns {{event_or_opening_name}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{event_or_opening_name}}, holding a unit?" data-preview="the Riverside campus opening, holding a unit?">{{event_or_opening_name}}, holding a unit?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call.&#10;&#10;Reply yes and I&#39;ll send the activation brief and the {{month}} rental availability.&#10;&#10;Should that go to you or whoever owns {{event_or_opening_name}}?" data-preview="Dana, no call.&#10;&#10;Reply yes and I&#39;ll send the activation brief and the November rental availability.&#10;&#10;Should that go to you or whoever owns the Riverside campus opening?">
+                        <p>{{first_name}}, no call.</p><p>Reply yes and I&#39;ll send the activation brief and the {{month}} rental availability.</p><p>Should that go to you or whoever owns {{event_or_opening_name}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 - Catch-all</strong>
+              <em>40-second beam video + M2 self-serve path</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 - Catch-all steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{venue_type}}&#10;&#10;{{personalised_observation_about_their_space}}.&#10;&#10;But would it be fair to assume every AI project at {{company}} so far has lived on the website or in the app? Which is the strange part. The people with the highest intent are the ones physically standing in your {{venue_type}}, and that&#39;s the one place with no AI in it and no way to measure what happened.&#10;&#10;We build the layer that fixes that. 120+ organisations run on it, including PwC, Deloitte, Christie&#39;s, the Walmart Museum, health systems and 50+ universities.&#10;&#10;The easiest way in is our tabletop unit, the M2. Around $6,900, ships in a case, first year of the platform included. No committee, no integration project.&#10;&#10;Reply &quot;video&quot; and I&#39;ll send the 40-second clip of what it actually looks like. Nothing else.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{venue_type}}" data-preview="clinic lobby">{{venue_type}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{personalised_observation_about_their_space}}.&#10;&#10;But would it be fair to assume every AI project at {{company}} so far has lived on the website or in the app? Which is the strange part. The people with the highest intent are the ones physically standing in your {{venue_type}}, and that&#39;s the one place with no AI in it and no way to measure what happened.&#10;&#10;We build the layer that fixes that. 120+ organisations run on it, including PwC, Deloitte, Christie&#39;s, the Walmart Museum, health systems and 50+ universities.&#10;&#10;The easiest way in is our tabletop unit, the M2. Around $6,900, ships in a case, first year of the platform included. No committee, no integration project.&#10;&#10;Reply &quot;video&quot; and I&#39;ll send the 40-second clip of what it actually looks like. Nothing else." data-preview="Saw the new atrium in the Riverside build-out.&#10;&#10;But would it be fair to assume every AI project at Northgate Health so far has lived on the website or in the app? Which is the strange part. The people with the highest intent are the ones physically standing in your clinic lobby, and that&#39;s the one place with no AI in it and no way to measure what happened.&#10;&#10;We build the layer that fixes that. 120+ organisations run on it, including PwC, Deloitte, Christie&#39;s, the Walmart Museum, health systems and 50+ universities.&#10;&#10;The easiest way in is our tabletop unit, the M2. Around $6,900, ships in a case, first year of the platform included. No committee, no integration project.&#10;&#10;Reply &quot;video&quot; and I&#39;ll send the 40-second clip of what it actually looks like. Nothing else.">
+                        <p>{{personalised_observation_about_their_space}}.</p><p>But would it be fair to assume every AI project at {{company}} so far has lived on the website or in the app? Which is the strange part. The people with the highest intent are the ones physically standing in your {{venue_type}}, and that&#39;s the one place with no AI in it and no way to measure what happened.</p><p>We build the layer that fixes that. 120+ organisations run on it, including PwC, Deloitte, Christie&#39;s, the Walmart Museum, health systems and 50+ universities.</p><p>The easiest way in is our tabletop unit, the M2. Around $6,900, ships in a case, first year of the platform included. No committee, no integration project.</p><p>Reply &quot;video&quot; and I&#39;ll send the 40-second clip of what it actually looks like. Nothing else.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The thing that usually lands harder than the visual.&#10;&#10;Every interaction is measured. Who approached, what they asked, what they did next. The same read you get from your website, from the room. Most physical spaces have never had that.&#10;&#10;Want the clip?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The thing that usually lands harder than the visual.&#10;&#10;Every interaction is measured. Who approached, what they asked, what they did next. The same read you get from your website, from the room. Most physical spaces have never had that.&#10;&#10;Want the clip?" data-preview="The thing that usually lands harder than the visual.&#10;&#10;Every interaction is measured. Who approached, what they asked, what they did next. The same read you get from your website, from the room. Most physical spaces have never had that.&#10;&#10;Want the clip?">
+                        <p>The thing that usually lands harder than the visual.</p><p>Every interaction is measured. Who approached, what they asked, what they did next. The same read you get from your website, from the room. Most physical spaces have never had that.</p><p>Want the clip?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}}&#10;&#10;{{first_name}}, last one from me.&#10;&#10;Reply yes and I&#39;ll send the 40-second video and the M2 page. No call, no deck.&#10;&#10;Or should this sit with {{likely_marketing_or_innovation_owner}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}}" data-preview="Northgate Health">{{company}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, last one from me.&#10;&#10;Reply yes and I&#39;ll send the 40-second video and the M2 page. No call, no deck.&#10;&#10;Or should this sit with {{likely_marketing_or_innovation_owner}}?" data-preview="Dana, last one from me.&#10;&#10;Reply yes and I&#39;ll send the 40-second video and the M2 page. No call, no deck.&#10;&#10;Or should this sit with your Head of Marketing?">
+                        <p>{{first_name}}, last one from me.</p><p>Reply yes and I&#39;ll send the 40-second video and the M2 page. No call, no deck.</p><p>Or should this sit with {{likely_marketing_or_innovation_owner}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">Launch</p>
+      <h2>Tier 2 goes first, deliberately</h2>
+      <p class="takeaway">Tier 1 is only 1,350 accounts - Proto&#39;s most valuable list in North America. Tier 2 teaches the same lesson at eight times the volume with the lowest-friction offer Proto owns.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Weeks 1-3, Phase 1: Tier 2, ProtoPlayer. 20,200 contacts, ramped. This is a deliberate inversion of the usual highest-intent-first order. Tier 1 is only 1,350 accounts - the entire competitor-displacement universe in North America - and firing unvalidated copy at it burns Proto&#39;s most valuable list to learn something Tier 2 teaches for free at eight times the volume. Tier 2 also carries the lowest-friction offer Proto owns.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Weeks 4-6, Phase 2: Tier 1, Platform versus Activation. 3,400 contacts. Apply the structure proven in Phase 1 to the scarcest, highest-value list, with the winning copy shape already known.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 5-8, Phase 3: Tier 3, The counter you cannot staff. 25,300 contacts. Highest-volume operational pain in the strategy - expect the strongest response from health systems and airports, and route regulated accounts to the compliance-led variant.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Weeks 7-10, Phase 4: Tier 4, The moment on the calendar. 18,500 contacts, rolling. Time-boxed to the event calendar and refreshed every quarter from exhibitor directories, so it costs no new strategy work to keep alive.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Week 9 onward, Phase 5: Tier 5, Catch-all. 101,000 contacts. The volume engine, built on the M2 self-serve entry point at roughly $6,900.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Infrastructure: ramp new sending domains across three weeks before Phase 1 volume begins, then hold 30 to 50 sends per mailbox per day at steady state. Open tracking off on government and public-institution domains.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>Before Phase 1 goes live, close two blocking proof gaps: one defensible performance number Proto will stand behind (dwell time, interaction rate or conversion lift), and ProtoPlayer pilot pricing plus minimum unit count. Tier 2&#39;s entire premise is that it costs less than replacing the screen, and that claim currently has no figure behind it.</p>
+              </div>
+              <div class="launch-step">
+                <span>08</span>
+                <p>Geography: United States and Canada for Phase 1 under CAN-SPAM and CASL. The United Kingdom is Phase 2, where the PECR corporate-body filter must run before the tier logic rather than after it. Germany is excluded from cold email entirely under UWG section 7.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacts</strong>
+                <span>Perfect. Scale the tier immediately and pull more list against that trigger.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run untouched.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450 to 500</strong>
+                <span>Borderline. Test one copy variant and hold everything else constant.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or reply rate under 1% after 1,500 sends</strong>
+                <span>Cut the tier and rework the trigger, not the copy.</span>
+              </div>
+              <div class="threshold">
+                <strong>Any tier below 1,500 contacts</strong>
+                <span>Do not launch it. Below that there is no way to tell whether the tier is working or simply unlucky.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a working session</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dana","NextGen AI Technologies","customer support rep","7","Intercom","healthcare operations","Maya","Northgate Health","60-odd","Diversified","the 14 clinic lobbies","the video wall in the main atrium","West Cancer Center","your AV technology manager","the holographic lobby host","the downtown campus","Holoconnects","your Chief Innovation Officer","Patient Access Representative","5 sites","83 days","English and Spanish","We're HIPAA compliant, and the deployment sits behind your own knowledge base rather than ours\\.","clinic lobby","your Director of Patient Access","the Riverside campus opening","opening","November","Saw the new atrium in the Riverside build-out","your Head of Marketing"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
