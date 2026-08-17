@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webinopoly - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-18</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Webinopoly</p>
+          <h1>The Webinopoly outbound <mark>journey</mark>.</h1>
+          <p class="hero-copy">One cascade. Five tiers. A routing signal that is computed, not bought.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> There are two Webinopolys, and only one of them survives cold outbound. A $50/hour development shop competes with every offshore studio on earth and cannot fund an outbound channel — the allowable CAC is a few hundred dollars. But the agency that tripled a brand&#39;s revenue in 90 days while taking it from 34 people to 16 is selling something nobody else in the category sells, at a price outbound economics actually support. This playbook leads with the operating system and treats Shopify projects as the downsell accepted on the call.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>~160,000</strong>
+          <span>Qualified accounts in the addressable market</span>
+        </div>
+        <div class="metric-card">
+          <strong>$0</strong>
+          <span>Cost of the entire routing signal layer</span>
+        </div>
+        <div class="metric-card">
+          <strong>5</strong>
+          <span>Tiers, 100% market coverage, one cascade</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Shopify and Shopify Plus engineering out of Houston — 700+ builds, 100+ on Plus, 40+ custom apps — plus the AI operating systems that took one supplement brand from $400k to $1.2M a month while cutting the team in half.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>Every storefront broadcasts its own condition, for free</p></div><div><span>02</span><p>One cascade, first match wins</p></div><div><span>03</span><p>Five tiers, from a dated deadline down to the catch-all</p></div><div><span>04</span><p>What runs inside each tier</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>The signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>The routing</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>The tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>The campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>The copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>The launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="The signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">The signal</p>
+      <h2>Every storefront broadcasts its own condition, for free</h2>
+      <p class="takeaway">Three public, unauthenticated endpoints — joined per domain — let us compute how much money a specific brand is losing before we ever contact them. The list cannot be bought because it does not exist until somebody computes it.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>The Chrome UX Report only publishes origin data for sufficiently-trafficked sites — so the same free lookup that diagnoses the pain also qualifies the lead. No revenue estimates, no enrichment vendor.</p></div><div class="reason-card"><span>02</span><p>It is real user field data, not a Lighthouse score. These are the prospect&#39;s own customers on their own phones in the last 28 days, which is very hard to argue with in a cold email.</p></div><div class="reason-card"><span>03</span><p>The signal is computed across three datasets rather than purchased as a database attribute, so no competitor can buy the same list.</p></div><div class="reason-card"><span>04</span><p>CrUX refreshes daily on a rolling 28-day window, so a store that passes today can fail next month — the same domain legitimately re-enters the market with a genuinely current finding.</p></div>
+            </div>
+            <div class="field-cloud"><span>platform</span><span>has_legacy_checkout_customisation</span><span>crux_mobile_lcp_s</span><span>crux_mobile_inp_ms</span><span>crux_cwv_pass</span><span>category_speed_rank</span><span>active_ad_count</span><span>product_count</span><span>variant_count</span><span>computed_aov_band</span><span>days_since_last_product_update</span><span>open_ops_or_cs_roles</span><span>third_party_script_count</span><span>theme_age_years</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>/products.json</h3><p>Free and unauthenticated on effectively every Shopify storefront, returning up to 250 full product objects per request — and it keeps working on headless builds where theme detection fails. Gives catalogue scale, variant complexity, a computed AOV rather than an estimated one, and merchandising velocity from the update timestamps. Separates a real business from a dropshipping husk in a single call.</p></div><div class="source-card"><span>02</span><h3>Chrome UX Report API</h3><p>Google&#39;s public dataset of real Chrome user experience — free REST access at origin level, refreshed daily across a rolling 28-day window. Returns mobile LCP, INP and CLS. Doubles as the qualification gate: no CrUX record means not enough traffic to justify the engagement, and the account drops out of the market automatically.</p></div><div class="source-card"><span>03</span><h3>Meta Ad Library</h3><p>Free, public, no login. Returns every currently active ad for any advertiser. Its role is narrow but essential — it proves the brand is actively buying traffic, which turns a performance problem from an abstraction into something costing money by the click.</p></div><div class="source-card"><span>04</span><h3>Storefront HTML source</h3><p>Theme name and age from the Shopify.theme object, installed app footprint, and the third-party script count on product pages — usually most of the explanation for a failing LCP.</p></div><div class="source-card"><span>05</span><h3>LinkedIn and job boards</h3><p>Open requisitions for customer support, operations and ecommerce roles. Presence-based and therefore reliable, unlike inferring absence of a tool.</p></div><div class="source-card"><span>06</span><h3>Platform version fingerprint</h3><p>Magento and Adobe Commerce version, mapped to its published support clock — regular support ending May 2027, extended May 2028, Cloud decommission enforcement June 2028.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="The routing">
+        
+    <div class="section-head">
+      <p class="eyebrow">The routing</p>
+      <h2>One cascade, first match wins</h2>
+      <p class="takeaway">Priority runs by how forced and how dated the spend is, not by deal size. Every lead exits the matrix with exactly one tier assignment, and nothing in the qualified market falls through.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF Shopify non-Plus AND legacy checkout customisation AND running ads</span>
+          <strong>Tier 1 — Checkout Breakage</strong>
+          <em>The only tier where the triggering event has already happened on a known date, with damage accruing daily. Shopify auto-upgraded these stores on 26 August 2026 and stripped whatever sat in checkout.liquid and Additional Scripts.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF ELSE IF 150+ products AND (hiring ops or CS OR 600+ variants) AND 10+ active ads</span>
+          <strong>Tier 2 — Outgrown the Team</strong>
+          <em>Deliberately placed above Tier 3. A 200-SKU brand with thirty live ads and an open support req would also satisfy Tier 3&#39;s condition, but routing it to a speed pitch spends the highest-value opportunity in the book on a fifteen-thousand-dollar project.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF ELSE IF running ads AND fails Core Web Vitals on mobile</span>
+          <strong>Tier 3 — Paying to Bounce</strong>
+          <em>The workhorse. Largest reachable volume, fully computable pain, evergreen, and no external dependency — which is why it launches first.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF ELSE IF platform is Magento, Adobe Commerce, WooCommerce or BigCommerce</span>
+          <strong>Tier 4 — Platform Refugee</strong>
+          <em>Carries the largest single project value but sits low because the buying window is twelve to twenty-four months out. High value, low urgency.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF ELSE</span>
+          <strong>Tier 5 — Catch-All: Stale Storefront</strong>
+          <em>Everything else clearing the qualification gate. Real traffic on a storefront nobody has touched in years — not on fire, just quietly compounding a loss on every session.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF Shopify non-Plus AND legacy checkout customisation AND running ads -&gt; Tier 1 — Checkout Breakage (The only tier where the triggering event has already happened on a known date, with damage accruing daily. Shopify auto-upgraded these stores on 26 August 2026 and stripped whatever sat in checkout.liquid and Additional Scripts.)&#10;2. IF ELSE IF 150+ products AND (hiring ops or CS OR 600+ variants) AND 10+ active ads -&gt; Tier 2 — Outgrown the Team (Deliberately placed above Tier 3. A 200-SKU brand with thirty live ads and an open support req would also satisfy Tier 3&#39;s condition, but routing it to a speed pitch spends the highest-value opportunity in the book on a fifteen-thousand-dollar project.)&#10;3. IF ELSE IF running ads AND fails Core Web Vitals on mobile -&gt; Tier 3 — Paying to Bounce (The workhorse. Largest reachable volume, fully computable pain, evergreen, and no external dependency — which is why it launches first.)&#10;4. IF ELSE IF platform is Magento, Adobe Commerce, WooCommerce or BigCommerce -&gt; Tier 4 — Platform Refugee (Carries the largest single project value but sits low because the buying window is twelve to twenty-four months out. High value, low urgency.)&#10;5. IF ELSE -&gt; Tier 5 — Catch-All: Stale Storefront (Everything else clearing the qualification gate. Real traffic on a storefront nobody has touched in years — not on fire, just quietly compounding a loss on every session.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF Shopify non-Plus AND legacy checkout customisation AND running ads -&gt; Tier 1 — Checkout Breakage (The only tier where the triggering event has already happened on a known date, with damage accruing daily. Shopify auto-upgraded these stores on 26 August 2026 and stripped whatever sat in checkout.liquid and Additional Scripts.)
+2. IF ELSE IF 150+ products AND (hiring ops or CS OR 600+ variants) AND 10+ active ads -&gt; Tier 2 — Outgrown the Team (Deliberately placed above Tier 3. A 200-SKU brand with thirty live ads and an open support req would also satisfy Tier 3&#39;s condition, but routing it to a speed pitch spends the highest-value opportunity in the book on a fifteen-thousand-dollar project.)
+3. IF ELSE IF running ads AND fails Core Web Vitals on mobile -&gt; Tier 3 — Paying to Bounce (The workhorse. Largest reachable volume, fully computable pain, evergreen, and no external dependency — which is why it launches first.)
+4. IF ELSE IF platform is Magento, Adobe Commerce, WooCommerce or BigCommerce -&gt; Tier 4 — Platform Refugee (Carries the largest single project value but sits low because the buying window is twelve to twenty-four months out. High value, low urgency.)
+5. IF ELSE -&gt; Tier 5 — Catch-All: Stale Storefront (Everything else clearing the qualification gate. Real traffic on a storefront nobody has touched in years — not on fire, just quietly compounding a loss on every session.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="The tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">The tiers</p>
+      <h2>Five tiers, from a dated deadline down to the catch-all</h2>
+      <p class="takeaway">Tier 1 leads because its triggering event has already happened on a known date. Tier 2 deliberately outranks Tier 3 so the highest-value accounts are not spent on a speed pitch.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">7% TAM</span>
+          </div>
+          <h3>Tier 1: Checkout Breakage</h3>
+          <p>Non-Plus Shopify store with legacy checkout or Additional Scripts customisation, currently running ads.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Shopify auto-upgraded the store on 26 August 2026 and stripped every legacy checkout customisation. If purchase-event pixels sat in the Additional Scripts field they are gone — and Meta and Google have been optimising on partial conversion data ever since. It throws no error. Spend just quietly gets less efficient, and it usually surfaces six to eight weeks later in a monthly review, after budget has already been reallocated on numbers that were not real.</dd></div>
+              <div><dt>Offer</dt><dd>Checkout Exposure Audit — exactly which tracking survived the upgrade and which did not</dd></div>
+              <div><dt>Source</dt><dd>Storefront source + Meta Ad Library + platform detection</dd></div>
+              <div><dt>Reply density</dt><dd>Highest — a dated event that has already happened, with damage accruing daily</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">8% TAM</span>
+          </div>
+          <h3>Tier 2: Outgrown the Team</h3>
+          <p>150+ products, and either 600+ variants or an open operations/customer-support requisition, with 10+ active ads.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Revenue is scaling faster than the people running it. Every new dollar adds a ticket, a return and a creative brief, so growth keeps buying more work instead of more margin. The founder has become the bottleneck and the instinctive fix — hiring — caps out at one conversation at a time for roughly $45k fully loaded.</dd></div>
+              <div><dt>Offer</dt><dd>Operating Load Teardown — where the operational load sits, mapped from the outside</dd></div>
+              <div><dt>Source</dt><dd>products.json + LinkedIn requisitions + Meta Ad Library</dd></div>
+              <div><dt>Reply density</dt><dd>Very high and highest value — gated until three credibility gaps close</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">27% TAM</span>
+          </div>
+          <h3>Tier 3: Paying to Bounce</h3>
+          <p>Running ads and failing Core Web Vitals on mobile in real user data.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Buying traffic by the click and sending it to a page real users abandon before it renders. The ad account is not underperforming — the landing experience taxes every dollar going into it. And this is not lost organic traffic they never paid for; it is paid clicks leaving before the page draws.</dd></div>
+              <div><dt>Offer</dt><dd>Storefront Leak Report — CrUX mobile performance plus a ranking against named category competitors</dd></div>
+              <div><dt>Source</dt><dd>Chrome UX Report API + Meta Ad Library + storefront script count</dd></div>
+              <div><dt>Reply density</dt><dd>Good at volume — the workhorse tier, 1 in 300 is a success</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">13% TAM</span>
+          </div>
+          <h3>Tier 4: Platform Refugee</h3>
+          <p>Running Magento, Adobe Commerce, WooCommerce or BigCommerce.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>On a published support clock, with licence, hosting and specialist developer costs rising while the store does the same job. The spend is coming either way — the only real decision is whether it goes into staying put or moving. And every year of waiting widens the version gap, because you are no longer migrating a current store, you are untangling five years of custom modules.</dd></div>
+              <div><dt>Offer</dt><dd>Migration Cost Model — three-year cost of staying versus moving</dd></div>
+              <div><dt>Source</dt><dd>Platform version fingerprint + Adobe published lifecycle dates</dd></div>
+              <div><dt>Reply density</dt><dd>Moderate — largest project value, but a twelve to twenty-four month buying window</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">45% TAM</span>
+          </div>
+          <h3>Tier 5: Catch-All: Stale Storefront</h3>
+          <p>Everything else that clears the qualification gate.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Real traffic arriving at a storefront nobody has touched in years. Not on fire, which is exactly why it never gets prioritised — it just quietly costs a little of every session. Theme age matters less than what has been bolted on since: the script count is usually the accumulation of apps installed for a reason that made sense at the time and never removed.</dd></div>
+              <div><dt>Offer</dt><dd>Category Benchmark — where the brand sits against others in its category</dd></div>
+              <div><dt>Source</dt><dd>Chrome UX Report API + storefront theme and script detection</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest — 1 in 400 to 500 is acceptable for a catch-all</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="The campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">The campaigns</p>
+      <h2>What runs inside each tier</h2>
+      <p class="takeaway">Each tier carries a primary campaign plus targeted experiments. Side campaigns sit outside the waterfall on orthogonal triggers and run only once the cascade is stable.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Post-deadline tracking remediation</h3>
+          <p>The brands that ignored every warning email through July are precisely the ones who will not have noticed their tracking broke. The opener names the date and their live ad count, then asks whether anyone actually verified where the purchase pixels lived.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Non-Plus Shopify, legacy checkout or Additional Scripts customisation detected, 1+ active ad</dd></div>
+            <div><dt>AI strategy</dt><dd>Mail from 27 August only. Pre-deadline the pitch is a hypothetical risk that is easy to defer; after the deadline the damage is real, dated and already in their analytics. Lead with the date, not the service.</dd></div>
+            <div><dt>Value</dt><dd>Stop wasting ad spend</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Niche</span>
+          </div>
+          <h3>Shopify Scripts dark (Plus variant)</h3>
+          <p>A tighter, higher-intent variant of Tier 1 aimed at the Plus segment, where the deal sizes are larger and the broken logic is directly revenue-bearing rather than analytical.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Shopify Plus stores that ran Shopify Scripts before the 30 June 2026 EOL</dd></div>
+            <div><dt>AI strategy</dt><dd>Scripts stopped executing on 30 June, with editing locked from 15 April. Discount, shipping and payment logic built on it has been dark for weeks. Lead with the specific logic type most likely to have broken.</dd></div>
+            <div><dt>Value</dt><dd>Recover broken revenue logic</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Hire or build</h3>
+          <p>The requisition is the trigger and the anchor simultaneously. They have already decided to spend money solving this problem; the campaign only changes what they spend it on.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>150+ products, open support or ops requisition, 10+ active ads</dd></div>
+            <div><dt>AI strategy</dt><dd>Anchor against the cost of the hire they are actively making. A support hire runs roughly $45k fully loaded and caps out at one conversation at a time — that comparison does the work.</dd></div>
+            <div><dt>Value</dt><dd>Grow without growing headcount</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Founder time recovery</h3>
+          <p>Same tier, different buyer and different rotation. Used as the email-two angle in the main sequence and as a standalone variant when the founder is the only reachable contact.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same trigger set, routed to Founder or CEO rather than the ecommerce lead</dd></div>
+            <div><dt>AI strategy</dt><dd>Rotate the value proposition from cost to time. In the reference engagement the metric that landed hardest with the founder was not revenue — it was that the business came off his desk.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Category speed leaderboard</h3>
+          <p>The primary volume campaign and the one that produces the reusable Storefront Leak Report. Launches first because it carries no external dependency.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Active ads, fails mobile Core Web Vitals, category peer set defined</dd></div>
+            <div><dt>AI strategy</dt><dd>Rank the brand against eight or nine named competitors. A raw score invites &#39;compared to what?&#39; — a named ranking reframes a technical metric as a competitive position, and costs nothing to produce once the peer set exists.</dd></div>
+            <div><dt>Value</dt><dd>Beat the competition</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Paid traffic leak (money rotation)</h3>
+          <p>The rotation that makes the technical finding a finance conversation. Deliberately avoids asking them to increase budget.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same trigger set, second email in sequence</dd></div>
+            <div><dt>AI strategy</dt><dd>Convert seconds into commercial terms using the Deloitte retail benchmark of 8.4% conversion movement per 0.1s of mobile improvement. Nothing about the ad account changes — same spend, same creative, same audience.</dd></div>
+            <div><dt>Value</dt><dd>Make more from the same spend</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>App bloat teardown</h3>
+          <p>Works because the finding is checkable in thirty seconds by anyone who opens their own dev tools, which converts scepticism into engagement.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>High third-party script count on product pages</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the heaviest offending scripts specifically. Script count is usually most of the LCP answer and it is the most concrete, least arguable finding available.</dd></div>
+            <div><dt>Value</dt><dd>Fix the root cause</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Support clock cost model</h3>
+          <p>A three-year side-by-side cost comparison is the magnet. It reframes a platform preference argument as an arithmetic one.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Magento or Adobe Commerce, version fingerprinted</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with Adobe&#39;s own published dates rather than an opinion about the platform. The spend is not optional; only its destination is.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Migration debt compounding</h3>
+          <p>Used as the email-two rotation and as the primary angle where no hard vendor deadline exists to point at.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>WooCommerce and BigCommerce at scale</dd></div>
+            <div><dt>AI strategy</dt><dd>The migration is not what teams underestimate — it is that every year of waiting widens the version gap and raises the eventual cost. Brands that moved early paid less than those who waited for the deadline.</dd></div>
+            <div><dt>Value</dt><dd>Avoid a bigger bill later</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Category benchmark, no pitch</h3>
+          <p>The widest tier by a distance. Runs on the same computed report as Tier 3, so its marginal production cost is zero.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Everything clearing the gate that matched no tier above</dd></div>
+            <div><dt>AI strategy</dt><dd>Softest CTA in the programme. Acknowledge that it has been &#39;working fine, deal with it later&#39; — because it has — and offer the benchmark without a pitch attached.</dd></div>
+            <div><dt>Value</dt><dd>Know where you stand</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>BFCM readiness (side campaign)</h3>
+          <p>Not part of the waterfall — an orthogonal, time-boxed side campaign. Prepare now for a September launch; for those eight weeks it should outperform Tier 3 itself.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>September to October, stores failing Core Web Vitals</dd></div>
+            <div><dt>AI strategy</dt><dd>Tier 3&#39;s pitch with a hard seasonal deadline attached. The one time of year when site speed is unarguable and the cost of ignoring it is obvious to everyone internally.</dd></div>
+            <div><dt>Value</dt><dd>Protect peak season</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>New ecommerce leadership (side campaign)</h3>
+          <p>Orthogonal trigger, sits outside the cascade. Run only once the waterfall is stable.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>New Head of Ecommerce or Digital, in role under 90 days</dd></div>
+            <div><dt>AI strategy</dt><dd>New leaders re-evaluate the stack and want a fast, visible win they can attribute to themselves. The window closes once they have committed to an approach.</dd></div>
+            <div><dt>Value</dt><dd>Make the new hire look good</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="The copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">The copy</p>
+      <h2>Five sequences, three emails each</h2>
+      <p class="takeaway">Every opening line contains a figure computed for that exact storefront. No email asks for a meeting — every CTA is a single word typed in reply, because the offer is a report we have already produced.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{brand}}</span><span>{{sender}}</span><span>{{active_ad_count}}</span><span>{{days_since_deadline}}</span><span>{{product_count}}</span><span>{{variant_count}}</span><span>{{open_ops_or_cs_roles}}</span><span>{{open_roles_phrase}}</span><span>{{crux_mobile_lcp_s}}</span><span>{{seconds_over}}</span><span>{{category_speed_rank}}</span><span>{{competitor_count}}</span><span>{{third_party_script_count}}</span><span>{{platform}}</span><span>{{platform_version}}</span><span>{{theme_name}}</span><span>{{theme_age_years}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{brand}}, {{sender}}, {{active_ad_count}}, {{days_since_deadline}}, {{product_count}}, {{variant_count}}, {{open_ops_or_cs_roles}}, {{open_roles_phrase}}, {{crux_mobile_lcp_s}}, {{seconds_over}}, {{category_speed_rank}}, {{competitor_count}}, {{third_party_script_count}}, {{platform}}, {{platform_version}}, {{theme_name}}, {{theme_age_years}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Checkout Breakage</strong>
+              <em>Checkout Exposure Audit</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Checkout Breakage steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your checkout on the 26th&#10;&#10;Hi {{first_name}},&#10;&#10;On 26 August Shopify auto-upgraded every non-Plus store still running legacy checkout customisations, and stripped whatever was in the Additional Scripts field. {{brand}} was running {{active_ad_count}} ads that week.&#10;&#10;But would it be fair to assume nobody has actually verified whether your purchase-event pixels were in that field?&#10;&#10;If they were, they&#39;re gone — and Meta and Google have been optimising on partial conversion data for {{days_since_deadline}} days without flagging it. It doesn&#39;t throw an error. Spend just quietly gets less efficient.&#10;&#10;We rebuild checkout on Extensibility properly — UI Extensions, Pixels, Functions — and we&#39;ve built 40+ custom Shopify apps doing it.&#10;&#10;Reply &quot;check&quot; and I&#39;ll tell you exactly which of your tracking survived the upgrade and which didn&#39;t. Takes me ten minutes, no call needed.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your checkout on the 26th" data-preview="your checkout on the 26th">your checkout on the 26th</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;On 26 August Shopify auto-upgraded every non-Plus store still running legacy checkout customisations, and stripped whatever was in the Additional Scripts field. {{brand}} was running {{active_ad_count}} ads that week.&#10;&#10;But would it be fair to assume nobody has actually verified whether your purchase-event pixels were in that field?&#10;&#10;If they were, they&#39;re gone — and Meta and Google have been optimising on partial conversion data for {{days_since_deadline}} days without flagging it. It doesn&#39;t throw an error. Spend just quietly gets less efficient.&#10;&#10;We rebuild checkout on Extensibility properly — UI Extensions, Pixels, Functions — and we&#39;ve built 40+ custom Shopify apps doing it.&#10;&#10;Reply &quot;check&quot; and I&#39;ll tell you exactly which of your tracking survived the upgrade and which didn&#39;t. Takes me ten minutes, no call needed.&#10;&#10;{{sender}}" data-preview="Hi Dana,&#10;&#10;On 26 August Shopify auto-upgraded every non-Plus store still running legacy checkout customisations, and stripped whatever was in the Additional Scripts field. Northbank Supply was running 34 ads that week.&#10;&#10;But would it be fair to assume nobody has actually verified whether your purchase-event pixels were in that field?&#10;&#10;If they were, they&#39;re gone — and Meta and Google have been optimising on partial conversion data for 19 days without flagging it. It doesn&#39;t throw an error. Spend just quietly gets less efficient.&#10;&#10;We rebuild checkout on Extensibility properly — UI Extensions, Pixels, Functions — and we&#39;ve built 40+ custom Shopify apps doing it.&#10;&#10;Reply &quot;check&quot; and I&#39;ll tell you exactly which of your tracking survived the upgrade and which didn&#39;t. Takes me ten minutes, no call needed.&#10;&#10;Moe">
+                        <p>Hi {{first_name}},</p><p>On 26 August Shopify auto-upgraded every non-Plus store still running legacy checkout customisations, and stripped whatever was in the Additional Scripts field. {{brand}} was running {{active_ad_count}} ads that week.</p><p>But would it be fair to assume nobody has actually verified whether your purchase-event pixels were in that field?</p><p>If they were, they&#39;re gone — and Meta and Google have been optimising on partial conversion data for {{days_since_deadline}} days without flagging it. It doesn&#39;t throw an error. Spend just quietly gets less efficient.</p><p>We rebuild checkout on Extensibility properly — UI Extensions, Pixels, Functions — and we&#39;ve built 40+ custom Shopify apps doing it.</p><p>Reply &quot;check&quot; and I&#39;ll tell you exactly which of your tracking survived the upgrade and which didn&#39;t. Takes me ten minutes, no call needed.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Quick follow-up with the part that costs money.&#10;&#10;When purchase events break, the ad platforms don&#39;t stop spending — they keep bidding on a signal that&#39;s now missing conversions. The account looks like it&#39;s working. Blended ROAS drifts.&#10;&#10;Most brands find it 6-8 weeks later in a monthly review, after they&#39;ve already reallocated budget based on numbers that weren&#39;t real.&#10;&#10;Still happy to check yours. Reply &quot;check&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Quick follow-up with the part that costs money.&#10;&#10;When purchase events break, the ad platforms don&#39;t stop spending — they keep bidding on a signal that&#39;s now missing conversions. The account looks like it&#39;s working. Blended ROAS drifts.&#10;&#10;Most brands find it 6-8 weeks later in a monthly review, after they&#39;ve already reallocated budget based on numbers that weren&#39;t real.&#10;&#10;Still happy to check yours. Reply &quot;check&quot;." data-preview="Quick follow-up with the part that costs money.&#10;&#10;When purchase events break, the ad platforms don&#39;t stop spending — they keep bidding on a signal that&#39;s now missing conversions. The account looks like it&#39;s working. Blended ROAS drifts.&#10;&#10;Most brands find it 6-8 weeks later in a monthly review, after they&#39;ve already reallocated budget based on numbers that weren&#39;t real.&#10;&#10;Still happy to check yours. Reply &quot;check&quot;.">
+                        <p>Quick follow-up with the part that costs money.</p><p>When purchase events break, the ad platforms don&#39;t stop spending — they keep bidding on a signal that&#39;s now missing conversions. The account looks like it&#39;s working. Blended ROAS drifts.</p><p>Most brands find it 6-8 weeks later in a monthly review, after they&#39;ve already reallocated budget based on numbers that weren&#39;t real.</p><p>Still happy to check yours. Reply &quot;check&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: wrong person?&#10;&#10;{{first_name}} — no need for a call. Just reply &quot;check&quot; and I&#39;ll send you a written breakdown of what {{brand}}&#39;s checkout upgrade actually removed.&#10;&#10;Should I send this to you, or is your ecommerce lead the better contact?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="wrong person?" data-preview="wrong person?">wrong person?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — no need for a call. Just reply &quot;check&quot; and I&#39;ll send you a written breakdown of what {{brand}}&#39;s checkout upgrade actually removed.&#10;&#10;Should I send this to you, or is your ecommerce lead the better contact?" data-preview="Dana — no need for a call. Just reply &quot;check&quot; and I&#39;ll send you a written breakdown of what Northbank Supply&#39;s checkout upgrade actually removed.&#10;&#10;Should I send this to you, or is your ecommerce lead the better contact?">
+                        <p>{{first_name}} — no need for a call. Just reply &quot;check&quot; and I&#39;ll send you a written breakdown of what {{brand}}&#39;s checkout upgrade actually removed.</p><p>Should I send this to you, or is your ecommerce lead the better contact?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Outgrown the Team</strong>
+              <em>Operating Load Teardown</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Outgrown the Team steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{product_count}} SKUs, {{open_roles_phrase}}&#10;&#10;Hi {{first_name}},&#10;&#10;I pulled {{brand}}&#39;s catalogue — {{product_count}} products, {{variant_count}} variants — and saw you&#39;re hiring {{open_ops_or_cs_roles}} for customer support and ops. You&#39;ve also got {{active_ad_count}} ads live.&#10;&#10;But would it be fair to assume every extra dollar of revenue right now costs you another ticket, another return, and another creative brief — so growth keeps buying you more work instead of more margin?&#10;&#10;We build the operating layer that breaks that link. Custom AI across support, creative, returns and reporting — not apps, systems trained on your own data.&#10;&#10;Last one: a supplement brand went from $400k to $1.2M a month in 90 days while going from 34 people to 16. Support response 4 hours to under 30 seconds. Returns 9.4% to 6.1%. Margins up 30 points.&#10;&#10;Reply &quot;teardown&quot; and I&#39;ll map where {{brand}}&#39;s operating load actually sits, from the outside. No call.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{product_count}} SKUs, {{open_roles_phrase}}" data-preview="212 SKUs, 2 support roles open">{{product_count}} SKUs, {{open_roles_phrase}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;I pulled {{brand}}&#39;s catalogue — {{product_count}} products, {{variant_count}} variants — and saw you&#39;re hiring {{open_ops_or_cs_roles}} for customer support and ops. You&#39;ve also got {{active_ad_count}} ads live.&#10;&#10;But would it be fair to assume every extra dollar of revenue right now costs you another ticket, another return, and another creative brief — so growth keeps buying you more work instead of more margin?&#10;&#10;We build the operating layer that breaks that link. Custom AI across support, creative, returns and reporting — not apps, systems trained on your own data.&#10;&#10;Last one: a supplement brand went from $400k to $1.2M a month in 90 days while going from 34 people to 16. Support response 4 hours to under 30 seconds. Returns 9.4% to 6.1%. Margins up 30 points.&#10;&#10;Reply &quot;teardown&quot; and I&#39;ll map where {{brand}}&#39;s operating load actually sits, from the outside. No call.&#10;&#10;{{sender}}" data-preview="Hi Dana,&#10;&#10;I pulled Northbank Supply&#39;s catalogue — 212 products, 740 variants — and saw you&#39;re hiring 2 roles for customer support and ops. You&#39;ve also got 34 ads live.&#10;&#10;But would it be fair to assume every extra dollar of revenue right now costs you another ticket, another return, and another creative brief — so growth keeps buying you more work instead of more margin?&#10;&#10;We build the operating layer that breaks that link. Custom AI across support, creative, returns and reporting — not apps, systems trained on your own data.&#10;&#10;Last one: a supplement brand went from $400k to $1.2M a month in 90 days while going from 34 people to 16. Support response 4 hours to under 30 seconds. Returns 9.4% to 6.1%. Margins up 30 points.&#10;&#10;Reply &quot;teardown&quot; and I&#39;ll map where Northbank Supply&#39;s operating load actually sits, from the outside. No call.&#10;&#10;Moe">
+                        <p>Hi {{first_name}},</p><p>I pulled {{brand}}&#39;s catalogue — {{product_count}} products, {{variant_count}} variants — and saw you&#39;re hiring {{open_ops_or_cs_roles}} for customer support and ops. You&#39;ve also got {{active_ad_count}} ads live.</p><p>But would it be fair to assume every extra dollar of revenue right now costs you another ticket, another return, and another creative brief — so growth keeps buying you more work instead of more margin?</p><p>We build the operating layer that breaks that link. Custom AI across support, creative, returns and reporting — not apps, systems trained on your own data.</p><p>Last one: a supplement brand went from $400k to $1.2M a month in 90 days while going from 34 people to 16. Support response 4 hours to under 30 seconds. Returns 9.4% to 6.1%. Margins up 30 points.</p><p>Reply &quot;teardown&quot; and I&#39;ll map where {{brand}}&#39;s operating load actually sits, from the outside. No call.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The number that surprised the founder in that project wasn&#39;t revenue.&#10;&#10;It was that he stopped working 60-hour weeks on operations. The systems didn&#39;t just cut cost — they took the business off his desk.&#10;&#10;If you&#39;re hiring {{open_ops_or_cs_roles}} to absorb growth, that&#39;s the same fork in the road: add people, or add a system that means you don&#39;t have to.&#10;&#10;Reply &quot;teardown&quot; and I&#39;ll show you which of your load is automatable.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The number that surprised the founder in that project wasn&#39;t revenue.&#10;&#10;It was that he stopped working 60-hour weeks on operations. The systems didn&#39;t just cut cost — they took the business off his desk.&#10;&#10;If you&#39;re hiring {{open_ops_or_cs_roles}} to absorb growth, that&#39;s the same fork in the road: add people, or add a system that means you don&#39;t have to.&#10;&#10;Reply &quot;teardown&quot; and I&#39;ll show you which of your load is automatable." data-preview="The number that surprised the founder in that project wasn&#39;t revenue.&#10;&#10;It was that he stopped working 60-hour weeks on operations. The systems didn&#39;t just cut cost — they took the business off his desk.&#10;&#10;If you&#39;re hiring 2 roles to absorb growth, that&#39;s the same fork in the road: add people, or add a system that means you don&#39;t have to.&#10;&#10;Reply &quot;teardown&quot; and I&#39;ll show you which of your load is automatable.">
+                        <p>The number that surprised the founder in that project wasn&#39;t revenue.</p><p>It was that he stopped working 60-hour weeks on operations. The systems didn&#39;t just cut cost — they took the business off his desk.</p><p>If you&#39;re hiring {{open_ops_or_cs_roles}} to absorb growth, that&#39;s the same fork in the road: add people, or add a system that means you don&#39;t have to.</p><p>Reply &quot;teardown&quot; and I&#39;ll show you which of your load is automatable.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: hire or build&#10;&#10;{{first_name}} — a support hire at {{brand}}&#39;s scale runs ~$45k fully loaded and caps out at one conversation at a time. That&#39;s the comparison we usually end up making.&#10;&#10;No call needed. Reply &quot;teardown&quot; and I&#39;ll send the map.&#10;&#10;Should this go to you or whoever owns ecommerce ops?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="hire or build" data-preview="hire or build">hire or build</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — a support hire at {{brand}}&#39;s scale runs ~$45k fully loaded and caps out at one conversation at a time. That&#39;s the comparison we usually end up making.&#10;&#10;No call needed. Reply &quot;teardown&quot; and I&#39;ll send the map.&#10;&#10;Should this go to you or whoever owns ecommerce ops?" data-preview="Dana — a support hire at Northbank Supply&#39;s scale runs ~$45k fully loaded and caps out at one conversation at a time. That&#39;s the comparison we usually end up making.&#10;&#10;No call needed. Reply &quot;teardown&quot; and I&#39;ll send the map.&#10;&#10;Should this go to you or whoever owns ecommerce ops?">
+                        <p>{{first_name}} — a support hire at {{brand}}&#39;s scale runs ~$45k fully loaded and caps out at one conversation at a time. That&#39;s the comparison we usually end up making.</p><p>No call needed. Reply &quot;teardown&quot; and I&#39;ll send the map.</p><p>Should this go to you or whoever owns ecommerce ops?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Paying to Bounce</strong>
+              <em>Storefront Leak Report</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Paying to Bounce steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{brand}} vs {{competitor_count}} others on mobile&#10;&#10;Hi {{first_name}},&#10;&#10;I ran {{brand}} through Google&#39;s Chrome UX Report — that&#39;s real customer data, not a Lighthouse score. Your mobile pages take {{crux_mobile_lcp_s}}s to render. Google&#39;s threshold is 2.5s.&#10;&#10;Against {{competitor_count}} brands in your category, you rank {{category_speed_rank}}.&#10;&#10;But would it be fair to assume the {{active_ad_count}} ads you&#39;re running right now are sending paid traffic straight into that?&#10;&#10;That&#39;s the part that stings — you&#39;re not losing organic visitors you never paid for. You&#39;re paying per click for people who leave before the page draws. We found {{third_party_script_count}} third-party scripts loading on your product pages, which is usually most of the answer.&#10;&#10;We fix this at the root, not by compressing images.&#10;&#10;Reply &quot;report&quot; and I&#39;ll send the full breakdown with the competitor ranking. No call.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{brand}} vs {{competitor_count}} others on mobile" data-preview="Northbank Supply vs 9 others on mobile">{{brand}} vs {{competitor_count}} others on mobile</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;I ran {{brand}} through Google&#39;s Chrome UX Report — that&#39;s real customer data, not a Lighthouse score. Your mobile pages take {{crux_mobile_lcp_s}}s to render. Google&#39;s threshold is 2.5s.&#10;&#10;Against {{competitor_count}} brands in your category, you rank {{category_speed_rank}}.&#10;&#10;But would it be fair to assume the {{active_ad_count}} ads you&#39;re running right now are sending paid traffic straight into that?&#10;&#10;That&#39;s the part that stings — you&#39;re not losing organic visitors you never paid for. You&#39;re paying per click for people who leave before the page draws. We found {{third_party_script_count}} third-party scripts loading on your product pages, which is usually most of the answer.&#10;&#10;We fix this at the root, not by compressing images.&#10;&#10;Reply &quot;report&quot; and I&#39;ll send the full breakdown with the competitor ranking. No call.&#10;&#10;{{sender}}" data-preview="Hi Dana,&#10;&#10;I ran Northbank Supply through Google&#39;s Chrome UX Report — that&#39;s real customer data, not a Lighthouse score. Your mobile pages take 4.2s to render. Google&#39;s threshold is 2.5s.&#10;&#10;Against 9 brands in your category, you rank 7th.&#10;&#10;But would it be fair to assume the 34 ads you&#39;re running right now are sending paid traffic straight into that?&#10;&#10;That&#39;s the part that stings — you&#39;re not losing organic visitors you never paid for. You&#39;re paying per click for people who leave before the page draws. We found 23 third-party scripts loading on your product pages, which is usually most of the answer.&#10;&#10;We fix this at the root, not by compressing images.&#10;&#10;Reply &quot;report&quot; and I&#39;ll send the full breakdown with the competitor ranking. No call.&#10;&#10;Moe">
+                        <p>Hi {{first_name}},</p><p>I ran {{brand}} through Google&#39;s Chrome UX Report — that&#39;s real customer data, not a Lighthouse score. Your mobile pages take {{crux_mobile_lcp_s}}s to render. Google&#39;s threshold is 2.5s.</p><p>Against {{competitor_count}} brands in your category, you rank {{category_speed_rank}}.</p><p>But would it be fair to assume the {{active_ad_count}} ads you&#39;re running right now are sending paid traffic straight into that?</p><p>That&#39;s the part that stings — you&#39;re not losing organic visitors you never paid for. You&#39;re paying per click for people who leave before the page draws. We found {{third_party_script_count}} third-party scripts loading on your product pages, which is usually most of the answer.</p><p>We fix this at the root, not by compressing images.</p><p>Reply &quot;report&quot; and I&#39;ll send the full breakdown with the competitor ranking. No call.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;To put the {{crux_mobile_lcp_s}}s in commercial terms:&#10;&#10;Deloitte&#39;s study across retail found a 0.1s mobile improvement moved conversion 8.4%. You&#39;re {{seconds_over}}s over Google&#39;s threshold.&#10;&#10;Nothing about your ad account changes. Same spend, same creative, same audience — the traffic just arrives somewhere that loads.&#10;&#10;Reply &quot;report&quot; and I&#39;ll send yours.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="To put the {{crux_mobile_lcp_s}}s in commercial terms:&#10;&#10;Deloitte&#39;s study across retail found a 0.1s mobile improvement moved conversion 8.4%. You&#39;re {{seconds_over}}s over Google&#39;s threshold.&#10;&#10;Nothing about your ad account changes. Same spend, same creative, same audience — the traffic just arrives somewhere that loads.&#10;&#10;Reply &quot;report&quot; and I&#39;ll send yours." data-preview="To put the 4.2s in commercial terms:&#10;&#10;Deloitte&#39;s study across retail found a 0.1s mobile improvement moved conversion 8.4%. You&#39;re 1.7s over Google&#39;s threshold.&#10;&#10;Nothing about your ad account changes. Same spend, same creative, same audience — the traffic just arrives somewhere that loads.&#10;&#10;Reply &quot;report&quot; and I&#39;ll send yours.">
+                        <p>To put the {{crux_mobile_lcp_s}}s in commercial terms:</p><p>Deloitte&#39;s study across retail found a 0.1s mobile improvement moved conversion 8.4%. You&#39;re {{seconds_over}}s over Google&#39;s threshold.</p><p>Nothing about your ad account changes. Same spend, same creative, same audience — the traffic just arrives somewhere that loads.</p><p>Reply &quot;report&quot; and I&#39;ll send yours.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{category_speed_rank}} of {{competitor_count}}&#10;&#10;{{first_name}} — no need for a call. Reply &quot;report&quot; and I&#39;ll send {{brand}}&#39;s mobile performance breakdown and where you sit against {{competitor_count}} named competitors.&#10;&#10;Should I send it to you or your ecommerce lead?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{category_speed_rank}} of {{competitor_count}}" data-preview="7th of 9">{{category_speed_rank}} of {{competitor_count}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — no need for a call. Reply &quot;report&quot; and I&#39;ll send {{brand}}&#39;s mobile performance breakdown and where you sit against {{competitor_count}} named competitors.&#10;&#10;Should I send it to you or your ecommerce lead?" data-preview="Dana — no need for a call. Reply &quot;report&quot; and I&#39;ll send Northbank Supply&#39;s mobile performance breakdown and where you sit against 9 named competitors.&#10;&#10;Should I send it to you or your ecommerce lead?">
+                        <p>{{first_name}} — no need for a call. Reply &quot;report&quot; and I&#39;ll send {{brand}}&#39;s mobile performance breakdown and where you sit against {{competitor_count}} named competitors.</p><p>Should I send it to you or your ecommerce lead?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 - Platform Refugee</strong>
+              <em>Migration Cost Model</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 - Platform Refugee steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 10</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{platform}} support clock&#10;&#10;Hi {{first_name}},&#10;&#10;Saw {{brand}} is running {{platform}} {{platform_version}}.&#10;&#10;But would it be fair to assume the renewal conversation is getting harder to justify each year — licence, hosting, and a developer who knows the stack, all going up while the store does the same job?&#10;&#10;Adobe&#39;s own timeline has regular support for 2.4.7 ending May 2027 and Cloud environments on unsupported versions facing decommission from June 2028. Which means the spend isn&#39;t optional. The only real decision is whether it goes into staying put or moving.&#10;&#10;We&#39;ve done 700+ Shopify builds and 100+ on Plus, including full data and ERP migrations.&#10;&#10;Reply &quot;model&quot; and I&#39;ll send a side-by-side of your 3-year cost on {{platform}} vs on Shopify. No call.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{platform}} support clock" data-preview="Adobe Commerce support clock">{{platform}} support clock</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Saw {{brand}} is running {{platform}} {{platform_version}}.&#10;&#10;But would it be fair to assume the renewal conversation is getting harder to justify each year — licence, hosting, and a developer who knows the stack, all going up while the store does the same job?&#10;&#10;Adobe&#39;s own timeline has regular support for 2.4.7 ending May 2027 and Cloud environments on unsupported versions facing decommission from June 2028. Which means the spend isn&#39;t optional. The only real decision is whether it goes into staying put or moving.&#10;&#10;We&#39;ve done 700+ Shopify builds and 100+ on Plus, including full data and ERP migrations.&#10;&#10;Reply &quot;model&quot; and I&#39;ll send a side-by-side of your 3-year cost on {{platform}} vs on Shopify. No call.&#10;&#10;{{sender}}" data-preview="Hi Dana,&#10;&#10;Saw Northbank Supply is running Adobe Commerce 2.4.6.&#10;&#10;But would it be fair to assume the renewal conversation is getting harder to justify each year — licence, hosting, and a developer who knows the stack, all going up while the store does the same job?&#10;&#10;Adobe&#39;s own timeline has regular support for 2.4.7 ending May 2027 and Cloud environments on unsupported versions facing decommission from June 2028. Which means the spend isn&#39;t optional. The only real decision is whether it goes into staying put or moving.&#10;&#10;We&#39;ve done 700+ Shopify builds and 100+ on Plus, including full data and ERP migrations.&#10;&#10;Reply &quot;model&quot; and I&#39;ll send a side-by-side of your 3-year cost on Adobe Commerce vs on Shopify. No call.&#10;&#10;Moe">
+                        <p>Hi {{first_name}},</p><p>Saw {{brand}} is running {{platform}} {{platform_version}}.</p><p>But would it be fair to assume the renewal conversation is getting harder to justify each year — licence, hosting, and a developer who knows the stack, all going up while the store does the same job?</p><p>Adobe&#39;s own timeline has regular support for 2.4.7 ending May 2027 and Cloud environments on unsupported versions facing decommission from June 2028. Which means the spend isn&#39;t optional. The only real decision is whether it goes into staying put or moving.</p><p>We&#39;ve done 700+ Shopify builds and 100+ on Plus, including full data and ERP migrations.</p><p>Reply &quot;model&quot; and I&#39;ll send a side-by-side of your 3-year cost on {{platform}} vs on Shopify. No call.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The thing most teams underestimate on this one isn&#39;t the migration.&#10;&#10;It&#39;s that every year you wait, the version gap widens and the migration gets more expensive — because you&#39;re not moving a current store, you&#39;re untangling five years of custom modules.&#10;&#10;The brands that moved early paid less than the ones who waited for the deadline.&#10;&#10;Reply &quot;model&quot; and I&#39;ll send the numbers.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The thing most teams underestimate on this one isn&#39;t the migration.&#10;&#10;It&#39;s that every year you wait, the version gap widens and the migration gets more expensive — because you&#39;re not moving a current store, you&#39;re untangling five years of custom modules.&#10;&#10;The brands that moved early paid less than the ones who waited for the deadline.&#10;&#10;Reply &quot;model&quot; and I&#39;ll send the numbers." data-preview="The thing most teams underestimate on this one isn&#39;t the migration.&#10;&#10;It&#39;s that every year you wait, the version gap widens and the migration gets more expensive — because you&#39;re not moving a current store, you&#39;re untangling five years of custom modules.&#10;&#10;The brands that moved early paid less than the ones who waited for the deadline.&#10;&#10;Reply &quot;model&quot; and I&#39;ll send the numbers.">
+                        <p>The thing most teams underestimate on this one isn&#39;t the migration.</p><p>It&#39;s that every year you wait, the version gap widens and the migration gets more expensive — because you&#39;re not moving a current store, you&#39;re untangling five years of custom modules.</p><p>The brands that moved early paid less than the ones who waited for the deadline.</p><p>Reply &quot;model&quot; and I&#39;ll send the numbers.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 10</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: stay or move&#10;&#10;{{first_name}} — no call needed. Reply &quot;model&quot; and I&#39;ll send the 3-year cost comparison for {{brand}}.&#10;&#10;Is this yours, or should it go to whoever owns the platform decision?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="stay or move" data-preview="stay or move">stay or move</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — no call needed. Reply &quot;model&quot; and I&#39;ll send the 3-year cost comparison for {{brand}}.&#10;&#10;Is this yours, or should it go to whoever owns the platform decision?" data-preview="Dana — no call needed. Reply &quot;model&quot; and I&#39;ll send the 3-year cost comparison for Northbank Supply.&#10;&#10;Is this yours, or should it go to whoever owns the platform decision?">
+                        <p>{{first_name}} — no call needed. Reply &quot;model&quot; and I&#39;ll send the 3-year cost comparison for {{brand}}.</p><p>Is this yours, or should it go to whoever owns the platform decision?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 - Catch-All: Stale Storefront</strong>
+              <em>Category Benchmark</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 - Catch-All: Stale Storefront steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 5</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 11</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{brand}} + {{theme_name}}&#10;&#10;Hi {{first_name}},&#10;&#10;{{brand}} is running {{theme_name}}, which is about {{theme_age_years}} years old, with {{third_party_script_count}} third-party scripts on your product pages.&#10;&#10;But would it be fair to assume it&#39;s been &quot;working fine, deal with it later&quot; for a while now?&#10;&#10;Usually is. The reason it&#39;s worth a look: your mobile pages are at {{crux_mobile_lcp_s}}s in Google&#39;s real-user data, which puts you {{category_speed_rank}} of {{competitor_count}} in your category. Not on fire — just quietly costing a bit of every session.&#10;&#10;We&#39;ve built 700+ Shopify stores, so we&#39;ve got a decent benchmark for what your category should look like.&#10;&#10;Reply &quot;benchmark&quot; and I&#39;ll send where {{brand}} sits. No pitch, no call.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{brand}} + {{theme_name}}" data-preview="Northbank Supply + Debut">{{brand}} + {{theme_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;{{brand}} is running {{theme_name}}, which is about {{theme_age_years}} years old, with {{third_party_script_count}} third-party scripts on your product pages.&#10;&#10;But would it be fair to assume it&#39;s been &quot;working fine, deal with it later&quot; for a while now?&#10;&#10;Usually is. The reason it&#39;s worth a look: your mobile pages are at {{crux_mobile_lcp_s}}s in Google&#39;s real-user data, which puts you {{category_speed_rank}} of {{competitor_count}} in your category. Not on fire — just quietly costing a bit of every session.&#10;&#10;We&#39;ve built 700+ Shopify stores, so we&#39;ve got a decent benchmark for what your category should look like.&#10;&#10;Reply &quot;benchmark&quot; and I&#39;ll send where {{brand}} sits. No pitch, no call.&#10;&#10;{{sender}}" data-preview="Hi Dana,&#10;&#10;Northbank Supply is running Debut, which is about 6 years old, with 23 third-party scripts on your product pages.&#10;&#10;But would it be fair to assume it&#39;s been &quot;working fine, deal with it later&quot; for a while now?&#10;&#10;Usually is. The reason it&#39;s worth a look: your mobile pages are at 4.2s in Google&#39;s real-user data, which puts you 7th of 9 in your category. Not on fire — just quietly costing a bit of every session.&#10;&#10;We&#39;ve built 700+ Shopify stores, so we&#39;ve got a decent benchmark for what your category should look like.&#10;&#10;Reply &quot;benchmark&quot; and I&#39;ll send where Northbank Supply sits. No pitch, no call.&#10;&#10;Moe">
+                        <p>Hi {{first_name}},</p><p>{{brand}} is running {{theme_name}}, which is about {{theme_age_years}} years old, with {{third_party_script_count}} third-party scripts on your product pages.</p><p>But would it be fair to assume it&#39;s been &quot;working fine, deal with it later&quot; for a while now?</p><p>Usually is. The reason it&#39;s worth a look: your mobile pages are at {{crux_mobile_lcp_s}}s in Google&#39;s real-user data, which puts you {{category_speed_rank}} of {{competitor_count}} in your category. Not on fire — just quietly costing a bit of every session.</p><p>We&#39;ve built 700+ Shopify stores, so we&#39;ve got a decent benchmark for what your category should look like.</p><p>Reply &quot;benchmark&quot; and I&#39;ll send where {{brand}} sits. No pitch, no call.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 5</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One thing worth knowing: theme age matters less than what&#39;s been bolted on since.&#10;&#10;{{third_party_script_count}} scripts is usually the accumulation of apps installed for a reason that made sense at the time, and never removed. Each one runs on every page load.&#10;&#10;Reply &quot;benchmark&quot; and I&#39;ll show you which ones are costing you.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One thing worth knowing: theme age matters less than what&#39;s been bolted on since.&#10;&#10;{{third_party_script_count}} scripts is usually the accumulation of apps installed for a reason that made sense at the time, and never removed. Each one runs on every page load.&#10;&#10;Reply &quot;benchmark&quot; and I&#39;ll show you which ones are costing you." data-preview="One thing worth knowing: theme age matters less than what&#39;s been bolted on since.&#10;&#10;23 scripts is usually the accumulation of apps installed for a reason that made sense at the time, and never removed. Each one runs on every page load.&#10;&#10;Reply &quot;benchmark&quot; and I&#39;ll show you which ones are costing you.">
+                        <p>One thing worth knowing: theme age matters less than what&#39;s been bolted on since.</p><p>{{third_party_script_count}} scripts is usually the accumulation of apps installed for a reason that made sense at the time, and never removed. Each one runs on every page load.</p><p>Reply &quot;benchmark&quot; and I&#39;ll show you which ones are costing you.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 11</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: category benchmark&#10;&#10;{{first_name}} — reply &quot;benchmark&quot; and I&#39;ll send {{brand}}&#39;s numbers against {{competitor_count}} others in your category. No call, no deck.&#10;&#10;You, or someone else?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="category benchmark" data-preview="category benchmark">category benchmark</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — reply &quot;benchmark&quot; and I&#39;ll send {{brand}}&#39;s numbers against {{competitor_count}} others in your category. No call, no deck.&#10;&#10;You, or someone else?" data-preview="Dana — reply &quot;benchmark&quot; and I&#39;ll send Northbank Supply&#39;s numbers against 9 others in your category. No call, no deck.&#10;&#10;You, or someone else?">
+                        <p>{{first_name}} — reply &quot;benchmark&quot; and I&#39;ll send {{brand}}&#39;s numbers against {{competitor_count}} others in your category. No call, no deck.</p><p>You, or someone else?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="The launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">The launch</p>
+      <h2>Tier 3 first, Tier 2 gated</h2>
+      <p class="takeaway">Tier 3 has no external dependency, validates the thesis fastest at volume, and produces the report every other tier reuses. Tier 2 is held until three credibility gaps close, because launching it early wastes the best list in the book.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Week 1 — Tier 3, Paying to Bounce. 1,500 contacts per week ramping to 4,000. Launches first because it has no external dependency, validates the CrUX and Ad Library thesis fastest at volume, and produces the Storefront Leak Report that every other tier reuses.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Week 2, from 27 August — Tier 1, Checkout Breakage. 1,200 per week, hand-checked. Cannot mail before the 27th: there is no runway to build a list and warm domains before the 26 August deadline, so it is built as a post-deadline remediation campaign instead, which is stronger anyway.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Week 4 — Tier 2, Outgrown the Team. 800 per week, and gated. The most valuable tier in the programme, held until an AI service page exists on the site, the $1.2M case study is named or made verifiable, and the Clutch headcount contradiction is resolved.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Week 6 — Tier 4, Platform Refugee. 1,500 per week.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Week 8 — Tier 5, Catch-All. 3,000 per week.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>September — BFCM Readiness side campaign. 2,500 per week for eight weeks. Tier 3&#39;s pitch with a hard seasonal deadline attached; expect it to outperform Tier 3 itself during that window.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>Infrastructure — twelve to fifteen sending domains at three mailboxes each, four to six weeks of warm-up before Phase 1 volume, domains kept separate from webinopoly.com, open tracking off and measurement on replies only.</p>
+              </div>
+              <div class="launch-step">
+                <span>08</span>
+                <p>Suppression — existing clients, active pipeline, Shopify Partner competitors and other ecommerce agencies. Germany excluded throughout under UWG §7, which requires prior consent for B2B email.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacts</strong>
+                <span>Perfect. Scale this tier. Tiers 1 and 2 should beat this given signal strength.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run. This is the realistic success mark for Tier 3 at volume.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450-500</strong>
+                <span>Borderline. Test a copy variant. Acceptable as a steady state for the Tier 5 catch-all.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or reply rate under 1% after 1,500 sends</strong>
+                <span>Cut the tier and rework it. Two variants per tier maximum; on a fresh tier run a chaos test of two completely different copies, then narrow.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dana","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Northbank Supply","Moe","34","19","212","740","2 roles","2 support roles open","4\\.2","1\\.7","7th","9","23","Adobe Commerce","2\\.4\\.6","Debut"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
