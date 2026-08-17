@@ -1,0 +1,1773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuvolum - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-18</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Nuvolum</p>
+          <h1>The Nuvolum outbound <mark>journey</mark>.</h1>
+          <p class="hero-copy">One cascade that routes every specialty surgical practice in America on a signal their own website hands us for free.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Specialty practice websites publish the name of their current marketing agency in their own page source. Verified live on beaconoms.com, canyonofs.com and utahsurgicalarts.com, all three reading &#39;Website &amp; Video Production by Nuvolum&#39;. Every competitor stamps the same footer, so one crawl reconstructs who all ~37,000 practices are paying right now. Layer Google&#39;s free Ads Transparency Center over it and a live rank check beside it, and you know who they pay, how big a bet they have placed, and whether they are losing it.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a 20-minute walkthrough</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>~36,800</strong>
+          <span>Routed practice accounts across seven specialties</span>
+        </div>
+        <div class="metric-card">
+          <strong>$0</strong>
+          <span>Enrichment cost for the routing signal</span>
+        </div>
+        <div class="metric-card">
+          <strong>5 tiers</strong>
+          <span>One cascade, 100% market coverage</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Nuvolum builds the visibility position for high-ticket elective surgical practices: brand, website, SEO, paid search, PR, video and podcast production, referral amplification, and QUANTUM PRM.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The agency name is in the footer</p></div><div><span>02</span><p>Ordered by the size of the bet already placed</p></div><div><span>03</span><p>Five campaigns, five honest pains</p></div><div><span>04</span><p>What layers on top of the cascade</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>The signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>The routing</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>The tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>The experiments</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>The copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>The rollout</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="The signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">The signal</p>
+      <h2>The agency name is in the footer</h2>
+      <p class="takeaway">Dental and aesthetic web vendors put their credit line in the contract, so every practice site names its incumbent agency in plain text. That is a competitor client list for the whole industry, free, refreshable, and unbuyable.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>It is published, not inferred. The vendor credit is a contract term, so it sits in plain text on the practice&#39;s own homepage.</p></div><div class="reason-card"><span>02</span><p>No data broker sells it. BuiltWith indexes that a site runs WordPress, not that PBHS built it and still bills for it monthly.</p></div><div class="reason-card"><span>03</span><p>It refreshes itself. Practices change vendors constantly, and every switch reshuffles accounts between tiers on the next crawl.</p></div><div class="reason-card"><span>04</span><p>It pairs with two other free public sources. Google&#39;s Ads Transparency Center proves the budget; a live rank check proves whether it is working.</p></div>
+            </div>
+            <div class="field-cloud"><span>web_vendor</span><span>vendor_class</span><span>location_count</span><span>group_affiliated</span><span>paid_ads_live</span><span>ad_count</span><span>ad_first_seen</span><span>money_term_rank</span><span>top3_owner</span><span>has_video</span><span>has_press_page</span><span>blog_last_post_date</span><span>has_referral_page</span><span>specialty</span><span>surgeon_roster</span><span>review_count</span><span>contact_persona</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>Direct page-source crawl (the unlock)</h3><p>Vendor footer credit, surgeon roster, location count, referral-page presence, video, press and blog presence. Crawls /, /about, /meet-the-doctors, /referrals and /contact. This one cannot be substituted.</p></div><div class="source-card"><span>02</span><h3>AAOMS Surgeon Locator (myoms.org/find-a-surgeon)</h3><p>The oral surgery core market: surgeon, practice, city, contact. Public with no login, but rendered client-side, so it needs a headless browser rather than a plain fetch.</p></div><div class="source-card"><span>03</span><h3>AAP, ACP, ABPS/ASPS and AAFPRS directories</h3><p>The adjacent specialty market: periodontics, prosthodontics, plastic and facial plastic surgery, all sitting on the same signal ladder.</p></div><div class="source-card"><span>04</span><h3>Google Ads Transparency Center + Meta Ad Library</h3><p>Confirmed live paid spend, ad creative, launch dates and targeted regions. Both free, both searchable by practice name, neither requires a login.</p></div><div class="source-card"><span>05</span><h3>Live rank check, 8 to 12 money terms per metro</h3><p>Who actually holds the top three on the terms that drive consults. This is both the second half of every tier&#39;s story and the entire lead magnet.</p></div><div class="source-card"><span>06</span><h3>Google Maps / Places by specialty and metro</h3><p>Practice entity, location count, review count and velocity, website URL. Supplies the patient-volume proxy used by the qualification gate.</p></div><div class="source-card"><span>07</span><h3>Becker&#39;s Dental Review / Group Dentistry Now</h3><p>Dated acquisition and de-novo location events, free, feeding the side campaigns rather than the cascade.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="The routing">
+        
+    <div class="section-head">
+      <p class="eyebrow">The routing</p>
+      <h2>Ordered by the size of the bet already placed</h2>
+      <p class="takeaway">Vendor commitment, then demonstrated ad spend, then visibility outcome. Each practice is tested top to bottom and exits at the first tier it matches, so nobody gets two pitches.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF Qualification gate, applied before any routing: real practice domain, at least one board-certified specialist, 50+ Google reviews at the primary location OR two or more locations, US-based</span>
+          <strong>Enter the cascade</strong>
+          <em>Nuvolum engagements start around $3,000/month. A solo practice collecting $700k cannot clear that, and mailing them burns sending reputation for nothing. Roughly 30 to 35% of the raw directory pull drops here, which is the gate working rather than a loss.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF location_count &gt;= 3 OR group_affiliated == TRUE, AND vendor_class == volume_template</span>
+          <strong>TIER 1 - Multi-site practice, single-site website</strong>
+          <em>A multi-site surgical group running on a website product built for one practice. Locations compete with their own siblings for the same metro terms, so authority splits instead of compounding. The incumbent vendor cannot fix this because the vendor does not sell that.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF paid_ads_live == TRUE AND money_term_rank NOT IN top 3</span>
+          <strong>TIER 2 - Renting the term you should own</strong>
+          <em>Two verified public facts, and the pain is arithmetic on them. They are paying per click for a term they should own outright, so paid spend has become the floor rather than the ceiling.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF vendor_class == premium_custom AND (has_video == FALSE OR has_press_page == FALSE OR blog_last_post_date older than 180 days)</span>
+          <strong>TIER 3 - You bought a website, not a growth engine</strong>
+          <em>The custom vendor credit proves budget was spent. A missing /video, /press or stale /blog route is a reliable absence signal because the route either resolves or it does not, unlike inferring absence from a tech-stack index.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF specialty IN (oms, perio, prostho) AND has_referral_page == FALSE</span>
+          <strong>TIER 4 - Your biggest case channel is unmanaged</strong>
+          <em>That oral surgery case volume flows through referring general dentists is the structural fact of the specialty. The referral page either exists or it does not, and without one that channel has no digital front door at all.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="5">
+          <span class="route-rule__num">06</span>
+          <span class="route-rule__if">IF Everything else in the addressable market</span>
+          <strong>TIER 5 - CATCH-ALL - Three practices own your metro</strong>
+          <em>A practice already ranking top three with video, press and a live blog falls all the way here by design. They do not have a visibility problem, and manufacturing one would be the exact invented-pain failure this framework exists to prevent.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF Qualification gate, applied before any routing: real practice domain, at least one board-certified specialist, 50+ Google reviews at the primary location OR two or more locations, US-based -&gt; Enter the cascade (Nuvolum engagements start around $3,000/month. A solo practice collecting $700k cannot clear that, and mailing them burns sending reputation for nothing. Roughly 30 to 35% of the raw directory pull drops here, which is the gate working rather than a loss.)&#10;2. IF location_count &gt;= 3 OR group_affiliated == TRUE, AND vendor_class == volume_template -&gt; TIER 1 - Multi-site practice, single-site website (A multi-site surgical group running on a website product built for one practice. Locations compete with their own siblings for the same metro terms, so authority splits instead of compounding. The incumbent vendor cannot fix this because the vendor does not sell that.)&#10;3. IF paid_ads_live == TRUE AND money_term_rank NOT IN top 3 -&gt; TIER 2 - Renting the term you should own (Two verified public facts, and the pain is arithmetic on them. They are paying per click for a term they should own outright, so paid spend has become the floor rather than the ceiling.)&#10;4. IF vendor_class == premium_custom AND (has_video == FALSE OR has_press_page == FALSE OR blog_last_post_date older than 180 days) -&gt; TIER 3 - You bought a website, not a growth engine (The custom vendor credit proves budget was spent. A missing /video, /press or stale /blog route is a reliable absence signal because the route either resolves or it does not, unlike inferring absence from a tech-stack index.)&#10;5. IF specialty IN (oms, perio, prostho) AND has_referral_page == FALSE -&gt; TIER 4 - Your biggest case channel is unmanaged (That oral surgery case volume flows through referring general dentists is the structural fact of the specialty. The referral page either exists or it does not, and without one that channel has no digital front door at all.)&#10;6. IF Everything else in the addressable market -&gt; TIER 5 - CATCH-ALL - Three practices own your metro (A practice already ranking top three with video, press and a live blog falls all the way here by design. They do not have a visibility problem, and manufacturing one would be the exact invented-pain failure this framework exists to prevent.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF Qualification gate, applied before any routing: real practice domain, at least one board-certified specialist, 50+ Google reviews at the primary location OR two or more locations, US-based -&gt; Enter the cascade (Nuvolum engagements start around $3,000/month. A solo practice collecting $700k cannot clear that, and mailing them burns sending reputation for nothing. Roughly 30 to 35% of the raw directory pull drops here, which is the gate working rather than a loss.)
+2. IF location_count &gt;= 3 OR group_affiliated == TRUE, AND vendor_class == volume_template -&gt; TIER 1 - Multi-site practice, single-site website (A multi-site surgical group running on a website product built for one practice. Locations compete with their own siblings for the same metro terms, so authority splits instead of compounding. The incumbent vendor cannot fix this because the vendor does not sell that.)
+3. IF paid_ads_live == TRUE AND money_term_rank NOT IN top 3 -&gt; TIER 2 - Renting the term you should own (Two verified public facts, and the pain is arithmetic on them. They are paying per click for a term they should own outright, so paid spend has become the floor rather than the ceiling.)
+4. IF vendor_class == premium_custom AND (has_video == FALSE OR has_press_page == FALSE OR blog_last_post_date older than 180 days) -&gt; TIER 3 - You bought a website, not a growth engine (The custom vendor credit proves budget was spent. A missing /video, /press or stale /blog route is a reliable absence signal because the route either resolves or it does not, unlike inferring absence from a tech-stack index.)
+5. IF specialty IN (oms, perio, prostho) AND has_referral_page == FALSE -&gt; TIER 4 - Your biggest case channel is unmanaged (That oral surgery case volume flows through referring general dentists is the structural fact of the specialty. The referral page either exists or it does not, and without one that channel has no digital front door at all.)
+6. IF Everything else in the addressable market -&gt; TIER 5 - CATCH-ALL - Three practices own your metro (A practice already ranking top three with video, press and a live blog falls all the way here by design. They do not have a visibility problem, and manufacturing one would be the exact invented-pain failure this framework exists to prevent.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="The tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">The tiers</p>
+      <h2>Five campaigns, five honest pains</h2>
+      <p class="takeaway">Every pain point traces straight back to its trigger. Nothing is inferred about the market and nothing is invented about the practice.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">8% TAM</span>
+          </div>
+          <h3>Tier 1: Multi-site practice, single-site website</h3>
+          <p>Three or more locations, or DSO/MSO affiliation, AND on a volume or template web vendor (PBHS, ProSites, Officite, Dentalfone, Great Dental Websites)</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They run a multi-site surgical group on a website product built for a single practice. Each location competes with its own siblings for the same metro terms, authority splits instead of compounding, and no location page is strong enough to win its own market. The incumbent vendor cannot fix this, because the vendor does not sell that.</dd></div>
+              <div><dt>Offer</dt><dd>Location Ranking Map - every one of their offices ranked against its own metro&#39;s money terms, showing which offices are cannibalising which</dd></div>
+              <div><dt>Source</dt><dd>Page-source crawl for the vendor credit, contact page for the location count, Becker&#39;s and Group Dentistry Now for DSO parentage</dd></div>
+              <div><dt>Reply density</dt><dd>Highest contract value in the program. Smaller list, and the tier where the Beacon reference does the most work.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-orange" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">14% TAM</span>
+          </div>
+          <h3>Tier 2: Renting the term you should own</h3>
+          <p>Live ads confirmed in Google Ads Transparency Center or the Meta Ad Library, AND outside the top three for their primary money term</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They are paying per click for a term they should own outright. Paid spend has become the floor rather than the ceiling, so cost per consult only rises. And the moment the card stops, the pipeline stops with it.</dd></div>
+              <div><dt>Offer</dt><dd>Metro Money-Term Map - the 10 to 12 terms driving consults in their metro, who holds the top three on each, and which of those terms they are currently buying</dd></div>
+              <div><dt>Source</dt><dd>Google Ads Transparency Center and Meta Ad Library, plus a live rank check on the metro&#39;s money terms</dd></div>
+              <div><dt>Reply density</dt><dd>Largest sharp-tier pool and the most verifiable first line. Launches first.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">11% TAM</span>
+          </div>
+          <h3>Tier 3: You bought a website, not a growth engine</h3>
+          <p>On a premium or custom vendor (Rosemont Media, Progressive Dental, O360, Studio III), AND missing video, a press page, or a blog updated in the last 180 days</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They invested real money in a brand and then had nothing to feed it. The site is a brochure that was finished, not a channel that runs. The three things that actually convert a high-ticket elective consult, patient story video, earned media and consistent content, are absent or stalled.</dd></div>
+              <div><dt>Offer</dt><dd>Content Gap Audit - what exists on the three channels that convert elective consults, scored against the three highest-visibility practices in their metro</dd></div>
+              <div><dt>Source</dt><dd>Page-source crawl for vendor class, video embeds, /press and /media routes, and the most recent blog post date</dd></div>
+              <div><dt>Reply density</dt><dd>Sells Nuvolum&#39;s highest-margin services. Needs benchmark scoring built per metro first.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">9% TAM</span>
+          </div>
+          <h3>Tier 4: Your biggest case channel is unmanaged</h3>
+          <p>Oral surgery, periodontics or prosthodontics, AND no referring-doctor page or portal anywhere on the site</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Their highest-value case volume, implants, third molars and full-arch, arrives via referring general dentists, and that channel has no digital front door at all. Referrals come by fax and phone, nobody can tell which referrers have gone quiet, and a competitor with a portal is the lower-friction choice for the referring office&#39;s front desk.</dd></div>
+              <div><dt>Offer</dt><dd>Referral Catchment Map - every general dental practice within a ten-minute drive of each of their offices, and which of those already name a specialist referral relationship on their own site</dd></div>
+              <div><dt>Source</dt><dd>Page-source crawl for /refer, /referrals, /referring-doctors and /professionals routes, plus a Google Places radius query per office</dd></div>
+              <div><dt>Reply density</dt><dd>The most differentiated tier in the program and the one no competitor is running. Also the heaviest magnet to produce.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">58% TAM</span>
+          </div>
+          <h3>Tier 5: Catch-all: three practices own your metro</h3>
+          <p>Everything else in the addressable market</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Their metro&#39;s elective search demand is concentrated in two or three practices and they are not one of them. Nothing is visibly broken, which is exactly the problem. There is no event forcing a decision, and the gap compounds quietly while the practice assumes referrals and reputation will hold.</dd></div>
+              <div><dt>Offer</dt><dd>Metro Visibility Report - every qualifying practice in their metro ranked across the money terms, with their own position marked</dd></div>
+              <div><dt>Source</dt><dd>Live rank check across the metro, plus the specialty directory pull for the full local practice set</dd></div>
+              <div><dt>Reply density</dt><dd>58% of the market and the softest ask in the program. This is the tier still producing in month eleven.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="The experiments">
+        
+    <div class="section-head">
+      <p class="eyebrow">The experiments</p>
+      <h2>What layers on top of the cascade</h2>
+      <p class="takeaway">Copy variants inside tiers, plus five side campaigns fired by dated events that sit alongside the waterfall rather than inside it.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Location cannibalisation map</h3>
+          <p>Opens on two facts from the practice&#39;s own site: the location count and the vendor name in the footer. Beacon Oral Specialists at 80+ practices across 15+ states is the reference that makes this credible at group scale.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>3+ locations or DSO/MSO affiliated, on a volume/template vendor</dd></div>
+            <div><dt>AI strategy</dt><dd>Crawl the contact page for every distinct address, then run each office&#39;s own metro money terms independently. The map shows which offices win their market and which are quietly being outranked by their own siblings.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Subsidised-location variant</h3>
+          <p>The chaos-test counterpart for Tier 1. Same trigger, materially different framing, so the winner tells us whether this buyer responds to architecture or to wasted spend.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same as above, second copy variant</dd></div>
+            <div><dt>AI strategy</dt><dd>Rotate the value prop from time saved to revenue. Reframe the losing locations as the ones the group&#39;s marketing spend is quietly subsidising rather than simply the ones ranking lower.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Ads running, organic missing</h3>
+          <p>Launches first in the program. Fastest list to build, largest sharp-tier pool, and it directly proves the metric Nuvolum leads with: 91% of targeted keywords in the top three.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Live ads in Google Ads Transparency Center, not in the top three organically for the primary money term</dd></div>
+            <div><dt>AI strategy</dt><dd>Pull the ad first-seen date straight from the Transparency Center, then name the practice actually holding the top three. Two public facts the recipient can check in under a minute, and the gap between them is the entire pitch.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Compounding-asset variant</h3>
+          <p>The second Tier 2 variant. Tests whether the buyer is moved more by the CAC arithmetic or by the durability argument.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same as above, second copy variant</dd></div>
+            <div><dt>AI strategy</dt><dd>Rotate from cost to asset. Everything spent on the money term since the ad first-seen date bought traffic; none of it bought the position. The ads stop the day the card stops, the organic position does not.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Stale content engine</h3>
+          <p>The compliment is load-bearing here. This buyer has already been sold to on the basis that their site is bad, which is false and they know it. The gap is the content engine, not the build.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Premium custom vendor, no video or no press page or blog older than 180 days</dd></div>
+            <div><dt>AI strategy</dt><dd>Open by crediting the site honestly, because it is genuinely good and someone spent properly on it. Then name the three specific absences and score them against the three most visible practices in the metro.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Referral front door</h3>
+          <p>No competitor in this market is running this angle. The follow-up sharpens it further: the expensive problem is not the referrers they never had, it is the three or four who quietly stopped sending and nobody noticed.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>OMS, perio or prostho with no referring-doctor page or portal</dd></div>
+            <div><dt>AI strategy</dt><dd>Pull every general dental practice within a ten-minute drive of each office via a Places radius query, then flag which of those already name a specialist referral relationship on their own site.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Metro concentration list</h3>
+          <p>Turn this on early rather than last. It is 58% of the market and the softest ask in the program, so it should be accumulating replies in the background while the sharp tiers are still being tuned.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>All remaining qualified practices</dd></div>
+            <div><dt>AI strategy</dt><dd>Run every practice in the metro against the terms patients use before booking a consult, then send the ranked list with their position marked. The list is useful on its own merits, which is why it earns a reply.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Side campaign">
+          <div class="campaign-card__meta">
+            <span>Side campaign</span>
+            <span>Niche</span>
+          </div>
+          <h3>New associate surgeon (NOT in the waterfall)</h3>
+          <p>Requires a baseline snapshot, so it cannot fire in month one. Start snapshotting from day one so it is live by month two. Runs alongside the cascade, never inside it.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>A name appears on /meet-the-doctors that was absent from last month&#39;s snapshot</dd></div>
+            <div><dt>AI strategy</dt><dd>Monthly diff of the existing crawl. A new surgeon is an empty chair with a fixed cost attached, and the practice needs case volume for them on a clock.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Side campaign">
+          <div class="campaign-card__meta">
+            <span>Side campaign</span>
+            <span>Niche</span>
+          </div>
+          <h3>Vendor consolidation event (NOT in the waterfall)</h3>
+          <p>The highest-leverage side campaign when it fires. Officite under Henry Schein One is the one to watch. Also on the side-campaign list: acquisition and de-novo events from the free dated deal feeds, the AAOMS Annual Meeting in Seattle, and residency graduations.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>A volume vendor is acquired, sunset, or migrates its platform</dd></div>
+            <div><dt>AI strategy</dt><dd>A forced-migration moment. The vendor&#39;s entire client base is briefly in-market at once, and the footer crawl already tells us exactly who that client base is.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="The copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">The copy</p>
+      <h2>A checkable fact in every first line</h2>
+      <p class="takeaway">This ICP is one of the most spammed in American healthcare. Every opener leads with something the surgeon can verify in ten seconds, and no email in the program asks for a call.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company}}</span><span>{{sender}}</span><span>{{web_vendor}}</span><span>{{location_count}}</span><span>{{metro}}</span><span>{{metro_list}}</span><span>{{money_term}}</span><span>{{term_count}}</span><span>{{ad_first_seen}}</span><span>{{top3_owner}}</span><span>{{blog_last_post_date}}</span><span>{{specialty}}</span><span>{{procedure}}</span><span>{{administrator_name}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company}}, {{sender}}, {{web_vendor}}, {{location_count}}, {{metro}}, {{metro_list}}, {{money_term}}, {{term_count}}, {{ad_first_seen}}, {{top3_owner}}, {{blog_last_post_date}}, {{specialty}}, {{procedure}}, {{administrator_name}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Multi-site practice, single-site website</strong>
+              <em>Location Ranking Map</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Multi-site practice, single-site website steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} - {{location_count}} locations, one site&#10;&#10;{{company}} runs {{location_count}} offices across {{metro_list}}. The site&#39;s built on {{web_vendor}} - it&#39;s in the footer.&#10;&#10;But would it be fair to assume all {{location_count}} locations are pulling against each other for the same search terms, because there&#39;s one website doing the job of {{location_count}}?&#10;&#10;We build location-level architecture so each office ranks in its own market instead of splitting the authority {{location_count}} ways. Beacon Oral Specialists runs 80+ practices across 15+ states on the system we built them.&#10;&#10;I mapped where each of your {{location_count}} offices currently sits in its own metro. Reply &quot;map&quot; and I&#39;ll send it over. No call needed.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} - {{location_count}} locations, one site" data-preview="Redstone Oral &amp; Facial Surgery - 4 locations, one site">{{company}} - {{location_count}} locations, one site</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{company}} runs {{location_count}} offices across {{metro_list}}. The site&#39;s built on {{web_vendor}} - it&#39;s in the footer.&#10;&#10;But would it be fair to assume all {{location_count}} locations are pulling against each other for the same search terms, because there&#39;s one website doing the job of {{location_count}}?&#10;&#10;We build location-level architecture so each office ranks in its own market instead of splitting the authority {{location_count}} ways. Beacon Oral Specialists runs 80+ practices across 15+ states on the system we built them.&#10;&#10;I mapped where each of your {{location_count}} offices currently sits in its own metro. Reply &quot;map&quot; and I&#39;ll send it over. No call needed.&#10;&#10;{{sender}}" data-preview="Redstone Oral &amp; Facial Surgery runs 4 offices across Charlotte, Concord, Matthews and Gastonia. The site&#39;s built on ProSites - it&#39;s in the footer.&#10;&#10;But would it be fair to assume all 4 locations are pulling against each other for the same search terms, because there&#39;s one website doing the job of 4?&#10;&#10;We build location-level architecture so each office ranks in its own market instead of splitting the authority 4 ways. Beacon Oral Specialists runs 80+ practices across 15+ states on the system we built them.&#10;&#10;I mapped where each of your 4 offices currently sits in its own metro. Reply &quot;map&quot; and I&#39;ll send it over. No call needed.&#10;&#10;Ravi">
+                        <p>{{company}} runs {{location_count}} offices across {{metro_list}}. The site&#39;s built on {{web_vendor}} - it&#39;s in the footer.</p><p>But would it be fair to assume all {{location_count}} locations are pulling against each other for the same search terms, because there&#39;s one website doing the job of {{location_count}}?</p><p>We build location-level architecture so each office ranks in its own market instead of splitting the authority {{location_count}} ways. Beacon Oral Specialists runs 80+ practices across 15+ states on the system we built them.</p><p>I mapped where each of your {{location_count}} offices currently sits in its own metro. Reply &quot;map&quot; and I&#39;ll send it over. No call needed.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One number on the last note: when a {{location_count}}-location group consolidates onto one template site, the locations that lose the internal competition aren&#39;t just ranking lower - they&#39;re the ones your marketing spend is quietly subsidising.&#10;&#10;The map shows which of your offices those are. Want it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One number on the last note: when a {{location_count}}-location group consolidates onto one template site, the locations that lose the internal competition aren&#39;t just ranking lower - they&#39;re the ones your marketing spend is quietly subsidising.&#10;&#10;The map shows which of your offices those are. Want it?" data-preview="One number on the last note: when a 4-location group consolidates onto one template site, the locations that lose the internal competition aren&#39;t just ranking lower - they&#39;re the ones your marketing spend is quietly subsidising.&#10;&#10;The map shows which of your offices those are. Want it?">
+                        <p>One number on the last note: when a {{location_count}}-location group consolidates onto one template site, the locations that lose the internal competition aren&#39;t just ranking lower - they&#39;re the ones your marketing spend is quietly subsidising.</p><p>The map shows which of your offices those are. Want it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} location map&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the location ranking map for all {{location_count}} of your offices.&#10;&#10;Should I send this to you, or is {{administrator_name}} the right person?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} location map" data-preview="Redstone Oral &amp; Facial Surgery location map">{{company}} location map</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No need for a call. Just reply yes and I&#39;ll send the location ranking map for all {{location_count}} of your offices.&#10;&#10;Should I send this to you, or is {{administrator_name}} the right person?" data-preview="No need for a call. Just reply yes and I&#39;ll send the location ranking map for all 4 of your offices.&#10;&#10;Should I send this to you, or is your practice administrator the right person?">
+                        <p>No need for a call. Just reply yes and I&#39;ll send the location ranking map for all {{location_count}} of your offices.</p><p>Should I send this to you, or is {{administrator_name}} the right person?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Renting the term you should own</strong>
+              <em>Metro Money-Term Map</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Renting the term you should own steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{money_term}} in {{metro}}&#10;&#10;Pulled {{company}} up in Google&#39;s Ads Transparency Center - you&#39;ve had ads running on {{money_term}} in {{metro}} since {{ad_first_seen}}.&#10;&#10;Then I ran the organic result for the same term. {{top3_owner}} holds the top 3. {{company}} isn&#39;t on it.&#10;&#10;But would it be fair to assume the ad spend is there because the organic position isn&#39;t - and that cost per consult has only gone one direction since {{ad_first_seen}}?&#10;&#10;That&#39;s the specific problem we solve: 91% of the keywords we target for a practice land in the top 3, which is what turns paid from the floor into a choice.&#10;&#10;I mapped all {{term_count}} money terms in {{metro}} - who ranks, who&#39;s paying, where the gap is. Reply &quot;map&quot; and it&#39;s yours. No call.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{money_term}} in {{metro}}" data-preview="dental implants Charlotte in Charlotte">{{money_term}} in {{metro}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Pulled {{company}} up in Google&#39;s Ads Transparency Center - you&#39;ve had ads running on {{money_term}} in {{metro}} since {{ad_first_seen}}.&#10;&#10;Then I ran the organic result for the same term. {{top3_owner}} holds the top 3. {{company}} isn&#39;t on it.&#10;&#10;But would it be fair to assume the ad spend is there because the organic position isn&#39;t - and that cost per consult has only gone one direction since {{ad_first_seen}}?&#10;&#10;That&#39;s the specific problem we solve: 91% of the keywords we target for a practice land in the top 3, which is what turns paid from the floor into a choice.&#10;&#10;I mapped all {{term_count}} money terms in {{metro}} - who ranks, who&#39;s paying, where the gap is. Reply &quot;map&quot; and it&#39;s yours. No call.&#10;&#10;{{sender}}" data-preview="Pulled Redstone Oral &amp; Facial Surgery up in Google&#39;s Ads Transparency Center - you&#39;ve had ads running on dental implants Charlotte in Charlotte since March 2026.&#10;&#10;Then I ran the organic result for the same term. Queen City Oral Surgery holds the top 3. Redstone Oral &amp; Facial Surgery isn&#39;t on it.&#10;&#10;But would it be fair to assume the ad spend is there because the organic position isn&#39;t - and that cost per consult has only gone one direction since March 2026?&#10;&#10;That&#39;s the specific problem we solve: 91% of the keywords we target for a practice land in the top 3, which is what turns paid from the floor into a choice.&#10;&#10;I mapped all 11 money terms in Charlotte - who ranks, who&#39;s paying, where the gap is. Reply &quot;map&quot; and it&#39;s yours. No call.&#10;&#10;Ravi">
+                        <p>Pulled {{company}} up in Google&#39;s Ads Transparency Center - you&#39;ve had ads running on {{money_term}} in {{metro}} since {{ad_first_seen}}.</p><p>Then I ran the organic result for the same term. {{top3_owner}} holds the top 3. {{company}} isn&#39;t on it.</p><p>But would it be fair to assume the ad spend is there because the organic position isn&#39;t - and that cost per consult has only gone one direction since {{ad_first_seen}}?</p><p>That&#39;s the specific problem we solve: 91% of the keywords we target for a practice land in the top 3, which is what turns paid from the floor into a choice.</p><p>I mapped all {{term_count}} money terms in {{metro}} - who ranks, who&#39;s paying, where the gap is. Reply &quot;map&quot; and it&#39;s yours. No call.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Following up with the part that usually lands harder than the ranking itself:&#10;&#10;the ads stop the day the card stops. The organic position doesn&#39;t. Everything you&#39;ve spent on {{money_term}} since {{ad_first_seen}} has bought traffic; none of it has bought the position.&#10;&#10;The {{metro}} map shows exactly what the position is worth. Say the word.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Following up with the part that usually lands harder than the ranking itself:&#10;&#10;the ads stop the day the card stops. The organic position doesn&#39;t. Everything you&#39;ve spent on {{money_term}} since {{ad_first_seen}} has bought traffic; none of it has bought the position.&#10;&#10;The {{metro}} map shows exactly what the position is worth. Say the word." data-preview="Following up with the part that usually lands harder than the ranking itself:&#10;&#10;the ads stop the day the card stops. The organic position doesn&#39;t. Everything you&#39;ve spent on dental implants Charlotte since March 2026 has bought traffic; none of it has bought the position.&#10;&#10;The Charlotte map shows exactly what the position is worth. Say the word.">
+                        <p>Following up with the part that usually lands harder than the ranking itself:</p><p>the ads stop the day the card stops. The organic position doesn&#39;t. Everything you&#39;ve spent on {{money_term}} since {{ad_first_seen}} has bought traffic; none of it has bought the position.</p><p>The {{metro}} map shows exactly what the position is worth. Say the word.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{metro}} map&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the {{metro}} money-term map - all {{term_count}} terms, who owns each one, and where {{company}} sits.&#10;&#10;Should I send it to you or to whoever runs the ad account?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{metro}} map" data-preview="Charlotte map">{{metro}} map</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No need for a call. Just reply yes and I&#39;ll send the {{metro}} money-term map - all {{term_count}} terms, who owns each one, and where {{company}} sits.&#10;&#10;Should I send it to you or to whoever runs the ad account?" data-preview="No need for a call. Just reply yes and I&#39;ll send the Charlotte money-term map - all 11 terms, who owns each one, and where Redstone Oral &amp; Facial Surgery sits.&#10;&#10;Should I send it to you or to whoever runs the ad account?">
+                        <p>No need for a call. Just reply yes and I&#39;ll send the {{metro}} money-term map - all {{term_count}} terms, who owns each one, and where {{company}} sits.</p><p>Should I send it to you or to whoever runs the ad account?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - You bought a website, not a growth engine</strong>
+              <em>Content Gap Audit</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - You bought a website, not a growth engine steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the last post on {{company}}&#39;s blog&#10;&#10;Your site is genuinely good - custom build, real photography, nothing template about it. Someone spent properly on it.&#10;&#10;But there&#39;s no video anywhere on it, no press page, and the last blog post is {{blog_last_post_date}}.&#10;&#10;Would it be fair to assume the site was a project that finished, and the content that was supposed to feed it never got a system behind it?&#10;&#10;We run video, PR and content as one engine rather than three vendors - patient stories, earned media, the lot. Canyon Oral &amp; Facial Surgery and Utah Surgical Arts both run on it.&#10;&#10;I scored {{company}} against the three most visible {{specialty}} practices in {{metro}} on those exact channels. Reply &quot;audit&quot; and I&#39;ll send it. No call.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the last post on {{company}}&#39;s blog" data-preview="the last post on Redstone Oral &amp; Facial Surgery&#39;s blog">the last post on {{company}}&#39;s blog</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Your site is genuinely good - custom build, real photography, nothing template about it. Someone spent properly on it.&#10;&#10;But there&#39;s no video anywhere on it, no press page, and the last blog post is {{blog_last_post_date}}.&#10;&#10;Would it be fair to assume the site was a project that finished, and the content that was supposed to feed it never got a system behind it?&#10;&#10;We run video, PR and content as one engine rather than three vendors - patient stories, earned media, the lot. Canyon Oral &amp; Facial Surgery and Utah Surgical Arts both run on it.&#10;&#10;I scored {{company}} against the three most visible {{specialty}} practices in {{metro}} on those exact channels. Reply &quot;audit&quot; and I&#39;ll send it. No call.&#10;&#10;{{sender}}" data-preview="Your site is genuinely good - custom build, real photography, nothing template about it. Someone spent properly on it.&#10;&#10;But there&#39;s no video anywhere on it, no press page, and the last blog post is 14 November 2024.&#10;&#10;Would it be fair to assume the site was a project that finished, and the content that was supposed to feed it never got a system behind it?&#10;&#10;We run video, PR and content as one engine rather than three vendors - patient stories, earned media, the lot. Canyon Oral &amp; Facial Surgery and Utah Surgical Arts both run on it.&#10;&#10;I scored Redstone Oral &amp; Facial Surgery against the three most visible oral surgery practices in Charlotte on those exact channels. Reply &quot;audit&quot; and I&#39;ll send it. No call.&#10;&#10;Ravi">
+                        <p>Your site is genuinely good - custom build, real photography, nothing template about it. Someone spent properly on it.</p><p>But there&#39;s no video anywhere on it, no press page, and the last blog post is {{blog_last_post_date}}.</p><p>Would it be fair to assume the site was a project that finished, and the content that was supposed to feed it never got a system behind it?</p><p>We run video, PR and content as one engine rather than three vendors - patient stories, earned media, the lot. Canyon Oral &amp; Facial Surgery and Utah Surgical Arts both run on it.</p><p>I scored {{company}} against the three most visible {{specialty}} practices in {{metro}} on those exact channels. Reply &quot;audit&quot; and I&#39;ll send it. No call.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The reason those three channels matter more here than in most industries: a {{procedure}} is a considered, expensive, slightly frightening decision. Patients don&#39;t convert on a services page. They convert on watching someone who already had it done.&#10;&#10;That&#39;s what the audit measures. Want it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The reason those three channels matter more here than in most industries: a {{procedure}} is a considered, expensive, slightly frightening decision. Patients don&#39;t convert on a services page. They convert on watching someone who already had it done.&#10;&#10;That&#39;s what the audit measures. Want it?" data-preview="The reason those three channels matter more here than in most industries: a full-arch implant case is a considered, expensive, slightly frightening decision. Patients don&#39;t convert on a services page. They convert on watching someone who already had it done.&#10;&#10;That&#39;s what the audit measures. Want it?">
+                        <p>The reason those three channels matter more here than in most industries: a {{procedure}} is a considered, expensive, slightly frightening decision. Patients don&#39;t convert on a services page. They convert on watching someone who already had it done.</p><p>That&#39;s what the audit measures. Want it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} content audit&#10;&#10;No need for a call - reply yes and I&#39;ll send the audit: what {{company}} has on video, press and content versus the three practices currently out-ranking you in {{metro}}.&#10;&#10;You, or should this go to {{administrator_name}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} content audit" data-preview="Redstone Oral &amp; Facial Surgery content audit">{{company}} content audit</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No need for a call - reply yes and I&#39;ll send the audit: what {{company}} has on video, press and content versus the three practices currently out-ranking you in {{metro}}.&#10;&#10;You, or should this go to {{administrator_name}}?" data-preview="No need for a call - reply yes and I&#39;ll send the audit: what Redstone Oral &amp; Facial Surgery has on video, press and content versus the three practices currently out-ranking you in Charlotte.&#10;&#10;You, or should this go to your practice administrator?">
+                        <p>No need for a call - reply yes and I&#39;ll send the audit: what {{company}} has on video, press and content versus the three practices currently out-ranking you in {{metro}}.</p><p>You, or should this go to {{administrator_name}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 - Your biggest case channel is unmanaged</strong>
+              <em>Referral Catchment Map</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 - Your biggest case channel is unmanaged steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: referring dentists to {{company}}&#10;&#10;Most of {{company}}&#39;s implant and third-molar volume comes from referring general dentists. But there&#39;s no referral page anywhere on your site - no portal, no form, nothing for a referring office to actually use.&#10;&#10;Would it be fair to assume referrals still arrive by fax and phone, and that nobody can currently tell you which referring practices have gone quiet this year?&#10;&#10;We build the referral side properly: a referring-doctor portal plus the outreach that keeps referrers active. One of our surgeons&#39; case acceptance moved from 80% to 85% on implants and 86% to 92% on other surgery.&#10;&#10;I pulled every general dental practice within a 10-minute drive of each of your offices, and flagged which ones already name a specialist referral relationship on their own site. Reply &quot;referrals&quot; and I&#39;ll send it.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="referring dentists to {{company}}" data-preview="referring dentists to Redstone Oral &amp; Facial Surgery">referring dentists to {{company}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Most of {{company}}&#39;s implant and third-molar volume comes from referring general dentists. But there&#39;s no referral page anywhere on your site - no portal, no form, nothing for a referring office to actually use.&#10;&#10;Would it be fair to assume referrals still arrive by fax and phone, and that nobody can currently tell you which referring practices have gone quiet this year?&#10;&#10;We build the referral side properly: a referring-doctor portal plus the outreach that keeps referrers active. One of our surgeons&#39; case acceptance moved from 80% to 85% on implants and 86% to 92% on other surgery.&#10;&#10;I pulled every general dental practice within a 10-minute drive of each of your offices, and flagged which ones already name a specialist referral relationship on their own site. Reply &quot;referrals&quot; and I&#39;ll send it.&#10;&#10;{{sender}}" data-preview="Most of Redstone Oral &amp; Facial Surgery&#39;s implant and third-molar volume comes from referring general dentists. But there&#39;s no referral page anywhere on your site - no portal, no form, nothing for a referring office to actually use.&#10;&#10;Would it be fair to assume referrals still arrive by fax and phone, and that nobody can currently tell you which referring practices have gone quiet this year?&#10;&#10;We build the referral side properly: a referring-doctor portal plus the outreach that keeps referrers active. One of our surgeons&#39; case acceptance moved from 80% to 85% on implants and 86% to 92% on other surgery.&#10;&#10;I pulled every general dental practice within a 10-minute drive of each of your offices, and flagged which ones already name a specialist referral relationship on their own site. Reply &quot;referrals&quot; and I&#39;ll send it.&#10;&#10;Ravi">
+                        <p>Most of {{company}}&#39;s implant and third-molar volume comes from referring general dentists. But there&#39;s no referral page anywhere on your site - no portal, no form, nothing for a referring office to actually use.</p><p>Would it be fair to assume referrals still arrive by fax and phone, and that nobody can currently tell you which referring practices have gone quiet this year?</p><p>We build the referral side properly: a referring-doctor portal plus the outreach that keeps referrers active. One of our surgeons&#39; case acceptance moved from 80% to 85% on implants and 86% to 92% on other surgery.</p><p>I pulled every general dental practice within a 10-minute drive of each of your offices, and flagged which ones already name a specialist referral relationship on their own site. Reply &quot;referrals&quot; and I&#39;ll send it.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Worth adding: the expensive problem usually isn&#39;t the referrers you don&#39;t have. It&#39;s the three or four who used to send you a case a month and quietly stopped, and nobody noticed because there&#39;s no system watching.&#10;&#10;The catchment list shows who&#39;s in range. The portal is what stops the quiet drop-off. Want the list?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Worth adding: the expensive problem usually isn&#39;t the referrers you don&#39;t have. It&#39;s the three or four who used to send you a case a month and quietly stopped, and nobody noticed because there&#39;s no system watching.&#10;&#10;The catchment list shows who&#39;s in range. The portal is what stops the quiet drop-off. Want the list?" data-preview="Worth adding: the expensive problem usually isn&#39;t the referrers you don&#39;t have. It&#39;s the three or four who used to send you a case a month and quietly stopped, and nobody noticed because there&#39;s no system watching.&#10;&#10;The catchment list shows who&#39;s in range. The portal is what stops the quiet drop-off. Want the list?">
+                        <p>Worth adding: the expensive problem usually isn&#39;t the referrers you don&#39;t have. It&#39;s the three or four who used to send you a case a month and quietly stopped, and nobody noticed because there&#39;s no system watching.</p><p>The catchment list shows who&#39;s in range. The portal is what stops the quiet drop-off. Want the list?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{metro}} referral catchment&#10;&#10;No need for a call. Reply yes and I&#39;ll send the referral catchment list - every GP practice near your offices and where they currently point their surgical cases.&#10;&#10;Should this come to you or to {{administrator_name}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{metro}} referral catchment" data-preview="Charlotte referral catchment">{{metro}} referral catchment</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No need for a call. Reply yes and I&#39;ll send the referral catchment list - every GP practice near your offices and where they currently point their surgical cases.&#10;&#10;Should this come to you or to {{administrator_name}}?" data-preview="No need for a call. Reply yes and I&#39;ll send the referral catchment list - every GP practice near your offices and where they currently point their surgical cases.&#10;&#10;Should this come to you or to your practice administrator?">
+                        <p>No need for a call. Reply yes and I&#39;ll send the referral catchment list - every GP practice near your offices and where they currently point their surgical cases.</p><p>Should this come to you or to {{administrator_name}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 - Catch-all: three practices own your metro</strong>
+              <em>Metro Visibility Report</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 - Catch-all: three practices own your metro steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{specialty}} in {{metro}}&#10;&#10;I checked every {{specialty}} practice in {{metro}} against the {{term_count}} search terms patients actually use before booking a consult.&#10;&#10;Three practices hold most of it. {{company}} isn&#39;t one of them.&#10;&#10;Nothing&#39;s obviously broken on your end - which is sort of the point. Would it be fair to assume nobody&#39;s ever put that list in front of you?&#10;&#10;Building the visibility position for specialty surgical practices is the entire business here. But before any of that - the list is genuinely useful on its own.&#10;&#10;Reply &quot;list&quot; and I&#39;ll send the {{metro}} map. No pitch, no call.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{specialty}} in {{metro}}" data-preview="oral surgery in Charlotte">{{specialty}} in {{metro}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="I checked every {{specialty}} practice in {{metro}} against the {{term_count}} search terms patients actually use before booking a consult.&#10;&#10;Three practices hold most of it. {{company}} isn&#39;t one of them.&#10;&#10;Nothing&#39;s obviously broken on your end - which is sort of the point. Would it be fair to assume nobody&#39;s ever put that list in front of you?&#10;&#10;Building the visibility position for specialty surgical practices is the entire business here. But before any of that - the list is genuinely useful on its own.&#10;&#10;Reply &quot;list&quot; and I&#39;ll send the {{metro}} map. No pitch, no call.&#10;&#10;{{sender}}" data-preview="I checked every oral surgery practice in Charlotte against the 11 search terms patients actually use before booking a consult.&#10;&#10;Three practices hold most of it. Redstone Oral &amp; Facial Surgery isn&#39;t one of them.&#10;&#10;Nothing&#39;s obviously broken on your end - which is sort of the point. Would it be fair to assume nobody&#39;s ever put that list in front of you?&#10;&#10;Building the visibility position for specialty surgical practices is the entire business here. But before any of that - the list is genuinely useful on its own.&#10;&#10;Reply &quot;list&quot; and I&#39;ll send the Charlotte map. No pitch, no call.&#10;&#10;Ravi">
+                        <p>I checked every {{specialty}} practice in {{metro}} against the {{term_count}} search terms patients actually use before booking a consult.</p><p>Three practices hold most of it. {{company}} isn&#39;t one of them.</p><p>Nothing&#39;s obviously broken on your end - which is sort of the point. Would it be fair to assume nobody&#39;s ever put that list in front of you?</p><p>Building the visibility position for specialty surgical practices is the entire business here. But before any of that - the list is genuinely useful on its own.</p><p>Reply &quot;list&quot; and I&#39;ll send the {{metro}} map. No pitch, no call.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The reason I sent it rather than pitching: in a market this concentrated, the gap between position 1 and position 4 isn&#39;t a ranking difference, it&#39;s most of the consult volume.&#10;&#10;The map shows where the line currently sits in {{metro}}. Want it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The reason I sent it rather than pitching: in a market this concentrated, the gap between position 1 and position 4 isn&#39;t a ranking difference, it&#39;s most of the consult volume.&#10;&#10;The map shows where the line currently sits in {{metro}}. Want it?" data-preview="The reason I sent it rather than pitching: in a market this concentrated, the gap between position 1 and position 4 isn&#39;t a ranking difference, it&#39;s most of the consult volume.&#10;&#10;The map shows where the line currently sits in Charlotte. Want it?">
+                        <p>The reason I sent it rather than pitching: in a market this concentrated, the gap between position 1 and position 4 isn&#39;t a ranking difference, it&#39;s most of the consult volume.</p><p>The map shows where the line currently sits in {{metro}}. Want it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{metro}} list&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the {{metro}} visibility map - every practice, every term, your position marked.&#10;&#10;You, or someone else there?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{metro}} list" data-preview="Charlotte list">{{metro}} list</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No need for a call. Just reply yes and I&#39;ll send the {{metro}} visibility map - every practice, every term, your position marked.&#10;&#10;You, or someone else there?" data-preview="No need for a call. Just reply yes and I&#39;ll send the Charlotte visibility map - every practice, every term, your position marked.&#10;&#10;You, or someone else there?">
+                        <p>No need for a call. Just reply yes and I&#39;ll send the {{metro}} visibility map - every practice, every term, your position marked.</p><p>You, or someone else there?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="The rollout">
+        
+    <div class="section-head">
+      <p class="eyebrow">The rollout</p>
+      <h2>Tier 2 first, not Tier 1</h2>
+      <p class="takeaway">Tier 1 carries the highest contract value but takes a week of group mapping. Tier 2 needs two instant public lookups, so it produces the first reply while the rest is still being built.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Weeks 1-2 - Launch Tier 2 first, not Tier 1. It needs only two instant public lookups, it carries the largest sharp-tier volume in the market, its first line is the most verifiable in the program, and it directly proves the metric Nuvolum leads with. Fastest route to a reply worth showing the client.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Weeks 3-4 - Tier 1. Highest contract value in the program and the tier where the Beacon Oral Specialists reference does the most work. Launch as soon as the multi-location and DSO-parentage mapping is clean, which is roughly a week of reconciling the crawl against deal records.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 5-6 - Tier 5, the catch-all. Turn this on early rather than last. It is 58% of the market and the softest ask in the program, so it should be accumulating replies in the background while the sharp tiers are still being tuned.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Weeks 7-8 - Tier 3. Needs the content-gap scoring built against three benchmark practices per metro. Worth the wait, because it sells Nuvolum&#39;s highest-margin services.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Weeks 9-10 - Tier 4. Needs the general-dentist catchment build, a Places radius query per office. The most differentiated tier in the program and the one no competitor is running, but the heaviest magnet to produce.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Month 2 onwards - Side campaigns. New-associate detection goes live once a month of crawl snapshots exists, so start snapshotting on day one.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>Month-one deliverable: the Tier 2 list plus the first fifty Metro Money-Term Maps. Those maps are simultaneously the routing evidence, the lead magnet, and the proof that the data layer works.</p>
+              </div>
+              <div class="launch-step">
+                <span>08</span>
+                <p>Before scaling, close three proof gaps. The 91% top-three claim needs a denominator (how many keywords, which practice, what period). Tier 4&#39;s case-acceptance figures need attribution to a named practice with a date. And Tiers 1 and 2 are both displacement pitches with no published displacement story. One conversation with Nuvolum&#39;s data team naming a single client, the incumbent vendor replaced, the keyword set and the before-and-after unblocks 22% of the market and the two highest-value tiers.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacts</strong>
+                <span>Perfect. Scale this tier hard and pour list volume into it.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run untouched.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450 to 500</strong>
+                <span>Borderline. Test the second copy variant before touching anything else.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or reply rate under 1% after 1,500+ sends</strong>
+                <span>Cut the tier and rework the trigger or the magnet. Do not rewrite the copy first - a dead tier is almost always a trigger problem, not a wording problem.</span>
+              </div>
+              <div class="threshold">
+                <strong>Testing discipline</strong>
+                <span>Two copy variants per tier, maximum. Tiers 2 and 5 launch with no prior signal, so run a chaos test of two genuinely different approaches, then narrow to single-variable tests once a winner emerges.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a 20-minute walkthrough</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dr\\. Ellery","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Redstone Oral & Facial Surgery","Ravi","ProSites","4","Charlotte","Charlotte, Concord, Matthews and Gastonia","dental implants Charlotte","11","March 2026","Queen City Oral Surgery","14 November 2024","oral surgery","full-arch implant case","your practice administrator"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
