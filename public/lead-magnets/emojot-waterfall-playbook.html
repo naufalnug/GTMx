@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emojot - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-18</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Emojot</p>
+          <h1>Your Emojot outbound <mark>journey</mark>.</h1>
+          <p class="hero-copy">One cascade across seven industries. 72,000 qualified accounts, routed on a signal your prospects publish themselves.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Every multi-location operator publishes a live, dated confession of how badly it handles complaints. It is called the reply button on Google reviews, and most of them are not pressing it.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a working session</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>~72,000</strong>
+          <span>Qualified accounts across seven industries</span>
+        </div>
+        <div class="metric-card">
+          <strong>$0</strong>
+          <span>Cost of the routing signal behind every tier</span>
+        </div>
+        <div class="metric-card">
+          <strong>5 tiers</strong>
+          <span>One cascade, 100% TAM coverage</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Emojot&#39;s Unified Experience Intelligence platform captures every customer and employee signal an organisation generates, reads it with AI, and routes each issue to the person who has to fix it, with an SLA running on it. CX, complaints, reputation, employee experience and process automation on one platform.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The reply button is a public confession, and it is timestamped.</p></div><div><span>02</span><p>One ladder, ordered by how expensive their evidence already is.</p></div><div><span>03</span><p>Five tiers, exclusive routing, and a catch-all that leaves nothing behind.</p></div><div><span>04</span><p>Ten campaigns, every one anchored to something already public.</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>The signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>The cascade</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>The tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>The experiments</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>The copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>The rollout</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="The signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">The signal</p>
+      <h2>The reply button is a public confession, and it is timestamped.</h2>
+      <p class="takeaway">Apollo will sell you a restaurant group&#39;s head office address. ZoomInfo will sell you the COO&#39;s mobile number. Neither will tell you that the Riyadh branch has a one-star review from 3 March about a refund, still unanswered 168 days later, while the Jeddah branch replies to everything inside a day. That gap is the entire Emojot pitch, stated back to the prospect as a checkable fact about their own business, and it has to be scraped, which is exactly why it works.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>It is free. Owner responses render publicly on Google Maps with a date attached, and the CFPB and CMS files are open federal data with no key required.</p></div><div class="reason-card"><span>02</span><p>It is unbuyable. No data vendor sells owner-response rate across a brand&#39;s estate, so no competitor is writing this email.</p></div><div class="reason-card"><span>03</span><p>It proves the pain rather than asserting it. The prospect cannot argue with a review at their own location that they have not answered in 168 days.</p></div><div class="reason-card"><span>04</span><p>It is self-refreshing. Every new Birdeye deployment adds a Tier 1 account, every quarterly CFPB file republishes Tier 2, and every negative review that ages past thirty days promotes an account from Tier 5 into Tier 3.</p></div>
+            </div>
+            <div class="field-cloud"><span>location_count</span><span>total_reviews_estate</span><span>avg_rating_estate</span><span>rating_variance_across_locations</span><span>worst_location_name</span><span>worst_location_rating</span><span>best_location_name</span><span>best_location_rating</span><span>owner_response_rate_pct</span><span>median_owner_response_latency_days</span><span>aged_unanswered_negatives</span><span>oldest_unanswered_negative_date</span><span>oldest_unanswered_negative_theme</span><span>oldest_unanswered_negative_location</span><span>incumbent_tool_detected</span><span>incumbent_tool_class</span><span>regulator_dataset_hit</span><span>regulator_metric_value</span><span>regulator_peer_median</span><span>hiring_experience_role</span><span>expansion_signal</span><span>industry</span><span>country</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>Google Maps place search and reviews scrape (Apify)</h3><p>The backbone of the whole build. A brand-name and geo-grid search returns the full location set with count, addresses, rating and review volume; the reviews pass then returns every review with its star, its date, and critically the owner response text and date. That single pull produces the qualification gate, the routing signal for Tier 3 and Tier 5, and the lead magnet, for roughly $0.004 a place and $0.50 per thousand reviews.</p></div><div class="source-card"><span>02</span><h3>Homepage and subpage HTML scrape, confirmed against BuiltWith</h3><p>Tier 1&#39;s trigger. Vendor scripts and widget footprints for Birdeye, Podium, Yext, Reputation.com, Medallia, Qualtrics, Delighted, AskNicely, Trustpilot, Feefo, Yotpo, Bazaarvoice, Zendesk, Freshdesk and Intercom, sitting in the prospect&#39;s own page source. Free, and second-sourced before we ever name a competitor in copy.</p></div><div class="source-card"><span>03</span><h3>CFPB Consumer Complaint Database API</h3><p>Tier 2 for US financial services. Per-institution complaint counts, product mix, company response and timely-response rate, published by a federal regulator and updated continuously. Open API, no key, no cost. The peer median we compare against is computed from the same file.</p></div><div class="source-card"><span>04</span><h3>CMS Care Compare and HCAHPS files</h3><p>Tier 2 for US healthcare. Patient-experience star ratings by facility, including responsiveness of hospital staff, communication, and willingness to recommend. Free federal data, republished quarterly with the provider&#39;s name on it.</p></div><div class="source-card"><span>05</span><h3>TripAdvisor and Booking.com property pages</h3><p>The hospitality equivalent of the Maps signal. Management-response rate and response latency per property, which is often visible where a hotel group&#39;s Google presence is fragmented across franchisees.</p></div><div class="source-card"><span>06</span><h3>Job boards and LinkedIn Sales Navigator</h3><p>Tier 4&#39;s trigger, refreshed weekly. Open roles for Customer Experience Manager, Guest Relations, Patient Experience, Complaints Officer, Voice of Customer and Service Quality, plus the job-change alerts that feed the new-in-seat side campaign.</p></div><div class="source-card"><span>07</span><h3>Store-locator page scrape</h3><p>The authoritative location count where Maps is ambiguous, and the corporate versus franchise split that decides whether the head office can actually buy for the estate.</p></div><div class="source-card"><span>08</span><h3>Apollo and Sales Navigator</h3><p>The contact layer only. Names, titles and emails, pulled after an account has already qualified and routed. Nothing is enriched before it earns enrichment, which is what keeps the unit economics of a 72,000-account programme intact.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="The cascade">
+        
+    <div class="section-head">
+      <p class="eyebrow">The cascade</p>
+      <h2>One ladder, ordered by how expensive their evidence already is.</h2>
+      <p class="takeaway">Emojot is horizontal across seven industries, which invites the worst possible outbound structure: one campaign per vertical, rebuilt quarterly, none of them compounding. Instead every account in the market is tested against one question. How much public, timestamped, unresolved evidence of experience failure is this organisation carrying, and how much is that evidence already costing them? The industry then decides only two things: which list we pull from, and which case study goes in the email.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF NOT (location_count &gt;= 8 OR total_reviews_estate &gt;= 1000)</span>
+          <strong>EXCLUDE</strong>
+          <em>Below the gate, Emojot is arguing about price with Birdeye and losing the unified-platform story. The OR clause is deliberate: a 400-bed hospital, a 300-room resort or a university is one location but generates more experience surface area than forty coffee shops, and Emojot&#39;s own Radisson and Marino Beach references are single-property.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF incumbent_tool_detected != none</span>
+          <strong>TIER 1 - Stack Displacement</strong>
+          <em>Budget is proven and already spent, which makes this the shortest path to a decision. It is also the tier with the strongest arithmetic: per-location review platforms run $299 to $449 per location per month, so a 120-site operator is paying roughly $430,000 a year for the review layer alone.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF regulator_dataset_hit != none AND regulator_metric_value &lt; regulator_peer_median</span>
+          <strong>TIER 2 - Published Failure</strong>
+          <em>The failure is not our claim and not their opinion. It is on a federal website with their name on it, and it gets republished next quarter whether or not anything changes in between. Whoever owns that number has a dated problem and usually a budget already attached to it.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF owner_response_rate_pct &lt; 40 OR aged_unanswered_negatives &gt;= 3</span>
+          <strong>TIER 3 - The Open Ledger</strong>
+          <em>Complaints are landing in public and dying there. Every unanswered one-star is a permanent, indexed, dated defect that suppresses local ranking and pre-empts the next booking. Nobody in the business owns it because nobody is watching all the locations at the same time.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF hiring_experience_role == TRUE OR expansion_signal == TRUE</span>
+          <strong>TIER 4 - Solving It With Headcount</strong>
+          <em>They have already decided experience is a priority and are buying the most expensive possible version of the answer: a person, with no system underneath them. Reaching them before the hire starts is worth far more than reaching them after.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="5">
+          <span class="route-rule__num">06</span>
+          <span class="route-rule__if">IF ELSE</span>
+          <strong>TIER 5 - The Consistency Gap (catch-all)</strong>
+          <em>Multi-site, decent ratings, no public failure, no detected tool. Nothing is on fire, which is exactly the problem: the variance between their best and worst location is invisible internally and obvious externally, and they have no instrument that would flag drift until the rating has already moved.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF NOT (location_count &gt;= 8 OR total_reviews_estate &gt;= 1000) -&gt; EXCLUDE (Below the gate, Emojot is arguing about price with Birdeye and losing the unified-platform story. The OR clause is deliberate: a 400-bed hospital, a 300-room resort or a university is one location but generates more experience surface area than forty coffee shops, and Emojot&#39;s own Radisson and Marino Beach references are single-property.)&#10;2. IF incumbent_tool_detected != none -&gt; TIER 1 - Stack Displacement (Budget is proven and already spent, which makes this the shortest path to a decision. It is also the tier with the strongest arithmetic: per-location review platforms run $299 to $449 per location per month, so a 120-site operator is paying roughly $430,000 a year for the review layer alone.)&#10;3. IF regulator_dataset_hit != none AND regulator_metric_value &lt; regulator_peer_median -&gt; TIER 2 - Published Failure (The failure is not our claim and not their opinion. It is on a federal website with their name on it, and it gets republished next quarter whether or not anything changes in between. Whoever owns that number has a dated problem and usually a budget already attached to it.)&#10;4. IF owner_response_rate_pct &lt; 40 OR aged_unanswered_negatives &gt;= 3 -&gt; TIER 3 - The Open Ledger (Complaints are landing in public and dying there. Every unanswered one-star is a permanent, indexed, dated defect that suppresses local ranking and pre-empts the next booking. Nobody in the business owns it because nobody is watching all the locations at the same time.)&#10;5. IF hiring_experience_role == TRUE OR expansion_signal == TRUE -&gt; TIER 4 - Solving It With Headcount (They have already decided experience is a priority and are buying the most expensive possible version of the answer: a person, with no system underneath them. Reaching them before the hire starts is worth far more than reaching them after.)&#10;6. IF ELSE -&gt; TIER 5 - The Consistency Gap (catch-all) (Multi-site, decent ratings, no public failure, no detected tool. Nothing is on fire, which is exactly the problem: the variance between their best and worst location is invisible internally and obvious externally, and they have no instrument that would flag drift until the rating has already moved.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF NOT (location_count &gt;= 8 OR total_reviews_estate &gt;= 1000) -&gt; EXCLUDE (Below the gate, Emojot is arguing about price with Birdeye and losing the unified-platform story. The OR clause is deliberate: a 400-bed hospital, a 300-room resort or a university is one location but generates more experience surface area than forty coffee shops, and Emojot&#39;s own Radisson and Marino Beach references are single-property.)
+2. IF incumbent_tool_detected != none -&gt; TIER 1 - Stack Displacement (Budget is proven and already spent, which makes this the shortest path to a decision. It is also the tier with the strongest arithmetic: per-location review platforms run $299 to $449 per location per month, so a 120-site operator is paying roughly $430,000 a year for the review layer alone.)
+3. IF regulator_dataset_hit != none AND regulator_metric_value &lt; regulator_peer_median -&gt; TIER 2 - Published Failure (The failure is not our claim and not their opinion. It is on a federal website with their name on it, and it gets republished next quarter whether or not anything changes in between. Whoever owns that number has a dated problem and usually a budget already attached to it.)
+4. IF owner_response_rate_pct &lt; 40 OR aged_unanswered_negatives &gt;= 3 -&gt; TIER 3 - The Open Ledger (Complaints are landing in public and dying there. Every unanswered one-star is a permanent, indexed, dated defect that suppresses local ranking and pre-empts the next booking. Nobody in the business owns it because nobody is watching all the locations at the same time.)
+5. IF hiring_experience_role == TRUE OR expansion_signal == TRUE -&gt; TIER 4 - Solving It With Headcount (They have already decided experience is a priority and are buying the most expensive possible version of the answer: a person, with no system underneath them. Reaching them before the hire starts is worth far more than reaching them after.)
+6. IF ELSE -&gt; TIER 5 - The Consistency Gap (catch-all) (Multi-site, decent ratings, no public failure, no detected tool. Nothing is on fire, which is exactly the problem: the variance between their best and worst location is invisible internally and obvious externally, and they have no instrument that would flag drift until the rating has already moved.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="The tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">The tiers</p>
+      <h2>Five tiers, exclusive routing, and a catch-all that leaves nothing behind.</h2>
+      <p class="takeaway">Tier 1 is already paying a vendor. Tier 2 has a federal regulator publishing its failure rate. Tier 3 has unanswered one-stars sitting in public. Tier 4 is solving the problem by hiring a person and giving them a spreadsheet. Tier 5 has nothing on fire, which is its own problem. Every tier clears the 1,500-contact statistical floor several times over, so each one can be read independently rather than guessed at.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">11% TAM</span>
+          </div>
+          <h3>Tier 1: Stack Displacement</h3>
+          <p>An incumbent CX, review, survey or enterprise XM vendor is detected on the prospect&#39;s own website, and the account clears the qualification gate.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Budget is proven and already spent, but it is spent on a point tool. The reviews are covered. The complaint that arrives by WhatsApp at branch 44, the one a branch manager writes on a paper form, the exit interview and the facilities ticket are in three other systems or in none. And because the pricing is per location, the bill grows every time the estate does.</dd></div>
+              <div><dt>Offer</dt><dd>Stack Consolidation Map - the tools we detected, what each one covers, what is falling between them, and the single-platform replacement</dd></div>
+              <div><dt>Source</dt><dd>Homepage and subpage HTML scrape, second-sourced against BuiltWith</dd></div>
+              <div><dt>Reply density</dt><dd>Highest. Live budget, a named incumbent, and an argument made entirely in their own per-location arithmetic.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">7% TAM</span>
+          </div>
+          <h3>Tier 2: Published Failure</h3>
+          <p>Not Tier 1. A regulator or public dataset publishes their complaint-handling or patient-experience performance and it sits below the peer median. In practice: CFPB timely-response rate for US financial institutions, or the HCAHPS responsiveness star for US hospitals.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The failure is on a federal website with their name on it, and it will be republished next quarter whether or not anything changes in between. The gap between resolving a complaint and being able to evidence that it was resolved inside the window is the entire exposure, and it is a tracking problem rather than a service problem.</dd></div>
+              <div><dt>Offer</dt><dd>Regulatory Complaint Exposure Brief - their published figures against the peer median, with the specific SLA gaps that produce the number</dd></div>
+              <div><dt>Source</dt><dd>CFPB Consumer Complaint Database API and CMS Care Compare / HCAHPS files</dd></div>
+              <div><dt>Reply density</dt><dd>High. Every account has a dated, externally-imposed problem and a named executive who owns it.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">28% TAM</span>
+          </div>
+          <h3>Tier 3: The Open Ledger</h3>
+          <p>Not Tier 1 or 2. Owner-response rate across the estate is below 40%, or there are three or more negative reviews older than thirty days with no reply.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Complaints are landing in public and dying there. Every unanswered one-star is a permanent, indexed, dated defect that suppresses local ranking and pre-empts the next booking. Nobody in the business owns it, because nobody is watching all the locations at the same time.</dd></div>
+              <div><dt>Offer</dt><dd>Unanswered Complaint Ledger - every unanswered negative across their entire estate, by location, aged in days, grouped by theme</dd></div>
+              <div><dt>Source</dt><dd>Google Maps reviews scrape, owner response text and date</dd></div>
+              <div><dt>Reply density</dt><dd>Strong, and the highest volume of any instrumented tier. The email quotes a specific location and a specific date, which is very hard to ignore and impossible to mistake for a template.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">12% TAM</span>
+          </div>
+          <h3>Tier 4: Solving It With Headcount</h3>
+          <p>Not Tier 1, 2 or 3. Currently hiring a Customer Experience, Guest Relations, Patient Experience, Complaints Officer or Service Quality role, or has opened new locations in the last twelve months.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They have already decided experience is a priority and are buying the most expensive possible version of the answer: a person, with no system underneath them. That person spends most of their first year assembling spreadsheets rather than fixing anything, and most of them do not get a second year.</dd></div>
+              <div><dt>Offer</dt><dd>Experience Ops Blueprint - what the role they just posted will actually spend 70% of its time on, and which parts are automatable before they start</dd></div>
+              <div><dt>Source</dt><dd>Job boards and LinkedIn Sales Navigator, refreshed weekly</dd></div>
+              <div><dt>Reply density</dt><dd>High, and time-sensitive. The window closes the moment the hire starts, which is exactly why the email lands before they do.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">42% TAM</span>
+          </div>
+          <h3>Tier 5: The Consistency Gap</h3>
+          <p>Catch-all. Everything else above the gate: multi-site, decent ratings, no public failure, no detected tool.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Nothing is on fire, which is exactly the problem. The variance between their best and worst location is invisible internally and obvious externally, and they have no instrument that would tell them a site is drifting until the rating has already moved.</dd></div>
+              <div><dt>Offer</dt><dd>Location Consistency Scorecard - rating and sentiment variance across their estate, best versus worst site, and the recurring themes behind the spread</dd></div>
+              <div><dt>Source</dt><dd>Google Maps place search and reviews scrape, aggregated across the estate</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest, and the largest volume. Broadest copy, softest CTA, and the tier that runs last once magnet fulfilment is proven.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="The experiments">
+        
+    <div class="section-head">
+      <p class="eyebrow">The experiments</p>
+      <h2>Ten campaigns, every one anchored to something already public.</h2>
+      <p class="takeaway">No campaign here needs a data purchase or a discovery call to run. Each one is built from a review corpus, a federal file, a job posting, or a vendor script sitting on the prospect&#39;s own website. The most expensive input in the entire build is a few dollars of scraping credit.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>The Per-Location Tax (economics-led)</h3>
+          <p>The single sharpest argument available in the whole build, made entirely in the prospect&#39;s own numbers. A 120-site operator is paying roughly $430,000 a year for reviews alone, and the bill grows every time they open a location. Emojot is not priced that way and covers four more modules besides.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Birdeye, Podium, Yext or Reputation.com detected on site, and location_count above 40.</dd></div>
+            <div><dt>AI strategy</dt><dd>Count the estate from the Maps scrape, then price their current review layer against published per-location rates of $299 to $449 per location per month. Put the annual figure in the second email rather than the first, so the opener earns the read and the arithmetic closes it.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>The Gap Between Systems (coverage-led)</h3>
+          <p>Displacement without attacking the incumbent. The pitch is not that their tool is bad, it is that their tool was never designed to catch the complaint that arrives by WhatsApp at branch 44. Barista runs 61 cafes with 11,000+ reviews and 450+ complaints on one platform instead of four.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Any incumbent tool detected, with the tool class recorded as review, survey, enterprise_xm or helpdesk.</dd></div>
+            <div><dt>AI strategy</dt><dd>Branch the opener on incumbent_tool_class. A review tool gets the WhatsApp-complaint gap. A survey tool gets the you-measure-it-but-nobody-owns-the-fix gap. A helpdesk gets the no-one-is-reading-the-public-side gap. Same email skeleton, three different holes named.</dd></div>
+            <div><dt>Value</dt><dd>Reduce risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>The Federal File (BFSI)</h3>
+          <p>A federal regulator has already written the first line of this email. Seylan Bank runs 171 branches on Emojot with CSAT up 13.43%, which makes the branch-scale objection difficult to raise.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>US banks, credit unions and insurers appearing in the CFPB Consumer Complaint Database with a timely-response rate below the peer median.</dd></div>
+            <div><dt>AI strategy</dt><dd>Compute the peer median from the same open file so the comparison is defensible, then lead with their own figure against it. The email never characterises the number as bad, it simply states both and asks whether the cause is service or tracking.</dd></div>
+            <div><dt>Value</dt><dd>Reduce risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>The Responsiveness Star (healthcare)</h3>
+          <p>Asiri Hospitals processed 29,000+ tickets at a 93.8% resolution rate across seven hospitals, which is the closest thing in the proof inventory to a like-for-like. This is the tier where Emojot&#39;s audit trail and ISO/IEC 27001:2022 certification do the most work.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>US hospitals and health systems whose HCAHPS responsiveness-of-staff or willingness-to-recommend star sits below the peer median for their bed-size band.</dd></div>
+            <div><dt>AI strategy</dt><dd>Band the peer comparison by bed count rather than nationally, so the comparison survives scrutiny from a Chief Patient Experience Officer who knows the dataset better than we do. Lead with the specific domain, never the composite.</dd></div>
+            <div><dt>Value</dt><dd>Reduce risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Focused</span>
+          </div>
+          <h3>The Aged Ledger (specificity-led)</h3>
+          <p>The highest-volume instrumented campaign in the build and the one the whole lead-listing strategy was designed around. The offer is the full ledger across every location, which we have already built in order to send the email at all.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Three or more one and two-star reviews older than thirty days with no owner response anywhere in the estate.</dd></div>
+            <div><dt>AI strategy</dt><dd>Open on the single oldest unanswered negative: the location name, the age in days, and a summarised theme. Never paste the customer&#39;s words. The subject line is the location name and the day count, nothing else, which reads as internal rather than as marketing.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>The Response Rate Delta (ops-led)</h3>
+          <p>Marino Beach moved NPS 192.5% in 60 days and held it for 15 months. Radisson cleared 60+ alert tickets in five. Both are response-discipline stories rather than technology stories, which is the register this campaign wants.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Estate-wide owner-response rate below 40%, with at least one location above 80% to contrast against.</dd></div>
+            <div><dt>AI strategy</dt><dd>Show them their own internal inconsistency rather than an external benchmark. One site answers everything, another answers nothing, and nobody at head office knows which is which. Frames the problem as a visibility failure, not a competence failure, which is far easier for an operator to accept.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Before They Start (hiring-led)</h3>
+          <p>The failure mode on this hire is almost never the person. It is that they inherit no instrument, so their first year is data collection. Brandix cut manual errors 25 to 50% and saved 30% of the time on the process work underneath.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>An open Customer Experience, Guest Relations, Patient Experience, Complaints Officer or Service Quality role, posted within the last 45 days.</dd></div>
+            <div><dt>AI strategy</dt><dd>Write to the hiring manager, not to HR, and time the send to land while the req is open rather than after it closes. The argument is about making the hire succeed rather than about replacing them, which is what keeps the email from reading as a threat to the person who wrote the job description.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Faster Than You Can Watch (expansion-led)</h3>
+          <p>Expansion is the one condition under which a manual process visibly stops scaling, and the prospect already knows it. The email does not have to convince them of the problem, only that it can be instrumented before it gets worse.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>New locations appearing in the Maps scrape within the trailing twelve months, or an active franchise recruitment page.</dd></div>
+            <div><dt>AI strategy</dt><dd>Anchor on the specific count of sites added this year. Growth is the moment consistency breaks and the moment nobody has time to notice, which makes an operator unusually receptive to a measurement argument they would have dismissed a year earlier.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Best Site vs Worst Site (variance-led)</h3>
+          <p>The catch-all, and the largest tier by volume. Seylan Bank does this across 171 branches and Barista across 61, which is the reference class for anyone asking whether estate-scale consistency is actually measurable.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>All remaining accounts above the gate, with a rating spread of 0.6 stars or more between best and worst location.</dd></div>
+            <div><dt>AI strategy</dt><dd>Name both locations and both ratings in the subject line and the opener. Same brand, same standards, same training, measurably different outcome. The gap is the whole message, and it needs no adjective attached to it.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>The Staff Half (employee-experience-led)</h3>
+          <p>This is the campaign that opens the EXI module as an entry point rather than an upsell, and it is the most reliable way to get a second stakeholder into the thread without asking for a meeting.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Catch-all accounts where the CHRO or People Director is reachable alongside the operations lead.</dd></div>
+            <div><dt>AI strategy</dt><dd>Run the second email in the sequence at the employee side rather than the customer side. The location with the lowest customer rating is very often the one with the highest staff turnover, and almost nobody has those two numbers on the same screen.</dd></div>
+            <div><dt>Value</dt><dd>Reduce risk</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="The copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">The copy</p>
+      <h2>Fifteen emails. The specificity is the whole product.</h2>
+      <p class="takeaway">Every email opens with a fact we actually pulled, pivots on a poke-the-bear question, ties the value proposition straight back to that poke, lands a named case study with a number in it, and closes on a one-word reply. No calendar links in emails one and two. The offer is always the audit we already built in order to send the email at all.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company}}</span><span>{{sender}}</span><span>{{alt_decision_maker}}</span><span>{{location_count}}</span><span>{{incumbent_tool}}</span><span>{{annual_cost_estimate}}</span><span>{{regulator_dataset}}</span><span>{{regulator_metric_name}}</span><span>{{regulator_metric_value}}</span><span>{{regulator_peer_median}}</span><span>{{total_reviews_estate}}</span><span>{{aged_unanswered_negatives}}</span><span>{{worst_location_name}}</span><span>{{worst_location_rating}}</span><span>{{best_location_name}}</span><span>{{best_location_rating}}</span><span>{{rating_gap}}</span><span>{{oldest_unanswered_negative_days}}</span><span>{{complaint_theme}}</span><span>{{owner_response_rate_pct}}</span><span>{{job_title}}</span><span>{{job_post_date}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company}}, {{sender}}, {{alt_decision_maker}}, {{location_count}}, {{incumbent_tool}}, {{annual_cost_estimate}}, {{regulator_dataset}}, {{regulator_metric_name}}, {{regulator_metric_value}}, {{regulator_peer_median}}, {{total_reviews_estate}}, {{aged_unanswered_negatives}}, {{worst_location_name}}, {{worst_location_rating}}, {{best_location_name}}, {{best_location_rating}}, {{rating_gap}}, {{oldest_unanswered_negative_days}}, {{complaint_theme}}, {{owner_response_rate_pct}}, {{job_title}}, {{job_post_date}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Stack Displacement</strong>
+              <em>Stack Consolidation Map</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Stack Displacement steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{incumbent_tool}} across {{location_count}} sites&#10;&#10;Hi {{first_name}},&#10;&#10;I was looking at {{company}} and saw {{incumbent_tool}} running on your site, then counted {{location_count}} locations across your estate.&#10;&#10;But would it be fair to assume {{incumbent_tool}} only covers the reviews, and the complaint that comes in by WhatsApp, the one the branch manager writes on a form, and the exit interview are all still living somewhere else?&#10;&#10;Emojot puts customer feedback, complaints, reputation and employee experience on one platform. One contract, and not priced per location.&#10;&#10;Barista runs 61 cafes on it: 11,000+ reviews managed, 450+ complaints resolved and 6,000+ feedback entries, all in one place.&#10;&#10;Reply &quot;map&quot; and I&#39;ll send you a one-page consolidation map: the tools we detected, what each one covers, and what&#39;s falling between them. No call needed.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{incumbent_tool}} across {{location_count}} sites" data-preview="Birdeye across 47 sites">{{incumbent_tool}} across {{location_count}} sites</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;I was looking at {{company}} and saw {{incumbent_tool}} running on your site, then counted {{location_count}} locations across your estate.&#10;&#10;But would it be fair to assume {{incumbent_tool}} only covers the reviews, and the complaint that comes in by WhatsApp, the one the branch manager writes on a form, and the exit interview are all still living somewhere else?&#10;&#10;Emojot puts customer feedback, complaints, reputation and employee experience on one platform. One contract, and not priced per location.&#10;&#10;Barista runs 61 cafes on it: 11,000+ reviews managed, 450+ complaints resolved and 6,000+ feedback entries, all in one place.&#10;&#10;Reply &quot;map&quot; and I&#39;ll send you a one-page consolidation map: the tools we detected, what each one covers, and what&#39;s falling between them. No call needed.&#10;&#10;{{sender}}" data-preview="Hi Priya,&#10;&#10;I was looking at Northbank Hospitality Group and saw Birdeye running on your site, then counted 47 locations across your estate.&#10;&#10;But would it be fair to assume Birdeye only covers the reviews, and the complaint that comes in by WhatsApp, the one the branch manager writes on a form, and the exit interview are all still living somewhere else?&#10;&#10;Emojot puts customer feedback, complaints, reputation and employee experience on one platform. One contract, and not priced per location.&#10;&#10;Barista runs 61 cafes on it: 11,000+ reviews managed, 450+ complaints resolved and 6,000+ feedback entries, all in one place.&#10;&#10;Reply &quot;map&quot; and I&#39;ll send you a one-page consolidation map: the tools we detected, what each one covers, and what&#39;s falling between them. No call needed.&#10;&#10;Josh">
+                        <p>Hi {{first_name}},</p><p>I was looking at {{company}} and saw {{incumbent_tool}} running on your site, then counted {{location_count}} locations across your estate.</p><p>But would it be fair to assume {{incumbent_tool}} only covers the reviews, and the complaint that comes in by WhatsApp, the one the branch manager writes on a form, and the exit interview are all still living somewhere else?</p><p>Emojot puts customer feedback, complaints, reputation and employee experience on one platform. One contract, and not priced per location.</p><p>Barista runs 61 cafes on it: 11,000+ reviews managed, 450+ complaints resolved and 6,000+ feedback entries, all in one place.</p><p>Reply &quot;map&quot; and I&#39;ll send you a one-page consolidation map: the tools we detected, what each one covers, and what&#39;s falling between them. No call needed.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Following up with the arithmetic, since it&#39;s usually the part that lands.&#10;&#10;Per-location review platforms run $299 to $449 per location per month. At {{location_count}} locations that&#39;s roughly {{annual_cost_estimate}} a year, for the review layer alone.&#10;&#10;Emojot isn&#39;t priced that way, and it also covers complaints, employee experience and the process automation underneath. Seylan Bank runs 171 branches on it and moved CSAT 13.43%.&#10;&#10;Still happy to just send the consolidation map. Reply &quot;map&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Following up with the arithmetic, since it&#39;s usually the part that lands.&#10;&#10;Per-location review platforms run $299 to $449 per location per month. At {{location_count}} locations that&#39;s roughly {{annual_cost_estimate}} a year, for the review layer alone.&#10;&#10;Emojot isn&#39;t priced that way, and it also covers complaints, employee experience and the process automation underneath. Seylan Bank runs 171 branches on it and moved CSAT 13.43%.&#10;&#10;Still happy to just send the consolidation map. Reply &quot;map&quot;." data-preview="Following up with the arithmetic, since it&#39;s usually the part that lands.&#10;&#10;Per-location review platforms run $299 to $449 per location per month. At 47 locations that&#39;s roughly $168,000 a year, for the review layer alone.&#10;&#10;Emojot isn&#39;t priced that way, and it also covers complaints, employee experience and the process automation underneath. Seylan Bank runs 171 branches on it and moved CSAT 13.43%.&#10;&#10;Still happy to just send the consolidation map. Reply &quot;map&quot;.">
+                        <p>Following up with the arithmetic, since it&#39;s usually the part that lands.</p><p>Per-location review platforms run $299 to $449 per location per month. At {{location_count}} locations that&#39;s roughly {{annual_cost_estimate}} a year, for the review layer alone.</p><p>Emojot isn&#39;t priced that way, and it also covers complaints, employee experience and the process automation underneath. Seylan Bank runs 171 branches on it and moved CSAT 13.43%.</p><p>Still happy to just send the consolidation map. Reply &quot;map&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: wrong person?&#10;&#10;Hi {{first_name}}, no need for a call on this one.&#10;&#10;Just reply &quot;yes&quot; and I&#39;ll send over the consolidation map for {{company}}&#39;s {{location_count}} sites: what {{incumbent_tool}} covers, what it doesn&#39;t, and what the gaps are costing.&#10;&#10;Should I send it to you, or is {{alt_decision_maker}} the better person?&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="wrong person?" data-preview="wrong person?">wrong person?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, no need for a call on this one.&#10;&#10;Just reply &quot;yes&quot; and I&#39;ll send over the consolidation map for {{company}}&#39;s {{location_count}} sites: what {{incumbent_tool}} covers, what it doesn&#39;t, and what the gaps are costing.&#10;&#10;Should I send it to you, or is {{alt_decision_maker}} the better person?&#10;&#10;{{sender}}" data-preview="Hi Priya, no need for a call on this one.&#10;&#10;Just reply &quot;yes&quot; and I&#39;ll send over the consolidation map for Northbank Hospitality Group&#39;s 47 sites: what Birdeye covers, what it doesn&#39;t, and what the gaps are costing.&#10;&#10;Should I send it to you, or is the ops director the better person?&#10;&#10;Josh">
+                        <p>Hi {{first_name}}, no need for a call on this one.</p><p>Just reply &quot;yes&quot; and I&#39;ll send over the consolidation map for {{company}}&#39;s {{location_count}} sites: what {{incumbent_tool}} covers, what it doesn&#39;t, and what the gaps are costing.</p><p>Should I send it to you, or is {{alt_decision_maker}} the better person?</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Published Failure</strong>
+              <em>Regulatory Complaint Exposure Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Published Failure steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{regulator_metric_name}} - {{company}}&#10;&#10;Hi {{first_name}},&#10;&#10;I pulled {{company}}&#39;s {{regulator_dataset}} record: {{regulator_metric_value}} against a peer median of {{regulator_peer_median}}.&#10;&#10;But would it be fair to assume that number isn&#39;t a service problem so much as a tracking problem: complaints arriving across branches, email, call centre and social, with no single clock running on any of them?&#10;&#10;Emojot&#39;s complaints module gives every complaint an owner, a category, a severity, an SLA countdown and an escalation path, with a full audit trail behind it.&#10;&#10;Asiri Hospitals processed 29,000+ tickets at a 93.8% resolution rate on it. Seylan Bank did it across 171 branches.&#10;&#10;Reply &quot;brief&quot; and I&#39;ll send a two-page exposure brief: your published figures against the peer set, and the specific SLA gaps that produce them. No call needed.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{regulator_metric_name}} - {{company}}" data-preview="timely response rate - Northbank Hospitality Group">{{regulator_metric_name}} - {{company}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;I pulled {{company}}&#39;s {{regulator_dataset}} record: {{regulator_metric_value}} against a peer median of {{regulator_peer_median}}.&#10;&#10;But would it be fair to assume that number isn&#39;t a service problem so much as a tracking problem: complaints arriving across branches, email, call centre and social, with no single clock running on any of them?&#10;&#10;Emojot&#39;s complaints module gives every complaint an owner, a category, a severity, an SLA countdown and an escalation path, with a full audit trail behind it.&#10;&#10;Asiri Hospitals processed 29,000+ tickets at a 93.8% resolution rate on it. Seylan Bank did it across 171 branches.&#10;&#10;Reply &quot;brief&quot; and I&#39;ll send a two-page exposure brief: your published figures against the peer set, and the specific SLA gaps that produce them. No call needed.&#10;&#10;{{sender}}" data-preview="Hi Priya,&#10;&#10;I pulled Northbank Hospitality Group&#39;s CFPB record: 91.2% against a peer median of 98.4%.&#10;&#10;But would it be fair to assume that number isn&#39;t a service problem so much as a tracking problem: complaints arriving across branches, email, call centre and social, with no single clock running on any of them?&#10;&#10;Emojot&#39;s complaints module gives every complaint an owner, a category, a severity, an SLA countdown and an escalation path, with a full audit trail behind it.&#10;&#10;Asiri Hospitals processed 29,000+ tickets at a 93.8% resolution rate on it. Seylan Bank did it across 171 branches.&#10;&#10;Reply &quot;brief&quot; and I&#39;ll send a two-page exposure brief: your published figures against the peer set, and the specific SLA gaps that produce them. No call needed.&#10;&#10;Josh">
+                        <p>Hi {{first_name}},</p><p>I pulled {{company}}&#39;s {{regulator_dataset}} record: {{regulator_metric_value}} against a peer median of {{regulator_peer_median}}.</p><p>But would it be fair to assume that number isn&#39;t a service problem so much as a tracking problem: complaints arriving across branches, email, call centre and social, with no single clock running on any of them?</p><p>Emojot&#39;s complaints module gives every complaint an owner, a category, a severity, an SLA countdown and an escalation path, with a full audit trail behind it.</p><p>Asiri Hospitals processed 29,000+ tickets at a 93.8% resolution rate on it. Seylan Bank did it across 171 branches.</p><p>Reply &quot;brief&quot; and I&#39;ll send a two-page exposure brief: your published figures against the peer set, and the specific SLA gaps that produce them. No call needed.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The part that usually matters more than the number itself: it gets republished.&#10;&#10;Next quarter&#39;s file goes out with {{company}}&#39;s name on it whether or not anything changed in between, and the gap between &quot;we resolved it&quot; and &quot;we can evidence we resolved it inside the window&quot; is the whole exposure.&#10;&#10;Emojot is ISO/IEC 27001:2022 certified and every complaint carries a full audit log from intake to closure.&#10;&#10;Want the exposure brief? Reply &quot;brief&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The part that usually matters more than the number itself: it gets republished.&#10;&#10;Next quarter&#39;s file goes out with {{company}}&#39;s name on it whether or not anything changed in between, and the gap between &quot;we resolved it&quot; and &quot;we can evidence we resolved it inside the window&quot; is the whole exposure.&#10;&#10;Emojot is ISO/IEC 27001:2022 certified and every complaint carries a full audit log from intake to closure.&#10;&#10;Want the exposure brief? Reply &quot;brief&quot;." data-preview="The part that usually matters more than the number itself: it gets republished.&#10;&#10;Next quarter&#39;s file goes out with Northbank Hospitality Group&#39;s name on it whether or not anything changed in between, and the gap between &quot;we resolved it&quot; and &quot;we can evidence we resolved it inside the window&quot; is the whole exposure.&#10;&#10;Emojot is ISO/IEC 27001:2022 certified and every complaint carries a full audit log from intake to closure.&#10;&#10;Want the exposure brief? Reply &quot;brief&quot;.">
+                        <p>The part that usually matters more than the number itself: it gets republished.</p><p>Next quarter&#39;s file goes out with {{company}}&#39;s name on it whether or not anything changed in between, and the gap between &quot;we resolved it&quot; and &quot;we can evidence we resolved it inside the window&quot; is the whole exposure.</p><p>Emojot is ISO/IEC 27001:2022 certified and every complaint carries a full audit log from intake to closure.</p><p>Want the exposure brief? Reply &quot;brief&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} - quick one&#10;&#10;Hi {{first_name}}, no call needed.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll send the complaint exposure brief for {{company}}: your published {{regulator_metric_name}}, the peer median, and where the time is actually going.&#10;&#10;Should I send it to you or {{alt_decision_maker}}?&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} - quick one" data-preview="Northbank Hospitality Group - quick one">{{company}} - quick one</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, no call needed.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll send the complaint exposure brief for {{company}}: your published {{regulator_metric_name}}, the peer median, and where the time is actually going.&#10;&#10;Should I send it to you or {{alt_decision_maker}}?&#10;&#10;{{sender}}" data-preview="Hi Priya, no call needed.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll send the complaint exposure brief for Northbank Hospitality Group: your published timely response rate, the peer median, and where the time is actually going.&#10;&#10;Should I send it to you or the ops director?&#10;&#10;Josh">
+                        <p>Hi {{first_name}}, no call needed.</p><p>Reply &quot;yes&quot; and I&#39;ll send the complaint exposure brief for {{company}}: your published {{regulator_metric_name}}, the peer median, and where the time is actually going.</p><p>Should I send it to you or {{alt_decision_maker}}?</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - The Open Ledger</strong>
+              <em>Unanswered Complaint Ledger</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - The Open Ledger steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{worst_location_name}} - {{oldest_unanswered_negative_days}} days&#10;&#10;Hi {{first_name}},&#10;&#10;I went through {{total_reviews_estate}} reviews across {{company}}&#39;s {{location_count}} locations. {{aged_unanswered_negatives}} negative ones are still sitting there with no reply. The oldest is at {{worst_location_name}}, posted {{oldest_unanswered_negative_days}} days ago about {{complaint_theme}}.&#10;&#10;But would it be fair to assume nobody&#39;s ignoring them, it&#39;s just that no one person is watching all {{location_count}} locations at once?&#10;&#10;Emojot monitors every site&#39;s reviews in one view, drafts the response, and routes the underlying issue to the manager who can actually fix it, with an SLA on it.&#10;&#10;Marino Beach moved NPS 192.5% in 60 days and held it for 15 months. Radisson cleared 60+ alert tickets in 5.&#10;&#10;Reply &quot;ledger&quot; and I&#39;ll send the full list: every unanswered negative across your estate, by location, aged, grouped by theme. Yours to keep either way.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{worst_location_name}} - {{oldest_unanswered_negative_days}} days" data-preview="the Harbour Street site - 168 days">{{worst_location_name}} - {{oldest_unanswered_negative_days}} days</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;I went through {{total_reviews_estate}} reviews across {{company}}&#39;s {{location_count}} locations. {{aged_unanswered_negatives}} negative ones are still sitting there with no reply. The oldest is at {{worst_location_name}}, posted {{oldest_unanswered_negative_days}} days ago about {{complaint_theme}}.&#10;&#10;But would it be fair to assume nobody&#39;s ignoring them, it&#39;s just that no one person is watching all {{location_count}} locations at once?&#10;&#10;Emojot monitors every site&#39;s reviews in one view, drafts the response, and routes the underlying issue to the manager who can actually fix it, with an SLA on it.&#10;&#10;Marino Beach moved NPS 192.5% in 60 days and held it for 15 months. Radisson cleared 60+ alert tickets in 5.&#10;&#10;Reply &quot;ledger&quot; and I&#39;ll send the full list: every unanswered negative across your estate, by location, aged, grouped by theme. Yours to keep either way.&#10;&#10;{{sender}}" data-preview="Hi Priya,&#10;&#10;I went through 12,400 reviews across Northbank Hospitality Group&#39;s 47 locations. 31 negative ones are still sitting there with no reply. The oldest is at the Harbour Street site, posted 168 days ago about a refund that never arrived.&#10;&#10;But would it be fair to assume nobody&#39;s ignoring them, it&#39;s just that no one person is watching all 47 locations at once?&#10;&#10;Emojot monitors every site&#39;s reviews in one view, drafts the response, and routes the underlying issue to the manager who can actually fix it, with an SLA on it.&#10;&#10;Marino Beach moved NPS 192.5% in 60 days and held it for 15 months. Radisson cleared 60+ alert tickets in 5.&#10;&#10;Reply &quot;ledger&quot; and I&#39;ll send the full list: every unanswered negative across your estate, by location, aged, grouped by theme. Yours to keep either way.&#10;&#10;Josh">
+                        <p>Hi {{first_name}},</p><p>I went through {{total_reviews_estate}} reviews across {{company}}&#39;s {{location_count}} locations. {{aged_unanswered_negatives}} negative ones are still sitting there with no reply. The oldest is at {{worst_location_name}}, posted {{oldest_unanswered_negative_days}} days ago about {{complaint_theme}}.</p><p>But would it be fair to assume nobody&#39;s ignoring them, it&#39;s just that no one person is watching all {{location_count}} locations at once?</p><p>Emojot monitors every site&#39;s reviews in one view, drafts the response, and routes the underlying issue to the manager who can actually fix it, with an SLA on it.</p><p>Marino Beach moved NPS 192.5% in 60 days and held it for 15 months. Radisson cleared 60+ alert tickets in 5.</p><p>Reply &quot;ledger&quot; and I&#39;ll send the full list: every unanswered negative across your estate, by location, aged, grouped by theme. Yours to keep either way.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One more reason this one&#39;s worth ten minutes of someone&#39;s attention.&#10;&#10;That review at {{worst_location_name}} is indexed. It&#39;s the thing a customer reads at the moment they&#39;re deciding, it&#39;s dated, and an unanswered one reads very differently to an answered one, even when the answer is just &quot;we&#39;ve fixed this.&quot;&#10;&#10;Your estate response rate is currently around {{owner_response_rate_pct}}%.&#10;&#10;The ledger&#39;s already built. Reply &quot;ledger&quot; and it&#39;s yours.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One more reason this one&#39;s worth ten minutes of someone&#39;s attention.&#10;&#10;That review at {{worst_location_name}} is indexed. It&#39;s the thing a customer reads at the moment they&#39;re deciding, it&#39;s dated, and an unanswered one reads very differently to an answered one, even when the answer is just &quot;we&#39;ve fixed this.&quot;&#10;&#10;Your estate response rate is currently around {{owner_response_rate_pct}}%.&#10;&#10;The ledger&#39;s already built. Reply &quot;ledger&quot; and it&#39;s yours." data-preview="One more reason this one&#39;s worth ten minutes of someone&#39;s attention.&#10;&#10;That review at the Harbour Street site is indexed. It&#39;s the thing a customer reads at the moment they&#39;re deciding, it&#39;s dated, and an unanswered one reads very differently to an answered one, even when the answer is just &quot;we&#39;ve fixed this.&quot;&#10;&#10;Your estate response rate is currently around 23%.&#10;&#10;The ledger&#39;s already built. Reply &quot;ledger&quot; and it&#39;s yours.">
+                        <p>One more reason this one&#39;s worth ten minutes of someone&#39;s attention.</p><p>That review at {{worst_location_name}} is indexed. It&#39;s the thing a customer reads at the moment they&#39;re deciding, it&#39;s dated, and an unanswered one reads very differently to an answered one, even when the answer is just &quot;we&#39;ve fixed this.&quot;</p><p>Your estate response rate is currently around {{owner_response_rate_pct}}%.</p><p>The ledger&#39;s already built. Reply &quot;ledger&quot; and it&#39;s yours.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the list for {{company}}&#10;&#10;Hi {{first_name}}, no call, no demo.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll send the unanswered-complaint ledger for all {{location_count}} of your locations. It&#39;s a spreadsheet. Use it however you like.&#10;&#10;Should I send it to you, or is {{alt_decision_maker}} closer to this?&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the list for {{company}}" data-preview="the list for Northbank Hospitality Group">the list for {{company}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, no call, no demo.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll send the unanswered-complaint ledger for all {{location_count}} of your locations. It&#39;s a spreadsheet. Use it however you like.&#10;&#10;Should I send it to you, or is {{alt_decision_maker}} closer to this?&#10;&#10;{{sender}}" data-preview="Hi Priya, no call, no demo.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll send the unanswered-complaint ledger for all 47 of your locations. It&#39;s a spreadsheet. Use it however you like.&#10;&#10;Should I send it to you, or is the ops director closer to this?&#10;&#10;Josh">
+                        <p>Hi {{first_name}}, no call, no demo.</p><p>Reply &quot;yes&quot; and I&#39;ll send the unanswered-complaint ledger for all {{location_count}} of your locations. It&#39;s a spreadsheet. Use it however you like.</p><p>Should I send it to you, or is {{alt_decision_maker}} closer to this?</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 - Solving It With Headcount</strong>
+              <em>Experience Ops Blueprint</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 - Solving It With Headcount steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the {{job_title}} role&#10;&#10;Hi {{first_name}},&#10;&#10;Saw {{company}} posted for a {{job_title}} on {{job_post_date}}, and that you&#39;re running {{location_count}} locations.&#10;&#10;But would it be fair to assume that whoever takes it spends their first six months building spreadsheets, pulling feedback out of four channels by hand before they get anywhere near actually fixing anything?&#10;&#10;Emojot gives that role an instrumented function on day one: capture across QR, in-branch, web, app, SMS, WhatsApp and the call centre, AI classification, and routing by location, department and team.&#10;&#10;Brandix cut manual errors 25 to 50% and saved 30% of the time on the process work underneath it.&#10;&#10;Reply &quot;blueprint&quot; and I&#39;ll send a one-pager on what that role&#39;s first 90 days usually look like, and which parts are automatable before they start. No call needed.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the {{job_title}} role" data-preview="the Customer Experience Manager role">the {{job_title}} role</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Saw {{company}} posted for a {{job_title}} on {{job_post_date}}, and that you&#39;re running {{location_count}} locations.&#10;&#10;But would it be fair to assume that whoever takes it spends their first six months building spreadsheets, pulling feedback out of four channels by hand before they get anywhere near actually fixing anything?&#10;&#10;Emojot gives that role an instrumented function on day one: capture across QR, in-branch, web, app, SMS, WhatsApp and the call centre, AI classification, and routing by location, department and team.&#10;&#10;Brandix cut manual errors 25 to 50% and saved 30% of the time on the process work underneath it.&#10;&#10;Reply &quot;blueprint&quot; and I&#39;ll send a one-pager on what that role&#39;s first 90 days usually look like, and which parts are automatable before they start. No call needed.&#10;&#10;{{sender}}" data-preview="Hi Priya,&#10;&#10;Saw Northbank Hospitality Group posted for a Customer Experience Manager on 14 July, and that you&#39;re running 47 locations.&#10;&#10;But would it be fair to assume that whoever takes it spends their first six months building spreadsheets, pulling feedback out of four channels by hand before they get anywhere near actually fixing anything?&#10;&#10;Emojot gives that role an instrumented function on day one: capture across QR, in-branch, web, app, SMS, WhatsApp and the call centre, AI classification, and routing by location, department and team.&#10;&#10;Brandix cut manual errors 25 to 50% and saved 30% of the time on the process work underneath it.&#10;&#10;Reply &quot;blueprint&quot; and I&#39;ll send a one-pager on what that role&#39;s first 90 days usually look like, and which parts are automatable before they start. No call needed.&#10;&#10;Josh">
+                        <p>Hi {{first_name}},</p><p>Saw {{company}} posted for a {{job_title}} on {{job_post_date}}, and that you&#39;re running {{location_count}} locations.</p><p>But would it be fair to assume that whoever takes it spends their first six months building spreadsheets, pulling feedback out of four channels by hand before they get anywhere near actually fixing anything?</p><p>Emojot gives that role an instrumented function on day one: capture across QR, in-branch, web, app, SMS, WhatsApp and the call centre, AI classification, and routing by location, department and team.</p><p>Brandix cut manual errors 25 to 50% and saved 30% of the time on the process work underneath it.</p><p>Reply &quot;blueprint&quot; and I&#39;ll send a one-pager on what that role&#39;s first 90 days usually look like, and which parts are automatable before they start. No call needed.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The reason I sent this before they start rather than after.&#10;&#10;The failure mode on this hire is almost never the person. It&#39;s that they inherit no instrument, so their first year is data collection and their second is the one where they finally get to do the job. Most don&#39;t get a second year.&#10;&#10;Asiri gave the function a system first: 29,000+ tickets, 93.8% resolved.&#10;&#10;Want the blueprint? Reply &quot;blueprint&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The reason I sent this before they start rather than after.&#10;&#10;The failure mode on this hire is almost never the person. It&#39;s that they inherit no instrument, so their first year is data collection and their second is the one where they finally get to do the job. Most don&#39;t get a second year.&#10;&#10;Asiri gave the function a system first: 29,000+ tickets, 93.8% resolved.&#10;&#10;Want the blueprint? Reply &quot;blueprint&quot;." data-preview="The reason I sent this before they start rather than after.&#10;&#10;The failure mode on this hire is almost never the person. It&#39;s that they inherit no instrument, so their first year is data collection and their second is the one where they finally get to do the job. Most don&#39;t get a second year.&#10;&#10;Asiri gave the function a system first: 29,000+ tickets, 93.8% resolved.&#10;&#10;Want the blueprint? Reply &quot;blueprint&quot;.">
+                        <p>The reason I sent this before they start rather than after.</p><p>The failure mode on this hire is almost never the person. It&#39;s that they inherit no instrument, so their first year is data collection and their second is the one where they finally get to do the job. Most don&#39;t get a second year.</p><p>Asiri gave the function a system first: 29,000+ tickets, 93.8% resolved.</p><p>Want the blueprint? Reply &quot;blueprint&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: before they start&#10;&#10;Hi {{first_name}}, no call needed.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll send the 90-day blueprint for the {{job_title}} role across {{location_count}} sites.&#10;&#10;Should that go to you or {{alt_decision_maker}}?&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="before they start" data-preview="before they start">before they start</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, no call needed.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll send the 90-day blueprint for the {{job_title}} role across {{location_count}} sites.&#10;&#10;Should that go to you or {{alt_decision_maker}}?&#10;&#10;{{sender}}" data-preview="Hi Priya, no call needed.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll send the 90-day blueprint for the Customer Experience Manager role across 47 sites.&#10;&#10;Should that go to you or the ops director?&#10;&#10;Josh">
+                        <p>Hi {{first_name}}, no call needed.</p><p>Reply &quot;yes&quot; and I&#39;ll send the 90-day blueprint for the {{job_title}} role across {{location_count}} sites.</p><p>Should that go to you or {{alt_decision_maker}}?</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 - The Consistency Gap</strong>
+              <em>Location Consistency Scorecard</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 - The Consistency Gap steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{best_location_name}} vs {{worst_location_name}}&#10;&#10;Hi {{first_name}},&#10;&#10;I looked at all {{location_count}} of {{company}}&#39;s locations. {{best_location_name}} sits at {{best_location_rating}}. {{worst_location_name}} sits at {{worst_location_rating}}. Same brand, same standards, {{rating_gap}} stars apart.&#10;&#10;But would it be fair to assume that gap only becomes visible internally once it&#39;s already moved, because there&#39;s no instrument reading all {{location_count}} sites the same way at the same time?&#10;&#10;That&#39;s the whole of what Emojot does: one capture layer across every touchpoint, and analytics that break down by location, department, team and segment, so drift shows up as a trend rather than a surprise.&#10;&#10;Seylan Bank does it across 171 branches. Barista across 61.&#10;&#10;Reply &quot;scorecard&quot; and I&#39;ll send the consistency scorecard for your estate: the spread, the outliers, and the themes behind them. No call needed.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{best_location_name}} vs {{worst_location_name}}" data-preview="the Clifton Road site vs the Harbour Street site">{{best_location_name}} vs {{worst_location_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;I looked at all {{location_count}} of {{company}}&#39;s locations. {{best_location_name}} sits at {{best_location_rating}}. {{worst_location_name}} sits at {{worst_location_rating}}. Same brand, same standards, {{rating_gap}} stars apart.&#10;&#10;But would it be fair to assume that gap only becomes visible internally once it&#39;s already moved, because there&#39;s no instrument reading all {{location_count}} sites the same way at the same time?&#10;&#10;That&#39;s the whole of what Emojot does: one capture layer across every touchpoint, and analytics that break down by location, department, team and segment, so drift shows up as a trend rather than a surprise.&#10;&#10;Seylan Bank does it across 171 branches. Barista across 61.&#10;&#10;Reply &quot;scorecard&quot; and I&#39;ll send the consistency scorecard for your estate: the spread, the outliers, and the themes behind them. No call needed.&#10;&#10;{{sender}}" data-preview="Hi Priya,&#10;&#10;I looked at all 47 of Northbank Hospitality Group&#39;s locations. the Clifton Road site sits at 4.6. the Harbour Street site sits at 3.4. Same brand, same standards, 1.2 stars apart.&#10;&#10;But would it be fair to assume that gap only becomes visible internally once it&#39;s already moved, because there&#39;s no instrument reading all 47 sites the same way at the same time?&#10;&#10;That&#39;s the whole of what Emojot does: one capture layer across every touchpoint, and analytics that break down by location, department, team and segment, so drift shows up as a trend rather than a surprise.&#10;&#10;Seylan Bank does it across 171 branches. Barista across 61.&#10;&#10;Reply &quot;scorecard&quot; and I&#39;ll send the consistency scorecard for your estate: the spread, the outliers, and the themes behind them. No call needed.&#10;&#10;Josh">
+                        <p>Hi {{first_name}},</p><p>I looked at all {{location_count}} of {{company}}&#39;s locations. {{best_location_name}} sits at {{best_location_rating}}. {{worst_location_name}} sits at {{worst_location_rating}}. Same brand, same standards, {{rating_gap}} stars apart.</p><p>But would it be fair to assume that gap only becomes visible internally once it&#39;s already moved, because there&#39;s no instrument reading all {{location_count}} sites the same way at the same time?</p><p>That&#39;s the whole of what Emojot does: one capture layer across every touchpoint, and analytics that break down by location, department, team and segment, so drift shows up as a trend rather than a surprise.</p><p>Seylan Bank does it across 171 branches. Barista across 61.</p><p>Reply &quot;scorecard&quot; and I&#39;ll send the consistency scorecard for your estate: the spread, the outliers, and the themes behind them. No call needed.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The half of this that usually explains the other half.&#10;&#10;The location with the lowest customer rating is very often the one with the highest staff turnover, and almost nobody has those two numbers on the same screen. Emojot runs eNPS and lifecycle feedback on the same platform as the customer side.&#10;&#10;Scorecard&#39;s ready whenever. Reply &quot;scorecard&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The half of this that usually explains the other half.&#10;&#10;The location with the lowest customer rating is very often the one with the highest staff turnover, and almost nobody has those two numbers on the same screen. Emojot runs eNPS and lifecycle feedback on the same platform as the customer side.&#10;&#10;Scorecard&#39;s ready whenever. Reply &quot;scorecard&quot;." data-preview="The half of this that usually explains the other half.&#10;&#10;The location with the lowest customer rating is very often the one with the highest staff turnover, and almost nobody has those two numbers on the same screen. Emojot runs eNPS and lifecycle feedback on the same platform as the customer side.&#10;&#10;Scorecard&#39;s ready whenever. Reply &quot;scorecard&quot;.">
+                        <p>The half of this that usually explains the other half.</p><p>The location with the lowest customer rating is very often the one with the highest staff turnover, and almost nobody has those two numbers on the same screen. Emojot runs eNPS and lifecycle feedback on the same platform as the customer side.</p><p>Scorecard&#39;s ready whenever. Reply &quot;scorecard&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} - {{location_count}} sites&#10;&#10;Hi {{first_name}}, no call, no demo.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll send the consistency scorecard across your {{location_count}} locations. Yours to keep.&#10;&#10;Should I send it to you or {{alt_decision_maker}}?&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} - {{location_count}} sites" data-preview="Northbank Hospitality Group - 47 sites">{{company}} - {{location_count}} sites</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}}, no call, no demo.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll send the consistency scorecard across your {{location_count}} locations. Yours to keep.&#10;&#10;Should I send it to you or {{alt_decision_maker}}?&#10;&#10;{{sender}}" data-preview="Hi Priya, no call, no demo.&#10;&#10;Reply &quot;yes&quot; and I&#39;ll send the consistency scorecard across your 47 locations. Yours to keep.&#10;&#10;Should I send it to you or the ops director?&#10;&#10;Josh">
+                        <p>Hi {{first_name}}, no call, no demo.</p><p>Reply &quot;yes&quot; and I&#39;ll send the consistency scorecard across your {{location_count}} locations. Yours to keep.</p><p>Should I send it to you or {{alt_decision_maker}}?</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="The rollout">
+        
+    <div class="section-head">
+      <p class="eyebrow">The rollout</p>
+      <h2>Tier 1 and Tier 3 together, then build outward.</h2>
+      <p class="takeaway">Tier 1 is the highest-intent, fastest-proof tier and needs only the vendor footprint scrape. Tier 3 is the largest instrumented tier and proves the Maps pipeline and the magnet at volume. Running them together in phase one validates both halves of the thesis before a dollar goes into the regulatory ingest.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Weeks 1 to 4, phase one: run Tier 1 and Tier 3 together. Tier 1 is the highest-intent, fastest-proof tier and needs only the vendor footprint scrape. Tier 3 is the largest instrumented tier and proves the Maps pipeline and the magnet at volume. Together they validate both halves of the thesis before a dollar goes into the regulatory ingest.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Weeks 5 to 8, phase two: add Tier 2 once the CFPB and CMS ingests are built and the peer medians are computed from the same files. US only at first, because that is the only market where the regulator publishes the signal.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 9 to 12, phase three: add Tier 4 once the job-board watcher is on a weekly refresh. It then refills continuously without further work.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Week 13 onward, phase four: release Tier 5, the catch-all. It is the largest and weakest tier and will consume the most volume, so it goes last, once magnet fulfilment inside four working hours has been proven at Tier 3 scale.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Region sequencing inside every phase: United States first for the largest market and the best data coverage, then the GCC for the best fit-to-effort ratio, then the UK and Australia, then India and Southeast Asia.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Infrastructure: five secondary domains unrelated to emojot.com, three mailboxes each, 22 sends per mailbox per day for roughly 330 a day, after 21 days of warmup. Note the Sunday to Thursday working week in KSA, UAE and Qatar, run Canada LinkedIn-first under CASL, and exclude Germany, where UWG section 7 requires prior consent for B2B email.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>Two launch blockers to close first: one Western or GCC reference logo, because every named proof point except Radisson is Sri Lankan; and a defensible price anchor for a 50-location year-one deployment, because the Tier 1 arithmetic cannot be written without it.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacts</strong>
+                <span>Perfect. Scale that tier immediately and add domains behind it.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run untouched.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450 to 500</strong>
+                <span>Borderline. Test one copy variant, and swap the lead magnet before you touch the body.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or reply rate under 1 percent after 1,500 sends</strong>
+                <span>Failing. Cut the tier and rework the trigger, not the copy. A weak trigger cannot be rescued by a better sentence.</span>
+              </div>
+              <div class="threshold">
+                <strong>Testing discipline</strong>
+                <span>Two variants per tier, maximum. For a fresh tier with no data run a chaos test, two structurally different emails rather than two versions of the same one. Once a winner emerges, switch to single-variable tests and vary only the lead magnet or the first-line research angle.</span>
+              </div>
+              <div class="threshold">
+                <strong>Reporting rule</strong>
+                <span>Report per tier, never in aggregate. A strong Tier 1 will otherwise hide a failing Tier 5 for months, and by the time the blended number moves, three months of volume has gone to a trigger that does not work.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a working session</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Priya","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Northbank Hospitality Group","Josh","the ops director","47","Birdeye","\\$168,000","CFPB","timely response rate","91\\.2%","98\\.4%","12,400","31","the Harbour Street site","3\\.4","the Clifton Road site","4\\.6","1\\.2","168","a refund that never arrived","23","Customer Experience Manager","14 July"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
