@@ -1,0 +1,1760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Foundry - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-20</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Image Foundry</p>
+          <h1>Your Image Foundry waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">One cascade, five tiers, ~44,900 accounts — routed on a signal that lives in the prospect&#39;s own gallery.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Every developer and every manufacturer publishes, for free, the complete set of images they are currently trying to sell with. Count them and you know exactly who is trying to sell something they cannot photograph — and how far they have got in solving it.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a strategy call</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>£16bn</strong>
+          <span>of client property &amp; product sold on Image Foundry CGI</span>
+        </div>
+        <div class="metric-card">
+          <strong>44,900</strong>
+          <span>qualified accounts across UK/IE, EU and US</span>
+        </div>
+        <div class="metric-card">
+          <strong>5 tiers</strong>
+          <span>exclusive routing, 100% TAM coverage</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>CGI stills, animation and interactive 3D (configurators, VR showrooms, product selectors) sold to property developers, housebuilders, and KBB / interiors / consumer product manufacturers.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The unbuyable unlock: the prospect&#39;s own gallery</p></div><div><span>02</span><p>One cascade, tested top to bottom, first match wins</p></div><div><span>03</span><p>Five tiers, ordered by how much money is already committed</p></div><div><span>04</span><p>What each tier actually says, and why it lands</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>The signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>The routing</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>The tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>The campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>The copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>The launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="The signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">The signal</p>
+      <h2>The unbuyable unlock: the prospect&#39;s own gallery</h2>
+      <p class="takeaway">No data vendor sells &quot;this scheme launches in March and the gallery has a location map on it.&quot; It exists only in the prospect&#39;s own public pages.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>It is free and public. The gallery, the product pages, the job ads and the page source are all open — zero paid enrichment establishes tier membership.</p></div><div class="reason-card"><span>02</span><p>It cuts across property and product rather than along them. A housebuilder with a location map in the gallery has more in common with a bathroom brand shipping CAD line drawings than with a solved peer in its own sector.</p></div><div class="reason-card"><span>03</span><p>It cannot be bought. Apollo does not know how many images are on a development page. BuiltWith sees a configurator script but not that it covers 4% of the catalogue.</p></div><div class="reason-card"><span>04</span><p>The same crawl that routes the lead generates the lead magnet. One pass produces the tier assignment and the personalised asset offered in email one.</p></div>
+            </div>
+            <div class="field-cloud"><span>entity_class</span><span>scale_metric</span><span>geo_email_permitted</span><span>launch_status</span><span>launch_asset_state</span><span>launch_date_stated</span><span>new_range_flag</span><span>new_range_asset_state</span><span>viz_job_ad</span><span>viz_job_posted_days</span><span>viz_job_manager</span><span>threed_stack_detected</span><span>threed_sku_coverage_pct</span><span>assets_per_development</span><span>asset_mix</span><span>interiors_furnished</span><span>cgi_reuse_detected</span><span>roomset_count</span><span>roomset_ratio</span><span>brochure_year</span><span>tradeshow_exhibitor</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>Developer /developments and /our-communities pages</h3><p>The scheme list plus status (Coming Soon / Launching / Now Selling), gallery asset count and asset mix — TAM and signal in one pull.</p></div><div class="source-card"><span>02</span><h3>Rightmove &amp; Zoopla new-homes developer directories</h3><p>Active developers with live stock, plus the listing image sets used to compute the regional benchmark.</p></div><div class="source-card"><span>03</span><h3>Brand sitemap.xml → product-page crawl</h3><p>Live SKU count and per-SKU image classification (CAD / cut-out / roomset), which computes the roomset ratio.</p></div><div class="source-card"><span>04</span><h3>BuiltWith / Wappalyzer + raw HTML and asset scan</h3><p>Threekit, Emersya, Cylindo, Sketchfab, Matterport, Roomle, model-viewer and .glb detection — the 3D-stack signal.</p></div><div class="source-card"><span>05</span><h3>LinkedIn Jobs, Indeed, company /careers pages</h3><p>Live ads for 3D Visualiser, CGI Artist, Archviz, Studio Manager and Content Producer — plus the named hiring manager.</p></div><div class="source-card"><span>06</span><h3>NHBC, LABC, Premier Guarantee registers + Companies House SIC 41100</h3><p>The UK developer universe including small and regional builders, plus incorporation status for PECR compliance.</p></div><div class="source-card"><span>07</span><h3>Regulator of Social Housing register + Homes England partners</h3><p>Housing associations with active development programmes (Sage Housing is an existing client).</p></div><div class="source-card"><span>08</span><h3>planning.data.gov.uk and local authority planning portals</h3><p>Consents granted with the applicant named — the consent date predicts the launch window.</p></div><div class="source-card"><span>09</span><h3>BMA, KBSA, BiKBBI, BFM, GGF and AMDEA member lists</h3><p>The UK/EU manufacturer universe with category classification.</p></div><div class="source-card"><span>10</span><h3>Exhibitor directories (KBB Birmingham, Clerkenwell, Salone del Mobile, Interzum, KBIS, IBS, High Point)</h3><p>Brands with committed visual budget against a fixed date, visible months in advance.</p></div><div class="source-card"><span>11</span><h3>Merchant and marketplace supplier directories (B&amp;Q, Wickes, Travis Perkins, Wayfair, Houzz)</h3><p>Brands that have won listings — and a checkable inconsistency between their imagery and the retailer&#39;s.</p></div><div class="source-card"><span>12</span><h3>/downloads brochure PDF crawl</h3><p>Brochure vintage year from filename and PDF metadata, which reveals the refresh cycle.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="The routing">
+        
+    <div class="section-head">
+      <p class="eyebrow">The routing</p>
+      <h2>One cascade, tested top to bottom, first match wins</h2>
+      <p class="takeaway">A developer both launching a scheme with no imagery and hiring a 3D artist routes to Tier 1 only. The launch deadline is the hotter signal.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF GATE: entity_class in approved set AND (scale_metric &gt;= 25 SKUs for product, or &gt;= 1 scheme in pipeline for property) AND geo_email_permitted = TRUE</span>
+          <strong>Continue to Tier 1. If any condition fails, drop from TAM entirely.</strong>
+          <em>Excludes estate agents (the house already exists), architecture practices (referral channel), competing CGI studios, sub-25-SKU brands, Germany and Austria (UWG §7), and UK sole traders (PECR treats them as individuals).</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF (launch_status in {coming-soon, launching-dated} AND launch_asset_state in {none, map-or-siteplan, site-photo}) OR (new_range_flag = TRUE AND new_range_asset_state in {cad-only, cutout-only})</span>
+          <strong>Tier 1 — Launch With Nothing To Show</strong>
+          <em>Capital and a public launch date are committed to something that physically cannot be photographed. This is the hottest signal in the cascade because it carries a fixed deadline.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF ELSE IF viz_job_ad != none AND viz_job_posted_days &lt;= 45</span>
+          <strong>Tier 2 — Hiring The Problem</strong>
+          <em>Budget is approved and the workload already exceeds capacity. The job ad also names the hiring manager, so the contact comes free with the signal.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF ELSE IF threed_stack_detected != none AND threed_sku_coverage_pct &lt; 0.35</span>
+          <strong>Tier 3 — 3D Stack, Thin Library</strong>
+          <em>They bought the tool and believe in 3D. The platform has outrun the asset library, so most of the catalogue still cannot be configured. Highest deal value in the cascade.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF ELSE IF launch_status = now-selling AND (assets_per_development &lt; 8 OR interiors_furnished = FALSE OR &#39;people&#39; not in asset_mix OR cgi_reuse_detected = TRUE)</span>
+          <strong>Tier 4 — Selling Live On Thin Visuals</strong>
+          <em>They already pay for CGI and believe in it. They are under-served by their current supplier — flat, cold, thin, recycled. This is a displacement conversation, not an education one.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="5">
+          <span class="route-rule__num">06</span>
+          <span class="route-rule__if">IF ELSE (everything remaining that passed the gate)</span>
+          <strong>Tier 5 — Catch-all: The Catalogue Reality Gap</strong>
+          <em>Roomset photography does not scale. Every new colourway and configuration needs another studio day, so the catalogue silently outgrows the imagery. No account can exit the matrix unrouted.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF GATE: entity_class in approved set AND (scale_metric &gt;= 25 SKUs for product, or &gt;= 1 scheme in pipeline for property) AND geo_email_permitted = TRUE -&gt; Continue to Tier 1. If any condition fails, drop from TAM entirely. (Excludes estate agents (the house already exists), architecture practices (referral channel), competing CGI studios, sub-25-SKU brands, Germany and Austria (UWG §7), and UK sole traders (PECR treats them as individuals).)&#10;2. IF (launch_status in {coming-soon, launching-dated} AND launch_asset_state in {none, map-or-siteplan, site-photo}) OR (new_range_flag = TRUE AND new_range_asset_state in {cad-only, cutout-only}) -&gt; Tier 1 — Launch With Nothing To Show (Capital and a public launch date are committed to something that physically cannot be photographed. This is the hottest signal in the cascade because it carries a fixed deadline.)&#10;3. IF ELSE IF viz_job_ad != none AND viz_job_posted_days &lt;= 45 -&gt; Tier 2 — Hiring The Problem (Budget is approved and the workload already exceeds capacity. The job ad also names the hiring manager, so the contact comes free with the signal.)&#10;4. IF ELSE IF threed_stack_detected != none AND threed_sku_coverage_pct &lt; 0.35 -&gt; Tier 3 — 3D Stack, Thin Library (They bought the tool and believe in 3D. The platform has outrun the asset library, so most of the catalogue still cannot be configured. Highest deal value in the cascade.)&#10;5. IF ELSE IF launch_status = now-selling AND (assets_per_development &lt; 8 OR interiors_furnished = FALSE OR &#39;people&#39; not in asset_mix OR cgi_reuse_detected = TRUE) -&gt; Tier 4 — Selling Live On Thin Visuals (They already pay for CGI and believe in it. They are under-served by their current supplier — flat, cold, thin, recycled. This is a displacement conversation, not an education one.)&#10;6. IF ELSE (everything remaining that passed the gate) -&gt; Tier 5 — Catch-all: The Catalogue Reality Gap (Roomset photography does not scale. Every new colourway and configuration needs another studio day, so the catalogue silently outgrows the imagery. No account can exit the matrix unrouted.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF GATE: entity_class in approved set AND (scale_metric &gt;= 25 SKUs for product, or &gt;= 1 scheme in pipeline for property) AND geo_email_permitted = TRUE -&gt; Continue to Tier 1. If any condition fails, drop from TAM entirely. (Excludes estate agents (the house already exists), architecture practices (referral channel), competing CGI studios, sub-25-SKU brands, Germany and Austria (UWG §7), and UK sole traders (PECR treats them as individuals).)
+2. IF (launch_status in {coming-soon, launching-dated} AND launch_asset_state in {none, map-or-siteplan, site-photo}) OR (new_range_flag = TRUE AND new_range_asset_state in {cad-only, cutout-only}) -&gt; Tier 1 — Launch With Nothing To Show (Capital and a public launch date are committed to something that physically cannot be photographed. This is the hottest signal in the cascade because it carries a fixed deadline.)
+3. IF ELSE IF viz_job_ad != none AND viz_job_posted_days &lt;= 45 -&gt; Tier 2 — Hiring The Problem (Budget is approved and the workload already exceeds capacity. The job ad also names the hiring manager, so the contact comes free with the signal.)
+4. IF ELSE IF threed_stack_detected != none AND threed_sku_coverage_pct &lt; 0.35 -&gt; Tier 3 — 3D Stack, Thin Library (They bought the tool and believe in 3D. The platform has outrun the asset library, so most of the catalogue still cannot be configured. Highest deal value in the cascade.)
+5. IF ELSE IF launch_status = now-selling AND (assets_per_development &lt; 8 OR interiors_furnished = FALSE OR &#39;people&#39; not in asset_mix OR cgi_reuse_detected = TRUE) -&gt; Tier 4 — Selling Live On Thin Visuals (They already pay for CGI and believe in it. They are under-served by their current supplier — flat, cold, thin, recycled. This is a displacement conversation, not an education one.)
+6. IF ELSE (everything remaining that passed the gate) -&gt; Tier 5 — Catch-all: The Catalogue Reality Gap (Roomset photography does not scale. Every new colourway and configuration needs another studio day, so the catalogue silently outgrows the imagery. No account can exit the matrix unrouted.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="The tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">The tiers</p>
+      <h2>Five tiers, ordered by how much money is already committed</h2>
+      <p class="takeaway">Tiers 1 and 2 regenerate themselves every month. The waterfall recirculates rather than depletes.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">7% TAM</span>
+          </div>
+          <h3>Tier 1: Launch With Nothing To Show</h3>
+          <p>A scheme listed Coming Soon or with a dated launch and no CGI in the gallery — or a new product range whose pages carry CAD-or-cutout-only imagery.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Capital and a public launch date are committed to something that physically cannot be photographed. Reservations and pre-orders stall on an empty gallery, and the register-your-interest list converts at whatever a location map converts at.</dd></div>
+              <div><dt>Offer</dt><dd>Launch Visual Readiness Check — named scheme or range, asset deficit vs. the regional benchmark, plus one concept frame</dd></div>
+              <div><dt>Source</dt><dd>/developments status + gallery classification; product-page image classification</dd></div>
+              <div><dt>Reply density</dt><dd>Highest in the cascade — a fixed launch deadline the prospect cannot move</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-orange" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">4% TAM</span>
+          </div>
+          <h3>Tier 2: Hiring The Problem</h3>
+          <p>A live job ad posted within 45 days for a 3D Visualiser, CGI Artist, Archviz Artist, Visualisation Manager, Studio Manager or Content Producer.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Budget is approved and the workload already exceeds capacity. One hire is a three-month ramp, one skillset and one holiday calendar — and the work is already stacked up behind them.</dd></div>
+              <div><dt>Offer</dt><dd>Make-vs-Buy Model — fully loaded cost of the role they posted vs. equivalent studio output in year one</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Jobs, Indeed, company /careers page — including the named hiring manager</dd></div>
+              <div><dt>Reply density</dt><dd>Very high — approved budget, a named contact, and an argument that is useful even if they hire</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">9% TAM</span>
+          </div>
+          <h3>Tier 3: 3D Stack, Thin Library</h3>
+          <p>A configurator, AR or 3D viewer detected in the page source (Threekit, Emersya, Cylindo, Sketchfab, Matterport, Roomle, model-viewer) covering under 35% of live SKUs.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They bought the tool and believe in 3D. The platform has outrun the asset library, so a configurator covering a third of the range mostly teaches customers which products are not configurable.</dd></div>
+              <div><dt>Offer</dt><dd>3D Coverage Map — which SKUs and room types the existing tool actually covers today</dd></div>
+              <div><dt>Source</dt><dd>BuiltWith + raw HTML/asset scan, cross-referenced against the product crawl</dd></div>
+              <div><dt>Reply density</dt><dd>Strong — the belief is already bought, so no category education is needed. Highest deal sizes.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">22% TAM</span>
+          </div>
+          <h3>Tier 4: Selling Live On Thin Visuals</h3>
+          <p>A Now Selling scheme carrying fewer than 8 assets, unfurnished interiors, no people in frame, or CGI reused across two or more schemes (caught by perceptual hash).</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They already pay for CGI and believe in it — they are simply under-served. The current supplier renders what it is sent rather than telling them what should be in the shot, so the gallery is flat, cold, thin and sometimes recycled.</dd></div>
+              <div><dt>Offer</dt><dd>Listing Image Gap Report — their asset count and mix vs. the 20 fastest-reserving comparable schemes</dd></div>
+              <div><dt>Source</dt><dd>Gallery count + asset classification + pHash reuse detection across the portfolio</dd></div>
+              <div><dt>Reply density</dt><dd>Good — a displacement conversation with an existing budget line already approved</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">58% TAM</span>
+          </div>
+          <h3>Tier 5: Catch-all: The Catalogue Reality Gap</h3>
+          <p>Everything else that passes the qualification gate — routed on the computed roomset ratio (lifestyle roomset images ÷ live SKUs), brochure vintage and trade-show exhibitor status.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Roomset photography does not scale. Every new colourway, finish and configuration needs another studio day, so the catalogue silently outgrows the imagery — 640 products and 11 lifestyle images is not a decision, it is a constraint.</dd></div>
+              <div><dt>Offer</dt><dd>Roomset Ratio Audit — their computed ratio, the category benchmark, and what closing the gap looks like</dd></div>
+              <div><dt>Source</dt><dd>Product crawl + brochure vintage + exhibitor directories</dd></div>
+              <div><dt>Reply density</dt><dd>Broadest and softest — expected to land between 1 in 400 and 1 in 500, which is normal for a catch-all</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="The campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">The campaigns</p>
+      <h2>What each tier actually says, and why it lands</h2>
+      <p class="takeaway">Sector decides only which case study goes in the email. It never decides the campaign.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>The Empty Gallery (property)</h3>
+          <p>The hottest tier in the cascade because the deadline belongs to the prospect, not to us. They cannot take off-plan reservations on a location map, and the launch date is already public.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Developer /developments page shows a scheme as Coming Soon or with a dated launch, and the gallery contains only a location map, site plan or hoarding photo.</dd></div>
+            <div><dt>AI strategy</dt><dd>Crawl every scheme page in the portfolio, classify each gallery image, and compute the Launch Asset Deficit against the median of the 20 fastest-reserving comparable schemes in the same region and price band. The email names the scheme and quotes the deficit.</dd></div>
+            <div><dt>Value</dt><dd>Sell what is not built</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>CAD On White (product)</h3>
+          <p>Same structural condition as the property version — the range is going to merchants and to the brochure before anyone has seen it in an actual room.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>A new or forthcoming range whose product pages carry only cut-outs on white or CAD line drawings, with no roomset imagery anywhere.</dd></div>
+            <div><dt>AI strategy</dt><dd>Detect new-range pages via /new, press releases and &#39;coming [season]&#39; copy, then classify every product image on the range. The email names the range and the SKU count, and contrasts it against the ranges winning space at the relevant retailer.</dd></div>
+            <div><dt>Value</dt><dd>Sell what is not manufactured</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Make vs Buy</h3>
+          <p>Deliberately not an anti-hiring pitch. The best clients have someone in-house; what they do not have is one person covering archviz, product roomsets, animation and a real-time configurator, because that is four skillsets.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Live job ad within 45 days for a 3D Visualiser, CGI Artist, Archviz Artist, Studio Manager, Retoucher or Content Producer.</dd></div>
+            <div><dt>AI strategy</dt><dd>Monitor LinkedIn Jobs, Indeed and company careers pages weekly. Email the named hiring manager first, the marketing lead second. The asset is a fully loaded cost model of the exact role they posted — salary, software, hardware, ramp — against equivalent studio output.</dd></div>
+            <div><dt>Value</dt><dd>Save time and money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>The Half-Built Configurator</h3>
+          <p>The blocker is never the platform — it is that somebody has to model and dress every remaining SKU, and that queue never gets to the front of anyone&#39;s week. Highest deal value in the cascade.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>A 3D/AR/configurator platform detected in the page source, live on under 35% of the brand&#39;s SKUs.</dd></div>
+            <div><dt>AI strategy</dt><dd>Detect the platform via BuiltWith plus a raw asset scan for .glb/.gltf and model-viewer, then crawl the catalogue to compute exactly what percentage of SKUs the tool actually reaches. The email quotes the coverage percentage back to them.</dd></div>
+            <div><dt>Value</dt><dd>Make money from a tool already paid for</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Six Empty Rooms</h3>
+          <p>A supplier displacement conversation. They believe in CGI and have the budget line — the argument is that their studio renders what it is sent rather than deciding what should be in the frame.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Now Selling schemes with under 8 assets, unfurnished interiors, no people in frame, or CGI matched across multiple schemes by perceptual hash.</dd></div>
+            <div><dt>AI strategy</dt><dd>Count and classify the gallery, run pHash across the whole portfolio to catch reuse, and benchmark against the 20 fastest-reserving comparable schemes. The subject line carries their own asset count.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Four Assets From One (Labs upsell)</h3>
+          <p>The lowest-friction entry point in the whole strategy — same scheme, same budget line, four times the channel coverage, and no new production brief.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Tier 4 accounts whose existing CGI is technically fine but unfurnished, daylight-only and unpeopled.</dd></div>
+            <div><dt>AI strategy</dt><dd>Position AI Labs as a no-reshoot upgrade path: take existing CGI and add people, movement and time-of-day. One empty daylight lounge becomes dusk, occupied, a social crop and a short dynamic still for paid.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>The Roomset Ratio</h3>
+          <p>The number is theirs, taken from their own site, so it cannot be disputed — only explained. Explaining it is a sales conversation.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Everything remaining that passes the gate — routed on live SKU count divided by lifestyle roomset image count.</dd></div>
+            <div><dt>AI strategy</dt><dd>Crawl the sitemap, classify every product image, and compute the ratio. The subject line is two numbers: their SKU count and their roomset count. The body explains that this is a constraint, not a decision.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Brochure Vintage</h3>
+          <p>Re-engagement angle for Tier 5 non-repliers, and a natural bridge to the brochure work Image Foundry already does for Ideal Standard and Armera.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>A downloadable brochure PDF whose filename or metadata carries a year 18+ months old.</dd></div>
+            <div><dt>AI strategy</dt><dd>Crawl /downloads and read PDF metadata for the vintage year. Time the send to the brochure refresh cycle, which in KBB and building products is annual and predictable.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="The copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">The copy</p>
+      <h2>Three emails per tier, over eight days</h2>
+      <p class="takeaway">Every merge field is populated by the same crawl that routed the lead. None require manual research.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company}}</span><span>{{scheme_name}}</span><span>{{launch_status_phrase}}</span><span>{{asset_description}}</span><span>{{plot_count}}</span><span>{{region}}</span><span>{{launch_month}}</span><span>{{range_name}}</span><span>{{sku_count}}</span><span>{{retailer_or_category}}</span><span>{{job_title}}</span><span>{{days_ago}}</span><span>{{observed_workload}}</span><span>{{tool_name}}</span><span>{{coverage_pct}}</span><span>{{asset_count}}</span><span>{{asset_observation}}</span><span>{{benchmark_count}}</span><span>{{roomset_count}}</span><span>{{alt_contact_role}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company}}, {{scheme_name}}, {{launch_status_phrase}}, {{asset_description}}, {{plot_count}}, {{region}}, {{launch_month}}, {{range_name}}, {{sku_count}}, {{retailer_or_category}}, {{job_title}}, {{days_ago}}, {{observed_workload}}, {{tool_name}}, {{coverage_pct}}, {{asset_count}}, {{asset_observation}}, {{benchmark_count}}, {{roomset_count}}, {{alt_contact_role}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 — Launch With Nothing To Show</strong>
+              <em>Launch Visual Readiness Check</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 — Launch With Nothing To Show steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{scheme_name}}&#10;&#10;{{first_name}} — I was going through the developments page on {{company}} and {{scheme_name}} is listed as {{launch_status_phrase}}, with a register-your-interest form already live.&#10;&#10;The gallery on it has {{asset_description}} and nothing else.&#10;&#10;But would it be fair to assume the sales team is being asked to take reservations on {{plot_count}} plots before there&#39;s anything to actually show a buyer?&#10;&#10;That&#39;s the whole of what we do. We&#39;re a CGI studio in Manchester, and over the last 20 years our clients have sold more than £16bn of property and products using imagery of things that weren&#39;t built yet — Vistry Partnerships, Sage Housing, Rippon Homes, Spitfire Homes.&#10;&#10;I&#39;ve put together a one-page launch readiness check on {{scheme_name}}: what your gallery carries today against what the 20 fastest-reserving schemes in {{region}} carry at the same stage.&#10;&#10;Reply Y and I&#39;ll send it over. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{scheme_name}}" data-preview="Kingsfield Gardens">{{scheme_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — I was going through the developments page on {{company}} and {{scheme_name}} is listed as {{launch_status_phrase}}, with a register-your-interest form already live.&#10;&#10;The gallery on it has {{asset_description}} and nothing else.&#10;&#10;But would it be fair to assume the sales team is being asked to take reservations on {{plot_count}} plots before there&#39;s anything to actually show a buyer?&#10;&#10;That&#39;s the whole of what we do. We&#39;re a CGI studio in Manchester, and over the last 20 years our clients have sold more than £16bn of property and products using imagery of things that weren&#39;t built yet — Vistry Partnerships, Sage Housing, Rippon Homes, Spitfire Homes.&#10;&#10;I&#39;ve put together a one-page launch readiness check on {{scheme_name}}: what your gallery carries today against what the 20 fastest-reserving schemes in {{region}} carry at the same stage.&#10;&#10;Reply Y and I&#39;ll send it over. No call needed." data-preview="Rachel — I was going through the developments page on Northgate Homes and Kingsfield Gardens is listed as launching this spring, with a register-your-interest form already live.&#10;&#10;The gallery on it has a location map and a site plan and nothing else.&#10;&#10;But would it be fair to assume the sales team is being asked to take reservations on 84 plots before there&#39;s anything to actually show a buyer?&#10;&#10;That&#39;s the whole of what we do. We&#39;re a CGI studio in Manchester, and over the last 20 years our clients have sold more than £16bn of property and products using imagery of things that weren&#39;t built yet — Vistry Partnerships, Sage Housing, Rippon Homes, Spitfire Homes.&#10;&#10;I&#39;ve put together a one-page launch readiness check on Kingsfield Gardens: what your gallery carries today against what the 20 fastest-reserving schemes in the East Midlands carry at the same stage.&#10;&#10;Reply Y and I&#39;ll send it over. No call needed.">
+                        <p>{{first_name}} — I was going through the developments page on {{company}} and {{scheme_name}} is listed as {{launch_status_phrase}}, with a register-your-interest form already live.</p><p>The gallery on it has {{asset_description}} and nothing else.</p><p>But would it be fair to assume the sales team is being asked to take reservations on {{plot_count}} plots before there&#39;s anything to actually show a buyer?</p><p>That&#39;s the whole of what we do. We&#39;re a CGI studio in Manchester, and over the last 20 years our clients have sold more than £16bn of property and products using imagery of things that weren&#39;t built yet — Vistry Partnerships, Sage Housing, Rippon Homes, Spitfire Homes.</p><p>I&#39;ve put together a one-page launch readiness check on {{scheme_name}}: what your gallery carries today against what the 20 fastest-reserving schemes in {{region}} carry at the same stage.</p><p>Reply Y and I&#39;ll send it over. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One thing I should have led with, {{first_name}}.&#10;&#10;The reason this matters before {{launch_month}} rather than after is that the register-your-interest list you&#39;re building right now is the cheapest reservation pipeline you&#39;ll ever have. Every week it runs without imagery, it converts at whatever a location map converts at.&#10;&#10;Our own research on this is fairly blunt: carefully propped images are 22% more likely to be clicked and 68% more memorable than standard ones. On an off-plan launch, that&#39;s the difference between a waiting list and a database.&#10;&#10;Still happy to send the {{scheme_name}} readiness check across — just say the word.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One thing I should have led with, {{first_name}}.&#10;&#10;The reason this matters before {{launch_month}} rather than after is that the register-your-interest list you&#39;re building right now is the cheapest reservation pipeline you&#39;ll ever have. Every week it runs without imagery, it converts at whatever a location map converts at.&#10;&#10;Our own research on this is fairly blunt: carefully propped images are 22% more likely to be clicked and 68% more memorable than standard ones. On an off-plan launch, that&#39;s the difference between a waiting list and a database.&#10;&#10;Still happy to send the {{scheme_name}} readiness check across — just say the word." data-preview="One thing I should have led with, Rachel.&#10;&#10;The reason this matters before March rather than after is that the register-your-interest list you&#39;re building right now is the cheapest reservation pipeline you&#39;ll ever have. Every week it runs without imagery, it converts at whatever a location map converts at.&#10;&#10;Our own research on this is fairly blunt: carefully propped images are 22% more likely to be clicked and 68% more memorable than standard ones. On an off-plan launch, that&#39;s the difference between a waiting list and a database.&#10;&#10;Still happy to send the Kingsfield Gardens readiness check across — just say the word.">
+                        <p>One thing I should have led with, {{first_name}}.</p><p>The reason this matters before {{launch_month}} rather than after is that the register-your-interest list you&#39;re building right now is the cheapest reservation pipeline you&#39;ll ever have. Every week it runs without imagery, it converts at whatever a location map converts at.</p><p>Our own research on this is fairly blunt: carefully propped images are 22% more likely to be clicked and 68% more memorable than standard ones. On an off-plan launch, that&#39;s the difference between a waiting list and a database.</p><p>Still happy to send the {{scheme_name}} readiness check across — just say the word.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: wrong person?&#10;&#10;{{first_name}} — no need for a call on this.&#10;&#10;Just reply yes and I&#39;ll send over the launch readiness check for {{scheme_name}}.&#10;&#10;Should I send it to you, or is {{alt_contact_role}} the better person for pre-launch marketing assets?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="wrong person?" data-preview="wrong person?">wrong person?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — no need for a call on this.&#10;&#10;Just reply yes and I&#39;ll send over the launch readiness check for {{scheme_name}}.&#10;&#10;Should I send it to you, or is {{alt_contact_role}} the better person for pre-launch marketing assets?" data-preview="Rachel — no need for a call on this.&#10;&#10;Just reply yes and I&#39;ll send over the launch readiness check for Kingsfield Gardens.&#10;&#10;Should I send it to you, or is your Head of Marketing the better person for pre-launch marketing assets?">
+                        <p>{{first_name}} — no need for a call on this.</p><p>Just reply yes and I&#39;ll send over the launch readiness check for {{scheme_name}}.</p><p>Should I send it to you, or is {{alt_contact_role}} the better person for pre-launch marketing assets?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 — Hiring The Problem</strong>
+              <em>Make-vs-Buy Model</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 — Hiring The Problem steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the {{job_title}} role&#10;&#10;{{first_name}} — saw {{company}} posted for a {{job_title}} {{days_ago}} days ago, and then had a look at {{observed_workload}}.&#10;&#10;But would it be fair to assume the work is already stacked up behind that hire — and it&#39;s another three months before anyone&#39;s actually rendering anything?&#10;&#10;We&#39;re a CGI studio in Manchester, running since 2001. Stills, animation and interactive 3D under one roof, live from the first brief rather than after a notice period. Our clients have sold more than £16bn of property and products on our imagery.&#10;&#10;I&#39;ve built a quick model of what that role costs fully loaded — salary, software, hardware, ramp — against what the same budget buys as studio output in year one.&#10;&#10;Reply Y and I&#39;ll send it. Genuinely useful either way, including if you go ahead and hire.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the {{job_title}} role" data-preview="the 3D Visualiser role">the {{job_title}} role</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — saw {{company}} posted for a {{job_title}} {{days_ago}} days ago, and then had a look at {{observed_workload}}.&#10;&#10;But would it be fair to assume the work is already stacked up behind that hire — and it&#39;s another three months before anyone&#39;s actually rendering anything?&#10;&#10;We&#39;re a CGI studio in Manchester, running since 2001. Stills, animation and interactive 3D under one roof, live from the first brief rather than after a notice period. Our clients have sold more than £16bn of property and products on our imagery.&#10;&#10;I&#39;ve built a quick model of what that role costs fully loaded — salary, software, hardware, ramp — against what the same budget buys as studio output in year one.&#10;&#10;Reply Y and I&#39;ll send it. Genuinely useful either way, including if you go ahead and hire." data-preview="Rachel — saw Northgate Homes posted for a 3D Visualiser 11 days ago, and then had a look at the four schemes you&#39;ve got launching this year.&#10;&#10;But would it be fair to assume the work is already stacked up behind that hire — and it&#39;s another three months before anyone&#39;s actually rendering anything?&#10;&#10;We&#39;re a CGI studio in Manchester, running since 2001. Stills, animation and interactive 3D under one roof, live from the first brief rather than after a notice period. Our clients have sold more than £16bn of property and products on our imagery.&#10;&#10;I&#39;ve built a quick model of what that role costs fully loaded — salary, software, hardware, ramp — against what the same budget buys as studio output in year one.&#10;&#10;Reply Y and I&#39;ll send it. Genuinely useful either way, including if you go ahead and hire.">
+                        <p>{{first_name}} — saw {{company}} posted for a {{job_title}} {{days_ago}} days ago, and then had a look at {{observed_workload}}.</p><p>But would it be fair to assume the work is already stacked up behind that hire — and it&#39;s another three months before anyone&#39;s actually rendering anything?</p><p>We&#39;re a CGI studio in Manchester, running since 2001. Stills, animation and interactive 3D under one roof, live from the first brief rather than after a notice period. Our clients have sold more than £16bn of property and products on our imagery.</p><p>I&#39;ve built a quick model of what that role costs fully loaded — salary, software, hardware, ramp — against what the same budget buys as studio output in year one.</p><p>Reply Y and I&#39;ll send it. Genuinely useful either way, including if you go ahead and hire.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;To be clear {{first_name}}, I&#39;m not trying to talk you out of the hire.&#10;&#10;The clients we work with best usually have someone in-house. What they don&#39;t have is one person who can cover archviz, product roomsets, animation, and a real-time configurator — because that&#39;s four skillsets and nobody has all four.&#10;&#10;The in-house hire owns the pipeline. We take the peaks and the things outside their lane. That&#39;s how it works with most of our KBB and housebuilder clients.&#10;&#10;Model&#39;s still here if it&#39;s useful.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="To be clear {{first_name}}, I&#39;m not trying to talk you out of the hire.&#10;&#10;The clients we work with best usually have someone in-house. What they don&#39;t have is one person who can cover archviz, product roomsets, animation, and a real-time configurator — because that&#39;s four skillsets and nobody has all four.&#10;&#10;The in-house hire owns the pipeline. We take the peaks and the things outside their lane. That&#39;s how it works with most of our KBB and housebuilder clients.&#10;&#10;Model&#39;s still here if it&#39;s useful." data-preview="To be clear Rachel, I&#39;m not trying to talk you out of the hire.&#10;&#10;The clients we work with best usually have someone in-house. What they don&#39;t have is one person who can cover archviz, product roomsets, animation, and a real-time configurator — because that&#39;s four skillsets and nobody has all four.&#10;&#10;The in-house hire owns the pipeline. We take the peaks and the things outside their lane. That&#39;s how it works with most of our KBB and housebuilder clients.&#10;&#10;Model&#39;s still here if it&#39;s useful.">
+                        <p>To be clear {{first_name}}, I&#39;m not trying to talk you out of the hire.</p><p>The clients we work with best usually have someone in-house. What they don&#39;t have is one person who can cover archviz, product roomsets, animation, and a real-time configurator — because that&#39;s four skillsets and nobody has all four.</p><p>The in-house hire owns the pipeline. We take the peaks and the things outside their lane. That&#39;s how it works with most of our KBB and housebuilder clients.</p><p>Model&#39;s still here if it&#39;s useful.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: quick one&#10;&#10;No call needed, {{first_name}} — just reply yes and I&#39;ll send the make-vs-buy model for the {{job_title}} role.&#10;&#10;Should that come to you or to whoever holds the marketing budget?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="quick one" data-preview="quick one">quick one</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed, {{first_name}} — just reply yes and I&#39;ll send the make-vs-buy model for the {{job_title}} role.&#10;&#10;Should that come to you or to whoever holds the marketing budget?" data-preview="No call needed, Rachel — just reply yes and I&#39;ll send the make-vs-buy model for the 3D Visualiser role.&#10;&#10;Should that come to you or to whoever holds the marketing budget?">
+                        <p>No call needed, {{first_name}} — just reply yes and I&#39;ll send the make-vs-buy model for the {{job_title}} role.</p><p>Should that come to you or to whoever holds the marketing budget?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 — 3D Stack, Thin Library</strong>
+              <em>3D Coverage Map</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 — 3D Stack, Thin Library steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your {{tool_name}} coverage&#10;&#10;{{first_name}} — I noticed {{company}} is running {{tool_name}} on the product pages, so I checked how far it reaches. It&#39;s live on roughly {{coverage_pct}}% of your {{sku_count}} products.&#10;&#10;But would it be fair to assume the blocker isn&#39;t the platform — it&#39;s that somebody has to model and dress every remaining SKU, and that queue never gets to the front of anyone&#39;s week?&#10;&#10;That&#39;s what we do. We&#39;re a Manchester CGI studio and we build the asset libraries that sit underneath these tools — we built The Radiator Company&#39;s product configurator and Pilot Group&#39;s interactive VR showroom end to end.&#10;&#10;I&#39;ve mapped which of your categories and room types {{tool_name}} actually covers today and which are still flat images. One page.&#10;&#10;Reply Y and I&#39;ll send it over. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your {{tool_name}} coverage" data-preview="your Cylindo coverage">your {{tool_name}} coverage</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — I noticed {{company}} is running {{tool_name}} on the product pages, so I checked how far it reaches. It&#39;s live on roughly {{coverage_pct}}% of your {{sku_count}} products.&#10;&#10;But would it be fair to assume the blocker isn&#39;t the platform — it&#39;s that somebody has to model and dress every remaining SKU, and that queue never gets to the front of anyone&#39;s week?&#10;&#10;That&#39;s what we do. We&#39;re a Manchester CGI studio and we build the asset libraries that sit underneath these tools — we built The Radiator Company&#39;s product configurator and Pilot Group&#39;s interactive VR showroom end to end.&#10;&#10;I&#39;ve mapped which of your categories and room types {{tool_name}} actually covers today and which are still flat images. One page.&#10;&#10;Reply Y and I&#39;ll send it over. No call needed." data-preview="Rachel — I noticed Northgate Homes is running Cylindo on the product pages, so I checked how far it reaches. It&#39;s live on roughly 18% of your 640 products.&#10;&#10;But would it be fair to assume the blocker isn&#39;t the platform — it&#39;s that somebody has to model and dress every remaining SKU, and that queue never gets to the front of anyone&#39;s week?&#10;&#10;That&#39;s what we do. We&#39;re a Manchester CGI studio and we build the asset libraries that sit underneath these tools — we built The Radiator Company&#39;s product configurator and Pilot Group&#39;s interactive VR showroom end to end.&#10;&#10;I&#39;ve mapped which of your categories and room types Cylindo actually covers today and which are still flat images. One page.&#10;&#10;Reply Y and I&#39;ll send it over. No call needed.">
+                        <p>{{first_name}} — I noticed {{company}} is running {{tool_name}} on the product pages, so I checked how far it reaches. It&#39;s live on roughly {{coverage_pct}}% of your {{sku_count}} products.</p><p>But would it be fair to assume the blocker isn&#39;t the platform — it&#39;s that somebody has to model and dress every remaining SKU, and that queue never gets to the front of anyone&#39;s week?</p><p>That&#39;s what we do. We&#39;re a Manchester CGI studio and we build the asset libraries that sit underneath these tools — we built The Radiator Company&#39;s product configurator and Pilot Group&#39;s interactive VR showroom end to end.</p><p>I&#39;ve mapped which of your categories and room types {{tool_name}} actually covers today and which are still flat images. One page.</p><p>Reply Y and I&#39;ll send it over. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The commercial angle on this, {{first_name}}:&#10;&#10;A configurator that covers a third of the range mostly teaches customers which products aren&#39;t configurable. The tool is already paid for — the return only starts once coverage is high enough that a shopper doesn&#39;t fall out of the experience halfway through.&#10;&#10;Filling the library is a one-off. The tool then keeps earning on it every year.&#10;&#10;Coverage map&#39;s ready whenever you want it.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The commercial angle on this, {{first_name}}:&#10;&#10;A configurator that covers a third of the range mostly teaches customers which products aren&#39;t configurable. The tool is already paid for — the return only starts once coverage is high enough that a shopper doesn&#39;t fall out of the experience halfway through.&#10;&#10;Filling the library is a one-off. The tool then keeps earning on it every year.&#10;&#10;Coverage map&#39;s ready whenever you want it." data-preview="The commercial angle on this, Rachel:&#10;&#10;A configurator that covers a third of the range mostly teaches customers which products aren&#39;t configurable. The tool is already paid for — the return only starts once coverage is high enough that a shopper doesn&#39;t fall out of the experience halfway through.&#10;&#10;Filling the library is a one-off. The tool then keeps earning on it every year.&#10;&#10;Coverage map&#39;s ready whenever you want it.">
+                        <p>The commercial angle on this, {{first_name}}:</p><p>A configurator that covers a third of the range mostly teaches customers which products aren&#39;t configurable. The tool is already paid for — the return only starts once coverage is high enough that a shopper doesn&#39;t fall out of the experience halfway through.</p><p>Filling the library is a one-off. The tool then keeps earning on it every year.</p><p>Coverage map&#39;s ready whenever you want it.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} + {{tool_name}}&#10;&#10;{{first_name}} — no call, no pitch.&#10;&#10;Reply yes and I&#39;ll send the 3D coverage map for {{company}}.&#10;&#10;You, or is this {{alt_contact_role}}&#39;s call?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} + {{tool_name}}" data-preview="Northgate Homes + Cylindo">{{company}} + {{tool_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — no call, no pitch.&#10;&#10;Reply yes and I&#39;ll send the 3D coverage map for {{company}}.&#10;&#10;You, or is this {{alt_contact_role}}&#39;s call?" data-preview="Rachel — no call, no pitch.&#10;&#10;Reply yes and I&#39;ll send the 3D coverage map for Northgate Homes.&#10;&#10;You, or is this your Head of Marketing&#39;s call?">
+                        <p>{{first_name}} — no call, no pitch.</p><p>Reply yes and I&#39;ll send the 3D coverage map for {{company}}.</p><p>You, or is this {{alt_contact_role}}&#39;s call?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 — Selling Live On Thin Visuals</strong>
+              <em>Listing Image Gap Report</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 — Selling Live On Thin Visuals steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{scheme_name}} — {{asset_count}} images&#10;&#10;{{first_name}} — {{scheme_name}} is live and selling, and the gallery is carrying {{asset_count}} images. {{asset_observation}}.&#10;&#10;I ran the same count across the 20 fastest-reserving schemes in {{region}} at the same price point. Median is {{benchmark_count}}, and almost all of them have furnished interiors and people in the frame.&#10;&#10;But would it be fair to assume the current supplier renders what they&#39;re sent, rather than telling you what should be in the shot?&#10;&#10;That&#39;s the difference at our end. Our own research: carefully propped images are 22% more likely to be clicked and 68% more memorable than standard ones. We&#39;re a Manchester studio, 20 years in, £16bn of client property and product sold on our imagery.&#10;&#10;I&#39;ve written up the gap on {{scheme_name}} — image count, mix, and the three frames it&#39;s missing. Reply Y and I&#39;ll send it.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{scheme_name}} — {{asset_count}} images" data-preview="Kingsfield Gardens — 6 images">{{scheme_name}} — {{asset_count}} images</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — {{scheme_name}} is live and selling, and the gallery is carrying {{asset_count}} images. {{asset_observation}}.&#10;&#10;I ran the same count across the 20 fastest-reserving schemes in {{region}} at the same price point. Median is {{benchmark_count}}, and almost all of them have furnished interiors and people in the frame.&#10;&#10;But would it be fair to assume the current supplier renders what they&#39;re sent, rather than telling you what should be in the shot?&#10;&#10;That&#39;s the difference at our end. Our own research: carefully propped images are 22% more likely to be clicked and 68% more memorable than standard ones. We&#39;re a Manchester studio, 20 years in, £16bn of client property and product sold on our imagery.&#10;&#10;I&#39;ve written up the gap on {{scheme_name}} — image count, mix, and the three frames it&#39;s missing. Reply Y and I&#39;ll send it." data-preview="Rachel — Kingsfield Gardens is live and selling, and the gallery is carrying 6 images. All six are daylight exteriors, and the two interiors are unfurnished.&#10;&#10;I ran the same count across the 20 fastest-reserving schemes in the East Midlands at the same price point. Median is 19, and almost all of them have furnished interiors and people in the frame.&#10;&#10;But would it be fair to assume the current supplier renders what they&#39;re sent, rather than telling you what should be in the shot?&#10;&#10;That&#39;s the difference at our end. Our own research: carefully propped images are 22% more likely to be clicked and 68% more memorable than standard ones. We&#39;re a Manchester studio, 20 years in, £16bn of client property and product sold on our imagery.&#10;&#10;I&#39;ve written up the gap on Kingsfield Gardens — image count, mix, and the three frames it&#39;s missing. Reply Y and I&#39;ll send it.">
+                        <p>{{first_name}} — {{scheme_name}} is live and selling, and the gallery is carrying {{asset_count}} images. {{asset_observation}}.</p><p>I ran the same count across the 20 fastest-reserving schemes in {{region}} at the same price point. Median is {{benchmark_count}}, and almost all of them have furnished interiors and people in the frame.</p><p>But would it be fair to assume the current supplier renders what they&#39;re sent, rather than telling you what should be in the shot?</p><p>That&#39;s the difference at our end. Our own research: carefully propped images are 22% more likely to be clicked and 68% more memorable than standard ones. We&#39;re a Manchester studio, 20 years in, £16bn of client property and product sold on our imagery.</p><p>I&#39;ve written up the gap on {{scheme_name}} — image count, mix, and the three frames it&#39;s missing. Reply Y and I&#39;ll send it.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One more thing worth knowing, {{first_name}}.&#10;&#10;You don&#39;t have to re-shoot anything to fix most of this. We can take existing CGI and add people, movement and time-of-day to it — that&#39;s what our Labs work does. An empty daylight lounge becomes four assets: dusk, occupied, a social crop, and a short dynamic still for paid.&#10;&#10;Same scheme, same budget line, four times the channel coverage.&#10;&#10;Gap report&#39;s still here for {{scheme_name}}.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One more thing worth knowing, {{first_name}}.&#10;&#10;You don&#39;t have to re-shoot anything to fix most of this. We can take existing CGI and add people, movement and time-of-day to it — that&#39;s what our Labs work does. An empty daylight lounge becomes four assets: dusk, occupied, a social crop, and a short dynamic still for paid.&#10;&#10;Same scheme, same budget line, four times the channel coverage.&#10;&#10;Gap report&#39;s still here for {{scheme_name}}." data-preview="One more thing worth knowing, Rachel.&#10;&#10;You don&#39;t have to re-shoot anything to fix most of this. We can take existing CGI and add people, movement and time-of-day to it — that&#39;s what our Labs work does. An empty daylight lounge becomes four assets: dusk, occupied, a social crop, and a short dynamic still for paid.&#10;&#10;Same scheme, same budget line, four times the channel coverage.&#10;&#10;Gap report&#39;s still here for Kingsfield Gardens.">
+                        <p>One more thing worth knowing, {{first_name}}.</p><p>You don&#39;t have to re-shoot anything to fix most of this. We can take existing CGI and add people, movement and time-of-day to it — that&#39;s what our Labs work does. An empty daylight lounge becomes four assets: dusk, occupied, a social crop, and a short dynamic still for paid.</p><p>Same scheme, same budget line, four times the channel coverage.</p><p>Gap report&#39;s still here for {{scheme_name}}.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: quick favour&#10;&#10;{{first_name}} — no call needed.&#10;&#10;Reply yes and I&#39;ll send the image gap report for {{scheme_name}} — yours against the 20 fastest-reserving comparable schemes.&#10;&#10;Should this go to you or to {{alt_contact_role}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="quick favour" data-preview="quick favour">quick favour</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — no call needed.&#10;&#10;Reply yes and I&#39;ll send the image gap report for {{scheme_name}} — yours against the 20 fastest-reserving comparable schemes.&#10;&#10;Should this go to you or to {{alt_contact_role}}?" data-preview="Rachel — no call needed.&#10;&#10;Reply yes and I&#39;ll send the image gap report for Kingsfield Gardens — yours against the 20 fastest-reserving comparable schemes.&#10;&#10;Should this go to you or to your Head of Marketing?">
+                        <p>{{first_name}} — no call needed.</p><p>Reply yes and I&#39;ll send the image gap report for {{scheme_name}} — yours against the 20 fastest-reserving comparable schemes.</p><p>Should this go to you or to {{alt_contact_role}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 — Catch-all: The Catalogue Reality Gap</strong>
+              <em>Roomset Ratio Audit</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 — Catch-all: The Catalogue Reality Gap steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{sku_count}} products, {{roomset_count}} rooms&#10;&#10;{{first_name}} — I counted what&#39;s live on {{company}}: {{sku_count}} products, and {{roomset_count}} images of any of them in an actual room.&#10;&#10;But would it be fair to assume that isn&#39;t a decision — it&#39;s just that every new finish and configuration needs another studio day, and the catalogue grows faster than the shoot calendar does?&#10;&#10;We&#39;re a CGI studio in Manchester. We build the room once in 3D, then render every SKU, every finish and every channel out of it — no studio, no props, no reshoot when the range changes. Ideal Standard, Geberit, Aqualisa, Croydex and JELD-WEN all work this way with us.&#10;&#10;I&#39;ve put your ratio next to the category benchmark and costed what closing it looks like. One page, no obligation.&#10;&#10;Reply Y and I&#39;ll send it across.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{sku_count}} products, {{roomset_count}} rooms" data-preview="640 products, 11 rooms">{{sku_count}} products, {{roomset_count}} rooms</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — I counted what&#39;s live on {{company}}: {{sku_count}} products, and {{roomset_count}} images of any of them in an actual room.&#10;&#10;But would it be fair to assume that isn&#39;t a decision — it&#39;s just that every new finish and configuration needs another studio day, and the catalogue grows faster than the shoot calendar does?&#10;&#10;We&#39;re a CGI studio in Manchester. We build the room once in 3D, then render every SKU, every finish and every channel out of it — no studio, no props, no reshoot when the range changes. Ideal Standard, Geberit, Aqualisa, Croydex and JELD-WEN all work this way with us.&#10;&#10;I&#39;ve put your ratio next to the category benchmark and costed what closing it looks like. One page, no obligation.&#10;&#10;Reply Y and I&#39;ll send it across." data-preview="Rachel — I counted what&#39;s live on Northgate Homes: 640 products, and 11 images of any of them in an actual room.&#10;&#10;But would it be fair to assume that isn&#39;t a decision — it&#39;s just that every new finish and configuration needs another studio day, and the catalogue grows faster than the shoot calendar does?&#10;&#10;We&#39;re a CGI studio in Manchester. We build the room once in 3D, then render every SKU, every finish and every channel out of it — no studio, no props, no reshoot when the range changes. Ideal Standard, Geberit, Aqualisa, Croydex and JELD-WEN all work this way with us.&#10;&#10;I&#39;ve put your ratio next to the category benchmark and costed what closing it looks like. One page, no obligation.&#10;&#10;Reply Y and I&#39;ll send it across.">
+                        <p>{{first_name}} — I counted what&#39;s live on {{company}}: {{sku_count}} products, and {{roomset_count}} images of any of them in an actual room.</p><p>But would it be fair to assume that isn&#39;t a decision — it&#39;s just that every new finish and configuration needs another studio day, and the catalogue grows faster than the shoot calendar does?</p><p>We&#39;re a CGI studio in Manchester. We build the room once in 3D, then render every SKU, every finish and every channel out of it — no studio, no props, no reshoot when the range changes. Ideal Standard, Geberit, Aqualisa, Croydex and JELD-WEN all work this way with us.</p><p>I&#39;ve put your ratio next to the category benchmark and costed what closing it looks like. One page, no obligation.</p><p>Reply Y and I&#39;ll send it across.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}} — the version of this that usually lands:&#10;&#10;The next time {{company}} adds a colourway, photography means a set build, a day rate and a reshoot of every affected SKU. In 3D it&#39;s a material swap and a re-render of the same room, overnight.&#10;&#10;The first roomset costs about what a shoot costs. The second one onwards is where it stops being comparable.&#10;&#10;Ratio breakdown&#39;s ready if you want it.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}} — the version of this that usually lands:&#10;&#10;The next time {{company}} adds a colourway, photography means a set build, a day rate and a reshoot of every affected SKU. In 3D it&#39;s a material swap and a re-render of the same room, overnight.&#10;&#10;The first roomset costs about what a shoot costs. The second one onwards is where it stops being comparable.&#10;&#10;Ratio breakdown&#39;s ready if you want it." data-preview="Rachel — the version of this that usually lands:&#10;&#10;The next time Northgate Homes adds a colourway, photography means a set build, a day rate and a reshoot of every affected SKU. In 3D it&#39;s a material swap and a re-render of the same room, overnight.&#10;&#10;The first roomset costs about what a shoot costs. The second one onwards is where it stops being comparable.&#10;&#10;Ratio breakdown&#39;s ready if you want it.">
+                        <p>{{first_name}} — the version of this that usually lands:</p><p>The next time {{company}} adds a colourway, photography means a set build, a day rate and a reshoot of every affected SKU. In 3D it&#39;s a material swap and a re-render of the same room, overnight.</p><p>The first roomset costs about what a shoot costs. The second one onwards is where it stops being comparable.</p><p>Ratio breakdown&#39;s ready if you want it.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: right person?&#10;&#10;No call, {{first_name}} — just reply yes and I&#39;ll send the roomset ratio breakdown for {{company}}.&#10;&#10;Is that you, or should it go to {{alt_contact_role}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="right person?" data-preview="right person?">right person?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call, {{first_name}} — just reply yes and I&#39;ll send the roomset ratio breakdown for {{company}}.&#10;&#10;Is that you, or should it go to {{alt_contact_role}}?" data-preview="No call, Rachel — just reply yes and I&#39;ll send the roomset ratio breakdown for Northgate Homes.&#10;&#10;Is that you, or should it go to your Head of Marketing?">
+                        <p>No call, {{first_name}} — just reply yes and I&#39;ll send the roomset ratio breakdown for {{company}}.</p><p>Is that you, or should it go to {{alt_contact_role}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="The launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">The launch</p>
+      <h2>Phase the hottest tier first, then add volume</h2>
+      <p class="takeaway">A single reply from a housebuilder eight weeks out from launch is worth more than 5,000 catch-all sends.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Weeks 1–2 — Tier 1 only. Build the property crawler first (/developments status plus gallery classification) covering UK developers and registered providers, roughly 2,900 contacts. Tier 1 launches first because it has the hardest deadline, the clearest pain and the shortest path to a referenceable win.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Weeks 3–4 — Add Tier 2. Job-ad monitoring across both universes. Small volume, very high intent, and it seeds the make-vs-buy asset that Tiers 3 and 5 also draw on.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 5–7 — Add Tiers 3 and 4. The product-page crawler and pHash reuse detection come online. Tier 4 carries the biggest property volume; Tier 3 carries the biggest deal sizes.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Week 8 onward — Tier 5 at volume. The catch-all opens once the first four tiers have proven copy and the reply-handling process holds. Extend to US accounts here, not before — establish the UK proof first.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Infrastructure — 4–6 secondary domains (never the primary imagefoundry.co.uk), 3 mailboxes each, full SPF/DKIM/DMARC, warmed 21 days before the first send. 20–25 sends per mailbox per day at steady state.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Compliance — UK PECR: corporate subscribers only with a working opt-out. US CAN-SPAM: opt-out plus postal address. Germany and Austria excluded from cold email entirely under UWG §7; route those accounts to LinkedIn and paid.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>Ongoing — Re-scan Tier 1 monthly and Tier 2 weekly (both are rolling tiers that regenerate). Tiers 3 and 4 quarterly. Side campaigns (agency white-label, trade-show windows, new marketing leaders, retailer imagery mismatch) open only after the waterfall has run eight consecutive weeks without a copy change.</p>
+              </div>
+              <div class="launch-step">
+                <span>08</span>
+                <p>The one thing that breaks it — every email offers a specific personalised asset for one character of effort. If those assets go out late or generic, the tier collapses regardless of copy quality. The crawler must produce the asset automatically, and a named person must own sending it within one working day.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacts</strong>
+                <span>Perfect. Scale the tier hard — increase daily volume and widen the geography.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run untouched.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450–500</strong>
+                <span>Borderline. Test one copy variant — change the lead magnet or the opening observation, and hold everything else constant.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or reply rate under 1% after 1,500+ sends</strong>
+                <span>Failing. Cut the tier and rework it.</span>
+              </div>
+              <div class="threshold">
+                <strong>Under 1,500 sends on any tier</strong>
+                <span>Do not read it. Below that threshold the numbers are noise.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a strategy call</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Rachel","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Northgate Homes","Kingsfield Gardens","launching this spring","a location map and a site plan","84","the East Midlands","March","Halden","640","Victoria Plum","3D Visualiser","11","the four schemes you've got launching this year","Cylindo","18","All six are daylight exteriors, and the two interiors are unfurnished","19","your Head of Marketing"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
