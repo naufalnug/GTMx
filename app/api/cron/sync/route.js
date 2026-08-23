@@ -4,7 +4,7 @@ export const dynamic = 'force-dynamic';
 export const maxDuration = 300;
 
 /**
- * Refreshes Neon from EmailBison for all configured clients. Invoked by the
+ * Refreshes Supabase from EmailBison for all configured clients. Invoked by the
  * Vercel cron (see vercel.json). Vercel attaches `Authorization: Bearer
  * <CRON_SECRET>` automatically when CRON_SECRET is set; we reject anything else.
  */
