@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HexaGroup - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-22</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for HexaGroup</p>
+          <h1>Your HexaGroup waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">A scrollable GTMx strategy artifact for routing energy and industrial firms into the right Growth Engine offer. List building, campaign angles, and sample copy, prepared for Alberto Bernardoni. A Clay workflow is ready to stand up with this spec.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Charlotte already opened on energy and industrial firms, writing to CMOs and Business Development Managers. The one TAM stays there. The one routing ladder is public growth pressure: marketing leadership hiring first, then sales and BD hiring, then a named project launch, then every remaining energy or industrial firm.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book the strategy call</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>30+ yrs</strong>
+          <span>energy and industrial work</span>
+        </div>
+        <div class="metric-card">
+          <strong>4</strong>
+          <span>exclusive growth routes</span>
+        </div>
+        <div class="metric-card">
+          <strong>10 days</strong>
+          <span>to a Growth Engine proposal</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>HexaGroup helps energy and industrial firms hatch bold ideas and scale them with precision. Growth Engines bridge branding, marketing, sales, and service so CX runs in lockstep. Work arrives as a custom Growth Engine, a rapidly tailored GOpack, or a project-based engagement. HexaGroup is a member-owner of BBN and does not replace the client&#39;s team. It extends it.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal is public growth pressure</p></div><div><span>02</span><p>One cascade routes the energy and industrial TAM</p></div><div><span>03</span><p>Each pressure gets a different first offer</p></div><div><span>04</span><p>Charlotte&#39;s three angles, mapped onto the waterfall</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>Waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>Email Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">Signal</p>
+      <h2>The signal is public growth pressure</h2>
+      <p class="takeaway">Open marketing or BD seats, then a named project launch, tell you which HexaGroup motion the firm needs now. LinkedIn Jobs and the newsroom carry that without a paid data product.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>LinkedIn Jobs and careers pages show CMO, marketing, BD, and sales seats without buying a vertical database.</p></div><div class="reason-card"><span>02</span><p>Company newsrooms and Google News name plant, terminal, product, and market-entry launches, which is the CX pain Charlotte wanted personalized.</p></div><div class="reason-card"><span>03</span><p>The ladder maps to live HexaGroup copy: Growth Engines exist because branding, marketing, sales, and service sitting in silos clips growth.</p></div><div class="reason-card"><span>04</span><p>Every remaining energy or industrial firm still gets a GOsurvey route, so coverage is 100% of TAM.</p></div>
+            </div>
+            <div class="field-cloud"><span>industry_segment</span><span>marketing_leadership_req</span><span>bd_sales_req</span><span>open_role</span><span>project_launch</span><span>launch_recency_90d</span><span>cx_gap</span><span>multi_site</span><span>decision_maker</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>LinkedIn Sales Navigator + Jobs</h3><p>Energy and industrial TAM, CMO / BDM titles, and the Tier 1 / Tier 2 hiring triggers</p></div><div class="source-card"><span>02</span><h3>Company careers pages</h3><p>Authoritative req titles when LinkedIn lags, plus CX, brand, and digital seats</p></div><div class="source-card"><span>03</span><h3>Newsroom / Google News scrape</h3><p>Named project, plant, product, and market-entry launches for Tier 3 personalization</p></div><div class="source-card"><span>04</span><h3>Company site scrape</h3><p>Industry segment, multi-site language, and the CX gap used in merge tags</p></div><div class="source-card"><span>05</span><h3>Apollo (after qualification)</h3><p>Work emails for routed accounts. Qualify on hiring or launch first.</p></div><div class="source-card"><span>06</span><h3>Clay workflow</h3><p>The waterfall spec as a ready-to-run enrichment and routing graph, which Charlotte already offered</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="Waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">Waterfall</p>
+      <h2>One cascade routes the energy and industrial TAM</h2>
+      <p class="takeaway">First match wins. CMO and marketing leadership hiring, then BD and sales hiring, then a recent launch, then the GOsurvey catch-all.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF marketing_leadership_req = true</span>
+          <strong>Tier 1</strong>
+          <em>CMO / marketing hire</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF bd_sales_req = true</span>
+          <strong>Tier 2</strong>
+          <em>BD / sales hire</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF launch_recency_90d = true AND project_launch != none</span>
+          <strong>Tier 3</strong>
+          <em>Named project launch</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF remaining energy or industrial firm in TAM</span>
+          <strong>Catch-all</strong>
+          <em>GOsurvey / engineered growth</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF marketing_leadership_req = true -&gt; Tier 1 (CMO / marketing hire)&#10;2. IF bd_sales_req = true -&gt; Tier 2 (BD / sales hire)&#10;3. IF launch_recency_90d = true AND project_launch != none -&gt; Tier 3 (Named project launch)&#10;4. IF remaining energy or industrial firm in TAM -&gt; Catch-all (GOsurvey / engineered growth)">Copy routing spec</button>
+            <pre id="routeCode">1. IF marketing_leadership_req = true -&gt; Tier 1 (CMO / marketing hire)
+2. IF bd_sales_req = true -&gt; Tier 2 (BD / sales hire)
+3. IF launch_recency_90d = true AND project_launch != none -&gt; Tier 3 (Named project launch)
+4. IF remaining energy or industrial firm in TAM -&gt; Catch-all (GOsurvey / engineered growth)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">Tiers</p>
+      <h2>Each pressure gets a different first offer</h2>
+      <p class="takeaway">Marketing hires get a silo / brand sketch. BD hires get sales lockstep. Launch accounts get a CX brief on the named project. Everyone else gets a GOsurvey.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">tightest TAM</span>
+          </div>
+          <h3>Tier 1: CMO / marketing hire</h3>
+          <p>Open CMO, VP Marketing, Head of Marketing, Head of Growth, or Brand Director seat</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The firm just approved a marketing leadership seat, which usually means brand, demand, and CX are still sitting in separate owners. A new hire without a system becomes another silo.</dd></div>
+              <div><dt>Offer</dt><dd>Silo / Growth Engine Sketch</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Jobs + careers pages</dd></div>
+              <div><dt>Reply density</dt><dd>Highest intent. Budget and mandate are already on the req.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">focused TAM</span>
+          </div>
+          <h3>Tier 2: BD / sales hire</h3>
+          <p>Open BDM, VP Sales, Director of Business Development, or CRO seat, and no marketing-leadership req</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Sales is being asked to grow while marketing and service still hand off a different story. Pipeline gets sluggish and credibility with customers drops, which is the silo problem HexaGroup writes on the Growth Engine page.</dd></div>
+              <div><dt>Offer</dt><dd>Sales Lockstep Teardown</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Jobs + Sales Navigator titles</dd></div>
+              <div><dt>Reply density</dt><dd>Strong. The seat is a growth number, not a brand workshop.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">wide TAM</span>
+          </div>
+          <h3>Tier 3: Named project launch</h3>
+          <p>A plant, terminal, product line, or new-market launch in the last 90 days, and no growth hire already routed</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The firm launched something real, then brand, sales, and service did not move in lockstep around it. Buyers feel the CX gap on day one of the new offer.</dd></div>
+              <div><dt>Offer</dt><dd>Launch CX Brief</dd></div>
+              <div><dt>Source</dt><dd>Newsroom / Google News + site scrape</dd></div>
+              <div><dt>Reply density</dt><dd>Good when the project name is in the first line.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="catchall" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">remainder TAM</span>
+          </div>
+          <h3>Catch-all: GOsurvey / engineered growth</h3>
+          <p>Every remaining energy or industrial firm in the TAM</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Growth is still ad hoc. Branding, marketing, sales, and service run in parallel, so the firm keeps buying projects instead of a system.</dd></div>
+              <div><dt>Offer</dt><dd>GOsurvey Growth-Readiness Snapshot</dd></div>
+              <div><dt>Source</dt><dd>Energy and industrial TAM pull after higher tiers route out</dd></div>
+              <div><dt>Reply density</dt><dd>Broadest coverage. Softest ask. Still 100% of TAM.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">Campaigns</p>
+      <h2>Charlotte&#39;s three angles, mapped onto the waterfall</h2>
+      <p class="takeaway">The list is always energy and industrial, aimed at CMOs and BDMs. Project-launch personalization is a tier, not a side quest. Brand-integration versus sales-growth is the A/B on those same routes.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Silo / Growth Engine Sketch</h3>
+          <p>Charlotte angle 1 + 3. Scrape energy and industrial firms, write to the CMO track, and lead with brand, marketing, sales, and service in lockstep.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Open CMO / VP / Head of Marketing / Head of Growth / Brand Director</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the open role and the silo the hire will inherit, then offer a Growth Engine sketch</dd></div>
+            <div><dt>Value</dt><dd>Brand integration</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Experiment">
+          <div class="campaign-card__meta">
+            <span>Experiment</span>
+            <span>Focused</span>
+          </div>
+          <h3>Sales-growth variant on the CMO hire</h3>
+          <p>A/B against the silo sketch. Same exclusive route, sales-growth language.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same Tier 1 list, sales-growth copy instead of brand copy</dd></div>
+            <div><dt>AI strategy</dt><dd>Keep the req as the notice line. Swap the poke to pipeline and valuation instead of brand strength.</dd></div>
+            <div><dt>Value</dt><dd>Sales growth</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Sales Lockstep Teardown</h3>
+          <p>Charlotte&#39;s BDM target as its own tier, not a mixed CMO list.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Open BDM / VP Sales / Director BD / CRO, no marketing-leadership req</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the sales seat and the marketing/service handoff, then offer lockstep</dd></div>
+            <div><dt>Value</dt><dd>Sales growth</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Experiment">
+          <div class="campaign-card__meta">
+            <span>Experiment</span>
+            <span>Focused</span>
+          </div>
+          <h3>Brand-integration variant on the BD hire</h3>
+          <p>A/B against the lockstep teardown. Same waterfall, brand-integration language.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same Tier 2 list, brand copy instead of sales copy</dd></div>
+            <div><dt>AI strategy</dt><dd>Keep the BD seat in the first line. Lead with brand as a revenue-generating asset rather than more pipeline activity.</dd></div>
+            <div><dt>Value</dt><dd>Brand integration</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Launch CX Brief</h3>
+          <p>Charlotte angle 2. Recent project launches and CX pain are the route, not a P.S. on a generic email.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Named project / plant / product / market entry in the last 90 days</dd></div>
+            <div><dt>AI strategy</dt><dd>Personalize on {{project_launch}} and {{cx_gap}}</dd></div>
+            <div><dt>Value</dt><dd>CX around the launch</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Broad</span>
+          </div>
+          <h3>GOsurvey snapshot</h3>
+          <p>Catch-all so the scrape of energy and industrial firms still covers 100% of TAM.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Remaining energy or industrial firms</dd></div>
+            <div><dt>AI strategy</dt><dd>Industry-segment notice line, GOsurvey as the tiny yes</dd></div>
+            <div><dt>Value</dt><dd>Engineered growth</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Experiment">
+          <div class="campaign-card__meta">
+            <span>Experiment</span>
+            <span>Broad</span>
+          </div>
+          <h3>Brand versus sales catch-all A/B</h3>
+          <p>Charlotte angle 3 on the remainder, after higher-intent tiers have a control.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same catch-all list, split brand-integration vs sales-growth first line</dd></div>
+            <div><dt>AI strategy</dt><dd>Do not change routing. Split only the value prop sentence.</dd></div>
+            <div><dt>Value</dt><dd>Brand integration vs sales growth</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="Email Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">Email Copy</p>
+      <h2>Copy that names the hire or the launch</h2>
+      <p class="takeaway">Notice the req or the project, poke the silo between brand, marketing, sales, and service, then ask for a one-letter yes.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company_name}}</span><span>{{open_role}}</span><span>{{sales_role}}</span><span>{{project_launch}}</span><span>{{industry_segment}}</span><span>{{cx_gap}}</span><span>{{alt_decision_maker}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company_name}}, {{open_role}}, {{sales_role}}, {{project_launch}}, {{industry_segment}}, {{cx_gap}}, {{alt_decision_maker}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1: CMO / marketing hire</strong>
+              <em>Silo / Growth Engine Sketch</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1: CMO / marketing hire steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{open_role}} at {{company_name}}&#10;&#10;{{first_name}}, saw {{company_name}} is hiring a {{open_role}} on the {{industry_segment}} side.&#10;&#10;But would it be fair to assume that seat is being asked to fix growth while branding, marketing, sales, and service still sit with different owners?&#10;&#10;HexaGroup builds Growth Engines that put those four in lockstep. They plug into the team you already have. They do not replace it, and they do not add a parallel headcount.&#10;&#10;GridPoint is the named CX-integration proof on their site: 10x brand valuation.&#10;&#10;Reply Y and I&#39;ll send a Silo / Growth Engine Sketch for {{company_name}}, built around that {{open_role}} seat. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{open_role}} at {{company_name}}" data-preview="VP Marketing at Redfield Energy Services">{{open_role}} at {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, saw {{company_name}} is hiring a {{open_role}} on the {{industry_segment}} side.&#10;&#10;But would it be fair to assume that seat is being asked to fix growth while branding, marketing, sales, and service still sit with different owners?&#10;&#10;HexaGroup builds Growth Engines that put those four in lockstep. They plug into the team you already have. They do not replace it, and they do not add a parallel headcount.&#10;&#10;GridPoint is the named CX-integration proof on their site: 10x brand valuation.&#10;&#10;Reply Y and I&#39;ll send a Silo / Growth Engine Sketch for {{company_name}}, built around that {{open_role}} seat. No call needed." data-preview="Dana, saw Redfield Energy Services is hiring a VP Marketing on the industrial services side.&#10;&#10;But would it be fair to assume that seat is being asked to fix growth while branding, marketing, sales, and service still sit with different owners?&#10;&#10;HexaGroup builds Growth Engines that put those four in lockstep. They plug into the team you already have. They do not replace it, and they do not add a parallel headcount.&#10;&#10;GridPoint is the named CX-integration proof on their site: 10x brand valuation.&#10;&#10;Reply Y and I&#39;ll send a Silo / Growth Engine Sketch for Redfield Energy Services, built around that VP Marketing seat. No call needed.">
+                        <p>{{first_name}}, saw {{company_name}} is hiring a {{open_role}} on the {{industry_segment}} side.</p><p>But would it be fair to assume that seat is being asked to fix growth while branding, marketing, sales, and service still sit with different owners?</p><p>HexaGroup builds Growth Engines that put those four in lockstep. They plug into the team you already have. They do not replace it, and they do not add a parallel headcount.</p><p>GridPoint is the named CX-integration proof on their site: 10x brand valuation.</p><p>Reply Y and I&#39;ll send a Silo / Growth Engine Sketch for {{company_name}}, built around that {{open_role}} seat. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the expensive version of this hire is a new leader walking into the same silos on week one.&#10;&#10;HexaGroup&#39;s own line is that consultants give you a slide deck and they give you a functioning growth system. Custom, GOpack, or project-based, the proposal is supposed to come back in 10 business days after the GOsurvey.&#10;&#10;Want the sketch for that {{open_role}} seat? Reply Y.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the expensive version of this hire is a new leader walking into the same silos on week one.&#10;&#10;HexaGroup&#39;s own line is that consultants give you a slide deck and they give you a functioning growth system. Custom, GOpack, or project-based, the proposal is supposed to come back in 10 business days after the GOsurvey.&#10;&#10;Want the sketch for that {{open_role}} seat? Reply Y." data-preview="Dana, the expensive version of this hire is a new leader walking into the same silos on week one.&#10;&#10;HexaGroup&#39;s own line is that consultants give you a slide deck and they give you a functioning growth system. Custom, GOpack, or project-based, the proposal is supposed to come back in 10 business days after the GOsurvey.&#10;&#10;Want the sketch for that VP Marketing seat? Reply Y.">
+                        <p>{{first_name}}, the expensive version of this hire is a new leader walking into the same silos on week one.</p><p>HexaGroup&#39;s own line is that consultants give you a slide deck and they give you a functioning growth system. Custom, GOpack, or project-based, the proposal is supposed to come back in 10 business days after the GOsurvey.</p><p>Want the sketch for that {{open_role}} seat? Reply Y.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: growth engine for {{company_name}}&#10;&#10;{{first_name}}, last note. No call needed.&#10;&#10;If the {{open_role}} hire is going to inherit a connected system instead of four disconnected vendors, I will send the sketch.&#10;&#10;Reply Y and I&#39;ll send the Silo / Growth Engine Sketch. Should I send it to you, or is {{alt_decision_maker}} the better person?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="growth engine for {{company_name}}" data-preview="growth engine for Redfield Energy Services">growth engine for {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, last note. No call needed.&#10;&#10;If the {{open_role}} hire is going to inherit a connected system instead of four disconnected vendors, I will send the sketch.&#10;&#10;Reply Y and I&#39;ll send the Silo / Growth Engine Sketch. Should I send it to you, or is {{alt_decision_maker}} the better person?" data-preview="Dana, last note. No call needed.&#10;&#10;If the VP Marketing hire is going to inherit a connected system instead of four disconnected vendors, I will send the sketch.&#10;&#10;Reply Y and I&#39;ll send the Silo / Growth Engine Sketch. Should I send it to you, or is your CMO the better person?">
+                        <p>{{first_name}}, last note. No call needed.</p><p>If the {{open_role}} hire is going to inherit a connected system instead of four disconnected vendors, I will send the sketch.</p><p>Reply Y and I&#39;ll send the Silo / Growth Engine Sketch. Should I send it to you, or is {{alt_decision_maker}} the better person?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2: BD / sales hire</strong>
+              <em>Sales Lockstep Teardown</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2: BD / sales hire steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{sales_role}} seat&#10;&#10;{{first_name}}, {{company_name}} is hiring a {{sales_role}} while still selling {{industry_segment}} the long way.&#10;&#10;But would it be fair to assume marketing and service still hand that person a different story than the one they tell in the room?&#10;&#10;HexaGroup&#39;s Growth Engines exist to put marketing and sales in sync and keep service feeding the next conversation. Member-owner of BBN, 30+ years in energy and industrial, and they extend the team rather than replacing it.&#10;&#10;Reply Y and I&#39;ll send a Sales Lockstep Teardown for {{company_name}}. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{sales_role}} seat" data-preview="Business Development Manager seat">{{sales_role}} seat</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, {{company_name}} is hiring a {{sales_role}} while still selling {{industry_segment}} the long way.&#10;&#10;But would it be fair to assume marketing and service still hand that person a different story than the one they tell in the room?&#10;&#10;HexaGroup&#39;s Growth Engines exist to put marketing and sales in sync and keep service feeding the next conversation. Member-owner of BBN, 30+ years in energy and industrial, and they extend the team rather than replacing it.&#10;&#10;Reply Y and I&#39;ll send a Sales Lockstep Teardown for {{company_name}}. No call needed." data-preview="Dana, Redfield Energy Services is hiring a Business Development Manager while still selling industrial services the long way.&#10;&#10;But would it be fair to assume marketing and service still hand that person a different story than the one they tell in the room?&#10;&#10;HexaGroup&#39;s Growth Engines exist to put marketing and sales in sync and keep service feeding the next conversation. Member-owner of BBN, 30+ years in energy and industrial, and they extend the team rather than replacing it.&#10;&#10;Reply Y and I&#39;ll send a Sales Lockstep Teardown for Redfield Energy Services. No call needed.">
+                        <p>{{first_name}}, {{company_name}} is hiring a {{sales_role}} while still selling {{industry_segment}} the long way.</p><p>But would it be fair to assume marketing and service still hand that person a different story than the one they tell in the room?</p><p>HexaGroup&#39;s Growth Engines exist to put marketing and sales in sync and keep service feeding the next conversation. Member-owner of BBN, 30+ years in energy and industrial, and they extend the team rather than replacing it.</p><p>Reply Y and I&#39;ll send a Sales Lockstep Teardown for {{company_name}}. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, adding a {{sales_role}} without lockstep is how pipeline gets sluggish and credibility with customers drops. That is the silo language on HexaGroup&#39;s own Growth Engine page.&#10;&#10;A GOpack is the faster door if {{company_name}} needs lift before a custom build.&#10;&#10;Want the teardown? Reply Y.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, adding a {{sales_role}} without lockstep is how pipeline gets sluggish and credibility with customers drops. That is the silo language on HexaGroup&#39;s own Growth Engine page.&#10;&#10;A GOpack is the faster door if {{company_name}} needs lift before a custom build.&#10;&#10;Want the teardown? Reply Y." data-preview="Dana, adding a Business Development Manager without lockstep is how pipeline gets sluggish and credibility with customers drops. That is the silo language on HexaGroup&#39;s own Growth Engine page.&#10;&#10;A GOpack is the faster door if Redfield Energy Services needs lift before a custom build.&#10;&#10;Want the teardown? Reply Y.">
+                        <p>{{first_name}}, adding a {{sales_role}} without lockstep is how pipeline gets sluggish and credibility with customers drops. That is the silo language on HexaGroup&#39;s own Growth Engine page.</p><p>A GOpack is the faster door if {{company_name}} needs lift before a custom build.</p><p>Want the teardown? Reply Y.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: lockstep for {{company_name}}&#10;&#10;{{first_name}}, no call needed.&#10;&#10;I will send a short teardown of how branding, marketing, sales, and service currently show up around that {{sales_role}} seat, and what a Growth Engine would connect.&#10;&#10;Reply Y and I&#39;ll send the Sales Lockstep Teardown. You, or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="lockstep for {{company_name}}" data-preview="lockstep for Redfield Energy Services">lockstep for {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed.&#10;&#10;I will send a short teardown of how branding, marketing, sales, and service currently show up around that {{sales_role}} seat, and what a Growth Engine would connect.&#10;&#10;Reply Y and I&#39;ll send the Sales Lockstep Teardown. You, or {{alt_decision_maker}}?" data-preview="Dana, no call needed.&#10;&#10;I will send a short teardown of how branding, marketing, sales, and service currently show up around that Business Development Manager seat, and what a Growth Engine would connect.&#10;&#10;Reply Y and I&#39;ll send the Sales Lockstep Teardown. You, or your CMO?">
+                        <p>{{first_name}}, no call needed.</p><p>I will send a short teardown of how branding, marketing, sales, and service currently show up around that {{sales_role}} seat, and what a Growth Engine would connect.</p><p>Reply Y and I&#39;ll send the Sales Lockstep Teardown. You, or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3: Named project launch</strong>
+              <em>Launch CX Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3: Named project launch steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{project_launch}}&#10;&#10;{{first_name}}, I caught {{project_launch}} at {{company_name}}.&#10;&#10;But would it be fair to assume {{cx_gap}}, so the new offer is live and the experience around it is not?&#10;&#10;HexaGroup&#39;s project path is built for launches like this: new market entry, energy-transition repositioning, site and story around a milestone. Growth is engineered around the thing you just put in the world, not a generic retainer.&#10;&#10;GridPoint is their named CX-integration proof: 10x brand valuation.&#10;&#10;Reply Y and I&#39;ll send a Launch CX Brief on {{project_launch}}. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{project_launch}}" data-preview="the new Gulf Coast terminal">{{project_launch}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, I caught {{project_launch}} at {{company_name}}.&#10;&#10;But would it be fair to assume {{cx_gap}}, so the new offer is live and the experience around it is not?&#10;&#10;HexaGroup&#39;s project path is built for launches like this: new market entry, energy-transition repositioning, site and story around a milestone. Growth is engineered around the thing you just put in the world, not a generic retainer.&#10;&#10;GridPoint is their named CX-integration proof: 10x brand valuation.&#10;&#10;Reply Y and I&#39;ll send a Launch CX Brief on {{project_launch}}. No call needed." data-preview="Dana, I caught the new Gulf Coast terminal at Redfield Energy Services.&#10;&#10;But would it be fair to assume sales and service handing customers off in two different portals, so the new offer is live and the experience around it is not?&#10;&#10;HexaGroup&#39;s project path is built for launches like this: new market entry, energy-transition repositioning, site and story around a milestone. Growth is engineered around the thing you just put in the world, not a generic retainer.&#10;&#10;GridPoint is their named CX-integration proof: 10x brand valuation.&#10;&#10;Reply Y and I&#39;ll send a Launch CX Brief on the new Gulf Coast terminal. No call needed.">
+                        <p>{{first_name}}, I caught {{project_launch}} at {{company_name}}.</p><p>But would it be fair to assume {{cx_gap}}, so the new offer is live and the experience around it is not?</p><p>HexaGroup&#39;s project path is built for launches like this: new market entry, energy-transition repositioning, site and story around a milestone. Growth is engineered around the thing you just put in the world, not a generic retainer.</p><p>GridPoint is their named CX-integration proof: 10x brand valuation.</p><p>Reply Y and I&#39;ll send a Launch CX Brief on {{project_launch}}. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, launches fail quietly when sales, marketing, and service do not move with the asset.&#10;&#10;The brief is one page: what buyers will feel on {{project_launch}}, where the handoffs break, and whether this is a project or a full Growth Engine.&#10;&#10;Want it? Reply Y.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, launches fail quietly when sales, marketing, and service do not move with the asset.&#10;&#10;The brief is one page: what buyers will feel on {{project_launch}}, where the handoffs break, and whether this is a project or a full Growth Engine.&#10;&#10;Want it? Reply Y." data-preview="Dana, launches fail quietly when sales, marketing, and service do not move with the asset.&#10;&#10;The brief is one page: what buyers will feel on the new Gulf Coast terminal, where the handoffs break, and whether this is a project or a full Growth Engine.&#10;&#10;Want it? Reply Y.">
+                        <p>{{first_name}}, launches fail quietly when sales, marketing, and service do not move with the asset.</p><p>The brief is one page: what buyers will feel on {{project_launch}}, where the handoffs break, and whether this is a project or a full Growth Engine.</p><p>Want it? Reply Y.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: CX around {{project_launch}}&#10;&#10;{{first_name}}, last one. No call needed.&#10;&#10;If {{project_launch}} is already out, the window to put brand, sales, and service on the same story is now, not after the next campaign calendar.&#10;&#10;Reply Y and I&#39;ll send the Launch CX Brief. Should I send it to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="CX around {{project_launch}}" data-preview="CX around the new Gulf Coast terminal">CX around {{project_launch}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, last one. No call needed.&#10;&#10;If {{project_launch}} is already out, the window to put brand, sales, and service on the same story is now, not after the next campaign calendar.&#10;&#10;Reply Y and I&#39;ll send the Launch CX Brief. Should I send it to you or {{alt_decision_maker}}?" data-preview="Dana, last one. No call needed.&#10;&#10;If the new Gulf Coast terminal is already out, the window to put brand, sales, and service on the same story is now, not after the next campaign calendar.&#10;&#10;Reply Y and I&#39;ll send the Launch CX Brief. Should I send it to you or your CMO?">
+                        <p>{{first_name}}, last one. No call needed.</p><p>If {{project_launch}} is already out, the window to put brand, sales, and service on the same story is now, not after the next campaign calendar.</p><p>Reply Y and I&#39;ll send the Launch CX Brief. Should I send it to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Catch-all: GOsurvey</strong>
+              <em>GOsurvey Growth-Readiness Snapshot</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Catch-all: GOsurvey steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{industry_segment}} growth, engineered&#10;&#10;{{first_name}}, been looking at how {{industry_segment}} firms are still running brand, demand, sales, and service as separate workstreams.&#10;&#10;But would it be fair to assume {{company_name}} is buying projects when the actual problem is the system those projects never connect?&#10;&#10;HexaGroup is the growth engineer for energy and industrial firms. Custom Growth Engine, GOpack, or project-based. The front door is a GOsurvey, and the proposal is supposed to come back in 10 business days.&#10;&#10;Reply Y and I&#39;ll send a GOsurvey Growth-Readiness Snapshot for {{company_name}}. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{industry_segment}} growth, engineered" data-preview="industrial services growth, engineered">{{industry_segment}} growth, engineered</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, been looking at how {{industry_segment}} firms are still running brand, demand, sales, and service as separate workstreams.&#10;&#10;But would it be fair to assume {{company_name}} is buying projects when the actual problem is the system those projects never connect?&#10;&#10;HexaGroup is the growth engineer for energy and industrial firms. Custom Growth Engine, GOpack, or project-based. The front door is a GOsurvey, and the proposal is supposed to come back in 10 business days.&#10;&#10;Reply Y and I&#39;ll send a GOsurvey Growth-Readiness Snapshot for {{company_name}}. No call needed." data-preview="Dana, been looking at how industrial services firms are still running brand, demand, sales, and service as separate workstreams.&#10;&#10;But would it be fair to assume Redfield Energy Services is buying projects when the actual problem is the system those projects never connect?&#10;&#10;HexaGroup is the growth engineer for energy and industrial firms. Custom Growth Engine, GOpack, or project-based. The front door is a GOsurvey, and the proposal is supposed to come back in 10 business days.&#10;&#10;Reply Y and I&#39;ll send a GOsurvey Growth-Readiness Snapshot for Redfield Energy Services. No call needed.">
+                        <p>{{first_name}}, been looking at how {{industry_segment}} firms are still running brand, demand, sales, and service as separate workstreams.</p><p>But would it be fair to assume {{company_name}} is buying projects when the actual problem is the system those projects never connect?</p><p>HexaGroup is the growth engineer for energy and industrial firms. Custom Growth Engine, GOpack, or project-based. The front door is a GOsurvey, and the proposal is supposed to come back in 10 business days.</p><p>Reply Y and I&#39;ll send a GOsurvey Growth-Readiness Snapshot for {{company_name}}. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, HexaGroup&#39;s line is that growth is not magic, it is engineered. Fresh eggs and flying lessons, which on their site means ideas plus the system that scales them.&#10;&#10;The snapshot is just the four Growth Engine areas scored from public signal: branding, marketing, sales, service.&#10;&#10;Want it? Reply Y.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, HexaGroup&#39;s line is that growth is not magic, it is engineered. Fresh eggs and flying lessons, which on their site means ideas plus the system that scales them.&#10;&#10;The snapshot is just the four Growth Engine areas scored from public signal: branding, marketing, sales, service.&#10;&#10;Want it? Reply Y." data-preview="Dana, HexaGroup&#39;s line is that growth is not magic, it is engineered. Fresh eggs and flying lessons, which on their site means ideas plus the system that scales them.&#10;&#10;The snapshot is just the four Growth Engine areas scored from public signal: branding, marketing, sales, service.&#10;&#10;Want it? Reply Y.">
+                        <p>{{first_name}}, HexaGroup&#39;s line is that growth is not magic, it is engineered. Fresh eggs and flying lessons, which on their site means ideas plus the system that scales them.</p><p>The snapshot is just the four Growth Engine areas scored from public signal: branding, marketing, sales, service.</p><p>Want it? Reply Y.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: GOsurvey for {{company_name}}&#10;&#10;{{first_name}}, no call needed.&#10;&#10;Reply Y and I&#39;ll send the GOsurvey Growth-Readiness Snapshot. Should I send it to you, or is {{alt_decision_maker}} the better person?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="GOsurvey for {{company_name}}" data-preview="GOsurvey for Redfield Energy Services">GOsurvey for {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed.&#10;&#10;Reply Y and I&#39;ll send the GOsurvey Growth-Readiness Snapshot. Should I send it to you, or is {{alt_decision_maker}} the better person?" data-preview="Dana, no call needed.&#10;&#10;Reply Y and I&#39;ll send the GOsurvey Growth-Readiness Snapshot. Should I send it to you, or is your CMO the better person?">
+                        <p>{{first_name}}, no call needed.</p><p>Reply Y and I&#39;ll send the GOsurvey Growth-Readiness Snapshot. Should I send it to you, or is {{alt_decision_maker}} the better person?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">Launch</p>
+      <h2>Launch the CMO-hire tier, then stand up Clay</h2>
+      <p class="takeaway">Start where the mandate is on the job board. Load the same routing spec into the Clay workflow Charlotte already offered.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Build the energy and industrial TAM in LinkedIn Sales Nav, then pull open marketing-leadership and BD/sales reqs before any enrichment.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Stand up the Clay workflow Charlotte already offered, with the same exclusive routing spec and merge fields.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Launch Tier 1 CMO / marketing-hire first. Brand-integration copy as the control, sales-growth as the A/B on the same list.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Add Tier 2 BD / sales-hire, then Tier 3 named launches once the newsroom scrape is wiring clean project names.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Turn on the GOsurvey catch-all last so every remaining energy or industrial account still has a route.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>Dense positive replies on the first pass</strong>
+                <span>Scale that tier. Keep the winning brand or sales variant.</span>
+              </div>
+              <div class="threshold">
+                <strong>Steady replies, no clear winner yet</strong>
+                <span>Let it run. Do not mix non-energy TAM into this waterfall.</span>
+              </div>
+              <div class="threshold">
+                <strong>Thin replies after a full first pass</strong>
+                <span>Swap only the magnet or the first-line hire/launch mention. Do not change the route.</span>
+              </div>
+              <div class="threshold">
+                <strong>No density after a full pass of the tier</strong>
+                <span>Cut that copy variant. Keep the exclusive waterfall.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book the strategy call</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dana","Redfield Energy Services","VP Marketing","6","Intercom","healthcare operations","Maya","Business Development Manager","the new Gulf Coast terminal","industrial services","sales and service handing customers off in two different portals","your CMO"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pennock - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-18</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Pennock</p>
+          <h1>Your Pennock waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">One priority-routed cascade that absorbs 22,000 DTC brands — built on public data that costs nothing to pull.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Pennock doesn&#39;t sell marketing. Every service you own is the NEXT channel for a brand already spending somewhere else — so the whole cascade routes on how much growth commitment a brand has already made in public, and which adjacent channel is visibly missing from it.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>~22,000</strong>
+          <span>Qualified DTC brands in the market</span>
+        </div>
+        <div class="metric-card">
+          <strong>~53,000</strong>
+          <span>Contacts across five tiers</span>
+        </div>
+        <div class="metric-card">
+          <strong>$0</strong>
+          <span>Cost of the routing data</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Pennock runs paid media, AEO/GEO and affiliate for DTC beauty, fashion, wellness and home brands. 5.87X average ROAS, $41.1M revenue driven, 120+ brands scaled.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal every DTC brand publishes for free</p></div><div><span>02</span><p>Exclusive, top-down, 100% coverage</p></div><div><span>03</span><p>Five shapes of the same gap</p></div><div><span>04</span><p>The experiments that sit on the cascade</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>Routing</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">Signal</p>
+      <h2>The signal every DTC brand publishes for free</h2>
+      <p class="takeaway">Meta Ad Library proves the budget. One HTTP request to the storefront proves the gap. Joined, they predict an agency reply better than anything you can buy.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>The Meta Ad Library is public and free — it proves a brand is paying for demand right now, how many creatives are live, and since when.</p></div><div class="reason-card"><span>02</span><p>One HTTP request to the storefront returns the affiliate network tag, product schema, retention stack and platform — the channels they&#39;ve already bought tooling for.</p></div><div class="reason-card"><span>03</span><p>Joined, the two produce what no vendor sells: proven budget sitting next to a channel nobody is running. Apollo can&#39;t filter on it. BuiltWith gives you half.</p></div><div class="reason-card"><span>04</span><p>It regenerates itself. Retailers announce brands monthly, job reqs post weekly, affiliate tags appear the day a platform is installed — a brand in the catch-all gets promoted automatically.</p></div>
+            </div>
+            <div class="field-cloud"><span>brand_domain</span><span>category</span><span>platform</span><span>retail_launch_retailer</span><span>retail_launch_date</span><span>meta_ads_active</span><span>meta_creative_count</span><span>meta_earliest_ad_date</span><span>affiliate_network_detected</span><span>affiliate_page_present</span><span>inhouse_affiliate_manager</span><span>open_growth_req</span><span>open_req_title</span><span>ai_citation_score</span><span>ai_competitors_cited</span><span>product_schema_present</span><span>headcount_band</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>Meta Ad Library</h3><p>Active-ad status, live creative count, earliest run date, placements and formats. Note: it does NOT publish spend for commercial advertisers — creative count is an intensity proxy only, and no email asserts a prospect&#39;s budget.</p></div><div class="source-card"><span>02</span><h3>Storefront page-source scrape (1 GET per domain)</h3><p>Shopify vs Shopify Plus, affiliate network tag (Impact, ShareASale, Awin, Rakuten, CJ, ShopMy, Shopify Collabs), affiliate/ambassador route, retention stack, review platform, product schema JSON-LD.</p></div><div class="source-card"><span>03</span><h3>Retail trade press + retailer new-brand indexes</h3><p>Named, dated brand-to-retailer launch events from BeautyMatter Retail Watch, WWD roundups, and the Sephora, Ulta, Target, Credo, Bluemercury, Nordstrom, Amazon Premium Beauty and Walmart/Wayfair new-arrival indexes.</p></div><div class="source-card"><span>04</span><h3>Public job boards</h3><p>Live requisitions for Growth, Performance, Ecommerce and Retention Marketing roles from LinkedIn Jobs, Greenhouse, Lever, Ashby and brand careers pages.</p></div><div class="source-card"><span>05</span><h3>Answer-engine citation sweep</h3><p>A fixed 20-prompt category basket run against ChatGPT, Perplexity, Gemini and Google AI Overviews — citation count, the competitor set cited instead, and share of voice. This is Pennock&#39;s own AEO service run at list-build time, which is why the output doubles as the lead magnet.</p></div><div class="source-card"><span>06</span><h3>Market seed lists</h3><p>Shopify and Shopify Plus tech directories filtered to beauty, personal care, apparel and home; retailer brand indexes; Amazon Premium Beauty; TikTok Shop seller directory.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="Routing">
+        
+    <div class="section-head">
+      <p class="eyebrow">Routing</p>
+      <h2>Exclusive, top-down, 100% coverage</h2>
+      <p class="takeaway">Every brand is tested against the tiers in order and lands in the first one it matches. The catch-all guarantees no qualified brand is left unaddressed.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF Retail launch within the last 120 days, or an announced upcoming launch</span>
+          <strong>Tier 1 — Retail Launch On The Clock</strong>
+          <em>A dated event with a hard commercial deadline attached. Nothing else in the ladder has a clock.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF NOT Tier 1 AND active Meta ads AND an affiliate network tag or affiliate page AND no in-house affiliate manager</span>
+          <strong>Tier 2 — Affiliate Program, No Driver</strong>
+          <em>Proven budget plus a channel they already paid to switch on and demonstrably nobody owns. Inverting a LinkedIn job title is reliable; inverting a tech detection would not be.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF NOT Tier 1-2 AND a live requisition for Growth, Performance, Ecommerce or Retention Marketing</span>
+          <strong>Tier 3 — Pricing The Gap At A Salary</strong>
+          <em>They have already admitted the gap and put a salary number on it.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF NOT Tier 1-3 AND active Meta ads AND two or fewer citations across the 20-prompt category basket</span>
+          <strong>Tier 4 — Renting 100% Of Discovery</strong>
+          <em>Proven budget, zero owned discovery. A positive measurement, not an absence inference — you run the prompts and record what came back.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF Everything else in the qualified market</span>
+          <strong>Tier 5 — Catch-All: Channel Concentration</strong>
+          <em>Guarantees 100% coverage. No qualified brand is left unaddressed.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF Retail launch within the last 120 days, or an announced upcoming launch -&gt; Tier 1 — Retail Launch On The Clock (A dated event with a hard commercial deadline attached. Nothing else in the ladder has a clock.)&#10;2. IF NOT Tier 1 AND active Meta ads AND an affiliate network tag or affiliate page AND no in-house affiliate manager -&gt; Tier 2 — Affiliate Program, No Driver (Proven budget plus a channel they already paid to switch on and demonstrably nobody owns. Inverting a LinkedIn job title is reliable; inverting a tech detection would not be.)&#10;3. IF NOT Tier 1-2 AND a live requisition for Growth, Performance, Ecommerce or Retention Marketing -&gt; Tier 3 — Pricing The Gap At A Salary (They have already admitted the gap and put a salary number on it.)&#10;4. IF NOT Tier 1-3 AND active Meta ads AND two or fewer citations across the 20-prompt category basket -&gt; Tier 4 — Renting 100% Of Discovery (Proven budget, zero owned discovery. A positive measurement, not an absence inference — you run the prompts and record what came back.)&#10;5. IF Everything else in the qualified market -&gt; Tier 5 — Catch-All: Channel Concentration (Guarantees 100% coverage. No qualified brand is left unaddressed.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF Retail launch within the last 120 days, or an announced upcoming launch -&gt; Tier 1 — Retail Launch On The Clock (A dated event with a hard commercial deadline attached. Nothing else in the ladder has a clock.)
+2. IF NOT Tier 1 AND active Meta ads AND an affiliate network tag or affiliate page AND no in-house affiliate manager -&gt; Tier 2 — Affiliate Program, No Driver (Proven budget plus a channel they already paid to switch on and demonstrably nobody owns. Inverting a LinkedIn job title is reliable; inverting a tech detection would not be.)
+3. IF NOT Tier 1-2 AND a live requisition for Growth, Performance, Ecommerce or Retention Marketing -&gt; Tier 3 — Pricing The Gap At A Salary (They have already admitted the gap and put a salary number on it.)
+4. IF NOT Tier 1-3 AND active Meta ads AND two or fewer citations across the 20-prompt category basket -&gt; Tier 4 — Renting 100% Of Discovery (Proven budget, zero owned discovery. A positive measurement, not an absence inference — you run the prompts and record what came back.)
+5. IF Everything else in the qualified market -&gt; Tier 5 — Catch-All: Channel Concentration (Guarantees 100% coverage. No qualified brand is left unaddressed.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">Tiers</p>
+      <h2>Five shapes of the same gap</h2>
+      <p class="takeaway">Each tier is a different way a brand shows it has already committed to growth and is missing one of Pennock&#39;s three services.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">4% TAM</span>
+          </div>
+          <h3>Tier 1: Retail Launch On The Clock</h3>
+          <p>Landed or announced at Sephora, Ulta, Target, Credo, Bluemercury, Nordstrom, Amazon Premium Beauty, Walmart or Wayfair within 120 days</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>A retail launch is decided by first-90-day sell-through, and the media plan is still pointed at the .com. Door-level demand, retail media and creator-to-shelf are a different job than DTC prospecting — and weak sell-through kills the second purchase order.</dd></div>
+              <div><dt>Offer</dt><dd>90-Day Retail Sell-Through Media Plan — door-weighting model + channel split</dd></div>
+              <div><dt>Source</dt><dd>BeautyMatter Retail Watch, WWD roundups, retailer new-brand indexes</dd></div>
+              <div><dt>Reply density</dt><dd>Highest intent in the cascade — a dated event with a commercial deadline attached</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">11% TAM</span>
+          </div>
+          <h3>Tier 2: Affiliate Program, No Driver</h3>
+          <p>Active Meta ads AND an affiliate network tag or affiliate page detected AND no in-house affiliate manager on LinkedIn</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They paid to switch the channel on and nobody runs it. Unmanaged programs drift toward coupon, loyalty and cashback extensions that re-claim credit for traffic paid media already bought. The brand pays twice for one customer — and last-click reporting says the channel is working.</dd></div>
+              <div><dt>Offer</dt><dd>Affiliate Incrementality Teardown — their detected network, publisher-type mix, and the paid overlap</dd></div>
+              <div><dt>Source</dt><dd>Meta Ad Library × storefront page source × LinkedIn people search</dd></div>
+              <div><dt>Reply density</dt><dd>High — the pain is quantifiable in dollars and maps to Pennock&#39;s strongest proof set</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">7% TAM</span>
+          </div>
+          <h3>Tier 3: Pricing The Gap At A Salary</h3>
+          <p>A live requisition for a Growth, Performance, Ecommerce or Retention Marketing role</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They have admitted the gap and priced it at a salary. But one generalist cannot cover Meta, Google, Amazon, TikTok Shop, affiliate and AEO — and the hire takes 60 to 90 days to land plus another 90 to ramp. Two quarters before anything in the account moves.</dd></div>
+              <div><dt>Offer</dt><dd>Bench vs. Hire Cost Model — loaded salary and ramp maths against retained coverage</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Jobs, Greenhouse, Lever, Ashby, brand careers pages</dd></div>
+              <div><dt>Reply density</dt><dd>Good — steady rolling volume, but a competitive inbox: every agency emails hiring brands</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">31% TAM</span>
+          </div>
+          <h3>Tier 4: Renting 100% Of Discovery</h3>
+          <p>Active Meta ads AND two or fewer citations across the 20-prompt category basket in ChatGPT, Perplexity, Gemini and AI Overviews</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Every unit of demand is rented from an auction that reprices against them every quarter, while the discovery layer moves to answer engines where they do not appear. The competitors named in those answers are compounding an asset the brand is not building.</dd></div>
+              <div><dt>Offer</dt><dd>AI Visibility Scorecard — their 20-prompt result against the competitors cited instead</dd></div>
+              <div><dt>Source</dt><dd>Citation sweep × Meta Ad Library × storefront page source</dd></div>
+              <div><dt>Reply density</dt><dd>Broad — the largest tier and the most differentiated angle, but the prospect has usually not yet named this problem</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">47% TAM</span>
+          </div>
+          <h3>Tier 5: Catch-All: Channel Concentration</h3>
+          <p>Everything else in the qualified market — a DTC brand past the revenue-floor gate that matched no tier above</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The structural DTC condition — demand concentrated in one or two auction channels, no owned discovery, no partner channel. Blended CAC only moves in one direction.</dd></div>
+              <div><dt>Offer</dt><dd>Pennock&#39;s existing CAC, ROAS and CPM calculators + the Creative Hook Guide — already built, zero cost to deliver</dd></div>
+              <div><dt>Source</dt><dd>Seed lists filtered through the revenue-floor qualification gate</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest — broadest copy and the softest CTA, but it guarantees the cascade covers the whole market</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">Campaigns</p>
+      <h2>The experiments that sit on the cascade</h2>
+      <p class="takeaway">Targeting, personalisation and value angle per tier — the variables you actually test, holding the structure constant.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Retail Sell-Through Clock</h3>
+          <p>The only tier with a real clock on it. Everyone congratulates a brand on landing at Ulta; nobody tells them the first 90 days decide whether there&#39;s a reorder. Note: this tier needs a 24-month lookback accumulated before launch — one month of Retail Watch is a few hundred brands, not enough to read a result.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Brand named in a retail launch published within the last 120 days across Sephora, Ulta, Target, Credo, Bluemercury, Nordstrom, Amazon Premium Beauty, Walmart or Wayfair</dd></div>
+            <div><dt>AI strategy</dt><dd>Pull the retailer and launch month straight from the trade-press entry. Personalise the first line on the specific retailer and whether the launch is online-only or in-door, then name the sell-through window as the deadline rather than the launch as an achievement.</dd></div>
+            <div><dt>Value</dt><dd>Protect the second PO</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Wholesale Margin Reframe</h3>
+          <p>The angle that separates Pennock from a generalist media buyer. It shows the agency understands the P&amp;L consequence of the launch, not just the channel mechanics.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same Tier 1 list, second-touch variant</dd></div>
+            <div><dt>AI strategy</dt><dd>Rotate from volume to margin. Wholesale margin is roughly half of DTC, so every sale retail pulls off the brand&#39;s own site costs real gross profit — reframe the media split as margin defence, not spend.</dd></div>
+            <div><dt>Value</dt><dd>Protect gross margin</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Double-Paid Customer Audit</h3>
+          <p>The sharpest pain-to-value-prop match in the whole account. Unmanaged programs skew to coupon and cashback extensions re-claiming credit for paid traffic — which is exactly what Pennock&#39;s incremental-first reporting exists to expose.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Active Meta ads + affiliate network tag detected + no in-house affiliate manager</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the specific network detected in page source and the live creative count from the Ad Library in the first line, then state that the affiliate program has no visible owner. The research is the credibility — it proves the email is not a blast.</dd></div>
+            <div><dt>Value</dt><dd>Stop paying twice</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Idle Channel Upside</h3>
+          <p>The framing that converts skeptics: the brand already owns the tooling and paid for the integration. The channel isn&#39;t missing, it&#39;s idle.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same Tier 2 list, value-rotation variant</dd></div>
+            <div><dt>AI strategy</dt><dd>Rotate from the leak to the upside — affiliate lands around 38% of revenue on properly run programs and grows the publisher base rather than the coupon base, without touching paid spend.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Five Specialisms, One Salary</h3>
+          <p>High-intent but competitive — every agency emails hiring brands. The differentiator is the ramp-time maths, not the pitch.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Live requisition for Growth, Performance, Ecommerce or Retention Marketing</dd></div>
+            <div><dt>AI strategy</dt><dd>Quote the actual req title and the channel list from the job description. The poke is that they&#39;re hiring one person to do five specialisms — then pivot to the clock: 60-90 days to land plus 90 to ramp.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Hire The Strategist, Rent The Execution</h3>
+          <p>Disarms the obvious objection by conceding it. Agencies that say &#39;don&#39;t hire&#39; lose; agencies that make the hire more successful get the meeting.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same Tier 3 list, second-touch variant</dd></div>
+            <div><dt>AI strategy</dt><dd>Explicitly refuse the either/or. Recommend they still hire — one internal owner who knows the brand — and rent the platform execution, so the new hire walks into a working account instead of a rebuild.</dd></div>
+            <div><dt>Value</dt><dd>Save time + de-risk the hire</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>20-Prompt Citation Sweep</h3>
+          <p>The magnet IS the service, so the scorecard doubles as the discovery call. Largest tier in the cascade and the angle nobody else in DTC beauty is running yet.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Active Meta ads + citation score of 2 or fewer across the category prompt basket</dd></div>
+            <div><dt>AI strategy</dt><dd>Run the sweep before sending. Lead with the actual result — how many of 20 prompts returned the brand, and which competitors returned in most of them. The competitor names do the persuading.</dd></div>
+            <div><dt>Value</dt><dd>Own discovery instead of renting it</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Citations Compound, CPMs Don&#39;t</h3>
+          <p>Converts the problem from a nice-to-have into a closing window without inventing a deadline.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same Tier 4 list, urgency variant</dd></div>
+            <div><dt>AI strategy</dt><dd>Answer engines settle on a source set and keep reusing it, so the brands cited today get easier to cite every month. Counter the &#39;we&#39;ll do it next year&#39; response with real speed proof — No. 8 Health went 34 to 6 in 60 days.</dd></div>
+            <div><dt>Value</dt><dd>Move before the source set locks</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Channel Concentration Benchmark</h3>
+          <p>The tier that makes this a waterfall rather than four campaigns. Launches last so sending reputation is built on the high-reply tiers first.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Every qualified brand that matched no tier above</dd></div>
+            <div><dt>AI strategy</dt><dd>No individual research to lead with, so lead with the pattern across the peer set instead — one or two auction channels, no owned discovery, no partner channel. Softest CTA in the cascade, no call requested at all.</dd></div>
+            <div><dt>Value</dt><dd>Reduce CAC concentration risk</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Free Tools Give-Away</h3>
+          <p>Costs nothing to deliver because the assets already exist on pennock.co. The cheapest way to convert the largest tier into a conversation.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same Tier 5 list, offer-led variant</dd></div>
+            <div><dt>AI strategy</dt><dd>Give away assets Pennock has already built — the CAC, ROAS and CPM calculators and the Creative Hook Guide. Zero marginal cost, zero call requested, and it opens a reply thread on the softest possible terms.</dd></div>
+            <div><dt>Value</dt><dd>Pure give, no ask</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">Copy</p>
+      <h2>Three emails per tier, founder-to-founder</h2>
+      <p class="takeaway">Notice line from real data, poke-the-bear, value prop tied to the poke, real proof, reply-based CTA. No calendar links.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{brand}}</span><span>{{category}}</span><span>{{retailer}}</span><span>{{launch_month}}</span><span>{{doors_or_online}}</span><span>{{retail_network}}</span><span>{{affiliate_network}}</span><span>{{meta_creative_count}}</span><span>{{open_req_title}}</span><span>{{ai_citation_score}}</span><span>{{ai_competitors_cited}}</span><span>{{use_case}}</span><span>{{colleague}}</span>
+          <button class="copy-btn" type="button" data-copy="{{brand}}, {{category}}, {{retailer}}, {{launch_month}}, {{doors_or_online}}, {{retail_network}}, {{affiliate_network}}, {{meta_creative_count}}, {{open_req_title}}, {{ai_citation_score}}, {{ai_competitors_cited}}, {{use_case}}, {{colleague}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 — Retail Launch On The Clock</strong>
+              <em>90-Day Retail Sell-Through Media Plan</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 — Retail Launch On The Clock steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{brand}} at {{retailer}}&#10;&#10;Saw {{brand}} landed at {{retailer}} in {{launch_month}} — {{doors_or_online}}.&#10;&#10;But would it be fair to assume the media plan hasn&#39;t changed shape yet? Most brands walk into a retail launch still running the same DTC prospecting they ran the week before, and then the first 90 days of sell-through quietly decide whether there&#39;s a second PO.&#10;&#10;We run the retail-and-DTC split for beauty and home brands — paid social geo-weighted around doors, retail media on {{retail_network}}, and creator + affiliate pointed at the shelf instead of only the .com. We did the Walmart and Wayfair channels for Tramontina and the professional channels for Face Reality and Green Envee.&#10;&#10;Reply &quot;sell-through&quot; and I&#39;ll send the 90-day retail launch media plan we use — the door-weighting model and the channel split. No call needed.&#10;&#10;Nikki">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{brand}} at {{retailer}}" data-preview="Northlight Botanics at Ulta">{{brand}} at {{retailer}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Saw {{brand}} landed at {{retailer}} in {{launch_month}} — {{doors_or_online}}.&#10;&#10;But would it be fair to assume the media plan hasn&#39;t changed shape yet? Most brands walk into a retail launch still running the same DTC prospecting they ran the week before, and then the first 90 days of sell-through quietly decide whether there&#39;s a second PO.&#10;&#10;We run the retail-and-DTC split for beauty and home brands — paid social geo-weighted around doors, retail media on {{retail_network}}, and creator + affiliate pointed at the shelf instead of only the .com. We did the Walmart and Wayfair channels for Tramontina and the professional channels for Face Reality and Green Envee.&#10;&#10;Reply &quot;sell-through&quot; and I&#39;ll send the 90-day retail launch media plan we use — the door-weighting model and the channel split. No call needed.&#10;&#10;Nikki" data-preview="Saw Northlight Botanics landed at Ulta in June — online plus 480 doors.&#10;&#10;But would it be fair to assume the media plan hasn&#39;t changed shape yet? Most brands walk into a retail launch still running the same DTC prospecting they ran the week before, and then the first 90 days of sell-through quietly decide whether there&#39;s a second PO.&#10;&#10;We run the retail-and-DTC split for beauty and home brands — paid social geo-weighted around doors, retail media on Amazon and Walmart Connect, and creator + affiliate pointed at the shelf instead of only the .com. We did the Walmart and Wayfair channels for Tramontina and the professional channels for Face Reality and Green Envee.&#10;&#10;Reply &quot;sell-through&quot; and I&#39;ll send the 90-day retail launch media plan we use — the door-weighting model and the channel split. No call needed.&#10;&#10;Nikki">
+                        <p>Saw {{brand}} landed at {{retailer}} in {{launch_month}} — {{doors_or_online}}.</p><p>But would it be fair to assume the media plan hasn&#39;t changed shape yet? Most brands walk into a retail launch still running the same DTC prospecting they ran the week before, and then the first 90 days of sell-through quietly decide whether there&#39;s a second PO.</p><p>We run the retail-and-DTC split for beauty and home brands — paid social geo-weighted around doors, retail media on {{retail_network}}, and creator + affiliate pointed at the shelf instead of only the .com. We did the Walmart and Wayfair channels for Tramontina and the professional channels for Face Reality and Green Envee.</p><p>Reply &quot;sell-through&quot; and I&#39;ll send the 90-day retail launch media plan we use — the door-weighting model and the channel split. No call needed.</p><p>Nikki</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One more thing on {{retailer}} — the part that catches most brands is margin, not volume.&#10;&#10;Wholesale margin is roughly half of DTC, so every sale the retail launch pulls off your own site costs you real gross profit. The fix isn&#39;t spending less, it&#39;s splitting the media so retail demand is genuinely incremental and DTC keeps the repeat buyers.&#10;&#10;That&#39;s the split we build. 5.87X average ROAS across the brands we run, $41.1M in revenue driven.&#10;&#10;Want the 90-day plan? Just reply &quot;sell-through.&quot;">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One more thing on {{retailer}} — the part that catches most brands is margin, not volume.&#10;&#10;Wholesale margin is roughly half of DTC, so every sale the retail launch pulls off your own site costs you real gross profit. The fix isn&#39;t spending less, it&#39;s splitting the media so retail demand is genuinely incremental and DTC keeps the repeat buyers.&#10;&#10;That&#39;s the split we build. 5.87X average ROAS across the brands we run, $41.1M in revenue driven.&#10;&#10;Want the 90-day plan? Just reply &quot;sell-through.&quot;" data-preview="One more thing on Ulta — the part that catches most brands is margin, not volume.&#10;&#10;Wholesale margin is roughly half of DTC, so every sale the retail launch pulls off your own site costs you real gross profit. The fix isn&#39;t spending less, it&#39;s splitting the media so retail demand is genuinely incremental and DTC keeps the repeat buyers.&#10;&#10;That&#39;s the split we build. 5.87X average ROAS across the brands we run, $41.1M in revenue driven.&#10;&#10;Want the 90-day plan? Just reply &quot;sell-through.&quot;">
+                        <p>One more thing on {{retailer}} — the part that catches most brands is margin, not volume.</p><p>Wholesale margin is roughly half of DTC, so every sale the retail launch pulls off your own site costs you real gross profit. The fix isn&#39;t spending less, it&#39;s splitting the media so retail demand is genuinely incremental and DTC keeps the repeat buyers.</p><p>That&#39;s the split we build. 5.87X average ROAS across the brands we run, $41.1M in revenue driven.</p><p>Want the 90-day plan? Just reply &quot;sell-through.&quot;</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{retailer}} sell-through&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the 90-day retail launch plan — door weighting, channel split, and the sell-through reporting we run weekly.&#10;&#10;Should I send this to you, or is {{colleague}} the right person on retail?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{retailer}} sell-through" data-preview="Ulta sell-through">{{retailer}} sell-through</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No need for a call. Just reply yes and I&#39;ll send the 90-day retail launch plan — door weighting, channel split, and the sell-through reporting we run weekly.&#10;&#10;Should I send this to you, or is {{colleague}} the right person on retail?" data-preview="No need for a call. Just reply yes and I&#39;ll send the 90-day retail launch plan — door weighting, channel split, and the sell-through reporting we run weekly.&#10;&#10;Should I send this to you, or is your growth lead the right person on retail?">
+                        <p>No need for a call. Just reply yes and I&#39;ll send the 90-day retail launch plan — door weighting, channel split, and the sell-through reporting we run weekly.</p><p>Should I send this to you, or is {{colleague}} the right person on retail?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 — Affiliate Program, No Driver</strong>
+              <em>Affiliate Incrementality Teardown</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 — Affiliate Program, No Driver steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your {{affiliate_network}} program&#10;&#10;Two things I noticed about {{brand}}: you&#39;ve got {{meta_creative_count}} creatives live on Meta right now, and {{affiliate_network}} is running on your site. Then I looked for whoever owns the affiliate program on your team and couldn&#39;t find them.&#10;&#10;Would it be fair to assume the program is mostly running itself? That&#39;s usually where it gets expensive — unmanaged programs drift toward coupon, loyalty and cashback extensions that attach to traffic your paid media already bought. Last-click says affiliate is working. What&#39;s actually happening is you&#39;re paying twice for the same customer.&#10;&#10;We manage affiliate incrementality-first for beauty and lifestyle brands — publisher mix by category and margin, commission restructuring, extension policing. 17X return on affiliate spend, 3.4X incremental new customers, 376% YoY program growth.&#10;&#10;Reply &quot;teardown&quot; and I&#39;ll send a breakdown of your program&#39;s publisher mix and where the overlap with paid is — free, no call.&#10;&#10;Nikki">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your {{affiliate_network}} program" data-preview="your Impact program">your {{affiliate_network}} program</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Two things I noticed about {{brand}}: you&#39;ve got {{meta_creative_count}} creatives live on Meta right now, and {{affiliate_network}} is running on your site. Then I looked for whoever owns the affiliate program on your team and couldn&#39;t find them.&#10;&#10;Would it be fair to assume the program is mostly running itself? That&#39;s usually where it gets expensive — unmanaged programs drift toward coupon, loyalty and cashback extensions that attach to traffic your paid media already bought. Last-click says affiliate is working. What&#39;s actually happening is you&#39;re paying twice for the same customer.&#10;&#10;We manage affiliate incrementality-first for beauty and lifestyle brands — publisher mix by category and margin, commission restructuring, extension policing. 17X return on affiliate spend, 3.4X incremental new customers, 376% YoY program growth.&#10;&#10;Reply &quot;teardown&quot; and I&#39;ll send a breakdown of your program&#39;s publisher mix and where the overlap with paid is — free, no call.&#10;&#10;Nikki" data-preview="Two things I noticed about Northlight Botanics: you&#39;ve got 23 creatives live on Meta right now, and Impact is running on your site. Then I looked for whoever owns the affiliate program on your team and couldn&#39;t find them.&#10;&#10;Would it be fair to assume the program is mostly running itself? That&#39;s usually where it gets expensive — unmanaged programs drift toward coupon, loyalty and cashback extensions that attach to traffic your paid media already bought. Last-click says affiliate is working. What&#39;s actually happening is you&#39;re paying twice for the same customer.&#10;&#10;We manage affiliate incrementality-first for beauty and lifestyle brands — publisher mix by category and margin, commission restructuring, extension policing. 17X return on affiliate spend, 3.4X incremental new customers, 376% YoY program growth.&#10;&#10;Reply &quot;teardown&quot; and I&#39;ll send a breakdown of your program&#39;s publisher mix and where the overlap with paid is — free, no call.&#10;&#10;Nikki">
+                        <p>Two things I noticed about {{brand}}: you&#39;ve got {{meta_creative_count}} creatives live on Meta right now, and {{affiliate_network}} is running on your site. Then I looked for whoever owns the affiliate program on your team and couldn&#39;t find them.</p><p>Would it be fair to assume the program is mostly running itself? That&#39;s usually where it gets expensive — unmanaged programs drift toward coupon, loyalty and cashback extensions that attach to traffic your paid media already bought. Last-click says affiliate is working. What&#39;s actually happening is you&#39;re paying twice for the same customer.</p><p>We manage affiliate incrementality-first for beauty and lifestyle brands — publisher mix by category and margin, commission restructuring, extension policing. 17X return on affiliate spend, 3.4X incremental new customers, 376% YoY program growth.</p><p>Reply &quot;teardown&quot; and I&#39;ll send a breakdown of your program&#39;s publisher mix and where the overlap with paid is — free, no call.</p><p>Nikki</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Following up with the upside rather than the leak.&#10;&#10;On the programs we run properly, affiliate lands around 38% of revenue and grows the publisher base rather than the coupon base — that&#39;s 56% more revenue out of active publishers without touching paid spend. You already own the tooling. The channel is just idle.&#10;&#10;The teardown shows you which of your current publishers are incremental and which are re-claiming credit. Reply &quot;teardown.&quot;">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Following up with the upside rather than the leak.&#10;&#10;On the programs we run properly, affiliate lands around 38% of revenue and grows the publisher base rather than the coupon base — that&#39;s 56% more revenue out of active publishers without touching paid spend. You already own the tooling. The channel is just idle.&#10;&#10;The teardown shows you which of your current publishers are incremental and which are re-claiming credit. Reply &quot;teardown.&quot;" data-preview="Following up with the upside rather than the leak.&#10;&#10;On the programs we run properly, affiliate lands around 38% of revenue and grows the publisher base rather than the coupon base — that&#39;s 56% more revenue out of active publishers without touching paid spend. You already own the tooling. The channel is just idle.&#10;&#10;The teardown shows you which of your current publishers are incremental and which are re-claiming credit. Reply &quot;teardown.&quot;">
+                        <p>Following up with the upside rather than the leak.</p><p>On the programs we run properly, affiliate lands around 38% of revenue and grows the publisher base rather than the coupon base — that&#39;s 56% more revenue out of active publishers without touching paid spend. You already own the tooling. The channel is just idle.</p><p>The teardown shows you which of your current publishers are incremental and which are re-claiming credit. Reply &quot;teardown.&quot;</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{brand}} affiliate&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the affiliate incrementality teardown — your publisher mix, the paid overlap, and the commission structure we&#39;d put in.&#10;&#10;Should I send it to you or {{colleague}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{brand}} affiliate" data-preview="Northlight Botanics affiliate">{{brand}} affiliate</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No need for a call. Just reply yes and I&#39;ll send the affiliate incrementality teardown — your publisher mix, the paid overlap, and the commission structure we&#39;d put in.&#10;&#10;Should I send it to you or {{colleague}}?" data-preview="No need for a call. Just reply yes and I&#39;ll send the affiliate incrementality teardown — your publisher mix, the paid overlap, and the commission structure we&#39;d put in.&#10;&#10;Should I send it to you or your growth lead?">
+                        <p>No need for a call. Just reply yes and I&#39;ll send the affiliate incrementality teardown — your publisher mix, the paid overlap, and the commission structure we&#39;d put in.</p><p>Should I send it to you or {{colleague}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 — Pricing The Gap At A Salary</strong>
+              <em>Bench vs. Hire Cost Model</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 — Pricing The Gap At A Salary steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the {{open_req_title}} req&#10;&#10;Saw {{brand}} is hiring a {{open_req_title}} — and the JD covers paid social, Google, retention and marketplace.&#10;&#10;But would it be fair to assume you&#39;re hiring one person to do five specialisms? The bigger issue is the clock: a good one takes 60-90 days to land and another 90 to ramp, so you&#39;re two quarters out before anything in the account actually changes.&#10;&#10;We&#39;re a 10-person specialist bench — Meta, Google, TikTok Shop, Amazon and retail media, affiliate and AEO — live in about two weeks, for less than one loaded senior salary. 5.87X average ROAS, 120+ brands scaled, $41.1M revenue driven.&#10;&#10;Reply &quot;model&quot; and I&#39;ll send the cost comparison we built — loaded salary plus ramp versus retained coverage. Not a pitch deck, just the maths.&#10;&#10;Nikki">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the {{open_req_title}} req" data-preview="the Growth Marketing Manager req">the {{open_req_title}} req</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Saw {{brand}} is hiring a {{open_req_title}} — and the JD covers paid social, Google, retention and marketplace.&#10;&#10;But would it be fair to assume you&#39;re hiring one person to do five specialisms? The bigger issue is the clock: a good one takes 60-90 days to land and another 90 to ramp, so you&#39;re two quarters out before anything in the account actually changes.&#10;&#10;We&#39;re a 10-person specialist bench — Meta, Google, TikTok Shop, Amazon and retail media, affiliate and AEO — live in about two weeks, for less than one loaded senior salary. 5.87X average ROAS, 120+ brands scaled, $41.1M revenue driven.&#10;&#10;Reply &quot;model&quot; and I&#39;ll send the cost comparison we built — loaded salary plus ramp versus retained coverage. Not a pitch deck, just the maths.&#10;&#10;Nikki" data-preview="Saw Northlight Botanics is hiring a Growth Marketing Manager — and the JD covers paid social, Google, retention and marketplace.&#10;&#10;But would it be fair to assume you&#39;re hiring one person to do five specialisms? The bigger issue is the clock: a good one takes 60-90 days to land and another 90 to ramp, so you&#39;re two quarters out before anything in the account actually changes.&#10;&#10;We&#39;re a 10-person specialist bench — Meta, Google, TikTok Shop, Amazon and retail media, affiliate and AEO — live in about two weeks, for less than one loaded senior salary. 5.87X average ROAS, 120+ brands scaled, $41.1M revenue driven.&#10;&#10;Reply &quot;model&quot; and I&#39;ll send the cost comparison we built — loaded salary plus ramp versus retained coverage. Not a pitch deck, just the maths.&#10;&#10;Nikki">
+                        <p>Saw {{brand}} is hiring a {{open_req_title}} — and the JD covers paid social, Google, retention and marketplace.</p><p>But would it be fair to assume you&#39;re hiring one person to do five specialisms? The bigger issue is the clock: a good one takes 60-90 days to land and another 90 to ramp, so you&#39;re two quarters out before anything in the account actually changes.</p><p>We&#39;re a 10-person specialist bench — Meta, Google, TikTok Shop, Amazon and retail media, affiliate and AEO — live in about two weeks, for less than one loaded senior salary. 5.87X average ROAS, 120+ brands scaled, $41.1M revenue driven.</p><p>Reply &quot;model&quot; and I&#39;ll send the cost comparison we built — loaded salary plus ramp versus retained coverage. Not a pitch deck, just the maths.</p><p>Nikki</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;To be clear, I&#39;m not saying don&#39;t hire.&#10;&#10;The brands that get this right hire the strategist and rent the execution — one internal owner who knows the brand, a bench that already knows the platforms. Kinship put ROAS up 300% that way. MOB Beauty doubled monthly revenue.&#10;&#10;It also means the hire walks into a working account instead of a rebuild. Want the cost model? Reply &quot;model.&quot;">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="To be clear, I&#39;m not saying don&#39;t hire.&#10;&#10;The brands that get this right hire the strategist and rent the execution — one internal owner who knows the brand, a bench that already knows the platforms. Kinship put ROAS up 300% that way. MOB Beauty doubled monthly revenue.&#10;&#10;It also means the hire walks into a working account instead of a rebuild. Want the cost model? Reply &quot;model.&quot;" data-preview="To be clear, I&#39;m not saying don&#39;t hire.&#10;&#10;The brands that get this right hire the strategist and rent the execution — one internal owner who knows the brand, a bench that already knows the platforms. Kinship put ROAS up 300% that way. MOB Beauty doubled monthly revenue.&#10;&#10;It also means the hire walks into a working account instead of a rebuild. Want the cost model? Reply &quot;model.&quot;">
+                        <p>To be clear, I&#39;m not saying don&#39;t hire.</p><p>The brands that get this right hire the strategist and rent the execution — one internal owner who knows the brand, a bench that already knows the platforms. Kinship put ROAS up 300% that way. MOB Beauty doubled monthly revenue.</p><p>It also means the hire walks into a working account instead of a rebuild. Want the cost model? Reply &quot;model.&quot;</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{open_req_title}}&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the bench-vs-hire cost model — fully loaded salary, ramp time, and what retained coverage runs.&#10;&#10;Should I send it to you or {{colleague}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{open_req_title}}" data-preview="Growth Marketing Manager">{{open_req_title}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No need for a call. Just reply yes and I&#39;ll send the bench-vs-hire cost model — fully loaded salary, ramp time, and what retained coverage runs.&#10;&#10;Should I send it to you or {{colleague}}?" data-preview="No need for a call. Just reply yes and I&#39;ll send the bench-vs-hire cost model — fully loaded salary, ramp time, and what retained coverage runs.&#10;&#10;Should I send it to you or your growth lead?">
+                        <p>No need for a call. Just reply yes and I&#39;ll send the bench-vs-hire cost model — fully loaded salary, ramp time, and what retained coverage runs.</p><p>Should I send it to you or {{colleague}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 — Renting 100% Of Discovery</strong>
+              <em>AI Visibility Scorecard</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 — Renting 100% Of Discovery steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{brand}} in ChatGPT&#10;&#10;I ran {{brand}} through 20 buying questions in your category across ChatGPT, Perplexity and Google AI Overviews — the &quot;best {{category}} for {{use_case}}&quot; type questions people actually ask now.&#10;&#10;{{brand}} came back in {{ai_citation_score}} of them. {{ai_competitors_cited}} came back in most of them.&#10;&#10;You&#39;ve got {{meta_creative_count}} creatives live on Meta, so demand is clearly getting bought. Would it be fair to assume none of it is coming from the layer where those answers get written? That&#39;s the part that compounds — auction CPMs reprice against you every quarter, citations don&#39;t.&#10;&#10;That&#39;s what we do: schema, structured content, digital PR, and citation tracking as a reported metric. Juvia&#39;s Place put organic keyword growth up 668%. Marco Bicego grew AI Overview keywords 85%. Across the book, 1,002% growth in SERP features and AI Overviews.&#10;&#10;Reply &quot;scorecard&quot; and I&#39;ll send your 20-prompt result with the competitors cited instead. Free, no call.&#10;&#10;Nikki">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{brand}} in ChatGPT" data-preview="Northlight Botanics in ChatGPT">{{brand}} in ChatGPT</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="I ran {{brand}} through 20 buying questions in your category across ChatGPT, Perplexity and Google AI Overviews — the &quot;best {{category}} for {{use_case}}&quot; type questions people actually ask now.&#10;&#10;{{brand}} came back in {{ai_citation_score}} of them. {{ai_competitors_cited}} came back in most of them.&#10;&#10;You&#39;ve got {{meta_creative_count}} creatives live on Meta, so demand is clearly getting bought. Would it be fair to assume none of it is coming from the layer where those answers get written? That&#39;s the part that compounds — auction CPMs reprice against you every quarter, citations don&#39;t.&#10;&#10;That&#39;s what we do: schema, structured content, digital PR, and citation tracking as a reported metric. Juvia&#39;s Place put organic keyword growth up 668%. Marco Bicego grew AI Overview keywords 85%. Across the book, 1,002% growth in SERP features and AI Overviews.&#10;&#10;Reply &quot;scorecard&quot; and I&#39;ll send your 20-prompt result with the competitors cited instead. Free, no call.&#10;&#10;Nikki" data-preview="I ran Northlight Botanics through 20 buying questions in your category across ChatGPT, Perplexity and Google AI Overviews — the &quot;best clean skincare for sensitive skin&quot; type questions people actually ask now.&#10;&#10;Northlight Botanics came back in 1 of them. Two competitors came back in most of them.&#10;&#10;You&#39;ve got 23 creatives live on Meta, so demand is clearly getting bought. Would it be fair to assume none of it is coming from the layer where those answers get written? That&#39;s the part that compounds — auction CPMs reprice against you every quarter, citations don&#39;t.&#10;&#10;That&#39;s what we do: schema, structured content, digital PR, and citation tracking as a reported metric. Juvia&#39;s Place put organic keyword growth up 668%. Marco Bicego grew AI Overview keywords 85%. Across the book, 1,002% growth in SERP features and AI Overviews.&#10;&#10;Reply &quot;scorecard&quot; and I&#39;ll send your 20-prompt result with the competitors cited instead. Free, no call.&#10;&#10;Nikki">
+                        <p>I ran {{brand}} through 20 buying questions in your category across ChatGPT, Perplexity and Google AI Overviews — the &quot;best {{category}} for {{use_case}}&quot; type questions people actually ask now.</p><p>{{brand}} came back in {{ai_citation_score}} of them. {{ai_competitors_cited}} came back in most of them.</p><p>You&#39;ve got {{meta_creative_count}} creatives live on Meta, so demand is clearly getting bought. Would it be fair to assume none of it is coming from the layer where those answers get written? That&#39;s the part that compounds — auction CPMs reprice against you every quarter, citations don&#39;t.</p><p>That&#39;s what we do: schema, structured content, digital PR, and citation tracking as a reported metric. Juvia&#39;s Place put organic keyword growth up 668%. Marco Bicego grew AI Overview keywords 85%. Across the book, 1,002% growth in SERP features and AI Overviews.</p><p>Reply &quot;scorecard&quot; and I&#39;ll send your 20-prompt result with the competitors cited instead. Free, no call.</p><p>Nikki</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The reason I&#39;d move on this rather than park it: answer engines settle on a source set and then keep reusing it. The brands cited in your category today are getting easier to cite every month.&#10;&#10;It isn&#39;t a twelve-month project either — No. 8 Health went from position 34 to 6 in 60 days. Vella Bioscience grew page-one keywords 450%.&#10;&#10;Your scorecard&#39;s ready when you want it. Reply &quot;scorecard.&quot;">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The reason I&#39;d move on this rather than park it: answer engines settle on a source set and then keep reusing it. The brands cited in your category today are getting easier to cite every month.&#10;&#10;It isn&#39;t a twelve-month project either — No. 8 Health went from position 34 to 6 in 60 days. Vella Bioscience grew page-one keywords 450%.&#10;&#10;Your scorecard&#39;s ready when you want it. Reply &quot;scorecard.&quot;" data-preview="The reason I&#39;d move on this rather than park it: answer engines settle on a source set and then keep reusing it. The brands cited in your category today are getting easier to cite every month.&#10;&#10;It isn&#39;t a twelve-month project either — No. 8 Health went from position 34 to 6 in 60 days. Vella Bioscience grew page-one keywords 450%.&#10;&#10;Your scorecard&#39;s ready when you want it. Reply &quot;scorecard.&quot;">
+                        <p>The reason I&#39;d move on this rather than park it: answer engines settle on a source set and then keep reusing it. The brands cited in your category today are getting easier to cite every month.</p><p>It isn&#39;t a twelve-month project either — No. 8 Health went from position 34 to 6 in 60 days. Vella Bioscience grew page-one keywords 450%.</p><p>Your scorecard&#39;s ready when you want it. Reply &quot;scorecard.&quot;</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: AI visibility — {{brand}}&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the AI visibility scorecard — the 20 prompts, where {{brand}} appears, and who&#39;s being cited instead.&#10;&#10;Should I send it to you or {{colleague}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="AI visibility — {{brand}}" data-preview="AI visibility — Northlight Botanics">AI visibility — {{brand}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No need for a call. Just reply yes and I&#39;ll send the AI visibility scorecard — the 20 prompts, where {{brand}} appears, and who&#39;s being cited instead.&#10;&#10;Should I send it to you or {{colleague}}?" data-preview="No need for a call. Just reply yes and I&#39;ll send the AI visibility scorecard — the 20 prompts, where Northlight Botanics appears, and who&#39;s being cited instead.&#10;&#10;Should I send it to you or your growth lead?">
+                        <p>No need for a call. Just reply yes and I&#39;ll send the AI visibility scorecard — the 20 prompts, where {{brand}} appears, and who&#39;s being cited instead.</p><p>Should I send it to you or {{colleague}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 — Catch-All: Channel Concentration</strong>
+              <em>CAC / ROAS / CPM calculators + Creative Hook Guide</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 — Catch-All: Channel Concentration steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 5</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 10</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{brand}}&#39;s channel mix&#10;&#10;Been looking at {{category}} brands around {{brand}}&#39;s stage this month.&#10;&#10;The pattern that keeps showing up: nearly all the demand comes from one or two auction channels, there&#39;s no owned discovery, and no partner channel. Which is fine right up until CPMs move — and then there&#39;s nowhere for the budget to go.&#10;&#10;We run paid, AI search and affiliate as one P&amp;L rather than three vendors, for beauty, fashion and home brands. 5.87X average ROAS, $41.1M driven, 120+ brands.&#10;&#10;Not pitching a call. If it&#39;s useful, reply &quot;tools&quot; and I&#39;ll send our CAC, ROAS and CPM calculators plus the creative hook guide our team uses.&#10;&#10;Nikki">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{brand}}&#39;s channel mix" data-preview="Northlight Botanics&#39;s channel mix">{{brand}}&#39;s channel mix</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Been looking at {{category}} brands around {{brand}}&#39;s stage this month.&#10;&#10;The pattern that keeps showing up: nearly all the demand comes from one or two auction channels, there&#39;s no owned discovery, and no partner channel. Which is fine right up until CPMs move — and then there&#39;s nowhere for the budget to go.&#10;&#10;We run paid, AI search and affiliate as one P&amp;L rather than three vendors, for beauty, fashion and home brands. 5.87X average ROAS, $41.1M driven, 120+ brands.&#10;&#10;Not pitching a call. If it&#39;s useful, reply &quot;tools&quot; and I&#39;ll send our CAC, ROAS and CPM calculators plus the creative hook guide our team uses.&#10;&#10;Nikki" data-preview="Been looking at clean skincare brands around Northlight Botanics&#39;s stage this month.&#10;&#10;The pattern that keeps showing up: nearly all the demand comes from one or two auction channels, there&#39;s no owned discovery, and no partner channel. Which is fine right up until CPMs move — and then there&#39;s nowhere for the budget to go.&#10;&#10;We run paid, AI search and affiliate as one P&amp;L rather than three vendors, for beauty, fashion and home brands. 5.87X average ROAS, $41.1M driven, 120+ brands.&#10;&#10;Not pitching a call. If it&#39;s useful, reply &quot;tools&quot; and I&#39;ll send our CAC, ROAS and CPM calculators plus the creative hook guide our team uses.&#10;&#10;Nikki">
+                        <p>Been looking at {{category}} brands around {{brand}}&#39;s stage this month.</p><p>The pattern that keeps showing up: nearly all the demand comes from one or two auction channels, there&#39;s no owned discovery, and no partner channel. Which is fine right up until CPMs move — and then there&#39;s nowhere for the budget to go.</p><p>We run paid, AI search and affiliate as one P&amp;L rather than three vendors, for beauty, fashion and home brands. 5.87X average ROAS, $41.1M driven, 120+ brands.</p><p>Not pitching a call. If it&#39;s useful, reply &quot;tools&quot; and I&#39;ll send our CAC, ROAS and CPM calculators plus the creative hook guide our team uses.</p><p>Nikki</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 5</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Quick follow-up with something concrete instead of a pitch.&#10;&#10;The single cheapest move for most brands at your stage isn&#39;t more spend — it&#39;s turning on the channel you already have tooling for. Affiliate lands around 38% of revenue on the programs we run, and AI search is currently free real estate in nearly every beauty category.&#10;&#10;Reply &quot;tools&quot; if you want the calculators and the hook guide.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Quick follow-up with something concrete instead of a pitch.&#10;&#10;The single cheapest move for most brands at your stage isn&#39;t more spend — it&#39;s turning on the channel you already have tooling for. Affiliate lands around 38% of revenue on the programs we run, and AI search is currently free real estate in nearly every beauty category.&#10;&#10;Reply &quot;tools&quot; if you want the calculators and the hook guide." data-preview="Quick follow-up with something concrete instead of a pitch.&#10;&#10;The single cheapest move for most brands at your stage isn&#39;t more spend — it&#39;s turning on the channel you already have tooling for. Affiliate lands around 38% of revenue on the programs we run, and AI search is currently free real estate in nearly every beauty category.&#10;&#10;Reply &quot;tools&quot; if you want the calculators and the hook guide.">
+                        <p>Quick follow-up with something concrete instead of a pitch.</p><p>The single cheapest move for most brands at your stage isn&#39;t more spend — it&#39;s turning on the channel you already have tooling for. Affiliate lands around 38% of revenue on the programs we run, and AI search is currently free real estate in nearly every beauty category.</p><p>Reply &quot;tools&quot; if you want the calculators and the hook guide.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 10</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: quick one&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the calculators and the creative hook guide.&#10;&#10;Should I send it to you or is {{colleague}} closer to growth?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="quick one" data-preview="quick one">quick one</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No need for a call. Just reply yes and I&#39;ll send the calculators and the creative hook guide.&#10;&#10;Should I send it to you or is {{colleague}} closer to growth?" data-preview="No need for a call. Just reply yes and I&#39;ll send the calculators and the creative hook guide.&#10;&#10;Should I send it to you or is your growth lead closer to growth?">
+                        <p>No need for a call. Just reply yes and I&#39;ll send the calculators and the creative hook guide.</p><p>Should I send it to you or is {{colleague}} closer to growth?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">Launch</p>
+      <h2>Live in twelve weeks, never rebuilt</h2>
+      <p class="takeaway">Tier 2 launches first because its list is buildable today. After that the work is adding leads, not inventing campaigns.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Weeks 1-3 — Launch Tier 2 (Affiliate, No Driver) first, despite it being tier two. The list is buildable immediately from two free sources, the pain is quantifiable in dollars, and it maps to Pennock&#39;s strongest proof set. Fastest route to a reply that proves the model.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Weeks 3-6 — Launch Tier 4 (Renting Discovery). Largest tier and the most differentiated angle, and the offer IS the service — the scorecard doubles as the discovery call.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 5-8 — Launch Tier 3 (Pricing The Gap). Steady rolling volume from job boards; build the bench-vs-hire cost model first.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Weeks 7-10 — Launch Tier 1 (Retail Launch). Requires the 24-month trade-press lookback to reach 1,500 contacts, and a retail sell-through proof metric.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Weeks 9-12 — Launch Tier 5 (Catch-All). Largest volume and weakest signal, so send it last once sending reputation is established on the high-reply tiers.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Before any send: resolve the two launch blockers — the contradictory public metrics ($11M+/110+ brands on the services page vs $7M+/120+ brands on the paid media page), and the missing retail sell-through number that Tier 1 depends on.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacts</strong>
+                <span>Perfect — scale this tier</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good — let it run</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450-500</strong>
+                <span>Borderline — test one copy variant, varying the offer or the notice-line angle only</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or reply rate under 1% after 1,500+ sends</strong>
+                <span>Cut the tier and rework it</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dana","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Northlight Botanics","clean skincare","Ulta","June","online plus 480 doors","Amazon and Walmart Connect","Impact","23","Growth Marketing Manager","1","Two competitors","sensitive skin","your growth lead"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMADE - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-21</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for SMADE</p>
+          <h1>The SMADE waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">One priority-routed cascade across every medical device manufacturer with an instrument fleet in circulation, built entirely on free federal device data.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> A manufacturer&#39;s instrument set fleet is the largest capital line item they control that nobody measures. It sits on the balance sheet as a named asset, depreciates over five years, and gets written off when it disappears. Yet how many sets to build is decided once, at launch, by a person guessing. One SMADE client planned a five-set build; the data showed they needed two.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>~10k</strong>
+          <span>Accounts with a provable instrument fleet</span>
+        </div>
+        <div class="metric-card">
+          <strong>~50 / mo</strong>
+          <span>New Tier 1 accounts, free, forever</span>
+        </div>
+        <div class="metric-card">
+          <strong>$0</strong>
+          <span>Data cost to build and route the entire market</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Autoclavable IoT trackers plus the S-HUB platform, giving manufacturers real location, turn rate and lifecycle data on surgical trays, loaner kits and consignment fleets, with no reader infrastructure anywhere.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The routing signal nobody can buy</p></div><div><span>02</span><p>One cascade, routed on the set-fleet capital cycle</p></div><div><span>03</span><p>Five tiers from building the fleet to never having measured it</p></div><div><span>04</span><p>The campaign experiments that sit on the cascade</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>The signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>The waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>The tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>The campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>The copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>The launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="The signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">The signal</p>
+      <h2>The routing signal nobody can buy</h2>
+      <p class="takeaway">Every account, every tier and every lead magnet comes out of the FDA&#39;s own device databases. Qualification happens before a single enrichment credit is spent.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>AccessGUDID publishes a device-kit flag and a single-use flag on every device record, so you can prove which companies actually own reusable instrument fleets rather than guessing from an industry code.</p></div><div class="reason-card"><span>02</span><p>The openFDA 510(k) database timestamps every clearance, which is the exact moment a manufacturer commits capital to a new set fleet. It is a launch clock, published free, updated monthly.</p></div><div class="reason-card"><span>03</span><p>No data vendor sells this. Purchased medtech lists cannot separate a disposable device company from one running two thousand trays, because the distinction lives in the device record rather than the company record.</p></div><div class="reason-card"><span>04</span><p>It replenishes itself. Roughly fifty new qualified accounts arrive every month at the precise moment their fleet sizing decision is live, and none of them had to be bought.</p></div>
+            </div>
+            <div class="field-cloud"><span>company_name</span><span>labeler_duns</span><span>kit_sku_count</span><span>reusable_sku_count</span><span>product_code_family</span><span>latest_clearance_date</span><span>latest_clearance_device</span><span>months_since_clearance</span><span>incumbent_tracking_vendor</span><span>rep_network_type</span><span>territory_count</span><span>set_mgmt_open_reqs</span><span>set_mgmt_req_titles</span><span>hq_country</span><span>instruments_ppe_value</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>AccessGUDID Full Release</h3><p>The base market. Every device on the US market plus labeler name, brand, device-kit flag, single-use flag, sterilisation flag and FDA product code. Bulk download, roughly four million records, free and no account required.</p></div><div class="source-card"><span>02</span><h3>openFDA Registration &amp; Listing API</h3><p>The corporate entity behind each device. Registered establishment name, address, country, owner or operator, and official correspondent. Free.</p></div><div class="source-card"><span>03</span><h3>openFDA 510(k) API</h3><p>The Tier 1 trigger. New clearances with applicant, decision date and product code. This is the launch clock that tells you a set fleet is about to be built.</p></div><div class="source-card"><span>04</span><h3>EUDAMED actor and UDI-DI registry</h3><p>The European mirror of GUDID, mandatory since 28 May 2026. Extends the same qualification gate across the EU market.</p></div><div class="source-card"><span>05</span><h3>Company domain crawl</h3><p>Rep-locator, distributor, territory and loaner pages, revealing whether the fleet is handled by employees or by independent reps, and roughly how many territories it spreads across.</p></div><div class="source-card"><span>06</span><h3>Job-board and vendor-name sweep</h3><p>Open requisitions for set, loaner, field-inventory and asset-management coordination, plus any named incumbent tracking vendor mentioned in postings, press or integration pages.</p></div><div class="source-card"><span>07</span><h3>SEC EDGAR full-text search</h3><p>For public filers, the instruments-and-sets balance sheet line and depreciation policy. Powers the Balance Sheet 100 account-based campaign, where you can open with the prospect&#39;s own filed number.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="The waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">The waterfall</p>
+      <h2>One cascade, routed on the set-fleet capital cycle</h2>
+      <p class="takeaway">Accounts are tested top to bottom and land in exactly one tier, so nobody ever receives two competing messages.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF The account publishes no reusable and no kit device records</span>
+          <strong>Exclude from the market entirely</strong>
+          <em>No fleet means nothing to track and nothing to buy. This gate removes every single-use and disposable device company, which is the filter no purchased list can apply.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF The account is headquartered in Germany</span>
+          <strong>Suppress from email, route to a LinkedIn and phone lane</strong>
+          <em>UWG section 7 requires prior consent for commercial email, including B2B. Tuttlingen is the densest surgical instrument cluster on earth, so these accounts are worked on other channels rather than dropped.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF A 510(k) or CE clearance landed in the trailing twelve months</span>
+          <strong>Tier 1, Fleet Being Built</strong>
+          <em>The set-count decision is live right now, and whatever number they pick depreciates for five years whether the sets move or not.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF A named incumbent tracking or RFID vendor is detected</span>
+          <strong>Tier 2, Visibility Stops at the Dock</strong>
+          <em>They already pay for tracking and already believe in the category, so the only question left is the gap, and the gap is provable.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF The company publishes an independent or hybrid rep network on its own site</span>
+          <strong>Tier 3, Fleet in Other People&#39;s Cars</strong>
+          <em>Assets sit in the custody of people who do not work for them, so location data comes back as a favour rather than as a fact.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="5">
+          <span class="route-rule__num">06</span>
+          <span class="route-rule__if">IF There is at least one open requisition for set, loaner, field-inventory or asset-management coordination</span>
+          <strong>Tier 4, Fleet Managed by Headcount</strong>
+          <em>They have already priced the problem and approved budget for it, just in salary and spreadsheets rather than in data.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="6">
+          <span class="route-rule__num">07</span>
+          <span class="route-rule__if">IF None of the above matched</span>
+          <strong>Tier 5 catch-all, The Unmeasured Fleet</strong>
+          <em>The fleet exists and turn rate has never been measured, so dormant trays are invisible and indistinguishable from busy ones.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF The account publishes no reusable and no kit device records -&gt; Exclude from the market entirely (No fleet means nothing to track and nothing to buy. This gate removes every single-use and disposable device company, which is the filter no purchased list can apply.)&#10;2. IF The account is headquartered in Germany -&gt; Suppress from email, route to a LinkedIn and phone lane (UWG section 7 requires prior consent for commercial email, including B2B. Tuttlingen is the densest surgical instrument cluster on earth, so these accounts are worked on other channels rather than dropped.)&#10;3. IF A 510(k) or CE clearance landed in the trailing twelve months -&gt; Tier 1, Fleet Being Built (The set-count decision is live right now, and whatever number they pick depreciates for five years whether the sets move or not.)&#10;4. IF A named incumbent tracking or RFID vendor is detected -&gt; Tier 2, Visibility Stops at the Dock (They already pay for tracking and already believe in the category, so the only question left is the gap, and the gap is provable.)&#10;5. IF The company publishes an independent or hybrid rep network on its own site -&gt; Tier 3, Fleet in Other People&#39;s Cars (Assets sit in the custody of people who do not work for them, so location data comes back as a favour rather than as a fact.)&#10;6. IF There is at least one open requisition for set, loaner, field-inventory or asset-management coordination -&gt; Tier 4, Fleet Managed by Headcount (They have already priced the problem and approved budget for it, just in salary and spreadsheets rather than in data.)&#10;7. IF None of the above matched -&gt; Tier 5 catch-all, The Unmeasured Fleet (The fleet exists and turn rate has never been measured, so dormant trays are invisible and indistinguishable from busy ones.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF The account publishes no reusable and no kit device records -&gt; Exclude from the market entirely (No fleet means nothing to track and nothing to buy. This gate removes every single-use and disposable device company, which is the filter no purchased list can apply.)
+2. IF The account is headquartered in Germany -&gt; Suppress from email, route to a LinkedIn and phone lane (UWG section 7 requires prior consent for commercial email, including B2B. Tuttlingen is the densest surgical instrument cluster on earth, so these accounts are worked on other channels rather than dropped.)
+3. IF A 510(k) or CE clearance landed in the trailing twelve months -&gt; Tier 1, Fleet Being Built (The set-count decision is live right now, and whatever number they pick depreciates for five years whether the sets move or not.)
+4. IF A named incumbent tracking or RFID vendor is detected -&gt; Tier 2, Visibility Stops at the Dock (They already pay for tracking and already believe in the category, so the only question left is the gap, and the gap is provable.)
+5. IF The company publishes an independent or hybrid rep network on its own site -&gt; Tier 3, Fleet in Other People&#39;s Cars (Assets sit in the custody of people who do not work for them, so location data comes back as a favour rather than as a fact.)
+6. IF There is at least one open requisition for set, loaner, field-inventory or asset-management coordination -&gt; Tier 4, Fleet Managed by Headcount (They have already priced the problem and approved budget for it, just in salary and spreadsheets rather than in data.)
+7. IF None of the above matched -&gt; Tier 5 catch-all, The Unmeasured Fleet (The fleet exists and turn rate has never been measured, so dormant trays are invisible and indistinguishable from busy ones.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="The tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">The tiers</p>
+      <h2>Five tiers from building the fleet to never having measured it</h2>
+      <p class="takeaway">The hottest tier is the smallest and refreshes itself monthly. The catch-all absorbs roughly half the market and is never skipped.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">5-7% TAM</span>
+          </div>
+          <h3>Tier 1: Fleet Being Built</h3>
+          <p>A 510(k) or CE clearance in the trailing twelve months on an instrument-bearing product code.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They are about to commit capital to a set fleet whose size nobody can justify. The number came from a rep forecast and a bit of instinct, and it will be wrong in one direction for five years.</dd></div>
+              <div><dt>Offer</dt><dd>Set Fleet Sizing Model</dd></div>
+              <div><dt>Source</dt><dd>openFDA 510(k) API, refreshed monthly</dd></div>
+              <div><dt>Reply density</dt><dd>Highest. Perfectly timed against a live capex decision, and the tier refreshes itself with roughly fifty new accounts every month.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">3-5% TAM</span>
+          </div>
+          <h3>Tier 2: Visibility Stops at the Dock</h3>
+          <p>A named incumbent tracking or RFID vendor detected in job posts, press, integration pages or the vendor&#39;s own published customer logos.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They have already solved the hard internal problem and know what is in the building. But RFID needs a reader, and they do not own the hospital basement or the rep&#39;s boot, so visibility ends exactly where the losses begin.</dd></div>
+              <div><dt>Offer</dt><dd>Field Blind-Spot Map</dd></div>
+              <div><dt>Source</dt><dd>Multi-source vendor-name evidence sweep</dd></div>
+              <div><dt>Reply density</dt><dd>Very high but the smallest tier. Confirmed budget and confirmed belief in the category, held until it clears 1,500 contacts rather than launched thin.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">18-24% TAM</span>
+          </div>
+          <h3>Tier 3: Fleet in Other People&#39;s Cars</h3>
+          <p>An independent or hybrid 1099 rep network published on the company&#39;s own website, with a countable number of territories.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The assets are in the custody of people who do not work for them. No chain of custody, no return SLA, and the only data source is the word of the rep holding the tray.</dd></div>
+              <div><dt>Offer</dt><dd>Consignment Exposure Snapshot</dd></div>
+              <div><dt>Source</dt><dd>Rep-locator and distributor page crawl</dd></div>
+              <div><dt>Reply density</dt><dd>Strong, and this is the volume engine among the high-signal tiers. Maps directly onto SMADE&#39;s strongest published case study.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">8-12% TAM</span>
+          </div>
+          <h3>Tier 4: Fleet Managed by Headcount</h3>
+          <p>One or more open requisitions for set, loaner, field-inventory or asset-management coordination.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They have already priced the problem and paid for it in salary and spreadsheets rather than in data. Worse, the knowledge lives in one person&#39;s head and leaves when they do.</dd></div>
+              <div><dt>Offer</dt><dd>Tray-Chasing Cost Calculator</dd></div>
+              <div><dt>Source</dt><dd>Weekly job-board sweep on set-management titles</dd></div>
+              <div><dt>Reply density</dt><dd>Moderate. The signal proves awareness and budget, but not urgency, which is why it sits below the rep-network tier.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">45-55% TAM</span>
+          </div>
+          <h3>Tier 5: Catch-all: The Unmeasured Fleet</h3>
+          <p>Every remaining account publishing reusable or device-kit SKUs in the target product codes.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The fleet exists and turn rate has never been measured per set, so a tray that has not moved in seven months looks identical to one running every week. At renewal, the only available argument is last year&#39;s number plus a bit.</dd></div>
+              <div><dt>Offer</dt><dd>Turn Rate Benchmark</dd></div>
+              <div><dt>Source</dt><dd>GUDID kit and reusable SKU counts per labeler</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest per contact, but the contact cost is effectively zero and this is where accounts land as they age out of Tier 1.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="The campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">The campaigns</p>
+      <h2>The campaign experiments that sit on the cascade</h2>
+      <p class="takeaway">Each tier runs a primary angle plus one controlled variant, so every result is attributable to a single change.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>The Set Count Nobody Can Justify</h3>
+          <p>The flagship campaign. It reaches a manufacturer during the narrow window when the fleet capex decision is still reversible, and anchors on the five-sets-to-two reduction that SMADE has already delivered.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Clearance in the trailing twelve months, instrument-bearing product code, CFO and Controller as primary persona.</dd></div>
+            <div><dt>AI strategy</dt><dd>Pull the clearance record from openFDA and name the cleared device and the month in the first line. The email does not claim to know their set count, it claims to know how the number was arrived at, which is the part that lands.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>The Cost of Under-Building</h3>
+          <p>The controlled variant against the primary Tier 1 angle. Same trigger, same data, opposite direction of the money, which makes the result attributable to the argument rather than the list.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same population, VP Commercial Operations as primary persona.</dd></div>
+            <div><dt>AI strategy</dt><dd>Invert the argument. Instead of the capex saved by building fewer sets, lead with the revenue lost when a set is not available and the case goes to whoever&#39;s tray is on the shelf.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>After the Dock</h3>
+          <p>Runs as a chaos test first, two structurally different emails, because the tier launches with no prior signal to narrow against.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Named incumbent tracking or RFID vendor detected.</dd></div>
+            <div><dt>AI strategy</dt><dd>Open by crediting what they have already solved, then name the structural boundary of reader-based systems. The pitch is explicitly additive rather than a rip-and-replace, which removes the switching-cost objection before it forms.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Focused</span>
+          </div>
+          <h3>Territory Count</h3>
+          <p>The volume engine of the high-signal tiers, and the campaign that maps most directly onto SMADE&#39;s flagship case study of kits forgotten at facilities and left in homes.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Independent or hybrid rep network, territory count scraped from their own rep locator.</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the exact territory count in the subject line. It proves the research instantly and frames the scale of the exposure without needing a single number the prospect has not already published themselves.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Focused</span>
+          </div>
+          <h3>The Two Weeks</h3>
+          <p>The rotation angle for Tier 3, used as the threaded second email and testable as a standalone Day 0 variant.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same population, Operations persona.</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with recovery time rather than recovery rate. The insight ops teams report as unexpected is not the kits recovered, it is the roughly two weeks knocked off finding them once location stopped being a phone call.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Don&#39;t Hire a Tracking System</h3>
+          <p>The requisition title is quoted verbatim in the subject line, so the email is unmistakably about something they published this month.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>At least one open requisition for set, loaner or field-inventory coordination.</dd></div>
+            <div><dt>AI strategy</dt><dd>Explicitly do not argue against the hire. Argue that the person hired should not be the tracking system, which keeps the hiring manager on side rather than defensive about a decision they have already made.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Dormant Sets</h3>
+          <p>The catch-all workhorse. Broad copy, softest ask, near-zero contact cost, and the destination for every account that ages out of Tier 1.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>All remaining accounts publishing reusable or kit SKUs.</dd></div>
+            <div><dt>AI strategy</dt><dd>Open with their own published kit reference count from the FDA database, then ask a question rather than make a claim. Turn rate per set is something almost nobody can answer, and the inability to answer it is the pitch.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>The Balance Sheet 100</h3>
+          <p>Run one-to-one and manually to CFO, Controller and VP FP&amp;A across roughly a hundred accounts. Sits alongside the waterfall rather than inside it, and carries the highest deal value in the programme.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Publicly filing manufacturers disclosing an instruments-and-sets line in property, plant and equipment.</dd></div>
+            <div><dt>AI strategy</dt><dd>Open with the prospect&#39;s own filed number. SeaSpine reported spinal instruments and sets in PP&amp;E on a five-year life with depreciation booked to selling and marketing; Alphatec disclosed $58.3M of investing cash going into surgical instruments in a single year.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="The copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">The copy</p>
+      <h2>Fifteen emails, three per tier</h2>
+      <p class="takeaway">Every notice line is grounded in data pulled before send, and no email in the entire programme asks for a call.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company}}</span><span>{{sender}}</span><span>{{clearance_device}}</span><span>{{clearance_month}}</span><span>{{incumbent_vendor}}</span><span>{{territory_count}}</span><span>{{open_req_title}}</span><span>{{kit_sku_count}}</span><span>{{product_code_family}}</span><span>{{alt_decision_maker}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company}}, {{sender}}, {{clearance_device}}, {{clearance_month}}, {{incumbent_vendor}}, {{territory_count}}, {{open_req_title}}, {{kit_sku_count}}, {{product_code_family}}, {{alt_decision_maker}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Fleet Being Built</strong>
+              <em>Set Fleet Sizing Model</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Fleet Being Built steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{clearance_device}} sets&#10;&#10;Hi {{first_name}},&#10;&#10;Saw {{company}} cleared {{clearance_device}} in {{clearance_month}}, so somewhere in the building there&#39;s a number written down for how many instrument sets you&#39;re building for launch.&#10;&#10;But would it be fair to assume that number came from a rep&#39;s forecast and a bit of instinct, rather than utilisation data you don&#39;t have yet?&#10;&#10;That&#39;s the expensive part. The set count you pick now depreciates for five years whether the sets move or not. We built SMADE so manufacturers can see actual turn rate per set from day one. One client came to us planning a 5-set build and the data showed they needed 2.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send you the sizing model we use, the inputs, the maths and the utilisation thresholds. No call needed.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{clearance_device}} sets" data-preview="the Vertex-C cervical system sets">{{clearance_device}} sets</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Saw {{company}} cleared {{clearance_device}} in {{clearance_month}}, so somewhere in the building there&#39;s a number written down for how many instrument sets you&#39;re building for launch.&#10;&#10;But would it be fair to assume that number came from a rep&#39;s forecast and a bit of instinct, rather than utilisation data you don&#39;t have yet?&#10;&#10;That&#39;s the expensive part. The set count you pick now depreciates for five years whether the sets move or not. We built SMADE so manufacturers can see actual turn rate per set from day one. One client came to us planning a 5-set build and the data showed they needed 2.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send you the sizing model we use, the inputs, the maths and the utilisation thresholds. No call needed.&#10;&#10;{{sender}}" data-preview="Hi Dana,&#10;&#10;Saw Meridian Orthopedics cleared the Vertex-C cervical system in May, so somewhere in the building there&#39;s a number written down for how many instrument sets you&#39;re building for launch.&#10;&#10;But would it be fair to assume that number came from a rep&#39;s forecast and a bit of instinct, rather than utilisation data you don&#39;t have yet?&#10;&#10;That&#39;s the expensive part. The set count you pick now depreciates for five years whether the sets move or not. We built SMADE so manufacturers can see actual turn rate per set from day one. One client came to us planning a 5-set build and the data showed they needed 2.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send you the sizing model we use, the inputs, the maths and the utilisation thresholds. No call needed.&#10;&#10;Claire">
+                        <p>Hi {{first_name}},</p><p>Saw {{company}} cleared {{clearance_device}} in {{clearance_month}}, so somewhere in the building there&#39;s a number written down for how many instrument sets you&#39;re building for launch.</p><p>But would it be fair to assume that number came from a rep&#39;s forecast and a bit of instinct, rather than utilisation data you don&#39;t have yet?</p><p>That&#39;s the expensive part. The set count you pick now depreciates for five years whether the sets move or not. We built SMADE so manufacturers can see actual turn rate per set from day one. One client came to us planning a 5-set build and the data showed they needed 2.</p><p>Reply &quot;Y&quot; and I&#39;ll send you the sizing model we use, the inputs, the maths and the utilisation thresholds. No call needed.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One more angle on this, {{first_name}}.&#10;&#10;Under-building costs more than over-building. When a set isn&#39;t available the case doesn&#39;t get delayed, it goes to whoever&#39;s set is on the shelf.&#10;&#10;A 52-kit fleet we track went from chasing kits to $42k a month in additional revenue. Six extra procedures a month, purely from kits being where they needed to be. Over a year that was around $500k.&#10;&#10;Still happy to send the sizing model. Just reply &quot;Y&quot;.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One more angle on this, {{first_name}}.&#10;&#10;Under-building costs more than over-building. When a set isn&#39;t available the case doesn&#39;t get delayed, it goes to whoever&#39;s set is on the shelf.&#10;&#10;A 52-kit fleet we track went from chasing kits to $42k a month in additional revenue. Six extra procedures a month, purely from kits being where they needed to be. Over a year that was around $500k.&#10;&#10;Still happy to send the sizing model. Just reply &quot;Y&quot;.&#10;&#10;{{sender}}" data-preview="One more angle on this, Dana.&#10;&#10;Under-building costs more than over-building. When a set isn&#39;t available the case doesn&#39;t get delayed, it goes to whoever&#39;s set is on the shelf.&#10;&#10;A 52-kit fleet we track went from chasing kits to $42k a month in additional revenue. Six extra procedures a month, purely from kits being where they needed to be. Over a year that was around $500k.&#10;&#10;Still happy to send the sizing model. Just reply &quot;Y&quot;.&#10;&#10;Claire">
+                        <p>One more angle on this, {{first_name}}.</p><p>Under-building costs more than over-building. When a set isn&#39;t available the case doesn&#39;t get delayed, it goes to whoever&#39;s set is on the shelf.</p><p>A 52-kit fleet we track went from chasing kits to $42k a month in additional revenue. Six extra procedures a month, purely from kits being where they needed to be. Over a year that was around $500k.</p><p>Still happy to send the sizing model. Just reply &quot;Y&quot;.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: wrong person?&#10;&#10;{{first_name}}, no need for a call on this.&#10;&#10;Just reply yes and I&#39;ll send the set-fleet sizing model for the {{clearance_device}} launch.&#10;&#10;Should I send it to you, or is {{alt_decision_maker}} closer to the instrument capex decision?&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="wrong person?" data-preview="wrong person?">wrong person?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no need for a call on this.&#10;&#10;Just reply yes and I&#39;ll send the set-fleet sizing model for the {{clearance_device}} launch.&#10;&#10;Should I send it to you, or is {{alt_decision_maker}} closer to the instrument capex decision?&#10;&#10;{{sender}}" data-preview="Dana, no need for a call on this.&#10;&#10;Just reply yes and I&#39;ll send the set-fleet sizing model for the the Vertex-C cervical system launch.&#10;&#10;Should I send it to you, or is your Director of Asset Management closer to the instrument capex decision?&#10;&#10;Claire">
+                        <p>{{first_name}}, no need for a call on this.</p><p>Just reply yes and I&#39;ll send the set-fleet sizing model for the {{clearance_device}} launch.</p><p>Should I send it to you, or is {{alt_decision_maker}} closer to the instrument capex decision?</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Visibility Stops at the Dock</strong>
+              <em>Field Blind-Spot Map</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Visibility Stops at the Dock steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: after the dock&#10;&#10;Hi {{first_name}},&#10;&#10;Noticed {{company}} runs {{incumbent_vendor}}, so you&#39;ve already solved the hard internal problem. You know what&#39;s in the building and what&#39;s been processed.&#10;&#10;But would it be fair to assume that visibility stops the moment a tray leaves the dock? RFID needs a reader, and you don&#39;t own the hospital basement or the rep&#39;s boot.&#10;&#10;Which is the awkward bit, because the trays that go missing are by definition the ones that left. SMADE sits on top of what you already run. Cellular trackers, no readers, no portals, survives 500 autoclave cycles. Clients see an 80% reduction in asset loss.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the blind-spot map, where reader-based systems lose sight of a tray, stage by stage. No call.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="after the dock" data-preview="after the dock">after the dock</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Noticed {{company}} runs {{incumbent_vendor}}, so you&#39;ve already solved the hard internal problem. You know what&#39;s in the building and what&#39;s been processed.&#10;&#10;But would it be fair to assume that visibility stops the moment a tray leaves the dock? RFID needs a reader, and you don&#39;t own the hospital basement or the rep&#39;s boot.&#10;&#10;Which is the awkward bit, because the trays that go missing are by definition the ones that left. SMADE sits on top of what you already run. Cellular trackers, no readers, no portals, survives 500 autoclave cycles. Clients see an 80% reduction in asset loss.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the blind-spot map, where reader-based systems lose sight of a tray, stage by stage. No call.&#10;&#10;{{sender}}" data-preview="Hi Dana,&#10;&#10;Noticed Meridian Orthopedics runs an RFID tracking system, so you&#39;ve already solved the hard internal problem. You know what&#39;s in the building and what&#39;s been processed.&#10;&#10;But would it be fair to assume that visibility stops the moment a tray leaves the dock? RFID needs a reader, and you don&#39;t own the hospital basement or the rep&#39;s boot.&#10;&#10;Which is the awkward bit, because the trays that go missing are by definition the ones that left. SMADE sits on top of what you already run. Cellular trackers, no readers, no portals, survives 500 autoclave cycles. Clients see an 80% reduction in asset loss.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the blind-spot map, where reader-based systems lose sight of a tray, stage by stage. No call.&#10;&#10;Claire">
+                        <p>Hi {{first_name}},</p><p>Noticed {{company}} runs {{incumbent_vendor}}, so you&#39;ve already solved the hard internal problem. You know what&#39;s in the building and what&#39;s been processed.</p><p>But would it be fair to assume that visibility stops the moment a tray leaves the dock? RFID needs a reader, and you don&#39;t own the hospital basement or the rep&#39;s boot.</p><p>Which is the awkward bit, because the trays that go missing are by definition the ones that left. SMADE sits on top of what you already run. Cellular trackers, no readers, no portals, survives 500 autoclave cycles. Clients see an 80% reduction in asset loss.</p><p>Reply &quot;Y&quot; and I&#39;ll send the blind-spot map, where reader-based systems lose sight of a tray, stage by stage. No call.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Quick follow-up, {{first_name}}.&#10;&#10;The other thing readers can&#39;t give you is the tray&#39;s own history. Our trackers count autoclave cycles on the instrument itself, so lifecycle and condition data comes from the asset rather than from someone remembering to scan it.&#10;&#10;Centinel Spine&#39;s Director of Asset Management put it as: &quot;Centinel Spine wouldn&#39;t have performed the way it did in 2025 without SMADE.&quot;&#10;&#10;Blind-spot map still yours if you want it. Reply &quot;Y&quot;.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Quick follow-up, {{first_name}}.&#10;&#10;The other thing readers can&#39;t give you is the tray&#39;s own history. Our trackers count autoclave cycles on the instrument itself, so lifecycle and condition data comes from the asset rather than from someone remembering to scan it.&#10;&#10;Centinel Spine&#39;s Director of Asset Management put it as: &quot;Centinel Spine wouldn&#39;t have performed the way it did in 2025 without SMADE.&quot;&#10;&#10;Blind-spot map still yours if you want it. Reply &quot;Y&quot;.&#10;&#10;{{sender}}" data-preview="Quick follow-up, Dana.&#10;&#10;The other thing readers can&#39;t give you is the tray&#39;s own history. Our trackers count autoclave cycles on the instrument itself, so lifecycle and condition data comes from the asset rather than from someone remembering to scan it.&#10;&#10;Centinel Spine&#39;s Director of Asset Management put it as: &quot;Centinel Spine wouldn&#39;t have performed the way it did in 2025 without SMADE.&quot;&#10;&#10;Blind-spot map still yours if you want it. Reply &quot;Y&quot;.&#10;&#10;Claire">
+                        <p>Quick follow-up, {{first_name}}.</p><p>The other thing readers can&#39;t give you is the tray&#39;s own history. Our trackers count autoclave cycles on the instrument itself, so lifecycle and condition data comes from the asset rather than from someone remembering to scan it.</p><p>Centinel Spine&#39;s Director of Asset Management put it as: &quot;Centinel Spine wouldn&#39;t have performed the way it did in 2025 without SMADE.&quot;</p><p>Blind-spot map still yours if you want it. Reply &quot;Y&quot;.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: you or {{alt_decision_maker}}?&#10;&#10;{{first_name}}, not asking for a call.&#10;&#10;Reply yes and I&#39;ll send the field blind-spot map for a {{incumbent_vendor}} setup.&#10;&#10;Should that go to you or {{alt_decision_maker}}?&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="you or {{alt_decision_maker}}?" data-preview="you or your Director of Asset Management?">you or {{alt_decision_maker}}?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, not asking for a call.&#10;&#10;Reply yes and I&#39;ll send the field blind-spot map for a {{incumbent_vendor}} setup.&#10;&#10;Should that go to you or {{alt_decision_maker}}?&#10;&#10;{{sender}}" data-preview="Dana, not asking for a call.&#10;&#10;Reply yes and I&#39;ll send the field blind-spot map for a an RFID tracking system setup.&#10;&#10;Should that go to you or your Director of Asset Management?&#10;&#10;Claire">
+                        <p>{{first_name}}, not asking for a call.</p><p>Reply yes and I&#39;ll send the field blind-spot map for a {{incumbent_vendor}} setup.</p><p>Should that go to you or {{alt_decision_maker}}?</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Fleet in Other People&#39;s Cars</strong>
+              <em>Consignment Exposure Snapshot</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Fleet in Other People&#39;s Cars steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{territory_count}} territories&#10;&#10;Hi {{first_name}},&#10;&#10;Went through {{company}}&#39;s rep locator, {{territory_count}} territories running independent reps.&#10;&#10;But would it be fair to say that once a tray goes out to a territory, the only way you know where it is is to ask the rep who has it?&#10;&#10;That&#39;s the structural problem we built SMADE for. The assets are in the custody of people who don&#39;t work for you, so the data comes back as a favour rather than a fact. A 52-kit fleet we track prevented six write-offs in a year, $78,000 that would otherwise have quietly left the balance sheet, with nobody having to chase a single rep.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the consignment exposure snapshot, how to size what&#39;s actually at risk across a rep network. No call needed.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{territory_count}} territories" data-preview="34 territories">{{territory_count}} territories</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Went through {{company}}&#39;s rep locator, {{territory_count}} territories running independent reps.&#10;&#10;But would it be fair to say that once a tray goes out to a territory, the only way you know where it is is to ask the rep who has it?&#10;&#10;That&#39;s the structural problem we built SMADE for. The assets are in the custody of people who don&#39;t work for you, so the data comes back as a favour rather than a fact. A 52-kit fleet we track prevented six write-offs in a year, $78,000 that would otherwise have quietly left the balance sheet, with nobody having to chase a single rep.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the consignment exposure snapshot, how to size what&#39;s actually at risk across a rep network. No call needed.&#10;&#10;{{sender}}" data-preview="Hi Dana,&#10;&#10;Went through Meridian Orthopedics&#39;s rep locator, 34 territories running independent reps.&#10;&#10;But would it be fair to say that once a tray goes out to a territory, the only way you know where it is is to ask the rep who has it?&#10;&#10;That&#39;s the structural problem we built SMADE for. The assets are in the custody of people who don&#39;t work for you, so the data comes back as a favour rather than a fact. A 52-kit fleet we track prevented six write-offs in a year, $78,000 that would otherwise have quietly left the balance sheet, with nobody having to chase a single rep.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the consignment exposure snapshot, how to size what&#39;s actually at risk across a rep network. No call needed.&#10;&#10;Claire">
+                        <p>Hi {{first_name}},</p><p>Went through {{company}}&#39;s rep locator, {{territory_count}} territories running independent reps.</p><p>But would it be fair to say that once a tray goes out to a territory, the only way you know where it is is to ask the rep who has it?</p><p>That&#39;s the structural problem we built SMADE for. The assets are in the custody of people who don&#39;t work for you, so the data comes back as a favour rather than a fact. A 52-kit fleet we track prevented six write-offs in a year, $78,000 that would otherwise have quietly left the balance sheet, with nobody having to chase a single rep.</p><p>Reply &quot;Y&quot; and I&#39;ll send the consignment exposure snapshot, how to size what&#39;s actually at risk across a rep network. No call needed.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, following on.&#10;&#10;The bit ops teams tell us they didn&#39;t expect: it&#39;s not just the recovered kits, it&#39;s the two weeks. Average recovery time on a missing kit dropped by around two weeks once location stopped being a phone call.&#10;&#10;Across a {{territory_count}}-territory network that&#39;s a meaningful amount of fleet quietly back in rotation.&#10;&#10;Snapshot&#39;s still there if useful. Reply &quot;Y&quot;.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, following on.&#10;&#10;The bit ops teams tell us they didn&#39;t expect: it&#39;s not just the recovered kits, it&#39;s the two weeks. Average recovery time on a missing kit dropped by around two weeks once location stopped being a phone call.&#10;&#10;Across a {{territory_count}}-territory network that&#39;s a meaningful amount of fleet quietly back in rotation.&#10;&#10;Snapshot&#39;s still there if useful. Reply &quot;Y&quot;.&#10;&#10;{{sender}}" data-preview="Dana, following on.&#10;&#10;The bit ops teams tell us they didn&#39;t expect: it&#39;s not just the recovered kits, it&#39;s the two weeks. Average recovery time on a missing kit dropped by around two weeks once location stopped being a phone call.&#10;&#10;Across a 34-territory network that&#39;s a meaningful amount of fleet quietly back in rotation.&#10;&#10;Snapshot&#39;s still there if useful. Reply &quot;Y&quot;.&#10;&#10;Claire">
+                        <p>{{first_name}}, following on.</p><p>The bit ops teams tell us they didn&#39;t expect: it&#39;s not just the recovered kits, it&#39;s the two weeks. Average recovery time on a missing kit dropped by around two weeks once location stopped being a phone call.</p><p>Across a {{territory_count}}-territory network that&#39;s a meaningful amount of fleet quietly back in rotation.</p><p>Snapshot&#39;s still there if useful. Reply &quot;Y&quot;.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: right person for field inventory?&#10;&#10;{{first_name}}, no call needed.&#10;&#10;Reply yes and I&#39;ll send the consignment exposure snapshot for a {{territory_count}}-territory rep network.&#10;&#10;Is field inventory yours, or should this go to {{alt_decision_maker}}?&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="right person for field inventory?" data-preview="right person for field inventory?">right person for field inventory?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed.&#10;&#10;Reply yes and I&#39;ll send the consignment exposure snapshot for a {{territory_count}}-territory rep network.&#10;&#10;Is field inventory yours, or should this go to {{alt_decision_maker}}?&#10;&#10;{{sender}}" data-preview="Dana, no call needed.&#10;&#10;Reply yes and I&#39;ll send the consignment exposure snapshot for a 34-territory rep network.&#10;&#10;Is field inventory yours, or should this go to your Director of Asset Management?&#10;&#10;Claire">
+                        <p>{{first_name}}, no call needed.</p><p>Reply yes and I&#39;ll send the consignment exposure snapshot for a {{territory_count}}-territory rep network.</p><p>Is field inventory yours, or should this go to {{alt_decision_maker}}?</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 - Fleet Managed by Headcount</strong>
+              <em>Tray-Chasing Cost Calculator</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 - Fleet Managed by Headcount steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{open_req_title}}&#10;&#10;Hi {{first_name}},&#10;&#10;Saw {{company}} is hiring a {{open_req_title}}.&#10;&#10;But would it be fair to assume a decent chunk of that role is going to be spreadsheets, phone calls and chasing where trays ended up?&#10;&#10;Not saying don&#39;t hire. Saying the person you hire shouldn&#39;t be the tracking system. SMADE gives teams the location and cycle data automatically. The teams we work with get 5 to 10 hours a week back each, and the new hire spends them on the work you actually hired for.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the tray-chasing cost calculator, what those hours cost you annually at current headcount. No call.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{open_req_title}}" data-preview="Loaner Set Coordinator">{{open_req_title}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Saw {{company}} is hiring a {{open_req_title}}.&#10;&#10;But would it be fair to assume a decent chunk of that role is going to be spreadsheets, phone calls and chasing where trays ended up?&#10;&#10;Not saying don&#39;t hire. Saying the person you hire shouldn&#39;t be the tracking system. SMADE gives teams the location and cycle data automatically. The teams we work with get 5 to 10 hours a week back each, and the new hire spends them on the work you actually hired for.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the tray-chasing cost calculator, what those hours cost you annually at current headcount. No call.&#10;&#10;{{sender}}" data-preview="Hi Dana,&#10;&#10;Saw Meridian Orthopedics is hiring a Loaner Set Coordinator.&#10;&#10;But would it be fair to assume a decent chunk of that role is going to be spreadsheets, phone calls and chasing where trays ended up?&#10;&#10;Not saying don&#39;t hire. Saying the person you hire shouldn&#39;t be the tracking system. SMADE gives teams the location and cycle data automatically. The teams we work with get 5 to 10 hours a week back each, and the new hire spends them on the work you actually hired for.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the tray-chasing cost calculator, what those hours cost you annually at current headcount. No call.&#10;&#10;Claire">
+                        <p>Hi {{first_name}},</p><p>Saw {{company}} is hiring a {{open_req_title}}.</p><p>But would it be fair to assume a decent chunk of that role is going to be spreadsheets, phone calls and chasing where trays ended up?</p><p>Not saying don&#39;t hire. Saying the person you hire shouldn&#39;t be the tracking system. SMADE gives teams the location and cycle data automatically. The teams we work with get 5 to 10 hours a week back each, and the new hire spends them on the work you actually hired for.</p><p>Reply &quot;Y&quot; and I&#39;ll send the tray-chasing cost calculator, what those hours cost you annually at current headcount. No call.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One more thing, {{first_name}}.&#10;&#10;The other risk with solving this by headcount is that the knowledge leaves when they do. Where trays go, which hospitals return late, which sets never move, that lives in one person&#39;s head until it doesn&#39;t.&#10;&#10;Clients using SMADE cut write-offs by 51% in twelve months, and that number belongs to the company rather than to an individual.&#10;&#10;Calculator&#39;s yours if you want it. Reply &quot;Y&quot;.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One more thing, {{first_name}}.&#10;&#10;The other risk with solving this by headcount is that the knowledge leaves when they do. Where trays go, which hospitals return late, which sets never move, that lives in one person&#39;s head until it doesn&#39;t.&#10;&#10;Clients using SMADE cut write-offs by 51% in twelve months, and that number belongs to the company rather than to an individual.&#10;&#10;Calculator&#39;s yours if you want it. Reply &quot;Y&quot;.&#10;&#10;{{sender}}" data-preview="One more thing, Dana.&#10;&#10;The other risk with solving this by headcount is that the knowledge leaves when they do. Where trays go, which hospitals return late, which sets never move, that lives in one person&#39;s head until it doesn&#39;t.&#10;&#10;Clients using SMADE cut write-offs by 51% in twelve months, and that number belongs to the company rather than to an individual.&#10;&#10;Calculator&#39;s yours if you want it. Reply &quot;Y&quot;.&#10;&#10;Claire">
+                        <p>One more thing, {{first_name}}.</p><p>The other risk with solving this by headcount is that the knowledge leaves when they do. Where trays go, which hospitals return late, which sets never move, that lives in one person&#39;s head until it doesn&#39;t.</p><p>Clients using SMADE cut write-offs by 51% in twelve months, and that number belongs to the company rather than to an individual.</p><p>Calculator&#39;s yours if you want it. Reply &quot;Y&quot;.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: send to you?&#10;&#10;{{first_name}}, no call.&#10;&#10;Reply yes and I&#39;ll send the tray-chasing cost calculator alongside the {{open_req_title}} hire.&#10;&#10;You, or {{alt_decision_maker}}?&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="send to you?" data-preview="send to you?">send to you?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call.&#10;&#10;Reply yes and I&#39;ll send the tray-chasing cost calculator alongside the {{open_req_title}} hire.&#10;&#10;You, or {{alt_decision_maker}}?&#10;&#10;{{sender}}" data-preview="Dana, no call.&#10;&#10;Reply yes and I&#39;ll send the tray-chasing cost calculator alongside the Loaner Set Coordinator hire.&#10;&#10;You, or your Director of Asset Management?&#10;&#10;Claire">
+                        <p>{{first_name}}, no call.</p><p>Reply yes and I&#39;ll send the tray-chasing cost calculator alongside the {{open_req_title}} hire.</p><p>You, or {{alt_decision_maker}}?</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 - Catch-all: The Unmeasured Fleet</strong>
+              <em>Turn Rate Benchmark</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 - Catch-all: The Unmeasured Fleet steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: dormant sets&#10;&#10;Hi {{first_name}},&#10;&#10;{{company}} publishes {{kit_sku_count}} reusable kit references in the FDA&#39;s device database, so there&#39;s a real fleet in circulation out there.&#10;&#10;Quick question rather than a pitch. Do you know your turn rate per set? Not fleet-wide utilisation, per set, so you can tell a busy tray from one that hasn&#39;t moved in seven months.&#10;&#10;Most manufacturers can&#39;t, because nothing measures it. Clients who start measuring it see turn rate improve 2.5x, mostly by finding dormant sets and moving them rather than by buying more.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the turn rate benchmark for {{product_code_family}} fleets. No call needed.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="dormant sets" data-preview="dormant sets">dormant sets</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;{{company}} publishes {{kit_sku_count}} reusable kit references in the FDA&#39;s device database, so there&#39;s a real fleet in circulation out there.&#10;&#10;Quick question rather than a pitch. Do you know your turn rate per set? Not fleet-wide utilisation, per set, so you can tell a busy tray from one that hasn&#39;t moved in seven months.&#10;&#10;Most manufacturers can&#39;t, because nothing measures it. Clients who start measuring it see turn rate improve 2.5x, mostly by finding dormant sets and moving them rather than by buying more.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the turn rate benchmark for {{product_code_family}} fleets. No call needed.&#10;&#10;{{sender}}" data-preview="Hi Dana,&#10;&#10;Meridian Orthopedics publishes 46 reusable kit references in the FDA&#39;s device database, so there&#39;s a real fleet in circulation out there.&#10;&#10;Quick question rather than a pitch. Do you know your turn rate per set? Not fleet-wide utilisation, per set, so you can tell a busy tray from one that hasn&#39;t moved in seven months.&#10;&#10;Most manufacturers can&#39;t, because nothing measures it. Clients who start measuring it see turn rate improve 2.5x, mostly by finding dormant sets and moving them rather than by buying more.&#10;&#10;Reply &quot;Y&quot; and I&#39;ll send the turn rate benchmark for spine fleets. No call needed.&#10;&#10;Claire">
+                        <p>Hi {{first_name}},</p><p>{{company}} publishes {{kit_sku_count}} reusable kit references in the FDA&#39;s device database, so there&#39;s a real fleet in circulation out there.</p><p>Quick question rather than a pitch. Do you know your turn rate per set? Not fleet-wide utilisation, per set, so you can tell a busy tray from one that hasn&#39;t moved in seven months.</p><p>Most manufacturers can&#39;t, because nothing measures it. Clients who start measuring it see turn rate improve 2.5x, mostly by finding dormant sets and moving them rather than by buying more.</p><p>Reply &quot;Y&quot; and I&#39;ll send the turn rate benchmark for {{product_code_family}} fleets. No call needed.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the practical reason this matters is fleet renewal.&#10;&#10;When it&#39;s time to re-buy, the only defensible way to argue for a smaller number is data showing which sets never moved. Without it, the renewal is last year&#39;s number plus a bit.&#10;&#10;One client we worked with cut a planned build from 5 sets to 2 on exactly that evidence.&#10;&#10;Benchmark&#39;s still available. Reply &quot;Y&quot;.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the practical reason this matters is fleet renewal.&#10;&#10;When it&#39;s time to re-buy, the only defensible way to argue for a smaller number is data showing which sets never moved. Without it, the renewal is last year&#39;s number plus a bit.&#10;&#10;One client we worked with cut a planned build from 5 sets to 2 on exactly that evidence.&#10;&#10;Benchmark&#39;s still available. Reply &quot;Y&quot;.&#10;&#10;{{sender}}" data-preview="Dana, the practical reason this matters is fleet renewal.&#10;&#10;When it&#39;s time to re-buy, the only defensible way to argue for a smaller number is data showing which sets never moved. Without it, the renewal is last year&#39;s number plus a bit.&#10;&#10;One client we worked with cut a planned build from 5 sets to 2 on exactly that evidence.&#10;&#10;Benchmark&#39;s still available. Reply &quot;Y&quot;.&#10;&#10;Claire">
+                        <p>{{first_name}}, the practical reason this matters is fleet renewal.</p><p>When it&#39;s time to re-buy, the only defensible way to argue for a smaller number is data showing which sets never moved. Without it, the renewal is last year&#39;s number plus a bit.</p><p>One client we worked with cut a planned build from 5 sets to 2 on exactly that evidence.</p><p>Benchmark&#39;s still available. Reply &quot;Y&quot;.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: you or {{alt_decision_maker}}?&#10;&#10;{{first_name}}, no call, genuinely.&#10;&#10;Reply yes and I&#39;ll send the turn rate benchmark for {{product_code_family}} fleets.&#10;&#10;Should I send it to you or {{alt_decision_maker}}?&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="you or {{alt_decision_maker}}?" data-preview="you or your Director of Asset Management?">you or {{alt_decision_maker}}?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call, genuinely.&#10;&#10;Reply yes and I&#39;ll send the turn rate benchmark for {{product_code_family}} fleets.&#10;&#10;Should I send it to you or {{alt_decision_maker}}?&#10;&#10;{{sender}}" data-preview="Dana, no call, genuinely.&#10;&#10;Reply yes and I&#39;ll send the turn rate benchmark for spine fleets.&#10;&#10;Should I send it to you or your Director of Asset Management?&#10;&#10;Claire">
+                        <p>{{first_name}}, no call, genuinely.</p><p>Reply yes and I&#39;ll send the turn rate benchmark for {{product_code_family}} fleets.</p><p>Should I send it to you or {{alt_decision_maker}}?</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="The launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">The launch</p>
+      <h2>Sixteen weeks to steady state, then one refresh a month</h2>
+      <p class="takeaway">Ongoing maintenance is a single monthly data pull. The market refreshes itself, for free, forever.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Weeks 1 to 3, build. Pull the AccessGUDID full release, the openFDA Registration &amp; Listing data and the 510(k) database, then apply the qualification gate so only companies with a provable instrument fleet enter the market. Stand up four to six secondary sending domains and begin a twenty-one day warmup.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Weeks 4 to 6, Tier 1 goes live alone. Roughly 2,500 contacts against the highest-intent trigger in the programme. It gives the fastest read and it validates the entire free-data pipeline end to end before any volume is added.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 6 to 9, add Tier 3. The rep-locator crawl runs in parallel with Phase 1 so the list is ready the moment the phase opens. This is the biggest high-signal tier and the volume engine.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Weeks 9 to 13, add Tier 4 and then open the catch-all. This is the volume phase, and it is where the strategy starts compounding across the full market.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Weeks 13 to 16, launch Tier 2 once the vendor sweep clears 1,500 contacts, and begin the Balance Sheet 100 manually alongside it to CFO, Controller and VP FP&amp;A.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Week 16 onward, steady state. Re-pull 510(k) monthly for roughly fifty new Tier 1 accounts, re-run the job sweep weekly, and age accounts out of Tier 1 into their next matching tier. Ongoing maintenance is one data refresh a month.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacts</strong>
+                <span>Perfect. Scale the tier hard. Tiers 1 and 2 should land at or near this, because one is precisely timed and the other is a confirmed budget holder.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run unchanged. This is the expected landing zone for Tiers 3 and 4.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450 to 500</strong>
+                <span>Borderline. Test exactly one copy variant, varying the magnet or the notice-line angle and holding everything else constant so the result is attributable.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or reply rate below 1% after 1,500 or more sends</strong>
+                <span>Failing. Cut the tier and rework it. The one exception is Tier 5, where 1 per 400 remains acceptable because the contact cost is effectively zero.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dana","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Meridian Orthopedics","Claire","the Vertex-C cervical system","May","an RFID tracking system","34","Loaner Set Coordinator","46","spine","your Director of Asset Management"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

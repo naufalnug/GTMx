@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Knucklepuck - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-18</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Knucklepuck</p>
+          <h1>The Knucklepuck outbound <mark>journey</mark>.</h1>
+          <p class="hero-copy">One cascade. Five tiers. A market that publishes its own budget, its own leadership, and its own buying window — free, every year.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Stop offering to look for problems. Show up having already found one. &quot;I could run an audit for you&quot; is the email every competitor sends; &quot;I already ran it, here&#39;s what broke, want the list?&quot; is a different email in kind — and it removes the recipient&#39;s entire reason to say no.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a working session</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>~48,000</strong>
+          <span>US member-serving orgs in the addressable market</span>
+        </div>
+        <div class="metric-card">
+          <strong>$0</strong>
+          <span>Cost of the routing signal — IRS filings + 4 free web sources</span>
+        </div>
+        <div class="metric-card">
+          <strong>5</strong>
+          <span>Tiers, first-match routing, 100% market coverage</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>SEO, paid media and E-E-A-T content for associations, member-serving organisations and mission-driven institutions. Arlington, VA. Federal Bar Association, NAFA, ICGS, Marymount University, Healthline.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal</p></div><div><span>02</span><p>The routing logic</p></div><div><span>03</span><p>The five tiers</p></div><div><span>04</span><p>Campaign experiments</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>01</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>02</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>03</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>04</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>05</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>06</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="01">
+        
+    <div class="section-head">
+      <p class="eyebrow">01</p>
+      <h2>The signal</h2>
+      <p class="takeaway">Every US tax-exempt organisation publishes its revenue, its marketing spend, its leadership roster and its fiscal calendar — annually, by law, in machine-readable form. Nobody in this category reads it.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>One free API call returns the market, the marketing budget, the decision-maker&#39;s name and the buying window — for ~48,000 organisations, at zero data cost.</p></div><div class="reason-card"><span>02</span><p>The fiscal year end on a Form 990 tells you exactly when next year&#39;s budget gets written. Nobody times outbound to a prospect&#39;s budget calendar, because it means reading a tax return.</p></div><div class="reason-card"><span>03</span><p>Search problems are the one product surface that is fully public. Broken redirects, stale ad creative, missing bylines — the diagnosis and the pitch are the same artefact.</p></div><div class="reason-card"><span>04</span><p>No enrichment vendor sells this join. The data isn&#39;t hidden; it&#39;s just that nobody in the SEO category has bothered to look at it.</p></div>
+            </div>
+            <div class="field-cloud"><span>total_revenue</span><span>membership_dues_revenue</span><span>dues_trend_3yr</span><span>advertising_promotion_expense</span><span>conference_convention_expense</span><span>officer_names_titles</span><span>fiscal_year_end</span><span>migration_detected</span><span>cms_previous / cms_current</span><span>staging_subdomain_indexed</span><span>google_ads_active</span><span>ads_creative_age_days</span><span>ads_landing_page_type</span><span>content_library_size</span><span>author_byline_present</span><span>ai_overview_citation</span><span>hiring_search_role</span><span>seed_query_position</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>IRS Form 990 e-file data (ProPublica Nonprofit Explorer API v2)</h3><p>The entire market plus the budget, the dues trend, the officer&#39;s name and the fiscal calendar. ~1.8M filings indexed, 40–120 structured fields each, free.</p></div><div class="source-card"><span>02</span><h3>Wayback Machine CDX API</h3><p>Detects a site relaunch or platform change by diffing CMS and template fingerprints across archived snapshots. This is the Tier 1 trigger.</p></div><div class="source-card"><span>03</span><h3>Google Ads Transparency Center</h3><p>Every live ad an organisation runs, with start dates and formats. Gives creative age and landing-page destination — the Tier 2 trigger.</p></div><div class="source-card"><span>04</span><h3>Direct page-source scrape</h3><p>Author bylines, author schema, content library size, CMS generator tags. The Tier 3 trigger.</p></div><div class="source-card"><span>05</span><h3>Seed-query search results</h3><p>Whether an AI Overview cites them or a competitor, and where they place on the searches a prospective member actually runs.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="02">
+        
+    <div class="section-head">
+      <p class="eyebrow">02</p>
+      <h2>The routing logic</h2>
+      <p class="takeaway">Route on how much search revenue an organisation has already put at risk, and how recently. Not industry. Not headcount. Not job title.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF A relaunch or platform change is detected in the last 180 days, OR a staging subdomain is still indexed</span>
+          <strong>Tier 1 — Migration Risk</strong>
+          <em>Redirect maps ship about 80% complete. The missing 20% is always the deep resource pages holding all the inbound links, and nobody notices for ten weeks. It&#39;s the one SEO problem with a clock on it.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF NOT Tier 1 AND Google Ads are running AND (creative is older than 180 days OR the ad points anywhere other than a dedicated landing page)</span>
+          <strong>Tier 2 — Paid Waste</strong>
+          <em>Money is leaving the building this month, and you can point at the exact ad in the same free tool they can open themselves. That&#39;s not a claim, it&#39;s a receipt.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF NOT Tier 1–2 AND there are 20+ published articles AND (no author bylines OR an AI Overview cites someone else on their core subject)</span>
+          <strong>Tier 3 — Anonymous Authority</strong>
+          <em>They are the authority in their field by charter, but they publish anonymously — so search and answer engines can&#39;t attribute the expertise, and aggregators outrank the source that fed them.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF NOT Tier 1–3 AND there is an open req for an SEO, digital marketing, content or marketing director role</span>
+          <strong>Tier 4 — Hiring the Role</strong>
+          <em>Budget is approved and sitting in a headcount line. But one generalist can&#39;t cover technical, paid and content, and time-to-fill is ~90 days before day one.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF Everything else in the market with revenue of $2M or more</span>
+          <strong>Tier 5 — Catch-all: Member Search Visibility</strong>
+          <em>The dues trend on their own filings is flat or declining. Member acquisition isn&#39;t keeping pace, and search is where prospective members start.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF A relaunch or platform change is detected in the last 180 days, OR a staging subdomain is still indexed -&gt; Tier 1 — Migration Risk (Redirect maps ship about 80% complete. The missing 20% is always the deep resource pages holding all the inbound links, and nobody notices for ten weeks. It&#39;s the one SEO problem with a clock on it.)&#10;2. IF NOT Tier 1 AND Google Ads are running AND (creative is older than 180 days OR the ad points anywhere other than a dedicated landing page) -&gt; Tier 2 — Paid Waste (Money is leaving the building this month, and you can point at the exact ad in the same free tool they can open themselves. That&#39;s not a claim, it&#39;s a receipt.)&#10;3. IF NOT Tier 1–2 AND there are 20+ published articles AND (no author bylines OR an AI Overview cites someone else on their core subject) -&gt; Tier 3 — Anonymous Authority (They are the authority in their field by charter, but they publish anonymously — so search and answer engines can&#39;t attribute the expertise, and aggregators outrank the source that fed them.)&#10;4. IF NOT Tier 1–3 AND there is an open req for an SEO, digital marketing, content or marketing director role -&gt; Tier 4 — Hiring the Role (Budget is approved and sitting in a headcount line. But one generalist can&#39;t cover technical, paid and content, and time-to-fill is ~90 days before day one.)&#10;5. IF Everything else in the market with revenue of $2M or more -&gt; Tier 5 — Catch-all: Member Search Visibility (The dues trend on their own filings is flat or declining. Member acquisition isn&#39;t keeping pace, and search is where prospective members start.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF A relaunch or platform change is detected in the last 180 days, OR a staging subdomain is still indexed -&gt; Tier 1 — Migration Risk (Redirect maps ship about 80% complete. The missing 20% is always the deep resource pages holding all the inbound links, and nobody notices for ten weeks. It&#39;s the one SEO problem with a clock on it.)
+2. IF NOT Tier 1 AND Google Ads are running AND (creative is older than 180 days OR the ad points anywhere other than a dedicated landing page) -&gt; Tier 2 — Paid Waste (Money is leaving the building this month, and you can point at the exact ad in the same free tool they can open themselves. That&#39;s not a claim, it&#39;s a receipt.)
+3. IF NOT Tier 1–2 AND there are 20+ published articles AND (no author bylines OR an AI Overview cites someone else on their core subject) -&gt; Tier 3 — Anonymous Authority (They are the authority in their field by charter, but they publish anonymously — so search and answer engines can&#39;t attribute the expertise, and aggregators outrank the source that fed them.)
+4. IF NOT Tier 1–3 AND there is an open req for an SEO, digital marketing, content or marketing director role -&gt; Tier 4 — Hiring the Role (Budget is approved and sitting in a headcount line. But one generalist can&#39;t cover technical, paid and content, and time-to-fill is ~90 days before day one.)
+5. IF Everything else in the market with revenue of $2M or more -&gt; Tier 5 — Catch-all: Member Search Visibility (The dues trend on their own filings is flat or declining. Member acquisition isn&#39;t keeping pace, and search is where prospective members start.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="03">
+        
+    <div class="section-head">
+      <p class="eyebrow">03</p>
+      <h2>The five tiers</h2>
+      <p class="takeaway">A broken relaunch is bleeding today. A stale ad is bleeding this month. An unattributed content library has been bleeding for years. Urgency descends; copy widens.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">6% TAM</span>
+          </div>
+          <h3>Tier 1: Migration Risk</h3>
+          <p>Site relaunched or replatformed in the last 180 days (Wayback CMS/template fingerprint change), or a staging subdomain is still indexed.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Redirect maps are usually about 80% complete at launch. The missing 20% is almost always the deep resource pages — the ones with every inbound link pointing at them. Nobody notices for roughly ten weeks, because those pages don&#39;t get navigated to. They get arrived at.</dd></div>
+              <div><dt>Offer</dt><dd>Post-Migration Break Report — old sitemap diffed against new, every 404 ranked by inbound links lost</dd></div>
+              <div><dt>Source</dt><dd>Wayback Machine CDX API + live page-source fingerprint</dd></div>
+              <div><dt>Reply density</dt><dd>Highest — acute, dated, and compounding weekly</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">11% TAM</span>
+          </div>
+          <h3>Tier 2: Paid Waste</h3>
+          <p>Running Google Ads with creative unchanged for 180+ days, or ads pointing at a homepage/generic page rather than a dedicated landing page.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They&#39;re paying for clicks every month and landing them somewhere that asks the visitor to work out where to go next. Six months of static creative means nothing is being tested, so cost per acquisition drifts upward invisibly.</dd></div>
+              <div><dt>Offer</dt><dd>Landing-Path Teardown — their live ad, their landing page, three named fixes and the cost impact</dd></div>
+              <div><dt>Source</dt><dd>Google Ads Transparency Center + click-through inspection</dd></div>
+              <div><dt>Reply density</dt><dd>High — the evidence is a receipt they can verify in the same free tool</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">19% TAM</span>
+          </div>
+          <h3>Tier 3: Anonymous Authority</h3>
+          <p>20+ published articles, but money pages carry no author byline, credentials or author schema — or an AI Overview on their core subject cites somebody else.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They are the primary authority in their field — that is literally what the organisation exists to be. But they publish anonymously, so search engines and answer engines cannot attribute the expertise, and aggregators outrank the source that fed them.</dd></div>
+              <div><dt>Offer</dt><dd>Authority Attribution Gap Report — the six pages where a third party outranks them using their own material</dd></div>
+              <div><dt>Source</dt><dd>Page-source scrape (byline + author schema) + seed-query SERP check</dd></div>
+              <div><dt>Reply density</dt><dd>Strong — the highest emotional resonance in the cascade</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">9% TAM</span>
+          </div>
+          <h3>Tier 4: Hiring the Role</h3>
+          <p>An open req for an SEO manager, digital marketing manager, content manager or marketing director.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The budget is approved and sitting in a headcount line. But one generalist cannot cover technical SEO, paid media and content, and average time-to-fill is about 90 days before day one — while the mandate that created the req is already running.</dd></div>
+              <div><dt>Offer</dt><dd>Specialist-vs-Generalist Comparison, built against their actual job description</dd></div>
+              <div><dt>Source</dt><dd>Careers page + job-board monitor</dd></div>
+              <div><dt>Reply density</dt><dd>Moderate — competing against a decision already made</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">55% TAM</span>
+          </div>
+          <h3>Tier 5: Member Search Visibility (catch-all)</h3>
+          <p>Everything remaining in the market with total revenue of $2M or more.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The dues trend on their own tax filings is flat or declining. Member acquisition isn&#39;t keeping pace, and search is where prospective members actually start looking — at the exact moment they decide who the authority is.</dd></div>
+              <div><dt>Offer</dt><dd>Member Search Visibility Snapshot — the five queries a prospective member runs, and where they rank on each</dd></div>
+              <div><dt>Source</dt><dd>IRS Form 990 dues trend + seed-query SERP positions</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest — volume play on the softest ask</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="04">
+        
+    <div class="section-head">
+      <p class="eyebrow">04</p>
+      <h2>Campaign experiments</h2>
+      <p class="takeaway">Every offer is a finished research artefact, never a meeting. A call asks for thirty minutes of a stranger&#39;s time; an artefact asks for one word.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Relaunch Break Report</h3>
+          <p>The sharpest tier in the cascade. A botched migration silently costs 30-60% of organic traffic, and the damage compounds for ten weeks before anyone spots it. Knucklepuck&#39;s single strongest proof metric — 88% organic conversion lift — came from exactly this scenario.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Wayback CDX shows a CMS or template fingerprint change within 180 days</dd></div>
+            <div><dt>AI strategy</dt><dd>Diff the archived sitemap against the live one before sending. The email references the actual month of the relaunch and names the old and new platform, so it cannot read as mail-merged.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Indexed Staging Subdomain</h3>
+          <p>Low volume, extremely high reply density. Treat as a manual send from a senior name rather than an automated sequence.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>site:staging.&lt;domain&gt; or site:new.&lt;domain&gt; returns indexed pages</dd></div>
+            <div><dt>AI strategy</dt><dd>A hand-worked variant for the small set where a staging environment is publicly indexed — an urgent, embarrassing and instantly fixable problem that earns a reply on courtesy alone.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Stale Creative Teardown</h3>
+          <p>The launch tier. Needs no pipeline build, the evidence is unarguable, and it produces revenue proof fastest — which is what funds the Tier 1 build and generates the CPA case study the whole strategy is currently missing.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Google Ads active AND same creative running 180+ days with no variants</dd></div>
+            <div><dt>AI strategy</dt><dd>Pull the live ad from the Ads Transparency Center, screenshot the landing path, and write three specific fixes before sending. The recipient can open the same free tool and confirm every word.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Homepage Landing Waste</h3>
+          <p>Runs as the second variant against Tier 2. Same market, different wedge — useful for the two-variant chaos test before narrowing.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Google Ads active AND ad destination is the homepage or a generic membership page</dd></div>
+            <div><dt>AI strategy</dt><dd>Route the ad click manually, capture where it lands, and quantify the drop-off. Frame as yield on spend already committed, never as a request for new budget.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Who Wrote This?</h3>
+          <p>The highest emotional resonance in the cascade. Association staff know they are the experts; being outranked by an aggregator summarising their own work is a genuine and specific frustration.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>20+ articles published with no visible byline or author schema on money pages</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the single best article on their site, then point out it has no author. The compliment is real and it is the setup for the entire pitch — the expertise exists, it just isn&#39;t machine-readable.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>AI Overview Displacement</h3>
+          <p>The most current framing available in 2026 and the one least likely to have been used by any competing agency. Doubles as the second Tier 3 variant.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>An AI Overview on their core subject cites a competitor or aggregator rather than them</dd></div>
+            <div><dt>AI strategy</dt><dd>Screenshot the answer box citing someone else on a subject the organisation exists to own. Attribution, not rewriting, is the fix — which keeps the ask small.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Three Specialists vs One Hire</h3>
+          <p>Budget is already approved, which makes this warm — but they have decided to solve it in-house, which makes the reframe harder. Winning move is the 90-day gap before day one, which never appears in the salary line.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Open req for SEO, digital marketing, content or marketing director</dd></div>
+            <div><dt>AI strategy</dt><dd>Read the actual job description, count the disciplines stacked into it, and build an honest cost comparison against a retainer. Explicitly does not ask them to cancel the req.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Five Searches Your Future Members Run</h3>
+          <p>Carries 55% of the market on the softest ask. Credibility rests almost entirely on the association logo set, which is why the missing association proof metric is a launch blocker for this tier specifically.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>All remaining orgs with revenue $2M+</dd></div>
+            <div><dt>AI strategy</dt><dd>Run five membership-intent queries per organisation, record where they place, and lead with the single worst result. Name three peer associations from the Knucklepuck roster for credibility.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Fiscal-Calendar Cohorting</h3>
+          <p>Not a separate campaign so much as a scheduling layer applied across the whole catch-all. The single cheapest performance gain available in this plan, and it costs nothing but reading the header of a tax return.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Fiscal year end from the Form 990 return header, bucketed into 12 monthly cohorts</dd></div>
+            <div><dt>AI strategy</dt><dd>Schedule each cohort to land 60–90 days before that organisation&#39;s budget is drafted. Same emails, materially better timing. Reference the planning cycle, never a figure from the filing.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Declining Dues Trend</h3>
+          <p>A prioritisation signal, not a copy angle. Quoting someone&#39;s tax filings back at them reads as surveillance and is the fastest way to lose an association account before it starts.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Membership dues revenue down across three consecutive filings</dd></div>
+            <div><dt>AI strategy</dt><dd>Use the trend to prioritise send order within the catch-all — never to open the email. The dues decline informs who to contact first, not what to say.</dd></div>
+            <div><dt>Value</dt><dd>Make money</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="05">
+        
+    <div class="section-head">
+      <p class="eyebrow">05</p>
+      <h2>The copy</h2>
+      <p class="takeaway">Fifteen emails. Four banned phrases. Not one booking link before email three.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{org_name}}</span><span>{{domain}}</span><span>{{launch_month}}</span><span>{{old_cms}}</span><span>{{new_cms}}</span><span>{{campaign_subject}}</span><span>{{first_seen_month}}</span><span>{{months_running}}</span><span>{{article_title}}</span><span>{{topic}}</span><span>{{credential}}</span><span>{{outranking_site}}</span><span>{{role_title}}</span><span>{{field}}</span><span>{{seed_query}}</span><span>{{position}}</span><span>{{whats_above}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{org_name}}, {{domain}}, {{launch_month}}, {{old_cms}}, {{new_cms}}, {{campaign_subject}}, {{first_seen_month}}, {{months_running}}, {{article_title}}, {{topic}}, {{credential}}, {{outranking_site}}, {{role_title}}, {{field}}, {{seed_query}}, {{position}}, {{whats_above}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 — Migration Risk</strong>
+              <em>Post-Migration Break Report</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 — Migration Risk steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{domain}} relaunch&#10;&#10;Saw {{org_name}} relaunched around {{launch_month}} — the {{old_cms}} templates are gone from the archive and {{new_cms}} is serving now.&#10;&#10;But would it be fair to assume nobody&#39;s watching organic separately from total sessions yet?&#10;&#10;That&#39;s the gap that gets expensive. Redirect maps are usually about 80% complete at launch. The missing 20% is almost always the deep resource pages — the ones with every inbound link pointing at them. Nobody notices for roughly ten weeks, because those pages don&#39;t get navigated to. They get arrived at.&#10;&#10;We ran the technical SEO on a relaunch last year and organic conversions finished 88% up year over year. The migration was the reason, not a coincidence.&#10;&#10;I already diffed your old sitemap against the new one. Reply &quot;send&quot; and I&#39;ll send you what&#39;s 404ing — it&#39;s done, costs me nothing to pass over.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{domain}} relaunch" data-preview="example-society.org relaunch">{{domain}} relaunch</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Saw {{org_name}} relaunched around {{launch_month}} — the {{old_cms}} templates are gone from the archive and {{new_cms}} is serving now.&#10;&#10;But would it be fair to assume nobody&#39;s watching organic separately from total sessions yet?&#10;&#10;That&#39;s the gap that gets expensive. Redirect maps are usually about 80% complete at launch. The missing 20% is almost always the deep resource pages — the ones with every inbound link pointing at them. Nobody notices for roughly ten weeks, because those pages don&#39;t get navigated to. They get arrived at.&#10;&#10;We ran the technical SEO on a relaunch last year and organic conversions finished 88% up year over year. The migration was the reason, not a coincidence.&#10;&#10;I already diffed your old sitemap against the new one. Reply &quot;send&quot; and I&#39;ll send you what&#39;s 404ing — it&#39;s done, costs me nothing to pass over." data-preview="Saw the National Society of Example Practitioners relaunched around March — the Drupal 7 templates are gone from the archive and WordPress is serving now.&#10;&#10;But would it be fair to assume nobody&#39;s watching organic separately from total sessions yet?&#10;&#10;That&#39;s the gap that gets expensive. Redirect maps are usually about 80% complete at launch. The missing 20% is almost always the deep resource pages — the ones with every inbound link pointing at them. Nobody notices for roughly ten weeks, because those pages don&#39;t get navigated to. They get arrived at.&#10;&#10;We ran the technical SEO on a relaunch last year and organic conversions finished 88% up year over year. The migration was the reason, not a coincidence.&#10;&#10;I already diffed your old sitemap against the new one. Reply &quot;send&quot; and I&#39;ll send you what&#39;s 404ing — it&#39;s done, costs me nothing to pass over.">
+                        <p>Saw {{org_name}} relaunched around {{launch_month}} — the {{old_cms}} templates are gone from the archive and {{new_cms}} is serving now.</p><p>But would it be fair to assume nobody&#39;s watching organic separately from total sessions yet?</p><p>That&#39;s the gap that gets expensive. Redirect maps are usually about 80% complete at launch. The missing 20% is almost always the deep resource pages — the ones with every inbound link pointing at them. Nobody notices for roughly ten weeks, because those pages don&#39;t get navigated to. They get arrived at.</p><p>We ran the technical SEO on a relaunch last year and organic conversions finished 88% up year over year. The migration was the reason, not a coincidence.</p><p>I already diffed your old sitemap against the new one. Reply &quot;send&quot; and I&#39;ll send you what&#39;s 404ing — it&#39;s done, costs me nothing to pass over.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Adding the part that makes this urgent rather than tidy.&#10;&#10;The pages that break in a relaunch are the ones with the most inbound links — old conference archives, member resources, position statements. They&#39;re also the hardest to notice missing, because nobody navigates to them.&#10;&#10;Every week one of those sits at 404, the authority behind it decays, and the recovery gets slower. It&#39;s the one SEO problem with a clock on it.&#10;&#10;The 404 list is sitting in a doc. Reply &quot;send&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Adding the part that makes this urgent rather than tidy.&#10;&#10;The pages that break in a relaunch are the ones with the most inbound links — old conference archives, member resources, position statements. They&#39;re also the hardest to notice missing, because nobody navigates to them.&#10;&#10;Every week one of those sits at 404, the authority behind it decays, and the recovery gets slower. It&#39;s the one SEO problem with a clock on it.&#10;&#10;The 404 list is sitting in a doc. Reply &quot;send&quot;." data-preview="Adding the part that makes this urgent rather than tidy.&#10;&#10;The pages that break in a relaunch are the ones with the most inbound links — old conference archives, member resources, position statements. They&#39;re also the hardest to notice missing, because nobody navigates to them.&#10;&#10;Every week one of those sits at 404, the authority behind it decays, and the recovery gets slower. It&#39;s the one SEO problem with a clock on it.&#10;&#10;The 404 list is sitting in a doc. Reply &quot;send&quot;.">
+                        <p>Adding the part that makes this urgent rather than tidy.</p><p>The pages that break in a relaunch are the ones with the most inbound links — old conference archives, member resources, position statements. They&#39;re also the hardest to notice missing, because nobody navigates to them.</p><p>Every week one of those sits at 404, the authority behind it decays, and the recovery gets slower. It&#39;s the one SEO problem with a clock on it.</p><p>The 404 list is sitting in a doc. Reply &quot;send&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: wrong person?&#10;&#10;No call needed. Just reply yes and I&#39;ll send the list of URLs that broke in the {{org_name}} relaunch.&#10;&#10;Should I send it to you, or whoever managed the rebuild?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="wrong person?" data-preview="wrong person?">wrong person?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed. Just reply yes and I&#39;ll send the list of URLs that broke in the {{org_name}} relaunch.&#10;&#10;Should I send it to you, or whoever managed the rebuild?" data-preview="No call needed. Just reply yes and I&#39;ll send the list of URLs that broke in the the National Society of Example Practitioners relaunch.&#10;&#10;Should I send it to you, or whoever managed the rebuild?">
+                        <p>No call needed. Just reply yes and I&#39;ll send the list of URLs that broke in the {{org_name}} relaunch.</p><p>Should I send it to you, or whoever managed the rebuild?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 — Paid Waste</strong>
+              <em>Landing-Path Teardown</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 — Paid Waste steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your {{campaign_subject}} ad&#10;&#10;Your ad for {{campaign_subject}} has been running since {{first_seen_month}} — I found it in Google&#39;s Ads Transparency Center. Same creative the whole time, no variants.&#10;&#10;But would it be fair to assume it&#39;s pointing at your homepage because nobody had the bandwidth to build a page just for it?&#10;&#10;That&#39;s usually where cost per registration quietly doubles. You&#39;ve already paid for the click. Then the person lands somewhere that asks them to work out where to go next.&#10;&#10;We run paid media where the only number that matters is cost per acquisition, not clicks — Annuity.org and Rosenberg | Perry are both on that model.&#10;&#10;I wrote up the three things I&#39;d change about that ad&#39;s landing path. Reply &quot;send it&quot; and it&#39;s yours. No call.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your {{campaign_subject}} ad" data-preview="your the 2026 Annual Conference ad">your {{campaign_subject}} ad</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Your ad for {{campaign_subject}} has been running since {{first_seen_month}} — I found it in Google&#39;s Ads Transparency Center. Same creative the whole time, no variants.&#10;&#10;But would it be fair to assume it&#39;s pointing at your homepage because nobody had the bandwidth to build a page just for it?&#10;&#10;That&#39;s usually where cost per registration quietly doubles. You&#39;ve already paid for the click. Then the person lands somewhere that asks them to work out where to go next.&#10;&#10;We run paid media where the only number that matters is cost per acquisition, not clicks — Annuity.org and Rosenberg | Perry are both on that model.&#10;&#10;I wrote up the three things I&#39;d change about that ad&#39;s landing path. Reply &quot;send it&quot; and it&#39;s yours. No call." data-preview="Your ad for the 2026 Annual Conference has been running since January — I found it in Google&#39;s Ads Transparency Center. Same creative the whole time, no variants.&#10;&#10;But would it be fair to assume it&#39;s pointing at your homepage because nobody had the bandwidth to build a page just for it?&#10;&#10;That&#39;s usually where cost per registration quietly doubles. You&#39;ve already paid for the click. Then the person lands somewhere that asks them to work out where to go next.&#10;&#10;We run paid media where the only number that matters is cost per acquisition, not clicks — Annuity.org and Rosenberg | Perry are both on that model.&#10;&#10;I wrote up the three things I&#39;d change about that ad&#39;s landing path. Reply &quot;send it&quot; and it&#39;s yours. No call.">
+                        <p>Your ad for {{campaign_subject}} has been running since {{first_seen_month}} — I found it in Google&#39;s Ads Transparency Center. Same creative the whole time, no variants.</p><p>But would it be fair to assume it&#39;s pointing at your homepage because nobody had the bandwidth to build a page just for it?</p><p>That&#39;s usually where cost per registration quietly doubles. You&#39;ve already paid for the click. Then the person lands somewhere that asks them to work out where to go next.</p><p>We run paid media where the only number that matters is cost per acquisition, not clicks — Annuity.org and Rosenberg | Perry are both on that model.</p><p>I wrote up the three things I&#39;d change about that ad&#39;s landing path. Reply &quot;send it&quot; and it&#39;s yours. No call.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Following up with the money version of this.&#10;&#10;{{months_running}} months of unchanged creative usually sits well above achievable CPA — not because the ad is bad, but because there&#39;s no second variant that ever got the chance to beat it.&#10;&#10;The fix isn&#39;t more spend. It&#39;s the same spend, pointed at a page built for one ask instead of a homepage built for everyone.&#10;&#10;Still happy to send the three changes. Reply &quot;send it&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Following up with the money version of this.&#10;&#10;{{months_running}} months of unchanged creative usually sits well above achievable CPA — not because the ad is bad, but because there&#39;s no second variant that ever got the chance to beat it.&#10;&#10;The fix isn&#39;t more spend. It&#39;s the same spend, pointed at a page built for one ask instead of a homepage built for everyone.&#10;&#10;Still happy to send the three changes. Reply &quot;send it&quot;." data-preview="Following up with the money version of this.&#10;&#10;Seven months of unchanged creative usually sits well above achievable CPA — not because the ad is bad, but because there&#39;s no second variant that ever got the chance to beat it.&#10;&#10;The fix isn&#39;t more spend. It&#39;s the same spend, pointed at a page built for one ask instead of a homepage built for everyone.&#10;&#10;Still happy to send the three changes. Reply &quot;send it&quot;.">
+                        <p>Following up with the money version of this.</p><p>{{months_running}} months of unchanged creative usually sits well above achievable CPA — not because the ad is bad, but because there&#39;s no second variant that ever got the chance to beat it.</p><p>The fix isn&#39;t more spend. It&#39;s the same spend, pointed at a page built for one ask instead of a homepage built for everyone.</p><p>Still happy to send the three changes. Reply &quot;send it&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{org_name}} paid&#10;&#10;No need for a call. Reply yes and I&#39;ll send the landing-path teardown for the {{campaign_subject}} ad.&#10;&#10;Should that go to you, or whoever owns paid at {{org_name}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{org_name}} paid" data-preview="the National Society of Example Practitioners paid">{{org_name}} paid</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No need for a call. Reply yes and I&#39;ll send the landing-path teardown for the {{campaign_subject}} ad.&#10;&#10;Should that go to you, or whoever owns paid at {{org_name}}?" data-preview="No need for a call. Reply yes and I&#39;ll send the landing-path teardown for the the 2026 Annual Conference ad.&#10;&#10;Should that go to you, or whoever owns paid at the National Society of Example Practitioners?">
+                        <p>No need for a call. Reply yes and I&#39;ll send the landing-path teardown for the {{campaign_subject}} ad.</p><p>Should that go to you, or whoever owns paid at {{org_name}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 — Anonymous Authority</strong>
+              <em>Authority Attribution Gap Report</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 — Anonymous Authority steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: who wrote {{article_title}}?&#10;&#10;{{org_name}} published {{article_title}}. It&#39;s the clearest explanation of {{topic}} I&#39;ve read anywhere, and there&#39;s no author name on it.&#10;&#10;But would it be fair to assume the person who wrote it is a {{credential}} who&#39;s been doing this for twenty years?&#10;&#10;That&#39;s the whole problem in one line. You are the authority on {{topic}} in this country — it&#39;s in your charter — and Google has no way to tell. So {{outranking_site}} takes the top result with a freelancer&#39;s summary of your own work, and increasingly the AI answer box cites them instead of you.&#10;&#10;We fixed this for a health resource site. Organic traffic grew 30% month over month and qualified leads went up 4x. No re-writing — the fix is attribution.&#10;&#10;I pulled the six pages where someone is outranking you using your own material. Reply &quot;send&quot; and it&#39;s yours.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="who wrote {{article_title}}?" data-preview="who wrote &quot;What the 2026 Rule Change Means for Practitioners&quot;?">who wrote {{article_title}}?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{org_name}} published {{article_title}}. It&#39;s the clearest explanation of {{topic}} I&#39;ve read anywhere, and there&#39;s no author name on it.&#10;&#10;But would it be fair to assume the person who wrote it is a {{credential}} who&#39;s been doing this for twenty years?&#10;&#10;That&#39;s the whole problem in one line. You are the authority on {{topic}} in this country — it&#39;s in your charter — and Google has no way to tell. So {{outranking_site}} takes the top result with a freelancer&#39;s summary of your own work, and increasingly the AI answer box cites them instead of you.&#10;&#10;We fixed this for a health resource site. Organic traffic grew 30% month over month and qualified leads went up 4x. No re-writing — the fix is attribution.&#10;&#10;I pulled the six pages where someone is outranking you using your own material. Reply &quot;send&quot; and it&#39;s yours." data-preview="the National Society of Example Practitioners published &quot;What the 2026 Rule Change Means for Practitioners&quot;. It&#39;s the clearest explanation of the 2026 rule change I&#39;ve read anywhere, and there&#39;s no author name on it.&#10;&#10;But would it be fair to assume the person who wrote it is a board-certified specialist who&#39;s been doing this for twenty years?&#10;&#10;That&#39;s the whole problem in one line. You are the authority on the 2026 rule change in this country — it&#39;s in your charter — and Google has no way to tell. So a general legal-news aggregator takes the top result with a freelancer&#39;s summary of your own work, and increasingly the AI answer box cites them instead of you.&#10;&#10;We fixed this for a health resource site. Organic traffic grew 30% month over month and qualified leads went up 4x. No re-writing — the fix is attribution.&#10;&#10;I pulled the six pages where someone is outranking you using your own material. Reply &quot;send&quot; and it&#39;s yours.">
+                        <p>{{org_name}} published {{article_title}}. It&#39;s the clearest explanation of {{topic}} I&#39;ve read anywhere, and there&#39;s no author name on it.</p><p>But would it be fair to assume the person who wrote it is a {{credential}} who&#39;s been doing this for twenty years?</p><p>That&#39;s the whole problem in one line. You are the authority on {{topic}} in this country — it&#39;s in your charter — and Google has no way to tell. So {{outranking_site}} takes the top result with a freelancer&#39;s summary of your own work, and increasingly the AI answer box cites them instead of you.</p><p>We fixed this for a health resource site. Organic traffic grew 30% month over month and qualified leads went up 4x. No re-writing — the fix is attribution.</p><p>I pulled the six pages where someone is outranking you using your own material. Reply &quot;send&quot; and it&#39;s yours.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Worth adding why this matters beyond traffic.&#10;&#10;When someone searches {{topic}} and lands on {{outranking_site}}&#39;s version, they get the answer and never learn {{org_name}} exists. That&#39;s not a traffic problem. That&#39;s the top of the membership pipeline being intercepted by someone quoting you.&#10;&#10;Bylines, credentials and author schema on an existing library is roughly a two-week job. Nothing gets rewritten.&#10;&#10;Still have the six-page list. Reply &quot;send&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Worth adding why this matters beyond traffic.&#10;&#10;When someone searches {{topic}} and lands on {{outranking_site}}&#39;s version, they get the answer and never learn {{org_name}} exists. That&#39;s not a traffic problem. That&#39;s the top of the membership pipeline being intercepted by someone quoting you.&#10;&#10;Bylines, credentials and author schema on an existing library is roughly a two-week job. Nothing gets rewritten.&#10;&#10;Still have the six-page list. Reply &quot;send&quot;." data-preview="Worth adding why this matters beyond traffic.&#10;&#10;When someone searches the 2026 rule change and lands on a general legal-news aggregator&#39;s version, they get the answer and never learn the National Society of Example Practitioners exists. That&#39;s not a traffic problem. That&#39;s the top of the membership pipeline being intercepted by someone quoting you.&#10;&#10;Bylines, credentials and author schema on an existing library is roughly a two-week job. Nothing gets rewritten.&#10;&#10;Still have the six-page list. Reply &quot;send&quot;.">
+                        <p>Worth adding why this matters beyond traffic.</p><p>When someone searches {{topic}} and lands on {{outranking_site}}&#39;s version, they get the answer and never learn {{org_name}} exists. That&#39;s not a traffic problem. That&#39;s the top of the membership pipeline being intercepted by someone quoting you.</p><p>Bylines, credentials and author schema on an existing library is roughly a two-week job. Nothing gets rewritten.</p><p>Still have the six-page list. Reply &quot;send&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{org_name}} attribution&#10;&#10;No call. Reply yes and I&#39;ll send the list of pages where a third party is ranking above you for your own material.&#10;&#10;Are you the right person for this, or should it go to whoever owns communications?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{org_name}} attribution" data-preview="the National Society of Example Practitioners attribution">{{org_name}} attribution</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call. Reply yes and I&#39;ll send the list of pages where a third party is ranking above you for your own material.&#10;&#10;Are you the right person for this, or should it go to whoever owns communications?" data-preview="No call. Reply yes and I&#39;ll send the list of pages where a third party is ranking above you for your own material.&#10;&#10;Are you the right person for this, or should it go to whoever owns communications?">
+                        <p>No call. Reply yes and I&#39;ll send the list of pages where a third party is ranking above you for your own material.</p><p>Are you the right person for this, or should it go to whoever owns communications?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 — Hiring the Role</strong>
+              <em>Specialist-vs-Generalist Comparison</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 — Hiring the Role steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the {{role_title}} req&#10;&#10;Saw the {{role_title}} opening at {{org_name}}.&#10;&#10;But would it be fair to assume the description has technical SEO, paid media and content all sitting in it — because that&#39;s what the mandate actually needs?&#10;&#10;Those are three different people. Whoever you hire will be genuinely good at one of them and learning the other two on your budget. And the average time-to-fill on that req is about 90 days before day one.&#10;&#10;We work as an integrated extension of the team — you get the technical, paid and content specialists directly rather than through an account manager, starting in about two weeks.&#10;&#10;Not suggesting you cancel the req. But if you want the honest comparison — three specialists on retainer against one hire, at real numbers, built against your actual job description — reply &quot;send&quot; and I&#39;ll put it together for {{org_name}}.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the {{role_title}} req" data-preview="the Digital Marketing Manager req">the {{role_title}} req</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Saw the {{role_title}} opening at {{org_name}}.&#10;&#10;But would it be fair to assume the description has technical SEO, paid media and content all sitting in it — because that&#39;s what the mandate actually needs?&#10;&#10;Those are three different people. Whoever you hire will be genuinely good at one of them and learning the other two on your budget. And the average time-to-fill on that req is about 90 days before day one.&#10;&#10;We work as an integrated extension of the team — you get the technical, paid and content specialists directly rather than through an account manager, starting in about two weeks.&#10;&#10;Not suggesting you cancel the req. But if you want the honest comparison — three specialists on retainer against one hire, at real numbers, built against your actual job description — reply &quot;send&quot; and I&#39;ll put it together for {{org_name}}." data-preview="Saw the Digital Marketing Manager opening at the National Society of Example Practitioners.&#10;&#10;But would it be fair to assume the description has technical SEO, paid media and content all sitting in it — because that&#39;s what the mandate actually needs?&#10;&#10;Those are three different people. Whoever you hire will be genuinely good at one of them and learning the other two on your budget. And the average time-to-fill on that req is about 90 days before day one.&#10;&#10;We work as an integrated extension of the team — you get the technical, paid and content specialists directly rather than through an account manager, starting in about two weeks.&#10;&#10;Not suggesting you cancel the req. But if you want the honest comparison — three specialists on retainer against one hire, at real numbers, built against your actual job description — reply &quot;send&quot; and I&#39;ll put it together for the National Society of Example Practitioners.">
+                        <p>Saw the {{role_title}} opening at {{org_name}}.</p><p>But would it be fair to assume the description has technical SEO, paid media and content all sitting in it — because that&#39;s what the mandate actually needs?</p><p>Those are three different people. Whoever you hire will be genuinely good at one of them and learning the other two on your budget. And the average time-to-fill on that req is about 90 days before day one.</p><p>We work as an integrated extension of the team — you get the technical, paid and content specialists directly rather than through an account manager, starting in about two weeks.</p><p>Not suggesting you cancel the req. But if you want the honest comparison — three specialists on retainer against one hire, at real numbers, built against your actual job description — reply &quot;send&quot; and I&#39;ll put it together for {{org_name}}.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;One thing that usually doesn&#39;t make it into the business case:&#10;&#10;The 90 days before day one aren&#39;t neutral. Whatever created the req — a membership target, a relaunch, a conference — keeps running on the old plan the whole time. Then there&#39;s ramp on top.&#10;&#10;That gap is the real cost of the hire, and it never appears in the salary line.&#10;&#10;Happy to build the comparison against your description. Reply &quot;send&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="One thing that usually doesn&#39;t make it into the business case:&#10;&#10;The 90 days before day one aren&#39;t neutral. Whatever created the req — a membership target, a relaunch, a conference — keeps running on the old plan the whole time. Then there&#39;s ramp on top.&#10;&#10;That gap is the real cost of the hire, and it never appears in the salary line.&#10;&#10;Happy to build the comparison against your description. Reply &quot;send&quot;." data-preview="One thing that usually doesn&#39;t make it into the business case:&#10;&#10;The 90 days before day one aren&#39;t neutral. Whatever created the req — a membership target, a relaunch, a conference — keeps running on the old plan the whole time. Then there&#39;s ramp on top.&#10;&#10;That gap is the real cost of the hire, and it never appears in the salary line.&#10;&#10;Happy to build the comparison against your description. Reply &quot;send&quot;.">
+                        <p>One thing that usually doesn&#39;t make it into the business case:</p><p>The 90 days before day one aren&#39;t neutral. Whatever created the req — a membership target, a relaunch, a conference — keeps running on the old plan the whole time. Then there&#39;s ramp on top.</p><p>That gap is the real cost of the hire, and it never appears in the salary line.</p><p>Happy to build the comparison against your description. Reply &quot;send&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{role_title}} at {{org_name}}&#10;&#10;No call needed. Reply yes and I&#39;ll send the specialist-vs-generalist breakdown built against your {{role_title}} description.&#10;&#10;You, or whoever&#39;s making the hiring call?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{role_title}} at {{org_name}}" data-preview="Digital Marketing Manager at the National Society of Example Practitioners">{{role_title}} at {{org_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call needed. Reply yes and I&#39;ll send the specialist-vs-generalist breakdown built against your {{role_title}} description.&#10;&#10;You, or whoever&#39;s making the hiring call?" data-preview="No call needed. Reply yes and I&#39;ll send the specialist-vs-generalist breakdown built against your Digital Marketing Manager description.&#10;&#10;You, or whoever&#39;s making the hiring call?">
+                        <p>No call needed. Reply yes and I&#39;ll send the specialist-vs-generalist breakdown built against your {{role_title}} description.</p><p>You, or whoever&#39;s making the hiring call?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 — Member Search Visibility (catch-all)</strong>
+              <em>Member Search Visibility Snapshot</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 — Member Search Visibility (catch-all) steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 9</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{seed_query}}&#10;&#10;When somebody decides to get into {{field}}, the first thing they do is search &quot;{{seed_query}}&quot;.&#10;&#10;But would it be fair to assume nobody at {{org_name}} has looked at what actually comes up on that page in the last year or so?&#10;&#10;I ran it. You&#39;re {{position}} — under {{whats_above}}. For the national body in {{field}}, that&#39;s backwards, and it&#39;s the moment a future member decides who the authority is.&#10;&#10;We do a lot of this work in the association world — Federal Bar Association, NAFA, the International Coalition of Girls&#39; Schools.&#10;&#10;Reply &quot;send&quot; and I&#39;ll share what the first page looks like for the five searches your future members are actually running.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{seed_query}}" data-preview="how to get certified in the profession">{{seed_query}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="When somebody decides to get into {{field}}, the first thing they do is search &quot;{{seed_query}}&quot;.&#10;&#10;But would it be fair to assume nobody at {{org_name}} has looked at what actually comes up on that page in the last year or so?&#10;&#10;I ran it. You&#39;re {{position}} — under {{whats_above}}. For the national body in {{field}}, that&#39;s backwards, and it&#39;s the moment a future member decides who the authority is.&#10;&#10;We do a lot of this work in the association world — Federal Bar Association, NAFA, the International Coalition of Girls&#39; Schools.&#10;&#10;Reply &quot;send&quot; and I&#39;ll share what the first page looks like for the five searches your future members are actually running." data-preview="When somebody decides to get into the profession, the first thing they do is search &quot;how to get certified in the profession&quot;.&#10;&#10;But would it be fair to assume nobody at the National Society of Example Practitioners has looked at what actually comes up on that page in the last year or so?&#10;&#10;I ran it. You&#39;re sixth — under three exam-prep vendors and a Reddit thread. For the national body in the profession, that&#39;s backwards, and it&#39;s the moment a future member decides who the authority is.&#10;&#10;We do a lot of this work in the association world — Federal Bar Association, NAFA, the International Coalition of Girls&#39; Schools.&#10;&#10;Reply &quot;send&quot; and I&#39;ll share what the first page looks like for the five searches your future members are actually running.">
+                        <p>When somebody decides to get into {{field}}, the first thing they do is search &quot;{{seed_query}}&quot;.</p><p>But would it be fair to assume nobody at {{org_name}} has looked at what actually comes up on that page in the last year or so?</p><p>I ran it. You&#39;re {{position}} — under {{whats_above}}. For the national body in {{field}}, that&#39;s backwards, and it&#39;s the moment a future member decides who the authority is.</p><p>We do a lot of this work in the association world — Federal Bar Association, NAFA, the International Coalition of Girls&#39; Schools.</p><p>Reply &quot;send&quot; and I&#39;ll share what the first page looks like for the five searches your future members are actually running.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The reason I&#39;d bother you about this:&#10;&#10;Every one of those searches is someone who has already decided they want in. They&#39;re not being persuaded, they&#39;re choosing where to go. Whoever holds the first page gets to be the default answer.&#10;&#10;For most associations it&#39;s a fixable position, not a structural one.&#10;&#10;Five-query snapshot is ready whenever. Reply &quot;send&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The reason I&#39;d bother you about this:&#10;&#10;Every one of those searches is someone who has already decided they want in. They&#39;re not being persuaded, they&#39;re choosing where to go. Whoever holds the first page gets to be the default answer.&#10;&#10;For most associations it&#39;s a fixable position, not a structural one.&#10;&#10;Five-query snapshot is ready whenever. Reply &quot;send&quot;." data-preview="The reason I&#39;d bother you about this:&#10;&#10;Every one of those searches is someone who has already decided they want in. They&#39;re not being persuaded, they&#39;re choosing where to go. Whoever holds the first page gets to be the default answer.&#10;&#10;For most associations it&#39;s a fixable position, not a structural one.&#10;&#10;Five-query snapshot is ready whenever. Reply &quot;send&quot;.">
+                        <p>The reason I&#39;d bother you about this:</p><p>Every one of those searches is someone who has already decided they want in. They&#39;re not being persuaded, they&#39;re choosing where to go. Whoever holds the first page gets to be the default answer.</p><p>For most associations it&#39;s a fixable position, not a structural one.</p><p>Five-query snapshot is ready whenever. Reply &quot;send&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 9</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{org_name}} + {{seed_query}}&#10;&#10;No call. Reply yes and I&#39;ll send the five-search visibility snapshot for {{org_name}}.&#10;&#10;Should this go to you or whoever owns membership growth?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{org_name}} + {{seed_query}}" data-preview="the National Society of Example Practitioners + how to get certified in the profession">{{org_name}} + {{seed_query}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="No call. Reply yes and I&#39;ll send the five-search visibility snapshot for {{org_name}}.&#10;&#10;Should this go to you or whoever owns membership growth?" data-preview="No call. Reply yes and I&#39;ll send the five-search visibility snapshot for the National Society of Example Practitioners.&#10;&#10;Should this go to you or whoever owns membership growth?">
+                        <p>No call. Reply yes and I&#39;ll send the five-search visibility snapshot for {{org_name}}.</p><p>Should this go to you or whoever owns membership growth?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="06">
+        
+    <div class="section-head">
+      <p class="eyebrow">06</p>
+      <h2>Launch sequence</h2>
+      <p class="takeaway">Tier 2 first, not Tier 1 — because its evidence is a receipt, it needs no pipeline, and it produces the proof metrics the rest of the cascade is missing.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Week 0 — Run the full Form 990 API pass across member-serving NTEE codes at $2M+ revenue. Confirm the ~48,000 estimate before committing any send volume, and bucket every organisation into one of twelve fiscal-calendar cohorts.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Week 0 — Close the two launch blockers. Pull a before-and-after CPA figure from any two paid accounts, and get one outcome number from FBA, NAFA, ICGS or NC Bar. Neither Tier 2 nor Tier 5 should send without them.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 1–3 — Launch Tier 2 (Paid Waste). Ads Transparency pull needs no pipeline, the evidence is a receipt the recipient can verify themselves, and it produces revenue proof fastest. Start at 1,500 contacts, scale to 5,300.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Weeks 3–6 — Launch Tier 3 (Anonymous Authority). Largest qualified market at ~9,100 and the strongest existing proof. Requires the byline and author-schema scraper.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Weeks 6–9 — Launch Tier 1 (Migration Risk) once the Wayback CDX diffing pipeline is built and validated. Highest reply density in the cascade, smallest market at ~2,900.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Weeks 9–11 — Launch Tier 4 (Hiring the Role) behind a job-board monitor. ~4,300 organisations.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>Weeks 11–14 — Launch Tier 5 catch-all, staged at 2,000 per week across ~26,400 organisations, sequenced by fiscal-calendar cohort.</p>
+              </div>
+              <div class="launch-step">
+                <span>08</span>
+                <p>Ongoing — Weekly re-scan. Organisations move between tiers as their state changes. An org that sat in the catch-all in March and relaunched in June is not a new prospect; it&#39;s an existing record promoted to Tier 1, with a genuine reason to email again.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacts</strong>
+                <span>Perfect. Scale this tier hard.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run untouched.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450–500</strong>
+                <span>Borderline. Test one copy variant — rotate the artefact first, not the body.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or reply rate under 1% after 1,500 sends</strong>
+                <span>Failing. Cut the tier and rework the trigger.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a working session</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dana","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","the National Society of Example Practitioners","example-society\\.org","March","Drupal 7","WordPress","the 2026 Annual Conference","January","Seven","\"What the 2026 Rule Change Means for Practitioners\"","the 2026 rule change","board-certified specialist","a general legal-news aggregator","Digital Marketing Manager","the profession","how to get certified in the profession","sixth","three exam-prep vendors and a Reddit thread"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
