@@ -16,6 +16,18 @@ function pct(value) {
   return `${Number(value).toFixed(1)}%`;
 }
 
+/**
+ * The ratio counts every contact emailed, including those still mid-sequence, so it
+ * reads pessimistically early on and improves as sequences finish. This note says how
+ * far through that is, so the number isn't mistaken for a settled figure.
+ */
+function sequenceNote({ emailed, interested, fullySequenced, sequenceLength }) {
+  if (!interested) return `${int(emailed)} emailed · no interested leads yet`;
+  if (!sequenceLength || !emailed) return `${int(emailed)} emailed · ${int(interested)} interested`;
+  const share = (fullySequenced / emailed) * 100;
+  return `${share < 1 ? "<1" : Math.round(share)}% through all ${sequenceLength} steps`;
+}
+
 export default async function PortalOverview({ searchParams }) {
   const query = await searchParams;
   const viewer = await requirePortalClient(query?.client);
@@ -61,6 +73,20 @@ export default async function PortalOverview({ searchParams }) {
             <span>Bounce rate</span>
             <strong>{pct(data.totals.bounceRate)}</strong>
             <small>{int(data.totals.bounced)} bounced</small>
+          </article>
+          <article>
+            <span>Contacts emailed</span>
+            <strong>{int(data.contacts.emailed)}</strong>
+            <small>All time · unique people</small>
+          </article>
+          <article>
+            <span>Current contact → lead ratio</span>
+            <strong>
+              {data.contacts.contactsPerLead
+                ? `1 in ${int(data.contacts.contactsPerLead)}`
+                : "—"}
+            </strong>
+            <small>{sequenceNote(data.contacts)}</small>
           </article>
         </section>
         <section className="portal-panel performance-panel">
