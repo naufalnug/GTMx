@@ -8,6 +8,7 @@ import { resolvePeriod } from "../../lib/period";
 import PortalShell from "./_components/PortalShell";
 import PortalFilters from "./_components/PortalFilters";
 import TrendChart from "./_components/TrendChart";
+import SyncButton from "./_components/SyncButton";
 
 function int(value) {
   return new Intl.NumberFormat("en-US").format(Math.round(value));
@@ -28,6 +29,26 @@ function sequenceNote({ emailed, interested, fullySequenced, sequenceLength }) {
   return `${share < 1 ? "<1" : Math.round(share)}% through all ${sequenceLength} steps`;
 }
 
+// A manual sync pulls a whole EmailBison workspace inline, which outlasts the
+// default action budget on larger clients.
+export const maxDuration = 300;
+
+const SYNC_NOTICE = {
+  done: { tone: "portal-success", text: "Data synced from EmailBison." },
+  failed: { tone: "portal-alert", text: "Sync failed. The last good data is still shown." },
+  recent: { tone: "portal-success", text: "Already synced in the last minute." },
+};
+
+function syncedAgo(value) {
+  if (!value) return "Never synced";
+  const minutes = Math.round((Date.now() - new Date(value).getTime()) / 60000);
+  if (minutes < 1) return "Synced just now";
+  if (minutes < 60) return `Synced ${minutes}m ago`;
+  const hours = Math.round(minutes / 60);
+  if (hours < 24) return `Synced ${hours}h ago`;
+  return `Synced ${Math.round(hours / 24)}d ago`;
+}
+
 export default async function PortalOverview({ searchParams }) {
   const query = await searchParams;
   const viewer = await requirePortalClient(query?.client);
@@ -39,6 +60,7 @@ export default async function PortalOverview({ searchParams }) {
   );
   const period = resolvePeriod({ ...query, period: query?.period || "30d" });
   const data = await getPortalDashboard(viewer.client.slug, period, source);
+  const notice = SYNC_NOTICE[query?.sync] ?? null;
   return (
     <PortalShell client={viewer.client} active="overview" preview={viewer.isPreview}>
       <main className="portal-content">
@@ -51,8 +73,19 @@ export default async function PortalOverview({ searchParams }) {
               EmailBison.
             </p>
           </div>
-          <PortalFilters period={period} sources={sources} source={source} />
+          <div className="portal-head-controls">
+            <PortalFilters period={period} sources={sources} source={source} />
+            <div className="sync-control">
+              <SyncButton previewClient={viewer.isPreview ? viewer.client.slug : null} />
+              <small>{syncedAgo(viewer.client.last_synced_at)}</small>
+            </div>
+          </div>
         </header>
+        {notice ? (
+          <p className={notice.tone} role="status">
+            {notice.text}
+          </p>
+        ) : null}
         <section className="metric-strip" aria-label="Campaign totals">
           <article>
             <span>Emails sent</span>
