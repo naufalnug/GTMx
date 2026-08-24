@@ -56,7 +56,11 @@ export function split(point) {
 }
 
 export default function TrendChart({ points }) {
-  const [outcomesOnly, setOutcomesOnly] = useState(false);
+  // Defaults to outcomes. In the all-sent view the outcomes are ~6% of the bar and
+  // read as slivers — which is true, but it buries the part of the day worth looking
+  // at. Leading with outcomes shows them at a legible proportion; the toggle puts them
+  // back in the context of total volume.
+  const [outcomesOnly, setOutcomesOnly] = useState(true);
   const [hover, setHover] = useState(null);
 
   const view = points.slice(-30).map(split);
@@ -77,21 +81,19 @@ export default function TrendChart({ points }) {
   return (
     <div className="chart">
       <div className="chart-legend">
-        {[...SEGMENTS].reverse().map((seg) => (
+        {[...shown].reverse().map((seg) => (
           <span key={seg.key} className="chart-key">
             <span className="chart-swatch" style={{ background: seg.color }} />
             {seg.label}
           </span>
         ))}
-        {/* Outcomes are ~5% of a day's sends, so they are thin slivers against the
-            remainder. Dropping it rescales the bar to the outcomes alone. */}
         <button
           type="button"
           className={`chart-toggle${outcomesOnly ? ' is-on' : ''}`}
           aria-pressed={outcomesOnly}
           onClick={() => setOutcomesOnly((v) => !v)}
         >
-          {outcomesOnly ? 'Show all sent' : 'Outcomes only'}
+          {outcomesOnly ? 'Show all emails sent' : 'Show outcomes only'}
         </button>
       </div>
 
@@ -126,10 +128,13 @@ export default function TrendChart({ points }) {
                         className="chart-seg"
                         style={{
                           background: seg.color,
-                          // A 3px floor keeps a 9-out-of-1005 segment perceptible. It
-                          // slightly overstates the smallest slices, which is why the
-                          // tooltip and table carry the exact counts.
-                          height: `max(3px, ${(value / total) * 100}%)`,
+                          // Only the all-sent view needs a floor, where a 9-out-of-1005
+                          // slice would otherwise be sub-pixel. It slightly overstates
+                          // the thinnest slices, which is why the tooltip and table
+                          // carry the exact counts. Outcomes view needs no such help.
+                          height: outcomesOnly
+                            ? `${(value / total) * 100}%`
+                            : `max(3px, ${(value / total) * 100}%)`,
                         }}
                       />
                     );
