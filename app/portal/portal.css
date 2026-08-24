@@ -96,29 +96,35 @@
 .notif-empty { min-height:180px; padding:28px; }
 .notif-empty>span { background:var(--portal-mint); }
 @media (max-width:720px) { .notif-panel { position:fixed; inset:66px 12px 76px; width:auto; max-height:none; } }
-/* Daily activity small multiples. Palette validated with the dataviz validator against
-   the #fffdf9 surface: blue #2a78d6 volume, green #008300 good, red #e34948 bad — all
-   pairs clear the CVD, normal-vision and 3:1 contrast gates. Green/red sit in the 6-8
-   CVD band, which is legal here because each series has its own titled facet, so the
-   two are never compared as adjacent marks. */
-.facet-grid-wrap { padding:22px 24px 20px; }
-.facet-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:16px; }
-.facet { --facet-ink:#2a78d6; margin:0; padding:14px 14px 10px; border:1px solid var(--portal-line); border-radius:12px; background:#fdfbf5; }
-.facet--good { --facet-ink:#008300; }
-.facet--bad { --facet-ink:#e34948; }
-.facet figcaption { display:block; margin-bottom:10px; }
-.facet figcaption span { display:block; color:var(--portal-muted); font-size:.7rem; font-weight:800; letter-spacing:.02em; }
-.facet figcaption strong { display:block; margin:4px 0 2px; font-size:1.5rem; line-height:1; letter-spacing:-.03em; }
-.facet figcaption small { display:block; color:#8d867c; font-size:.65rem; }
-.facet-plot { display:flex; align-items:flex-end; gap:2px; height:74px; }
-.facet-col { position:relative; display:flex; flex:1; align-items:flex-end; height:100%; min-width:2px; border-radius:3px; background:rgba(26,23,18,.05); cursor:default; }
-.facet-col.is-hover { background:rgba(26,23,18,.12); }
-.facet-bar { width:100%; border-radius:3px 3px 1px 1px; background:var(--facet-ink); }
-.facet-foot { display:flex; justify-content:space-between; margin-top:7px; min-height:14px; color:#8d867c; font-size:.62rem; font-weight:600; }
-.facet-readout { color:var(--portal-ink); }
-.facet-readout b { color:var(--facet-ink); }
-.facet-table { margin-top:16px; }
-.facet-table summary { width:max-content; padding:6px 10px; border:1px solid var(--portal-line); border-radius:8px; color:var(--portal-muted); cursor:pointer; font-size:.7rem; font-weight:700; }
-.facet-table[open] summary { margin-bottom:12px; }
-.facet-table .portal-table-wrap { max-height:300px; overflow:auto; border:1px solid var(--portal-line); border-radius:10px; }
-@media (max-width:720px) { .facet-grid-wrap { padding:16px; }.facet-grid { grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; } }
+/* Daily activity — one plot, five grouped series. Palette validated with the dataviz
+   validator against the #fffdf9 surface (contacts #b07d00, sent #2a78d6, replies
+   #4a3aa7, positive #008300, bounces #e34948): every adjacent pair clears the CVD,
+   normal-vision and 3:1 contrast gates. Green/red sit in the 6-8 CVD band, which is
+   legal only because identity never rests on colour alone here — legend and tooltip
+   name each measure, bars carry gaps, and the table view repeats the numbers. */
+.chart { padding:20px 24px 18px; }
+.chart-legend { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:16px; }
+.chart-key { display:inline-flex; align-items:center; gap:7px; padding:5px 10px; border:1px solid var(--portal-line); border-radius:999px; color:var(--portal-ink); background:var(--portal-surface); cursor:pointer; font:700 .69rem Figtree,sans-serif; }
+.chart-key:hover { background:#f6f2e6; }
+.chart-key.is-off { color:#a49d93; }
+.chart-key.is-off .chart-swatch { opacity:.28; }
+.chart-swatch { display:block; width:10px; height:10px; flex:none; border-radius:3px; }
+.chart-body { display:flex; gap:10px; }
+.chart-yaxis { display:flex; width:44px; flex:none; flex-direction:column; justify-content:space-between; height:200px; color:#8d867c; font-size:.62rem; font-weight:600; text-align:right; }
+.chart-plot { position:relative; display:flex; align-items:flex-end; gap:clamp(2px,.5vw,7px); height:200px; flex:1; padding-bottom:1px; border-bottom:1.5px solid var(--portal-line); }
+.chart-grid { position:absolute; z-index:0; inset:0 0 50% 0; border-bottom:1px dashed var(--portal-line); pointer-events:none; }
+.chart-day { position:relative; z-index:1; display:flex; align-items:flex-end; justify-content:center; gap:1px; height:100%; flex:1; min-width:4px; border-radius:3px 3px 0 0; }
+.chart-day.is-hover { background:rgba(26,23,18,.06); }
+.chart-bar { display:block; width:100%; max-width:9px; border-radius:2px 2px 0 0; }
+.chart-tip { position:absolute; z-index:5; bottom:calc(100% - 190px); display:grid; gap:5px; min-width:190px; padding:11px 12px; border:1.5px solid var(--portal-ink); border-radius:11px; background:var(--portal-surface); box-shadow:4px 4px 0 rgba(26,23,18,.13); pointer-events:none; }
+.chart-tip strong { font-size:.74rem; }
+.chart-tip span { display:grid; grid-template-columns:10px 1fr auto; align-items:center; gap:7px; color:var(--portal-muted); font-size:.7rem; }
+.chart-tip span.is-off { opacity:.4; }
+.chart-tip i { width:10px; height:10px; border-radius:3px; }
+.chart-tip b { color:var(--portal-ink); font-size:.74rem; font-weight:800; }
+.chart-xaxis { display:flex; justify-content:space-between; margin:7px 0 0 54px; color:#8d867c; font-size:.62rem; font-weight:600; }
+.chart-table { margin-top:16px; }
+.chart-table summary { width:max-content; padding:6px 10px; border:1px solid var(--portal-line); border-radius:8px; color:var(--portal-muted); cursor:pointer; font-size:.7rem; font-weight:700; }
+.chart-table[open] summary { margin-bottom:12px; }
+.chart-table .portal-table-wrap { max-height:300px; overflow:auto; border:1px solid var(--portal-line); border-radius:10px; }
+@media (max-width:720px) { .chart { padding:16px; }.chart-yaxis { width:34px; height:170px; }.chart-plot { height:170px; }.chart-tip { min-width:0; }.chart-xaxis { margin-left:44px; } }

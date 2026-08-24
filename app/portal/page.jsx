@@ -127,8 +127,7 @@ export default async function PortalOverview({ searchParams }) {
             <div>
               <h2>Daily activity</h2>
               <p>
-                Sends, replies, positive replies, bounces and contacts added — each
-                on its own scale.
+                Hover any day for the breakdown. Tap a metric to hide it and rescale.
               </p>
             </div>
             <span className="period-badge">{period.label}</span>
