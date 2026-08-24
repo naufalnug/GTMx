@@ -1,33 +1,31 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 /**
- * Daily activity: one plot, five measures, grouped bars per day.
+ * Daily activity: one stacked bar per day, segmented by what happened to that day's
+ * emails.
  *
- * The measures span two orders of magnitude — sends run ~1,000/day while positive
- * replies run under ten — and they share one linear axis, because a second y-axis
- * would let two different scales masquerade as comparable. The honest way out is to
- * let the reader choose: every legend entry toggles its series, and the axis rescales
- * to whatever is left. Hide the two volume series and the response measures fill the
- * plot at a readable size.
- *
- * Series order is the funnel — added, sent, replied, positive, bounced — and doubles
- * as the bar order inside each day.
+ * The segments are deliberately MUTUALLY EXCLUSIVE. The underlying measures are
+ * nested — positive replies are a subset of replies, which are a subset of sends — so
+ * stacking them as-is would total 1,080 on a day when 1,005 emails went out, and the
+ * bar would claim more activity than happened. Splitting into disjoint buckets makes
+ * the stack sum to exactly "emails sent", which is what a part-to-whole bar must mean.
  *
  * Palette validated with the dataviz validator against the #fffdf9 surface: every
- * adjacent pair clears the CVD, normal-vision and 3:1 contrast gates. Green/red sit
- * in the 6-8 CVD band, legal here because identity never rests on colour alone — the
- * legend and tooltip name every measure in text, bars carry gaps, and a table view
- * repeats the numbers.
+ * adjacent pair in the stack clears the CVD, normal-vision and 3:1 contrast gates with
+ * no warnings. Green and red are never adjacent — bounces sit below replies, so the
+ * best outcome caps the bar and the two most confusable hues stay apart.
  */
-const SERIES = [
-  { key: 'contacts', label: 'Contacts added', color: '#b07d00' },
-  { key: 'sent', label: 'Emails sent', color: '#2a78d6' },
-  { key: 'replies', label: 'Replies', color: '#4a3aa7' },
+const SEGMENTS = [
+  // Bottom to top. `no reply yet` is the remainder and wears a recessive neutral so
+  // the outcomes read as the figure against it.
+  { key: 'noReply', label: 'No reply yet', color: '#d8d2c4' },
+  { key: 'bounced', label: 'Bounced', color: '#e34948' },
+  { key: 'otherReplies', label: 'Replies', color: '#4a3aa7' },
   { key: 'positive', label: 'Positive replies', color: '#008300' },
-  { key: 'bounced', label: 'Bounces', color: '#e34948' },
 ];
+const OUTCOMES = SEGMENTS.filter((s) => s.key !== 'noReply');
 
 const int = (value) => new Intl.NumberFormat('en-US').format(value);
 
@@ -38,21 +36,31 @@ function shortDate(iso) {
     : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
 }
 
+/** Split a day into disjoint buckets that sum to the emails sent that day. */
+export function split(point) {
+  const sent = Number(point.sent ?? 0);
+  const replies = Number(point.replies ?? 0);
+  const bounced = Number(point.bounced ?? 0);
+  const positive = Number(point.positive ?? 0);
+  return {
+    date: point.date,
+    sent,
+    replies,
+    positive,
+    // Positive replies are dated by when the reply arrived, not by campaign day, so on
+    // a quiet day they can outnumber that day's replies. Clamp rather than go negative.
+    otherReplies: Math.max(0, replies - positive),
+    bounced,
+    noReply: Math.max(0, sent - replies - bounced),
+  };
+}
+
 export default function TrendChart({ points }) {
-  const view = points.slice(-30);
-  const [hidden, setHidden] = useState(() => new Set());
+  const [outcomesOnly, setOutcomesOnly] = useState(false);
   const [hover, setHover] = useState(null);
 
-  const visible = SERIES.filter((s) => !hidden.has(s.key));
-  // Scale to what is actually on screen, so hiding the volume series makes the
-  // response series legible instead of leaving them as slivers.
-  const max = useMemo(() => {
-    let top = 0;
-    for (const point of view) {
-      for (const series of visible) top = Math.max(top, Number(point[series.key] ?? 0));
-    }
-    return Math.max(top, 1);
-  }, [view, visible]);
+  const view = points.slice(-30).map(split);
+  const shown = outcomesOnly ? OUTCOMES : SEGMENTS;
 
   if (!view.length) {
     return (
@@ -62,37 +70,29 @@ export default function TrendChart({ points }) {
     );
   }
 
-  function toggle(key) {
-    setHidden((prev) => {
-      const next = new Set(prev);
-      // Never let the reader empty the plot entirely.
-      if (next.has(key)) next.delete(key);
-      else if (next.size < SERIES.length - 1) next.add(key);
-      return next;
-    });
-  }
-
+  const totalOf = (day) => shown.reduce((sum, seg) => sum + Number(day[seg.key] ?? 0), 0);
+  const max = Math.max(...view.map(totalOf), 1);
   const active = hover === null ? null : view[hover];
 
   return (
     <div className="chart">
       <div className="chart-legend">
-        {SERIES.map((series) => {
-          const off = hidden.has(series.key);
-          return (
-            <button
-              key={series.key}
-              type="button"
-              className={`chart-key${off ? ' is-off' : ''}`}
-              aria-pressed={!off}
-              onClick={() => toggle(series.key)}
-              title={off ? `Show ${series.label}` : `Hide ${series.label}`}
-            >
-              <span className="chart-swatch" style={{ background: series.color }} />
-              {series.label}
-            </button>
-          );
-        })}
+        {[...SEGMENTS].reverse().map((seg) => (
+          <span key={seg.key} className="chart-key">
+            <span className="chart-swatch" style={{ background: seg.color }} />
+            {seg.label}
+          </span>
+        ))}
+        {/* Outcomes are ~5% of a day's sends, so they are thin slivers against the
+            remainder. Dropping it rescales the bar to the outcomes alone. */}
+        <button
+          type="button"
+          className={`chart-toggle${outcomesOnly ? ' is-on' : ''}`}
+          aria-pressed={outcomesOnly}
+          onClick={() => setOutcomesOnly((v) => !v)}
+        >
+          {outcomesOnly ? 'Show all sent' : 'Outcomes only'}
+        </button>
       </div>
 
       <div className="chart-body">
@@ -104,35 +104,40 @@ export default function TrendChart({ points }) {
         <div
           className="chart-plot"
           role="img"
-          aria-label={`Daily activity for ${view.length} days. Series: ${visible
-            .map((s) => s.label)
-            .join(', ')}.`}
+          aria-label={`Daily emails by outcome across ${view.length} days.`}
           onMouseLeave={() => setHover(null)}
         >
           <span className="chart-grid" />
-          {view.map((point, index) => (
-            <div
-              key={point.date}
-              className={`chart-day${hover === index ? ' is-hover' : ''}`}
-              onMouseEnter={() => setHover(index)}
-            >
-              {visible.map((series) => {
-                const value = Number(point[series.key] ?? 0);
-                return (
-                  <span
-                    key={series.key}
-                    className="chart-bar"
-                    style={{
-                      background: series.color,
-                      // A non-zero day keeps a 2px floor so a single reply is still
-                      // visible beside a 1,000-send day; a zero day stays empty.
-                      height: value ? `max(2px, ${(value / max) * 100}%)` : '0',
-                    }}
-                  />
-                );
-              })}
-            </div>
-          ))}
+          {view.map((day, index) => {
+            const total = totalOf(day);
+            return (
+              <div
+                key={day.date}
+                className={`chart-day${hover === index ? ' is-hover' : ''}`}
+                onMouseEnter={() => setHover(index)}
+              >
+                <span className="chart-stack" style={{ height: `${(total / max) * 100}%` }}>
+                  {[...shown].reverse().map((seg) => {
+                    const value = Number(day[seg.key] ?? 0);
+                    if (!value) return null;
+                    return (
+                      <span
+                        key={seg.key}
+                        className="chart-seg"
+                        style={{
+                          background: seg.color,
+                          // A 3px floor keeps a 9-out-of-1005 segment perceptible. It
+                          // slightly overstates the smallest slices, which is why the
+                          // tooltip and table carry the exact counts.
+                          height: `max(3px, ${(value / total) * 100}%)`,
+                        }}
+                      />
+                    );
+                  })}
+                </span>
+              </div>
+            );
+          })}
           {active ? (
             <div
               className="chart-tip"
@@ -142,11 +147,14 @@ export default function TrendChart({ points }) {
               }}
             >
               <strong>{shortDate(active.date)}</strong>
-              {SERIES.map((series) => (
-                <span key={series.key} className={hidden.has(series.key) ? 'is-off' : ''}>
-                  <i style={{ background: series.color }} />
-                  {series.label}
-                  <b>{int(Number(active[series.key] ?? 0))}</b>
+              <span className="chart-tip-total">
+                Emails sent<b>{int(active.sent)}</b>
+              </span>
+              {[...SEGMENTS].reverse().map((seg) => (
+                <span key={seg.key}>
+                  <i style={{ background: seg.color }} />
+                  {seg.label}
+                  <b>{int(Number(active[seg.key] ?? 0))}</b>
                 </span>
               ))}
             </div>
@@ -166,17 +174,19 @@ export default function TrendChart({ points }) {
             <thead>
               <tr>
                 <th>Day</th>
-                {SERIES.map((s) => (
+                <th>Emails sent</th>
+                {[...SEGMENTS].reverse().map((s) => (
                   <th key={s.key}>{s.label}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
-              {[...view].reverse().map((p) => (
-                <tr key={p.date}>
-                  <td>{shortDate(p.date)}</td>
-                  {SERIES.map((s) => (
-                    <td key={s.key}>{int(Number(p[s.key] ?? 0))}</td>
+              {[...view].reverse().map((day) => (
+                <tr key={day.date}>
+                  <td>{shortDate(day.date)}</td>
+                  <td>{int(day.sent)}</td>
+                  {[...SEGMENTS].reverse().map((s) => (
+                    <td key={s.key}>{int(Number(day[s.key] ?? 0))}</td>
                   ))}
                 </tr>
               ))}

@@ -96,35 +96,38 @@
 .notif-empty { min-height:180px; padding:28px; }
 .notif-empty>span { background:var(--portal-mint); }
 @media (max-width:720px) { .notif-panel { position:fixed; inset:66px 12px 76px; width:auto; max-height:none; } }
-/* Daily activity — one plot, five grouped series. Palette validated with the dataviz
-   validator against the #fffdf9 surface (contacts #b07d00, sent #2a78d6, replies
-   #4a3aa7, positive #008300, bounces #e34948): every adjacent pair clears the CVD,
-   normal-vision and 3:1 contrast gates. Green/red sit in the 6-8 CVD band, which is
-   legal only because identity never rests on colour alone here — legend and tooltip
-   name each measure, bars carry gaps, and the table view repeats the numbers. */
+/* Daily activity — one stacked bar per day, split into mutually exclusive outcomes that
+   sum to that day's emails sent. Palette validated with the dataviz validator against
+   the #fffdf9 surface (bounced #e34948, replies #4a3aa7, positive #008300): every
+   adjacent pair clears the CVD, normal-vision and 3:1 contrast gates with no warnings.
+   Green and red are never adjacent in the stack. #d8d2c4 is the recessive remainder,
+   deliberately low-chroma so the outcomes read as figure against it. */
 .chart { padding:20px 24px 18px; }
-.chart-legend { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:16px; }
-.chart-key { display:inline-flex; align-items:center; gap:7px; padding:5px 10px; border:1px solid var(--portal-line); border-radius:999px; color:var(--portal-ink); background:var(--portal-surface); cursor:pointer; font:700 .69rem Figtree,sans-serif; }
-.chart-key:hover { background:#f6f2e6; }
-.chart-key.is-off { color:#a49d93; }
-.chart-key.is-off .chart-swatch { opacity:.28; }
-.chart-swatch { display:block; width:10px; height:10px; flex:none; border-radius:3px; }
+.chart-legend { display:flex; flex-wrap:wrap; align-items:center; gap:7px; margin-bottom:16px; }
+.chart-key { display:inline-flex; align-items:center; gap:7px; padding:5px 10px; border:1px solid var(--portal-line); border-radius:999px; color:var(--portal-ink); font:700 .69rem Figtree,sans-serif; }
+.chart-swatch { display:block; width:10px; height:10px; flex:none; border:1px solid rgba(26,23,18,.18); border-radius:3px; }
+.chart-toggle { margin-left:auto; padding:5px 11px; border:1.5px solid var(--portal-ink); border-radius:999px; color:var(--portal-ink); background:var(--portal-surface); cursor:pointer; font:700 .69rem Figtree,sans-serif; }
+.chart-toggle:hover { background:#f6f2e6; }
+.chart-toggle.is-on { background:var(--portal-mint); }
 .chart-body { display:flex; gap:10px; }
-.chart-yaxis { display:flex; width:44px; flex:none; flex-direction:column; justify-content:space-between; height:200px; color:#8d867c; font-size:.62rem; font-weight:600; text-align:right; }
-.chart-plot { position:relative; display:flex; align-items:flex-end; gap:clamp(2px,.5vw,7px); height:200px; flex:1; padding-bottom:1px; border-bottom:1.5px solid var(--portal-line); }
+.chart-yaxis { display:flex; width:46px; flex:none; flex-direction:column; justify-content:space-between; height:210px; color:#8d867c; font-size:.62rem; font-weight:600; text-align:right; }
+.chart-plot { position:relative; display:flex; align-items:flex-end; gap:clamp(2px,.5vw,6px); height:210px; flex:1; border-bottom:1.5px solid var(--portal-line); }
 .chart-grid { position:absolute; z-index:0; inset:0 0 50% 0; border-bottom:1px dashed var(--portal-line); pointer-events:none; }
-.chart-day { position:relative; z-index:1; display:flex; align-items:flex-end; justify-content:center; gap:1px; height:100%; flex:1; min-width:4px; border-radius:3px 3px 0 0; }
+.chart-day { position:relative; z-index:1; display:flex; align-items:flex-end; height:100%; flex:1; min-width:4px; cursor:default; }
 .chart-day.is-hover { background:rgba(26,23,18,.06); }
-.chart-bar { display:block; width:100%; max-width:9px; border-radius:2px 2px 0 0; }
-.chart-tip { position:absolute; z-index:5; bottom:calc(100% - 190px); display:grid; gap:5px; min-width:190px; padding:11px 12px; border:1.5px solid var(--portal-ink); border-radius:11px; background:var(--portal-surface); box-shadow:4px 4px 0 rgba(26,23,18,.13); pointer-events:none; }
+.chart-stack { display:flex; width:100%; flex-direction:column; justify-content:flex-end; overflow:hidden; border-radius:3px 3px 0 0; }
+/* A 1px surface gap keeps adjacent segments legible where both are thin. */
+.chart-seg { display:block; width:100%; box-shadow:0 1px 0 var(--portal-surface) inset; }
+.chart-seg:first-child { border-radius:3px 3px 0 0; }
+.chart-tip { position:absolute; z-index:5; bottom:14px; display:grid; gap:5px; min-width:196px; padding:11px 12px; border:1.5px solid var(--portal-ink); border-radius:11px; background:var(--portal-surface); box-shadow:4px 4px 0 rgba(26,23,18,.13); pointer-events:none; }
 .chart-tip strong { font-size:.74rem; }
 .chart-tip span { display:grid; grid-template-columns:10px 1fr auto; align-items:center; gap:7px; color:var(--portal-muted); font-size:.7rem; }
-.chart-tip span.is-off { opacity:.4; }
 .chart-tip i { width:10px; height:10px; border-radius:3px; }
 .chart-tip b { color:var(--portal-ink); font-size:.74rem; font-weight:800; }
-.chart-xaxis { display:flex; justify-content:space-between; margin:7px 0 0 54px; color:#8d867c; font-size:.62rem; font-weight:600; }
+.chart-tip-total { grid-template-columns:1fr auto!important; padding-bottom:5px; border-bottom:1px solid var(--portal-line); font-weight:700; }
+.chart-xaxis { display:flex; justify-content:space-between; margin:7px 0 0 56px; color:#8d867c; font-size:.62rem; font-weight:600; }
 .chart-table { margin-top:16px; }
 .chart-table summary { width:max-content; padding:6px 10px; border:1px solid var(--portal-line); border-radius:8px; color:var(--portal-muted); cursor:pointer; font-size:.7rem; font-weight:700; }
 .chart-table[open] summary { margin-bottom:12px; }
 .chart-table .portal-table-wrap { max-height:300px; overflow:auto; border:1px solid var(--portal-line); border-radius:10px; }
-@media (max-width:720px) { .chart { padding:16px; }.chart-yaxis { width:34px; height:170px; }.chart-plot { height:170px; }.chart-tip { min-width:0; }.chart-xaxis { margin-left:44px; } }
+@media (max-width:720px) { .chart { padding:16px; }.chart-yaxis { width:36px; height:180px; }.chart-plot { height:180px; }.chart-toggle { margin-left:0; }.chart-tip { min-width:0; }.chart-xaxis { margin-left:46px; } }
