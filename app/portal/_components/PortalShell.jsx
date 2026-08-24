@@ -1,5 +1,9 @@
 import Link from "next/link";
 import { logoutAction } from "../actions";
+import { getPortalViewer } from "../../../lib/portalAuth";
+import { getPortalNotifications } from "../../../lib/portalData";
+import Icon from "./Icon";
+import NotificationBell from "./NotificationBell";
 
 const nav = [
   ["Overview", "/portal", "overview"],
@@ -8,55 +12,20 @@ const nav = [
   ["Master inbox", "/portal/inbox", "inbox"],
 ];
 
-function Icon({ name }) {
-  const paths = {
-    overview: (
-      <>
-        <path d="M4 13h6V4H4zM14 20h6V11h-6zM4 20h6v-3H4zM14 7h6V4h-6z" />
-      </>
-    ),
-    leads: (
-      <>
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" />
-        <path d="m16 11 2 2 4-4" />
-      </>
-    ),
-    copy: (
-      <>
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-        <path d="M14 2v6h6M8 13h8M8 17h6" />
-      </>
-    ),
-    inbox: (
-      <>
-        <path d="M4 4h16v16H4z" />
-        <path d="m4 13 4-4 4 4 4-4 4 4" />
-      </>
-    ),
-  };
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      {paths[name]}
-    </svg>
-  );
-}
 
-export default function PortalShell({
+export default async function PortalShell({
   client,
   active,
   preview = false,
   children,
 }) {
   const initial = client.name.charAt(0).toUpperCase();
+  // Rendered on every portal page, so this is 3-4 indexed queries per page load.
+  // Failing here must not take down the page the bell is decorating.
+  const viewer = await getPortalViewer().catch(() => null);
+  const notifications = await getPortalNotifications(client.slug, {
+    userId: preview ? null : viewer?.id,
+  }).catch(() => ({ items: [], unreadCount: 0, latestId: 0, hasMore: false }));
   const withPreview = (href) =>
     preview ? `${href}?client=${encodeURIComponent(client.slug)}` : href;
   return (
@@ -65,9 +34,12 @@ export default function PortalShell({
       style={{ "--client-accent": client.brand_color || "#E8552B" }}
     >
       <aside className="portal-sidebar">
-        <Link className="portal-logo" href={withPreview("/portal")}>
-          GTM<span>x</span>
-        </Link>
+        <div className="sidebar-top">
+          <Link className="portal-logo" href={withPreview("/portal")}>
+            GTM<span>x</span>
+          </Link>
+          <NotificationBell {...notifications} readOnly={preview} />
+        </div>
         <nav aria-label="Client portal">
           {nav.map(([label, href, id]) => (
             <Link
@@ -105,6 +77,7 @@ export default function PortalShell({
             GTM<span>x</span>
           </Link>
           <span>{client.name}</span>
+          <NotificationBell {...notifications} readOnly={preview} />
         </header>
         <nav
           className="portal-mobile-nav"
