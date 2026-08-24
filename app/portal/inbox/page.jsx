@@ -1,14 +1,14 @@
 import { requirePortalClient } from "../../../lib/portalAuth";
-import { getClientInboxUrl } from "../../../lib/portalData";
+import { getClientInbox } from "../../../lib/portalData";
 import PortalShell from "../_components/PortalShell";
 import InboxFrame from "../_components/InboxFrame";
 
 export default async function InboxPage({ searchParams }) {
   const query = await searchParams;
   const viewer = await requirePortalClient(query?.client);
-  let url = null;
+  let inbox = null;
   try {
-    url = await getClientInboxUrl(viewer.client.slug);
+    inbox = await getClientInbox(viewer.client.slug);
   } catch (error) {
     console.error("Inbox configuration failed", error);
   }
@@ -25,7 +25,7 @@ export default async function InboxPage({ searchParams }) {
             </p>
           </div>
         </header>
-        <InboxFrame url={url} />
+        <InboxFrame inbox={inbox} />
       </main>
     </PortalShell>
   );
