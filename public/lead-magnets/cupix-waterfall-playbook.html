@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cupix - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-24</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Cupix</p>
+          <h1>Your Cupix waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">A scrollable GTMx strategy artifact for routing construction firms into the right Cupix spatial-intelligence offer. List building, campaign angles, and sample copy, prepared for Jérémie Henry.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Jérémie already sells spatial intelligence so builders and operators can see the site without flying there. Sophia&#39;s original pitch is the TAM: scrape construction firms, write to PMs and Owners who need visibility across the building lifecycle. The one list is construction firms LinkedIn already lists. The one routing signal is the job-keyword class in their open reqs, because Sales Nav returns that keyword in the same pull and it tells you whether they are staffing BIM/VDC progress, a capture stack, facilities handover, or none of those yet. PM and Owner titles are the people layer after the firm is routed. They are not a second TAM.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book the strategy call</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>70%</strong>
+          <span>time and efficiency gains, average reduction in site visits, reporting time, and design iterations, on their homepage</span>
+        </div>
+        <div class="metric-card">
+          <strong>7 million</strong>
+          <span>BIM elements tracked across SiteInsights projects, on their progress-tracking page</span>
+        </div>
+        <div class="metric-card">
+          <strong>4</strong>
+          <span>exclusive job-keyword routes</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Cupix is a spatial intelligence platform for construction and facility management. Teams walk a site with a consumer-grade 360 camera. Cupix AI turns that video into a 4D digital twin they can measure, annotate, and compare against BIM over time. SiteInsights, the add-on, aligns those captures with BIM and the schedule so completion is calculated across work areas, trades, and BIM categories. The all-in-one spatial hub unifies 360 maps, laser scans, drone orthos, and BIM in one georeferenced model. Integrates with Autodesk BIM360, ACC, Autodesk Forma, Procore, Revizto, Oracle, and ArcGIS. Homepage: join thousands of global leaders across construction, oil and gas, manufacturing, and government.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal is the keyword already in the job post</p></div><div><span>02</span><p>One cascade routes every construction firm</p></div><div><span>03</span><p>Each job keyword gets a different first offer</p></div><div><span>04</span><p>Catch the delay, unify the scans, hand over a record, skip the flight</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>Waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>Email Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">Signal</p>
+      <h2>The signal is the keyword already in the job post</h2>
+      <p class="takeaway">LinkedIn already names the construction firm and already prints BIM, VDC, reality capture, or facilities handover in the open req. That keyword is stronger than a headcount guess, and it is free to collect.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>LinkedIn Sales Nav job search is the TAM Sophia already named, construction firms with a visible PM or Owner, and the spatial-intelligence keyword in one pull.</p></div><div class="reason-card"><span>02</span><p>The same pull returns BIM / VDC / progress tracking / 4D, laser / LiDAR / drone / Matterport / OpenSpace / 360, or facilities / handover / as-built operations, which is enough to route without a second enrichment product.</p></div><div class="reason-card"><span>03</span><p>The ladder maps to live Cupix copy: SiteInsights (needs BIM, large jobs), the all-in-one spatial hub (laser, drone, 360, BIM in one model), the 4D as-built record for operators, and the 360-walk that cut Brandt Companies&#39; weekly field report from 3 hours to 20 minutes.</p></div><div class="reason-card"><span>04</span><p>PM, Owner, project type, and title are scrape filters and merge tags. They are not a second waterfall. Apollo is email last, never the TAM spine.</p></div>
+            </div>
+            <div class="field-cloud"><span>in_tam</span><span>already_customer</span><span>job_keyword_class</span><span>named_keyword</span><span>posted_role</span><span>pm_title</span><span>decision_maker</span><span>project_type</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>LinkedIn Sales Navigator job search</h3><p>Construction firms plus the open-req keyword used to assign Tier 1 / 2 / 3 / catch-all. The TAM gate and the spine of every route. One pull.</p></div><div class="source-card"><span>02</span><h3>Company careers / jobs page scrape</h3><p>Posted role text when Sales Nav truncates the keyword, plus project_type as a merge tag when the req names a hospital, data center, factory, hotel, or multifamily job</p></div><div class="source-card"><span>03</span><h3>LinkedIn company + title graph</h3><p>Project Manager, Owner, Project Executive, Superintendent, VDC / BIM Manager, Director of Construction, Facilities Manager after the domain is routed. Title is a merge tag, not a second TAM.</p></div><div class="source-card"><span>04</span><h3>Optional Dodge / ConstructConnect project index</h3><p>Backup named project_type and active-job context when careers pages are silent. Merge tag only. Do not route on project value. Those cutoffs are not on cupix.com.</p></div><div class="source-card"><span>05</span><h3>Apollo (after qualification)</h3><p>Work emails for already-routed accounts. Do not buy a raw &#39;construction PM&#39; list and hope.</p></div><div class="source-card"><span>06</span><h3>Optional Cupix customer suppress</h3><p>Current-customer exclusion when the signal is visible. Thin coverage. Treat as a suppress list, not a tier. Named logos and case studies on cupix.com are not a franchise-wide exclude.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="Waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">Waterfall</p>
+      <h2>One cascade routes every construction firm</h2>
+      <p class="takeaway">First match wins. BIM/VDC/progress keywords go first, then reality-capture keywords, then facilities/handover keywords, then every remaining in-TAM construction firm.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF already_customer = true</span>
+          <strong>Exclude</strong>
+          <em>Already a customer. Named case-study logos on cupix.com are not enough to exclude every office.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF job_keyword_class = bim_vdc</span>
+          <strong>Tier 1</strong>
+          <em>Open req names BIM, VDC, digital twin, progress tracking, 4D schedule, model manager, look-ahead, or as-built verification. Keyword class is estimated GTMx taxonomy, not a Cupix site field.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF job_keyword_class = reality_capture</span>
+          <strong>Tier 2</strong>
+          <em>Open req names reality capture, laser scan, LiDAR, drone, photogrammetry, Matterport, OpenSpace, StructionSite, HoloBuilder, 360 camera, or point cloud, and no bim_vdc keyword. Class estimated.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF job_keyword_class = facilities_ops</span>
+          <strong>Tier 3</strong>
+          <em>Open req names facilities manager, building operations, handover, turnover package, as-built documentation, owner&#39;s rep, CAFM, IWMS, or facility digital twin, and no bim_vdc or reality_capture keyword. Class estimated.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF in_tam = true</span>
+          <strong>Catch-all</strong>
+          <em>Remaining construction firms LinkedIn already lists: visible PM / Owner / superintendent / director of construction, and none of the keywords above</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF already_customer = true -&gt; Exclude (Already a customer. Named case-study logos on cupix.com are not enough to exclude every office.)&#10;2. IF job_keyword_class = bim_vdc -&gt; Tier 1 (Open req names BIM, VDC, digital twin, progress tracking, 4D schedule, model manager, look-ahead, or as-built verification. Keyword class is estimated GTMx taxonomy, not a Cupix site field.)&#10;3. IF job_keyword_class = reality_capture -&gt; Tier 2 (Open req names reality capture, laser scan, LiDAR, drone, photogrammetry, Matterport, OpenSpace, StructionSite, HoloBuilder, 360 camera, or point cloud, and no bim_vdc keyword. Class estimated.)&#10;4. IF job_keyword_class = facilities_ops -&gt; Tier 3 (Open req names facilities manager, building operations, handover, turnover package, as-built documentation, owner&#39;s rep, CAFM, IWMS, or facility digital twin, and no bim_vdc or reality_capture keyword. Class estimated.)&#10;5. IF in_tam = true -&gt; Catch-all (Remaining construction firms LinkedIn already lists: visible PM / Owner / superintendent / director of construction, and none of the keywords above)">Copy routing spec</button>
+            <pre id="routeCode">1. IF already_customer = true -&gt; Exclude (Already a customer. Named case-study logos on cupix.com are not enough to exclude every office.)
+2. IF job_keyword_class = bim_vdc -&gt; Tier 1 (Open req names BIM, VDC, digital twin, progress tracking, 4D schedule, model manager, look-ahead, or as-built verification. Keyword class is estimated GTMx taxonomy, not a Cupix site field.)
+3. IF job_keyword_class = reality_capture -&gt; Tier 2 (Open req names reality capture, laser scan, LiDAR, drone, photogrammetry, Matterport, OpenSpace, StructionSite, HoloBuilder, 360 camera, or point cloud, and no bim_vdc keyword. Class estimated.)
+4. IF job_keyword_class = facilities_ops -&gt; Tier 3 (Open req names facilities manager, building operations, handover, turnover package, as-built documentation, owner&#39;s rep, CAFM, IWMS, or facility digital twin, and no bim_vdc or reality_capture keyword. Class estimated.)
+5. IF in_tam = true -&gt; Catch-all (Remaining construction firms LinkedIn already lists: visible PM / Owner / superintendent / director of construction, and none of the keywords above)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">Tiers</p>
+      <h2>Each job keyword gets a different first offer</h2>
+      <p class="takeaway">BIM/VDC hiring gets a SiteInsights progress-gap brief. Capture-stack hiring gets a spatial-hub stack map. Facilities/handover hiring gets a lifecycle record. The rest get the 20-minute walk playbook Brandt Companies already proved.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">tightest TAM</span>
+          </div>
+          <h3>Tier 1: BIM / VDC keyword</h3>
+          <p>LinkedIn job post names BIM, VDC, digital twin, progress tracking, 4D schedule, model manager, look-ahead, percent complete, or as-built verification. Keyword class estimated, not a Cupix site field.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They are staffing the model. Percent-complete still comes from a walk and a spreadsheet, so BIM and the field disagree until someone is on site. SiteInsights FAQ: you have to have BIM models for the AI to measure progress. Best on large jobs with a lot of ground to cover: data centers, factories, hospitals, multifamily, hotels.</dd></div>
+              <div><dt>Offer</dt><dd>SiteInsights Progress Gap Brief</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Sales Nav job search</dd></div>
+              <div><dt>Reply density</dt><dd>Highest intent. They already budgeted a role to keep the model honest against the field.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">focused TAM</span>
+          </div>
+          <h3>Tier 2: Reality-capture keyword</h3>
+          <p>Open req names reality capture, laser scan, LiDAR, drone, photogrammetry, Matterport, OpenSpace, StructionSite, HoloBuilder, 360 camera, or point cloud, and no bim_vdc keyword. Class estimated.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They already capture. Laser lives in one app, drone in another, 360 in a third, BIM somewhere else. Homepage: the complexity of multiple applications. Spatial-hub page: unify 360, laser scans, and drone imagery in one georeferenced source of truth.</dd></div>
+              <div><dt>Offer</dt><dd>Spatial Hub Stack Map</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Sales Nav job search</dd></div>
+              <div><dt>Reply density</dt><dd>Strong. They already pay for capture. The silo is the pain the hub is built for.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">wide TAM</span>
+          </div>
+          <h3>Tier 3: Facilities / handover keyword</h3>
+          <p>Open req names facilities manager, building operations, handover, turnover package, as-built documentation, owner&#39;s rep, CAFM, IWMS, or facility digital twin, and no bim_vdc or reality_capture keyword. Class estimated.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The job is leaving construction and entering operations. Homepage: record spatial changes for full accountability, frequent 360 walks replace thousands of photos, a complete 4D record. John Holland customer-story page: close out with a 3D record that holds up at handover and beyond. Coquitlam customer-story page: fragmented facility data, repeat site visits, coordination across departments.</dd></div>
+              <div><dt>Offer</dt><dd>Lifecycle Handover Record</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Sales Nav job search</dd></div>
+              <div><dt>Reply density</dt><dd>Good. They are already staffing the operator side of Sophia&#39;s lifecycle pitch.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="catchall" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">remainder TAM</span>
+          </div>
+          <h3>Catch-all: Remaining TAM</h3>
+          <p>Every remaining in-TAM construction firm: visible PM, Owner, superintendent, or director of construction, and none of the keywords above.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They are still in the builder-and-operator set Sophia named. Understanding the site still means a flight. Homepage: give the entire team spatial understanding remotely, eliminate miscommunication, prevent rework, make decisions without site visits.</dd></div>
+              <div><dt>Offer</dt><dd>20-Minute Walk Playbook</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn TAM after higher tiers route out</dd></div>
+              <div><dt>Reply density</dt><dd>Broadest coverage. Softest ask. Still 100% of TAM.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">Campaigns</p>
+      <h2>Catch the delay, unify the scans, hand over a record, skip the flight</h2>
+      <p class="takeaway">The list is always construction firms, aimed at PMs, Owners, VDC/BIM leads, and facilities managers. Project type is a merge tag, not a second TAM. A/Bs sit on the exclusive routes.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>SiteInsights Progress Gap Brief</h3>
+          <p>Scrape Sales Nav jobs, write to the PM / Owner / VDC track, and lead with the model they are already staffing that still disagrees with the field.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>job_keyword_class = bim_vdc</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the BIM / VDC req and contrast walk-and-spreadsheet percent-complete with captures aligned to BIM and the schedule</dd></div>
+            <div><dt>Value</dt><dd>Catch the delay</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Experiment">
+          <div class="campaign-card__meta">
+            <span>Experiment</span>
+            <span>Focused</span>
+          </div>
+          <h3>7 million elements variant</h3>
+          <p>A/B against the progress-gap brief. Same exclusive route, SiteInsights-by-the-numbers language instead of model-versus-field language.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same Tier 1 list, volume copy instead of discrepancy copy</dd></div>
+            <div><dt>AI strategy</dt><dd>Keep {{named_keyword}} in the notice line. Swap the poke to 7 million BIM elements tracked and 70 SiteInsights projects since January 2025.</dd></div>
+            <div><dt>Value</dt><dd>Prove the install</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Spatial Hub Stack Map</h3>
+          <p>The capture-stack majority. Tool name is a merge tag, not a campaign split.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>job_keyword_class = reality_capture</dd></div>
+            <div><dt>AI strategy</dt><dd>Name {{named_keyword}} in the open req, then offer one georeferenced hub for laser, drone, 360, and BIM, the spatial-hub page</dd></div>
+            <div><dt>Value</dt><dd>Unify the scans</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Experiment">
+          <div class="campaign-card__meta">
+            <span>Experiment</span>
+            <span>Focused</span>
+          </div>
+          <h3>Autodesk synergy variant</h3>
+          <p>A/B against the stack map. Same exclusive route, Autodesk-ecosystem language instead of silo language.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same Tier 2 list, stack-fit copy</dd></div>
+            <div><dt>AI strategy</dt><dd>Keep {{named_keyword}} in the first line. Lead with Mitch Medway at Arcadis: Cupix as the complementary piece next to a global Autodesk investment.</dd></div>
+            <div><dt>Value</dt><dd>Fit the stack</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Lifecycle Handover Record</h3>
+          <p>The operator side of Sophia&#39;s lifecycle pitch. Handover side of the A/B.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>job_keyword_class = facilities_ops</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the facilities / handover req, then the 4D as-built Cupix already sells as the record that survives turnover</dd></div>
+            <div><dt>Value</dt><dd>Hand over a record</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Experiment">
+          <div class="campaign-card__meta">
+            <span>Experiment</span>
+            <span>Focused</span>
+          </div>
+          <h3>Coquitlam no-visit variant</h3>
+          <p>A/B against the handover record. Same exclusive route, facilities-ops language.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same Tier 3 list, remote-ops copy</dd></div>
+            <div><dt>AI strategy</dt><dd>Keep {{named_keyword}} in the first line. Lead with Coquitlam: remote facility access, fewer site visits, Canadian Network of Asset Managers Innovation Award.</dd></div>
+            <div><dt>Value</dt><dd>Skip the visit</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Broad</span>
+          </div>
+          <h3>20-Minute Walk Playbook</h3>
+          <p>Catch-all coverage so every scraped construction firm still gets one route. The playbook is the tiny yes.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Remaining in-TAM construction firms, job_keyword_class = none</dd></div>
+            <div><dt>AI strategy</dt><dd>Notice the construction firm LinkedIn already lists, name the flight-to-understand-the-site gap Sophia pitched, offer the 20-minute walk Brandt Companies already runs</dd></div>
+            <div><dt>Value</dt><dd>Skip the flight</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Experiment">
+          <div class="campaign-card__meta">
+            <span>Experiment</span>
+            <span>Broad</span>
+          </div>
+          <h3>70% homepage variant</h3>
+          <p>A/B against the playbook. Still exclusive catch-all, still one TAM.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same catch-all list, efficiency copy</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with 70% time and efficiency gains on the homepage, average reduction in site visits, reporting time, and design iterations. Do not change routing.</dd></div>
+            <div><dt>Value</dt><dd>Save time</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="Email Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">Email Copy</p>
+      <h2>Copy that names the req they already posted</h2>
+      <p class="takeaway">Notice the keyword, poke the walk-and-spreadsheet gap that keyword implies, then ask for a one-letter yes.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company_name}}</span><span>{{named_keyword}}</span><span>{{posted_role}}</span><span>{{pm_title}}</span><span>{{alt_decision_maker}}</span><span>{{project_type}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company_name}}, {{named_keyword}}, {{posted_role}}, {{pm_title}}, {{alt_decision_maker}}, {{project_type}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1: BIM / VDC keyword</strong>
+              <em>SiteInsights Progress Gap Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1: BIM / VDC keyword steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{named_keyword}} vs the model&#10;&#10;{{first_name}}, LinkedIn shows {{company_name}} hiring a {{posted_role}} against {{named_keyword}}.&#10;&#10;But would it be fair to assume percent-complete still comes from a walk and a spreadsheet, so the BIM and the field disagree until someone is on the {{project_type}} job?&#10;&#10;Cupix SiteInsights aligns 360 captures, BIM, and the schedule and flags which elements are in, late, or missing. Their progress-tracking page: 7 million BIM elements tracked, 70 projects since January 2025. Ramsay, Head of Innovation at Built, on that page: selected Cupix to capture site progress and join 3D models to the physical world.&#10;&#10;Reply Y and I&#39;ll send a SiteInsights Progress Gap Brief for {{company_name}}. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{named_keyword}} vs the model" data-preview="BIM Manager vs the model">{{named_keyword}} vs the model</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, LinkedIn shows {{company_name}} hiring a {{posted_role}} against {{named_keyword}}.&#10;&#10;But would it be fair to assume percent-complete still comes from a walk and a spreadsheet, so the BIM and the field disagree until someone is on the {{project_type}} job?&#10;&#10;Cupix SiteInsights aligns 360 captures, BIM, and the schedule and flags which elements are in, late, or missing. Their progress-tracking page: 7 million BIM elements tracked, 70 projects since January 2025. Ramsay, Head of Innovation at Built, on that page: selected Cupix to capture site progress and join 3D models to the physical world.&#10;&#10;Reply Y and I&#39;ll send a SiteInsights Progress Gap Brief for {{company_name}}. No call needed." data-preview="Marcus, LinkedIn shows Northbridge Construction hiring a VDC Manager against BIM Manager.&#10;&#10;But would it be fair to assume percent-complete still comes from a walk and a spreadsheet, so the BIM and the field disagree until someone is on the hospital job?&#10;&#10;Cupix SiteInsights aligns 360 captures, BIM, and the schedule and flags which elements are in, late, or missing. Their progress-tracking page: 7 million BIM elements tracked, 70 projects since January 2025. Ramsay, Head of Innovation at Built, on that page: selected Cupix to capture site progress and join 3D models to the physical world.&#10;&#10;Reply Y and I&#39;ll send a SiteInsights Progress Gap Brief for Northbridge Construction. No call needed.">
+                        <p>{{first_name}}, LinkedIn shows {{company_name}} hiring a {{posted_role}} against {{named_keyword}}.</p><p>But would it be fair to assume percent-complete still comes from a walk and a spreadsheet, so the BIM and the field disagree until someone is on the {{project_type}} job?</p><p>Cupix SiteInsights aligns 360 captures, BIM, and the schedule and flags which elements are in, late, or missing. Their progress-tracking page: 7 million BIM elements tracked, 70 projects since January 2025. Ramsay, Head of Innovation at Built, on that page: selected Cupix to capture site progress and join 3D models to the physical world.</p><p>Reply Y and I&#39;ll send a SiteInsights Progress Gap Brief for {{company_name}}. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the FAQ version is scope. SiteInsights needs BIM, and they say the most value is on large jobs with a lot of ground to cover: data centers, factories, hospitals, multifamily, hotels.&#10;&#10;Muhammad Khalil Bin Shaiful Bahar at Boustead Projects, on the same page: they chose Cupix to look at site progress, identify discrepancies, and validate as-built progress with AI.&#10;&#10;Want the Progress Gap Brief? Reply Y.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the FAQ version is scope. SiteInsights needs BIM, and they say the most value is on large jobs with a lot of ground to cover: data centers, factories, hospitals, multifamily, hotels.&#10;&#10;Muhammad Khalil Bin Shaiful Bahar at Boustead Projects, on the same page: they chose Cupix to look at site progress, identify discrepancies, and validate as-built progress with AI.&#10;&#10;Want the Progress Gap Brief? Reply Y." data-preview="Marcus, the FAQ version is scope. SiteInsights needs BIM, and they say the most value is on large jobs with a lot of ground to cover: data centers, factories, hospitals, multifamily, hotels.&#10;&#10;Muhammad Khalil Bin Shaiful Bahar at Boustead Projects, on the same page: they chose Cupix to look at site progress, identify discrepancies, and validate as-built progress with AI.&#10;&#10;Want the Progress Gap Brief? Reply Y.">
+                        <p>{{first_name}}, the FAQ version is scope. SiteInsights needs BIM, and they say the most value is on large jobs with a lot of ground to cover: data centers, factories, hospitals, multifamily, hotels.</p><p>Muhammad Khalil Bin Shaiful Bahar at Boustead Projects, on the same page: they chose Cupix to look at site progress, identify discrepancies, and validate as-built progress with AI.</p><p>Want the Progress Gap Brief? Reply Y.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: progress brief for {{company_name}}&#10;&#10;{{first_name}}, last note. No call needed.&#10;&#10;If {{company_name}} is going to keep staffing {{named_keyword}} while percent-complete still waits on a walk, that is a real choice. If you want the brief of how captures against BIM and the schedule change that, I will send it.&#10;&#10;Reply Y and I&#39;ll send the SiteInsights Progress Gap Brief. Should I send it to you, or is {{alt_decision_maker}} the better person?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="progress brief for {{company_name}}" data-preview="progress brief for Northbridge Construction">progress brief for {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, last note. No call needed.&#10;&#10;If {{company_name}} is going to keep staffing {{named_keyword}} while percent-complete still waits on a walk, that is a real choice. If you want the brief of how captures against BIM and the schedule change that, I will send it.&#10;&#10;Reply Y and I&#39;ll send the SiteInsights Progress Gap Brief. Should I send it to you, or is {{alt_decision_maker}} the better person?" data-preview="Marcus, last note. No call needed.&#10;&#10;If Northbridge Construction is going to keep staffing BIM Manager while percent-complete still waits on a walk, that is a real choice. If you want the brief of how captures against BIM and the schedule change that, I will send it.&#10;&#10;Reply Y and I&#39;ll send the SiteInsights Progress Gap Brief. Should I send it to you, or is your VDC lead the better person?">
+                        <p>{{first_name}}, last note. No call needed.</p><p>If {{company_name}} is going to keep staffing {{named_keyword}} while percent-complete still waits on a walk, that is a real choice. If you want the brief of how captures against BIM and the schedule change that, I will send it.</p><p>Reply Y and I&#39;ll send the SiteInsights Progress Gap Brief. Should I send it to you, or is {{alt_decision_maker}} the better person?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2: Reality-capture keyword</strong>
+              <em>Spatial Hub Stack Map</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2: Reality-capture keyword steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{named_keyword}} in three tools&#10;&#10;{{first_name}}, {{company_name}} is hiring a {{posted_role}} around {{named_keyword}}.&#10;&#10;But would it be fair to assume laser lives in one app, drone in another, 360 in a third, and BIM somewhere else, so nobody has one georeferenced as-built?&#10;&#10;Cupix&#39;s spatial hub puts 360 maps, laser scans, drone orthos, and BIM in one coordinated twin. That page: tens of billions of points, EPSG georeferencing, BIM deviation. Mitch Medway, Regional Digital Lead at Arcadis: Cupix has a nice synergy with the Autodesk ecosystem they already invested in globally.&#10;&#10;Reply Y and I&#39;ll send a Spatial Hub Stack Map for {{company_name}}. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{named_keyword}} in three tools" data-preview="BIM Manager in three tools">{{named_keyword}} in three tools</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, {{company_name}} is hiring a {{posted_role}} around {{named_keyword}}.&#10;&#10;But would it be fair to assume laser lives in one app, drone in another, 360 in a third, and BIM somewhere else, so nobody has one georeferenced as-built?&#10;&#10;Cupix&#39;s spatial hub puts 360 maps, laser scans, drone orthos, and BIM in one coordinated twin. That page: tens of billions of points, EPSG georeferencing, BIM deviation. Mitch Medway, Regional Digital Lead at Arcadis: Cupix has a nice synergy with the Autodesk ecosystem they already invested in globally.&#10;&#10;Reply Y and I&#39;ll send a Spatial Hub Stack Map for {{company_name}}. No call needed." data-preview="Marcus, Northbridge Construction is hiring a VDC Manager around BIM Manager.&#10;&#10;But would it be fair to assume laser lives in one app, drone in another, 360 in a third, and BIM somewhere else, so nobody has one georeferenced as-built?&#10;&#10;Cupix&#39;s spatial hub puts 360 maps, laser scans, drone orthos, and BIM in one coordinated twin. That page: tens of billions of points, EPSG georeferencing, BIM deviation. Mitch Medway, Regional Digital Lead at Arcadis: Cupix has a nice synergy with the Autodesk ecosystem they already invested in globally.&#10;&#10;Reply Y and I&#39;ll send a Spatial Hub Stack Map for Northbridge Construction. No call needed.">
+                        <p>{{first_name}}, {{company_name}} is hiring a {{posted_role}} around {{named_keyword}}.</p><p>But would it be fair to assume laser lives in one app, drone in another, 360 in a third, and BIM somewhere else, so nobody has one georeferenced as-built?</p><p>Cupix&#39;s spatial hub puts 360 maps, laser scans, drone orthos, and BIM in one coordinated twin. That page: tens of billions of points, EPSG georeferencing, BIM deviation. Mitch Medway, Regional Digital Lead at Arcadis: Cupix has a nice synergy with the Autodesk ecosystem they already invested in globally.</p><p>Reply Y and I&#39;ll send a Spatial Hub Stack Map for {{company_name}}. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the quality version is on the same hub page. Compare as-built laser against BIM with X, Y, Z deviation, and run slab flatness from the point cloud. Matterport and ArcGIS plug in rather than replace what you already capture.&#10;&#10;Homepage integrations already name BIM360, ACC, Procore, Revizto, Oracle, and ArcGIS.&#10;&#10;Want the Stack Map? Reply Y.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the quality version is on the same hub page. Compare as-built laser against BIM with X, Y, Z deviation, and run slab flatness from the point cloud. Matterport and ArcGIS plug in rather than replace what you already capture.&#10;&#10;Homepage integrations already name BIM360, ACC, Procore, Revizto, Oracle, and ArcGIS.&#10;&#10;Want the Stack Map? Reply Y." data-preview="Marcus, the quality version is on the same hub page. Compare as-built laser against BIM with X, Y, Z deviation, and run slab flatness from the point cloud. Matterport and ArcGIS plug in rather than replace what you already capture.&#10;&#10;Homepage integrations already name BIM360, ACC, Procore, Revizto, Oracle, and ArcGIS.&#10;&#10;Want the Stack Map? Reply Y.">
+                        <p>{{first_name}}, the quality version is on the same hub page. Compare as-built laser against BIM with X, Y, Z deviation, and run slab flatness from the point cloud. Matterport and ArcGIS plug in rather than replace what you already capture.</p><p>Homepage integrations already name BIM360, ACC, Procore, Revizto, Oracle, and ArcGIS.</p><p>Want the Stack Map? Reply Y.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: stack map for {{company_name}}&#10;&#10;{{first_name}}, no call needed.&#10;&#10;If {{named_keyword}} is going to keep living across three tools on the {{project_type}} job, that is the stack. If you want the map of how Cupix sits next to laser, drone, and BIM, I will send it.&#10;&#10;Reply Y and I&#39;ll send the Spatial Hub Stack Map. You, or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="stack map for {{company_name}}" data-preview="stack map for Northbridge Construction">stack map for {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed.&#10;&#10;If {{named_keyword}} is going to keep living across three tools on the {{project_type}} job, that is the stack. If you want the map of how Cupix sits next to laser, drone, and BIM, I will send it.&#10;&#10;Reply Y and I&#39;ll send the Spatial Hub Stack Map. You, or {{alt_decision_maker}}?" data-preview="Marcus, no call needed.&#10;&#10;If BIM Manager is going to keep living across three tools on the hospital job, that is the stack. If you want the map of how Cupix sits next to laser, drone, and BIM, I will send it.&#10;&#10;Reply Y and I&#39;ll send the Spatial Hub Stack Map. You, or your VDC lead?">
+                        <p>{{first_name}}, no call needed.</p><p>If {{named_keyword}} is going to keep living across three tools on the {{project_type}} job, that is the stack. If you want the map of how Cupix sits next to laser, drone, and BIM, I will send it.</p><p>Reply Y and I&#39;ll send the Spatial Hub Stack Map. You, or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3: Facilities / handover keyword</strong>
+              <em>Lifecycle Handover Record</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3: Facilities / handover keyword steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: handover still in binders&#10;&#10;{{first_name}}, LinkedIn shows {{company_name}} hiring around {{named_keyword}}.&#10;&#10;But would it be fair to assume the record the operator inherits is still photos and a binder, so the next failure has no 4D as-built to stand on?&#10;&#10;Cupix keeps time-stamped 360 walks as the spatial record through construction and into operations. Homepage: record spatial changes for full accountability. John Holland&#39;s customer-story page: a 3D record that holds up at handover and beyond, when something fails and someone needs to know why.&#10;&#10;Reply Y and I&#39;ll send a Lifecycle Handover Record framed for {{company_name}}. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="handover still in binders" data-preview="handover still in binders">handover still in binders</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, LinkedIn shows {{company_name}} hiring around {{named_keyword}}.&#10;&#10;But would it be fair to assume the record the operator inherits is still photos and a binder, so the next failure has no 4D as-built to stand on?&#10;&#10;Cupix keeps time-stamped 360 walks as the spatial record through construction and into operations. Homepage: record spatial changes for full accountability. John Holland&#39;s customer-story page: a 3D record that holds up at handover and beyond, when something fails and someone needs to know why.&#10;&#10;Reply Y and I&#39;ll send a Lifecycle Handover Record framed for {{company_name}}. No call needed." data-preview="Marcus, LinkedIn shows Northbridge Construction hiring around BIM Manager.&#10;&#10;But would it be fair to assume the record the operator inherits is still photos and a binder, so the next failure has no 4D as-built to stand on?&#10;&#10;Cupix keeps time-stamped 360 walks as the spatial record through construction and into operations. Homepage: record spatial changes for full accountability. John Holland&#39;s customer-story page: a 3D record that holds up at handover and beyond, when something fails and someone needs to know why.&#10;&#10;Reply Y and I&#39;ll send a Lifecycle Handover Record framed for Northbridge Construction. No call needed.">
+                        <p>{{first_name}}, LinkedIn shows {{company_name}} hiring around {{named_keyword}}.</p><p>But would it be fair to assume the record the operator inherits is still photos and a binder, so the next failure has no 4D as-built to stand on?</p><p>Cupix keeps time-stamped 360 walks as the spatial record through construction and into operations. Homepage: record spatial changes for full accountability. John Holland&#39;s customer-story page: a 3D record that holds up at handover and beyond, when something fails and someone needs to know why.</p><p>Reply Y and I&#39;ll send a Lifecycle Handover Record framed for {{company_name}}. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the facilities version is Coquitlam. Their customer-story page: fragmented facility data, repeat site visits, hard coordination across departments. After Cupix, teams stopped traveling to sites to make the call. They also cite the Canadian Network of Asset Managers Innovation Award.&#10;&#10;Homepage industries already name construction and facility management as one platform.&#10;&#10;Want the Handover Record? Reply Y.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the facilities version is Coquitlam. Their customer-story page: fragmented facility data, repeat site visits, hard coordination across departments. After Cupix, teams stopped traveling to sites to make the call. They also cite the Canadian Network of Asset Managers Innovation Award.&#10;&#10;Homepage industries already name construction and facility management as one platform.&#10;&#10;Want the Handover Record? Reply Y." data-preview="Marcus, the facilities version is Coquitlam. Their customer-story page: fragmented facility data, repeat site visits, hard coordination across departments. After Cupix, teams stopped traveling to sites to make the call. They also cite the Canadian Network of Asset Managers Innovation Award.&#10;&#10;Homepage industries already name construction and facility management as one platform.&#10;&#10;Want the Handover Record? Reply Y.">
+                        <p>{{first_name}}, the facilities version is Coquitlam. Their customer-story page: fragmented facility data, repeat site visits, hard coordination across departments. After Cupix, teams stopped traveling to sites to make the call. They also cite the Canadian Network of Asset Managers Innovation Award.</p><p>Homepage industries already name construction and facility management as one platform.</p><p>Want the Handover Record? Reply Y.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: handover record for {{company_name}}&#10;&#10;{{first_name}}, last one. No call needed.&#10;&#10;If {{company_name}} is going to keep turning over a {{project_type}} job with photos instead of a 4D as-built, that is the asset the operator gets. If you want the record of how Cupix carries that through handover, I will send it.&#10;&#10;Reply Y and I&#39;ll send the Lifecycle Handover Record. Should I send it to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="handover record for {{company_name}}" data-preview="handover record for Northbridge Construction">handover record for {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, last one. No call needed.&#10;&#10;If {{company_name}} is going to keep turning over a {{project_type}} job with photos instead of a 4D as-built, that is the asset the operator gets. If you want the record of how Cupix carries that through handover, I will send it.&#10;&#10;Reply Y and I&#39;ll send the Lifecycle Handover Record. Should I send it to you or {{alt_decision_maker}}?" data-preview="Marcus, last one. No call needed.&#10;&#10;If Northbridge Construction is going to keep turning over a hospital job with photos instead of a 4D as-built, that is the asset the operator gets. If you want the record of how Cupix carries that through handover, I will send it.&#10;&#10;Reply Y and I&#39;ll send the Lifecycle Handover Record. Should I send it to you or your VDC lead?">
+                        <p>{{first_name}}, last one. No call needed.</p><p>If {{company_name}} is going to keep turning over a {{project_type}} job with photos instead of a 4D as-built, that is the asset the operator gets. If you want the record of how Cupix carries that through handover, I will send it.</p><p>Reply Y and I&#39;ll send the Lifecycle Handover Record. Should I send it to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Catch-all: Remaining TAM</strong>
+              <em>20-Minute Walk Playbook</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Catch-all: Remaining TAM steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: site still only makes sense in person&#10;&#10;{{first_name}}, {{company_name}} looks like a {{project_type}} builder. LinkedIn already has {{pm_title}} on the page.&#10;&#10;But would it be fair to assume understanding the site still means a flight, so PMs and owners wait on photos that do not carry location or time?&#10;&#10;Cupix turns a 360 camera walk into a 4D twin the whole team can measure and share. Brandt Companies on their 360-to-3D-map page: more than 80% of their time on sites for documentation. Breanne Hanson, Senior Engineer, Brandt Companies: weekly field report from 3 hours to a 20-minute walk a less experienced partner can do.&#10;&#10;Reply Y and I&#39;ll send a 20-Minute Walk Playbook framed for {{company_name}}. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="site still only makes sense in person" data-preview="site still only makes sense in person">site still only makes sense in person</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, {{company_name}} looks like a {{project_type}} builder. LinkedIn already has {{pm_title}} on the page.&#10;&#10;But would it be fair to assume understanding the site still means a flight, so PMs and owners wait on photos that do not carry location or time?&#10;&#10;Cupix turns a 360 camera walk into a 4D twin the whole team can measure and share. Brandt Companies on their 360-to-3D-map page: more than 80% of their time on sites for documentation. Breanne Hanson, Senior Engineer, Brandt Companies: weekly field report from 3 hours to a 20-minute walk a less experienced partner can do.&#10;&#10;Reply Y and I&#39;ll send a 20-Minute Walk Playbook framed for {{company_name}}. No call needed." data-preview="Marcus, Northbridge Construction looks like a hospital builder. LinkedIn already has Project Executive on the page.&#10;&#10;But would it be fair to assume understanding the site still means a flight, so PMs and owners wait on photos that do not carry location or time?&#10;&#10;Cupix turns a 360 camera walk into a 4D twin the whole team can measure and share. Brandt Companies on their 360-to-3D-map page: more than 80% of their time on sites for documentation. Breanne Hanson, Senior Engineer, Brandt Companies: weekly field report from 3 hours to a 20-minute walk a less experienced partner can do.&#10;&#10;Reply Y and I&#39;ll send a 20-Minute Walk Playbook framed for Northbridge Construction. No call needed.">
+                        <p>{{first_name}}, {{company_name}} looks like a {{project_type}} builder. LinkedIn already has {{pm_title}} on the page.</p><p>But would it be fair to assume understanding the site still means a flight, so PMs and owners wait on photos that do not carry location or time?</p><p>Cupix turns a 360 camera walk into a 4D twin the whole team can measure and share. Brandt Companies on their 360-to-3D-map page: more than 80% of their time on sites for documentation. Breanne Hanson, Senior Engineer, Brandt Companies: weekly field report from 3 hours to a 20-minute walk a less experienced partner can do.</p><p>Reply Y and I&#39;ll send a 20-Minute Walk Playbook framed for {{company_name}}. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the homepage version is 70% time and efficiency gains. They define that as average reduction in site visits, reporting time, and design iterations.&#10;&#10;Capture is a consumer-grade 360 camera on a hard hat or stick, plus the TwinCapture app. No extra scan crew.&#10;&#10;Want the Playbook? Reply Y.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the homepage version is 70% time and efficiency gains. They define that as average reduction in site visits, reporting time, and design iterations.&#10;&#10;Capture is a consumer-grade 360 camera on a hard hat or stick, plus the TwinCapture app. No extra scan crew.&#10;&#10;Want the Playbook? Reply Y." data-preview="Marcus, the homepage version is 70% time and efficiency gains. They define that as average reduction in site visits, reporting time, and design iterations.&#10;&#10;Capture is a consumer-grade 360 camera on a hard hat or stick, plus the TwinCapture app. No extra scan crew.&#10;&#10;Want the Playbook? Reply Y.">
+                        <p>{{first_name}}, the homepage version is 70% time and efficiency gains. They define that as average reduction in site visits, reporting time, and design iterations.</p><p>Capture is a consumer-grade 360 camera on a hard hat or stick, plus the TwinCapture app. No extra scan crew.</p><p>Want the Playbook? Reply Y.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: walk playbook for {{company_name}}&#10;&#10;{{first_name}}, no call needed.&#10;&#10;Reply Y and I&#39;ll send the 20-Minute Walk Playbook. Should I send it to you, or is {{alt_decision_maker}} the better person?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="walk playbook for {{company_name}}" data-preview="walk playbook for Northbridge Construction">walk playbook for {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed.&#10;&#10;Reply Y and I&#39;ll send the 20-Minute Walk Playbook. Should I send it to you, or is {{alt_decision_maker}} the better person?" data-preview="Marcus, no call needed.&#10;&#10;Reply Y and I&#39;ll send the 20-Minute Walk Playbook. Should I send it to you, or is your VDC lead the better person?">
+                        <p>{{first_name}}, no call needed.</p><p>Reply Y and I&#39;ll send the 20-Minute Walk Playbook. Should I send it to you, or is {{alt_decision_maker}} the better person?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">Launch</p>
+      <h2>Launch the BIM/VDC keyword first</h2>
+      <p class="takeaway">Start where they are already staffing the model-versus-field gap SiteInsights is built for. Prove reply density, then roll capture-stack, handover, and the 20-minute-walk catch-all.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Pull LinkedIn Sales Nav for construction firms with a visible Project Manager, Owner, Project Executive, Superintendent, VDC / BIM Manager, Director of Construction, or Facilities Manager, or with construction / project-engineer jobs. Keep the open-req keyword in the same export. Classify job_keyword_class as bim_vdc, reality_capture, facilities_ops, or none. Suppress already_customer when a Cupix deployment is visible. Named case-study logos (Built, Brandt, Boustead, Arcadis, John Holland, Coquitlam, BNBuilders, Naylor Love) are not a blanket exclude.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Keyword classes are estimated GTMx taxonomy, not Cupix site fields. Tune the synonym list after the first Sales Nav pull if a band is starved or overlapping. First match wins. Do not also route on Dodge project value or headcount. Those cutoffs are not on cupix.com.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Resolve work emails in Apollo only after the domain is routed. Title is a merge tag, not a second TAM. Optional Dodge / ConstructConnect and careers-page text fill {{project_type}} (hospital, data center, factory, hotel, multifamily) as a merge tag only.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Launch Tier 1 SiteInsights Progress Gap Brief first. Smallest list, sharpest BIM-versus-field signal, closest to SiteInsights (needs BIM, large jobs). Discrepancy copy as the control, 7 million elements as the A/B on the same list.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Add Tier 2 Spatial Hub Stack Map once {{named_keyword}} merge tags are clean across laser, drone, Matterport, and OpenSpace language. Then Tier 3 Lifecycle Handover Record.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Turn on the 20-Minute Walk Playbook catch-all last so every remaining in-TAM construction firm still has a route. That is Sophia&#39;s original PM / Owner visibility pitch. Keep project_type as a merge tag, not a campaign split, until one job-keyword tier is clearly working. Do not launch a tier under about 1,500 contacts. That threshold is the waterfall SOP, not a Cupix site number.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacts</strong>
+                <span>Perfect. Scale that tier. Keep the winning discrepancy, stack, handover, or walk variant.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run. Do not mix a non-construction TAM into this waterfall, and do not move the spine onto a raw Apollo construction-PM list.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450-500</strong>
+                <span>Borderline. Swap only the magnet or the first-line job keyword. Do not change the route.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or reply rate under 1% after 1,500+ sends</strong>
+                <span>Cut that copy variant. Keep the exclusive waterfall. Retune the estimated bim_vdc / reality_capture / facilities_ops synonym lists from the live scrape if a band is starved of contacts.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book the strategy call</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Marcus","Northbridge Construction","customer support rep","6","Intercom","healthcare operations","Maya","BIM Manager","VDC Manager","Project Executive","your VDC lead","hospital"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
