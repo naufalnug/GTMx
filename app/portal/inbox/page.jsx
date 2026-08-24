@@ -20,8 +20,8 @@ export default async function InboxPage({ searchParams }) {
             <span className="portal-kicker">Reply without switching tools</span>
             <h1>Master inbox</h1>
             <p>
-              Review conversations and respond from your connected EmailBison
-              workspace.
+              Review conversations and respond from your connected inbox, without
+              leaving the portal.
             </p>
           </div>
         </header>

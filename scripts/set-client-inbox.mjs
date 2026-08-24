@@ -43,11 +43,19 @@ if (provider === 'masterinbox') {
   const domain = process.env.MI_DOMAIN;
   const email = process.env.MI_EMAIL;
   const password = process.env.MI_PASSWORD;
-  if (!domain || !email || !password) throw new Error('Set MI_DOMAIN, MI_EMAIL and MI_PASSWORD.');
+  if (!domain) throw new Error('Set MI_DOMAIN.');
   changes.inbox_url_ciphertext = encryptPortalValue(
     `https://app.masterinbox.com/?embed-view=${encodeURIComponent(domain)}`
   );
-  changes.inbox_credentials_ciphertext = encryptPortalValue(JSON.stringify({ email, password }));
+  // Credentials are optional. Without them the frame renders MasterInbox's own
+  // login instead of auto-signing in, which is the right default: the embed hands
+  // whatever it is given to the browser, so a shared account must not go in here.
+  if (email && password) {
+    changes.inbox_credentials_ciphertext = encryptPortalValue(JSON.stringify({ email, password }));
+  } else {
+    changes.inbox_credentials_ciphertext = null;
+    console.warn('No MI_EMAIL/MI_PASSWORD given — embedding without auto-login.');
+  }
 } else {
   const url = process.env.INBOX_URL;
   if (!url) throw new Error('Set INBOX_URL.');

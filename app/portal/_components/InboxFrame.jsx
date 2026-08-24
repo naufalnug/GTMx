@@ -50,9 +50,11 @@ export default function InboxFrame({ inbox }) {
     );
   }
 
-  // The MasterInbox handshake only completes once the frame is up, so "connected"
-  // means signed in there, but merely loaded for a plain iframe.
-  const ready = isMasterInbox ? signedIn : loaded;
+  // With credentials we wait for the handshake to confirm sign-in. Without them
+  // there is no handshake to wait for — the user signs in inside the frame — so
+  // fall back to plain load, or the overlay would never clear.
+  const autoLogin = Boolean(isMasterInbox && credentials);
+  const ready = autoLogin ? signedIn : loaded;
   const label = isMasterInbox ? 'Secure MasterInbox workspace' : 'Secure EmailBison workspace';
 
   return (
@@ -64,7 +66,7 @@ export default function InboxFrame({ inbox }) {
       {!ready ? (
         <div className="inbox-loading">
           <span />
-          <p>{isMasterInbox && credentials ? 'Signing you in…' : 'Connecting to your master inbox…'}</p>
+          <p>{autoLogin ? 'Signing you in…' : 'Connecting to your master inbox…'}</p>
         </div>
       ) : null}
       <iframe
