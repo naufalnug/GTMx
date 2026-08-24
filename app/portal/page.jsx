@@ -125,8 +125,11 @@ export default async function PortalOverview({ searchParams }) {
         <section className="portal-panel performance-panel">
           <header>
             <div>
-              <h2>Sending activity</h2>
-              <p>Daily volume across the selected reporting window.</p>
+              <h2>Daily activity</h2>
+              <p>
+                Sends, replies, positive replies, bounces and contacts added — each
+                on its own scale.
+              </p>
             </div>
             <span className="period-badge">{period.label}</span>
           </header>
