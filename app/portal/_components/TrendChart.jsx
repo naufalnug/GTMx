@@ -27,6 +27,13 @@ const SEGMENTS = [
 ];
 const OUTCOMES = SEGMENTS.filter((s) => s.key !== 'noReply');
 
+// Minimum drawn height for an outcome band in the all-sent view. Bounces, replies and
+// positives are ~6% of a day's sends between them, which at true scale is a 2-3px
+// hairline. This floor makes each band readable at a glance; it overstates the
+// smallest slices, so the tooltip and the table carry the exact counts and the
+// outcomes view shows the honest proportions.
+const MIN_BAND_PX = 9;
+
 const int = (value) => new Intl.NumberFormat('en-US').format(value);
 
 function shortDate(iso) {
@@ -128,13 +135,10 @@ export default function TrendChart({ points }) {
                         className="chart-seg"
                         style={{
                           background: seg.color,
-                          // Only the all-sent view needs a floor, where a 9-out-of-1005
-                          // slice would otherwise be sub-pixel. It slightly overstates
-                          // the thinnest slices, which is why the tooltip and table
-                          // carry the exact counts. Outcomes view needs no such help.
+                          // Outcomes view is already proportional and needs no floor.
                           height: outcomesOnly
                             ? `${(value / total) * 100}%`
-                            : `max(3px, ${(value / total) * 100}%)`,
+                            : `max(${seg.key === 'noReply' ? 0 : MIN_BAND_PX}px, ${(value / total) * 100}%)`,
                         }}
                       />
                     );
