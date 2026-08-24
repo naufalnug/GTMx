@@ -1,179 +1,237 @@
 'use client';
 
-import { useState } from 'react';
+import { useId, useState } from 'react';
 
 /**
- * Daily activity: one stacked bar per day, segmented by what happened to that day's
- * emails.
+ * Daily activity as a smoothed area chart — one line per measure, gradient fill
+ * beneath, shared y-axis.
  *
- * The segments are deliberately MUTUALLY EXCLUSIVE. The underlying measures are
- * nested — positive replies are a subset of replies, which are a subset of sends — so
- * stacking them as-is would total 1,080 on a day when 1,005 emails went out, and the
- * bar would claim more activity than happened. Splitting into disjoint buckets makes
- * the stack sum to exactly "emails sent", which is what a part-to-whole bar must mean.
+ * Curves use monotone cubic interpolation rather than a plain spline. A spline
+ * overshoots between points, which on counts invents dips below zero and peaks that
+ * never happened; monotone stays inside the data.
  *
- * Palette validated with the dataviz validator against the #fffdf9 surface: every
- * adjacent pair in the stack clears the CVD, normal-vision and 3:1 contrast gates with
- * no warnings. Green and red are never adjacent — bounces sit below replies, so the
- * best outcome caps the bar and the two most confusable hues stay apart.
+ * On colour: brand identity here comes from the surface, ink hairlines, type and the
+ * offset-shadow tooltip — NOT from the series hues. GTMx flame (#e8552b) was tried as
+ * a series colour and fails hard against the green (CVD ΔE 2.4, indistinguishable for
+ * protanopes), so the marks use a validated set instead. Every pair clears the CVD,
+ * normal-vision and 3:1 contrast gates against the #fffdf9 surface. Green/red sit in
+ * the 6-8 band, legal because the legend and tooltip name every series in text.
  */
-const SEGMENTS = [
-  // Bottom to top. `no reply yet` is the remainder and wears a recessive neutral so
-  // the outcomes read as the figure against it.
-  { key: 'noReply', label: 'No reply yet', color: '#d8d2c4' },
+const SERIES = [
+  { key: 'sent', label: 'Sent', color: '#2a78d6' },
+  { key: 'replies', label: 'Replied', color: '#4a3aa7' },
+  { key: 'positive', label: 'Interested', color: '#008300' },
   { key: 'bounced', label: 'Bounced', color: '#e34948' },
-  { key: 'otherReplies', label: 'Replies', color: '#4a3aa7' },
-  { key: 'positive', label: 'Positive replies', color: '#008300' },
 ];
-const OUTCOMES = SEGMENTS.filter((s) => s.key !== 'noReply');
+const OUTCOMES = SERIES.filter((s) => s.key !== 'sent');
 
-// Minimum drawn height for an outcome band in the all-sent view. Bounces, replies and
-// positives are ~6% of a day's sends between them, which at true scale is a 2-3px
-// hairline. This floor makes each band readable at a glance; it overstates the
-// smallest slices, so the tooltip and the table carry the exact counts and the
-// outcomes view shows the honest proportions.
-const MIN_BAND_PX = 9;
+const W = 1000;
+const H = 300;
+const PAD = { top: 16, right: 16, bottom: 30, left: 54 };
 
-const int = (value) => new Intl.NumberFormat('en-US').format(value);
+const int = (v) => new Intl.NumberFormat('en-US').format(v);
 
 function shortDate(iso) {
   const d = new Date(`${iso}T00:00:00Z`);
   return Number.isNaN(d.getTime())
     ? iso
-    : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+    : d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', timeZone: 'UTC' });
 }
 
-/** Split a day into disjoint buckets that sum to the emails sent that day. */
-export function split(point) {
-  const sent = Number(point.sent ?? 0);
-  const replies = Number(point.replies ?? 0);
-  const bounced = Number(point.bounced ?? 0);
-  const positive = Number(point.positive ?? 0);
-  return {
-    date: point.date,
-    sent,
-    replies,
-    positive,
-    // Positive replies are dated by when the reply arrived, not by campaign day, so on
-    // a quiet day they can outnumber that day's replies. Clamp rather than go negative.
-    otherReplies: Math.max(0, replies - positive),
-    bounced,
-    noReply: Math.max(0, sent - replies - bounced),
-  };
+/** Round the axis ceiling so ticks read 4,000 rather than 3,847. */
+function niceMax(value) {
+  if (value <= 4) return 4;
+  const pow = 10 ** Math.floor(Math.log10(value));
+  const step = [1, 2, 2.5, 5, 10].find((s) => value <= s * pow) ?? 10;
+  return step * pow;
+}
+
+/**
+ * Monotone cubic Hermite path. Tangents are clamped so no segment overshoots the
+ * points it joins — the curve cannot dip below zero between two small counts.
+ */
+function smoothPath(pts) {
+  if (pts.length < 2) return pts.length ? `M${pts[0].x},${pts[0].y}` : '';
+  const n = pts.length;
+  const dx = [];
+  const slope = [];
+  for (let i = 0; i < n - 1; i += 1) {
+    dx.push(pts[i + 1].x - pts[i].x);
+    slope.push((pts[i + 1].y - pts[i].y) / (pts[i + 1].x - pts[i].x));
+  }
+  const m = [slope[0]];
+  for (let i = 1; i < n - 1; i += 1) {
+    if (slope[i - 1] * slope[i] <= 0) {
+      m.push(0);
+    } else {
+      const w1 = 2 * dx[i] + dx[i - 1];
+      const w2 = dx[i] + 2 * dx[i - 1];
+      m.push((w1 + w2) / (w1 / slope[i - 1] + w2 / slope[i]));
+    }
+  }
+  m.push(slope[n - 2]);
+
+  let d = `M${pts[0].x},${pts[0].y}`;
+  for (let i = 0; i < n - 1; i += 1) {
+    const h = dx[i] / 3;
+    d += ` C${pts[i].x + h},${pts[i].y + m[i] * h} ${pts[i + 1].x - h},${
+      pts[i + 1].y - m[i + 1] * h
+    } ${pts[i + 1].x},${pts[i + 1].y}`;
+  }
+  return d;
 }
 
 export default function TrendChart({ points }) {
-  // Defaults to outcomes. In the all-sent view the outcomes are ~6% of the bar and
-  // read as slivers — which is true, but it buries the part of the day worth looking
-  // at. Leading with outcomes shows them at a legible proportion; the toggle puts them
-  // back in the context of total volume.
-  const [outcomesOnly, setOutcomesOnly] = useState(true);
+  const uid = useId().replace(/:/g, '');
+  const [outcomesOnly, setOutcomesOnly] = useState(false);
   const [hover, setHover] = useState(null);
 
-  const view = points.slice(-30).map(split);
-  const shown = outcomesOnly ? OUTCOMES : SEGMENTS;
+  const view = points.slice(-30);
+  const shown = outcomesOnly ? OUTCOMES : SERIES;
 
-  if (!view.length) {
+  if (view.length < 2) {
     return (
       <div className="chart-empty">
-        <span>No sending activity in this period.</span>
+        <span>Not enough activity yet to plot a trend.</span>
       </div>
     );
   }
 
-  const totalOf = (day) => shown.reduce((sum, seg) => sum + Number(day[seg.key] ?? 0), 0);
-  const max = Math.max(...view.map(totalOf), 1);
+  const max = niceMax(Math.max(...view.flatMap((p) => shown.map((s) => Number(p[s.key] ?? 0))), 1));
+  const plotW = W - PAD.left - PAD.right;
+  const plotH = H - PAD.top - PAD.bottom;
+  const x = (i) => PAD.left + (i / (view.length - 1)) * plotW;
+  const y = (v) => PAD.top + plotH - (v / max) * plotH;
+
+  const ticks = [0, 0.25, 0.5, 0.75, 1].map((t) => Math.round(max * t));
+  // Roughly six date labels whatever the window length.
+  const labelEvery = Math.max(1, Math.ceil(view.length / 6));
   const active = hover === null ? null : view[hover];
 
   return (
     <div className="chart">
-      <div className="chart-legend">
-        {[...shown].reverse().map((seg) => (
-          <span key={seg.key} className="chart-key">
-            <span className="chart-swatch" style={{ background: seg.color }} />
-            {seg.label}
-          </span>
-        ))}
+      <div className="chart-head">
         <button
           type="button"
           className={`chart-toggle${outcomesOnly ? ' is-on' : ''}`}
           aria-pressed={outcomesOnly}
           onClick={() => setOutcomesOnly((v) => !v)}
         >
-          {outcomesOnly ? 'Show all emails sent' : 'Show outcomes only'}
+          {outcomesOnly ? 'Show sent volume' : 'Outcomes only'}
         </button>
       </div>
 
-      <div className="chart-body">
-        <div className="chart-yaxis" aria-hidden="true">
-          <span>{int(max)}</span>
-          <span>{int(Math.round(max / 2))}</span>
-          <span>0</span>
-        </div>
-        <div
-          className="chart-plot"
+      <div className="chart-frame">
+        <svg
+          viewBox={`0 0 ${W} ${H}`}
+          className="chart-svg"
+          preserveAspectRatio="none"
           role="img"
-          aria-label={`Daily emails by outcome across ${view.length} days.`}
+          aria-label={`Daily ${shown.map((s) => s.label).join(', ')} across ${view.length} days.`}
           onMouseLeave={() => setHover(null)}
+          onMouseMove={(event) => {
+            const box = event.currentTarget.getBoundingClientRect();
+            const rel = ((event.clientX - box.left) / box.width) * W;
+            const i = Math.round(((rel - PAD.left) / plotW) * (view.length - 1));
+            setHover(Math.min(view.length - 1, Math.max(0, i)));
+          }}
         >
-          <span className="chart-grid" />
-          {view.map((day, index) => {
-            const total = totalOf(day);
+          <defs>
+            {SERIES.map((s) => (
+              <linearGradient key={s.key} id={`${uid}-${s.key}`} x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor={s.color} stopOpacity="0.34" />
+                <stop offset="100%" stopColor={s.color} stopOpacity="0.02" />
+              </linearGradient>
+            ))}
+          </defs>
+
+          {ticks.map((t) => (
+            <g key={t}>
+              <line
+                x1={PAD.left}
+                x2={W - PAD.right}
+                y1={y(t)}
+                y2={y(t)}
+                className="chart-gridline"
+              />
+              <text x={PAD.left - 12} y={y(t) + 4} className="chart-tick" textAnchor="end">
+                {int(t)}
+              </text>
+            </g>
+          ))}
+
+          {shown.map((s) => {
+            const pts = view.map((p, i) => ({ x: x(i), y: y(Number(p[s.key] ?? 0)) }));
+            const line = smoothPath(pts);
             return (
-              <div
-                key={day.date}
-                className={`chart-day${hover === index ? ' is-hover' : ''}`}
-                onMouseEnter={() => setHover(index)}
-              >
-                <span className="chart-stack" style={{ height: `${(total / max) * 100}%` }}>
-                  {[...shown].reverse().map((seg) => {
-                    const value = Number(day[seg.key] ?? 0);
-                    if (!value) return null;
-                    return (
-                      <span
-                        key={seg.key}
-                        className="chart-seg"
-                        style={{
-                          background: seg.color,
-                          // Outcomes view is already proportional and needs no floor.
-                          height: outcomesOnly
-                            ? `${(value / total) * 100}%`
-                            : `max(${seg.key === 'noReply' ? 0 : MIN_BAND_PX}px, ${(value / total) * 100}%)`,
-                        }}
-                      />
-                    );
-                  })}
-                </span>
-              </div>
+              <g key={s.key}>
+                <path
+                  d={`${line} L${x(view.length - 1)},${y(0)} L${x(0)},${y(0)} Z`}
+                  fill={`url(#${uid}-${s.key})`}
+                />
+                <path d={line} className="chart-line" stroke={s.color} />
+              </g>
             );
           })}
+
+          {view.map((p, i) =>
+            i % labelEvery === 0 || i === view.length - 1 ? (
+              <text key={p.date} x={x(i)} y={H - 8} className="chart-tick" textAnchor="middle">
+                {shortDate(p.date)}
+              </text>
+            ) : null
+          )}
+
           {active ? (
-            <div
-              className="chart-tip"
-              style={{
-                left: `${((hover + 0.5) / view.length) * 100}%`,
-                transform: hover > view.length / 2 ? 'translateX(-100%)' : 'none',
-              }}
-            >
-              <strong>{shortDate(active.date)}</strong>
-              <span className="chart-tip-total">
-                Emails sent<b>{int(active.sent)}</b>
-              </span>
-              {[...SEGMENTS].reverse().map((seg) => (
-                <span key={seg.key}>
-                  <i style={{ background: seg.color }} />
-                  {seg.label}
-                  <b>{int(Number(active[seg.key] ?? 0))}</b>
-                </span>
+            <g pointerEvents="none">
+              <line
+                x1={x(hover)}
+                x2={x(hover)}
+                y1={PAD.top}
+                y2={PAD.top + plotH}
+                className="chart-crosshair"
+              />
+              {shown.map((s) => (
+                <circle
+                  key={s.key}
+                  cx={x(hover)}
+                  cy={y(Number(active[s.key] ?? 0))}
+                  r="4.5"
+                  fill={s.color}
+                  className="chart-dot"
+                />
               ))}
-            </div>
+            </g>
           ) : null}
-        </div>
+        </svg>
+
+        {active ? (
+          <div
+            className="chart-tip"
+            style={{
+              left: `${(x(hover) / W) * 100}%`,
+              transform: hover > view.length / 2 ? 'translateX(-108%)' : 'translateX(8%)',
+            }}
+          >
+            <strong>{shortDate(active.date)}</strong>
+            {SERIES.map((s) => (
+              <span key={s.key} className={shown.includes(s) ? '' : 'is-off'}>
+                <i style={{ background: s.color }} />
+                {s.label}
+                <b>{int(Number(active[s.key] ?? 0))}</b>
+              </span>
+            ))}
+          </div>
+        ) : null}
       </div>
 
-      <div className="chart-xaxis">
-        <span>{shortDate(view[0].date)}</span>
-        <span>{shortDate(view[view.length - 1].date)}</span>
+      <div className="chart-legend">
+        {SERIES.map((s) => (
+          <span key={s.key} className={`chart-key${shown.includes(s) ? '' : ' is-off'}`}>
+            <i style={{ background: s.color }} />
+            {s.label}
+          </span>
+        ))}
       </div>
 
       <details className="chart-table">
@@ -183,19 +241,17 @@ export default function TrendChart({ points }) {
             <thead>
               <tr>
                 <th>Day</th>
-                <th>Emails sent</th>
-                {[...SEGMENTS].reverse().map((s) => (
+                {SERIES.map((s) => (
                   <th key={s.key}>{s.label}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
-              {[...view].reverse().map((day) => (
-                <tr key={day.date}>
-                  <td>{shortDate(day.date)}</td>
-                  <td>{int(day.sent)}</td>
-                  {[...SEGMENTS].reverse().map((s) => (
-                    <td key={s.key}>{int(Number(day[s.key] ?? 0))}</td>
+              {[...view].reverse().map((p) => (
+                <tr key={p.date}>
+                  <td>{shortDate(p.date)}</td>
+                  {SERIES.map((s) => (
+                    <td key={s.key}>{int(Number(p[s.key] ?? 0))}</td>
                   ))}
                 </tr>
               ))}

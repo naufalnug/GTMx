@@ -96,40 +96,37 @@
 .notif-empty { min-height:180px; padding:28px; }
 .notif-empty>span { background:var(--portal-mint); }
 @media (max-width:720px) { .notif-panel { position:fixed; inset:66px 12px 76px; width:auto; max-height:none; } }
-/* Daily activity — one stacked bar per day, split into mutually exclusive outcomes that
-   sum to that day's emails sent. Palette validated with the dataviz validator against
-   the #fffdf9 surface (bounced #e34948, replies #4a3aa7, positive #008300): every
-   adjacent pair clears the CVD, normal-vision and 3:1 contrast gates with no warnings.
-   Green and red are never adjacent in the stack. #d8d2c4 is the recessive remainder,
-   deliberately low-chroma so the outcomes read as figure against it. */
-.chart { padding:20px 24px 18px; }
-.chart-legend { display:flex; flex-wrap:wrap; align-items:center; gap:7px; margin-bottom:16px; }
-.chart-key { display:inline-flex; align-items:center; gap:7px; padding:5px 10px; border:1px solid var(--portal-line); border-radius:999px; color:var(--portal-ink); font:700 .69rem Figtree,sans-serif; }
-.chart-swatch { display:block; width:10px; height:10px; flex:none; border:1px solid rgba(26,23,18,.18); border-radius:3px; }
-.chart-toggle { margin-left:auto; padding:5px 11px; border:1.5px solid var(--portal-ink); border-radius:999px; color:var(--portal-ink); background:var(--portal-surface); cursor:pointer; font:700 .69rem Figtree,sans-serif; }
-.chart-toggle:hover { background:#f6f2e6; }
+/* Daily activity — smoothed area chart. The GTMx look comes from the surface, ink
+   hairlines, Figtree and the offset-shadow tooltip; the series hues are a validated
+   data-viz set, because brand flame against the green is CVD ΔE 2.4 (indistinguishable
+   for protanopes). All pairs clear the CVD, normal-vision and 3:1 contrast gates
+   against #fffdf9; green/red sit in the 6-8 band, legal because the legend and tooltip
+   name every series in text. */
+.chart { padding:18px 22px 16px; }
+.chart-head { display:flex; justify-content:flex-end; margin-bottom:6px; }
+.chart-toggle { padding:5px 11px; border:1.5px solid var(--portal-ink); border-radius:999px; color:var(--portal-ink); background:var(--portal-surface); cursor:pointer; font:700 .69rem Figtree,sans-serif; box-shadow:2px 2px 0 var(--portal-mint); }
+.chart-toggle:hover { transform:translate(-1px,-1px); box-shadow:3px 3px 0 var(--portal-mint); }
 .chart-toggle.is-on { background:var(--portal-mint); }
-.chart-body { display:flex; gap:10px; }
-.chart-yaxis { display:flex; width:46px; flex:none; flex-direction:column; justify-content:space-between; height:210px; color:#8d867c; font-size:.62rem; font-weight:600; text-align:right; }
-.chart-plot { position:relative; display:flex; align-items:flex-end; gap:clamp(2px,.5vw,6px); height:210px; flex:1; border-bottom:1.5px solid var(--portal-line); }
-.chart-grid { position:absolute; z-index:0; inset:0 0 50% 0; border-bottom:1px solid var(--portal-line); pointer-events:none; }
-.chart-day { position:relative; z-index:1; display:flex; align-items:flex-end; height:100%; flex:1; min-width:4px; cursor:default; }
-.chart-day.is-hover { background:rgba(26,23,18,.06); }
-.chart-stack { display:flex; width:100%; flex-direction:column; justify-content:flex-end; overflow:hidden; border-radius:3px 3px 0 0; }
-/* Segments are separated by a 2px surface gap rather than a border — a stroke around
-   each fill muddies thin bands and darkens the stack. */
-.chart-seg { display:block; width:100%; border-bottom:2px solid var(--portal-surface); }
-.chart-seg:last-child { border-bottom:0; }
-.chart-seg:first-child { border-radius:3px 3px 0 0; }
-.chart-tip { position:absolute; z-index:5; bottom:14px; display:grid; gap:5px; min-width:196px; padding:11px 12px; border:1.5px solid var(--portal-ink); border-radius:11px; background:var(--portal-surface); box-shadow:4px 4px 0 rgba(26,23,18,.13); pointer-events:none; }
+.chart-frame { position:relative; }
+.chart-svg { display:block; width:100%; height:clamp(220px,30vw,300px); overflow:visible; cursor:crosshair; }
+.chart-gridline { stroke:var(--portal-line); stroke-width:1; vector-effect:non-scaling-stroke; }
+.chart-tick { fill:#8d867c; font:600 11px Figtree,sans-serif; }
+.chart-line { fill:none; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke; }
+.chart-crosshair { stroke:var(--portal-ink); stroke-width:1; stroke-opacity:.28; vector-effect:non-scaling-stroke; }
+.chart-dot { stroke:var(--portal-surface); stroke-width:2; vector-effect:non-scaling-stroke; }
+.chart-tip { position:absolute; z-index:5; top:8px; display:grid; gap:5px; min-width:186px; padding:11px 12px; border:1.5px solid var(--portal-ink); border-radius:12px; background:var(--portal-surface); box-shadow:4px 4px 0 var(--portal-gold); pointer-events:none; }
 .chart-tip strong { font-size:.74rem; }
-.chart-tip span { display:grid; grid-template-columns:10px 1fr auto; align-items:center; gap:7px; color:var(--portal-muted); font-size:.7rem; }
-.chart-tip i { width:10px; height:10px; border-radius:3px; }
+.chart-tip span { display:grid; grid-template-columns:10px 1fr auto; align-items:center; gap:8px; color:var(--portal-muted); font-size:.7rem; }
+.chart-tip span.is-off { opacity:.38; }
+.chart-tip i { width:10px; height:3px; border-radius:2px; }
 .chart-tip b { color:var(--portal-ink); font-size:.74rem; font-weight:800; }
-.chart-tip-total { grid-template-columns:1fr auto!important; padding-bottom:5px; border-bottom:1px solid var(--portal-line); font-weight:700; }
-.chart-xaxis { display:flex; justify-content:space-between; margin:7px 0 0 56px; color:#8d867c; font-size:.62rem; font-weight:600; }
-.chart-table { margin-top:16px; }
+.chart-legend { display:flex; flex-wrap:wrap; justify-content:center; gap:8px 18px; margin-top:12px; }
+.chart-key { display:inline-flex; align-items:center; gap:8px; color:var(--portal-ink); font:700 .72rem Figtree,sans-serif; }
+.chart-key.is-off { color:#a49d93; }
+.chart-key.is-off i { opacity:.3; }
+.chart-key i { display:block; width:18px; height:3px; border-radius:2px; }
+.chart-table { margin-top:14px; }
 .chart-table summary { width:max-content; padding:6px 10px; border:1px solid var(--portal-line); border-radius:8px; color:var(--portal-muted); cursor:pointer; font-size:.7rem; font-weight:700; }
 .chart-table[open] summary { margin-bottom:12px; }
 .chart-table .portal-table-wrap { max-height:300px; overflow:auto; border:1px solid var(--portal-line); border-radius:10px; }
-@media (max-width:720px) { .chart { padding:16px; }.chart-yaxis { width:36px; height:180px; }.chart-plot { height:180px; }.chart-toggle { margin-left:0; }.chart-tip { min-width:0; }.chart-xaxis { margin-left:46px; } }
+@media (max-width:720px) { .chart { padding:14px; }.chart-svg { height:200px; }.chart-tip { min-width:0; }.chart-legend { gap:6px 12px; } }
