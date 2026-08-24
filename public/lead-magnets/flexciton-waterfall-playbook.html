@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flexciton - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-24</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Flexciton</p>
+          <h1>Your Flexciton waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">A scrollable GTMx strategy artifact for routing semiconductor manufacturers into the right Flexciton planning-and-scheduling offer. List building, campaign angles, and sample copy, prepared for Anna Robson.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Anna already sells autonomous planning and scheduling so chipmakers can uncover hidden capacity, hit commits, and run with fewer scarce engineers. Mila&#39;s original pitch is the TAM: scrape semiconductor manufacturers, write to Ops Managers and Production Directors, personalize on operational challenges and AI in the fab, A/B cost reduction versus throughput. The one list is semiconductor manufacturers LinkedIn already lists. The one routing signal is the job-keyword class in their open reqs, because Sales Nav returns that keyword in the same pull and it tells you whether they are staffing wafer-start planning, toolset dispatch, timelink or MES automation, or none of those yet. Ops Manager and Production Director titles are the people layer after the fab is routed. They are not a second TAM. Cost versus throughput is an A/B on the exclusive routes, not a second waterfall.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book the strategy call</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>9.4%</strong>
+          <span>increase in throughput in the photo area, on their homepage</span>
+        </div>
+        <div class="metric-card">
+          <strong>29%</strong>
+          <span>reduction in timelink violations in the diffusion area, on their homepage</span>
+        </div>
+        <div class="metric-card">
+          <strong>4</strong>
+          <span>exclusive job-keyword routes</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Flexciton is a technology company building production planning and scheduling software that helps chipmakers raise efficiency and move toward autonomous operations. Three Flex Apps: Flex Planner turns customer orders into daily wafer-start plans and production schedules with dynamic capacity modeling and mathematical optimization, updated every 45 minutes. Flex Local autonomously schedules lots to tools and balances batching, cycle time, and throughput without rule or parameter tuning. Flex Global connects local schedulers, guides the right WIP to the right toolset, cuts timelink violations, and plans changeover campaigns. Homepage use cases: hidden capacity without new capex, labour efficiency, on-time delivery, cost reduction. Named customers on-site: Seagate Technology, Renesas, Microchip. Intel partnership announced for factory automation and optimisation software. Homepage: 40+ experts dedicated to semiconductor manufacturing optimization, 100+ technical publications, 3 patents in mathematical optimization, 25+ fabs around the world.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal is the keyword already in the job post</p></div><div><span>02</span><p>One cascade routes every semiconductor manufacturer</p></div><div><span>03</span><p>Each job keyword gets a different first offer</p></div><div><span>04</span><p>Commit the plan, fill the tool, hold the timelink, skip the firefight</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>Waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>Email Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">Signal</p>
+      <h2>The signal is the keyword already in the job post</h2>
+      <p class="takeaway">LinkedIn already names the semiconductor manufacturer and already prints capacity planning, dispatch, MES, or timelink language in the open req. That keyword is stronger than a headcount guess, and it is free to collect.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>LinkedIn Sales Nav job search is the TAM Mila already named, semiconductor manufacturers with a visible Ops or Production title, and the planning or scheduling keyword in one pull.</p></div><div class="reason-card"><span>02</span><p>The same pull returns capacity / wafer starts / production control, dispatch / batching / cycle time / reticle, or timelink / MES / CIM / factory automation, which is enough to route without a second enrichment product.</p></div><div class="reason-card"><span>03</span><p>The ladder maps to live Flexciton copy: Flex Planner (wafer-start plans updated every 45 minutes), Flex Local (toolset KPIs without rule tuning), Flex Global (timelink constraints and Heatmap), and the remaining autonomous-factory pitch Anna already sells.</p></div><div class="reason-card"><span>04</span><p>Ops Manager, Production Director, and fab area are scrape filters and merge tags. They are not a second waterfall. Apollo is email last, never the TAM spine.</p></div>
+            </div>
+            <div class="field-cloud"><span>in_tam</span><span>already_customer</span><span>job_keyword_class</span><span>named_keyword</span><span>posted_role</span><span>ops_title</span><span>decision_maker</span><span>fab_area</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>LinkedIn Sales Navigator job search</h3><p>Semiconductor manufacturers plus the open-req keyword used to assign Tier 1 / 2 / 3 / catch-all. The TAM gate and the spine of every route. One pull.</p></div><div class="source-card"><span>02</span><h3>Company careers / jobs page scrape</h3><p>Posted role text when Sales Nav truncates the keyword, plus fab_area as a merge tag when the req names photo, diffusion, etch, or a named toolset</p></div><div class="source-card"><span>03</span><h3>LinkedIn company + title graph</h3><p>Ops Manager, Production Director, Fab Manager, Industrial Engineer, Production Control, Manufacturing Director after the domain is routed. Title is a merge tag, not a second TAM.</p></div><div class="source-card"><span>04</span><h3>Optional SEMI / public fab directory</h3><p>Backup in_tam when LinkedIn company industry is messy. Gate only. Do not route on wafer starts, node, or headcount. Those cutoffs are not on flexciton.com.</p></div><div class="source-card"><span>05</span><h3>Apollo (after qualification)</h3><p>Work emails for already-routed accounts. Do not buy a raw &#39;semiconductor Ops Manager&#39; list and hope.</p></div><div class="source-card"><span>06</span><h3>Optional Flexciton customer suppress</h3><p>Current-customer exclusion when the signal is visible. Thin coverage. Treat as a suppress list, not a tier. Named logos and case studies on flexciton.com (Seagate, Renesas, Microchip) are not a franchise-wide exclude. The Intel announcement is a partnership, not proof every Intel fab is a customer.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="Waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">Waterfall</p>
+      <h2>One cascade routes every semiconductor manufacturer</h2>
+      <p class="takeaway">First match wins. Planning and wafer-start keywords go first, then toolset scheduling keywords, then timelink and factory-automation keywords, then every remaining in-TAM manufacturer.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF already_customer = true</span>
+          <strong>Exclude</strong>
+          <em>Already a customer. Named case-study logos on flexciton.com are not enough to exclude every site.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF job_keyword_class = planning_capacity</span>
+          <strong>Tier 1</strong>
+          <em>Open req names production planner, capacity planner, wafer starts, industrial engineer, production control, WIP management, capacity modeling, or starts planning. Keyword class is estimated GTMx taxonomy, not a Flexciton site field.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF job_keyword_class = toolset_scheduling</span>
+          <strong>Tier 2</strong>
+          <em>Open req names dispatcher, scheduler, batching, cycle time, toolset, photolithography scheduling, diffusion scheduling, or reticle, and no planning_capacity keyword. Class estimated.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF job_keyword_class = timelink_automation</span>
+          <strong>Tier 3</strong>
+          <em>Open req names timelink, Q-time, QTimer, factory automation, MES, CIM, digital twin, Industry 4.0, autonomous factory, or fab-wide scheduling, and no planning_capacity or toolset_scheduling keyword. Class estimated.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF in_tam = true</span>
+          <strong>Catch-all</strong>
+          <em>Remaining semiconductor manufacturers LinkedIn already lists: visible Ops Manager / Production Director / Fab Manager / Industrial Engineer, and none of the keywords above</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF already_customer = true -&gt; Exclude (Already a customer. Named case-study logos on flexciton.com are not enough to exclude every site.)&#10;2. IF job_keyword_class = planning_capacity -&gt; Tier 1 (Open req names production planner, capacity planner, wafer starts, industrial engineer, production control, WIP management, capacity modeling, or starts planning. Keyword class is estimated GTMx taxonomy, not a Flexciton site field.)&#10;3. IF job_keyword_class = toolset_scheduling -&gt; Tier 2 (Open req names dispatcher, scheduler, batching, cycle time, toolset, photolithography scheduling, diffusion scheduling, or reticle, and no planning_capacity keyword. Class estimated.)&#10;4. IF job_keyword_class = timelink_automation -&gt; Tier 3 (Open req names timelink, Q-time, QTimer, factory automation, MES, CIM, digital twin, Industry 4.0, autonomous factory, or fab-wide scheduling, and no planning_capacity or toolset_scheduling keyword. Class estimated.)&#10;5. IF in_tam = true -&gt; Catch-all (Remaining semiconductor manufacturers LinkedIn already lists: visible Ops Manager / Production Director / Fab Manager / Industrial Engineer, and none of the keywords above)">Copy routing spec</button>
+            <pre id="routeCode">1. IF already_customer = true -&gt; Exclude (Already a customer. Named case-study logos on flexciton.com are not enough to exclude every site.)
+2. IF job_keyword_class = planning_capacity -&gt; Tier 1 (Open req names production planner, capacity planner, wafer starts, industrial engineer, production control, WIP management, capacity modeling, or starts planning. Keyword class is estimated GTMx taxonomy, not a Flexciton site field.)
+3. IF job_keyword_class = toolset_scheduling -&gt; Tier 2 (Open req names dispatcher, scheduler, batching, cycle time, toolset, photolithography scheduling, diffusion scheduling, or reticle, and no planning_capacity keyword. Class estimated.)
+4. IF job_keyword_class = timelink_automation -&gt; Tier 3 (Open req names timelink, Q-time, QTimer, factory automation, MES, CIM, digital twin, Industry 4.0, autonomous factory, or fab-wide scheduling, and no planning_capacity or toolset_scheduling keyword. Class estimated.)
+5. IF in_tam = true -&gt; Catch-all (Remaining semiconductor manufacturers LinkedIn already lists: visible Ops Manager / Production Director / Fab Manager / Industrial Engineer, and none of the keywords above)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">Tiers</p>
+      <h2>Each job keyword gets a different first offer</h2>
+      <p class="takeaway">Planning hiring gets a Capacity Commit Brief. Dispatch hiring gets a Toolset KPI Gap Brief. Timelink or MES hiring gets a Fab-Wide Flow Brief. The rest get the Autonomous Fab Playbook, with cost versus throughput as the A/B.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">tightest TAM</span>
+          </div>
+          <h3>Tier 1: Planning / wafer-start keyword</h3>
+          <p>LinkedIn job post names production planner, capacity planner, wafer starts, industrial engineer, production control, WIP management, capacity modeling, or starts planning. Keyword class estimated, not a Flexciton site field.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They are staffing the plan. Wafer starts still take days of spreadsheets, so the commit is stale before the shift starts. Flex Planner page: replace days of manual planning with constraint-aware wafer-start plans, delivered autonomously and updated every 45 minutes. No spreadsheets, no firefighting. Customer quote on that page: morning meetings are painful, and shortening them by 15 minutes would be a real ROI.</dd></div>
+              <div><dt>Offer</dt><dd>Capacity Commit Brief</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Sales Nav job search</dd></div>
+              <div><dt>Reply density</dt><dd>Highest intent. They already budgeted a role to keep wafer starts honest against real capacity.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">focused TAM</span>
+          </div>
+          <h3>Tier 2: Toolset scheduling keyword</h3>
+          <p>Open req names dispatcher, scheduler, batching, cycle time, toolset, photolithography scheduling, diffusion scheduling, or reticle, and no planning_capacity keyword. Class estimated.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They are staffing local dispatch. Rule-based schedulers only hit the KPI for one fab state, then engineers retune. Flex Local page: say goodbye to manual rules and constant parameter tweaking. Comparison table there: legacy solutions consume 50% to 80% of one engineering FTE just to understand and retune at every change in fab state.</dd></div>
+              <div><dt>Offer</dt><dd>Toolset KPI Gap Brief</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Sales Nav job search</dd></div>
+              <div><dt>Reply density</dt><dd>Strong. They already pay people to tune dispatch. The retune loop is the pain Flex Local is built for.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">wide TAM</span>
+          </div>
+          <h3>Tier 3: Timelink / factory-automation keyword</h3>
+          <p>Open req names timelink, Q-time, QTimer, factory automation, MES, CIM, digital twin, Industry 4.0, autonomous factory, or fab-wide scheduling, and no planning_capacity or toolset_scheduling keyword. Class estimated.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They are staffing the constraint the local dispatcher cannot see. Flex Global page: timelink constraints are too complex for rule-based schedulers. AST blog: when timelinks are violated, wafers require rework or must be scrapped. Heatmap on that page is the congestion view across time and tools, so issues show up before they escalate.</dd></div>
+              <div><dt>Offer</dt><dd>Timelink Flow Brief</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Sales Nav job search</dd></div>
+              <div><dt>Reply density</dt><dd>Good. They are already staffing the fab-wide constraint Flex Global publishes against.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="catchall" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">remainder TAM</span>
+          </div>
+          <h3>Catch-all: Remaining TAM</h3>
+          <p>Every remaining in-TAM semiconductor manufacturer: visible Ops Manager, Production Director, Fab Manager, or Industrial Engineer, and none of the keywords above.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They are still in the manufacturer set Mila named. Planning and dispatch still sit in heuristics, so engineers firefight and hidden capacity stays on the floor. Homepage: replace outdated, reactive systems with intelligent, real-time data-driven decision-making. AST blog: heuristic schedulers force at least one industrial engineer full-time onto rule maintenance; AST cuts that workload by at least 50%.</dd></div>
+              <div><dt>Offer</dt><dd>Autonomous Fab Playbook</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn TAM after higher tiers route out</dd></div>
+              <div><dt>Reply density</dt><dd>Broadest coverage. Softest ask. Still 100% of TAM. Cost versus throughput is the A/B here.</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">Campaigns</p>
+      <h2>Commit the plan, fill the tool, hold the timelink, skip the firefight</h2>
+      <p class="takeaway">The list is always semiconductor manufacturers, aimed at Ops Managers, Production Directors, Fab Managers, and Industrial Engineers. Fab area is a merge tag, not a second TAM. A/Bs sit on the exclusive routes.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Capacity Commit Brief</h3>
+          <p>Scrape Sales Nav jobs, write to the Ops / Production / IE track, and lead with the start plan they are already staffing that still disagrees with real capacity.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>job_keyword_class = planning_capacity</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the planning / wafer-start req and contrast days of spreadsheet starts with Flex Planner plans updated every 45 minutes</dd></div>
+            <div><dt>Value</dt><dd>Hit the commit</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Experiment">
+          <div class="campaign-card__meta">
+            <span>Experiment</span>
+            <span>Focused</span>
+          </div>
+          <h3>10 / 30 Planner variant</h3>
+          <p>A/B against the Capacity Commit Brief. Same exclusive route, Planner-by-the-numbers language instead of spreadsheet language.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same Tier 1 list, KPI copy instead of commit copy</dd></div>
+            <div><dt>AI strategy</dt><dd>Keep {{named_keyword}} in the notice line. Swap the poke to 10% cycle time at any given WIP and 30% less standard deviation from target velocity, Flex Planner page.</dd></div>
+            <div><dt>Value</dt><dd>Prove the plan</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Toolset KPI Gap Brief</h3>
+          <p>The dispatch majority. Toolset name is a merge tag, not a campaign split. Throughput side of Mila&#39;s A/B.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>job_keyword_class = toolset_scheduling</dd></div>
+            <div><dt>AI strategy</dt><dd>Name {{named_keyword}} in the open req, then offer objective-based scheduling without rule retune, with 9.4% photo throughput from the homepage</dd></div>
+            <div><dt>Value</dt><dd>Fill the tool</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Experiment">
+          <div class="campaign-card__meta">
+            <span>Experiment</span>
+            <span>Focused</span>
+          </div>
+          <h3>Engineering FTE variant</h3>
+          <p>A/B against the KPI Gap Brief. Same exclusive route, FTE language instead of throughput language.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same Tier 2 list, labour-cost copy</dd></div>
+            <div><dt>AI strategy</dt><dd>Keep {{named_keyword}} in the first line. Lead with Flex Local comparison: legacy dispatch consumes 50% to 80% of one engineering FTE to retune at every fab-state change. Cost side of Mila&#39;s A/B.</dd></div>
+            <div><dt>Value</dt><dd>Save labour</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Focused</span>
+          </div>
+          <h3>Timelink Flow Brief</h3>
+          <p>The factory-automation side of Anna&#39;s autonomous-ops pitch. 29% homepage number is the proof line.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>job_keyword_class = timelink_automation</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the timelink / MES / automation req, then Flex Global connecting local schedulers so timelinks stop becoming scrap</dd></div>
+            <div><dt>Value</dt><dd>Hold the timelink</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Experiment">
+          <div class="campaign-card__meta">
+            <span>Experiment</span>
+            <span>Focused</span>
+          </div>
+          <h3>Seagate commits variant</h3>
+          <p>A/B against the Flow Brief. Same exclusive route, delivery language instead of scrap language.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same Tier 3 list, on-time-delivery copy</dd></div>
+            <div><dt>AI strategy</dt><dd>Keep {{named_keyword}} in the first line. Lead with Mark Patton at Seagate: weekly customer commits, predictability and linearity on a long cycle-time build.</dd></div>
+            <div><dt>Value</dt><dd>Hit the commit</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Waterfall">
+          <div class="campaign-card__meta">
+            <span>Waterfall</span>
+            <span>Broad</span>
+          </div>
+          <h3>Autonomous Fab Playbook</h3>
+          <p>Catch-all coverage so every scraped manufacturer still gets one route. The playbook is the tiny yes.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Remaining in-TAM semiconductor manufacturers, job_keyword_class = none</dd></div>
+            <div><dt>AI strategy</dt><dd>Notice the manufacturer LinkedIn already lists, name the heuristic-and-firefight gap Mila pitched, offer the playbook of Planner plus Local plus Global. Throughput side of the A/B.</dd></div>
+            <div><dt>Value</dt><dd>Raise throughput</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Experiment">
+          <div class="campaign-card__meta">
+            <span>Experiment</span>
+            <span>Broad</span>
+          </div>
+          <h3>Cost-reduction variant</h3>
+          <p>A/B against the playbook. Still exclusive catch-all, still one TAM.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Same catch-all list, cost copy</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with the homepage Cost Reduction use case and the AST blog: workload down by at least 50% versus a full-time engineer on heuristic rules. Do not change routing. Cost side of Mila&#39;s original A/B.</dd></div>
+            <div><dt>Value</dt><dd>Cut cost</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="Email Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">Email Copy</p>
+      <h2>Copy that names the req they already posted</h2>
+      <p class="takeaway">Notice the keyword, poke the spreadsheet or rule-tuning gap that keyword implies, then ask for a one-letter yes.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company_name}}</span><span>{{named_keyword}}</span><span>{{posted_role}}</span><span>{{ops_title}}</span><span>{{alt_decision_maker}}</span><span>{{fab_area}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company_name}}, {{named_keyword}}, {{posted_role}}, {{ops_title}}, {{alt_decision_maker}}, {{fab_area}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1: Planning / wafer-start keyword</strong>
+              <em>Capacity Commit Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1: Planning / wafer-start keyword steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{named_keyword}} vs the start plan&#10;&#10;{{first_name}}, LinkedIn shows {{company_name}} hiring a {{posted_role}} against {{named_keyword}}.&#10;&#10;But would it be fair to assume wafer starts still take days of spreadsheets, so the commit is stale before the {{fab_area}} shift starts?&#10;&#10;Flex Planner turns ERP targets into constraint-aware wafer-start plans, delivered autonomously and updated every 45 minutes. Their Planner page: 10% reduction in cycle time at any given WIP level, 30% reduction in standard deviation from target velocity.&#10;&#10;Reply Y and I&#39;ll send a Capacity Commit Brief for {{company_name}}. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{named_keyword}} vs the start plan" data-preview="Capacity Planner vs the start plan">{{named_keyword}} vs the start plan</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, LinkedIn shows {{company_name}} hiring a {{posted_role}} against {{named_keyword}}.&#10;&#10;But would it be fair to assume wafer starts still take days of spreadsheets, so the commit is stale before the {{fab_area}} shift starts?&#10;&#10;Flex Planner turns ERP targets into constraint-aware wafer-start plans, delivered autonomously and updated every 45 minutes. Their Planner page: 10% reduction in cycle time at any given WIP level, 30% reduction in standard deviation from target velocity.&#10;&#10;Reply Y and I&#39;ll send a Capacity Commit Brief for {{company_name}}. No call needed." data-preview="Elena, LinkedIn shows Northridge Semiconductor hiring a Industrial Engineer against Capacity Planner.&#10;&#10;But would it be fair to assume wafer starts still take days of spreadsheets, so the commit is stale before the photolithography shift starts?&#10;&#10;Flex Planner turns ERP targets into constraint-aware wafer-start plans, delivered autonomously and updated every 45 minutes. Their Planner page: 10% reduction in cycle time at any given WIP level, 30% reduction in standard deviation from target velocity.&#10;&#10;Reply Y and I&#39;ll send a Capacity Commit Brief for Northridge Semiconductor. No call needed.">
+                        <p>{{first_name}}, LinkedIn shows {{company_name}} hiring a {{posted_role}} against {{named_keyword}}.</p><p>But would it be fair to assume wafer starts still take days of spreadsheets, so the commit is stale before the {{fab_area}} shift starts?</p><p>Flex Planner turns ERP targets into constraint-aware wafer-start plans, delivered autonomously and updated every 45 minutes. Their Planner page: 10% reduction in cycle time at any given WIP level, 30% reduction in standard deviation from target velocity.</p><p>Reply Y and I&#39;ll send a Capacity Commit Brief for {{company_name}}. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the morning-meeting version is on the same Planner page. A customer there: morning meetings are painful, and shortening them by 15 minutes would be a real ROI. Spotlight is the recommendation layer: reschedule maintenance, qualify a recipe, stop the issue before the meeting starts.&#10;&#10;Homepage Capacity use case: uncover hidden capacity on the tools you already have. No new capex required for that line.&#10;&#10;Want the Capacity Commit Brief? Reply Y.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the morning-meeting version is on the same Planner page. A customer there: morning meetings are painful, and shortening them by 15 minutes would be a real ROI. Spotlight is the recommendation layer: reschedule maintenance, qualify a recipe, stop the issue before the meeting starts.&#10;&#10;Homepage Capacity use case: uncover hidden capacity on the tools you already have. No new capex required for that line.&#10;&#10;Want the Capacity Commit Brief? Reply Y." data-preview="Elena, the morning-meeting version is on the same Planner page. A customer there: morning meetings are painful, and shortening them by 15 minutes would be a real ROI. Spotlight is the recommendation layer: reschedule maintenance, qualify a recipe, stop the issue before the meeting starts.&#10;&#10;Homepage Capacity use case: uncover hidden capacity on the tools you already have. No new capex required for that line.&#10;&#10;Want the Capacity Commit Brief? Reply Y.">
+                        <p>{{first_name}}, the morning-meeting version is on the same Planner page. A customer there: morning meetings are painful, and shortening them by 15 minutes would be a real ROI. Spotlight is the recommendation layer: reschedule maintenance, qualify a recipe, stop the issue before the meeting starts.</p><p>Homepage Capacity use case: uncover hidden capacity on the tools you already have. No new capex required for that line.</p><p>Want the Capacity Commit Brief? Reply Y.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: commit brief for {{company_name}}&#10;&#10;{{first_name}}, last note. No call needed.&#10;&#10;If {{company_name}} is going to keep staffing {{named_keyword}} while starts still wait on a spreadsheet, that is a real choice. If you want the brief of how a 45-minute plan changes that, I will send it.&#10;&#10;Reply Y and I&#39;ll send the Capacity Commit Brief. Should I send it to you, or is {{alt_decision_maker}} the better person?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="commit brief for {{company_name}}" data-preview="commit brief for Northridge Semiconductor">commit brief for {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, last note. No call needed.&#10;&#10;If {{company_name}} is going to keep staffing {{named_keyword}} while starts still wait on a spreadsheet, that is a real choice. If you want the brief of how a 45-minute plan changes that, I will send it.&#10;&#10;Reply Y and I&#39;ll send the Capacity Commit Brief. Should I send it to you, or is {{alt_decision_maker}} the better person?" data-preview="Elena, last note. No call needed.&#10;&#10;If Northridge Semiconductor is going to keep staffing Capacity Planner while starts still wait on a spreadsheet, that is a real choice. If you want the brief of how a 45-minute plan changes that, I will send it.&#10;&#10;Reply Y and I&#39;ll send the Capacity Commit Brief. Should I send it to you, or is your fab manager the better person?">
+                        <p>{{first_name}}, last note. No call needed.</p><p>If {{company_name}} is going to keep staffing {{named_keyword}} while starts still wait on a spreadsheet, that is a real choice. If you want the brief of how a 45-minute plan changes that, I will send it.</p><p>Reply Y and I&#39;ll send the Capacity Commit Brief. Should I send it to you, or is {{alt_decision_maker}} the better person?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2: Toolset scheduling keyword</strong>
+              <em>Toolset KPI Gap Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2: Toolset scheduling keyword steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{named_keyword}} still on rules&#10;&#10;{{first_name}}, {{company_name}} is hiring a {{posted_role}} around {{named_keyword}}.&#10;&#10;But would it be fair to assume dispatch still runs on if-then rules, so the KPI only holds for one fab state and someone retunes after every downtime or recipe change?&#10;&#10;Flex Local lets you set the objective once. The optimizer balances batching, cycle time, and throughput and pushes load, unload, and changeover through Runway. Homepage: 9.4% increase in throughput in the photo area, 18% increase in batch size across the diffusion area.&#10;&#10;Reply Y and I&#39;ll send a Toolset KPI Gap Brief for {{company_name}}. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{named_keyword}} still on rules" data-preview="Capacity Planner still on rules">{{named_keyword}} still on rules</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, {{company_name}} is hiring a {{posted_role}} around {{named_keyword}}.&#10;&#10;But would it be fair to assume dispatch still runs on if-then rules, so the KPI only holds for one fab state and someone retunes after every downtime or recipe change?&#10;&#10;Flex Local lets you set the objective once. The optimizer balances batching, cycle time, and throughput and pushes load, unload, and changeover through Runway. Homepage: 9.4% increase in throughput in the photo area, 18% increase in batch size across the diffusion area.&#10;&#10;Reply Y and I&#39;ll send a Toolset KPI Gap Brief for {{company_name}}. No call needed." data-preview="Elena, Northridge Semiconductor is hiring a Industrial Engineer around Capacity Planner.&#10;&#10;But would it be fair to assume dispatch still runs on if-then rules, so the KPI only holds for one fab state and someone retunes after every downtime or recipe change?&#10;&#10;Flex Local lets you set the objective once. The optimizer balances batching, cycle time, and throughput and pushes load, unload, and changeover through Runway. Homepage: 9.4% increase in throughput in the photo area, 18% increase in batch size across the diffusion area.&#10;&#10;Reply Y and I&#39;ll send a Toolset KPI Gap Brief for Northridge Semiconductor. No call needed.">
+                        <p>{{first_name}}, {{company_name}} is hiring a {{posted_role}} around {{named_keyword}}.</p><p>But would it be fair to assume dispatch still runs on if-then rules, so the KPI only holds for one fab state and someone retunes after every downtime or recipe change?</p><p>Flex Local lets you set the objective once. The optimizer balances batching, cycle time, and throughput and pushes load, unload, and changeover through Runway. Homepage: 9.4% increase in throughput in the photo area, 18% increase in batch size across the diffusion area.</p><p>Reply Y and I&#39;ll send a Toolset KPI Gap Brief for {{company_name}}. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the labour version is on the Flex Local comparison table. Legacy solutions take 50% to 80% of one engineering FTE just to understand and retune at every change in fab state. Flex Local: typically 12 months to full deployment versus 2 to 3 years for the rule stack.&#10;&#10;Unnamed quote on that page: improved moves while reducing risk of reticle breakages, and manufacturing specialists always give positive feedback on the scheduling.&#10;&#10;Want the KPI Gap Brief? Reply Y.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the labour version is on the Flex Local comparison table. Legacy solutions take 50% to 80% of one engineering FTE just to understand and retune at every change in fab state. Flex Local: typically 12 months to full deployment versus 2 to 3 years for the rule stack.&#10;&#10;Unnamed quote on that page: improved moves while reducing risk of reticle breakages, and manufacturing specialists always give positive feedback on the scheduling.&#10;&#10;Want the KPI Gap Brief? Reply Y." data-preview="Elena, the labour version is on the Flex Local comparison table. Legacy solutions take 50% to 80% of one engineering FTE just to understand and retune at every change in fab state. Flex Local: typically 12 months to full deployment versus 2 to 3 years for the rule stack.&#10;&#10;Unnamed quote on that page: improved moves while reducing risk of reticle breakages, and manufacturing specialists always give positive feedback on the scheduling.&#10;&#10;Want the KPI Gap Brief? Reply Y.">
+                        <p>{{first_name}}, the labour version is on the Flex Local comparison table. Legacy solutions take 50% to 80% of one engineering FTE just to understand and retune at every change in fab state. Flex Local: typically 12 months to full deployment versus 2 to 3 years for the rule stack.</p><p>Unnamed quote on that page: improved moves while reducing risk of reticle breakages, and manufacturing specialists always give positive feedback on the scheduling.</p><p>Want the KPI Gap Brief? Reply Y.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: KPI gap for {{company_name}}&#10;&#10;{{first_name}}, no call needed.&#10;&#10;If {{named_keyword}} is going to keep living in rules on the {{fab_area}} toolset, that is the stack. If you want the brief of how Flex Local sets the objective instead of the parameter, I will send it.&#10;&#10;Reply Y and I&#39;ll send the Toolset KPI Gap Brief. You, or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="KPI gap for {{company_name}}" data-preview="KPI gap for Northridge Semiconductor">KPI gap for {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed.&#10;&#10;If {{named_keyword}} is going to keep living in rules on the {{fab_area}} toolset, that is the stack. If you want the brief of how Flex Local sets the objective instead of the parameter, I will send it.&#10;&#10;Reply Y and I&#39;ll send the Toolset KPI Gap Brief. You, or {{alt_decision_maker}}?" data-preview="Elena, no call needed.&#10;&#10;If Capacity Planner is going to keep living in rules on the photolithography toolset, that is the stack. If you want the brief of how Flex Local sets the objective instead of the parameter, I will send it.&#10;&#10;Reply Y and I&#39;ll send the Toolset KPI Gap Brief. You, or your fab manager?">
+                        <p>{{first_name}}, no call needed.</p><p>If {{named_keyword}} is going to keep living in rules on the {{fab_area}} toolset, that is the stack. If you want the brief of how Flex Local sets the objective instead of the parameter, I will send it.</p><p>Reply Y and I&#39;ll send the Toolset KPI Gap Brief. You, or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3: Timelink / factory-automation keyword</strong>
+              <em>Timelink Flow Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3: Timelink / factory-automation keyword steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: timelink the dispatcher cannot see&#10;&#10;{{first_name}}, LinkedIn shows {{company_name}} hiring around {{named_keyword}}.&#10;&#10;But would it be fair to assume local dispatch still cannot see the next constraint, so a timelink break becomes rework or scrap before anyone has a fab-wide view?&#10;&#10;Flex Global connects toolset schedulers, holds timelink constraints, and uses Heatmap so congestion shows up across time and tools. Homepage: 29% reduction in timelink violations in the diffusion area. Their AST blog: when timelinks are violated, wafers require rework or must be scrapped.&#10;&#10;Reply Y and I&#39;ll send a Timelink Flow Brief framed for {{company_name}}. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="timelink the dispatcher cannot see" data-preview="timelink the dispatcher cannot see">timelink the dispatcher cannot see</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, LinkedIn shows {{company_name}} hiring around {{named_keyword}}.&#10;&#10;But would it be fair to assume local dispatch still cannot see the next constraint, so a timelink break becomes rework or scrap before anyone has a fab-wide view?&#10;&#10;Flex Global connects toolset schedulers, holds timelink constraints, and uses Heatmap so congestion shows up across time and tools. Homepage: 29% reduction in timelink violations in the diffusion area. Their AST blog: when timelinks are violated, wafers require rework or must be scrapped.&#10;&#10;Reply Y and I&#39;ll send a Timelink Flow Brief framed for {{company_name}}. No call needed." data-preview="Elena, LinkedIn shows Northridge Semiconductor hiring around Capacity Planner.&#10;&#10;But would it be fair to assume local dispatch still cannot see the next constraint, so a timelink break becomes rework or scrap before anyone has a fab-wide view?&#10;&#10;Flex Global connects toolset schedulers, holds timelink constraints, and uses Heatmap so congestion shows up across time and tools. Homepage: 29% reduction in timelink violations in the diffusion area. Their AST blog: when timelinks are violated, wafers require rework or must be scrapped.&#10;&#10;Reply Y and I&#39;ll send a Timelink Flow Brief framed for Northridge Semiconductor. No call needed.">
+                        <p>{{first_name}}, LinkedIn shows {{company_name}} hiring around {{named_keyword}}.</p><p>But would it be fair to assume local dispatch still cannot see the next constraint, so a timelink break becomes rework or scrap before anyone has a fab-wide view?</p><p>Flex Global connects toolset schedulers, holds timelink constraints, and uses Heatmap so congestion shows up across time and tools. Homepage: 29% reduction in timelink violations in the diffusion area. Their AST blog: when timelinks are violated, wafers require rework or must be scrapped.</p><p>Reply Y and I&#39;ll send a Timelink Flow Brief framed for {{company_name}}. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the delivery version is Seagate. Mark Patton, Director of Manufacturing, on the homepage: with Seagate adopting Flexciton they improved predictability of delivery by meeting weekly customer commits. With a lengthy cycle time build, that predictability and linearity has been key to meeting commits consistently.&#10;&#10;Jay Maguire, Industrial Engineer, Renesas Electronics, on the same page: the implementation worked out even better than they hoped.&#10;&#10;Want the Flow Brief? Reply Y.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the delivery version is Seagate. Mark Patton, Director of Manufacturing, on the homepage: with Seagate adopting Flexciton they improved predictability of delivery by meeting weekly customer commits. With a lengthy cycle time build, that predictability and linearity has been key to meeting commits consistently.&#10;&#10;Jay Maguire, Industrial Engineer, Renesas Electronics, on the same page: the implementation worked out even better than they hoped.&#10;&#10;Want the Flow Brief? Reply Y." data-preview="Elena, the delivery version is Seagate. Mark Patton, Director of Manufacturing, on the homepage: with Seagate adopting Flexciton they improved predictability of delivery by meeting weekly customer commits. With a lengthy cycle time build, that predictability and linearity has been key to meeting commits consistently.&#10;&#10;Jay Maguire, Industrial Engineer, Renesas Electronics, on the same page: the implementation worked out even better than they hoped.&#10;&#10;Want the Flow Brief? Reply Y.">
+                        <p>{{first_name}}, the delivery version is Seagate. Mark Patton, Director of Manufacturing, on the homepage: with Seagate adopting Flexciton they improved predictability of delivery by meeting weekly customer commits. With a lengthy cycle time build, that predictability and linearity has been key to meeting commits consistently.</p><p>Jay Maguire, Industrial Engineer, Renesas Electronics, on the same page: the implementation worked out even better than they hoped.</p><p>Want the Flow Brief? Reply Y.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: flow brief for {{company_name}}&#10;&#10;{{first_name}}, last one. No call needed.&#10;&#10;If {{company_name}} is going to keep running {{named_keyword}} while timelinks still break in {{fab_area}}, that is the constraint. If you want the brief of how Flex Global holds it across local schedulers, I will send it.&#10;&#10;Reply Y and I&#39;ll send the Timelink Flow Brief. Should I send it to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="flow brief for {{company_name}}" data-preview="flow brief for Northridge Semiconductor">flow brief for {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, last one. No call needed.&#10;&#10;If {{company_name}} is going to keep running {{named_keyword}} while timelinks still break in {{fab_area}}, that is the constraint. If you want the brief of how Flex Global holds it across local schedulers, I will send it.&#10;&#10;Reply Y and I&#39;ll send the Timelink Flow Brief. Should I send it to you or {{alt_decision_maker}}?" data-preview="Elena, last one. No call needed.&#10;&#10;If Northridge Semiconductor is going to keep running Capacity Planner while timelinks still break in photolithography, that is the constraint. If you want the brief of how Flex Global holds it across local schedulers, I will send it.&#10;&#10;Reply Y and I&#39;ll send the Timelink Flow Brief. Should I send it to you or your fab manager?">
+                        <p>{{first_name}}, last one. No call needed.</p><p>If {{company_name}} is going to keep running {{named_keyword}} while timelinks still break in {{fab_area}}, that is the constraint. If you want the brief of how Flex Global holds it across local schedulers, I will send it.</p><p>Reply Y and I&#39;ll send the Timelink Flow Brief. Should I send it to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Catch-all: Remaining TAM</strong>
+              <em>Autonomous Fab Playbook</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Catch-all: Remaining TAM steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: plan still lives in heuristics&#10;&#10;{{first_name}}, {{company_name}} looks like a semiconductor manufacturer. LinkedIn already has {{ops_title}} on the page.&#10;&#10;But would it be fair to assume planning and dispatch still sit in heuristics, so hidden capacity stays on the floor and engineers spend the shift firefighting?&#10;&#10;Flexciton is the decision-making layer of the autonomous factory: Flex Planner, Flex Local, Flex Global. Homepage: 25+ fabs around the world. Jamie Potter, CEO, on their AI blog: a full-fab deployment replaced rules-based scheduling and recorded a 75% reduction in manual flow-control transactions.&#10;&#10;Reply Y and I&#39;ll send an Autonomous Fab Playbook framed for {{company_name}}. No call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="plan still lives in heuristics" data-preview="plan still lives in heuristics">plan still lives in heuristics</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, {{company_name}} looks like a semiconductor manufacturer. LinkedIn already has {{ops_title}} on the page.&#10;&#10;But would it be fair to assume planning and dispatch still sit in heuristics, so hidden capacity stays on the floor and engineers spend the shift firefighting?&#10;&#10;Flexciton is the decision-making layer of the autonomous factory: Flex Planner, Flex Local, Flex Global. Homepage: 25+ fabs around the world. Jamie Potter, CEO, on their AI blog: a full-fab deployment replaced rules-based scheduling and recorded a 75% reduction in manual flow-control transactions.&#10;&#10;Reply Y and I&#39;ll send an Autonomous Fab Playbook framed for {{company_name}}. No call needed." data-preview="Elena, Northridge Semiconductor looks like a semiconductor manufacturer. LinkedIn already has Production Director on the page.&#10;&#10;But would it be fair to assume planning and dispatch still sit in heuristics, so hidden capacity stays on the floor and engineers spend the shift firefighting?&#10;&#10;Flexciton is the decision-making layer of the autonomous factory: Flex Planner, Flex Local, Flex Global. Homepage: 25+ fabs around the world. Jamie Potter, CEO, on their AI blog: a full-fab deployment replaced rules-based scheduling and recorded a 75% reduction in manual flow-control transactions.&#10;&#10;Reply Y and I&#39;ll send an Autonomous Fab Playbook framed for Northridge Semiconductor. No call needed.">
+                        <p>{{first_name}}, {{company_name}} looks like a semiconductor manufacturer. LinkedIn already has {{ops_title}} on the page.</p><p>But would it be fair to assume planning and dispatch still sit in heuristics, so hidden capacity stays on the floor and engineers spend the shift firefighting?</p><p>Flexciton is the decision-making layer of the autonomous factory: Flex Planner, Flex Local, Flex Global. Homepage: 25+ fabs around the world. Jamie Potter, CEO, on their AI blog: a full-fab deployment replaced rules-based scheduling and recorded a 75% reduction in manual flow-control transactions.</p><p>Reply Y and I&#39;ll send an Autonomous Fab Playbook framed for {{company_name}}. No call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;{{first_name}}, the cost version is on two pages. Homepage Cost Reduction use case: better tool utilisation, fewer bottlenecks, lower costs in peaks and downturns. AST blog: heuristic schedulers force at least one industrial engineer full-time onto rule maintenance. Autonomous scheduling cuts that workload by at least 50%.&#10;&#10;Homepage: 9.4% increase in throughput in the photo area, without a line about buying more tools.&#10;&#10;Want the Playbook? Reply Y.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, the cost version is on two pages. Homepage Cost Reduction use case: better tool utilisation, fewer bottlenecks, lower costs in peaks and downturns. AST blog: heuristic schedulers force at least one industrial engineer full-time onto rule maintenance. Autonomous scheduling cuts that workload by at least 50%.&#10;&#10;Homepage: 9.4% increase in throughput in the photo area, without a line about buying more tools.&#10;&#10;Want the Playbook? Reply Y." data-preview="Elena, the cost version is on two pages. Homepage Cost Reduction use case: better tool utilisation, fewer bottlenecks, lower costs in peaks and downturns. AST blog: heuristic schedulers force at least one industrial engineer full-time onto rule maintenance. Autonomous scheduling cuts that workload by at least 50%.&#10;&#10;Homepage: 9.4% increase in throughput in the photo area, without a line about buying more tools.&#10;&#10;Want the Playbook? Reply Y.">
+                        <p>{{first_name}}, the cost version is on two pages. Homepage Cost Reduction use case: better tool utilisation, fewer bottlenecks, lower costs in peaks and downturns. AST blog: heuristic schedulers force at least one industrial engineer full-time onto rule maintenance. Autonomous scheduling cuts that workload by at least 50%.</p><p>Homepage: 9.4% increase in throughput in the photo area, without a line about buying more tools.</p><p>Want the Playbook? Reply Y.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: playbook for {{company_name}}&#10;&#10;{{first_name}}, no call needed.&#10;&#10;Reply Y and I&#39;ll send the Autonomous Fab Playbook. Should I send it to you, or is {{alt_decision_maker}} the better person?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="playbook for {{company_name}}" data-preview="playbook for Northridge Semiconductor">playbook for {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed.&#10;&#10;Reply Y and I&#39;ll send the Autonomous Fab Playbook. Should I send it to you, or is {{alt_decision_maker}} the better person?" data-preview="Elena, no call needed.&#10;&#10;Reply Y and I&#39;ll send the Autonomous Fab Playbook. Should I send it to you, or is your fab manager the better person?">
+                        <p>{{first_name}}, no call needed.</p><p>Reply Y and I&#39;ll send the Autonomous Fab Playbook. Should I send it to you, or is {{alt_decision_maker}} the better person?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">Launch</p>
+      <h2>Launch the planning keyword first</h2>
+      <p class="takeaway">Start where they are already staffing wafer starts and capacity, the problem Flex Planner is built for. Prove reply density, then roll toolset scheduling, timelink automation, and the remaining-TAM catch-all.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Pull LinkedIn Sales Nav for semiconductor manufacturers (IDM, foundry, memory, OSAT with a front-end or assembly fab) with a visible Ops Manager, Production Director, Fab Manager, Industrial Engineer, Production Control, or Manufacturing Director, or with production-planning / dispatch / MES jobs. Keep the open-req keyword in the same export. Classify job_keyword_class as planning_capacity, toolset_scheduling, timelink_automation, or none. Suppress already_customer when a Flexciton deployment is visible. Named logos (Seagate, Renesas, Microchip) are not a blanket exclude. The Intel announcement is a partnership, not a customer-wide suppress.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Keyword classes are estimated GTMx taxonomy, not Flexciton site fields. Tune the synonym list after the first Sales Nav pull if a band is starved or overlapping. First match wins. Do not also route on wafer starts, node, headcount, or &#39;MES not detected&#39;. Those cutoffs are not on flexciton.com, and absence of a MES cookie is unreliable.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Resolve work emails in Apollo only after the domain is routed. Title is a merge tag, not a second TAM. Optional careers-page text fills {{fab_area}} (photolithography, diffusion, etch, metrology) as a merge tag only. Optional SEMI / public fab directory is an in_tam gate, not a route.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Launch Tier 1 Capacity Commit Brief first. Smallest list, sharpest starts-versus-capacity signal, closest to Flex Planner (updated every 45 minutes). Commit copy as the control, 10% / 30% Planner KPIs as the A/B on the same list.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Add Tier 2 Toolset KPI Gap Brief once {{named_keyword}} merge tags are clean across dispatch, batching, cycle time, and reticle language. Throughput copy as the control, 50% to 80% of one engineering FTE as the cost A/B. Then Tier 3 Timelink Flow Brief, with Seagate weekly-commits as the delivery A/B.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Turn on the Autonomous Fab Playbook catch-all last so every remaining in-TAM manufacturer still has a route. That is Mila&#39;s original Ops / Production pitch. Cost versus throughput is the A/B on this list, not a second TAM. Keep fab_area as a merge tag, not a campaign split, until one job-keyword tier is clearly working.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>Account-level TAM is qualitative and almost certainly under the waterfall SOP&#39;s 20k-account floor. Flexciton&#39;s own autonomous-fab post cites over 100 new wafer fabs expected industry-wide, and the homepage cites 25+ fabs they have already worked with. Volume lives at the contact layer (Ops, Production, IE, production control, per site). Do not print a fake TAM count. Do not launch a tier under about 1,500 contacts. That threshold is the waterfall SOP, not a Flexciton site number. If a keyword band is starved after the scrape, widen synonyms before inventing a headcount cutoff.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive reply per 150 contacts</strong>
+                <span>Perfect. Scale that tier. Keep the winning commit, KPI, timelink, or cost variant.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good. Let it run. Do not mix a non-manufacturer TAM into this waterfall, and do not move the spine onto a raw Apollo semiconductor-Ops list.</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450-500</strong>
+                <span>Borderline. Swap only the magnet or the first-line job keyword. Do not change the route.</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or reply rate under 1% after 1,500+ sends</strong>
+                <span>Cut that copy variant. Keep the exclusive waterfall. Retune the estimated planning_capacity / toolset_scheduling / timelink_automation synonym lists from the live scrape if a band is starved of contacts.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book the strategy call</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Elena","Northridge Semiconductor","customer support rep","6","Intercom","healthcare operations","Maya","Capacity Planner","Industrial Engineer","Production Director","your fab manager","photolithography"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
