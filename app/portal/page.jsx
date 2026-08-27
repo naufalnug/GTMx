@@ -31,7 +31,7 @@ function sequenceNote({ emailed, interested, fullySequenced, sequenceLength }) {
 
 // A manual sync pulls a whole EmailBison workspace inline, which outlasts the
 // default action budget on larger clients.
-export const maxDuration = 300;
+export const maxDuration = 800;
 
 const SYNC_NOTICE = {
   done: { tone: "portal-success", text: "Data synced from EmailBison." },
