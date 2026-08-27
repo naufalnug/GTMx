@@ -70,7 +70,13 @@ export async function syncClientDataAction(formData) {
 
   let status = 'done';
   try {
-    await runSync([slug], { log: (message) => console.log(`[manual sync] ${message}`) });
+    // Same budget as the cron route: stop the lead walk with ~100s of the 800s
+    // function limit left, so a big client saves its cursor and resumes next run
+    // instead of being killed mid-walk with nothing recorded.
+    await runSync([slug], {
+      deadline: Date.now() + 700_000,
+      log: (message) => console.log(`[manual sync] ${message}`),
+    });
   } catch (error) {
     console.error('Manual sync failed', error);
     status = 'failed';
