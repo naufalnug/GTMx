@@ -3,11 +3,14 @@ import { listClientSlugs } from '../../../../lib/clients';
 import { createAdminClient } from '../../../../lib/supabase/admin';
 
 export const dynamic = 'force-dynamic';
-export const maxDuration = 300;
+export const maxDuration = 800;
 
 // Leave room inside maxDuration to finish the client in flight and write results.
+// Raised to 800s (Pro/Fluid Compute ceiling) 2026-08-27: a single client was
+// exceeding the old 300s and returning FUNCTION_INVOCATION_TIMEOUT, so no
+// automated sync could ever complete.
 // A full roster takes minutes, so an unbounded run gets killed mid-write.
-const TIME_BUDGET_MS = 210_000;
+const TIME_BUDGET_MS = 700_000;
 
 /**
  * Orders clients stalest-first so a run that can't reach everyone still makes
