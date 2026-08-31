@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Optiwise - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-08-31</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Optiwise</p>
+          <h1>Your Optiwise waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">A scrollable GTMx strategy artifact for routing Walmart 1P suppliers and 3P marketplace brands into the right Optiwise listing, Rich Media, and ads offer. List building, campaign angles, and sample copy, prepared for Ritesh Jhamnani.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Ritesh already sells Walmart listing, SEO, and ads optimization so 1P suppliers and 3P brands stop paying for traffic that a broken catalog cannot convert. The one list is in-TAM Walmart sellers plus Amazon brands expanding to Walmart. The one routing signal is how the catalog already shows up. Category labels are merge tags after routing, not a second waterfall.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book the strategy call</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>1,000+</strong>
+          <span>brands optimized (on optiwise.ai/enterprise)</span>
+        </div>
+        <div class="metric-card">
+          <strong>20M+</strong>
+          <span>products optimized (on optiwise.ai/enterprise)</span>
+        </div>
+        <div class="metric-card">
+          <strong>2.8x</strong>
+          <span>increase in digital pen (on optiwise.ai/enterprise)</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Optiwise.ai is an Algorithm Optimization Platform (AOP) for Walmart 1P suppliers and 3P marketplace sellers: Gen-AI listing optimization (Item Spec 5.0 compliance, keyword-rich titles/descriptions, Amazon-to-Walmart import), Rich Media / BTF (Enhanced Brand Content) that transforms Amazon A+ 100x faster, TACoS-driven sponsored ads, seasonality, growth recommendations, and Olivia, a Gen-AI assistant watching 78 catalog and ads signals. Homepage line: expand Amazon success to Walmart. Enterprise page: not a PIM like Salsify or Syndigo. Named proof on optiwise.ai: 1,000+ brands, 20M+ products optimized across Walmart.com and Amazon, 470+ categories, 12+ years of Walmart partnership / Walmart Connect partner, founded by ex-Walmart and ex-Amazon tech leaders who optimized Walmart listings for 8 years. Measured outcomes on /enterprise/: 2.8x increase in digital pen, 60% digital sales growth, 18% content-quality-score improvement, 47% ROAS lift; average brand has 3,000 backend issues, 2,100 digital-shelf issues, 55 Omni Spec 5.0 issues, 161 backend attribute issues; fixing frontend issues averages +20% digital sales, backend +40%. Homepage sample data: 35-40% cost saved vs manual optimization. On-site testimonials: Jonathan Feldman 212% 3P / 300% 1P in three quarters; Claudia L Borunda 3X product sales; Nick 121% revenue; Acquco (Lucas Millman) doubled YoY with v5 item-spec compliance. Case studies: content score 86% and Walmart listing score 82% in 3 months; EBC 2.5x revenue in one month (90+ min per EBC to &lt;1 min). Pricing on /pricing/: free plan, 3P from $249/mo, 1P from $999/mo, managed services custom. Free Chrome extension. Free backend audit CTA on /enterprise/.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal is how the catalog already shows up</p></div><div><span>02</span><p>One cascade routes every Walmart 1P supplier and 3P marketplace brand</p></div><div><span>03</span><p>Each catalog-state gets a different first offer</p></div><div><span>04</span><p>Switch the ads stack, port A+ to Walmart BTF, raise the listing score, then cover the rest</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>Waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>Email Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">Signal</p>
+      <h2>The signal is how the catalog already shows up</h2>
+      <p class="takeaway">A Walmart PDP plus Amazon PDP already names live ads or a listing/ads/PIM competitor, Amazon A+ with no Walmart BTF, a thin Walmart listing, or none of those. That catalog-state is stronger than a title guess, and it is free to collect.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>LinkedIn plus Walmart seller and Amazon-brand directories are the TAM Ritesh already named: Walmart 1P suppliers and 3P marketplace brands, plus Amazon brands expanding to Walmart.</p></div><div class="reason-card"><span>02</span><p>The same Walmart PDP plus Amazon PDP scrape returns live ads or a named listing/ads/PIM competitor (Salsify or Syndigo on optiwise.ai/enterprise, or a Walmart ads platform), Amazon A+ with no Walmart BTF / Rich Media / EBC, or a thin Walmart listing, which is enough to route without a second enrichment product.</p></div><div class="reason-card"><span>03</span><p>The ladder maps to live Optiwise positioning: Algorithm Optimization Platform (not a PIM like Salsify or Syndigo); Gen-AI listing optimization and Item Spec 5.0; Rich Media / BTF that transforms Amazon A+ 100x faster; TACoS-driven sponsored ads; Olivia watching 78 catalog and ads signals; 1,000+ brands, 20M+ products, 2.8x digital pen (all on optiwise.ai / enterprise).</p></div><div class="reason-card"><span>04</span><p>Category labels are scrape filters and merge tags. They are not a second waterfall. Apollo is email last, never the TAM spine.</p></div>
+            </div>
+            <div class="field-cloud"><span>in_tam</span><span>already_customer</span><span>catalog_state</span><span>competitor</span><span>aplus_phrase</span><span>listing_phrase</span><span>buyer_title</span><span>category</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>LinkedIn Sales Navigator company + title graph</h3><p>In-TAM Walmart 1P suppliers, 3P marketplace brands, and Amazon brands expanding to Walmart, plus e-commerce / marketplace / channel titles. The TAM gate.</p></div><div class="source-card"><span>02</span><h3>Walmart PDP and Amazon PDP scrape</h3><p>catalog_state used to assign Tier 1 / 2 / 3 / catch-all: ads or named competitor, Amazon A+ with no Walmart BTF, thin Walmart PDP, or none. One pull.</p></div><div class="source-card"><span>03</span><h3>BuiltWith / script and footer scan</h3><p>Named listing, ads, or PIM competitor (Salsify or Syndigo, named on optiwise.ai/enterprise, or a Walmart ads platform) when the scrape needs a second pass</p></div><div class="source-card"><span>04</span><h3>Walmart Marketplace / Amazon brand directories (optional)</h3><p>Backup in_tam when LinkedIn coverage is thin. Gate only.</p></div><div class="source-card"><span>05</span><h3>Apollo (after qualification)</h3><p>Work emails for already-routed accounts. Do not buy a raw Walmart-sellers list and hope.</p></div><div class="source-card"><span>06</span><h3>Optional Optiwise customer suppress</h3><p>Current-customer exclusion when the signal is visible. Named testimonials on optiwise.ai (Jonathan Feldman, Claudia L Borunda, Nick, Acquco / Lucas Millman) are not a franchise-wide exclude.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="Waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">Waterfall</p>
+      <h2>One cascade routes every Walmart 1P supplier and 3P marketplace brand</h2>
+      <p class="takeaway">First match wins. Ads or a named competitor goes first, then Amazon A+ with no Walmart BTF, then a thin Walmart PDP, then every remaining in-TAM seller.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF already_customer = true</span>
+          <strong>Exclude</strong>
+          <em>Already a customer</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF in_tam AND catalog_state = ads_or_competitor</span>
+          <strong>Tier 1 - Algorithm Switch Brief</strong>
+          <em>They already pay for Walmart ads or a named listing/ads/PIM competitor. Strongest intent for an algorithm switch when traffic hits a catalog that cannot convert.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF in_tam AND catalog_state = amazon_aplus_no_walmart_btf</span>
+          <strong>Tier 2 - A+ to Walmart BTF Brief</strong>
+          <em>Amazon A+ / Premium A+ is live and the Walmart PDP has no BTF / Rich Media / EBC. Pain is porting content, not education.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF in_tam AND catalog_state = walmart_thin_pdp</span>
+          <strong>Tier 3 - Spec 5.0 Listing Score Brief</strong>
+          <em>The Walmart listing is live and thin (short copy, missing Item Spec 5.0 / Omni Spec 5.0 attributes). Maps to Optiwise listing-score and backend-issue offer.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF in_tam AND none of the above</span>
+          <strong>Catch-all - Digital Pen Playbook</strong>
+          <em>Still in TAM (Walmart 1P suppliers, 3P marketplace brands, Amazon brands expanding to Walmart). Softest CTA, broadest copy, mandatory 100% coverage.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF already_customer = true -&gt; Exclude (Already a customer)&#10;2. IF in_tam AND catalog_state = ads_or_competitor -&gt; Tier 1 - Algorithm Switch Brief (They already pay for Walmart ads or a named listing/ads/PIM competitor. Strongest intent for an algorithm switch when traffic hits a catalog that cannot convert.)&#10;3. IF in_tam AND catalog_state = amazon_aplus_no_walmart_btf -&gt; Tier 2 - A+ to Walmart BTF Brief (Amazon A+ / Premium A+ is live and the Walmart PDP has no BTF / Rich Media / EBC. Pain is porting content, not education.)&#10;4. IF in_tam AND catalog_state = walmart_thin_pdp -&gt; Tier 3 - Spec 5.0 Listing Score Brief (The Walmart listing is live and thin (short copy, missing Item Spec 5.0 / Omni Spec 5.0 attributes). Maps to Optiwise listing-score and backend-issue offer.)&#10;5. IF in_tam AND none of the above -&gt; Catch-all - Digital Pen Playbook (Still in TAM (Walmart 1P suppliers, 3P marketplace brands, Amazon brands expanding to Walmart). Softest CTA, broadest copy, mandatory 100% coverage.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF already_customer = true -&gt; Exclude (Already a customer)
+2. IF in_tam AND catalog_state = ads_or_competitor -&gt; Tier 1 - Algorithm Switch Brief (They already pay for Walmart ads or a named listing/ads/PIM competitor. Strongest intent for an algorithm switch when traffic hits a catalog that cannot convert.)
+3. IF in_tam AND catalog_state = amazon_aplus_no_walmart_btf -&gt; Tier 2 - A+ to Walmart BTF Brief (Amazon A+ / Premium A+ is live and the Walmart PDP has no BTF / Rich Media / EBC. Pain is porting content, not education.)
+4. IF in_tam AND catalog_state = walmart_thin_pdp -&gt; Tier 3 - Spec 5.0 Listing Score Brief (The Walmart listing is live and thin (short copy, missing Item Spec 5.0 / Omni Spec 5.0 attributes). Maps to Optiwise listing-score and backend-issue offer.)
+5. IF in_tam AND none of the above -&gt; Catch-all - Digital Pen Playbook (Still in TAM (Walmart 1P suppliers, 3P marketplace brands, Amazon brands expanding to Walmart). Softest CTA, broadest copy, mandatory 100% coverage.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">Tiers</p>
+      <h2>Each catalog-state gets a different first offer</h2>
+      <p class="takeaway">Ads or a competitor gets an Algorithm Switch Brief. Amazon A+ with no Walmart BTF gets an A+ to Walmart BTF Brief. A thin Walmart PDP gets a Spec 5.0 Listing Score Brief. The rest get the Digital Pen Playbook.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">est. flagged TAM</span>
+          </div>
+          <h3>Tier 1: Ads or competitor on the catalog stack</h3>
+          <p>Walmart PDP, site, or BuiltWith shows live sponsored ads or a named listing/ads/PIM competitor (Salsify or Syndigo, named on optiwise.ai/enterprise, or a Walmart ads platform)</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They already pay for Walmart traffic or a catalog tool, but a broken catalog still cannot convert the click. Digital pen stalls while ad spend rises.</dd></div>
+              <div><dt>Offer</dt><dd>Algorithm Switch Brief</dd></div>
+              <div><dt>Source</dt><dd>Walmart PDP scrape + BuiltWith / footer scan</dd></div>
+              <div><dt>Reply density</dt><dd>Highest - they already pay to send traffic at the catalog</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">est. flagged TAM</span>
+          </div>
+          <h3>Tier 2: Amazon A+ live, no Walmart BTF</h3>
+          <p>Amazon PDP shows A+ / Premium A+ / EBC and the Walmart PDP has no BTF, Rich Media, or Enhanced Brand Content</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Amazon content already exists, but Walmart still has a thin below-the-fold. Manual EBC is slow (90+ min per module on the Optiwise case study).</dd></div>
+              <div><dt>Offer</dt><dd>A+ to Walmart BTF Brief</dd></div>
+              <div><dt>Source</dt><dd>Amazon PDP + Walmart PDP scrape</dd></div>
+              <div><dt>Reply density</dt><dd>High - they already invested in Amazon A+</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">est. flagged TAM</span>
+          </div>
+          <h3>Tier 3: Thin Walmart PDP</h3>
+          <p>Walmart listing is live and thin: short title/description, missing Item Spec 5.0 / Omni Spec 5.0 attributes, no competitor or Amazon-A+ signal above</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The listing is on Walmart and still fails Spec 5.0. Average brand on optiwise.ai/enterprise: 3,000 backend issues, 2,100 digital-shelf issues, 55 Omni Spec 5.0 issues, 161 backend attribute issues.</dd></div>
+              <div><dt>Offer</dt><dd>Spec 5.0 Listing Score Brief</dd></div>
+              <div><dt>Source</dt><dd>Walmart PDP scrape</dd></div>
+              <div><dt>Reply density</dt><dd>Medium - a live thin PDP proves the catalog gap, urgency varies</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="catchall" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">est. flagged; remainder TAM</span>
+          </div>
+          <h3>Catch-all: Remaining in-TAM Walmart and Amazon-to-Walmart brands</h3>
+          <p>In-TAM Walmart 1P supplier, 3P marketplace brand, or Amazon brand expanding to Walmart, with an e-commerce decision maker and no Tier 1-3 catalog-state</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Digital pen still stalls on backend discoverability, compliance, and indexing issues the dashboard does not show.</dd></div>
+              <div><dt>Offer</dt><dd>Digital Pen Playbook</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn company + title graph after in_tam gate</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest - broadest list, softest CTA</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">Campaigns</p>
+      <h2>Switch the ads stack, port A+ to Walmart BTF, raise the listing score, then cover the rest</h2>
+      <p class="takeaway">The list is always in-TAM Walmart 1P suppliers and 3P marketplace brands plus Amazon brands expanding to Walmart, aimed at e-commerce, marketplace, and channel titles. Category is a merge tag, not a second TAM. A/Bs sit on the exclusive routes.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Ads or named competitor already on the stack</h3>
+          <p>Highest intent. Personalise on {{competitor}} and {{category}}.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>in_tam + ads_or_competitor</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with the named {{competitor}} or live Walmart ads on their catalog, then offer a one-page Algorithm Switch Brief showing how 1P and 3P brands fix discoverability before they keep buying clicks a thin listing cannot convert.</dd></div>
+            <div><dt>Value</dt><dd>Stop paying for traffic a broken catalog cannot convert</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Amazon A+ is live, Walmart has no BTF</h3>
+          <p>Second exclusive route. Keep copy about porting content, not education.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>in_tam + amazon_aplus_no_walmart_btf</dd></div>
+            <div><dt>AI strategy</dt><dd>Name the {{aplus_phrase}} already on Amazon, poke the missing Walmart BTF / Rich Media, offer the A+ to Walmart BTF Brief.</dd></div>
+            <div><dt>Value</dt><dd>Port Amazon A+ to Walmart BTF without a 90-minute EBC grind</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Walmart PDP is live and thin</h3>
+          <p>Third exclusive route. {{category}} is a merge tag.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>in_tam + walmart_thin_pdp</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with the thin {{listing_phrase}} already on Walmart and the missing Item Spec 5.0 completeness, then the listing-score and backend-issue proof already on optiwise.ai/enterprise.</dd></div>
+            <div><dt>Value</dt><dd>Raise Spec 5.0 listing score so the PDP can convert</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Remaining Walmart and Amazon-to-Walmart brands</h3>
+          <p>Mandatory catch-all for 100% TAM coverage.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>in_tam + no Tier 1-3 catalog-state</dd></div>
+            <div><dt>AI strategy</dt><dd>Soft Digital Pen Playbook. Category and title as merge tags. Soft CTA.</dd></div>
+            <div><dt>Value</dt><dd>Simple path to listing, Rich Media, and TACoS ads</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="Email Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">Email Copy</p>
+      <h2>Copy that names the catalog state already on their listings</h2>
+      <p class="takeaway">Notice the ads stack, the Amazon A+, or the thin Walmart PDP, poke the traffic-that-cannot-convert gap that catalog-state implies, then ask for a one-letter yes.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company_name}}</span><span>{{competitor}}</span><span>{{category}}</span><span>{{buyer_title}}</span><span>{{aplus_phrase}}</span><span>{{listing_phrase}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company_name}}, {{competitor}}, {{category}}, {{buyer_title}}, {{aplus_phrase}}, {{listing_phrase}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Algorithm Switch Brief</strong>
+              <em>Algorithm Switch Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Algorithm Switch Brief steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{competitor}} on {{company_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;Saw {{competitor}} on your stack. Usually that means {{category}} listings already pay for Walmart traffic, but a broken catalog still cannot convert the click.&#10;&#10;We put together a one-page Algorithm Switch Brief for 1P and 3P brands: how peers fix discoverability first, then run TACoS-driven ads with Olivia watching 78 catalog and ads signals (Optiwise AOP, not a PIM, on optiwise.ai/enterprise). 47% ROAS lift is the measured ads outcome on that page.&#10;&#10;Worth a look?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{competitor}} on {{company_name}}" data-preview="Salsify on Harborline Home">{{competitor}} on {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Saw {{competitor}} on your stack. Usually that means {{category}} listings already pay for Walmart traffic, but a broken catalog still cannot convert the click.&#10;&#10;We put together a one-page Algorithm Switch Brief for 1P and 3P brands: how peers fix discoverability first, then run TACoS-driven ads with Olivia watching 78 catalog and ads signals (Optiwise AOP, not a PIM, on optiwise.ai/enterprise). 47% ROAS lift is the measured ads outcome on that page.&#10;&#10;Worth a look?" data-preview="Hey Dana,&#10;&#10;Saw Salsify on your stack. Usually that means home listings already pay for Walmart traffic, but a broken catalog still cannot convert the click.&#10;&#10;We put together a one-page Algorithm Switch Brief for 1P and 3P brands: how peers fix discoverability first, then run TACoS-driven ads with Olivia watching 78 catalog and ads signals (Optiwise AOP, not a PIM, on optiwise.ai/enterprise). 47% ROAS lift is the measured ads outcome on that page.&#10;&#10;Worth a look?">
+                        <p>Hey {{first_name}},</p><p>Saw {{competitor}} on your stack. Usually that means {{category}} listings already pay for Walmart traffic, but a broken catalog still cannot convert the click.</p><p>We put together a one-page Algorithm Switch Brief for 1P and 3P brands: how peers fix discoverability first, then run TACoS-driven ads with Olivia watching 78 catalog and ads signals (Optiwise AOP, not a PIM, on optiwise.ai/enterprise). 47% ROAS lift is the measured ads outcome on that page.</p><p>Worth a look?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Quick bump on the Switch Brief. Happy to send the one-pager if {{competitor}} is still sitting in front of a catalog that cannot convert the traffic.&#10;&#10;Either way, appreciate you.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Quick bump on the Switch Brief. Happy to send the one-pager if {{competitor}} is still sitting in front of a catalog that cannot convert the traffic.&#10;&#10;Either way, appreciate you." data-preview="Hey Dana,&#10;&#10;Quick bump on the Switch Brief. Happy to send the one-pager if Salsify is still sitting in front of a catalog that cannot convert the traffic.&#10;&#10;Either way, appreciate you.">
+                        <p>Hey {{first_name}},</p><p>Quick bump on the Switch Brief. Happy to send the one-pager if {{competitor}} is still sitting in front of a catalog that cannot convert the traffic.</p><p>Either way, appreciate you.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: question for {{first_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;Should I close the loop on this, or is digital pen still something {{company_name}} wants cleaner than ads on a thin listing?&#10;&#10;A / B / C is fine.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="question for {{first_name}}" data-preview="question for Dana">question for {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Should I close the loop on this, or is digital pen still something {{company_name}} wants cleaner than ads on a thin listing?&#10;&#10;A / B / C is fine." data-preview="Hey Dana,&#10;&#10;Should I close the loop on this, or is digital pen still something Harborline Home wants cleaner than ads on a thin listing?&#10;&#10;A / B / C is fine.">
+                        <p>Hey {{first_name}},</p><p>Should I close the loop on this, or is digital pen still something {{company_name}} wants cleaner than ads on a thin listing?</p><p>A / B / C is fine.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - A+ to Walmart BTF Brief</strong>
+              <em>A+ to Walmart BTF Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - A+ to Walmart BTF Brief steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: A+ on {{company_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;Your Amazon pages already show {{aplus_phrase}}. The Walmart PDP looks like it still has no BTF / Rich Media under it, so the Amazon module never makes the trip.&#10;&#10;Happy to share a short A+ to Walmart BTF Brief: Rich Media that transforms Amazon A+ 100x faster. Optiwise case study: EBC 2.5x revenue in one month (90+ min per EBC to &lt;1 min).&#10;&#10;Useful?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="A+ on {{company_name}}" data-preview="A+ on Harborline Home">A+ on {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Your Amazon pages already show {{aplus_phrase}}. The Walmart PDP looks like it still has no BTF / Rich Media under it, so the Amazon module never makes the trip.&#10;&#10;Happy to share a short A+ to Walmart BTF Brief: Rich Media that transforms Amazon A+ 100x faster. Optiwise case study: EBC 2.5x revenue in one month (90+ min per EBC to &lt;1 min).&#10;&#10;Useful?" data-preview="Hey Dana,&#10;&#10;Your Amazon pages already show A+ Content. The Walmart PDP looks like it still has no BTF / Rich Media under it, so the Amazon module never makes the trip.&#10;&#10;Happy to share a short A+ to Walmart BTF Brief: Rich Media that transforms Amazon A+ 100x faster. Optiwise case study: EBC 2.5x revenue in one month (90+ min per EBC to &lt;1 min).&#10;&#10;Useful?">
+                        <p>Hey {{first_name}},</p><p>Your Amazon pages already show {{aplus_phrase}}. The Walmart PDP looks like it still has no BTF / Rich Media under it, so the Amazon module never makes the trip.</p><p>Happy to share a short A+ to Walmart BTF Brief: Rich Media that transforms Amazon A+ 100x faster. Optiwise case study: EBC 2.5x revenue in one month (90+ min per EBC to &lt;1 min).</p><p>Useful?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Just floating the A+ to Walmart BTF Brief again in case porting Amazon modules is a live topic this month.&#10;&#10;No stress either way.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Just floating the A+ to Walmart BTF Brief again in case porting Amazon modules is a live topic this month.&#10;&#10;No stress either way." data-preview="Hey Dana,&#10;&#10;Just floating the A+ to Walmart BTF Brief again in case porting Amazon modules is a live topic this month.&#10;&#10;No stress either way.">
+                        <p>Hey {{first_name}},</p><p>Just floating the A+ to Walmart BTF Brief again in case porting Amazon modules is a live topic this month.</p><p>No stress either way.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{first_name}} / BTF&#10;&#10;Hey {{first_name}},&#10;&#10;Want me to send the brief, or should I leave this?&#10;&#10;One-letter reply is perfect.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{first_name}} / BTF" data-preview="Dana / BTF">{{first_name}} / BTF</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Want me to send the brief, or should I leave this?&#10;&#10;One-letter reply is perfect." data-preview="Hey Dana,&#10;&#10;Want me to send the brief, or should I leave this?&#10;&#10;One-letter reply is perfect.">
+                        <p>Hey {{first_name}},</p><p>Want me to send the brief, or should I leave this?</p><p>One-letter reply is perfect.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Spec 5.0 Listing Score Brief</strong>
+              <em>Spec 5.0 Listing Score Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Spec 5.0 Listing Score Brief steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{listing_phrase}} at {{company_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;Your {{listing_phrase}} listing is live and still looks thin on Spec 5.0 attributes. Teams in that spot usually sit on backend issues the dashboard does not show.&#10;&#10;We sketched a Spec 5.0 Listing Score Brief around Item Spec 5.0 compliance. On optiwise.ai/enterprise the average brand has 3,000 backend issues and 55 Omni Spec 5.0 issues; a case study hit content score 86% and Walmart listing score 82% in 3 months.&#10;&#10;Want it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{listing_phrase}} at {{company_name}}" data-preview="Walmart marketplace at Harborline Home">{{listing_phrase}} at {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Your {{listing_phrase}} listing is live and still looks thin on Spec 5.0 attributes. Teams in that spot usually sit on backend issues the dashboard does not show.&#10;&#10;We sketched a Spec 5.0 Listing Score Brief around Item Spec 5.0 compliance. On optiwise.ai/enterprise the average brand has 3,000 backend issues and 55 Omni Spec 5.0 issues; a case study hit content score 86% and Walmart listing score 82% in 3 months.&#10;&#10;Want it?" data-preview="Hey Dana,&#10;&#10;Your Walmart marketplace listing is live and still looks thin on Spec 5.0 attributes. Teams in that spot usually sit on backend issues the dashboard does not show.&#10;&#10;We sketched a Spec 5.0 Listing Score Brief around Item Spec 5.0 compliance. On optiwise.ai/enterprise the average brand has 3,000 backend issues and 55 Omni Spec 5.0 issues; a case study hit content score 86% and Walmart listing score 82% in 3 months.&#10;&#10;Want it?">
+                        <p>Hey {{first_name}},</p><p>Your {{listing_phrase}} listing is live and still looks thin on Spec 5.0 attributes. Teams in that spot usually sit on backend issues the dashboard does not show.</p><p>We sketched a Spec 5.0 Listing Score Brief around Item Spec 5.0 compliance. On optiwise.ai/enterprise the average brand has 3,000 backend issues and 55 Omni Spec 5.0 issues; a case study hit content score 86% and Walmart listing score 82% in 3 months.</p><p>Want it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Bump in case the {{listing_phrase}} PDP is still thin on Spec 5.0 this quarter.&#10;&#10;Happy to send the brief or drop it.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Bump in case the {{listing_phrase}} PDP is still thin on Spec 5.0 this quarter.&#10;&#10;Happy to send the brief or drop it." data-preview="Hey Dana,&#10;&#10;Bump in case the Walmart marketplace PDP is still thin on Spec 5.0 this quarter.&#10;&#10;Happy to send the brief or drop it.">
+                        <p>Hey {{first_name}},</p><p>Bump in case the {{listing_phrase}} PDP is still thin on Spec 5.0 this quarter.</p><p>Happy to send the brief or drop it.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: close the loop?&#10;&#10;Hey {{first_name}},&#10;&#10;Keep / send / stop - whatever is easiest.&#10;&#10;Thanks either way.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="close the loop?" data-preview="close the loop?">close the loop?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Keep / send / stop - whatever is easiest.&#10;&#10;Thanks either way." data-preview="Hey Dana,&#10;&#10;Keep / send / stop - whatever is easiest.&#10;&#10;Thanks either way.">
+                        <p>Hey {{first_name}},</p><p>Keep / send / stop - whatever is easiest.</p><p>Thanks either way.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Catch-all - Digital Pen Playbook</strong>
+              <em>Digital Pen Playbook</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Catch-all - Digital Pen Playbook steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: digital pen for {{company_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;For {{category}} brands on Walmart (or expanding from Amazon), the usual drag is paying for traffic a catalog cannot convert.&#10;&#10;Put together a short Digital Pen Playbook: Optiwise AOP for listing, Rich Media, and TACoS ads, Olivia on 78 signals, 1,000+ brands and 20M+ products, 2.8x digital pen (all on optiwise.ai/enterprise). Free plan and a free backend audit on-site.&#10;&#10;Open to a look?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="digital pen for {{company_name}}" data-preview="digital pen for Harborline Home">digital pen for {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;For {{category}} brands on Walmart (or expanding from Amazon), the usual drag is paying for traffic a catalog cannot convert.&#10;&#10;Put together a short Digital Pen Playbook: Optiwise AOP for listing, Rich Media, and TACoS ads, Olivia on 78 signals, 1,000+ brands and 20M+ products, 2.8x digital pen (all on optiwise.ai/enterprise). Free plan and a free backend audit on-site.&#10;&#10;Open to a look?" data-preview="Hey Dana,&#10;&#10;For home brands on Walmart (or expanding from Amazon), the usual drag is paying for traffic a catalog cannot convert.&#10;&#10;Put together a short Digital Pen Playbook: Optiwise AOP for listing, Rich Media, and TACoS ads, Olivia on 78 signals, 1,000+ brands and 20M+ products, 2.8x digital pen (all on optiwise.ai/enterprise). Free plan and a free backend audit on-site.&#10;&#10;Open to a look?">
+                        <p>Hey {{first_name}},</p><p>For {{category}} brands on Walmart (or expanding from Amazon), the usual drag is paying for traffic a catalog cannot convert.</p><p>Put together a short Digital Pen Playbook: Optiwise AOP for listing, Rich Media, and TACoS ads, Olivia on 78 signals, 1,000+ brands and 20M+ products, 2.8x digital pen (all on optiwise.ai/enterprise). Free plan and a free backend audit on-site.</p><p>Open to a look?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Floating the playbook once more in case Walmart listing, BTF, or ads optimization is on the list this month.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Floating the playbook once more in case Walmart listing, BTF, or ads optimization is on the list this month." data-preview="Hey Dana,&#10;&#10;Floating the playbook once more in case Walmart listing, BTF, or ads optimization is on the list this month.">
+                        <p>Hey {{first_name}},</p><p>Floating the playbook once more in case Walmart listing, BTF, or ads optimization is on the list this month.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: ok to close?&#10;&#10;Hey {{first_name}},&#10;&#10;Fine to close this out if timing is off.&#10;&#10;A yes / no is plenty.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="ok to close?" data-preview="ok to close?">ok to close?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Fine to close this out if timing is off.&#10;&#10;A yes / no is plenty." data-preview="Hey Dana,&#10;&#10;Fine to close this out if timing is off.&#10;&#10;A yes / no is plenty.">
+                        <p>Hey {{first_name}},</p><p>Fine to close this out if timing is off.</p><p>A yes / no is plenty.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">Launch</p>
+      <h2>Launch the ads-or-competitor route first</h2>
+      <p class="takeaway">Start where they already pay for Walmart traffic or a listing/ads tool and a broken catalog still cannot convert the click. Prove reply density, then roll A+-with-no-BTF, thin-PDP, and the remaining-TAM catch-all.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Confirm in_tam definition: Walmart 1P suppliers and 3P marketplace brands, plus Amazon brands expanding to Walmart (Optiwise buyer set on optiwise.ai).</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Pull Sales Nav for those companies, then scrape Walmart and Amazon PDPs plus BuiltWith for catalog_state. Suppress known Optiwise customers when the signal is visible. Named testimonials on optiwise.ai are not a blanket exclude.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Launch Tier 1 only until reply density is clear (target ~1 positive / 150-300).</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Add Tier 2 amazon_aplus_no_walmart_btf once Tier 1 copy is stable.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Add Tier 3 walmart_thin_pdp, then the catch-all for remaining in-TAM sellers.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Enrich emails via Apollo only after the account is routed.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>A/B Algorithm Switch Brief vs 2.8x digital-pen / 47% ROAS proof on Tier 1 before cloning to lower tiers. Do not invent proof numbers that are not on optiwise.ai. Category is a merge tag, not a second waterfall. Tier shares are estimated and flagged.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive / 150 sends</strong>
+                <span>Scale the tier and clone winning angles downward</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 300</strong>
+                <span>Keep running; tighten personalization on {{competitor}} or {{aplus_phrase}}</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 450-500</strong>
+                <span>Test a subject or offer variant before cutting</span>
+              </div>
+              <div class="threshold">
+                <strong>&lt;1% reply after 1,500 sends</strong>
+                <span>Cut the tier and move volume to the next exclusive route</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book the strategy call</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dana","Harborline Home","customer support rep","6","Intercom","healthcare operations","Maya","Salsify","home","Head of E-commerce","A\\+ Content","Walmart marketplace"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
