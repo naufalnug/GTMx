@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CleanCloud - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-09-03</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for CleanCloud</p>
+          <h1>Your CleanCloud waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">A scrollable GTMx strategy artifact for routing laundromats, dry cleaners, alterations, and shoe-repair shops into the right CleanCloud POS, pickup-and-delivery, multi-store, or starter offer. List building, campaign angles, and sample copy, prepared for Ricard Pryce.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Ricard already sells one laundry operating system so shops stop running tickets, routes, and customer comms on pen-and-paper, a Windows dry-clean POS, or a laundromat-only stack that does not cover garment care plus pickup-and-delivery in one login. The one list is local laundry services only: Google Maps laundromats, dry cleaners, alterations, and shoe-repair shops in the English-speaking markets CleanCloud already sells into — not restaurants, not generic retail POS. The one routing signal is maps_ops_state: how the shop already shows up on Maps, because a Places scrape already returns a competitor POS named in reviews or on the site, pickup-and-delivery attributes on the listing, same-brand location count, or none of those, in one pull. Category (laundromat vs dry cleaner vs alterations) is a merge tag after routing, not a second waterfall.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book the strategy call</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>5,000+</strong>
+          <span>laundromats and dry cleaners (homepage: Loved by / Trusted by 5,000+ of the Best Laundromats and Dry Cleaners)</span>
+        </div>
+        <div class="metric-card">
+          <strong>122%</strong>
+          <span>more orders with branded app (cleancloudapp.com/pricing Grow+: *Based on CleanCloud customer data)</span>
+        </div>
+        <div class="metric-card">
+          <strong>$99/mo</strong>
+          <span>starting price (CleanCloud blog: plans starting at just $99 a month). Public pricing table names Lite/Pro/Grow/Grow+ by order volume, not dollars.</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>CleanCloud (cleancloud.com / cleancloudapp.com) is cloud POS + pickup/delivery + customer-app SaaS for laundromats, dry cleaners, shoe repair, and alterations. Homepage: Launch, Manage and Scale Your Laundry from One Platform; all-in-one for managing and scaling a laundromat, dry cleaning, shoe repair and alterations business; Loved by / Trusted by 5,000+ of the Best Laundromats and Dry Cleaners. Product surfaces: Point of Sale (easy UI, detailing, payments, digital waivers, automated SMS/Email/Push/WhatsApp, first-order identifier); Pickup and Delivery (customer app, driver app, route planning, photos/signatures/chat, DoorDash and Uber, repeat orders); Marketing (website builder, Google Business Profile Book Now, email/SMS/push, automated flows, review requests on Google/Yelp/Facebook/Nextdoor); Workflows (wash-and-fold tracking, MetalProgetti/QuickSort auto and assisted assembly, lockers, barcode tagging, washer/dryer payment integrations, multi-store plant). Named quotes: Daniel Logan, Columbia Pike Laundry — scale from one store to a full pickup &amp; delivery business; Charles Measley, Fluff &amp; Fold Laundry — over 30,000 pick up and delivery orders in 21 months; WashBar Laundries — 4 stores and growing; Aaron Cardelino, Wasfo — grow to different locations throughout Florida or across the United States. Features page: from 1-1000 stores; LaundryCard, FasCard, Laundroworks, Tangerpay &amp; SpyderWash integrations; Speed Queen and Huebsch; DoorDash and Uber; route optimizer; branded iOS/Android customer apps; QuickBooks and Xero. Pricing (cleancloudapp.com/pricing): Lite (500 orders/mo), Pro (2,000 + pickup &amp; delivery, Uber &amp; DoorDash, route optimization, driver app, subscriptions, assisted assembly, multi-store), Grow (3,000 + auto assembly, automated marketing, automated review promotion, automated invoicing, API), Grow+ (10,000 + branded iOS/Android customer app, dedicated AM); pay monthly or yearly (save up to 20%); 14-day free trial. Grow+ claim: see 122%* more orders with your own custom app — *Based on CleanCloud customer data. Blog (starting-a-laundry-business-a-pricing-strategy): plans starting at just $99 a month. Homepage CTA also frames current state as Pen and Paper. Dollar amounts for Lite/Pro/Grow/Grow+ are not printed on the public pricing table — do not invent them in copy.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal is how the shop already shows up on Google Maps</p></div><div><span>02</span><p>One cascade routes every in-TAM laundry shop</p></div><div><span>03</span><p>Each Maps ops state gets a different first offer</p></div><div><span>04</span><p>Switch the POS, productise pickup, roll up stores, then cover the rest</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>Waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>Email Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">Signal</p>
+      <h2>The signal is how the shop already shows up on Google Maps</h2>
+      <p class="takeaway">A Places scrape already names a competitor POS in reviews or on the website, pickup-and-delivery attributes on the listing, same-brand location count, or none of those. That maps_ops_state is stronger than a title guess, and it is cheap to collect.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>Google Maps (Places) is the TAM Ricard already sells into: laundromats, dry cleaners, alterations, and shoe-repair shops in English-speaking markets CleanCloud ships to (US, UK, Ireland, Canada, Australia, New Zealand, Singapore named on the Xero app listing as markets — treat as geo gate, not a headcount). TAM account count is not published on cleancloud.com; treat size as unknown and keep each launch tier ≥~1,500 contacts.</p></div><div class="reason-card"><span>02</span><p>The same Places pull returns maps_ops_state: competitor POS named in reviews or on the shop site, pickup-and-delivery / wash-and-fold booking attributes, and same-brand location count — enough to route without a second expensive enrichment product. LaundryCard, FasCard, Speed Queen, and Alliance are CleanCloud integrations, not switch targets.</p></div><div class="reason-card"><span>03</span><p>The ladder maps to live CleanCloud positioning: all-in-one vs a named POS; Pro pickup-and-delivery (customer app, driver app, route optimizer, DoorDash/Uber) on cleancloudapp.com/pickup-and-delivery; multi-store plant and 1–1000 stores on the features page; homepage Pen and Paper as the remaining-TAM starter state; 14-day trial and Lite-from-$99 (blog) as the soft offer.</p></div><div class="reason-card"><span>04</span><p>Shop type (laundromat vs dry cleaner vs alterations) and owner title are scrape filters and merge tags. They are not a second waterfall. Apollo is email last after the listing is routed, never the TAM spine alone.</p></div>
+            </div>
+            <div class="field-cloud"><span>in_tam</span><span>already_customer</span><span>maps_ops_state</span><span>competitor</span><span>pickup_delivery_signal</span><span>location_count</span><span>buyer_title</span><span>shop_type</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>Google Maps / Places (category + city in English-speaking markets)</h3><p>In-TAM laundromats, dry cleaners, alterations, and shoe-repair shops plus listing name, phone, website, review text, attributes, and location clustering. The TAM gate and the routing signal in one pull.</p></div><div class="source-card"><span>02</span><h3>Google review text + shop website scrape</h3><p>competitor used to assign Tier 1: Cents, SPOT / Spot Business Systems, Sera, Fabricare / Enlite, Geelus, DRYCLEAN PRO, Wintux / SMRT, Comca, and other named laundry/dry-clean POS called out in reviews or on the site. Do not treat LaundryCard, FasCard, Speed Queen, Huebsch, or Alliance as competitors — those are named CleanCloud integrations.</p></div><div class="source-card"><span>03</span><h3>Google Business Profile attributes / listing description</h3><p>pickup_delivery_signal used for Tier 2: Pickup, Delivery, Wash and fold, Book online, or equivalent service attributes / copy on the listing with no Tier-1 competitor POS.</p></div><div class="source-card"><span>04</span><h3>Same-brand Places clustering (name + website + phone)</h3><p>location_count used for Tier 3: 2+ listings under the same brand with no competitor POS and no pickup-delivery attribute.</p></div><div class="source-card"><span>05</span><h3>Optional industry directories (CLA, Coin Laundry Association, dry-cleaning association lists)</h3><p>Backup in_tam when Maps categories are messy. Gate only. Does not invent a TAM count.</p></div><div class="source-card"><span>06</span><h3>Apollo (after qualification)</h3><p>Work emails for already-routed accounts when the GBP has no usable owner email. Do not buy a raw &#39;laundry owner&#39; list and hope.</p></div><div class="source-card"><span>07</span><h3>Optional CleanCloud customer suppress</h3><p>Current-customer exclusion when the signal is visible (CleanCloud named on site or in reviews). Thin coverage. Treat as a suppress list, not a tier. Named homepage testimonials are not a franchise-wide exclude.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="Waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">Waterfall</p>
+      <h2>One cascade routes every in-TAM laundry shop</h2>
+      <p class="takeaway">First match wins. Named competitor POS in reviews or on-site goes first, then listings that already advertise pickup and delivery, then same-brand multi-site operators, then every remaining Maps laundromat, dry cleaner, alterations, or shoe-repair shop.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF in_tam AND competitor detected (Cents, SPOT / Spot Business Systems, Sera, Fabricare / Enlite, Geelus, DRYCLEAN PRO, Wintux / SMRT, Comca, or another named laundry/dry-clean POS in Google reviews or on the shop website)</span>
+          <strong>Tier 1 - POS Switch Brief</strong>
+          <em>They already pay for laundry POS. Strongest intent for CleanCloud&#39;s all-in-one pitch: cloud POS + pickup/delivery + customer app + marketing in one platform, Trusted by 5,000+ shops, 14-day trial. Integrations (LaundryCard, FasCard, Speed Queen) are the migration path, not the enemy.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF in_tam AND no Tier-1 competitor AND pickup_delivery_signal present (GBP attributes or listing copy for pickup, delivery, wash-and-fold booking, or Book online)</span>
+          <strong>Tier 2 - Route &amp; App Brief</strong>
+          <em>They already sell pickup and delivery on Maps, so the leak is routes, driver proof, and a customer app — not education about delivery. Maps to Pro: Pickup &amp; Delivery, Uber &amp; DoorDash, route optimization, driver app (cleancloudapp.com/pricing and /pickup-and-delivery). Charles Measley: over 30,000 pick up and delivery orders in 21 months.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF in_tam AND no Tier-1 competitor AND no Tier-2 pickup_delivery_signal AND location_count &gt;= 2 (same-brand Places cluster)</span>
+          <strong>Tier 3 - Multi-Store Plant Brief</strong>
+          <em>Two or more listings, still no named POS and no advertised P&amp;D. Pain is split tickets and no plant view. Features page: from 1-1000 stores; multi-store plant, shared customer/product database, metrics across stores. Homepage: WashBar — 4 stores and growing; Wasfo — locations throughout Florida or the US.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF in_tam AND none of the above</span>
+          <strong>Catch-all - Pen-and-Paper POS Playbook</strong>
+          <em>Still in TAM (Maps laundromat, dry cleaner, alterations, or shoe repair). Homepage explicitly frames Pen and Paper as the starting state. Softest CTA: Lite POS, hosted website, 14-day trial, blog starting at $99/mo. Mandatory 100% coverage.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF in_tam AND competitor detected (Cents, SPOT / Spot Business Systems, Sera, Fabricare / Enlite, Geelus, DRYCLEAN PRO, Wintux / SMRT, Comca, or another named laundry/dry-clean POS in Google reviews or on the shop website) -&gt; Tier 1 - POS Switch Brief (They already pay for laundry POS. Strongest intent for CleanCloud&#39;s all-in-one pitch: cloud POS + pickup/delivery + customer app + marketing in one platform, Trusted by 5,000+ shops, 14-day trial. Integrations (LaundryCard, FasCard, Speed Queen) are the migration path, not the enemy.)&#10;2. IF in_tam AND no Tier-1 competitor AND pickup_delivery_signal present (GBP attributes or listing copy for pickup, delivery, wash-and-fold booking, or Book online) -&gt; Tier 2 - Route &amp; App Brief (They already sell pickup and delivery on Maps, so the leak is routes, driver proof, and a customer app — not education about delivery. Maps to Pro: Pickup &amp; Delivery, Uber &amp; DoorDash, route optimization, driver app (cleancloudapp.com/pricing and /pickup-and-delivery). Charles Measley: over 30,000 pick up and delivery orders in 21 months.)&#10;3. IF in_tam AND no Tier-1 competitor AND no Tier-2 pickup_delivery_signal AND location_count &gt;= 2 (same-brand Places cluster) -&gt; Tier 3 - Multi-Store Plant Brief (Two or more listings, still no named POS and no advertised P&amp;D. Pain is split tickets and no plant view. Features page: from 1-1000 stores; multi-store plant, shared customer/product database, metrics across stores. Homepage: WashBar — 4 stores and growing; Wasfo — locations throughout Florida or the US.)&#10;4. IF in_tam AND none of the above -&gt; Catch-all - Pen-and-Paper POS Playbook (Still in TAM (Maps laundromat, dry cleaner, alterations, or shoe repair). Homepage explicitly frames Pen and Paper as the starting state. Softest CTA: Lite POS, hosted website, 14-day trial, blog starting at $99/mo. Mandatory 100% coverage.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF in_tam AND competitor detected (Cents, SPOT / Spot Business Systems, Sera, Fabricare / Enlite, Geelus, DRYCLEAN PRO, Wintux / SMRT, Comca, or another named laundry/dry-clean POS in Google reviews or on the shop website) -&gt; Tier 1 - POS Switch Brief (They already pay for laundry POS. Strongest intent for CleanCloud&#39;s all-in-one pitch: cloud POS + pickup/delivery + customer app + marketing in one platform, Trusted by 5,000+ shops, 14-day trial. Integrations (LaundryCard, FasCard, Speed Queen) are the migration path, not the enemy.)
+2. IF in_tam AND no Tier-1 competitor AND pickup_delivery_signal present (GBP attributes or listing copy for pickup, delivery, wash-and-fold booking, or Book online) -&gt; Tier 2 - Route &amp; App Brief (They already sell pickup and delivery on Maps, so the leak is routes, driver proof, and a customer app — not education about delivery. Maps to Pro: Pickup &amp; Delivery, Uber &amp; DoorDash, route optimization, driver app (cleancloudapp.com/pricing and /pickup-and-delivery). Charles Measley: over 30,000 pick up and delivery orders in 21 months.)
+3. IF in_tam AND no Tier-1 competitor AND no Tier-2 pickup_delivery_signal AND location_count &gt;= 2 (same-brand Places cluster) -&gt; Tier 3 - Multi-Store Plant Brief (Two or more listings, still no named POS and no advertised P&amp;D. Pain is split tickets and no plant view. Features page: from 1-1000 stores; multi-store plant, shared customer/product database, metrics across stores. Homepage: WashBar — 4 stores and growing; Wasfo — locations throughout Florida or the US.)
+4. IF in_tam AND none of the above -&gt; Catch-all - Pen-and-Paper POS Playbook (Still in TAM (Maps laundromat, dry cleaner, alterations, or shoe repair). Homepage explicitly frames Pen and Paper as the starting state. Softest CTA: Lite POS, hosted website, 14-day trial, blog starting at $99/mo. Mandatory 100% coverage.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">Tiers</p>
+      <h2>Each Maps ops state gets a different first offer</h2>
+      <p class="takeaway">Competitor POS shops get a Switch Brief. Pickup-and-delivery listings get a Route &amp; App Brief. Multi-site operators get a Multi-Store Plant Brief. The rest get the Pen-and-Paper POS Playbook.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">est. 8-15% TAM</span>
+          </div>
+          <h3>Tier 1: Competitor laundry POS named in reviews or on site</h3>
+          <p>Google reviews or the shop website name Cents, SPOT / Spot Business Systems, Sera, Fabricare / Enlite, Geelus, DRYCLEAN PRO, Wintux / SMRT, Comca, or another laundry/dry-clean POS</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They already budget for a POS but still leak cloud workflows, a customer/driver app, or garment-plus-delivery in one login. A Windows counter or laundromat-only stack is the job, unfinished.</dd></div>
+              <div><dt>Offer</dt><dd>POS Switch Brief</dd></div>
+              <div><dt>Source</dt><dd>Google review text + shop website scrape after Maps in_tam gate</dd></div>
+              <div><dt>Reply density</dt><dd>Highest - they already pay for laundry POS</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">est. 15-25% TAM</span>
+          </div>
+          <h3>Tier 2: Pickup and delivery advertised on Google, no competitor POS</h3>
+          <p>GBP attributes or listing copy show pickup, delivery, wash-and-fold booking, or Book online AND no Tier-1 competitor POS</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The listing already promises pickup and delivery, so missed routes, no driver proof, and phone-tag booking are leaking the offer they advertised.</dd></div>
+              <div><dt>Offer</dt><dd>Route &amp; App Brief</dd></div>
+              <div><dt>Source</dt><dd>Google Business Profile attributes / listing description</dd></div>
+              <div><dt>Reply density</dt><dd>High - they already sell P&amp;D on Maps and still look under-tooled</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">est. 10-20% TAM</span>
+          </div>
+          <h3>Tier 3: Same-brand multi-site, no competitor POS, no P&amp;D attribute</h3>
+          <p>2+ Google listings under the same brand AND no Tier-1 competitor AND no Tier-2 pickup_delivery_signal</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Locations are live as a mini-chain, but tickets, customers, and reporting still sit per store. Features page is blunt that growth from 1 to 1000 stores is the product job.</dd></div>
+              <div><dt>Offer</dt><dd>Multi-Store Plant Brief</dd></div>
+              <div><dt>Source</dt><dd>Same-brand Places clustering (name + website + phone)</dd></div>
+              <div><dt>Reply density</dt><dd>Medium - visible chain ops, budget timing varies</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="catchall" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">est. 45-65% TAM</span>
+          </div>
+          <h3>Catch-all: Remaining in-TAM Maps laundry shops</h3>
+          <p>In-TAM laundromat, dry cleaner, alterations, or shoe-repair listing with an owner/operator and no Tier 1-3 maps_ops_state</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Orders, payments, and ready-notifications still sit on paper tickets or a generic till, and there is no CleanCloud layer yet. Homepage frames this as Pen and Paper.</dd></div>
+              <div><dt>Offer</dt><dd>Pen-and-Paper POS Playbook</dd></div>
+              <div><dt>Source</dt><dd>Google Maps category scrape after in_tam gate</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest - broadest list, softest CTA</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">Campaigns</p>
+      <h2>Switch the POS, productise pickup, roll up stores, then cover the rest</h2>
+      <p class="takeaway">The list is always in-TAM local laundry services — laundromats, dry cleaners, alterations, shoe repair — aimed at owners and operators. Shop type is a merge tag, not a second TAM. A/Bs sit on the exclusive routes.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Competitor laundry POS already on the stack</h3>
+          <p>Highest intent. Personalise on {{competitor}} and {{shop_type}}. Do not claim we scraped their contract — only the named POS on public reviews or pages.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>in_tam + competitor detected in reviews or on site</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with {{competitor}} named in reviews or on the {{shop_type}} site, poke the missing cloud POS + routes + customer app, then offer a one-page POS Switch Brief: 5,000+ shops, Pro P&amp;D, Grow+ 122% more orders (CleanCloud customer data), 14-day trial. Do not pitch ripping LaundryCard/FasCard hardware.</dd></div>
+            <div><dt>Value</dt><dd>All-in-one cloud POS instead of a named laundry POS that still leaks routes or garment+delivery</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Pickup and delivery advertised on Google</h3>
+          <p>Second exclusive route. Keep copy about the advertised pickup, not a delivery 101.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>in_tam + pickup_delivery_signal + no Tier-1 competitor</dd></div>
+            <div><dt>AI strategy</dt><dd>Name {{pickup_delivery_signal}} on the listing, poke the route/app leak, offer the Route &amp; App Brief (Pro: customer app, driver app, route optimizer, DoorDash/Uber; Charles Measley 30,000 P&amp;D orders in 21 months).</dd></div>
+            <div><dt>Value</dt><dd>Routes, driver proof, and a customer app under the P&amp;D offer already on Maps</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Same-brand multi-site, no POS, no P&amp;D attribute</h3>
+          <p>Third exclusive route. {{buyer_title}} is a merge tag. Do not invent a chain-revenue number.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>in_tam + location_count &gt;= 2 + no Tier 1-2 match</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with {{location_count}}, then Multi-Store Plant Brief: shared database, plant mode, metrics across stores, 1–1000 stores on the features page.</dd></div>
+            <div><dt>Value</dt><dd>One dashboard across locations instead of per-store tickets</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Remaining Maps laundromats / dry cleaners / alterations</h3>
+          <p>Mandatory catch-all for 100% TAM coverage. Non-laundry local businesses stay out of this list.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>in_tam + no Tier 1-3 maps_ops_state</dd></div>
+            <div><dt>AI strategy</dt><dd>Soft Pen-and-Paper POS Playbook. Shop type and title as merge tags. Soft CTA around Lite POS, hosted website, 14-day trial, blog $99/mo start.</dd></div>
+            <div><dt>Value</dt><dd>Simple path off paper tickets onto a laundry POS</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="Email Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">Email Copy</p>
+      <h2>Copy that names the Maps state already on the listing</h2>
+      <p class="takeaway">Notice the competitor POS, the pickup-and-delivery attribute, or the extra locations, poke the ticket/route/multi-store pain that state implies, then ask for a one-letter yes.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company_name}}</span><span>{{competitor}}</span><span>{{pickup_delivery_signal}}</span><span>{{location_count}}</span><span>{{buyer_title}}</span><span>{{shop_type}}</span><span>{{alt_decision_maker}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company_name}}, {{competitor}}, {{pickup_delivery_signal}}, {{location_count}}, {{buyer_title}}, {{shop_type}}, {{alt_decision_maker}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - POS Switch Brief</strong>
+              <em>POS Switch Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - POS Switch Brief steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{competitor}} at {{company_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;Saw {{competitor}} named on {{company_name}}&#39;s reviews / site. Usually that means the {{shop_type}} already pays for a POS, then tickets, routes, and the customer app still sit in extra tools — or on paper.&#10;&#10;We put together a one-page POS Switch Brief for {{buyer_title}} teams: CleanCloud is the all-in-one laundry POS + pickup/delivery + marketing stack (cleancloudapp.com). Homepage publishes Trusted by 5,000+ laundromats and dry cleaners; Pro adds driver app, route optimization, Uber &amp; DoorDash; Grow+ branded app is listed at 122% more orders on the pricing page (CleanCloud customer data). 14-day trial.&#10;&#10;If you already run LaundryCard / FasCard / Speed Queen, those stay as integrations — this is not a hardware rip.&#10;&#10;Worth a look?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{competitor}} at {{company_name}}" data-preview="Cents at Riverside Cleaners">{{competitor}} at {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Saw {{competitor}} named on {{company_name}}&#39;s reviews / site. Usually that means the {{shop_type}} already pays for a POS, then tickets, routes, and the customer app still sit in extra tools — or on paper.&#10;&#10;We put together a one-page POS Switch Brief for {{buyer_title}} teams: CleanCloud is the all-in-one laundry POS + pickup/delivery + marketing stack (cleancloudapp.com). Homepage publishes Trusted by 5,000+ laundromats and dry cleaners; Pro adds driver app, route optimization, Uber &amp; DoorDash; Grow+ branded app is listed at 122% more orders on the pricing page (CleanCloud customer data). 14-day trial.&#10;&#10;If you already run LaundryCard / FasCard / Speed Queen, those stay as integrations — this is not a hardware rip.&#10;&#10;Worth a look?" data-preview="Hey Marcus,&#10;&#10;Saw Cents named on Riverside Cleaners&#39;s reviews / site. Usually that means the dry cleaner already pays for a POS, then tickets, routes, and the customer app still sit in extra tools — or on paper.&#10;&#10;We put together a one-page POS Switch Brief for Owner teams: CleanCloud is the all-in-one laundry POS + pickup/delivery + marketing stack (cleancloudapp.com). Homepage publishes Trusted by 5,000+ laundromats and dry cleaners; Pro adds driver app, route optimization, Uber &amp; DoorDash; Grow+ branded app is listed at 122% more orders on the pricing page (CleanCloud customer data). 14-day trial.&#10;&#10;If you already run LaundryCard / FasCard / Speed Queen, those stay as integrations — this is not a hardware rip.&#10;&#10;Worth a look?">
+                        <p>Hey {{first_name}},</p><p>Saw {{competitor}} named on {{company_name}}&#39;s reviews / site. Usually that means the {{shop_type}} already pays for a POS, then tickets, routes, and the customer app still sit in extra tools — or on paper.</p><p>We put together a one-page POS Switch Brief for {{buyer_title}} teams: CleanCloud is the all-in-one laundry POS + pickup/delivery + marketing stack (cleancloudapp.com). Homepage publishes Trusted by 5,000+ laundromats and dry cleaners; Pro adds driver app, route optimization, Uber &amp; DoorDash; Grow+ branded app is listed at 122% more orders on the pricing page (CleanCloud customer data). 14-day trial.</p><p>If you already run LaundryCard / FasCard / Speed Queen, those stay as integrations — this is not a hardware rip.</p><p>Worth a look?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Quick bump on the Switch Brief. Daniel Logan (Columbia Pike Laundry, on cleancloud.com) said CleanCloud helped them scale from one store to a full pickup &amp; delivery business — same class of gap when {{competitor}} is the counter and delivery still lives somewhere else.&#10;&#10;Happy to send the one-pager if {{competitor}} is still the only layer.&#10;&#10;Either way, appreciate you.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Quick bump on the Switch Brief. Daniel Logan (Columbia Pike Laundry, on cleancloud.com) said CleanCloud helped them scale from one store to a full pickup &amp; delivery business — same class of gap when {{competitor}} is the counter and delivery still lives somewhere else.&#10;&#10;Happy to send the one-pager if {{competitor}} is still the only layer.&#10;&#10;Either way, appreciate you." data-preview="Hey Marcus,&#10;&#10;Quick bump on the Switch Brief. Daniel Logan (Columbia Pike Laundry, on cleancloud.com) said CleanCloud helped them scale from one store to a full pickup &amp; delivery business — same class of gap when Cents is the counter and delivery still lives somewhere else.&#10;&#10;Happy to send the one-pager if Cents is still the only layer.&#10;&#10;Either way, appreciate you.">
+                        <p>Hey {{first_name}},</p><p>Quick bump on the Switch Brief. Daniel Logan (Columbia Pike Laundry, on cleancloud.com) said CleanCloud helped them scale from one store to a full pickup &amp; delivery business — same class of gap when {{competitor}} is the counter and delivery still lives somewhere else.</p><p>Happy to send the one-pager if {{competitor}} is still the only layer.</p><p>Either way, appreciate you.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: question for {{first_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the POS Switch Brief.&#10;&#10;Should I send this to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="question for {{first_name}}" data-preview="question for Marcus">question for {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the POS Switch Brief.&#10;&#10;Should I send this to you or {{alt_decision_maker}}?" data-preview="Hey Marcus,&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the POS Switch Brief.&#10;&#10;Should I send this to you or your store manager?">
+                        <p>Hey {{first_name}},</p><p>No need for a call. Just reply yes and I&#39;ll send the POS Switch Brief.</p><p>Should I send this to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Route &amp; App Brief</strong>
+              <em>Route &amp; App Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Route &amp; App Brief steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: pickup on the {{company_name}} listing&#10;&#10;Hey {{first_name}},&#10;&#10;Pulled {{company_name}} and saw {{pickup_delivery_signal}}. Teams in that spot usually advertised pickup, then still run routes and booking on phone tag.&#10;&#10;Happy to share a short Route &amp; App Brief: Pro pickup-and-delivery on cleancloudapp.com — customer app, driver app, route planning, geofencing, photos/signatures, DoorDash and Uber. Charles Measley (Fluff &amp; Fold Laundry, on the homepage) passed over 30,000 pick up and delivery orders in 21 months.&#10;&#10;Useful?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="pickup on the {{company_name}} listing" data-preview="pickup on the Riverside Cleaners listing">pickup on the {{company_name}} listing</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Pulled {{company_name}} and saw {{pickup_delivery_signal}}. Teams in that spot usually advertised pickup, then still run routes and booking on phone tag.&#10;&#10;Happy to share a short Route &amp; App Brief: Pro pickup-and-delivery on cleancloudapp.com — customer app, driver app, route planning, geofencing, photos/signatures, DoorDash and Uber. Charles Measley (Fluff &amp; Fold Laundry, on the homepage) passed over 30,000 pick up and delivery orders in 21 months.&#10;&#10;Useful?" data-preview="Hey Marcus,&#10;&#10;Pulled Riverside Cleaners and saw Google listing shows Pickup and delivery plus a Book online / order-pickup attribute. Teams in that spot usually advertised pickup, then still run routes and booking on phone tag.&#10;&#10;Happy to share a short Route &amp; App Brief: Pro pickup-and-delivery on cleancloudapp.com — customer app, driver app, route planning, geofencing, photos/signatures, DoorDash and Uber. Charles Measley (Fluff &amp; Fold Laundry, on the homepage) passed over 30,000 pick up and delivery orders in 21 months.&#10;&#10;Useful?">
+                        <p>Hey {{first_name}},</p><p>Pulled {{company_name}} and saw {{pickup_delivery_signal}}. Teams in that spot usually advertised pickup, then still run routes and booking on phone tag.</p><p>Happy to share a short Route &amp; App Brief: Pro pickup-and-delivery on cleancloudapp.com — customer app, driver app, route planning, geofencing, photos/signatures, DoorDash and Uber. Charles Measley (Fluff &amp; Fold Laundry, on the homepage) passed over 30,000 pick up and delivery orders in 21 months.</p><p>Useful?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Just floating the Route &amp; App Brief again in case the advertised pickup is a live topic this month. Repeat orders and live customer tracking sit on the same pickup-and-delivery page if you want the recurring-revenue angle instead of the route one.&#10;&#10;No stress either way.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Just floating the Route &amp; App Brief again in case the advertised pickup is a live topic this month. Repeat orders and live customer tracking sit on the same pickup-and-delivery page if you want the recurring-revenue angle instead of the route one.&#10;&#10;No stress either way." data-preview="Hey Marcus,&#10;&#10;Just floating the Route &amp; App Brief again in case the advertised pickup is a live topic this month. Repeat orders and live customer tracking sit on the same pickup-and-delivery page if you want the recurring-revenue angle instead of the route one.&#10;&#10;No stress either way.">
+                        <p>Hey {{first_name}},</p><p>Just floating the Route &amp; App Brief again in case the advertised pickup is a live topic this month. Repeat orders and live customer tracking sit on the same pickup-and-delivery page if you want the recurring-revenue angle instead of the route one.</p><p>No stress either way.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{first_name}} / pickup routes&#10;&#10;Hey {{first_name}},&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the Route &amp; App Brief.&#10;&#10;Should I send this to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{first_name}} / pickup routes" data-preview="Marcus / pickup routes">{{first_name}} / pickup routes</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the Route &amp; App Brief.&#10;&#10;Should I send this to you or {{alt_decision_maker}}?" data-preview="Hey Marcus,&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the Route &amp; App Brief.&#10;&#10;Should I send this to you or your store manager?">
+                        <p>Hey {{first_name}},</p><p>No need for a call. Just reply yes and I&#39;ll send the Route &amp; App Brief.</p><p>Should I send this to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Multi-Store Plant Brief</strong>
+              <em>Multi-Store Plant Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Multi-Store Plant Brief steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{location_count}} at {{company_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;{{company_name}} is showing {{location_count}}. Features page on cleancloudapp.com positions the same job: run from 1–1000 stores with plant mode, a shared customer/product database, and metrics across locations.&#10;&#10;We sketched a Multi-Store Plant Brief around barcode-powered tracking and one dashboard — WashBar on the homepage went to 4 stores on CleanCloud; Aaron Cardelino (Wasfo) talks about growing throughout Florida or the US on the same stack.&#10;&#10;Want it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{location_count}} at {{company_name}}" data-preview="4 Google listings under the same brand at Riverside Cleaners">{{location_count}} at {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;{{company_name}} is showing {{location_count}}. Features page on cleancloudapp.com positions the same job: run from 1–1000 stores with plant mode, a shared customer/product database, and metrics across locations.&#10;&#10;We sketched a Multi-Store Plant Brief around barcode-powered tracking and one dashboard — WashBar on the homepage went to 4 stores on CleanCloud; Aaron Cardelino (Wasfo) talks about growing throughout Florida or the US on the same stack.&#10;&#10;Want it?" data-preview="Hey Marcus,&#10;&#10;Riverside Cleaners is showing 4 Google listings under the same brand. Features page on cleancloudapp.com positions the same job: run from 1–1000 stores with plant mode, a shared customer/product database, and metrics across locations.&#10;&#10;We sketched a Multi-Store Plant Brief around barcode-powered tracking and one dashboard — WashBar on the homepage went to 4 stores on CleanCloud; Aaron Cardelino (Wasfo) talks about growing throughout Florida or the US on the same stack.&#10;&#10;Want it?">
+                        <p>Hey {{first_name}},</p><p>{{company_name}} is showing {{location_count}}. Features page on cleancloudapp.com positions the same job: run from 1–1000 stores with plant mode, a shared customer/product database, and metrics across locations.</p><p>We sketched a Multi-Store Plant Brief around barcode-powered tracking and one dashboard — WashBar on the homepage went to 4 stores on CleanCloud; Aaron Cardelino (Wasfo) talks about growing throughout Florida or the US on the same stack.</p><p>Want it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Bump in case rolling the extra locations onto one plant view is still on the list this quarter. Pricing Pro already includes multi-store features; Grow adds auto assembly and API if the plant is the bottleneck.&#10;&#10;Happy to send the brief or drop it.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Bump in case rolling the extra locations onto one plant view is still on the list this quarter. Pricing Pro already includes multi-store features; Grow adds auto assembly and API if the plant is the bottleneck.&#10;&#10;Happy to send the brief or drop it." data-preview="Hey Marcus,&#10;&#10;Bump in case rolling the extra locations onto one plant view is still on the list this quarter. Pricing Pro already includes multi-store features; Grow adds auto assembly and API if the plant is the bottleneck.&#10;&#10;Happy to send the brief or drop it.">
+                        <p>Hey {{first_name}},</p><p>Bump in case rolling the extra locations onto one plant view is still on the list this quarter. Pricing Pro already includes multi-store features; Grow adds auto assembly and API if the plant is the bottleneck.</p><p>Happy to send the brief or drop it.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: close the loop?&#10;&#10;Hey {{first_name}},&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the Multi-Store Plant Brief.&#10;&#10;Should I send this to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="close the loop?" data-preview="close the loop?">close the loop?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the Multi-Store Plant Brief.&#10;&#10;Should I send this to you or {{alt_decision_maker}}?" data-preview="Hey Marcus,&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the Multi-Store Plant Brief.&#10;&#10;Should I send this to you or your store manager?">
+                        <p>Hey {{first_name}},</p><p>No need for a call. Just reply yes and I&#39;ll send the Multi-Store Plant Brief.</p><p>Should I send this to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Catch-all - Pen-and-Paper POS Playbook</strong>
+              <em>Pen-and-Paper POS Playbook</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Catch-all - Pen-and-Paper POS Playbook steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: POS for {{company_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;For {{shop_type}} shops still on paper tickets or a generic till, the usual drag is lost orders and no ready-text when the rack is full. CleanCloud&#39;s homepage literally starts from Pen and Paper.&#10;&#10;Put together a short Pen-and-Paper POS Playbook: Lite POS (500 orders/mo, unlimited stations/staff, hosted website), 14-day trial, blog starting at $99 a month, Trusted by 5,000+ laundromats and dry cleaners (cleancloud.com).&#10;&#10;Open to a look?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="POS for {{company_name}}" data-preview="POS for Riverside Cleaners">POS for {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;For {{shop_type}} shops still on paper tickets or a generic till, the usual drag is lost orders and no ready-text when the rack is full. CleanCloud&#39;s homepage literally starts from Pen and Paper.&#10;&#10;Put together a short Pen-and-Paper POS Playbook: Lite POS (500 orders/mo, unlimited stations/staff, hosted website), 14-day trial, blog starting at $99 a month, Trusted by 5,000+ laundromats and dry cleaners (cleancloud.com).&#10;&#10;Open to a look?" data-preview="Hey Marcus,&#10;&#10;For dry cleaner shops still on paper tickets or a generic till, the usual drag is lost orders and no ready-text when the rack is full. CleanCloud&#39;s homepage literally starts from Pen and Paper.&#10;&#10;Put together a short Pen-and-Paper POS Playbook: Lite POS (500 orders/mo, unlimited stations/staff, hosted website), 14-day trial, blog starting at $99 a month, Trusted by 5,000+ laundromats and dry cleaners (cleancloud.com).&#10;&#10;Open to a look?">
+                        <p>Hey {{first_name}},</p><p>For {{shop_type}} shops still on paper tickets or a generic till, the usual drag is lost orders and no ready-text when the rack is full. CleanCloud&#39;s homepage literally starts from Pen and Paper.</p><p>Put together a short Pen-and-Paper POS Playbook: Lite POS (500 orders/mo, unlimited stations/staff, hosted website), 14-day trial, blog starting at $99 a month, Trusted by 5,000+ laundromats and dry cleaners (cleancloud.com).</p><p>Open to a look?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Floating the playbook once more in case getting off paper is on the list this month. Pricing also splits Pro (pickup &amp; delivery) vs Grow (automated marketing and review requests) if you ever want the next step after Lite.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Floating the playbook once more in case getting off paper is on the list this month. Pricing also splits Pro (pickup &amp; delivery) vs Grow (automated marketing and review requests) if you ever want the next step after Lite." data-preview="Hey Marcus,&#10;&#10;Floating the playbook once more in case getting off paper is on the list this month. Pricing also splits Pro (pickup &amp; delivery) vs Grow (automated marketing and review requests) if you ever want the next step after Lite.">
+                        <p>Hey {{first_name}},</p><p>Floating the playbook once more in case getting off paper is on the list this month. Pricing also splits Pro (pickup &amp; delivery) vs Grow (automated marketing and review requests) if you ever want the next step after Lite.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: ok to close?&#10;&#10;Hey {{first_name}},&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the Pen-and-Paper POS Playbook.&#10;&#10;Should I send this to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="ok to close?" data-preview="ok to close?">ok to close?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the Pen-and-Paper POS Playbook.&#10;&#10;Should I send this to you or {{alt_decision_maker}}?" data-preview="Hey Marcus,&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the Pen-and-Paper POS Playbook.&#10;&#10;Should I send this to you or your store manager?">
+                        <p>Hey {{first_name}},</p><p>No need for a call. Just reply yes and I&#39;ll send the Pen-and-Paper POS Playbook.</p><p>Should I send this to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">Launch</p>
+      <h2>Launch the competitor-POS route first</h2>
+      <p class="takeaway">Start where they already pay Cents, SPOT, Sera, Fabricare, or a peer and still leak cloud POS, routes, or a customer app. Prove reply density, then roll pickup-and-delivery listings, multi-site operators, and the remaining-TAM catch-all.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Confirm in_tam definition: Google Maps laundromats, dry cleaners, alterations, and shoe-repair shops in English-speaking markets CleanCloud sells into (US, UK, Ireland, Canada, Australia, New Zealand, Singapore appear on the Xero app listing — use as a geo gate). Restaurants, retail, and non-laundry local businesses are out of this TAM.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Pull Places by category + city, then review/site scrape for competitor, GBP attributes for pickup_delivery_signal, and same-brand clustering for location_count. Suppress known CleanCloud customers when visible. Named homepage quotes are not a blanket exclude. Do not treat LaundryCard, FasCard, Speed Queen, Huebsch, or Alliance as competitor_POS.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Launch Tier 1 only until reply density is clear (target ~1 positive / 150-300). Do not launch a tier under ~1,500 contacts. Per-tier account counts and overall TAM size are flagged unknowns — not published on cleancloud.com. Do not invent shop-count or TAM numbers in copy.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Add Tier 2 pickup-and-delivery listings once Tier 1 copy is stable.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Add Tier 3 multi-site operators, then the catch-all for remaining in-TAM Maps shops.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Enrich emails via Apollo only after the listing is routed (GBP phone/email first).</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>A/B POS Switch Brief vs Columbia Pike / Fluff &amp; Fold proof on Tier 1 before cloning angles downward. Optional chaos test: 5,000+ social proof vs 14-day trial / $99 start on the catch-all.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive / 150 sends</strong>
+                <span>Scale the tier and clone winning angles downward</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 300</strong>
+                <span>Keep running; tighten personalization on {{competitor}}, {{pickup_delivery_signal}}, or {{location_count}}</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 450-500</strong>
+                <span>Test a subject or offer variant before cutting</span>
+              </div>
+              <div class="threshold">
+                <strong>&lt;1% reply after 1,500 sends OR past 1 positive / 500</strong>
+                <span>Cut the tier and move volume to the next exclusive route</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book the strategy call</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Marcus","Riverside Cleaners","customer support rep","6","Intercom","healthcare operations","Maya","Cents","Google listing shows Pickup and delivery plus a Book online / order-pickup attribute","4 Google listings under the same brand","Owner","dry cleaner","your store manager"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
