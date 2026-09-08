@@ -23,7 +23,6 @@ export default function Results() {
             <div className="rcard__subs">
               <div className="rcard__sub"><b>$170K</b><span>pipeline</span></div>
               <div className="rcard__sub"><b>$10K</b><span>closed</span></div>
-              <div className="rcard__sub"><b>2,321</b><span>contacted</span></div>
             </div>
             <p className="rcard__quote">&ldquo;The AI-personalized approach matched each brand&apos;s products with relevant athletes &mdash; pitches that actually resonated with CMOs.&rdquo;
               <span className="rcard__who">— OpenSponsorship team</span>
