@@ -35,7 +35,7 @@ export default function Founder() {
             Connect with me on LinkedIn
           </a>
           <div className="founder-stats">
-            <div className="founder-stat"><div className="v">10<em>+</em></div><div className="l">years in GTM</div></div>
+            <div className="founder-stat"><div className="v">1M<em>+</em></div><div className="l">emails sent</div></div>
             <div className="founder-stat"><div className="v">YC</div><div className="l">&amp; public-co operators</div></div>
             <div className="founder-stat"><div className="v">5000<em>+</em></div><div className="l">MQLs generated</div></div>
           </div>
