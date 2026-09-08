@@ -8,25 +8,25 @@ export default function Founder() {
     <section className="section" id="about">
       <div className="founder-grid">
         <div className="founder-photo">
-          <span className="founder-arrow">more soon</span>
           <img
             src="/founder-headshot.jpg"
-            alt="GTMx co-founder"
+            alt="Josh, founder of GTMx"
             width={1000}
             height={1000}
             className="founder-photo__img"
             loading="lazy"
             decoding="async"
           />
-          <span className="founder-photo__tag">Co-founder</span>
+          <span className="founder-photo__tag">Josh</span>
         </div>
         <div className="founder-copy">
-          <h2 className="h2">We&apos;ve been on <span className="hl">both sides</span> of the table.</h2>
-          <p>Two co-founders with <strong>10+ years in GTM</strong> as Account Executives, product marketers, and agency operators. We&apos;ve each run our own agencies, worked inside top-5 global agencies, and built GTM systems for YC-backed and publicly traded companies. We&apos;ve been on the execution side &mdash; so we know exactly what the buyers you&apos;re trying to reach expect to see.</p>
+          <h2 className="h2">I&apos;ve been on <span className="hl">both sides</span> of the table.</h2>
+          <p>Hey there, I&apos;m Josh. I&apos;ve worn a lot of hats: project manager, product manager, blogger (back in the pre-ChatGPT days), cold email agency owner, GTM engineer, and then a cold email agency owner again. That loop wasn&apos;t an accident. Every detour taught me something about how B2B pipeline actually gets built, and it kept pulling me back to the thing I&apos;m best at &mdash; which is GTM.</p>
+          <p>To date, I&apos;ve sent <strong>multiple millions of emails</strong> and generated <strong>over 5,000 MQLs</strong> for bootstrapped and VC-backed companies. Let&apos;s have a chat to see if GTMx can help you grow your MRR today.</p>
           <div className="founder-stats">
             <div className="founder-stat"><div className="v">10<em>+</em></div><div className="l">years in GTM</div></div>
             <div className="founder-stat"><div className="v">YC</div><div className="l">&amp; public-co operators</div></div>
-            <div className="founder-stat"><div className="v">2x</div><div className="l">co-founders, each ran an agency</div></div>
+            <div className="founder-stat"><div className="v">5000<em>+</em></div><div className="l">MQLs generated</div></div>
           </div>
         </div>
       </div>
