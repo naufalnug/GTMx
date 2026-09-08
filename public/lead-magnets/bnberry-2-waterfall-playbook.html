@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BnBerry - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-09-08</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for BnBerry</p>
+          <h1>Your rebuilt BnBerry waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">A scrollable GTMx strategy artifact rebuilt from the discovery call: rating-qualified boutique hotels that are not on Airbnb or Vrbo yet, split by single property vs management company, two-step sequences, 2,000-3,000 sends a day. Prepared for Fiona Taylor, Global Director.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Fiona&#39;s own read is the whole strategy: the top 30% of BnBerry&#39;s hotels drive effectively all revenue and the bottom 70% produce nothing, and with no historical CRM data there was never a filter to tell the two apart before signing. So the list is not &#39;hotels&#39; - it is producer probability, assembled from four public fields before a single email sends: no Airbnb/Vrbo listing yet, a Booking.com rating of 7.8 or better, kitchenette / villa / suite-style inventory, and a location on Airbnb&#39;s top-300 priority list. Portfolio size is the only second cut, because a single property is a channel launch and a management company is a rollout - genuinely different offers. Everything else (title, brand, key count) is a merge tag, not a tier. This is also what pays for the pricing change: 2% plus $200/month only works if the accounts you sign actually produce, which means the qualification bar has to move upstream into list building rather than sit with the AE.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book the strategy call</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>44K-66K</strong>
+          <span>Emails a month at 2,000-3,000 a day</span>
+        </div>
+        <div class="metric-card">
+          <strong>7.8+</strong>
+          <span>Booking.com rating floor to enter the core list</span>
+        </div>
+        <div class="metric-card">
+          <strong>Top 300</strong>
+          <span>Airbnb priority locations used as the geo layer</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>BnBerry is full-service Airbnb and Vrbo management for hotels: listing build and optimization, 24/7 guest communications, and operational support, so a property can open the marketplace channel without hiring for it. Core offers on bnberry.com: (1) Airbnb &amp; Vrbo Connection and Management, positioned as the channel-management solution designed for hotels, with optimized listings, 24/7 guest support and analytics; (2) Guest Messaging, text messaging to protect 5-star reviews and grow bookings without hiring; (3) 3D / 360 virtual tours vs static photos. Integrations named on site: DerbySoft, SynXis, Sabre, SiteMinder. Connectivity page: 7500+ room nights / year, 4-night average stay, 4 guests per booking, 40-day booking window, a Boost Your Revenue by 30% annually claim, and Airbnb/Vrbo communication traffic running 10x other OTAs. Footprint: 95% of customers are US today, with Spain, Portugal and the UK opening by end of year. Pricing is moving from commission-only at 8-10% to a hybrid of 2% commission plus a $200/month subscription, so that customer acquisition cost is covered on properties that do not produce and new tooling and guest services are funded. A few existing customers have already migrated. Cold outreach leads with the commission-only framing because it is the lower-friction hook; the AE assesses which model fits on the call. Founded 2016, HQ Miami Beach. Named customers: Forest Suites Resort, AD1 Global, Plantation on Crystal River, Terrapin Hospitality.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal is producer probability, not just &#39;is it a hotel&#39;</p></div><div><span>02</span><p>One cascade routes every in-TAM property, independent or managed</p></div><div><span>03</span><p>Each producer profile gets a different first offer</p></div><div><span>04</span><p>Two message families: single property and management company</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>Waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>Email Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">Signal</p>
+      <h2>The signal is producer probability, not just &#39;is it a hotel&#39;</h2>
+      <p class="takeaway">No Airbnb/Vrbo listing yet, a 7.8+ Booking.com rating, kitchenette or villa-style units, and an Airbnb top-300 location. Four public fields, one crawl, and they predict the 30% of properties that actually produce room nights.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>01 The bottom 70% of BnBerry&#39;s hotels produce nothing, so every field in this signal is a public proxy for whether a property will actually generate room nights - the 7.8+ Booking rating, kitchenette / villa / suite inventory, and an Airbnb top-300 location - applied before the account enters the list rather than discovered after it signs.</p></div><div class="reason-card"><span>02</span><p>02 The disqualifier is free and unambiguous. An Airbnb/Vrbo listing search either returns the property or it does not, and &#39;not listed yet&#39; is the stated ICP, so the single most valuable field in the whole build costs one scrape.</p></div><div class="reason-card"><span>03</span><p>03 Both halves of the TAM come from cheap pulls. Google Maps lodging categories return boutique and independent properties; LinkedIn Sales Navigator returns the property management companies and small groups. Booking.com supplies rating and unit style on the same crawl, so qualification and routing arrive together.</p></div><div class="reason-card"><span>04</span><p>04 Portfolio size is the only second cut that changes the offer: one property is a channel launch, a management company is a rollout. Title, brand and key count stay merge tags. Chains and brand HQs (Marriott, Hilton) are excluded outright - the buyer is property-level or a small management company.</p></div>
+            </div>
+            <div class="field-cloud"><span>in_tam</span><span>airbnb_vrbo_state</span><span>booking_rating</span><span>unit_style</span><span>priority_market</span><span>portfolio_size</span><span>geo_market</span><span>chain_flag</span><span>buyer_title</span><span>competitor_cm</span><span>already_customer</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>01 Google Maps lodging scrape</h3><p>TAM spine for boutique and independent hotels. Returns property, location and lodging category without a paid database. This is the volume half of the list.</p></div><div class="source-card"><span>02</span><h3>02 LinkedIn Sales Navigator</h3><p>The other half of the TAM: property management companies and small multi-property groups, plus GM / Director of Sales / Revenue Manager / Owner titles. Used for the larger-firm segment, not for single boutique properties.</p></div><div class="source-card"><span>03</span><h3>03 Booking.com property scrape</h3><p>booking_rating for the 7.8+ gate and unit_style for kitchenette, villa and suite inventory. The single most important qualification pull - it decides whether an account enters the core routes at all.</p></div><div class="source-card"><span>04</span><h3>04 Airbnb / Vrbo listing search</h3><p>airbnb_vrbo_state. Absence is the core ICP and routes to Tiers 1-3. Presence drops the account to Tier 4, where the offer changes from new channel to full-service switch.</p></div><div class="source-card"><span>05</span><h3>05 Airbnb top-300 priority locations list</h3><p>priority_market. Fiona&#39;s source. Splits the highest-producing Tier 1 from standard-market Tier 2 and decides which markets get daily volume first.</p></div><div class="source-card"><span>06</span><h3>06 Chain / brand HQ exclusion list</h3><p>chain_flag. Removes Marriott, Hilton and other brand headquarters. Property-level operators and small management companies stay in - the decision has to sit inside the building or the group.</p></div><div class="source-card"><span>07</span><h3>07 Apollo (after routing only)</h3><p>Work emails for accounts that already cleared the rating, listing and market gates. Never the TAM spine - do not buy a raw hotel-manager list and hope.</p></div><div class="source-card"><span>08</span><h3>08 BnBerry customer suppress (live file)</h3><p>already_customer. There is no historical CRM data, so this starts from current accounts and grows from reply data every week. Treat it as a live file, not a one-time export.</p></div><div class="source-card"><span>09</span><h3>09 Optional BuiltWith / channel-manager detection</h3><p>competitor_cm for Tier 4 only. Note that SiteMinder is also a named BnBerry integration, so frame a detection as coverage and production, never as a rip-and-replace.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="Waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">Waterfall</p>
+      <h2>One cascade routes every in-TAM property, independent or managed</h2>
+      <p class="takeaway">First match wins. Priority-market villa stock goes first, then rating-qualified independents, then management companies as a rollout, then properties already live on Airbnb, then everything else still in TAM.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF IF in_tam AND chain_flag = false AND portfolio_size = single_property AND airbnb_vrbo_state = not_listed AND booking_rating &gt;= 7.8 AND unit_style = kitchenette_villa_or_suite AND priority_market = airbnb_top_300</span>
+          <strong>Tier 1 - Priority Market New Channel Brief</strong>
+          <em>Every producer field lines up at once: the channel is open, the property is already rated well enough to convert, the inventory is the style Airbnb travelers search for, and the market is one Airbnb itself prioritises. This is the profile behind the top 30% of revenue.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF IF in_tam AND chain_flag = false AND portfolio_size = single_property AND airbnb_vrbo_state = not_listed AND booking_rating &gt;= 7.8 AND no Tier-1 priority_market match</span>
+          <strong>Tier 2 - Rating-Qualified New Channel Brief</strong>
+          <em>Same core ICP and the same offer, one market rung down. This is the volume core of the programme: rated, unlisted, single-property boutique hotels outside the top-300 markets.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF IF in_tam AND chain_flag = false AND portfolio_size = management_company_or_group AND at least one property has airbnb_vrbo_state = not_listed</span>
+          <strong>Tier 3 - Portfolio Rollout Brief</strong>
+          <em>Separate campaign, separate offer. One conversation opens several properties, so the ask is a single pilot property with a rollout behind it - not a one-building channel launch. Small management companies only; brand HQs stay excluded.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF IF in_tam AND chain_flag = false AND airbnb_vrbo_state = listed</span>
+          <strong>Tier 4 - Full-Service Switch / Guest Messaging Brief</strong>
+          <em>Outside the stated ICP but not worthless. Inventory is live through a connector or a DIY setup, and the property still owns the guest-comms load Airbnb and Vrbo generate at roughly 10x other OTAs, plus listing optimization a thin path skips.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF IF in_tam AND none of the above (including booking_rating below 7.8)</span>
+          <strong>Catch-all - 3D Tour / Extra Distribution Playbook</strong>
+          <em>Still a lodging property with a reachable decision maker, but below the producer bar. Softest CTA, lowest priority, mandatory for 100% coverage - and a cheap way to keep testing whether the 7.8 floor is set correctly.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF IF in_tam AND chain_flag = false AND portfolio_size = single_property AND airbnb_vrbo_state = not_listed AND booking_rating &gt;= 7.8 AND unit_style = kitchenette_villa_or_suite AND priority_market = airbnb_top_300 -&gt; Tier 1 - Priority Market New Channel Brief (Every producer field lines up at once: the channel is open, the property is already rated well enough to convert, the inventory is the style Airbnb travelers search for, and the market is one Airbnb itself prioritises. This is the profile behind the top 30% of revenue.)&#10;2. IF IF in_tam AND chain_flag = false AND portfolio_size = single_property AND airbnb_vrbo_state = not_listed AND booking_rating &gt;= 7.8 AND no Tier-1 priority_market match -&gt; Tier 2 - Rating-Qualified New Channel Brief (Same core ICP and the same offer, one market rung down. This is the volume core of the programme: rated, unlisted, single-property boutique hotels outside the top-300 markets.)&#10;3. IF IF in_tam AND chain_flag = false AND portfolio_size = management_company_or_group AND at least one property has airbnb_vrbo_state = not_listed -&gt; Tier 3 - Portfolio Rollout Brief (Separate campaign, separate offer. One conversation opens several properties, so the ask is a single pilot property with a rollout behind it - not a one-building channel launch. Small management companies only; brand HQs stay excluded.)&#10;4. IF IF in_tam AND chain_flag = false AND airbnb_vrbo_state = listed -&gt; Tier 4 - Full-Service Switch / Guest Messaging Brief (Outside the stated ICP but not worthless. Inventory is live through a connector or a DIY setup, and the property still owns the guest-comms load Airbnb and Vrbo generate at roughly 10x other OTAs, plus listing optimization a thin path skips.)&#10;5. IF IF in_tam AND none of the above (including booking_rating below 7.8) -&gt; Catch-all - 3D Tour / Extra Distribution Playbook (Still a lodging property with a reachable decision maker, but below the producer bar. Softest CTA, lowest priority, mandatory for 100% coverage - and a cheap way to keep testing whether the 7.8 floor is set correctly.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF IF in_tam AND chain_flag = false AND portfolio_size = single_property AND airbnb_vrbo_state = not_listed AND booking_rating &gt;= 7.8 AND unit_style = kitchenette_villa_or_suite AND priority_market = airbnb_top_300 -&gt; Tier 1 - Priority Market New Channel Brief (Every producer field lines up at once: the channel is open, the property is already rated well enough to convert, the inventory is the style Airbnb travelers search for, and the market is one Airbnb itself prioritises. This is the profile behind the top 30% of revenue.)
+2. IF IF in_tam AND chain_flag = false AND portfolio_size = single_property AND airbnb_vrbo_state = not_listed AND booking_rating &gt;= 7.8 AND no Tier-1 priority_market match -&gt; Tier 2 - Rating-Qualified New Channel Brief (Same core ICP and the same offer, one market rung down. This is the volume core of the programme: rated, unlisted, single-property boutique hotels outside the top-300 markets.)
+3. IF IF in_tam AND chain_flag = false AND portfolio_size = management_company_or_group AND at least one property has airbnb_vrbo_state = not_listed -&gt; Tier 3 - Portfolio Rollout Brief (Separate campaign, separate offer. One conversation opens several properties, so the ask is a single pilot property with a rollout behind it - not a one-building channel launch. Small management companies only; brand HQs stay excluded.)
+4. IF IF in_tam AND chain_flag = false AND airbnb_vrbo_state = listed -&gt; Tier 4 - Full-Service Switch / Guest Messaging Brief (Outside the stated ICP but not worthless. Inventory is live through a connector or a DIY setup, and the property still owns the guest-comms load Airbnb and Vrbo generate at roughly 10x other OTAs, plus listing optimization a thin path skips.)
+5. IF IF in_tam AND none of the above (including booking_rating below 7.8) -&gt; Catch-all - 3D Tour / Extra Distribution Playbook (Still a lodging property with a reachable decision maker, but below the producer bar. Softest CTA, lowest priority, mandatory for 100% coverage - and a cheap way to keep testing whether the 7.8 floor is set correctly.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">Tiers</p>
+      <h2>Each producer profile gets a different first offer</h2>
+      <p class="takeaway">A single property gets a channel launch. A management company gets a portfolio rollout. A property already on Airbnb gets a switch. The rest get the soft 3D tour play.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">est. 10-15% TAM</span>
+          </div>
+          <h3>Tier 1: Priority market, villa stock, unlisted</h3>
+          <p>Single property, no Airbnb/Vrbo listing, Booking.com rating 7.8 or better, kitchenette / villa / suite inventory, and a location on Airbnb&#39;s top-300 priority list</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Booking and Expedia travelers find them; Airbnb and Vrbo travelers never do - in exactly the markets and unit styles where that traveler is searching hardest. This is the profile that matches the top 30% of producing accounts, which is why it gets volume first.</dd></div>
+              <div><dt>Offer</dt><dd>Priority Market New Channel Brief</dd></div>
+              <div><dt>Source</dt><dd>Google Maps + Booking.com scrape + Airbnb/Vrbo listing search + Airbnb top-300 list</dd></div>
+              <div><dt>Reply density</dt><dd>Highest - every qualification field agrees and the gap is visible in one search</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">est. 25-35% TAM</span>
+          </div>
+          <h3>Tier 2: Rating-qualified independent, unlisted</h3>
+          <p>Single property, no Airbnb/Vrbo listing, Booking.com rating 7.8 or better, outside the Airbnb top-300 priority markets</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The property converts well enough on the OTAs it already uses, and the Airbnb channel is simply not open. Nothing is broken - which is why the copy has to lead with the missing channel rather than a problem they would already have noticed.</dd></div>
+              <div><dt>Offer</dt><dd>New Channel Brief</dd></div>
+              <div><dt>Source</dt><dd>Google Maps + Booking.com rating and unit style + Airbnb/Vrbo listing search</dd></div>
+              <div><dt>Reply density</dt><dd>High - core ICP, and the widest single pool in the build</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">est. 8-12% TAM</span>
+          </div>
+          <h3>Tier 3: Management company / small group</h3>
+          <p>Property management company or small multi-property group, not a brand HQ, with at least one property missing an Airbnb/Vrbo listing</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The channel decision is portfolio-wide, so nobody wants a pitch about one building. They need a repeatable rollout and a way to test it on a single property without committing the group.</dd></div>
+              <div><dt>Offer</dt><dd>Portfolio Rollout Brief</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Sales Navigator company graph + per-property Airbnb/Vrbo listing checks</dd></div>
+              <div><dt>Reply density</dt><dd>Medium-high - fewer accounts, slower to reach, far more keys behind each reply</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">est. 15-25% TAM</span>
+          </div>
+          <h3>Tier 4: Already live on Airbnb/Vrbo</h3>
+          <p>In-TAM property with an Airbnb and/or Vrbo listing already live, whether through a named channel manager (SiteMinder, Cloudbeds, Guesty, Hostaway) or a DIY setup</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Inventory is live but the property still carries the guest-messaging load - Airbnb and Vrbo message traffic runs about 10x other OTAs - and a thin connector does not do hotel-native listing optimization.</dd></div>
+              <div><dt>Offer</dt><dd>Full-Service Switch / Guest Messaging Brief</dd></div>
+              <div><dt>Source</dt><dd>Airbnb/Vrbo listing scrape + optional BuiltWith / channel-manager detection</dd></div>
+              <div><dt>Reply density</dt><dd>Medium - outside the stated ICP, but the pain is real and already funded</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="catchall" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">est. 25-35% TAM</span>
+          </div>
+          <h3>Catch-all: Remaining in-TAM properties</h3>
+          <p>In-TAM lodging property with a reachable decision maker and no Tier 1-4 match, including properties rated below 7.8 on Booking.com</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Listing conversion still depends on how the property presents itself online, but the producer signals are not there, so a hard channel pitch would be a guess.</dd></div>
+              <div><dt>Offer</dt><dd>3D Tour / Extra Distribution Playbook</dd></div>
+              <div><dt>Source</dt><dd>Google Maps + Apollo after the in-TAM gate</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest - broadest list, softest CTA, mandatory for full coverage</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">Campaigns</p>
+      <h2>Two message families: single property and management company</h2>
+      <p class="takeaway">The offer, the proof and the CTA all change between a GM who owns one building and a director who owns twelve. Same signal, two vocabularies, plus the domain and hook A/Bs.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Priority market, unlisted villa stock</h3>
+          <p>The highest-producer profile in the build and the first tier to get daily volume. Every field agrees, so the personalisation writes itself and the gap is provable in one search.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>single_property + not_listed_airbnb_vrbo + booking_rating &gt;= 7.8 + kitchenette/villa/suite + airbnb_top_300 market</dd></div>
+            <div><dt>AI strategy</dt><dd>Open on the market itself: name {{priority_market}} as a market Airbnb prioritises, note {{unit_style}} inventory is what that traveler searches for, then point at {{airbnb_surface}}. Proof carries the 7500+ room nights / year and the 30% annual revenue line from the connectivity page.</dd></div>
+            <div><dt>Value</dt><dd>New marketplace revenue in the market where it converts hardest</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Rating-qualified independent, channel closed</h3>
+          <p>The volume core. Widest pool, cleanest single message, and the tier that will consume most of the 2,000-3,000 daily sends once Tier 1 density is proven.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>single_property + not_listed_airbnb_vrbo + booking_rating &gt;= 7.8 + outside top-300 markets</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with {{booking_rating}} on Booking next to {{airbnb_surface}} - they already convert, one channel is simply shut. Offer the New Channel Brief with the commission-only framing so there is no pricing objection to clear in the inbox.</dd></div>
+            <div><dt>Value</dt><dd>Revenue upside without a stack rebuild or a monthly commitment</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Portfolio rollout for management companies</h3>
+          <p>The second message family from the call. Same signal, different vocabulary, different offer - and one reply is worth many keys, so slower reply density is acceptable here.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>management_company_or_group + at least one property not_listed + chain_flag = false</dd></div>
+            <div><dt>AI strategy</dt><dd>Speak portfolio, not property. Name {{portfolio_size}}, ask for one pilot property rather than a group commitment, and use AD1 Global and Terrapin Hospitality as the multi-property proof shape. Aim at distribution or revenue leadership, not the on-site GM.</dd></div>
+            <div><dt>Value</dt><dd>A repeatable channel rollout the group can test on one building</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Full-service switch on a live listing</h3>
+          <p>Outside the stated ICP, so it runs at lower volume - but the buyer has already decided the channel matters, which usually shows up as a fast yes or a fast no.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>airbnb_vrbo_listed + optional competitor_cm detection</dd></div>
+            <div><dt>AI strategy</dt><dd>Name {{competitor_cm}} next to the live listing, poke the 10x guest-comms load and the listing optimization a connector skips, then offer the Switch Brief. Frame BnBerry as sitting alongside DerbySoft / SynXis / Sabre / SiteMinder, never as a rip-and-replace.</dd></div>
+            <div><dt>Value</dt><dd>Hotel-native production and 24/7 guest cover on a channel already open</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>3D tours and extra distribution</h3>
+          <p>Mandatory 100% coverage, and a live test of the rating floor - if this tier replies at Tier 2 rates, the 7.8 gate is set too high.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>in_tam + no Tier 1-4 match (includes booking_rating under 7.8)</dd></div>
+            <div><dt>AI strategy</dt><dd>Softest angle in the build: static photos versus 360 tours, with marketplace distribution as the optional second step. Property type and title as merge tags. Soft CTA, no channel pitch.</dd></div>
+            <div><dt>Value</dt><dd>A simple path to better listing conversion</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Side quest">
+          <div class="campaign-card__meta">
+            <span>Side quest</span>
+            <span>Focused</span>
+          </div>
+          <h3>A/B: branded vs non-branded sending domains</h3>
+          <p>The concern that hotel revenue managers distrust a non-branded sender is plausible and untested, so it gets a split rather than a decision - and it costs nothing, because both domain sets are being built anyway.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Tier 2 volume split evenly across both domain sets</dd></div>
+            <div><dt>AI strategy</dt><dd>Run the identical Tier 2 sequence from non-branded domains (send-ready at week two) and branded domains (ready at week four after warm-up), and compare reply and positive-reply rate rather than assuming.</dd></div>
+            <div><dt>Value</dt><dd>Settles the sender-trust question with data instead of opinion</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Side quest">
+          <div class="campaign-card__meta">
+            <span>Side quest</span>
+            <span>Focused</span>
+          </div>
+          <h3>A/B: commission-only hook vs revenue-proof hook</h3>
+          <p>This is the test behind the pricing question. If the commission-only framing wins clearly, the AE carries the hybrid conversation on the call; if proof wins, the pricing model can surface earlier without costing replies.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Tier 1 volume split evenly</dd></div>
+            <div><dt>AI strategy</dt><dd>Version A leads with the commercial framing (no monthly fee, paid on the room nights produced). Version B leads with the production proof (7500+ room nights / year, 30% annual revenue). Same offer, same CTA.</dd></div>
+            <div><dt>Value</dt><dd>Shows whether the low-friction hook or the proof hook opens the door</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Side quest">
+          <div class="campaign-card__meta">
+            <span>Side quest</span>
+            <span>Focused</span>
+          </div>
+          <h3>Q4 geo wave: Spain, Portugal, UK</h3>
+          <p>95% of customers are US today, so this stays a held wave rather than a launch tier. Build and validate the lists now; send when the expansion is live.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Tier 2 logic re-run against Spanish, Portuguese and UK lodging inventory</dd></div>
+            <div><dt>AI strategy</dt><dd>Same routing, re-validated sources. Booking.com coverage is strong across all three, but Google Maps category quality and the top-300 market overlap need checking before volume, and local sending rules need review per market.</dd></div>
+            <div><dt>Value</dt><dd>Pipeline in place for the expansion markets before the expansion lands</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="Email Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">Email Copy</p>
+      <h2>Two steps, commission-only hook, one-letter yes</h2>
+      <p class="takeaway">Day 0 names the qualification you already read off their listing. Day 3 is a threaded bump. No sequence mentions the subscription - that is the AE&#39;s call, live.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company_name}}</span><span>{{booking_rating}}</span><span>{{airbnb_surface}}</span><span>{{unit_style}}</span><span>{{priority_market}}</span><span>{{portfolio_size}}</span><span>{{competitor_cm}}</span><span>{{alt_decision_maker}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company_name}}, {{booking_rating}}, {{airbnb_surface}}, {{unit_style}}, {{priority_market}}, {{portfolio_size}}, {{competitor_cm}}, {{alt_decision_maker}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Priority Market New Channel Brief</strong>
+              <em>Priority Market New Channel Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Priority Market New Channel Brief steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: airbnb gap at {{company_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;{{company_name}} is sitting at {{booking_rating}} on Booking, and {{airbnb_surface}}. In {{priority_market}} that gap costs more than it does most places - Airbnb ranks it a priority market, and {{unit_style}} is exactly what that traveler searches for.&#10;&#10;We run the whole channel for hotels: listing build and optimization, 24/7 guest messaging, ops support. Nothing monthly to start - we&#39;re paid on the room nights we produce.&#10;&#10;Worth seeing the one-page New Channel Brief for {{priority_market}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="airbnb gap at {{company_name}}" data-preview="airbnb gap at Bayview Court Hotel">airbnb gap at {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;{{company_name}} is sitting at {{booking_rating}} on Booking, and {{airbnb_surface}}. In {{priority_market}} that gap costs more than it does most places - Airbnb ranks it a priority market, and {{unit_style}} is exactly what that traveler searches for.&#10;&#10;We run the whole channel for hotels: listing build and optimization, 24/7 guest messaging, ops support. Nothing monthly to start - we&#39;re paid on the room nights we produce.&#10;&#10;Worth seeing the one-page New Channel Brief for {{priority_market}}?" data-preview="Hey Marta,&#10;&#10;Bayview Court Hotel is sitting at 8.4 on Booking, and there&#39;s no Airbnb or Vrbo listing for the property. In Lisbon that gap costs more than it does most places - Airbnb ranks it a priority market, and your kitchenette suites is exactly what that traveler searches for.&#10;&#10;We run the whole channel for hotels: listing build and optimization, 24/7 guest messaging, ops support. Nothing monthly to start - we&#39;re paid on the room nights we produce.&#10;&#10;Worth seeing the one-page New Channel Brief for Lisbon?">
+                        <p>Hey {{first_name}},</p><p>{{company_name}} is sitting at {{booking_rating}} on Booking, and {{airbnb_surface}}. In {{priority_market}} that gap costs more than it does most places - Airbnb ranks it a priority market, and {{unit_style}} is exactly what that traveler searches for.</p><p>We run the whole channel for hotels: listing build and optimization, 24/7 guest messaging, ops support. Nothing monthly to start - we&#39;re paid on the room nights we produce.</p><p>Worth seeing the one-page New Channel Brief for {{priority_market}}?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Quick bump. Alesha Newman at Forest Suites Resort called Airbnb a growing segment as local short-term rental inventory tightens - same shape as {{company_name}}.&#10;&#10;Reply yes and I&#39;ll send the brief. Or should this go to {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Quick bump. Alesha Newman at Forest Suites Resort called Airbnb a growing segment as local short-term rental inventory tightens - same shape as {{company_name}}.&#10;&#10;Reply yes and I&#39;ll send the brief. Or should this go to {{alt_decision_maker}}?" data-preview="Hey Marta,&#10;&#10;Quick bump. Alesha Newman at Forest Suites Resort called Airbnb a growing segment as local short-term rental inventory tightens - same shape as Bayview Court Hotel.&#10;&#10;Reply yes and I&#39;ll send the brief. Or should this go to your revenue manager?">
+                        <p>Hey {{first_name}},</p><p>Quick bump. Alesha Newman at Forest Suites Resort called Airbnb a growing segment as local short-term rental inventory tightens - same shape as {{company_name}}.</p><p>Reply yes and I&#39;ll send the brief. Or should this go to {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - New Channel Brief</strong>
+              <em>New Channel Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - New Channel Brief steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company_name}} + airbnb&#10;&#10;Hey {{first_name}},&#10;&#10;Pulled {{company_name}} - {{booking_rating}} on Booking, and {{airbnb_surface}}. So Booking and Expedia travelers find you, and Airbnb and Vrbo travelers don&#39;t.&#10;&#10;We open that channel end to end for hotels: listing build, optimized content, 24/7 guest messaging, ops support. No monthly fee to start - we earn on the room nights we produce.&#10;&#10;Want the one-page New Channel Brief?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company_name}} + airbnb" data-preview="Bayview Court Hotel + airbnb">{{company_name}} + airbnb</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Pulled {{company_name}} - {{booking_rating}} on Booking, and {{airbnb_surface}}. So Booking and Expedia travelers find you, and Airbnb and Vrbo travelers don&#39;t.&#10;&#10;We open that channel end to end for hotels: listing build, optimized content, 24/7 guest messaging, ops support. No monthly fee to start - we earn on the room nights we produce.&#10;&#10;Want the one-page New Channel Brief?" data-preview="Hey Marta,&#10;&#10;Pulled Bayview Court Hotel - 8.4 on Booking, and there&#39;s no Airbnb or Vrbo listing for the property. So Booking and Expedia travelers find you, and Airbnb and Vrbo travelers don&#39;t.&#10;&#10;We open that channel end to end for hotels: listing build, optimized content, 24/7 guest messaging, ops support. No monthly fee to start - we earn on the room nights we produce.&#10;&#10;Want the one-page New Channel Brief?">
+                        <p>Hey {{first_name}},</p><p>Pulled {{company_name}} - {{booking_rating}} on Booking, and {{airbnb_surface}}. So Booking and Expedia travelers find you, and Airbnb and Vrbo travelers don&#39;t.</p><p>We open that channel end to end for hotels: listing build, optimized content, 24/7 guest messaging, ops support. No monthly fee to start - we earn on the room nights we produce.</p><p>Want the one-page New Channel Brief?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Floating this once more in case opening Airbnb and Vrbo is on the list this quarter. BnBerry&#39;s connectivity page publishes 7500+ room nights a year on the channel, with a 4-night average stay.&#10;&#10;Just reply yes and I&#39;ll send it over. Should it go to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Floating this once more in case opening Airbnb and Vrbo is on the list this quarter. BnBerry&#39;s connectivity page publishes 7500+ room nights a year on the channel, with a 4-night average stay.&#10;&#10;Just reply yes and I&#39;ll send it over. Should it go to you or {{alt_decision_maker}}?" data-preview="Hey Marta,&#10;&#10;Floating this once more in case opening Airbnb and Vrbo is on the list this quarter. BnBerry&#39;s connectivity page publishes 7500+ room nights a year on the channel, with a 4-night average stay.&#10;&#10;Just reply yes and I&#39;ll send it over. Should it go to you or your revenue manager?">
+                        <p>Hey {{first_name}},</p><p>Floating this once more in case opening Airbnb and Vrbo is on the list this quarter. BnBerry&#39;s connectivity page publishes 7500+ room nights a year on the channel, with a 4-night average stay.</p><p>Just reply yes and I&#39;ll send it over. Should it go to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Portfolio Rollout Brief</strong>
+              <em>Portfolio Rollout Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Portfolio Rollout Brief steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: airbnb across the {{company_name}} portfolio&#10;&#10;Hey {{first_name}},&#10;&#10;Looks like {{portfolio_size}} under {{company_name}}, and {{airbnb_surface}} - so the Airbnb and Vrbo channel is open across most of the group, not just one building.&#10;&#10;We run these as rollouts: pick one property, we build and run the listing, guest messaging and ops, then repeat across the portfolio at whatever cadence works. Performance-based to start, so the pilot doesn&#39;t need a budget line.&#10;&#10;Open to the Portfolio Rollout Brief?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="airbnb across the {{company_name}} portfolio" data-preview="airbnb across the Bayview Court Hotel portfolio">airbnb across the {{company_name}} portfolio</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Looks like {{portfolio_size}} under {{company_name}}, and {{airbnb_surface}} - so the Airbnb and Vrbo channel is open across most of the group, not just one building.&#10;&#10;We run these as rollouts: pick one property, we build and run the listing, guest messaging and ops, then repeat across the portfolio at whatever cadence works. Performance-based to start, so the pilot doesn&#39;t need a budget line.&#10;&#10;Open to the Portfolio Rollout Brief?" data-preview="Hey Marta,&#10;&#10;Looks like nine properties under Bayview Court Hotel, and there&#39;s no Airbnb or Vrbo listing for the property - so the Airbnb and Vrbo channel is open across most of the group, not just one building.&#10;&#10;We run these as rollouts: pick one property, we build and run the listing, guest messaging and ops, then repeat across the portfolio at whatever cadence works. Performance-based to start, so the pilot doesn&#39;t need a budget line.&#10;&#10;Open to the Portfolio Rollout Brief?">
+                        <p>Hey {{first_name}},</p><p>Looks like {{portfolio_size}} under {{company_name}}, and {{airbnb_surface}} - so the Airbnb and Vrbo channel is open across most of the group, not just one building.</p><p>We run these as rollouts: pick one property, we build and run the listing, guest messaging and ops, then repeat across the portfolio at whatever cadence works. Performance-based to start, so the pilot doesn&#39;t need a budget line.</p><p>Open to the Portfolio Rollout Brief?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Bump on the rollout brief - AD1 Global and Terrapin Hospitality run the same multi-property shape.&#10;&#10;Reply yes and I&#39;ll send it. Or point me at whoever owns distribution across the group.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Bump on the rollout brief - AD1 Global and Terrapin Hospitality run the same multi-property shape.&#10;&#10;Reply yes and I&#39;ll send it. Or point me at whoever owns distribution across the group." data-preview="Hey Marta,&#10;&#10;Bump on the rollout brief - AD1 Global and Terrapin Hospitality run the same multi-property shape.&#10;&#10;Reply yes and I&#39;ll send it. Or point me at whoever owns distribution across the group.">
+                        <p>Hey {{first_name}},</p><p>Bump on the rollout brief - AD1 Global and Terrapin Hospitality run the same multi-property shape.</p><p>Reply yes and I&#39;ll send it. Or point me at whoever owns distribution across the group.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 - Full-Service Switch Brief</strong>
+              <em>Full-Service Switch / Guest Messaging Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 - Full-Service Switch Brief steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{competitor_cm}} + airbnb at {{company_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;{{company_name}} is already live on Airbnb/Vrbo with {{competitor_cm}} on the stack. Usually the connector gets inventory listed, and then the property still owns the guest-comms load - Airbnb and Vrbo message traffic runs about 10x other OTAs - plus the listing optimization a thin connector skips.&#10;&#10;We take that over: hotel-native listing work, 24/7 guest messaging, analytics. We sit alongside DerbySoft, SynXis, Sabre and SiteMinder rather than replacing the stack.&#10;&#10;Want the Full-Service Switch Brief?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{competitor_cm}} + airbnb at {{company_name}}" data-preview="SiteMinder + airbnb at Bayview Court Hotel">{{competitor_cm}} + airbnb at {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;{{company_name}} is already live on Airbnb/Vrbo with {{competitor_cm}} on the stack. Usually the connector gets inventory listed, and then the property still owns the guest-comms load - Airbnb and Vrbo message traffic runs about 10x other OTAs - plus the listing optimization a thin connector skips.&#10;&#10;We take that over: hotel-native listing work, 24/7 guest messaging, analytics. We sit alongside DerbySoft, SynXis, Sabre and SiteMinder rather than replacing the stack.&#10;&#10;Want the Full-Service Switch Brief?" data-preview="Hey Marta,&#10;&#10;Bayview Court Hotel is already live on Airbnb/Vrbo with SiteMinder on the stack. Usually the connector gets inventory listed, and then the property still owns the guest-comms load - Airbnb and Vrbo message traffic runs about 10x other OTAs - plus the listing optimization a thin connector skips.&#10;&#10;We take that over: hotel-native listing work, 24/7 guest messaging, analytics. We sit alongside DerbySoft, SynXis, Sabre and SiteMinder rather than replacing the stack.&#10;&#10;Want the Full-Service Switch Brief?">
+                        <p>Hey {{first_name}},</p><p>{{company_name}} is already live on Airbnb/Vrbo with {{competitor_cm}} on the stack. Usually the connector gets inventory listed, and then the property still owns the guest-comms load - Airbnb and Vrbo message traffic runs about 10x other OTAs - plus the listing optimization a thin connector skips.</p><p>We take that over: hotel-native listing work, 24/7 guest messaging, analytics. We sit alongside DerbySoft, SynXis, Sabre and SiteMinder rather than replacing the stack.</p><p>Want the Full-Service Switch Brief?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Floating the Switch Brief again in case Airbnb production is a live topic this month. Laurie Pike at Plantation on Crystal River called out the 24/7 attention to travelers as the part that stuck.&#10;&#10;Reply yes and it&#39;s yours. Should I send it to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Floating the Switch Brief again in case Airbnb production is a live topic this month. Laurie Pike at Plantation on Crystal River called out the 24/7 attention to travelers as the part that stuck.&#10;&#10;Reply yes and it&#39;s yours. Should I send it to you or {{alt_decision_maker}}?" data-preview="Hey Marta,&#10;&#10;Floating the Switch Brief again in case Airbnb production is a live topic this month. Laurie Pike at Plantation on Crystal River called out the 24/7 attention to travelers as the part that stuck.&#10;&#10;Reply yes and it&#39;s yours. Should I send it to you or your revenue manager?">
+                        <p>Hey {{first_name}},</p><p>Floating the Switch Brief again in case Airbnb production is a live topic this month. Laurie Pike at Plantation on Crystal River called out the 24/7 attention to travelers as the part that stuck.</p><p>Reply yes and it&#39;s yours. Should I send it to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Catch-all - 3D Tour / Extra Distribution Playbook</strong>
+              <em>3D Tour / Extra Distribution Playbook</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Catch-all - 3D Tour / Extra Distribution Playbook steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: 3D tours for {{company_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;For independent hotels still leaning on static room photos, the usual drag is low engagement before a guest ever reaches the booking button.&#10;&#10;Put together a short 3D Tour / Extra Distribution Playbook - how comparable properties swap static photos for 360 tours, and optionally open Airbnb and Vrbo alongside it.&#10;&#10;Open to a look?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="3D tours for {{company_name}}" data-preview="3D tours for Bayview Court Hotel">3D tours for {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;For independent hotels still leaning on static room photos, the usual drag is low engagement before a guest ever reaches the booking button.&#10;&#10;Put together a short 3D Tour / Extra Distribution Playbook - how comparable properties swap static photos for 360 tours, and optionally open Airbnb and Vrbo alongside it.&#10;&#10;Open to a look?" data-preview="Hey Marta,&#10;&#10;For independent hotels still leaning on static room photos, the usual drag is low engagement before a guest ever reaches the booking button.&#10;&#10;Put together a short 3D Tour / Extra Distribution Playbook - how comparable properties swap static photos for 360 tours, and optionally open Airbnb and Vrbo alongside it.&#10;&#10;Open to a look?">
+                        <p>Hey {{first_name}},</p><p>For independent hotels still leaning on static room photos, the usual drag is low engagement before a guest ever reaches the booking button.</p><p>Put together a short 3D Tour / Extra Distribution Playbook - how comparable properties swap static photos for 360 tours, and optionally open Airbnb and Vrbo alongside it.</p><p>Open to a look?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Floating the playbook once more in case listing conversion or extra distribution is on the list this month.&#10;&#10;Reply yes and I&#39;ll send it over - no call needed.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Floating the playbook once more in case listing conversion or extra distribution is on the list this month.&#10;&#10;Reply yes and I&#39;ll send it over - no call needed." data-preview="Hey Marta,&#10;&#10;Floating the playbook once more in case listing conversion or extra distribution is on the list this month.&#10;&#10;Reply yes and I&#39;ll send it over - no call needed.">
+                        <p>Hey {{first_name}},</p><p>Floating the playbook once more in case listing conversion or extra distribution is on the list this month.</p><p>Reply yes and I&#39;ll send it over - no call needed.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">Launch</p>
+      <h2>Non-branded in two weeks, branded at four, Tier 1 first</h2>
+      <p class="takeaway">Send from non-branded domains at week two, bring branded domains in at week four after warm-up, and A/B them against revenue managers rather than guessing. Ramp to 2,000-3,000 a day once Tier 1 reply density holds.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Lock the in-TAM definition: boutique and independent hotels with kitchenette, villa or suite-style inventory, plus small property management companies and groups. Brand headquarters (Marriott, Hilton and peers) are excluded - the decision has to sit at property level or inside a small management company.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Build the TAM spine from two pulls, not one. Google Maps lodging categories return the boutique and independent properties; LinkedIn Sales Navigator returns the property management companies and multi-property groups. These feed two different message families, so keep them separated from the first row.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Enrich every account from Booking.com for rating and unit style. The 7.8 rating floor is a hard gate into Tiers 1-3; anything below it drops to the catch-all rather than being deleted, so the floor stays testable.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Run the Airbnb/Vrbo listing search as a disqualifier, not a nice-to-have. Already listed means Tier 4 and a different offer - never a new-channel pitch to a property that already has the channel.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Tag every account against Airbnb&#39;s top-300 priority locations list to split Tier 1 from Tier 2, and use it to decide which markets get daily volume first.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>United States first. 95% of current customers are US, so hold Spain, Portugal and the UK as a Q4 wave tied to the expansion - build and validate those lists now, send when the expansion is live, and check local sending rules per market before the first send.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>Enrich work emails through Apollo only after an account is routed. Do not buy a raw hotel-manager list and hope it qualifies backwards.</p>
+              </div>
+              <div class="launch-step">
+                <span>08</span>
+                <p>Stand up sending infrastructure on two clocks: non-branded domains are send-ready in about two weeks, branded domains in about four after inbox warm-up. Do not delay the launch waiting for branded.</p>
+              </div>
+              <div class="launch-step">
+                <span>09</span>
+                <p>A/B the two domain sets against real revenue managers rather than deciding in advance. The concern that hotel revenue managers distrust a non-branded sender is plausible and untested - split Tier 2 volume evenly and read the reply rate.</p>
+              </div>
+              <div class="launch-step">
+                <span>10</span>
+                <p>Lead every sequence with the commission-only framing. The 2% plus $200/month hybrid is an AE conversation on the call, not a cold-email disclosure - the AE assesses which model fits each prospect live, so the inbox only has to earn the reply.</p>
+              </div>
+              <div class="launch-step">
+                <span>11</span>
+                <p>Launch Tier 1 alone at limited volume until reply density is readable, then ramp toward 2,000-3,000 sends a day (44K-66K a month) as each tier clears the threshold. Two steps per sequence, Day 0 and Day 3.</p>
+              </div>
+              <div class="launch-step">
+                <span>12</span>
+                <p>Feed every positive reply and closed account back into the ICP analysis. With no historical CRM data, the first 90 days of replies are the dataset that re-tunes the 7.8 rating floor, the unit-style filter and the priority-market list - which is the same question as which 30% of hotels actually produce.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>3%+ reply rate</strong>
+                <span>Target hit. Scale the tier and clone the winning angle into the next route.</span>
+              </div>
+              <div class="threshold">
+                <strong>2-3% reply rate</strong>
+                <span>Minimum cleared. Keep running and tighten personalisation on {{priority_market}}, {{booking_rating}} or {{unit_style}}.</span>
+              </div>
+              <div class="threshold">
+                <strong>Under 2% reply rate</strong>
+                <span>Below the floor. Fix the subject and first line before touching the list; if it holds after a full cycle, cut the tier.</span>
+              </div>
+              <div class="threshold">
+                <strong>20%+ positive share of replies</strong>
+                <span>Offer and targeting agree. Hold the copy steady and add volume rather than rewriting.</span>
+              </div>
+              <div class="threshold">
+                <strong>Under 500 contacts per positive reply</strong>
+                <span>Exceptional. Give this tier the first claim on the daily 2,000-3,000 sends.</span>
+              </div>
+              <div class="threshold">
+                <strong>700-1,000 contacts per positive reply</strong>
+                <span>Benchmark average. Acceptable - keep optimising, do not panic.</span>
+              </div>
+              <div class="threshold">
+                <strong>Over 1,000 contacts per positive reply</strong>
+                <span>Cut the tier and move the volume to the next exclusive route.</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book the strategy call</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Marta","Bayview Court Hotel","customer support rep","6","Intercom","healthcare operations","Maya","8\\.4","there's no Airbnb or Vrbo listing for the property","your kitchenette suites","Lisbon","nine properties","SiteMinder","your revenue manager"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
