@@ -9,18 +9,16 @@ export default function Founder() {
       <div className="founder-grid">
         <div className="founder-photo">
           <span className="founder-arrow">more soon</span>
-          <div className="founder-photo__stealth">
-            {/* incognito glyph — hat + mask/glasses */}
-            <svg width="116" height="116" viewBox="0 0 120 120" fill="none" stroke="#1A1712" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M24 58c6-22 16-32 36-32s30 10 36 32" />
-              <path d="M16 58h88" />
-              <circle cx="44" cy="76" r="13" />
-              <circle cx="76" cy="76" r="13" />
-              <path d="M57 76c1.5-2 4.5-2 6 0" />
-            </svg>
-            <span className="founder-photo__cap">Founders in stealth</span>
-          </div>
-          <span className="founder-photo__tag">Revealed soon</span>
+          <img
+            src="/founder-headshot.jpg"
+            alt="GTMx co-founder"
+            width={1000}
+            height={1000}
+            className="founder-photo__img"
+            loading="lazy"
+            decoding="async"
+          />
+          <span className="founder-photo__tag">Co-founder</span>
         </div>
         <div className="founder-copy">
           <h2 className="h2">We&apos;ve been on <span className="hl">both sides</span> of the table.</h2>
