@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universal Accounting - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-09-11</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for Universal Accounting</p>
+          <h1>Your Universal Accounting waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">A scrollable GTMx strategy artifact for routing accounting, bookkeeping, and tax professionals into the right Build-Your-Firm, Start-Your-Practice, Better-Job, or soft Success Journey offer. List building, campaign angles, and sample copy, prepared for Roger Knecht.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Roger sells one education + coaching ladder mapped to career stage — Better Job, Start Your Business, Build Your Business — not a different product per specialty. Bookkeeping vs tax vs payroll is a merge tag after routing, not a second waterfall. The single routing signal is practice_stage from LinkedIn Sales Nav / Apollo title + headline + company type: firm owner/principal, independent solo practitioner, employed staff professional, or none of those. That ladder maps to Universal&#39;s live offers (Profit &amp; Growth Expert + Advanced Coaching, Virtual Bookkeeper Roadmap + start-up certs, Better-Job certifications, soft Success Journey / Accountrepreneurs Challenge for remaining TAM) and keeps one durable list for US accounting-profession outbound.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book the strategy call</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>Since 1979</strong>
+          <span>Universal Accounting Center serving accounting professionals (universalaccounting.com homepage)</span>
+        </div>
+        <div class="metric-card">
+          <strong>Tens of thousands</strong>
+          <span>accountants, bookkeepers, and tax preparers trained — Allen Bostrom instructor bio on Profit &amp; Growth Expert page</span>
+        </div>
+        <div class="metric-card">
+          <strong>3–6 weeks</strong>
+          <span>focused certification skill path without years of school (universalaccounting.com homepage)</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Universal Accounting Center (universalaccounting.com) is a post-secondary education and coaching business — not a SaaS product — serving accounting, bookkeeping, and tax professionals since 1979. Homepage framing: training, certifications, coaching &amp; support so professionals have the confidence and competence to excel and get paid what they are worth. Three Success Journey paths on-site: Better Job (Accountant Certification programs in as little as four weeks), Start Your Business (turnkey programs + coaching — in business for yourself but not by yourself), Build Your Business (retain clients, add value-based services, work efficiently and profitably). Core programs on /programs/: Color Accounting™, Professional Bookkeeper™, QuickBooks™ Specialist, Professional Tax Preparer™, Virtual Bookkeeper&#39;s Roadmap™, Profit &amp; Growth Expert™, Advanced Coaching Program (monthly closed-group calls with Roger Knecht on marketing, accounting, production). Profit &amp; Growth Expert page: 169+ video lessons, two manuals, 40 clock hours, 600+ pages of instruction, orientation + academic + marketing coaches; modules include In the BLACK, Red to BLACK, Strategic Selling, Universal Practice Builder, Profit First (Mike Michalowicz via Roger Knecht), Value Builder (John Warrillow via Roger Knecht). Public proof language: helping thousands of individuals (about-us); Allen Bostrom trained tens of thousands of accountants, bookkeepers, and tax preparers (PGE instructors). Free Accountrepreneurs Challenge (90-day give-back). GrowCon for owners of bookkeeping, accounting, and tax businesses. Roger Knecht = President and CEO. Prospect replied Sure, why not to Vivian&#39;s 5-page doc ask.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal is where they sit in the practice ladder</p></div><div><span>02</span><p>One cascade routes every in-TAM accounting professional</p></div><div><span>03</span><p>Each practice stage gets a different first offer</p></div><div><span>04</span><p>Grow the firm, launch the practice, certify the W-2, then cover the rest</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>Waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>Email Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">Signal</p>
+      <h2>The signal is where they sit in the practice ladder</h2>
+      <p class="takeaway">LinkedIn Sales Nav / Apollo already names firm owners, independent practitioners, employed staff accountants/bookkeepers/tax pros, or none of those. That practice_stage is stronger than a specialty guess and cheap to collect in one pull.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>Apollo + LinkedIn Sales Nav filtered to Universal&#39;s commercial TAM (US bookkeepers, accountants, tax preparers, payroll specialists, aspiring practice owners) is the spine Roger already sells into. Public TAM account count is not published on universalaccounting.com; treat size as estimated (see universal-accounting-magnet-flags.txt) and keep each launch tier ≥~1,500 contacts where possible.</p></div><div class="reason-card"><span>02</span><p>LinkedIn title + headline + company type returns practice_stage in one pull: Owner / Founder / Principal / Managing Partner / Firm Owner of a bookkeeping, accounting, or tax practice for Tier 1; Independent / Self-employed / Freelance / Solo bookkeeper, EA, tax preparer for Tier 2; Staff Accountant / Bookkeeper / Tax Preparer / Payroll Specialist (W-2 employer) for Tier 3 — enough to route without a second expensive enrichment product.</p></div><div class="reason-card"><span>03</span><p>The ladder maps to live Universal offers on universalaccounting.com: Profit &amp; Growth Expert + Advanced Coaching + GrowCon for firm owners; Virtual Bookkeeper&#39;s Roadmap + start-up certs + coaching for independents; Professional Bookkeeper / Tax Preparer / QuickBooks Specialist for Better-Job W-2 pros; soft Success Journey + free Accountrepreneurs Challenge for remaining TAM — plus since-1979 tenure and tens-of-thousands trained as proof language.</p></div><div class="reason-card"><span>04</span><p>Specialty (bookkeeping vs tax vs payroll) and city are scrape filters and merge tags, not a second waterfall. Apollo is email last after the account is routed.</p></div>
+            </div>
+            <div class="field-cloud"><span>in_tam</span><span>already_student</span><span>practice_stage</span><span>firm_owner_detected</span><span>independent_practice_detected</span><span>employed_staff_detected</span><span>specialty</span><span>buyer_title</span><span>city</span><span>title_signal</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>LinkedIn Sales Nav (title + headline + company type)</h3><p>practice_stage for firm owners (Tier 1), independent solo practitioners (Tier 2), and employed staff professionals (Tier 3). Primary routing signal.</p></div><div class="source-card"><span>02</span><h3>Apollo (US accounting / bookkeeping / tax filters)</h3><p>In-TAM accounts across bookkeeping firms, tax practices, accounting practices, and employed professionals plus work emails after routing. The TAM spine.</p></div><div class="source-card"><span>03</span><h3>Company / LinkedIn About (optional personalisation)</h3><p>specialty, city, and service-menu language for copy merge tags after routing. Do not use absence-of-cert alone as a Tier 1–2 trigger.</p></div><div class="source-card"><span>04</span><h3>Apollo email enrichment (after qualification)</h3><p>Work emails for already-routed contacts. Do not buy a raw &#39;accountant list&#39; and hope.</p></div><div class="source-card"><span>05</span><h3>Optional Universal student / alumni suppress</h3><p>Current-student and recent-graduate exclusion when Roger shares a CRM list. Treat as suppress, not a tier.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="Waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">Waterfall</p>
+      <h2>One cascade routes every in-TAM accounting professional</h2>
+      <p class="takeaway">First match wins. Firm owner/principal first, then independent solo practitioner, then employed staff seeking a better job, then every remaining in-TAM accounting-interested lead.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF in_tam AND firm_owner_detected = true (LinkedIn title/headline names Owner, Founder, Principal, Managing Partner, President, or Firm Owner of a bookkeeping, accounting, tax, or payroll practice) AND not already_student</span>
+          <strong>Tier 1 - Premier Firm Growth Brief</strong>
+          <em>They already run a practice and feel the ceiling on compliance-only work. Strongest intent for Universal&#39;s Build Your Business path — Profit &amp; Growth Expert (169+ lessons, Profit First + Value Builder modules), Advanced Coaching with Roger Knecht, and GrowCon community. Pain inferred from trigger: owners stuck in production instead of advisory/marketing.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF in_tam AND independent_practice_detected = true (Self-employed, Independent, Freelance, Solo bookkeeper / tax preparer / EA / accountant; company type = self-employed) AND no Tier-1 firm-owner match AND not already_student</span>
+          <strong>Tier 2 - Practice Launch Roadmap</strong>
+          <em>They hung out a shingle but still need turnkey workflow, pricing, and client acquisition. Maps to Virtual Bookkeeper&#39;s Roadmap + Professional Bookkeeper / Tax Preparer certs + marketing coaching — Start Your Business path on the homepage.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF in_tam AND employed_staff_detected = true (Staff Accountant, Bookkeeper, Tax Preparer, Payroll Specialist, Accounting Clerk at an employer; W-2 framing) AND no Tier 1–2 practice match AND not already_student</span>
+          <strong>Tier 3 - Better-Job Certification Brief</strong>
+          <em>They want competence credentials and a pay bump without years of school. Maps to Professional Bookkeeper™, Professional Tax Preparer™, QuickBooks™ Specialist, Color Accounting™ — Better Job path (as little as four weeks / 3–6 weeks on homepage).</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF in_tam AND none of the above</span>
+          <strong>Catch-all - Success Journey / Accountrepreneurs Challenge</strong>
+          <em>Still in TAM (career changers, aspiring accountants, adjacent finance roles considering bookkeeping/tax). Soft CTA around free Accountrepreneurs Challenge (90-day) and Success Journey overview. Mandatory 100% coverage.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF in_tam AND firm_owner_detected = true (LinkedIn title/headline names Owner, Founder, Principal, Managing Partner, President, or Firm Owner of a bookkeeping, accounting, tax, or payroll practice) AND not already_student -&gt; Tier 1 - Premier Firm Growth Brief (They already run a practice and feel the ceiling on compliance-only work. Strongest intent for Universal&#39;s Build Your Business path — Profit &amp; Growth Expert (169+ lessons, Profit First + Value Builder modules), Advanced Coaching with Roger Knecht, and GrowCon community. Pain inferred from trigger: owners stuck in production instead of advisory/marketing.)&#10;2. IF in_tam AND independent_practice_detected = true (Self-employed, Independent, Freelance, Solo bookkeeper / tax preparer / EA / accountant; company type = self-employed) AND no Tier-1 firm-owner match AND not already_student -&gt; Tier 2 - Practice Launch Roadmap (They hung out a shingle but still need turnkey workflow, pricing, and client acquisition. Maps to Virtual Bookkeeper&#39;s Roadmap + Professional Bookkeeper / Tax Preparer certs + marketing coaching — Start Your Business path on the homepage.)&#10;3. IF in_tam AND employed_staff_detected = true (Staff Accountant, Bookkeeper, Tax Preparer, Payroll Specialist, Accounting Clerk at an employer; W-2 framing) AND no Tier 1–2 practice match AND not already_student -&gt; Tier 3 - Better-Job Certification Brief (They want competence credentials and a pay bump without years of school. Maps to Professional Bookkeeper™, Professional Tax Preparer™, QuickBooks™ Specialist, Color Accounting™ — Better Job path (as little as four weeks / 3–6 weeks on homepage).)&#10;4. IF in_tam AND none of the above -&gt; Catch-all - Success Journey / Accountrepreneurs Challenge (Still in TAM (career changers, aspiring accountants, adjacent finance roles considering bookkeeping/tax). Soft CTA around free Accountrepreneurs Challenge (90-day) and Success Journey overview. Mandatory 100% coverage.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF in_tam AND firm_owner_detected = true (LinkedIn title/headline names Owner, Founder, Principal, Managing Partner, President, or Firm Owner of a bookkeeping, accounting, tax, or payroll practice) AND not already_student -&gt; Tier 1 - Premier Firm Growth Brief (They already run a practice and feel the ceiling on compliance-only work. Strongest intent for Universal&#39;s Build Your Business path — Profit &amp; Growth Expert (169+ lessons, Profit First + Value Builder modules), Advanced Coaching with Roger Knecht, and GrowCon community. Pain inferred from trigger: owners stuck in production instead of advisory/marketing.)
+2. IF in_tam AND independent_practice_detected = true (Self-employed, Independent, Freelance, Solo bookkeeper / tax preparer / EA / accountant; company type = self-employed) AND no Tier-1 firm-owner match AND not already_student -&gt; Tier 2 - Practice Launch Roadmap (They hung out a shingle but still need turnkey workflow, pricing, and client acquisition. Maps to Virtual Bookkeeper&#39;s Roadmap + Professional Bookkeeper / Tax Preparer certs + marketing coaching — Start Your Business path on the homepage.)
+3. IF in_tam AND employed_staff_detected = true (Staff Accountant, Bookkeeper, Tax Preparer, Payroll Specialist, Accounting Clerk at an employer; W-2 framing) AND no Tier 1–2 practice match AND not already_student -&gt; Tier 3 - Better-Job Certification Brief (They want competence credentials and a pay bump without years of school. Maps to Professional Bookkeeper™, Professional Tax Preparer™, QuickBooks™ Specialist, Color Accounting™ — Better Job path (as little as four weeks / 3–6 weeks on homepage).)
+4. IF in_tam AND none of the above -&gt; Catch-all - Success Journey / Accountrepreneurs Challenge (Still in TAM (career changers, aspiring accountants, adjacent finance roles considering bookkeeping/tax). Soft CTA around free Accountrepreneurs Challenge (90-day) and Success Journey overview. Mandatory 100% coverage.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">Tiers</p>
+      <h2>Each practice stage gets a different first offer</h2>
+      <p class="takeaway">Owners get a Premier Firm Growth Brief (PGE + Advanced Coaching). Independents get a Practice Launch Roadmap. Employed pros get a Better-Job Certification Brief. The rest get the soft Success Journey / Accountrepreneurs Challenge.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">est. 10-18% TAM</span>
+          </div>
+          <h3>Tier 1: Firm owner / principal detected</h3>
+          <p>LinkedIn title or headline names Owner, Founder, Principal, Managing Partner, President, or Firm Owner of a bookkeeping, accounting, tax, or payroll practice; not already a Universal student</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They already own the firm and still trade hours for compliance work — client retention, advisory pricing, and marketing sit behind the next busy season.</dd></div>
+              <div><dt>Offer</dt><dd>Premier Firm Growth Brief</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn Sales Nav / Apollo title + headline for firm-owner language</dd></div>
+              <div><dt>Reply density</dt><dd>Highest - they already own a practice and feel the growth ceiling</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">est. 18-28% TAM</span>
+          </div>
+          <h3>Tier 2: Independent solo practitioner</h3>
+          <p>In-TAM contact shows Self-employed / Independent / Freelance / Solo bookkeeper, tax preparer, EA, or accountant with no Tier-1 firm-owner match</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The shingle is up, but workflow, pricing, and a predictable client pipeline are still improvised — feast-or-famine months and no coaching bench.</dd></div>
+              <div><dt>Offer</dt><dd>Practice Launch Roadmap</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn / Apollo self-employed + solo-practice titles after firm-owner filter fails</dd></div>
+              <div><dt>Reply density</dt><dd>High - visible start-up friction, clear turnkey path</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">est. 22-32% TAM</span>
+          </div>
+          <h3>Tier 3: Employed staff accountant / bookkeeper / tax pro</h3>
+          <p>In-TAM contact holds Staff Accountant, Bookkeeper, Tax Preparer, Payroll Specialist, or similar W-2 role with no Tier 1–2 practice match</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Career growth and pay are capped by missing credentials — peers certify and either get promoted or leave for better roles while they stay stuck in the same seat.</dd></div>
+              <div><dt>Offer</dt><dd>Better-Job Certification Brief</dd></div>
+              <div><dt>Source</dt><dd>LinkedIn / Apollo employed staff titles after Tier 1–2 filters fail</dd></div>
+              <div><dt>Reply density</dt><dd>Medium - clear credential motive, longer consideration cycle</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="catchall" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">est. 30-45% TAM</span>
+          </div>
+          <h3>Catch-all: Remaining in-TAM accounting-interested leads</h3>
+          <p>In-TAM contact in US accounting / bookkeeping / tax / payroll / finance-adjacent roles or career-change intent with no Tier 1–3 practice_stage</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They are curious about accounting careers or side practices but have no clear next step — university paths feel too long and generic for small-business client work.</dd></div>
+              <div><dt>Offer</dt><dd>Success Journey / Accountrepreneurs Challenge</dd></div>
+              <div><dt>Source</dt><dd>Apollo / Sales Nav after in_tam gate</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest - broadest list, softest CTA</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">Campaigns</p>
+      <h2>Grow the firm, launch the practice, certify the W-2, then cover the rest</h2>
+      <p class="takeaway">The list is always US accounting, bookkeeping, and tax professionals Universal already sells into. Specialty (bookkeeping vs tax vs payroll) is a merge tag. A/Bs sit on exclusive routes (profit-advisory vs client-acquisition).</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Firm owner → Premier Firm Growth</h3>
+          <p>Highest intent. Personalise on {{specialty}}, {{city}}, and {{title_signal}}.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>in_tam + firm_owner_detected + not already_student</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with {{title_signal}} / {{specialty}} at {{company_name}}, offer Premier Firm Growth Brief anchored to Profit &amp; Growth Expert (169+ lessons, Profit First + Value Builder), Advanced Coaching with Roger Knecht, GrowCon for firm owners.</dd></div>
+            <div><dt>Value</dt><dd>Move from compliance hours to advisory + predictable growth</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Independent → Practice Launch Roadmap</h3>
+          <p>Second exclusive route. A/B client-acquisition vs workflow-efficiency lines.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>in_tam + independent_practice_detected + no firm_owner_detected</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with solo/independent {{specialty}} practice signal, offer Practice Launch Roadmap (Virtual Bookkeeper&#39;s Roadmap + certs + marketing coach).</dd></div>
+            <div><dt>Value</dt><dd>Turnkey systems so you are not building the practice alone</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Staff W-2 → Better-Job Certification</h3>
+          <p>Third exclusive route. Soft credential entry before start-your-business pitch.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>in_tam + employed_staff_detected + no Tier 1–2</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with employed {{buyer_title}} / {{cert_focus}} angle, offer Better-Job Certification Brief (PB, PTP, QuickBooks Specialist, Color Accounting) — weeks not years.</dd></div>
+            <div><dt>Value</dt><dd>Credentials and confidence for a better role or higher pay</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Remaining accounting TAM</h3>
+          <p>Mandatory catch-all for 100% TAM coverage. Specialty is a merge tag only.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>in_tam + no Tier 1–3 practice_stage</dd></div>
+            <div><dt>AI strategy</dt><dd>Soft Success Journey + free Accountrepreneurs Challenge (90-day). Soft CTA.</dd></div>
+            <div><dt>Value</dt><dd>Simple path into Universal training for {{specialty}} career changers</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="Email Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">Email Copy</p>
+      <h2>Copy that names the practice stage already on their LinkedIn</h2>
+      <p class="takeaway">Notice the owner title, solo practice, or staff role, poke the growth / client-acquisition / career-ceiling pain that stage implies, then ask for a one-letter yes.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company_name}}</span><span>{{practice_stage}}</span><span>{{specialty}}</span><span>{{title_signal}}</span><span>{{buyer_title}}</span><span>{{alt_decision_maker}}</span><span>{{city}}</span><span>{{cert_focus}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company_name}}, {{practice_stage}}, {{specialty}}, {{title_signal}}, {{buyer_title}}, {{alt_decision_maker}}, {{city}}, {{cert_focus}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Premier Firm Growth Brief</strong>
+              <em>Premier Firm Growth Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Premier Firm Growth Brief steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{specialty}} firm at {{company_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;Saw you listed as {{title_signal}} at {{company_name}} ({{specialty}}, {{city}}). When the firm already exists, the usual ceiling is still trading hours for compliance work while advisory pricing and client acquisition wait for &quot;after busy season.&quot;&#10;&#10;We put together a short Premier Firm Growth Brief on how Universal Accounting&#39;s Profit &amp; Growth Expert path (169+ lessons, Profit First + Value Builder with Roger Knecht) plus Advanced Coaching helps owners build the premier {{specialty}} firm in their area — training and coaching since 1979, tens of thousands trained per instructor bios on universalaccounting.com.&#10;&#10;Worth a look?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{specialty}} firm at {{company_name}}" data-preview="bookkeeping firm at Summit Bookkeeping Co">{{specialty}} firm at {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Saw you listed as {{title_signal}} at {{company_name}} ({{specialty}}, {{city}}). When the firm already exists, the usual ceiling is still trading hours for compliance work while advisory pricing and client acquisition wait for &quot;after busy season.&quot;&#10;&#10;We put together a short Premier Firm Growth Brief on how Universal Accounting&#39;s Profit &amp; Growth Expert path (169+ lessons, Profit First + Value Builder with Roger Knecht) plus Advanced Coaching helps owners build the premier {{specialty}} firm in their area — training and coaching since 1979, tens of thousands trained per instructor bios on universalaccounting.com.&#10;&#10;Worth a look?" data-preview="Hey Jordan,&#10;&#10;Saw you listed as Owner / Principal at Summit Bookkeeping Co (bookkeeping, Denver). When the firm already exists, the usual ceiling is still trading hours for compliance work while advisory pricing and client acquisition wait for &quot;after busy season.&quot;&#10;&#10;We put together a short Premier Firm Growth Brief on how Universal Accounting&#39;s Profit &amp; Growth Expert path (169+ lessons, Profit First + Value Builder with Roger Knecht) plus Advanced Coaching helps owners build the premier bookkeeping firm in their area — training and coaching since 1979, tens of thousands trained per instructor bios on universalaccounting.com.&#10;&#10;Worth a look?">
+                        <p>Hey {{first_name}},</p><p>Saw you listed as {{title_signal}} at {{company_name}} ({{specialty}}, {{city}}). When the firm already exists, the usual ceiling is still trading hours for compliance work while advisory pricing and client acquisition wait for &quot;after busy season.&quot;</p><p>We put together a short Premier Firm Growth Brief on how Universal Accounting&#39;s Profit &amp; Growth Expert path (169+ lessons, Profit First + Value Builder with Roger Knecht) plus Advanced Coaching helps owners build the premier {{specialty}} firm in their area — training and coaching since 1979, tens of thousands trained per instructor bios on universalaccounting.com.</p><p>Worth a look?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Quick bump on the Premier Firm Growth Brief. Happy to keep it to one page: where owners in {{specialty}} add consultative services and a marketing system without another year of DIY.&#10;&#10;Either way, appreciate you.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Quick bump on the Premier Firm Growth Brief. Happy to keep it to one page: where owners in {{specialty}} add consultative services and a marketing system without another year of DIY.&#10;&#10;Either way, appreciate you." data-preview="Hey Jordan,&#10;&#10;Quick bump on the Premier Firm Growth Brief. Happy to keep it to one page: where owners in bookkeeping add consultative services and a marketing system without another year of DIY.&#10;&#10;Either way, appreciate you.">
+                        <p>Hey {{first_name}},</p><p>Quick bump on the Premier Firm Growth Brief. Happy to keep it to one page: where owners in {{specialty}} add consultative services and a marketing system without another year of DIY.</p><p>Either way, appreciate you.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: question for {{first_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the Premier Firm Growth Brief.&#10;&#10;Should I send this to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="question for {{first_name}}" data-preview="question for Jordan">question for {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the Premier Firm Growth Brief.&#10;&#10;Should I send this to you or {{alt_decision_maker}}?" data-preview="Hey Jordan,&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the Premier Firm Growth Brief.&#10;&#10;Should I send this to you or your operations partner?">
+                        <p>Hey {{first_name}},</p><p>No need for a call. Just reply yes and I&#39;ll send the Premier Firm Growth Brief.</p><p>Should I send this to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Practice Launch Roadmap</strong>
+              <em>Practice Launch Roadmap</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Practice Launch Roadmap steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: solo {{specialty}} practice&#10;&#10;Hey {{first_name}},&#10;&#10;Noticed you&#39;re running an independent {{specialty}} practice ({{city}}). When the shingle is up but workflow, pricing, and a steady client pipeline are still improvised, feast-or-famine months usually follow.&#10;&#10;Happy to share a one-page Practice Launch Roadmap: Universal&#39;s Virtual Bookkeeper&#39;s Roadmap + Professional Bookkeeper / Tax Preparer certs + marketing coach — homepage line is &quot;in business for yourself but not by yourself,&quot; with coaches after the courses too.&#10;&#10;Useful?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="solo {{specialty}} practice" data-preview="solo bookkeeping practice">solo {{specialty}} practice</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Noticed you&#39;re running an independent {{specialty}} practice ({{city}}). When the shingle is up but workflow, pricing, and a steady client pipeline are still improvised, feast-or-famine months usually follow.&#10;&#10;Happy to share a one-page Practice Launch Roadmap: Universal&#39;s Virtual Bookkeeper&#39;s Roadmap + Professional Bookkeeper / Tax Preparer certs + marketing coach — homepage line is &quot;in business for yourself but not by yourself,&quot; with coaches after the courses too.&#10;&#10;Useful?" data-preview="Hey Jordan,&#10;&#10;Noticed you&#39;re running an independent bookkeeping practice (Denver). When the shingle is up but workflow, pricing, and a steady client pipeline are still improvised, feast-or-famine months usually follow.&#10;&#10;Happy to share a one-page Practice Launch Roadmap: Universal&#39;s Virtual Bookkeeper&#39;s Roadmap + Professional Bookkeeper / Tax Preparer certs + marketing coach — homepage line is &quot;in business for yourself but not by yourself,&quot; with coaches after the courses too.&#10;&#10;Useful?">
+                        <p>Hey {{first_name}},</p><p>Noticed you&#39;re running an independent {{specialty}} practice ({{city}}). When the shingle is up but workflow, pricing, and a steady client pipeline are still improvised, feast-or-famine months usually follow.</p><p>Happy to share a one-page Practice Launch Roadmap: Universal&#39;s Virtual Bookkeeper&#39;s Roadmap + Professional Bookkeeper / Tax Preparer certs + marketing coach — homepage line is &quot;in business for yourself but not by yourself,&quot; with coaches after the courses too.</p><p>Useful?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Quick bump. If client acquisition or back-office workflow is the constraint, the Roadmap is just how solo {{specialty}} pros get a turnkey plan instead of rebuilding from scratch each quarter.&#10;&#10;Want me to send it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Quick bump. If client acquisition or back-office workflow is the constraint, the Roadmap is just how solo {{specialty}} pros get a turnkey plan instead of rebuilding from scratch each quarter.&#10;&#10;Want me to send it?" data-preview="Hey Jordan,&#10;&#10;Quick bump. If client acquisition or back-office workflow is the constraint, the Roadmap is just how solo bookkeeping pros get a turnkey plan instead of rebuilding from scratch each quarter.&#10;&#10;Want me to send it?">
+                        <p>Hey {{first_name}},</p><p>Quick bump. If client acquisition or back-office workflow is the constraint, the Roadmap is just how solo {{specialty}} pros get a turnkey plan instead of rebuilding from scratch each quarter.</p><p>Want me to send it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: question for {{first_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;Reply yes and I&#39;ll send the Practice Launch Roadmap — or tell me if {{alt_decision_maker}} is the better inbox.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="question for {{first_name}}" data-preview="question for Jordan">question for {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Reply yes and I&#39;ll send the Practice Launch Roadmap — or tell me if {{alt_decision_maker}} is the better inbox." data-preview="Hey Jordan,&#10;&#10;Reply yes and I&#39;ll send the Practice Launch Roadmap — or tell me if your operations partner is the better inbox.">
+                        <p>Hey {{first_name}},</p><p>Reply yes and I&#39;ll send the Practice Launch Roadmap — or tell me if {{alt_decision_maker}} is the better inbox.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Better-Job Certification Brief</strong>
+              <em>Better-Job Certification Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Better-Job Certification Brief steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{buyer_title}} credentials&#10;&#10;Hey {{first_name}},&#10;&#10;Saw your {{buyer_title}} role ({{specialty}}). A lot of employed pros hit a ceiling until they have a focused credential — university paths take years and skew toward large-firm theory, not day-to-day client work.&#10;&#10;We sketched a short Better-Job Certification Brief on Universal&#39;s Professional Bookkeeper / Tax Preparer / QuickBooks Specialist paths (homepage: as little as four weeks / 3–6 weeks, video lessons + coaches). Anchored to {{cert_focus}} if that fits.&#10;&#10;Worth a skim?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{buyer_title}} credentials" data-preview="Owner credentials">{{buyer_title}} credentials</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Saw your {{buyer_title}} role ({{specialty}}). A lot of employed pros hit a ceiling until they have a focused credential — university paths take years and skew toward large-firm theory, not day-to-day client work.&#10;&#10;We sketched a short Better-Job Certification Brief on Universal&#39;s Professional Bookkeeper / Tax Preparer / QuickBooks Specialist paths (homepage: as little as four weeks / 3–6 weeks, video lessons + coaches). Anchored to {{cert_focus}} if that fits.&#10;&#10;Worth a skim?" data-preview="Hey Jordan,&#10;&#10;Saw your Owner role (bookkeeping). A lot of employed pros hit a ceiling until they have a focused credential — university paths take years and skew toward large-firm theory, not day-to-day client work.&#10;&#10;We sketched a short Better-Job Certification Brief on Universal&#39;s Professional Bookkeeper / Tax Preparer / QuickBooks Specialist paths (homepage: as little as four weeks / 3–6 weeks, video lessons + coaches). Anchored to Professional Bookkeeper if that fits.&#10;&#10;Worth a skim?">
+                        <p>Hey {{first_name}},</p><p>Saw your {{buyer_title}} role ({{specialty}}). A lot of employed pros hit a ceiling until they have a focused credential — university paths take years and skew toward large-firm theory, not day-to-day client work.</p><p>We sketched a short Better-Job Certification Brief on Universal&#39;s Professional Bookkeeper / Tax Preparer / QuickBooks Specialist paths (homepage: as little as four weeks / 3–6 weeks, video lessons + coaches). Anchored to {{cert_focus}} if that fits.</p><p>Worth a skim?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Quick bump on the Better-Job Certification Brief. Happy to keep it to how peers in {{specialty}} pick up competence credentials without another semester of filler.&#10;&#10;Either way, appreciate you.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Quick bump on the Better-Job Certification Brief. Happy to keep it to how peers in {{specialty}} pick up competence credentials without another semester of filler.&#10;&#10;Either way, appreciate you." data-preview="Hey Jordan,&#10;&#10;Quick bump on the Better-Job Certification Brief. Happy to keep it to how peers in bookkeeping pick up competence credentials without another semester of filler.&#10;&#10;Either way, appreciate you.">
+                        <p>Hey {{first_name}},</p><p>Quick bump on the Better-Job Certification Brief. Happy to keep it to how peers in {{specialty}} pick up competence credentials without another semester of filler.</p><p>Either way, appreciate you.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: question for {{first_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;Just reply yes and I&#39;ll send the Better-Job Certification Brief. You or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="question for {{first_name}}" data-preview="question for Jordan">question for {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Just reply yes and I&#39;ll send the Better-Job Certification Brief. You or {{alt_decision_maker}}?" data-preview="Hey Jordan,&#10;&#10;Just reply yes and I&#39;ll send the Better-Job Certification Brief. You or your operations partner?">
+                        <p>Hey {{first_name}},</p><p>Just reply yes and I&#39;ll send the Better-Job Certification Brief. You or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Catch-all - Success Journey / Accountrepreneurs Challenge</strong>
+              <em>Success Journey / Accountrepreneurs Challenge</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Catch-all - Success Journey / Accountrepreneurs Challenge steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: accounting career idea&#10;&#10;Hey {{first_name}},&#10;&#10;Looking at folks exploring {{specialty}} / accounting careers. We sketched a short Success Journey overview plus Universal&#39;s free Accountrepreneurs Challenge (90-day give-back on universalaccounting.com) — training and coaching since 1979, Better Job / Start Your Business / Build Your Business paths without a hard sell.&#10;&#10;Want the one-pager?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="accounting career idea" data-preview="accounting career idea">accounting career idea</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Looking at folks exploring {{specialty}} / accounting careers. We sketched a short Success Journey overview plus Universal&#39;s free Accountrepreneurs Challenge (90-day give-back on universalaccounting.com) — training and coaching since 1979, Better Job / Start Your Business / Build Your Business paths without a hard sell.&#10;&#10;Want the one-pager?" data-preview="Hey Jordan,&#10;&#10;Looking at folks exploring bookkeeping / accounting careers. We sketched a short Success Journey overview plus Universal&#39;s free Accountrepreneurs Challenge (90-day give-back on universalaccounting.com) — training and coaching since 1979, Better Job / Start Your Business / Build Your Business paths without a hard sell.&#10;&#10;Want the one-pager?">
+                        <p>Hey {{first_name}},</p><p>Looking at folks exploring {{specialty}} / accounting careers. We sketched a short Success Journey overview plus Universal&#39;s free Accountrepreneurs Challenge (90-day give-back on universalaccounting.com) — training and coaching since 1979, Better Job / Start Your Business / Build Your Business paths without a hard sell.</p><p>Want the one-pager?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Quick bump on the Success Journey / Accountrepreneurs Challenge. Soft CTA only — happy to send if a {{specialty}} credential or practice start is on your list this quarter.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Quick bump on the Success Journey / Accountrepreneurs Challenge. Soft CTA only — happy to send if a {{specialty}} credential or practice start is on your list this quarter." data-preview="Hey Jordan,&#10;&#10;Quick bump on the Success Journey / Accountrepreneurs Challenge. Soft CTA only — happy to send if a bookkeeping credential or practice start is on your list this quarter.">
+                        <p>Hey {{first_name}},</p><p>Quick bump on the Success Journey / Accountrepreneurs Challenge. Soft CTA only — happy to send if a {{specialty}} credential or practice start is on your list this quarter.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: question for {{first_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;Reply yes and I&#39;ll send the overview. No call needed unless you want one.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="question for {{first_name}}" data-preview="question for Jordan">question for {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Reply yes and I&#39;ll send the overview. No call needed unless you want one." data-preview="Hey Jordan,&#10;&#10;Reply yes and I&#39;ll send the overview. No call needed unless you want one.">
+                        <p>Hey {{first_name}},</p><p>Reply yes and I&#39;ll send the overview. No call needed unless you want one.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">Launch</p>
+      <h2>Launch the firm-owner route first</h2>
+      <p class="takeaway">Start where owners already feel client-retention and advisory-pricing pressure and Universal&#39;s Build Your Business / PGE / GrowCon path is the closest fit. Prove reply density, then roll independent launch, Better-Job certs, and the remaining-TAM catch-all.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Suppress known Universal students, recent graduates, and active coaching clients first (prefer CRM list from Roger when available).</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Launch Tier 1 firm-owner → Premier Firm Growth Brief; hold until ≥~1,500 contacts when niche allows, else run smaller waves with longer reply-density read.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Roll Tier 2 independent → Practice Launch Roadmap, then Tier 3 employed staff → Better-Job Certification Brief.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Open Catch-all Success Journey / Accountrepreneurs Challenge for remaining TAM (specialty = merge tag only).</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>A/B inside exclusive routes: advisory/Profit First vs client-acquisition / marketing-system lines (from PGE and Practice Builder modules).</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive / 150 sends</strong>
+                <span>Scale that tier</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 300</strong>
+                <span>Fine — keep running</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 450–500</strong>
+                <span>Test a copy/variant</span>
+              </div>
+              <div class="threshold">
+                <strong>&lt;1% reply after 1,500 sends or past 1/500</strong>
+                <span>Cut or rebuild that tier</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book the strategy call</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Jordan","Summit Bookkeeping Co","customer support rep","6","Intercom","healthcare operations","Maya","owner of a bookkeeping firm","bookkeeping","Owner / Principal","Owner","your operations partner","Denver","Professional Bookkeeper"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
