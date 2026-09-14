@@ -1,0 +1,1850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShipPrimus - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-09-14</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for ShipPrimus</p>
+          <h1>Your ShipPrimus waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">One signal routes every small and mid-size US freight brokerage. Five tiers, five different conversations, no overlap.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Every freight brokerage shows on its own website how a shipper gets a price: a login link to a TMS portal, or a form, an email or a phone number. Hosted portals sit on the vendor&#39;s domain, so that one free link often names the incumbent TMS and shows which ShipPrimus advantage applies.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>28,943</strong>
+          <span>Bonded FMCSA brokerages in the market frame</span>
+        </div>
+        <div class="metric-card">
+          <strong>~1,000</strong>
+          <span>Tier 1: already paying a seat-priced TMS (est.)</span>
+        </div>
+        <div class="metric-card">
+          <strong>$0</strong>
+          <span>Cost of the routing signal</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>Neutral, API-first TMS for freight brokers and 3PLs: rate, book, track and bill LTL, FTL and small pack, plus a white-labeled shipper portal. $3 per BOL, live in days.</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal</p></div><div><span>02</span><p>The routing</p></div><div><span>03</span><p>The five tiers</p></div><div><span>04</span><p>Campaign experiments</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>01</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>02</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>03</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>04</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>05</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>06</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="01">
+        
+    <div class="section-head">
+      <p class="eyebrow">01</p>
+      <h2>The signal</h2>
+      <p class="takeaway">Quote posture beats headcount and state, because every brokerage has one, it names the incumbent TMS, and no vendor sells it.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>Free. It comes from the broker&#39;s own website and FMCSA records, so there is no enrichment spend before routing.</p></div><div class="reason-card"><span>02</span><p>Names the incumbent. Hosted TMS portals run on the vendor&#39;s domain ([broker].taicloud.net, [broker].3plsystems.com), so Tier 1 copy can name the tool and its published price.</p></div><div class="reason-card"><span>03</span><p>Universal. Every brokerage with a website has a quote posture, so the catch-all tier can never be empty.</p></div><div class="reason-card"><span>04</span><p>Self-refreshing. When a broker switches TMS or adds a portal, the link changes and the account moves to a new tier.</p></div>
+            </div>
+            <div class="field-cloud"><span>bond_active</span><span>authority_type</span><span>authority_grant_date</span><span>headcount</span><span>portal_link_host</span><span>portal_vendor</span><span>vendor_class</span><span>service_lines</span><span>quote_mechanism</span><span>open_manual_ops_roles</span><span>role_title</span><span>jd_task</span><span>cargo_insurance_mentioned</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>FMCSA Licensing &amp; Insurance + Company Census File</h3><p>The market frame: every active broker authority, grant date, bond status, and registered phone and email.</p></div><div class="source-card"><span>02</span><h3>Broker website crawl</h3><p>The quote posture: portal link host, quote mechanism, service lines, cargo insurance mentions.</p></div><div class="source-card"><span>03</span><h3>TMS portal hostname fingerprints</h3><p>Turns a login link into a named vendor and a vendor class (existing customer, SMB, enterprise).</p></div><div class="source-card"><span>04</span><h3>Search-engine sweeps of vendor portal domains</h3><p>A Tier 1 seed list that does not depend on the crawl.</p></div><div class="source-card"><span>05</span><h3>Indeed, LinkedIn, ZipRecruiter</h3><p>Tier 3: open pricing, quoting, track and trace, and billing roles, plus the task lines in each posting.</p></div><div class="source-card"><span>06</span><h3>G2 and Capterra competitor reviews</h3><p>Tier 1 priority: reviewer company and review date, as a rough guide to renewal timing.</p></div><div class="source-card"><span>07</span><h3>AI Ark / Apollo</h3><p>Headcount and contacts, used last, after routing.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="02">
+        
+    <div class="section-head">
+      <p class="eyebrow">02</p>
+      <h2>The routing</h2>
+      <p class="takeaway">First match wins. Existing customers and enterprise-TMS users are excluded up front, so per-BOL pricing is only pitched where it holds up.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF Portal link on *.shipprimus.com</span>
+          <strong>Exclude: existing customer</strong>
+          <em>Returned to ShipPrimus as a reference list instead of emailed.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF Portal on an enterprise TMS (MercuryGate, McLeod, Revenova, Turvo)</span>
+          <strong>Exclude</strong>
+          <em>High BOL volume breaks per-BOL economics, and switching is a multi-quarter project.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF Portal on a seat-priced SMB TMS (Tai, Aljex, 3PL Systems, Rose Rocket, AscendTMS, FreightPOP)</span>
+          <strong>Tier 1: Paying a seat-priced TMS</strong>
+          <em>Already pays for the category. The pitch is usage pricing with the break-even stated.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF LTL or parcel listed AND quote by form, email or phone</span>
+          <strong>Tier 2: Quoting LTL and parcel by hand</strong>
+          <em>Every quote is built by hand, and the branded shipper portal answers it directly.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="4">
+          <span class="route-rule__num">05</span>
+          <span class="route-rule__if">IF Open quoting, tracking or billing role &gt;= 1</span>
+          <strong>Tier 3: Hiring people to do TMS work</strong>
+          <em>They&#39;re paying a salary for work software does. The posting is the evidence.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="5">
+          <span class="route-rule__num">06</span>
+          <span class="route-rule__if">IF Broker authority granted within 18 months</span>
+          <strong>Tier 4: New brokerage, first TMS</strong>
+          <em>Choosing a first TMS, with no volume yet to justify a fixed annual contract.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="6">
+          <span class="route-rule__num">07</span>
+          <span class="route-rule__if">IF Everything else past the gate</span>
+          <strong>Tier 5: Catch-all</strong>
+          <em>Category fit only. A free lane test carries the offer.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF Portal link on *.shipprimus.com -&gt; Exclude: existing customer (Returned to ShipPrimus as a reference list instead of emailed.)&#10;2. IF Portal on an enterprise TMS (MercuryGate, McLeod, Revenova, Turvo) -&gt; Exclude (High BOL volume breaks per-BOL economics, and switching is a multi-quarter project.)&#10;3. IF Portal on a seat-priced SMB TMS (Tai, Aljex, 3PL Systems, Rose Rocket, AscendTMS, FreightPOP) -&gt; Tier 1: Paying a seat-priced TMS (Already pays for the category. The pitch is usage pricing with the break-even stated.)&#10;4. IF LTL or parcel listed AND quote by form, email or phone -&gt; Tier 2: Quoting LTL and parcel by hand (Every quote is built by hand, and the branded shipper portal answers it directly.)&#10;5. IF Open quoting, tracking or billing role &gt;= 1 -&gt; Tier 3: Hiring people to do TMS work (They&#39;re paying a salary for work software does. The posting is the evidence.)&#10;6. IF Broker authority granted within 18 months -&gt; Tier 4: New brokerage, first TMS (Choosing a first TMS, with no volume yet to justify a fixed annual contract.)&#10;7. IF Everything else past the gate -&gt; Tier 5: Catch-all (Category fit only. A free lane test carries the offer.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF Portal link on *.shipprimus.com -&gt; Exclude: existing customer (Returned to ShipPrimus as a reference list instead of emailed.)
+2. IF Portal on an enterprise TMS (MercuryGate, McLeod, Revenova, Turvo) -&gt; Exclude (High BOL volume breaks per-BOL economics, and switching is a multi-quarter project.)
+3. IF Portal on a seat-priced SMB TMS (Tai, Aljex, 3PL Systems, Rose Rocket, AscendTMS, FreightPOP) -&gt; Tier 1: Paying a seat-priced TMS (Already pays for the category. The pitch is usage pricing with the break-even stated.)
+4. IF LTL or parcel listed AND quote by form, email or phone -&gt; Tier 2: Quoting LTL and parcel by hand (Every quote is built by hand, and the branded shipper portal answers it directly.)
+5. IF Open quoting, tracking or billing role &gt;= 1 -&gt; Tier 3: Hiring people to do TMS work (They&#39;re paying a salary for work software does. The posting is the evidence.)
+6. IF Broker authority granted within 18 months -&gt; Tier 4: New brokerage, first TMS (Choosing a first TMS, with no volume yet to justify a fixed annual contract.)
+7. IF Everything else past the gate -&gt; Tier 5: Catch-all (Category fit only. A free lane test carries the offer.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="03">
+        
+    <div class="section-head">
+      <p class="eyebrow">03</p>
+      <h2>The five tiers</h2>
+      <p class="takeaway">Each tier matches one ShipPrimus advantage: usage pricing, the branded shipper portal, automation, or speed to live.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">6% TAM</span>
+          </div>
+          <h3>Tier 1: Paying a seat-priced TMS</h3>
+          <p>The Customer Login, Quote or Track link resolves to a Tai, Aljex, 3PL Systems, Rose Rocket, AscendTMS or FreightPOP portal.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>The TMS bill is fixed. It goes up with logins, tiers and annual terms, not with loads moved, so a slow month costs the same as a busy one.</dd></div>
+              <div><dt>Offer</dt><dd>Side-by-side: their published plan vs per-BOL at their load count, with break-even marked</dd></div>
+              <div><dt>Source</dt><dd>Broker website crawl + TMS portal hostname fingerprints</dd></div>
+              <div><dt>Reply density</dt><dd>Highest: already pays for the category, and the tool and its price can be named</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">22% TAM</span>
+          </div>
+          <h3>Tier 2: Quoting LTL and parcel by hand</h3>
+          <p>LTL or parcel service listed, and the only way to get a price is a form, an email address or a phone number.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Every quote is built by hand across carrier websites. Requests after hours wait until morning, and a shipper who needs a number now calls whoever answers first.</dd></div>
+              <div><dt>Offer</dt><dd>A mockup of the ShipPrimus portal with their logo on it</dd></div>
+              <div><dt>Source</dt><dd>Broker website crawl: service lines + quote mechanism</dd></div>
+              <div><dt>Reply density</dt><dd>High: visible manual pain and a tangible, branded magnet</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">7% TAM</span>
+          </div>
+          <h3>Tier 3: Hiring people to do TMS work</h3>
+          <p>Open LTL pricing, quoting, track and trace, logistics CSR or billing role that lists rate shopping, BOL entry, tracking updates or invoicing.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Paying a salary for keystrokes: copying rates between carrier sites, then typing the same shipment into a BOL, a tracking email and an invoice.</dd></div>
+              <div><dt>Offer</dt><dd>Their own job posting marked up: what software covers, what stays human</dd></div>
+              <div><dt>Source</dt><dd>Indeed, LinkedIn, ZipRecruiter</dd></div>
+              <div><dt>Reply density</dt><dd>High: live hiring intent, anchored to a posting they wrote</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="tier4" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">15% TAM</span>
+          </div>
+          <h3>Tier 4: New brokerage, first TMS</h3>
+          <p>FMCSA broker authority granted within the last 18 months.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Running on carrier tabs and a spreadsheet, because typical TMS plans cost $700 to $2,000+ a month on annual terms before there is volume to justify them.</dd></div>
+              <div><dt>Offer</dt><dd>Day-one setup plan: carriers connected, portal branded, first BOL out</dd></div>
+              <div><dt>Source</dt><dd>FMCSA Licensing &amp; Insurance: authority grant date</dd></div>
+              <div><dt>Reply density</dt><dd>Medium-high: actively choosing, and few vendors have reached them yet</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier5" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">05</span>
+            <span class="tier-share">50% TAM</span>
+          </div>
+          <h3>Tier 5: Catch-all</h3>
+          <p>Every remaining bonded brokerage with 2-75 employees and a website.</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>LTL rates checked carrier by carrier, and every price or status request goes through a person.</dd></div>
+              <div><dt>Offer</dt><dd>Send one lane quoted this week, get back the rates ShipPrimus pulls for it</dd></div>
+              <div><dt>Source</dt><dd>FMCSA frame + website crawl</dd></div>
+              <div><dt>Reply density</dt><dd>Baseline: category fit only, carried by the lane test</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="04">
+        
+    <div class="section-head">
+      <p class="eyebrow">04</p>
+      <h2>Campaign experiments</h2>
+      <p class="takeaway">Fifteen angles on top of the waterfall, each tied to something the broker published themselves.</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="tier4">Tier 4</button><button class="chip" type="button" data-filter="tier5">Tier 5</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Seat cost vs per-BOL</h3>
+          <p>Break-even math at their volume, never a blanket &#39;cheaper&#39; claim.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>SMB TMS portal detected, 25 employees or fewer</dd></div>
+            <div><dt>AI strategy</dt><dd>Pull the detected vendor&#39;s published entry plan and compute break-even BOLs at $3. Merge {{competitor_floor}} and {{breakeven_bols}} into the Day 0 email.</dd></div>
+            <div><dt>Value</dt><dd>Save money</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Renewal-window switch</h3>
+          <p>Decide before the auto-renew, not after.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Company reviewed their TMS on G2 or Capterra 9-12 months ago</dd></div>
+            <div><dt>AI strategy</dt><dd>Use the review date as a renewal proxy and time the send for the month before an annual term would auto-renew.</dd></div>
+            <div><dt>Value</dt><dd>Timing</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Portal without the add-on</h3>
+          <p>The shipper portal comes with the BOL price.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>SMB TMS detected, no shipper-facing quote link on the site</dd></div>
+            <div><dt>AI strategy</dt><dd>Show that the incumbent is used back-office only, with no shipper self-service live, and lead with the portal included in the BOL price.</dd></div>
+            <div><dt>Value</dt><dd>Shipper self-service</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Your logo, your quote portal</h3>
+          <p>The branded mockup is the magnet. It makes the portal real before any call.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>LTL or parcel listed, quote by form, email or phone</dd></div>
+            <div><dt>AI strategy</dt><dd>Pull the logo from the site, drop it into the white-label portal template, and offer the mockup as a one-word reply.</dd></div>
+            <div><dt>Value</dt><dd>Win more quotes</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>After-hours quotes</h3>
+          <p>Shippers get a number at 7pm without anyone on the desk.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Quote form promises a reply within X hours or lists business hours</dd></div>
+            <div><dt>AI strategy</dt><dd>Quote their own response promise back to them in the notice line.</dd></div>
+            <div><dt>Value</dt><dd>Speed</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Parcel and LTL, one login</h3>
+          <p>One login for every mode they already sell.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Site lists both small pack and LTL</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with UPS/FedEx/USPS labels and LTL BOLs in one portal instead of two workflows.</dd></div>
+            <div><dt>Value</dt><dd>Consolidation</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Job-post markup</h3>
+          <p>Their own posting, marked up, is the proof.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Open pricing or quoting role</dd></div>
+            <div><dt>AI strategy</dt><dd>Extract task lines from the posting ({{jd_task}}) and map each to a ShipPrimus function.</dd></div>
+            <div><dt>Value</dt><dd>Leverage over headcount</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Billing clerk to invoicing sync</h3>
+          <p>The invoicing half of the platform, sold to the team that feels it.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Open billing or AR role</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with invoicing and aging in a few clicks, synced to QuickBooks.</dd></div>
+            <div><dt>Value</dt><dd>Faster cash</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Track and trace to carrier API</h3>
+          <p>Status comes in from the carriers instead of from phone calls.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Open track and trace or check-call role</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with carrier-pushed status updates and the Macropoint integration.</dd></div>
+            <div><dt>Value</dt><dd>Fewer check calls</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Day-one stack</h3>
+          <p>Live in days, pay per BOL, look established from the first quote.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Broker authority granted in the last 18 months</dd></div>
+            <div><dt>AI strategy</dt><dd>Congratulate on the grant month, then offer a day-one setup plan.</dd></div>
+            <div><dt>Value</dt><dd>Speed to live</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Agent-turned-owner</h3>
+          <p>The TMS they&#39;re used to, without the annual commitment.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>LinkedIn: left a large brokerage in the last year, now owns a new authority</dd></div>
+            <div><dt>AI strategy</dt><dd>Reference the brokerage they came from, and the TMS they used to have without the contract.</dd></div>
+            <div><dt>Value</dt><dd>Familiar tooling</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier4" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Fixed-cost squeeze</h3>
+          <p>Software that flexes while capital sits in the bond or trust.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Authority under 24 months old</dd></div>
+            <div><dt>AI strategy</dt><dd>Pair the $75,000 financial security requirement with software cost that moves with volume.</dd></div>
+            <div><dt>Value</dt><dd>Cash preservation</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>One-lane test</h3>
+          <p>The lowest-friction proof possible, on their own freight.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Catch-all</dd></div>
+            <div><dt>AI strategy</dt><dd>Ask for one lane quoted this week and return the rates ShipPrimus pulls for it.</dd></div>
+            <div><dt>Value</dt><dd>Proof on their lane</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Neutral means neutral</h3>
+          <p>Every rate they already have, in one screen.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Site mentions a carrier or 3PL partner network</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with neutrality: no freight sold, their own contracts and 3PL rates side by side.</dd></div>
+            <div><dt>Value</dt><dd>Keep relationships</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier5" data-campaign-group="Niche">
+          <div class="campaign-card__meta">
+            <span>Niche</span>
+            <span>Niche</span>
+          </div>
+          <h3>Insurance in the booking</h3>
+          <p>Cover sold inside booking, with no separate quote.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>Site mentions cargo insurance</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with Redkik per-load cargo insurance built into the booking flow.</dd></div>
+            <div><dt>Value</dt><dd>Margin add-on</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="05">
+        
+    <div class="section-head">
+      <p class="eyebrow">05</p>
+      <h2>The copy</h2>
+      <p class="takeaway">Three emails per tier, no call asks. Tier 1 never says cheaper without the break-even number.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company}}</span><span>{{sender}}</span><span>{{competitor}}</span><span>{{portal_host}}</span><span>{{competitor_floor}}</span><span>{{breakeven_bols}}</span><span>{{service_line}}</span><span>{{quote_method}}</span><span>{{role_title}}</span><span>{{jd_task}}</span><span>{{authority_month}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company}}, {{sender}}, {{competitor}}, {{portal_host}}, {{competitor_floor}}, {{breakeven_bols}}, {{service_line}}, {{quote_method}}, {{role_title}}, {{jd_task}}, {{authority_month}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Paying a seat-priced TMS</strong>
+              <em>Side-by-side: published plan vs per-BOL at their volume</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Paying a seat-priced TMS steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your {{competitor}} login&#10;&#10;Hi {{first_name}},&#10;&#10;Clicked Customer Login on {{company}}&#39;s site and it goes to {{portal_host}}, so I&#39;m guessing {{competitor}} runs your desk.&#10;&#10;Would it be fair to say that bill goes up when you add a login or move up a tier, even in months when the load count doesn&#39;t?&#10;&#10;ShipPrimus is priced per BOL: $3 each. Quoting, booking, tracking, invoicing, a customer portal with your logo, and training are all included. No seats, and most teams are live within days.&#10;&#10;{{competitor}}&#39;s published plans start at {{competitor_floor}} a month. Under roughly {{breakeven_bols}} BOLs a month, you&#39;d pay less with us.&#10;&#10;Reply &quot;numbers&quot; and I&#39;ll send a side-by-side at your volume. No call needed.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your {{competitor}} login" data-preview="your Tai login">your {{competitor}} login</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Clicked Customer Login on {{company}}&#39;s site and it goes to {{portal_host}}, so I&#39;m guessing {{competitor}} runs your desk.&#10;&#10;Would it be fair to say that bill goes up when you add a login or move up a tier, even in months when the load count doesn&#39;t?&#10;&#10;ShipPrimus is priced per BOL: $3 each. Quoting, booking, tracking, invoicing, a customer portal with your logo, and training are all included. No seats, and most teams are live within days.&#10;&#10;{{competitor}}&#39;s published plans start at {{competitor_floor}} a month. Under roughly {{breakeven_bols}} BOLs a month, you&#39;d pay less with us.&#10;&#10;Reply &quot;numbers&quot; and I&#39;ll send a side-by-side at your volume. No call needed.&#10;&#10;{{sender}}" data-preview="Hi Dana,&#10;&#10;Clicked Customer Login on Northline Freight&#39;s site and it goes to northline.taicloud.net, so I&#39;m guessing Tai runs your desk.&#10;&#10;Would it be fair to say that bill goes up when you add a login or move up a tier, even in months when the load count doesn&#39;t?&#10;&#10;ShipPrimus is priced per BOL: $3 each. Quoting, booking, tracking, invoicing, a customer portal with your logo, and training are all included. No seats, and most teams are live within days.&#10;&#10;Tai&#39;s published plans start at $995 a month. Under roughly 330 BOLs a month, you&#39;d pay less with us.&#10;&#10;Reply &quot;numbers&quot; and I&#39;ll send a side-by-side at your volume. No call needed.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>Clicked Customer Login on {{company}}&#39;s site and it goes to {{portal_host}}, so I&#39;m guessing {{competitor}} runs your desk.</p><p>Would it be fair to say that bill goes up when you add a login or move up a tier, even in months when the load count doesn&#39;t?</p><p>ShipPrimus is priced per BOL: $3 each. Quoting, booking, tracking, invoicing, a customer portal with your logo, and training are all included. No seats, and most teams are live within days.</p><p>{{competitor}}&#39;s published plans start at {{competitor_floor}} a month. Under roughly {{breakeven_bols}} BOLs a month, you&#39;d pay less with us.</p><p>Reply &quot;numbers&quot; and I&#39;ll send a side-by-side at your volume. No call needed.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The usual worry is the move, so here&#39;s what that involves.&#10;&#10;ShipPrimus connects to 180+ carriers and plugs into DAT, Truckstop, Macropoint and QuickBooks, so your carriers and accounting come across. Most users are comfortable after a single training session.&#10;&#10;[Named broker] moved off [competitor] and was live in [X] days.&#10;&#10;Want the side-by-side? Reply &quot;numbers&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The usual worry is the move, so here&#39;s what that involves.&#10;&#10;ShipPrimus connects to 180+ carriers and plugs into DAT, Truckstop, Macropoint and QuickBooks, so your carriers and accounting come across. Most users are comfortable after a single training session.&#10;&#10;[Named broker] moved off [competitor] and was live in [X] days.&#10;&#10;Want the side-by-side? Reply &quot;numbers&quot;." data-preview="The usual worry is the move, so here&#39;s what that involves.&#10;&#10;ShipPrimus connects to 180+ carriers and plugs into DAT, Truckstop, Macropoint and QuickBooks, so your carriers and accounting come across. Most users are comfortable after a single training session.&#10;&#10;[Named broker] moved off [competitor] and was live in [X] days.&#10;&#10;Want the side-by-side? Reply &quot;numbers&quot;.">
+                        <p>The usual worry is the move, so here&#39;s what that involves.</p><p>ShipPrimus connects to 180+ carriers and plugs into DAT, Truckstop, Macropoint and QuickBooks, so your carriers and accounting come across. Most users are comfortable after a single training session.</p><p>[Named broker] moved off [competitor] and was live in [X] days.</p><p>Want the side-by-side? Reply &quot;numbers&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} per-BOL math&#10;&#10;{{first_name}}, no call needed. Reply yes and I&#39;ll send your {{competitor}} plan next to a per-BOL bill at your load count, with the break-even marked.&#10;&#10;Should it go to you, or to whoever owns the software budget?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} per-BOL math" data-preview="Northline Freight per-BOL math">{{company}} per-BOL math</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed. Reply yes and I&#39;ll send your {{competitor}} plan next to a per-BOL bill at your load count, with the break-even marked.&#10;&#10;Should it go to you, or to whoever owns the software budget?" data-preview="Dana, no call needed. Reply yes and I&#39;ll send your Tai plan next to a per-BOL bill at your load count, with the break-even marked.&#10;&#10;Should it go to you, or to whoever owns the software budget?">
+                        <p>{{first_name}}, no call needed. Reply yes and I&#39;ll send your {{competitor}} plan next to a per-BOL bill at your load count, with the break-even marked.</p><p>Should it go to you, or to whoever owns the software budget?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Quoting LTL and parcel by hand</strong>
+              <em>Portal mockup with their logo</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Quoting LTL and parcel by hand steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{service_line}} quotes at {{company}}&#10;&#10;Hi {{first_name}},&#10;&#10;{{company}}&#39;s site says you move {{service_line}}, and the way to get a price is {{quote_method}}.&#10;&#10;Would it be fair to assume someone on your team builds each quote across carrier websites, and a shipper who needs a number at 7pm calls someone else?&#10;&#10;ShipPrimus gives your shippers a portal with your logo on it. They pull their own LTL and parcel rates across 180+ carrier integrations, book, and print the BOL at any hour. You set the margin.&#10;&#10;[X]% of quotes on ShipPrimus portals are requested outside business hours.&#10;&#10;Reply &quot;mockup&quot; and I&#39;ll send that portal with {{company}}&#39;s logo on it. No call needed.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{service_line}} quotes at {{company}}" data-preview="LTL and parcel quotes at Northline Freight">{{service_line}} quotes at {{company}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;{{company}}&#39;s site says you move {{service_line}}, and the way to get a price is {{quote_method}}.&#10;&#10;Would it be fair to assume someone on your team builds each quote across carrier websites, and a shipper who needs a number at 7pm calls someone else?&#10;&#10;ShipPrimus gives your shippers a portal with your logo on it. They pull their own LTL and parcel rates across 180+ carrier integrations, book, and print the BOL at any hour. You set the margin.&#10;&#10;[X]% of quotes on ShipPrimus portals are requested outside business hours.&#10;&#10;Reply &quot;mockup&quot; and I&#39;ll send that portal with {{company}}&#39;s logo on it. No call needed.&#10;&#10;{{sender}}" data-preview="Hi Dana,&#10;&#10;Northline Freight&#39;s site says you move LTL and parcel, and the way to get a price is a request-a-quote form.&#10;&#10;Would it be fair to assume someone on your team builds each quote across carrier websites, and a shipper who needs a number at 7pm calls someone else?&#10;&#10;ShipPrimus gives your shippers a portal with your logo on it. They pull their own LTL and parcel rates across 180+ carrier integrations, book, and print the BOL at any hour. You set the margin.&#10;&#10;[X]% of quotes on ShipPrimus portals are requested outside business hours.&#10;&#10;Reply &quot;mockup&quot; and I&#39;ll send that portal with Northline Freight&#39;s logo on it. No call needed.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>{{company}}&#39;s site says you move {{service_line}}, and the way to get a price is {{quote_method}}.</p><p>Would it be fair to assume someone on your team builds each quote across carrier websites, and a shipper who needs a number at 7pm calls someone else?</p><p>ShipPrimus gives your shippers a portal with your logo on it. They pull their own LTL and parcel rates across 180+ carrier integrations, book, and print the BOL at any hour. You set the margin.</p><p>[X]% of quotes on ShipPrimus portals are requested outside business hours.</p><p>Reply &quot;mockup&quot; and I&#39;ll send that portal with {{company}}&#39;s logo on it. No call needed.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;The part shippers notice second.&#10;&#10;In the same portal they can track their own shipments and check account balance and aging, without calling or emailing you. That means fewer where&#39;s-my-freight calls and fewer resend-the-invoice emails.&#10;&#10;It&#39;s $3 per BOL, and the portal is included.&#10;&#10;Want the mockup? Reply &quot;mockup&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="The part shippers notice second.&#10;&#10;In the same portal they can track their own shipments and check account balance and aging, without calling or emailing you. That means fewer where&#39;s-my-freight calls and fewer resend-the-invoice emails.&#10;&#10;It&#39;s $3 per BOL, and the portal is included.&#10;&#10;Want the mockup? Reply &quot;mockup&quot;." data-preview="The part shippers notice second.&#10;&#10;In the same portal they can track their own shipments and check account balance and aging, without calling or emailing you. That means fewer where&#39;s-my-freight calls and fewer resend-the-invoice emails.&#10;&#10;It&#39;s $3 per BOL, and the portal is included.&#10;&#10;Want the mockup? Reply &quot;mockup&quot;.">
+                        <p>The part shippers notice second.</p><p>In the same portal they can track their own shipments and check account balance and aging, without calling or emailing you. That means fewer where&#39;s-my-freight calls and fewer resend-the-invoice emails.</p><p>It&#39;s $3 per BOL, and the portal is included.</p><p>Want the mockup? Reply &quot;mockup&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} quote portal&#10;&#10;{{first_name}}, no call. Reply yes and I&#39;ll send the {{company}}-branded quote portal mockup.&#10;&#10;Should it go to you, or to whoever runs customer service?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} quote portal" data-preview="Northline Freight quote portal">{{company}} quote portal</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call. Reply yes and I&#39;ll send the {{company}}-branded quote portal mockup.&#10;&#10;Should it go to you, or to whoever runs customer service?" data-preview="Dana, no call. Reply yes and I&#39;ll send the Northline Freight-branded quote portal mockup.&#10;&#10;Should it go to you, or to whoever runs customer service?">
+                        <p>{{first_name}}, no call. Reply yes and I&#39;ll send the {{company}}-branded quote portal mockup.</p><p>Should it go to you, or to whoever runs customer service?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Hiring people to do TMS work</strong>
+              <em>Their job posting, marked up</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Hiring people to do TMS work steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: the {{role_title}} role&#10;&#10;Hi {{first_name}},&#10;&#10;Saw {{company}} is hiring a {{role_title}}, and the posting lists {{jd_task}}.&#10;&#10;Would it be fair to say a lot of that job is copying rates between carrier sites, then retyping the same shipment into a BOL, a tracking email and an invoice?&#10;&#10;ShipPrimus automates that over API. Your team gets quotes across carriers in seconds and builds a BOL in under a minute. Tracking comes in from the carriers, and invoices go out in a few clicks, synced to QuickBooks.&#10;&#10;Reply &quot;map&quot; and I&#39;ll mark which lines of that posting ShipPrimus covers. No call.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="the {{role_title}} role" data-preview="the LTL Pricing Coordinator role">the {{role_title}} role</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Saw {{company}} is hiring a {{role_title}}, and the posting lists {{jd_task}}.&#10;&#10;Would it be fair to say a lot of that job is copying rates between carrier sites, then retyping the same shipment into a BOL, a tracking email and an invoice?&#10;&#10;ShipPrimus automates that over API. Your team gets quotes across carriers in seconds and builds a BOL in under a minute. Tracking comes in from the carriers, and invoices go out in a few clicks, synced to QuickBooks.&#10;&#10;Reply &quot;map&quot; and I&#39;ll mark which lines of that posting ShipPrimus covers. No call.&#10;&#10;{{sender}}" data-preview="Hi Dana,&#10;&#10;Saw Northline Freight is hiring a LTL Pricing Coordinator, and the posting lists rate shopping carrier websites and entering BOLs.&#10;&#10;Would it be fair to say a lot of that job is copying rates between carrier sites, then retyping the same shipment into a BOL, a tracking email and an invoice?&#10;&#10;ShipPrimus automates that over API. Your team gets quotes across carriers in seconds and builds a BOL in under a minute. Tracking comes in from the carriers, and invoices go out in a few clicks, synced to QuickBooks.&#10;&#10;Reply &quot;map&quot; and I&#39;ll mark which lines of that posting ShipPrimus covers. No call.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>Saw {{company}} is hiring a {{role_title}}, and the posting lists {{jd_task}}.</p><p>Would it be fair to say a lot of that job is copying rates between carrier sites, then retyping the same shipment into a BOL, a tracking email and an invoice?</p><p>ShipPrimus automates that over API. Your team gets quotes across carriers in seconds and builds a BOL in under a minute. Tracking comes in from the carriers, and invoices go out in a few clicks, synced to QuickBooks.</p><p>Reply &quot;map&quot; and I&#39;ll mark which lines of that posting ShipPrimus covers. No call.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;On timing.&#10;&#10;A new hire takes weeks to learn your carriers and customers. ShipPrimus is live in days, and most users are comfortable after one training session.&#10;&#10;I&#39;m not saying skip the hire. The person you bring on can spend the day on customers and carriers instead of data entry.&#10;&#10;Want the marked-up posting? Reply &quot;map&quot;.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="On timing.&#10;&#10;A new hire takes weeks to learn your carriers and customers. ShipPrimus is live in days, and most users are comfortable after one training session.&#10;&#10;I&#39;m not saying skip the hire. The person you bring on can spend the day on customers and carriers instead of data entry.&#10;&#10;Want the marked-up posting? Reply &quot;map&quot;." data-preview="On timing.&#10;&#10;A new hire takes weeks to learn your carriers and customers. ShipPrimus is live in days, and most users are comfortable after one training session.&#10;&#10;I&#39;m not saying skip the hire. The person you bring on can spend the day on customers and carriers instead of data entry.&#10;&#10;Want the marked-up posting? Reply &quot;map&quot;.">
+                        <p>On timing.</p><p>A new hire takes weeks to learn your carriers and customers. ShipPrimus is live in days, and most users are comfortable after one training session.</p><p>I&#39;m not saying skip the hire. The person you bring on can spend the day on customers and carriers instead of data entry.</p><p>Want the marked-up posting? Reply &quot;map&quot;.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} ops hire&#10;&#10;{{first_name}}, no call needed. Reply yes and I&#39;ll send the {{role_title}} posting marked up: what software handles and what stays with a person.&#10;&#10;Should it go to you, or to whoever&#39;s hiring for ops?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} ops hire" data-preview="Northline Freight ops hire">{{company}} ops hire</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed. Reply yes and I&#39;ll send the {{role_title}} posting marked up: what software handles and what stays with a person.&#10;&#10;Should it go to you, or to whoever&#39;s hiring for ops?" data-preview="Dana, no call needed. Reply yes and I&#39;ll send the LTL Pricing Coordinator posting marked up: what software handles and what stays with a person.&#10;&#10;Should it go to you, or to whoever&#39;s hiring for ops?">
+                        <p>{{first_name}}, no call needed. Reply yes and I&#39;ll send the {{role_title}} posting marked up: what software handles and what stays with a person.</p><p>Should it go to you, or to whoever&#39;s hiring for ops?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 4 - New brokerage, first TMS</strong>
+              <em>Day-one setup plan</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 4 - New brokerage, first TMS steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: your first TMS&#10;&#10;Hi {{first_name}},&#10;&#10;Congrats on {{company}}&#39;s broker authority coming through in {{authority_month}}.&#10;&#10;Would it be fair to guess quoting still happens in carrier tabs and a spreadsheet? Most TMS plans want $700 to $2,000 a month on an annual contract before you&#39;ve moved much freight.&#10;&#10;ShipPrimus is $3 per BOL, so a slow month means a small bill. Quoting, booking, tracking, invoicing and a customer portal with your logo are included, and it&#39;s live in days.&#10;&#10;Reply &quot;setup&quot; and I&#39;ll send the day-one setup we&#39;d build for {{company}}: carriers connected, portal branded, first BOL out. No call.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="your first TMS" data-preview="your first TMS">your first TMS</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Congrats on {{company}}&#39;s broker authority coming through in {{authority_month}}.&#10;&#10;Would it be fair to guess quoting still happens in carrier tabs and a spreadsheet? Most TMS plans want $700 to $2,000 a month on an annual contract before you&#39;ve moved much freight.&#10;&#10;ShipPrimus is $3 per BOL, so a slow month means a small bill. Quoting, booking, tracking, invoicing and a customer portal with your logo are included, and it&#39;s live in days.&#10;&#10;Reply &quot;setup&quot; and I&#39;ll send the day-one setup we&#39;d build for {{company}}: carriers connected, portal branded, first BOL out. No call.&#10;&#10;{{sender}}" data-preview="Hi Dana,&#10;&#10;Congrats on Northline Freight&#39;s broker authority coming through in March.&#10;&#10;Would it be fair to guess quoting still happens in carrier tabs and a spreadsheet? Most TMS plans want $700 to $2,000 a month on an annual contract before you&#39;ve moved much freight.&#10;&#10;ShipPrimus is $3 per BOL, so a slow month means a small bill. Quoting, booking, tracking, invoicing and a customer portal with your logo are included, and it&#39;s live in days.&#10;&#10;Reply &quot;setup&quot; and I&#39;ll send the day-one setup we&#39;d build for Northline Freight: carriers connected, portal branded, first BOL out. No call.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>Congrats on {{company}}&#39;s broker authority coming through in {{authority_month}}.</p><p>Would it be fair to guess quoting still happens in carrier tabs and a spreadsheet? Most TMS plans want $700 to $2,000 a month on an annual contract before you&#39;ve moved much freight.</p><p>ShipPrimus is $3 per BOL, so a slow month means a small bill. Quoting, booking, tracking, invoicing and a customer portal with your logo are included, and it&#39;s live in days.</p><p>Reply &quot;setup&quot; and I&#39;ll send the day-one setup we&#39;d build for {{company}}: carriers connected, portal branded, first BOL out. No call.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Something new brokerages learn fast: shippers judge you by how quickly a number comes back.&#10;&#10;With ShipPrimus, shippers pull their own LTL and parcel quotes from a portal under your name from day one. It reads like a much bigger shop, at $3 a BOL.&#10;&#10;Reply &quot;setup&quot; for the day-one plan.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Something new brokerages learn fast: shippers judge you by how quickly a number comes back.&#10;&#10;With ShipPrimus, shippers pull their own LTL and parcel quotes from a portal under your name from day one. It reads like a much bigger shop, at $3 a BOL.&#10;&#10;Reply &quot;setup&quot; for the day-one plan." data-preview="Something new brokerages learn fast: shippers judge you by how quickly a number comes back.&#10;&#10;With ShipPrimus, shippers pull their own LTL and parcel quotes from a portal under your name from day one. It reads like a much bigger shop, at $3 a BOL.&#10;&#10;Reply &quot;setup&quot; for the day-one plan.">
+                        <p>Something new brokerages learn fast: shippers judge you by how quickly a number comes back.</p><p>With ShipPrimus, shippers pull their own LTL and parcel quotes from a portal under your name from day one. It reads like a much bigger shop, at $3 a BOL.</p><p>Reply &quot;setup&quot; for the day-one plan.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} day one&#10;&#10;{{first_name}}, no call. Reply yes and I&#39;ll send the day-one setup plan for {{company}}.&#10;&#10;Should it go to you, or to a partner?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} day one" data-preview="Northline Freight day one">{{company}} day one</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call. Reply yes and I&#39;ll send the day-one setup plan for {{company}}.&#10;&#10;Should it go to you, or to a partner?" data-preview="Dana, no call. Reply yes and I&#39;ll send the day-one setup plan for Northline Freight.&#10;&#10;Should it go to you, or to a partner?">
+                        <p>{{first_name}}, no call. Reply yes and I&#39;ll send the day-one setup plan for {{company}}.</p><p>Should it go to you, or to a partner?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 5 - Catch-all</strong>
+              <em>One-lane rate test</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 5 - Catch-all steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 4</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 8</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: one lane&#10;&#10;Hi {{first_name}},&#10;&#10;Had a look at {{company}}. You move freight for shippers, but there&#39;s no way for them to get a price or track a load without reaching someone on your team.&#10;&#10;Would it be fair to say a lot of the day goes to what&#39;s-the-rate and where&#39;s-my-freight messages?&#10;&#10;ShipPrimus is a neutral TMS with 180+ carrier integrations. Your team gets quotes in seconds and BOLs in under a minute, and shippers serve themselves in a portal with your logo. It&#39;s $3 per BOL with all of that included.&#10;&#10;Send me one lane you quoted this week and I&#39;ll send back the rates ShipPrimus pulls for it. No call.&#10;&#10;{{sender}}">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="one lane" data-preview="one lane">one lane</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hi {{first_name}},&#10;&#10;Had a look at {{company}}. You move freight for shippers, but there&#39;s no way for them to get a price or track a load without reaching someone on your team.&#10;&#10;Would it be fair to say a lot of the day goes to what&#39;s-the-rate and where&#39;s-my-freight messages?&#10;&#10;ShipPrimus is a neutral TMS with 180+ carrier integrations. Your team gets quotes in seconds and BOLs in under a minute, and shippers serve themselves in a portal with your logo. It&#39;s $3 per BOL with all of that included.&#10;&#10;Send me one lane you quoted this week and I&#39;ll send back the rates ShipPrimus pulls for it. No call.&#10;&#10;{{sender}}" data-preview="Hi Dana,&#10;&#10;Had a look at Northline Freight. You move freight for shippers, but there&#39;s no way for them to get a price or track a load without reaching someone on your team.&#10;&#10;Would it be fair to say a lot of the day goes to what&#39;s-the-rate and where&#39;s-my-freight messages?&#10;&#10;ShipPrimus is a neutral TMS with 180+ carrier integrations. Your team gets quotes in seconds and BOLs in under a minute, and shippers serve themselves in a portal with your logo. It&#39;s $3 per BOL with all of that included.&#10;&#10;Send me one lane you quoted this week and I&#39;ll send back the rates ShipPrimus pulls for it. No call.&#10;&#10;Alex">
+                        <p>Hi {{first_name}},</p><p>Had a look at {{company}}. You move freight for shippers, but there&#39;s no way for them to get a price or track a load without reaching someone on your team.</p><p>Would it be fair to say a lot of the day goes to what&#39;s-the-rate and where&#39;s-my-freight messages?</p><p>ShipPrimus is a neutral TMS with 180+ carrier integrations. Your team gets quotes in seconds and BOLs in under a minute, and shippers serve themselves in a portal with your logo. It&#39;s $3 per BOL with all of that included.</p><p>Send me one lane you quoted this week and I&#39;ll send back the rates ShipPrimus pulls for it. No call.</p><p>{{sender}}</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 4</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;About what &quot;neutral&quot; means.&#10;&#10;We don&#39;t sell freight and we don&#39;t favor carriers. Your own carrier contracts and 3PL relationships go in, and ShipPrimus shows every rate side by side. Redkik cargo insurance per load is built into booking, too.&#10;&#10;Send a lane and I&#39;ll send the rates.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="About what &quot;neutral&quot; means.&#10;&#10;We don&#39;t sell freight and we don&#39;t favor carriers. Your own carrier contracts and 3PL relationships go in, and ShipPrimus shows every rate side by side. Redkik cargo insurance per load is built into booking, too.&#10;&#10;Send a lane and I&#39;ll send the rates." data-preview="About what &quot;neutral&quot; means.&#10;&#10;We don&#39;t sell freight and we don&#39;t favor carriers. Your own carrier contracts and 3PL relationships go in, and ShipPrimus shows every rate side by side. Redkik cargo insurance per load is built into booking, too.&#10;&#10;Send a lane and I&#39;ll send the rates.">
+                        <p>About what &quot;neutral&quot; means.</p><p>We don&#39;t sell freight and we don&#39;t favor carriers. Your own carrier contracts and 3PL relationships go in, and ShipPrimus shows every rate side by side. Redkik cargo insurance per load is built into booking, too.</p><p>Send a lane and I&#39;ll send the rates.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 8</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{company}} rates&#10;&#10;{{first_name}}, no call needed. Reply with one lane you quoted this week and I&#39;ll send what ShipPrimus pulls for it.&#10;&#10;Should that go to you, or to whoever handles pricing?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{company}} rates" data-preview="Northline Freight rates">{{company}} rates</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="{{first_name}}, no call needed. Reply with one lane you quoted this week and I&#39;ll send what ShipPrimus pulls for it.&#10;&#10;Should that go to you, or to whoever handles pricing?" data-preview="Dana, no call needed. Reply with one lane you quoted this week and I&#39;ll send what ShipPrimus pulls for it.&#10;&#10;Should that go to you, or to whoever handles pricing?">
+                        <p>{{first_name}}, no call needed. Reply with one lane you quoted this week and I&#39;ll send what ShipPrimus pulls for it.</p><p>Should that go to you, or to whoever handles pricing?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="06">
+        
+    <div class="section-head">
+      <p class="eyebrow">06</p>
+      <h2>Launch plan</h2>
+      <p class="takeaway">Tier 1 first, then new authorities, which refill every month. Confirm $3/BOL terms before anything sends.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Week 0-1 - Build: pull active, bonded broker authorities from FMCSA, crawl broker sites for login/quote/track links, validate portal fingerprints on 20 hand-checked brokers, restate tier sizes from a 500-account sample.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Confirm current $3/BOL terms and secure one named switcher story. Both are launch blockers.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Weeks 1-2 - Tier 1: smallest, hottest list. Cost-comparison template with each competitor&#39;s published plans and break-even line.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Weeks 3-4 - Tier 4: FMCSA grants refill the list monthly, and few vendors have reached these brokers yet.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>Weeks 5-6 - Tier 2: once the logo-drop portal mockup workflow is running.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Weeks 7-8 - Tier 3: job-board pipeline and posting markup template.</p>
+              </div>
+              <div class="launch-step">
+                <span>07</span>
+                <p>Week 9+ - Tier 5: largest volume, opened once sending infrastructure is proven on the tiers above.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive per 150 contacts</strong>
+                <span>Perfect: scale the tier and widen the source</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 300</strong>
+                <span>Good: leave it running as is</span>
+              </div>
+              <div class="threshold">
+                <strong>1 per 450-500</strong>
+                <span>Borderline: test one copy variant, hold everything else</span>
+              </div>
+              <div class="threshold">
+                <strong>Worse than 1 per 500, or &lt;1% reply after 1,500+ sends</strong>
+                <span>Failing: cut the tier and rework it</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book a call with GTMx</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Dana","NextGen AI Technologies","customer support rep","6","Intercom","healthcare operations","Maya","Northline Freight","Alex","Tai","northline\\.taicloud\\.net","\\$995","330","LTL and parcel","a request-a-quote form","LTL Pricing Coordinator","rate shopping carrier websites and entering BOLs","March"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
