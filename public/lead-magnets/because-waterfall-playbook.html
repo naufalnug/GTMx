@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BeCause - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-09-21</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for BeCause</p>
+          <h1>Your BeCause waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">A scrollable GTMx strategy artifact for routing hotels, hotel groups, destinations, and travel partners into the right BeCause certification, framework-mapping, CSRD, or open-data offer. List building, campaign angles, and sample copy, prepared for Asam Nawaz, Head of Sales.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Asam sells one BeCause sustainability data hub for travel &amp; hospitality — not a different product per hotel brand or country. Hotel chain vs independent, OTA vs DMO, and region are merge tags after routing, not a second waterfall. The single routing signal is sustainability_maturity: what a lead source can already see on the property/company site and travel directories — competing hospitality ESG platform, public eco-certification (or Travel Sustainable badge) without a platform, sustainability/ESG page (or Sustainability title) without a cert, or none. That ladder maps to BeCause&#39;s live offers: competitor switch + consolidation, certification/framework mapping, Certification Co-pilot + CSRD prep, then a soft remaining-TAM sustainability data playbook.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book the strategy call</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>60+</strong>
+          <span>Tourism frameworks mapped on because.eco (enter data once)</span>
+        </div>
+        <div class="metric-card">
+          <strong>CSRD</strong>
+          <span>ESRS tool for CSRD / ESG compliance (because.eco)</span>
+        </div>
+        <div class="metric-card">
+          <strong>4</strong>
+          <span>Exclusive sustainability_maturity routes (incl. catch-all)</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>BeCause (because.eco) is sustainability and ESG data-management software built for travel, tourism, and hospitality. Homepage positioning: enabling certification support, data management, ESG compliance, and open data sharing for businesses in hospitality, tourism, and travel. Core capabilities published on because.eco: 60+ tourism frameworks mapped so data is entered once; Certification Co-pilot to steer hotels toward a fit certification; ESRS tool for CSRD/ESG compliance; Applications Manager for supplier sustainability and corporate-travel buyer submissions; a data hub for consolidating and sharing sustainability data with OTAs, certifiers, destinations, and travel partners; hotel utility trackers and industry-framework integrations. Buyer segments on site: hospitality providers (hotels, restaurants, attractions, events), travel marketplaces and OTAs, and destinations/partners. Public proof language includes Radisson Hotel Group (Sven Wiltink, Global Senior Director Sustainability), VisitEngland, GDS-Index destinations, and Vera-FY (a WSHA initiative powered by BeCause). Framework/certification partners and schemes listed on the hospitality solution page include Green Key, Travelife, GSTC-aligned certifiers, EarthCheck, GreenSign, Nordic Swan, Booking.com/Travalyst-linked schemes, ISO 14001/50001, LEED, and dozens more. Asam Nawaz is Head of Sales (asam@because.eco).</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal is how far their sustainability stack already shows up publicly</p></div><div><span>02</span><p>One cascade routes every in-TAM travel &amp; hospitality account</p></div><div><span>03</span><p>Each maturity band gets a different first offer</p></div><div><span>04</span><p>Switch the hub, map the frameworks, get certified, then cover the rest</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>Waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>Email Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">Signal</p>
+      <h2>The signal is how far their sustainability stack already shows up publicly</h2>
+      <p class="takeaway">Hotel sites, Booking.com Travel Sustainable badges, certification logos, and careers already show a competing ESG platform, a public eco-cert, a sustainability page/title, or none. That sustainability_maturity is stronger than a title guess and cheap to collect.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>Apollo / LinkedIn Sales Nav + hospitality directories (hotel groups, independents, attractions, DMOs, OTAs/travel marketplaces) are the TAM BeCause already sells into. Public global TAM account count is not published on because.eco; treat size as estimated (see because-magnet-flags.txt) and keep each launch tier &gt;=~1,500 contacts where possible.</p></div><div class="reason-card"><span>02</span><p>The same site + directory scrape returns sustainability_maturity: competing hospitality ESG/sustainability platforms (Ecostars, Con-Serve/Considerate, Sustainwize, GreenTurGo, adjacent); public eco-certifications or Travel Sustainable badges (Green Key, Travelife, GSTC-aligned, EarthCheck, GreenSign, Nordic Swan, Booking.com/Travalyst-linked); sustainability/ESG page or Head of Sustainability title without a cert; or none — enough to route without a second expensive enrichment product.</p></div><div class="reason-card"><span>03</span><p>The ladder maps to live BeCause positioning (Certification Co-pilot, 60+ framework mapping with no duplicate entry, CSRD/ESRS tool, Applications Manager, open data sharing with OTAs and travel partners) plus public proof language (Radisson Hotel Group, VisitEngland, GDS-Index, Vera-FY / WSHA).</p></div><div class="reason-card"><span>04</span><p>Segment (hotel group vs independent vs OTA vs DMO), region, and buyer title (Head of Sustainability / ESG / Ops / GM) are scrape filters and merge tags, not a second waterfall. Apollo is email last after the account is routed.</p></div>
+            </div>
+            <div class="field-cloud"><span>in_tam</span><span>already_customer</span><span>sustainability_maturity</span><span>competitor_platform</span><span>certification</span><span>has_sustainability_page</span><span>segment</span><span>property_count</span><span>region</span><span>buyer_title</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>Apollo + LinkedIn Sales Nav (hospitality / travel / tourism + buyer titles)</h3><p>In-TAM hotels, hotel groups, attractions, DMOs, OTAs, and travel marketplaces. The TAM spine.</p></div><div class="source-card"><span>02</span><h3>Company / property website scrape (sustainability, ESG, certifications, partner logos)</h3><p>sustainability_maturity: competitor platform badges, cert logos, sustainability/ESG page presence.</p></div><div class="source-card"><span>03</span><h3>Booking.com / OTA Travel Sustainable + public certification directories (Green Key, Travelife, GSTC, EarthCheck, etc.)</h3><p>Public eco-cert and Travel Sustainable signals used for Tier 2 routing and copy.</p></div><div class="source-card"><span>04</span><h3>LinkedIn Jobs + careers scrape</h3><p>Head of Sustainability / ESG / CSR titles and competitor-platform mentions as copy context — not a second waterfall axis.</p></div><div class="source-card"><span>05</span><h3>BuiltWith / public tech mentions where available</h3><p>Supplemental competitor_platform confirmation when a domain exposes the stack.</p></div><div class="source-card"><span>06</span><h3>Apollo (after qualification)</h3><p>Work emails for Head of Sustainability / ESG / CSR / Ops / GM / Procurement on already-routed accounts.</p></div><div class="source-card"><span>07</span><h3>Optional BeCause customer suppress</h3><p>Current-customer exclusion when Asam&#39;s team can share a list. Treat as suppress, not a tier.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="Waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">Waterfall</p>
+      <h2>One cascade routes every in-TAM travel &amp; hospitality account</h2>
+      <p class="takeaway">First match wins. Competing ESG platform first, then certified-without-platform, then sustainability-page-without-cert, then every remaining hotel, group, destination, and travel partner in TAM.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF in_tam AND sustainability_maturity = competitor_platform (Ecostars, Con-Serve/Considerate, Sustainwize, GreenTurGo, or adjacent hospitality ESG data hub) AND not already_customer</span>
+          <strong>Tier 1 - Competitor Switch + Consolidation Brief</strong>
+          <em>They already budget a hospitality ESG/sustainability platform. Strongest switch intent for BeCause as the travel-native data hub with 60+ framework mapping and open sharing to OTAs/partners.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF in_tam AND sustainability_maturity = certified_no_platform (public Green Key / Travelife / GSTC-aligned / EarthCheck / GreenSign / Nordic Swan / Booking.com Travel Sustainable / similar) AND no Tier-1 competitor_platform AND not already_customer</span>
+          <strong>Tier 2 - Framework Mapping Brief</strong>
+          <em>They already carry a public eco-cert or Travel Sustainable badge but no competing hub — classic duplicate-reporting pain across frameworks, RFPs, and OTAs. Maps to BeCause enter-once / map-everywhere.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF in_tam AND sustainability_maturity = sustainability_page_no_cert (sustainability/ESG/CR page OR Head of Sustainability / ESG title) AND no Tier 1-2 AND not already_customer</span>
+          <strong>Tier 3 - Certification Co-pilot Brief</strong>
+          <em>They signal intent publicly but have not landed a cert yet. Maps to BeCause Certification Co-pilot + CSRD/ESRS prep without inventing a cert they do not have.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF in_tam AND none of the above</span>
+          <strong>Catch-all - BeCause Sustainability Data Playbook</strong>
+          <em>Still in TAM (hotels, groups, destinations, travel partners). Softest CTA around consolidating sustainability data, certifications, and partner sharing. Mandatory 100% coverage.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF in_tam AND sustainability_maturity = competitor_platform (Ecostars, Con-Serve/Considerate, Sustainwize, GreenTurGo, or adjacent hospitality ESG data hub) AND not already_customer -&gt; Tier 1 - Competitor Switch + Consolidation Brief (They already budget a hospitality ESG/sustainability platform. Strongest switch intent for BeCause as the travel-native data hub with 60+ framework mapping and open sharing to OTAs/partners.)&#10;2. IF in_tam AND sustainability_maturity = certified_no_platform (public Green Key / Travelife / GSTC-aligned / EarthCheck / GreenSign / Nordic Swan / Booking.com Travel Sustainable / similar) AND no Tier-1 competitor_platform AND not already_customer -&gt; Tier 2 - Framework Mapping Brief (They already carry a public eco-cert or Travel Sustainable badge but no competing hub — classic duplicate-reporting pain across frameworks, RFPs, and OTAs. Maps to BeCause enter-once / map-everywhere.)&#10;3. IF in_tam AND sustainability_maturity = sustainability_page_no_cert (sustainability/ESG/CR page OR Head of Sustainability / ESG title) AND no Tier 1-2 AND not already_customer -&gt; Tier 3 - Certification Co-pilot Brief (They signal intent publicly but have not landed a cert yet. Maps to BeCause Certification Co-pilot + CSRD/ESRS prep without inventing a cert they do not have.)&#10;4. IF in_tam AND none of the above -&gt; Catch-all - BeCause Sustainability Data Playbook (Still in TAM (hotels, groups, destinations, travel partners). Softest CTA around consolidating sustainability data, certifications, and partner sharing. Mandatory 100% coverage.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF in_tam AND sustainability_maturity = competitor_platform (Ecostars, Con-Serve/Considerate, Sustainwize, GreenTurGo, or adjacent hospitality ESG data hub) AND not already_customer -&gt; Tier 1 - Competitor Switch + Consolidation Brief (They already budget a hospitality ESG/sustainability platform. Strongest switch intent for BeCause as the travel-native data hub with 60+ framework mapping and open sharing to OTAs/partners.)
+2. IF in_tam AND sustainability_maturity = certified_no_platform (public Green Key / Travelife / GSTC-aligned / EarthCheck / GreenSign / Nordic Swan / Booking.com Travel Sustainable / similar) AND no Tier-1 competitor_platform AND not already_customer -&gt; Tier 2 - Framework Mapping Brief (They already carry a public eco-cert or Travel Sustainable badge but no competing hub — classic duplicate-reporting pain across frameworks, RFPs, and OTAs. Maps to BeCause enter-once / map-everywhere.)
+3. IF in_tam AND sustainability_maturity = sustainability_page_no_cert (sustainability/ESG/CR page OR Head of Sustainability / ESG title) AND no Tier 1-2 AND not already_customer -&gt; Tier 3 - Certification Co-pilot Brief (They signal intent publicly but have not landed a cert yet. Maps to BeCause Certification Co-pilot + CSRD/ESRS prep without inventing a cert they do not have.)
+4. IF in_tam AND none of the above -&gt; Catch-all - BeCause Sustainability Data Playbook (Still in TAM (hotels, groups, destinations, travel partners). Softest CTA around consolidating sustainability data, certifications, and partner sharing. Mandatory 100% coverage.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">Tiers</p>
+      <h2>Each maturity band gets a different first offer</h2>
+      <p class="takeaway">Competitor platforms get a Switch + Consolidation Brief. Certified properties get a Framework Mapping Brief. Sustainability-page accounts get the Certification Co-pilot Brief. The rest get the BeCause Sustainability Data Playbook.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">est. 5-12% TAM</span>
+          </div>
+          <h3>Tier 1: Competing hospitality ESG platform detected</h3>
+          <p>sustainability_maturity = competitor_platform (Ecostars, Con-Serve/Considerate, Sustainwize, GreenTurGo, adjacent); in-TAM travel/hospitality account; not already a BeCause customer</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They are already paying for a hospitality ESG/sustainability stack and still re-enter the same data for certifications, OTA badges, corporate RFPs, and CSRD — lock-in plus duplicate reporting.</dd></div>
+              <div><dt>Offer</dt><dd>Competitor Switch + Consolidation Brief</dd></div>
+              <div><dt>Source</dt><dd>Site/partner-logo scrape + optional BuiltWith for Ecostars / Con-Serve / Sustainwize / GreenTurGo</dd></div>
+              <div><dt>Reply density</dt><dd>Highest - they already budget hospitality ESG software</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">est. 15-25% TAM</span>
+          </div>
+          <h3>Tier 2: Public eco-cert / Travel Sustainable, no platform</h3>
+          <p>sustainability_maturity = certified_no_platform (Green Key, Travelife, GSTC-aligned, EarthCheck, GreenSign, Nordic Swan, Booking.com Travel Sustainable, similar); no Tier-1 competitor_platform</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>A public cert or Travel Sustainable badge usually means spreadsheets and emails every time a new framework, OTA, or corporate travel buyer asks for the same evidence again.</dd></div>
+              <div><dt>Offer</dt><dd>Framework Mapping Brief</dd></div>
+              <div><dt>Source</dt><dd>Certification directories + Booking.com/OTA Travel Sustainable badges + site cert logos</dd></div>
+              <div><dt>Reply density</dt><dd>High - visible cert, clear duplicate-reporting pain</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">est. 15-25% TAM</span>
+          </div>
+          <h3>Tier 3: Sustainability page / ESG title, no cert yet</h3>
+          <p>sustainability_maturity = sustainability_page_no_cert (sustainability/ESG/CR page OR Head of Sustainability / ESG / CSR title) with no Tier 1-2 match</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Public sustainability intent without a cert usually means the team is stuck choosing a scheme, collecting evidence, and worrying about CSRD — slow, manual, and easy to greenwash-accuse.</dd></div>
+              <div><dt>Offer</dt><dd>Certification Co-pilot Brief</dd></div>
+              <div><dt>Source</dt><dd>Site sustainability/ESG page scrape + LinkedIn title signals</dd></div>
+              <div><dt>Reply density</dt><dd>Medium - clear intent, longer education cycle</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="catchall" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">est. 40-55% TAM</span>
+          </div>
+          <h3>Catch-all: Remaining in-TAM travel &amp; hospitality accounts</h3>
+          <p>in_tam hotel / hotel group / attraction / DMO / OTA / travel marketplace with buyer Sustainability/ESG/Ops/GM and no Tier 1-3 sustainability_maturity match</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Most travel &amp; hospitality operators know sustainability data, certifications, and partner sharing are coming — but have not publicly exposed a platform, cert, or ESG page yet, so the work still lives in spreadsheets.</dd></div>
+              <div><dt>Offer</dt><dd>BeCause Sustainability Data Playbook</dd></div>
+              <div><dt>Source</dt><dd>Apollo / Sales Nav hospitality-travel TAM after in_tam gate</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest - broadest list, softest CTA</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">Campaigns</p>
+      <h2>Switch the hub, map the frameworks, get certified, then cover the rest</h2>
+      <p class="takeaway">The list is always travel/hospitality accounts BeCause sells into. Segment (hotel group vs independent vs OTA vs DMO) and region are merge tags. A/Bs sit on exclusive routes (duplicate-reporting pain vs CSRD audit-readiness).</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Competitor switch (consolidation-led)</h3>
+          <p>Highest intent. Personalise on {{competitor_platform}}, {{segment}}, and {{region}}.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>in_tam + sustainability_maturity=competitor_platform + not already_customer</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with {{competitor_platform}} at {{company_name}} ({{segment}}), offer Competitor Switch + Consolidation Brief anchored to 60+ framework mapping, Certification Co-pilot, and OTA/partner open sharing.</dd></div>
+            <div><dt>Value</dt><dd>Leave duplicate ESG reporting without a painful cutover</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Certified — framework mapping A/B</h3>
+          <p>Second exclusive route. Duplicate-reporting vs CSRD-led copy variants.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>in_tam + sustainability_maturity=certified_no_platform + no Tier 1</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with {{certification}} / Travel Sustainable at {{company_name}}, A/B Framework Mapping Brief: duplicate-reporting pain vs CSRD/ESRS audit-readiness.</dd></div>
+            <div><dt>Value</dt><dd>Enter sustainability data once, map across frameworks and partners</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Sustainability page → Certification Co-pilot</h3>
+          <p>Third exclusive route. Certification-path education angle.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>in_tam + sustainability_maturity=sustainability_page_no_cert + no Tier 1-2</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with the visible sustainability/ESG page or {{buyer_title}}, offer Certification Co-pilot Brief — right-scheme guidance plus evidence hub and CSRD prep when {{region}} implies it.</dd></div>
+            <div><dt>Value</dt><dd>Pick the right cert and stop collecting evidence in email threads</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Remaining travel &amp; hospitality TAM</h3>
+          <p>Mandatory catch-all for 100% TAM coverage.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>in_tam + no Tier 1-3 sustainability_maturity</dd></div>
+            <div><dt>AI strategy</dt><dd>Soft BeCause Sustainability Data Playbook. A/B partner/OTA sharing vs certification readiness. Soft CTA. Segment and region stay merge tags.</dd></div>
+            <div><dt>Value</dt><dd>Simple path into BeCause certification, frameworks, or open data sharing</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="Email Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">Email Copy</p>
+      <h2>Copy that names the sustainability signal already visible on their site</h2>
+      <p class="takeaway">Notice the platform, cert badge, or sustainability page, poke the duplicate-reporting / certification / CSRD gap that state implies, then ask for a one-letter yes.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company_name}}</span><span>{{competitor_platform}}</span><span>{{certification}}</span><span>{{segment}}</span><span>{{buyer_title}}</span><span>{{alt_decision_maker}}</span><span>{{property_count}}</span><span>{{case_customer}}</span><span>{{framework}}</span><span>{{region}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company_name}}, {{competitor_platform}}, {{certification}}, {{segment}}, {{buyer_title}}, {{alt_decision_maker}}, {{property_count}}, {{case_customer}}, {{framework}}, {{region}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Competitor Switch + Consolidation Brief</strong>
+              <em>Competitor Switch + Consolidation Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Competitor Switch + Consolidation Brief steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: switching off {{competitor_platform}}&#10;&#10;Hey {{first_name}},&#10;&#10;Saw {{company_name}} running {{competitor_platform}} for your {{segment}} in {{region}}. Usually that means you&#39;re already paying for a hospitality ESG stack and still re-entering the same data for certifications, OTA badges, and corporate RFPs.&#10;&#10;We put together a short Competitor Switch + Consolidation Brief on how BeCause maps 60+ tourism frameworks from one data entry, runs Certification Co-pilot, and shares verified data with travel partners — the same hub language Radisson and VisitEngland describe on because.eco.&#10;&#10;Worth a look?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="switching off {{competitor_platform}}" data-preview="switching off Ecostars">switching off {{competitor_platform}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Saw {{company_name}} running {{competitor_platform}} for your {{segment}} in {{region}}. Usually that means you&#39;re already paying for a hospitality ESG stack and still re-entering the same data for certifications, OTA badges, and corporate RFPs.&#10;&#10;We put together a short Competitor Switch + Consolidation Brief on how BeCause maps 60+ tourism frameworks from one data entry, runs Certification Co-pilot, and shares verified data with travel partners — the same hub language Radisson and VisitEngland describe on because.eco.&#10;&#10;Worth a look?" data-preview="Hey Jordan,&#10;&#10;Saw Northline Hotels running Ecostars for your hotel group in EU. Usually that means you&#39;re already paying for a hospitality ESG stack and still re-entering the same data for certifications, OTA badges, and corporate RFPs.&#10;&#10;We put together a short Competitor Switch + Consolidation Brief on how BeCause maps 60+ tourism frameworks from one data entry, runs Certification Co-pilot, and shares verified data with travel partners — the same hub language Radisson and VisitEngland describe on because.eco.&#10;&#10;Worth a look?">
+                        <p>Hey {{first_name}},</p><p>Saw {{company_name}} running {{competitor_platform}} for your {{segment}} in {{region}}. Usually that means you&#39;re already paying for a hospitality ESG stack and still re-entering the same data for certifications, OTA badges, and corporate RFPs.</p><p>We put together a short Competitor Switch + Consolidation Brief on how BeCause maps 60+ tourism frameworks from one data entry, runs Certification Co-pilot, and shares verified data with travel partners — the same hub language Radisson and VisitEngland describe on because.eco.</p><p>Worth a look?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Quick bump on the Switch + Consolidation Brief. Happy to keep it to one page: what moves off {{competitor_platform}}, how {{property_count}} would land in BeCause, and where CSRD/ESRS sits if you need it.&#10;&#10;Either way, appreciate you.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Quick bump on the Switch + Consolidation Brief. Happy to keep it to one page: what moves off {{competitor_platform}}, how {{property_count}} would land in BeCause, and where CSRD/ESRS sits if you need it.&#10;&#10;Either way, appreciate you." data-preview="Hey Jordan,&#10;&#10;Quick bump on the Switch + Consolidation Brief. Happy to keep it to one page: what moves off Ecostars, how 12 properties would land in BeCause, and where CSRD/ESRS sits if you need it.&#10;&#10;Either way, appreciate you.">
+                        <p>Hey {{first_name}},</p><p>Quick bump on the Switch + Consolidation Brief. Happy to keep it to one page: what moves off {{competitor_platform}}, how {{property_count}} would land in BeCause, and where CSRD/ESRS sits if you need it.</p><p>Either way, appreciate you.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: question for {{first_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the Competitor Switch + Consolidation Brief.&#10;&#10;Should I send this to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="question for {{first_name}}" data-preview="question for Jordan">question for {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the Competitor Switch + Consolidation Brief.&#10;&#10;Should I send this to you or {{alt_decision_maker}}?" data-preview="Hey Jordan,&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the Competitor Switch + Consolidation Brief.&#10;&#10;Should I send this to you or your VP Operations?">
+                        <p>Hey {{first_name}},</p><p>No need for a call. Just reply yes and I&#39;ll send the Competitor Switch + Consolidation Brief.</p><p>Should I send this to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Framework Mapping Brief</strong>
+              <em>Framework Mapping Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Framework Mapping Brief steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: {{certification}} data still living in spreadsheets?&#10;&#10;Hey {{first_name}},&#10;&#10;Noticed {{company_name}} carrying {{certification}} (or a Travel Sustainable badge) for your {{segment}}. Operators in that spot usually still rebuild the same evidence pack every time {{framework}}, an OTA, or a corporate travel buyer asks again.&#10;&#10;Happy to share a one-page Framework Mapping Brief: how BeCause lets you enter sustainability data once and map it across 60+ tourism frameworks plus partner sharing — without starting another spreadsheet.&#10;&#10;Useful?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="{{certification}} data still living in spreadsheets?" data-preview="Green Key data still living in spreadsheets?">{{certification}} data still living in spreadsheets?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Noticed {{company_name}} carrying {{certification}} (or a Travel Sustainable badge) for your {{segment}}. Operators in that spot usually still rebuild the same evidence pack every time {{framework}}, an OTA, or a corporate travel buyer asks again.&#10;&#10;Happy to share a one-page Framework Mapping Brief: how BeCause lets you enter sustainability data once and map it across 60+ tourism frameworks plus partner sharing — without starting another spreadsheet.&#10;&#10;Useful?" data-preview="Hey Jordan,&#10;&#10;Noticed Northline Hotels carrying Green Key (or a Travel Sustainable badge) for your hotel group. Operators in that spot usually still rebuild the same evidence pack every time Travelife, an OTA, or a corporate travel buyer asks again.&#10;&#10;Happy to share a one-page Framework Mapping Brief: how BeCause lets you enter sustainability data once and map it across 60+ tourism frameworks plus partner sharing — without starting another spreadsheet.&#10;&#10;Useful?">
+                        <p>Hey {{first_name}},</p><p>Noticed {{company_name}} carrying {{certification}} (or a Travel Sustainable badge) for your {{segment}}. Operators in that spot usually still rebuild the same evidence pack every time {{framework}}, an OTA, or a corporate travel buyer asks again.</p><p>Happy to share a one-page Framework Mapping Brief: how BeCause lets you enter sustainability data once and map it across 60+ tourism frameworks plus partner sharing — without starting another spreadsheet.</p><p>Useful?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Quick bump. If duplicate reporting or CSRD/ESRS readiness is the louder pain this quarter, the Brief is just the side-by-side — no deck required.&#10;&#10;Want me to send it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Quick bump. If duplicate reporting or CSRD/ESRS readiness is the louder pain this quarter, the Brief is just the side-by-side — no deck required.&#10;&#10;Want me to send it?" data-preview="Hey Jordan,&#10;&#10;Quick bump. If duplicate reporting or CSRD/ESRS readiness is the louder pain this quarter, the Brief is just the side-by-side — no deck required.&#10;&#10;Want me to send it?">
+                        <p>Hey {{first_name}},</p><p>Quick bump. If duplicate reporting or CSRD/ESRS readiness is the louder pain this quarter, the Brief is just the side-by-side — no deck required.</p><p>Want me to send it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: question for {{first_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;Reply yes and I&#39;ll send the Framework Mapping Brief — or tell me if {{alt_decision_maker}} is the better inbox.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="question for {{first_name}}" data-preview="question for Jordan">question for {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Reply yes and I&#39;ll send the Framework Mapping Brief — or tell me if {{alt_decision_maker}} is the better inbox." data-preview="Hey Jordan,&#10;&#10;Reply yes and I&#39;ll send the Framework Mapping Brief — or tell me if your VP Operations is the better inbox.">
+                        <p>Hey {{first_name}},</p><p>Reply yes and I&#39;ll send the Framework Mapping Brief — or tell me if {{alt_decision_maker}} is the better inbox.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Certification Co-pilot Brief</strong>
+              <em>Certification Co-pilot Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Certification Co-pilot Brief steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: cert path for {{company_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;Looking at {{company_name}} — public signals look like a sustainability/ESG page (or {{buyer_title}}) without a live eco-cert yet. That usually means the team is stuck choosing a scheme and collecting evidence across email threads.&#10;&#10;We sketched a short Certification Co-pilot Brief: how BeCause steers the right certification for a {{segment}}, consolidates evidence, and maps collected data toward ESRS/CSRD when {{region}} needs it.&#10;&#10;Worth a skim?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="cert path for {{company_name}}" data-preview="cert path for Northline Hotels">cert path for {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Looking at {{company_name}} — public signals look like a sustainability/ESG page (or {{buyer_title}}) without a live eco-cert yet. That usually means the team is stuck choosing a scheme and collecting evidence across email threads.&#10;&#10;We sketched a short Certification Co-pilot Brief: how BeCause steers the right certification for a {{segment}}, consolidates evidence, and maps collected data toward ESRS/CSRD when {{region}} needs it.&#10;&#10;Worth a skim?" data-preview="Hey Jordan,&#10;&#10;Looking at Northline Hotels — public signals look like a sustainability/ESG page (or Head of Sustainability) without a live eco-cert yet. That usually means the team is stuck choosing a scheme and collecting evidence across email threads.&#10;&#10;We sketched a short Certification Co-pilot Brief: how BeCause steers the right certification for a hotel group, consolidates evidence, and maps collected data toward ESRS/CSRD when EU needs it.&#10;&#10;Worth a skim?">
+                        <p>Hey {{first_name}},</p><p>Looking at {{company_name}} — public signals look like a sustainability/ESG page (or {{buyer_title}}) without a live eco-cert yet. That usually means the team is stuck choosing a scheme and collecting evidence across email threads.</p><p>We sketched a short Certification Co-pilot Brief: how BeCause steers the right certification for a {{segment}}, consolidates evidence, and maps collected data toward ESRS/CSRD when {{region}} needs it.</p><p>Worth a skim?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Quick bump on the Certification Co-pilot Brief. Happy to keep it to how {{property_count}} would stop the evidence chase without picking the wrong scheme on day one.&#10;&#10;Either way, appreciate you.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Quick bump on the Certification Co-pilot Brief. Happy to keep it to how {{property_count}} would stop the evidence chase without picking the wrong scheme on day one.&#10;&#10;Either way, appreciate you." data-preview="Hey Jordan,&#10;&#10;Quick bump on the Certification Co-pilot Brief. Happy to keep it to how 12 properties would stop the evidence chase without picking the wrong scheme on day one.&#10;&#10;Either way, appreciate you.">
+                        <p>Hey {{first_name}},</p><p>Quick bump on the Certification Co-pilot Brief. Happy to keep it to how {{property_count}} would stop the evidence chase without picking the wrong scheme on day one.</p><p>Either way, appreciate you.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: question for {{first_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;Just reply yes and I&#39;ll send the Certification Co-pilot Brief. You or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="question for {{first_name}}" data-preview="question for Jordan">question for {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Just reply yes and I&#39;ll send the Certification Co-pilot Brief. You or {{alt_decision_maker}}?" data-preview="Hey Jordan,&#10;&#10;Just reply yes and I&#39;ll send the Certification Co-pilot Brief. You or your VP Operations?">
+                        <p>Hey {{first_name}},</p><p>Just reply yes and I&#39;ll send the Certification Co-pilot Brief. You or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Catch-all - BeCause Sustainability Data Playbook</strong>
+              <em>BeCause Sustainability Data Playbook</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Catch-all - BeCause Sustainability Data Playbook steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: sustainability data idea for {{company_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;Looking at {{company_name}} as a {{segment}} in {{region}}. We sketched a short BeCause Sustainability Data Playbook for travel &amp; hospitality teams testing where certification support, framework mapping, or open sharing to OTAs/partners actually buys hours back — BeCause already positions around 60+ frameworks, CSRD/ESRS, and partners like Radisson and VisitEngland on because.eco.&#10;&#10;Want the one-pager?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="sustainability data idea for {{company_name}}" data-preview="sustainability data idea for Northline Hotels">sustainability data idea for {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Looking at {{company_name}} as a {{segment}} in {{region}}. We sketched a short BeCause Sustainability Data Playbook for travel &amp; hospitality teams testing where certification support, framework mapping, or open sharing to OTAs/partners actually buys hours back — BeCause already positions around 60+ frameworks, CSRD/ESRS, and partners like Radisson and VisitEngland on because.eco.&#10;&#10;Want the one-pager?" data-preview="Hey Jordan,&#10;&#10;Looking at Northline Hotels as a hotel group in EU. We sketched a short BeCause Sustainability Data Playbook for travel &amp; hospitality teams testing where certification support, framework mapping, or open sharing to OTAs/partners actually buys hours back — BeCause already positions around 60+ frameworks, CSRD/ESRS, and partners like Radisson and VisitEngland on because.eco.&#10;&#10;Want the one-pager?">
+                        <p>Hey {{first_name}},</p><p>Looking at {{company_name}} as a {{segment}} in {{region}}. We sketched a short BeCause Sustainability Data Playbook for travel &amp; hospitality teams testing where certification support, framework mapping, or open sharing to OTAs/partners actually buys hours back — BeCause already positions around 60+ frameworks, CSRD/ESRS, and partners like Radisson and VisitEngland on because.eco.</p><p>Want the one-pager?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Quick bump on the BeCause Sustainability Data Playbook. Soft CTA only — happy to send if clarifying certification vs partner-data sharing is on the list this quarter.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Quick bump on the BeCause Sustainability Data Playbook. Soft CTA only — happy to send if clarifying certification vs partner-data sharing is on the list this quarter." data-preview="Hey Jordan,&#10;&#10;Quick bump on the BeCause Sustainability Data Playbook. Soft CTA only — happy to send if clarifying certification vs partner-data sharing is on the list this quarter.">
+                        <p>Hey {{first_name}},</p><p>Quick bump on the BeCause Sustainability Data Playbook. Soft CTA only — happy to send if clarifying certification vs partner-data sharing is on the list this quarter.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: question for {{first_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;Reply yes and I&#39;ll send the playbook. No call needed unless you want one.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="question for {{first_name}}" data-preview="question for Jordan">question for {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Reply yes and I&#39;ll send the playbook. No call needed unless you want one." data-preview="Hey Jordan,&#10;&#10;Reply yes and I&#39;ll send the playbook. No call needed unless you want one.">
+                        <p>Hey {{first_name}},</p><p>Reply yes and I&#39;ll send the playbook. No call needed unless you want one.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">Launch</p>
+      <h2>Launch the competitor-platform switch route first</h2>
+      <p class="takeaway">Start where sustainability_maturity already shows Ecostars, Con-Serve, Sustainwize, GreenTurGo, or similar. Prove reply density, then roll certified-without-platform, Certification Co-pilot, and the remaining-TAM catch-all.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Suppress visible BeCause customers first when Asam&#39;s team can share a customer list.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Launch Tier 1 Competitor Switch + Consolidation Brief; hold until &gt;=~1,500 contacts when TAM allows, else run smaller waves with longer reply-density read.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Roll Tier 2 Framework Mapping Brief (A/B duplicate-reporting vs CSRD/ESRS), then Tier 3 Certification Co-pilot Brief.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Open Catch-all BeCause Sustainability Data Playbook for remaining TAM.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>A/B inside exclusive routes: duplicate-reporting / OTA sharing vs CSRD audit-readiness; Tier 1 can chaos-test migration-speed vs lock-in/cost framing.</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Keep segment (hotel group vs independent vs OTA vs DMO) and region as merge tags only — do not split into parallel waterfalls per vertical.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive / 150 sends</strong>
+                <span>Scale that tier</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 300</strong>
+                <span>Fine — keep running</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 450–500</strong>
+                <span>Test a copy/variant</span>
+              </div>
+              <div class="threshold">
+                <strong>&lt;1% reply after 1,500 sends or past 1/500</strong>
+                <span>Cut or rebuild that tier</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book the strategy call</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Jordan","Northline Hotels","customer support rep","6","Intercom","healthcare operations","Maya","Ecostars","Green Key","hotel group","Head of Sustainability","your VP Operations","12 properties","Radisson Hotel Group","Travelife","EU"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
