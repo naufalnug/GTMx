@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D-ID - GTMx Strategy Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1E9D6;
+      --lav: #E4E2F7;
+      --white: #FFFFFF;
+      --warm: #FCFAF4;
+      --ink: #1B1813;
+      --graphite: #4E4A43;
+      --stone: #8B867C;
+      --orange: #DD5A2F;
+      --orange-soft: #F6D9C9;
+      --peri: #6B62E6;
+      --peri-soft: #C2BEF0;
+      --sage: #4FA873;
+      --sage-soft: #B7DCC1;
+      --butter: #EFC456;
+      --butter-soft: #F8E6AC;
+      --lilac: #B78FD8;
+      --lilac-soft: #D6BCE9;
+      --display: 'Gabarito', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --hand: 'Caveat', cursive;
+      --shadow: 7px 7px 0 var(--ink);
+      --border: 2px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(27,24,19,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: .26;
+      z-index: -2;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .top-rule { height: 14px; background: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wordmark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: -.04em; }
+    .wordmark .dot { display: inline-block; width: 9px; height: 9px; border-radius: 99px; background: var(--orange); border: 1.5px solid var(--ink); margin-left: 3px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.04; letter-spacing: -.02em; }
+    p { margin: 0; color: var(--graphite); }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 80px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -120px;
+      width: 980px;
+      height: 320px;
+      transform: translateX(-50%);
+      border: var(--border);
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft));
+      opacity: .42;
+      z-index: -1;
+    }
+    .brandbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 54px; }
+    .artifact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      box-shadow: 4px 4px 0 var(--butter);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 420px; gap: 48px; align-items: center; }
+    .hero h1 { max-width: 12ch; font-size: clamp(48px, 8vw, 92px); font-weight: 900; }
+    .hero h1 mark {
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .hero h1 mark::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: .08em;
+      height: .22em;
+      background: var(--orange);
+      border-radius: 60% 40% 55% 45%;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .hero-copy { margin-top: 26px; max-width: 62ch; font-size: 20px; }
+    .hero-card {
+      position: relative;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--peri);
+    }
+    .hero-card h2 { font-size: 25px; margin-bottom: 10px; }
+    .route-preview {
+      margin-top: 22px;
+      border: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .route-preview div { display: grid; grid-template-columns: 52px 1fr; border-bottom: var(--border); }
+    .route-preview div:last-child { border-bottom: 0; }
+    .route-preview span { display: grid; place-items: center; background: var(--butter-soft); border-right: var(--border); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .route-preview p { padding: 12px 14px; font-weight: 700; color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border: var(--border);
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-family: var(--display);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: 4px 4px 0 var(--orange); }
+    .btn-soft { background: linear-gradient(135deg, var(--sage-soft), var(--peri-soft)); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+    .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .metric-card { background: var(--white); border: var(--border); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--sage-soft); }
+    .metric-card strong { display: block; font-family: var(--display); font-size: 30px; line-height: .95; }
+    .metric-card span { display: block; margin-top: 5px; color: var(--graphite); font-size: 13px; font-weight: 700; }
+
+    .journey-shell { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 38px; align-items: start; }
+    .progress-rail {
+      position: sticky;
+      top: 22px;
+      min-height: calc(100vh - 44px);
+      padding: 24px 0;
+      z-index: 4;
+    }
+    .rail-card {
+      position: relative;
+      background: var(--warm);
+      border: var(--border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      overflow: hidden;
+    }
+    .rail-line {
+      position: absolute;
+      left: 30px;
+      top: 58px;
+      bottom: 28px;
+      width: 3px;
+      background: repeating-linear-gradient(to bottom, var(--ink), var(--ink) 8px, transparent 8px, transparent 15px);
+      opacity: .4;
+    }
+    .engine-marker {
+      position: absolute;
+      left: 14px;
+      top: 52px;
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 20px;
+      background: var(--peri-soft);
+      border: var(--border);
+      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      transition: transform .18s ease;
+      z-index: 2;
+    }
+    .rail-title { margin-left: 48px; font-family: var(--display); font-weight: 900; line-height: 1; }
+    .rail-steps { position: relative; display: grid; gap: 10px; margin-top: 22px; }
+    .rail-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--graphite);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .rail-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .rail-step.is-active .rail-dot, .rail-step.is-complete .rail-dot { background: var(--orange); color: var(--white); }
+    .rail-step.is-active { color: var(--ink); }
+    .mobile-progress {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--cream);
+      border-bottom: var(--border);
+      padding: 10px 14px;
+    }
+    .mobile-progress__bar { height: 9px; border: var(--border); border-radius: 999px; background: var(--white); overflow: hidden; }
+    .mobile-progress__bar span { display: block; width: 0; height: 100%; background: var(--orange); transition: width .16s ease; }
+    .mobile-progress__label { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+
+    main { padding-bottom: 90px; }
+    .journey-section {
+      position: relative;
+      padding: 96px 0;
+      border-top: var(--border);
+      z-index: 1;
+      isolation: isolate;
+    }
+    .journey-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 200vw;
+      transform: translateX(-50%);
+      z-index: -1;
+      background: transparent;
+    }
+    .journey-section:nth-child(even)::before { background: rgba(228, 226, 247, .42); }
+    .section-head { position: relative; margin-bottom: 34px; max-width: 760px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 9px; }
+    .takeaway {
+      margin-top: 14px;
+      font-size: 19px;
+      max-width: 62ch;
+      color: var(--graphite);
+    }
+    .hand-note {
+      position: absolute;
+      right: -80px;
+      top: 10px;
+      font-family: var(--hand);
+      font-size: 30px;
+      color: var(--orange);
+      transform: rotate(-7deg);
+    }
+    .panel {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .signal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .reason-card, .source-card {
+      border: var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--warm);
+      min-height: 120px;
+    }
+    .reason-card span, .source-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .source-list { display: grid; gap: 12px; }
+    .source-card { min-height: auto; background: var(--white); }
+    .source-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .field-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .field-cloud span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .route-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+    .route-rules { display: grid; gap: 12px; }
+    .route-rule {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .route-rule:hover, .route-rule.is-active { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--orange); background: var(--warm); }
+    .route-rule__num { display: grid; place-items: center; width: 38px; height: 38px; border: var(--border); border-radius: 10px; background: var(--peri-soft); font-family: var(--mono); font-weight: 800; }
+    .route-rule__if { font-weight: 800; color: var(--ink); }
+    .route-rule strong { font-family: var(--display); }
+    .route-rule em { grid-column: 2 / 4; color: var(--graphite); font-style: normal; font-size: 14px; }
+    .code-box {
+      background: var(--ink);
+      color: #F4EFE2;
+      border-radius: 18px;
+      border: var(--border);
+      padding: 18px;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+    .code-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .copy-btn, .mini-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--butter-soft);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { background: var(--sage-soft); }
+    .tier-toolbar, .campaign-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      padding: 9px 14px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip.is-active { background: var(--ink); color: var(--white); }
+    .tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .tier-card {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--peri-soft);
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tier-card:hover, .tier-card.is-open { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--peri); }
+    .tier-card.accent-orange { box-shadow: 7px 7px 0 var(--orange-soft); }
+    .tier-card.accent-orange:hover, .tier-card.accent-orange.is-open { box-shadow: 10px 10px 0 var(--orange); }
+    .tier-card.accent-sage { box-shadow: 7px 7px 0 var(--sage-soft); }
+    .tier-card.accent-sage:hover, .tier-card.accent-sage.is-open { box-shadow: 10px 10px 0 var(--sage); }
+    .tier-card.accent-lilac { box-shadow: 7px 7px 0 var(--lilac-soft); }
+    .tier-card.accent-lilac:hover, .tier-card.accent-lilac.is-open { box-shadow: 10px 10px 0 var(--lilac); }
+    .tier-card.accent-butter { box-shadow: 7px 7px 0 var(--butter-soft); }
+    .tier-card.accent-butter:hover, .tier-card.accent-butter.is-open { box-shadow: 10px 10px 0 var(--butter); }
+    .tier-card__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .tier-num, .tier-share {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--warm);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tier-card h3 { font-size: 26px; margin-bottom: 8px; }
+    .tier-card > p { font-weight: 700; color: var(--ink); }
+    .tier-reveal { display: none; margin-top: 18px; }
+    .tier-card.is-open .tier-reveal { display: block; }
+    dl { margin: 0; display: grid; gap: 12px; }
+    dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-weight: 800; }
+    dd { margin: 3px 0 0; color: var(--graphite); }
+    .mini-btn { margin-top: 18px; background: var(--white); }
+    .campaign-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .campaign-card {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 18px;
+      box-shadow: 5px 5px 0 var(--sage-soft);
+    }
+    .campaign-card[hidden] { display: none; }
+    .campaign-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .campaign-card__meta span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--lav);
+      padding: 5px 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-card h3 { font-size: 21px; margin-bottom: 8px; }
+    .campaign-card p { margin-bottom: 15px; }
+    .email-sequence {
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      margin-bottom: 16px;
+      box-shadow: 5px 5px 0 var(--lilac-soft);
+      overflow: hidden;
+    }
+    .email-sequence summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: var(--border);
+      list-style: none;
+    }
+    .email-sequence summary::-webkit-details-marker { display: none; }
+    .email-sequence summary strong { display: block; font-family: var(--display); font-size: 22px; }
+    .email-sequence summary em { display: block; margin-top: 4px; color: var(--graphite); font-style: normal; }
+    .email-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+    }
+    .email-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--warm);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 3px 3px 0 transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .email-tab:hover, .email-tab.is-active {
+      transform: translate(-2px, -2px);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+    .email-tab span {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .email-tab strong {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: inherit;
+    }
+    .email-stack { padding: 18px; }
+    .email-card {
+      display: none;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--warm);
+      padding: 22px;
+      min-width: 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .email-card.is-active { display: block; }
+    .email-card__top { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .email-card__top span { font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--orange); }
+    .email-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .preview-btn {
+      border: var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 7px 10px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .preview-btn.is-active { background: var(--sage-soft); }
+    .email-subject {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .email-subject span {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .email-card h3 { font-size: clamp(20px, 2.1vw, 27px); word-break: break-word; letter-spacing: 0; line-height: 1.15; }
+    .email-body {
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    .email-body p {
+      max-width: 72ch;
+      font-size: 18px;
+      line-height: 1.72;
+      color: var(--ink);
+    }
+    .email-body mark {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--butter-soft);
+      border: 1px solid rgba(27, 24, 19, .35);
+      border-radius: 6px;
+      padding: 0 .18em;
+      color: var(--ink);
+    }
+    .email-body p + p { margin-top: 16px; }
+    .variable-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .variable-row span {
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      padding: 7px 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .launch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .launch-steps { display: grid; gap: 14px; }
+    .launch-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: var(--border);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 15px;
+      box-shadow: 4px 4px 0 var(--orange-soft);
+    }
+    .launch-step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .launch-step p { color: var(--ink); font-weight: 700; }
+    .thresholds {
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 22px;
+      box-shadow: 7px 7px 0 var(--butter);
+    }
+    .thresholds h3 { color: var(--white); font-size: 24px; margin-bottom: 16px; }
+    .threshold { border-top: 1px dashed rgba(255,255,255,.35); padding: 13px 0; }
+    .threshold strong, .threshold span { display: block; }
+    .threshold strong { font-family: var(--display); color: var(--butter); }
+    .threshold span { color: #F4EFE2; margin-top: 3px; }
+    .final-cta {
+      border-top: var(--border);
+      padding: 78px 0 92px;
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 50vw 0 0 var(--ink), -50vw 0 0 var(--ink);
+    }
+    .final-cta .panel {
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 9px 9px 0 var(--orange);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .final-cta h2 { font-size: clamp(34px, 5vw, 58px); }
+    .final-cta p { margin-top: 10px; font-size: 18px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 120px);
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 4px 4px 0 var(--orange);
+      transition: transform .22s ease;
+      z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .signal-layout, .route-layout, .launch-grid, .final-cta .panel { grid-template-columns: 1fr; }
+      .journey-shell { display: block; }
+      .progress-rail { display: none; }
+      .mobile-progress { display: block; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hand-note { position: static; display: inline-block; margin-top: 14px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .brandbar { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+      .hero h1 { font-size: clamp(42px, 15vw, 68px); }
+      .hero-copy { font-size: 18px; }
+      .metric-strip, .reason-grid, .tier-grid, .campaign-grid, .email-tabs { grid-template-columns: 1fr; }
+      .email-tab { align-items: flex-start; flex-direction: column; }
+      .email-card { padding: 16px; }
+      .email-body { padding: 15px; }
+      .email-body p { font-size: 16px; line-height: 1.65; }
+      .route-rule { grid-template-columns: 42px 1fr; }
+      .route-rule strong { grid-column: 2; }
+      .route-rule em { grid-column: 1 / 3; }
+      .journey-section { padding: 72px 0; }
+      .section-head h2 { font-size: 35px; }
+      .takeaway { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <div class="mobile-progress" aria-hidden="true">
+    <div class="mobile-progress__bar"><span id="mobileBar"></span></div>
+    <div class="mobile-progress__label"><span id="mobileLabel">Signal</span><span id="mobilePct">0%</span></div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="brandbar">
+        <div class="wordmark">gtmx<span class="dot"></span></div>
+        <div class="artifact-pill">Custom strategy artifact - 2026-09-21</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Prepared for D-ID</p>
+          <h1>Your D-ID waterfall <mark>journey</mark>.</h1>
+          <p class="hero-copy">A scrollable GTMx strategy artifact for routing marketing, L&amp;D, CX, and sales-enablement buyers into the right D-ID Video Studio, Visual AI Agent, or competitor-switch offer. List building, campaign angles, and sample copy, prepared for Nader Wahba, VP Sales, North America.</p>
+          <p class="hero-copy"><strong>Core insight:</strong> Nader sells one D-ID digital-human platform — Video Studio + Visual AI Agents + AI Avatars — not a different product per vertical. Marketing vs L&amp;D vs CX vs sales enablement is a merge tag after routing, not a second waterfall. The single routing signal is ai_avatar_maturity: what a lead source can already see about how they produce talking-head or interactive experiences — competing AI avatar/video platform, heavy filmed video production without an AI avatar tool, conversational AI / chatbot without a face, or none. That ladder maps to D-ID&#39;s live offers: competitor switch into V4 real-time agents + Studio, replace costly video production with Studio avatars, overlay a Visual AI Agent on existing LLM/chat, then a soft remaining-TAM Visual Agents playbook.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signal">Start the journey</a>
+            <a class="btn btn-soft" href="https://www.gtmx.run/#book">Book the strategy call</a>
+          </div>
+          <div class="metric-strip">
+        <div class="metric-card">
+          <strong>120+</strong>
+          <span>Languages for video + real-time agents (d-id.com)</span>
+        </div>
+        <div class="metric-card">
+          <strong>800k+</strong>
+          <span>Visual agents created on prior D-ID models (Mar 2026 PR)</span>
+        </div>
+        <div class="metric-card">
+          <strong>4</strong>
+          <span>Exclusive ai_avatar_maturity routes (incl. catch-all)</span>
+        </div></div>
+        </div>
+        <aside class="hero-card">
+          <p class="eyebrow">Campaign engine</p>
+          <h2>One signal. One route. Five offers.</h2>
+          <p>D-ID (d-id.com) is an enterprise AI visual-agents and generative video platform. Homepage positioning: AI videos and interactive avatars for humanlike communication — explain clearly, engage personally, and scale messaging across every audience and channel. Core products on d-id.com: Video Studio (polished multilingual avatar videos from scripts, briefs, decks, or documents); Visual AI Agents (real-time conversational avatars that engage face-to-face, trigger workflows, and run in multiple languages, fully embeddable); AI Avatars (digital humans from images or video with voice cloning for offline video and real-time experiences). Published capabilities: brand-adaptable avatars, 120+ languages, API / real-time streaming (WebRTC Client SDK), RAG knowledge bases, configurable LLMs (built-in, external keys, or OpenAI-compatible endpoints), PowerPoint / Canva / Google Slides integrations, enterprise security and permissions. Buyer teams named on site: Marketing, Learning &amp; Development, Sales Enablement, Customer Experience, Content Creators, and Developers. March 2026 public proof: V4 Expressive Visual Agents for low-latency LLM-connected conversations; D-ID claims 1,500+ enterprise customers, 800,000+ visual agents and 300M+ non-interactive avatars created on prior models; September 2025 acquisition of simpleshow (explainer video). Nader Wahba is VP of Sales, North America (nader.wahba@d-id.com).</p>
+          <div class="route-preview">
+            <div><span>01</span><p>The signal is how far their AI talking-head stack already shows up publicly</p></div><div><span>02</span><p>One cascade routes every in-TAM marketing, L&amp;D, CX, and sales account</p></div><div><span>03</span><p>Each maturity band gets a different first offer</p></div><div><span>04</span><p>Switch the stack, replace the studio, add a face, then cover the rest</p></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap journey-shell">
+    <aside class="progress-rail" aria-label="Journey progress">
+      <div class="rail-card">
+        <div class="rail-line"></div>
+        <div class="engine-marker" id="engineMarker">x</div>
+        <div class="rail-title">Strategy<br>journey</div>
+        <nav class="rail-steps">
+        <a class="rail-step" href="#signal" data-section="signal">
+          <span class="rail-dot">01</span>
+          <span>Signal</span>
+        </a>
+        <a class="rail-step" href="#waterfall" data-section="waterfall">
+          <span class="rail-dot">02</span>
+          <span>Waterfall</span>
+        </a>
+        <a class="rail-step" href="#tiers" data-section="tiers">
+          <span class="rail-dot">03</span>
+          <span>Tiers</span>
+        </a>
+        <a class="rail-step" href="#campaigns" data-section="campaigns">
+          <span class="rail-dot">04</span>
+          <span>Campaigns</span>
+        </a>
+        <a class="rail-step" href="#emails" data-section="emails">
+          <span class="rail-dot">05</span>
+          <span>Email Copy</span>
+        </a>
+        <a class="rail-step" href="#launch" data-section="launch">
+          <span class="rail-dot">06</span>
+          <span>Launch</span>
+        </a></nav>
+      </div>
+    </aside>
+
+    <main>
+      <section class="journey-section" id="signal" data-section-label="Signal">
+        
+    <div class="section-head">
+      <p class="eyebrow">Signal</p>
+      <h2>The signal is how far their AI talking-head stack already shows up publicly</h2>
+      <p class="takeaway">BuiltWith, site widgets, careers, and LMS/marketing pages already show a competing AI avatar tool, heavy filmed video production, a text chatbot without a face, or none. That ai_avatar_maturity is stronger than a title guess and cheap to collect.</p>
+      <span class="hand-note">strongest signal</span>
+    </div>
+        <div class="signal-layout">
+          <div class="panel">
+            <div class="reason-grid">
+              <div class="reason-card"><span>01</span><p>Apollo / LinkedIn Sales Nav (Marketing, L&amp;D, CX, Sales Enablement, Product titles at mid-market and enterprise) are the TAM D-ID already sells into. Public global TAM account count is not published on d-id.com; treat size as estimated (see d-id-magnet-flags.txt) and keep each launch tier &gt;=~1,500 contacts where possible.</p></div><div class="reason-card"><span>02</span><p>The same BuiltWith + site + careers scrape returns ai_avatar_maturity: competing AI avatar/video platforms (HeyGen, Synthesia, Colossyan, Hour One, Elai, Tavus, adjacent); heavy filmed video / instructional-design production without an AI avatar tool; conversational AI / chatbot widgets (Intercom, Drift, Zendesk, custom) without a visual agent; or none — enough to route without a second expensive enrichment product.</p></div><div class="reason-card"><span>03</span><p>The ladder maps to live D-ID positioning (Video Studio, V4 Expressive Visual Agents, AI Avatars, 120+ languages, API / WebRTC Client SDK, RAG + configurable LLMs, PowerPoint/Canva/Slides) plus public proof language (SPIN Sport Innovation, SingIt, Defined AI, Pitango, MyHeritage, simpleshow acquisition footprint).</p></div><div class="reason-card"><span>04</span><p>Segment (marketing vs L&amp;D vs CX vs sales enablement vs developers) and use case (training, support, website concierge, demos) are scrape filters and merge tags, not a second waterfall. Apollo is email last after the account is routed.</p></div>
+            </div>
+            <div class="field-cloud"><span>in_tam</span><span>already_customer</span><span>ai_avatar_maturity</span><span>competitor_platform</span><span>has_filmed_video_production</span><span>chat_stack</span><span>segment</span><span>use_case</span><span>buyer_title</span><span>language_need</span></div>
+          </div>
+          <aside class="source-list">
+            <div class="source-card"><span>01</span><h3>Apollo + LinkedIn Sales Nav (Marketing / L&amp;D / CX / Sales Enablement / Product + buyer titles)</h3><p>In-TAM mid-market and enterprise accounts that buy AI video and digital humans. The TAM spine.</p></div><div class="source-card"><span>02</span><h3>BuiltWith + public tech mentions (HeyGen, Synthesia, Colossyan, Hour One, Elai, Tavus, adjacent)</h3><p>ai_avatar_maturity = competitor_platform for Tier 1 routing and copy.</p></div><div class="source-card"><span>03</span><h3>Company website + LMS / training portal + careers scrape</h3><p>Filmed video production signals (video producer / instructional designer / studio roles; human-presenter training libraries) used for Tier 2.</p></div><div class="source-card"><span>04</span><h3>Site widget / support-page scrape (Intercom, Drift, Zendesk chat, custom chatbot)</h3><p>Conversational AI without a visual agent for Tier 3 routing.</p></div><div class="source-card"><span>05</span><h3>LinkedIn Jobs + careers scrape</h3><p>Video production, L&amp;D content, CX automation, and competitor-platform mentions as copy context — not a second waterfall axis.</p></div><div class="source-card"><span>06</span><h3>Apollo (after qualification)</h3><p>Work emails for Marketing / L&amp;D / CX / Sales Enablement / Product buyers on already-routed accounts.</p></div><div class="source-card"><span>07</span><h3>Optional D-ID customer suppress</h3><p>Current-customer exclusion when Nader&#39;s team can share a list. Treat as suppress, not a tier.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="waterfall" data-section-label="Waterfall">
+        
+    <div class="section-head">
+      <p class="eyebrow">Waterfall</p>
+      <h2>One cascade routes every in-TAM marketing, L&amp;D, CX, and sales account</h2>
+      <p class="takeaway">First match wins. Competitor AI avatar platform first, then filmed-production-without-AI-avatar, then chatbot-without-visual-agent, then every remaining in-TAM buyer.</p>
+      <span class="hand-note">first match wins</span>
+    </div>
+        <div class="route-layout">
+          <div class="route-rules">
+        <button class="route-rule is-active" type="button" data-route="0">
+          <span class="route-rule__num">01</span>
+          <span class="route-rule__if">IF in_tam AND ai_avatar_maturity = competitor_platform (HeyGen, Synthesia, Colossyan, Hour One, Elai, Tavus, or adjacent AI avatar/talking-head video tool) AND not already_customer</span>
+          <strong>Tier 1 - Competitor Switch + Real-Time Agents Brief</strong>
+          <em>They already budget an AI avatar / talking-head stack. Strongest switch intent for D-ID as the real-time Visual Agents + Studio platform (V4 latency, API, 120+ languages) versus pre-recorded-first competitors.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="1">
+          <span class="route-rule__num">02</span>
+          <span class="route-rule__if">IF in_tam AND ai_avatar_maturity = filmed_production_no_avatar (video producer / instructional designer / studio roles OR human-presenter training/marketing video library) AND no Tier-1 competitor_platform AND not already_customer</span>
+          <strong>Tier 2 - Video Studio Replace Production Brief</strong>
+          <em>They still shoot or hire for talking-head content at scale. Maps to D-ID Video Studio: minutes-not-days avatar videos from scripts/decks, brand-adaptable, multilingual — without inventing an AI tool they do not have.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="2">
+          <span class="route-rule__num">03</span>
+          <span class="route-rule__if">IF in_tam AND ai_avatar_maturity = chat_no_visual_agent (Intercom / Drift / Zendesk chat / custom conversational AI on site or product) AND no Tier 1-2 AND not already_customer</span>
+          <strong>Tier 3 - Visual AI Agent Overlay Brief</strong>
+          <em>They already run text or voice chat but no face. Maps to D-ID Visual AI Agents: LLM-connected, RAG-grounded, WebRTC-streamed digital humans for CX, website concierge, or training roleplay.</em>
+        </button>
+        <button class="route-rule" type="button" data-route="3">
+          <span class="route-rule__num">04</span>
+          <span class="route-rule__if">IF in_tam AND none of the above</span>
+          <strong>Catch-all - D-ID Visual Agents Playbook</strong>
+          <em>Still in TAM (marketing, L&amp;D, CX, sales enablement, developer platforms). Softest CTA around AI video + interactive agents. Mandatory 100% coverage.</em>
+        </button></div>
+          <aside class="code-box">
+            <button class="copy-btn" type="button" data-copy="1. IF in_tam AND ai_avatar_maturity = competitor_platform (HeyGen, Synthesia, Colossyan, Hour One, Elai, Tavus, or adjacent AI avatar/talking-head video tool) AND not already_customer -&gt; Tier 1 - Competitor Switch + Real-Time Agents Brief (They already budget an AI avatar / talking-head stack. Strongest switch intent for D-ID as the real-time Visual Agents + Studio platform (V4 latency, API, 120+ languages) versus pre-recorded-first competitors.)&#10;2. IF in_tam AND ai_avatar_maturity = filmed_production_no_avatar (video producer / instructional designer / studio roles OR human-presenter training/marketing video library) AND no Tier-1 competitor_platform AND not already_customer -&gt; Tier 2 - Video Studio Replace Production Brief (They still shoot or hire for talking-head content at scale. Maps to D-ID Video Studio: minutes-not-days avatar videos from scripts/decks, brand-adaptable, multilingual — without inventing an AI tool they do not have.)&#10;3. IF in_tam AND ai_avatar_maturity = chat_no_visual_agent (Intercom / Drift / Zendesk chat / custom conversational AI on site or product) AND no Tier 1-2 AND not already_customer -&gt; Tier 3 - Visual AI Agent Overlay Brief (They already run text or voice chat but no face. Maps to D-ID Visual AI Agents: LLM-connected, RAG-grounded, WebRTC-streamed digital humans for CX, website concierge, or training roleplay.)&#10;4. IF in_tam AND none of the above -&gt; Catch-all - D-ID Visual Agents Playbook (Still in TAM (marketing, L&amp;D, CX, sales enablement, developer platforms). Softest CTA around AI video + interactive agents. Mandatory 100% coverage.)">Copy routing spec</button>
+            <pre id="routeCode">1. IF in_tam AND ai_avatar_maturity = competitor_platform (HeyGen, Synthesia, Colossyan, Hour One, Elai, Tavus, or adjacent AI avatar/talking-head video tool) AND not already_customer -&gt; Tier 1 - Competitor Switch + Real-Time Agents Brief (They already budget an AI avatar / talking-head stack. Strongest switch intent for D-ID as the real-time Visual Agents + Studio platform (V4 latency, API, 120+ languages) versus pre-recorded-first competitors.)
+2. IF in_tam AND ai_avatar_maturity = filmed_production_no_avatar (video producer / instructional designer / studio roles OR human-presenter training/marketing video library) AND no Tier-1 competitor_platform AND not already_customer -&gt; Tier 2 - Video Studio Replace Production Brief (They still shoot or hire for talking-head content at scale. Maps to D-ID Video Studio: minutes-not-days avatar videos from scripts/decks, brand-adaptable, multilingual — without inventing an AI tool they do not have.)
+3. IF in_tam AND ai_avatar_maturity = chat_no_visual_agent (Intercom / Drift / Zendesk chat / custom conversational AI on site or product) AND no Tier 1-2 AND not already_customer -&gt; Tier 3 - Visual AI Agent Overlay Brief (They already run text or voice chat but no face. Maps to D-ID Visual AI Agents: LLM-connected, RAG-grounded, WebRTC-streamed digital humans for CX, website concierge, or training roleplay.)
+4. IF in_tam AND none of the above -&gt; Catch-all - D-ID Visual Agents Playbook (Still in TAM (marketing, L&amp;D, CX, sales enablement, developer platforms). Softest CTA around AI video + interactive agents. Mandatory 100% coverage.)</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="journey-section" id="tiers" data-section-label="Tiers">
+        
+    <div class="section-head">
+      <p class="eyebrow">Tiers</p>
+      <h2>Each maturity band gets a different first offer</h2>
+      <p class="takeaway">Competitor platforms get a Switch + Real-Time Agents Brief. Filmed-production accounts get a Video Studio Replace Production Brief. Chatbot-only accounts get a Visual AI Agent Overlay Brief. The rest get the D-ID Visual Agents Playbook.</p>
+      <span class="hand-note">click each card</span>
+    </div>
+        <div class="tier-toolbar"><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="tier-grid">
+        <article class="tier-card accent-orange" data-tier-card="tier1" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">01</span>
+            <span class="tier-share">est. 8-15% TAM</span>
+          </div>
+          <h3>Tier 1: Competing AI avatar / talking-head platform detected</h3>
+          <p>ai_avatar_maturity = competitor_platform (HeyGen, Synthesia, Colossyan, Hour One, Elai, Tavus, adjacent); in-TAM account; not already a D-ID customer</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>They are already paying for an AI avatar or talking-head stack optimized for pre-recorded clips — and still lack low-latency, LLM-connected face-to-face agents for CX, website, or interactive training.</dd></div>
+              <div><dt>Offer</dt><dd>Competitor Switch + Real-Time Agents Brief</dd></div>
+              <div><dt>Source</dt><dd>BuiltWith + public tech mentions for HeyGen / Synthesia / Colossyan / Hour One / Elai / Tavus</dd></div>
+              <div><dt>Reply density</dt><dd>Highest - they already budget AI avatar software</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-lilac" data-tier-card="tier2" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">02</span>
+            <span class="tier-share">est. 15-25% TAM</span>
+          </div>
+          <h3>Tier 2: Filmed video production, no AI avatar tool</h3>
+          <p>ai_avatar_maturity = filmed_production_no_avatar (video producer / instructional designer / studio roles OR human-presenter training/marketing video library); no Tier-1 competitor_platform</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Talking-head training and marketing still depend on shoots, travel, reshoots, and localization queues — slow and expensive every time the script or language changes.</dd></div>
+              <div><dt>Offer</dt><dd>Video Studio Replace Production Brief</dd></div>
+              <div><dt>Source</dt><dd>Careers + LMS/training portal + marketing video-library scrape</dd></div>
+              <div><dt>Reply density</dt><dd>High - visible production cost / localization pain</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-sage" data-tier-card="tier3" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">03</span>
+            <span class="tier-share">est. 15-25% TAM</span>
+          </div>
+          <h3>Tier 3: Conversational AI / chatbot, no visual agent</h3>
+          <p>ai_avatar_maturity = chat_no_visual_agent (Intercom / Drift / Zendesk chat / custom conversational AI) with no Tier 1-2 match</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Text chat answers questions but feels faceless — drop-off on complex CX, onboarding, and sales-qualification flows where tone and presence matter.</dd></div>
+              <div><dt>Offer</dt><dd>Visual AI Agent Overlay Brief</dd></div>
+              <div><dt>Source</dt><dd>Site widget / support-page scrape for chat stacks</dd></div>
+              <div><dt>Reply density</dt><dd>Medium - clear chat stack, education on visual agents</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article>
+        <article class="tier-card accent-butter" data-tier-card="catchall" tabindex="0">
+          <div class="tier-card__top">
+            <span class="tier-num">04</span>
+            <span class="tier-share">est. 40-55% TAM</span>
+          </div>
+          <h3>Catch-all: Remaining in-TAM marketing / L&amp;D / CX / sales accounts</h3>
+          <p>in_tam marketing / L&amp;D / CX / sales enablement / developer-platform buyer with no Tier 1-3 ai_avatar_maturity match</p>
+          <div class="tier-reveal">
+            <dl>
+              <div><dt>Pain</dt><dd>Most mid-market and enterprise teams know video and always-on digital presence are coming — but have not publicly exposed an AI avatar tool, filmed-production org, or chatbot widget yet.</dd></div>
+              <div><dt>Offer</dt><dd>D-ID Visual Agents Playbook</dd></div>
+              <div><dt>Source</dt><dd>Apollo / Sales Nav TAM after in_tam gate</dd></div>
+              <div><dt>Reply density</dt><dd>Lowest - broadest list, softest CTA</dd></div>
+            </dl>
+          </div>
+          <button class="mini-btn" type="button">Open card</button>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="campaigns" data-section-label="Campaigns">
+        
+    <div class="section-head">
+      <p class="eyebrow">Campaigns</p>
+      <h2>Switch the stack, replace the studio, add a face, then cover the rest</h2>
+      <p class="takeaway">The list is always accounts D-ID sells into (marketing, L&amp;D, CX, sales enablement, developer platforms). Segment is a merge tag. A/Bs sit on exclusive routes (real-time agents vs Studio cost, production-hours vs multilingual scale).</p>
+      <span class="hand-note">volume + side quests</span>
+    </div>
+        <div class="campaign-toolbar"><button class="chip is-active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="tier1">Tier 1</button><button class="chip" type="button" data-filter="tier2">Tier 2</button><button class="chip" type="button" data-filter="tier3">Tier 3</button><button class="chip" type="button" data-filter="catchall">Catch-all</button></div>
+        <div class="campaign-grid">
+        <article class="campaign-card" data-campaign-tier="tier1" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Competitor switch (real-time agents-led)</h3>
+          <p>Highest intent. Personalise on {{competitor_platform}}, {{segment}}, and {{use_case}}.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>in_tam + ai_avatar_maturity=competitor_platform + not already_customer</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with {{competitor_platform}} at {{company_name}} ({{segment}}), offer Competitor Switch + Real-Time Agents Brief anchored to V4 latency, API/WebRTC, RAG + LLMs, and 120+ languages vs pre-recorded-first stacks.</dd></div>
+            <div><dt>Value</dt><dd>Keep avatar video, add real-time face-to-face agents</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier2" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Filmed production → Video Studio A/B</h3>
+          <p>Second exclusive route. Hours-vs-languages copy variants.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>in_tam + ai_avatar_maturity=filmed_production_no_avatar + no Tier 1</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with visible video/instructional-design production at {{company_name}}, A/B Video Studio Replace Production Brief: production-hours saved vs multilingual scale ({{language_count}} languages).</dd></div>
+            <div><dt>Value</dt><dd>Replace shoots with on-brand avatar videos from scripts/decks</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="tier3" data-campaign-group="Focused">
+          <div class="campaign-card__meta">
+            <span>Focused</span>
+            <span>Focused</span>
+          </div>
+          <h3>Chat stack → Visual AI Agent overlay</h3>
+          <p>Third exclusive route. CX / website / training roleplay angle.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>in_tam + ai_avatar_maturity=chat_no_visual_agent + no Tier 1-2</dd></div>
+            <div><dt>AI strategy</dt><dd>Lead with {{chat_stack}} (or custom chat) at {{company_name}}, offer Visual AI Agent Overlay Brief — LLM-connected V4 agent on existing knowledge, WebRTC face for {{use_case}}.</dd></div>
+            <div><dt>Value</dt><dd>Add a face to the chat stack without ripping out the LLM</dd></div>
+          </dl>
+        </article>
+        <article class="campaign-card" data-campaign-tier="catchall" data-campaign-group="Broad">
+          <div class="campaign-card__meta">
+            <span>Broad</span>
+            <span>Broad</span>
+          </div>
+          <h3>Remaining marketing / L&amp;D / CX / sales TAM</h3>
+          <p>Mandatory catch-all for 100% TAM coverage.</p>
+          <dl>
+            <div><dt>Filter</dt><dd>in_tam + no Tier 1-3 ai_avatar_maturity</dd></div>
+            <div><dt>AI strategy</dt><dd>Soft D-ID Visual Agents Playbook. A/B Studio video vs real-time agents. Soft CTA. Segment and use case stay merge tags.</dd></div>
+            <div><dt>Value</dt><dd>Simple path into D-ID Video Studio or Visual AI Agents</dd></div>
+          </dl>
+        </article></div>
+      </section>
+
+      <section class="journey-section" id="emails" data-section-label="Email Copy">
+        
+    <div class="section-head">
+      <p class="eyebrow">Email Copy</p>
+      <h2>Copy that names the avatar or chat signal already visible on their stack</h2>
+      <p class="takeaway">Notice the competitor, filmed production, or chatbot, poke the production / latency / face-less gap that state implies, then ask for a one-letter yes.</p>
+      <span class="hand-note">tiny yes CTA</span>
+    </div>
+        <div class="variable-row">
+          <span>{{first_name}}</span><span>{{company_name}}</span><span>{{competitor_platform}}</span><span>{{segment}}</span><span>{{buyer_title}}</span><span>{{alt_decision_maker}}</span><span>{{chat_stack}}</span><span>{{case_customer}}</span><span>{{language_count}}</span><span>{{use_case}}</span>
+          <button class="copy-btn" type="button" data-copy="{{first_name}}, {{company_name}}, {{competitor_platform}}, {{segment}}, {{buyer_title}}, {{alt_decision_maker}}, {{chat_stack}}, {{case_customer}}, {{language_count}}, {{use_case}}">Copy variables</button>
+        </div>
+        
+        <details class="email-sequence" open>
+          <summary>
+            <span>
+              <strong>Tier 1 - Competitor Switch + Real-Time Agents Brief</strong>
+              <em>Competitor Switch + Real-Time Agents Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 1 - Competitor Switch + Real-Time Agents Brief steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: switching off {{competitor_platform}}&#10;&#10;Hey {{first_name}},&#10;&#10;Saw {{company_name}} running {{competitor_platform}} for {{segment}} {{use_case}}. Teams in that spot usually already pay for talking-head video and still lack a low-latency, LLM-connected face for live CX, website, or interactive training.&#10;&#10;We put together a short Competitor Switch + Real-Time Agents Brief on how D-ID layers V4 Expressive Visual Agents (WebRTC, RAG, configurable LLMs) on top of Video Studio — {{language_count}} languages, API-ready — vs staying pre-recorded-only.&#10;&#10;Worth a look?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="switching off {{competitor_platform}}" data-preview="switching off Synthesia">switching off {{competitor_platform}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Saw {{company_name}} running {{competitor_platform}} for {{segment}} {{use_case}}. Teams in that spot usually already pay for talking-head video and still lack a low-latency, LLM-connected face for live CX, website, or interactive training.&#10;&#10;We put together a short Competitor Switch + Real-Time Agents Brief on how D-ID layers V4 Expressive Visual Agents (WebRTC, RAG, configurable LLMs) on top of Video Studio — {{language_count}} languages, API-ready — vs staying pre-recorded-only.&#10;&#10;Worth a look?" data-preview="Hey Jordan,&#10;&#10;Saw Northline Learning running Synthesia for L&amp;D onboarding training. Teams in that spot usually already pay for talking-head video and still lack a low-latency, LLM-connected face for live CX, website, or interactive training.&#10;&#10;We put together a short Competitor Switch + Real-Time Agents Brief on how D-ID layers V4 Expressive Visual Agents (WebRTC, RAG, configurable LLMs) on top of Video Studio — 120+ languages, API-ready — vs staying pre-recorded-only.&#10;&#10;Worth a look?">
+                        <p>Hey {{first_name}},</p><p>Saw {{company_name}} running {{competitor_platform}} for {{segment}} {{use_case}}. Teams in that spot usually already pay for talking-head video and still lack a low-latency, LLM-connected face for live CX, website, or interactive training.</p><p>We put together a short Competitor Switch + Real-Time Agents Brief on how D-ID layers V4 Expressive Visual Agents (WebRTC, RAG, configurable LLMs) on top of Video Studio — {{language_count}} languages, API-ready — vs staying pre-recorded-only.</p><p>Worth a look?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Quick bump on the Switch + Real-Time Agents Brief. Happy to keep it to one page: what moves off {{competitor_platform}}, where Studio stays for scripted video, and where a live Visual Agent lands for {{use_case}}.&#10;&#10;Either way, appreciate you.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Quick bump on the Switch + Real-Time Agents Brief. Happy to keep it to one page: what moves off {{competitor_platform}}, where Studio stays for scripted video, and where a live Visual Agent lands for {{use_case}}.&#10;&#10;Either way, appreciate you." data-preview="Hey Jordan,&#10;&#10;Quick bump on the Switch + Real-Time Agents Brief. Happy to keep it to one page: what moves off Synthesia, where Studio stays for scripted video, and where a live Visual Agent lands for onboarding training.&#10;&#10;Either way, appreciate you.">
+                        <p>Hey {{first_name}},</p><p>Quick bump on the Switch + Real-Time Agents Brief. Happy to keep it to one page: what moves off {{competitor_platform}}, where Studio stays for scripted video, and where a live Visual Agent lands for {{use_case}}.</p><p>Either way, appreciate you.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: question for {{first_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the Competitor Switch + Real-Time Agents Brief.&#10;&#10;Should I send this to you or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="question for {{first_name}}" data-preview="question for Jordan">question for {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the Competitor Switch + Real-Time Agents Brief.&#10;&#10;Should I send this to you or {{alt_decision_maker}}?" data-preview="Hey Jordan,&#10;&#10;No need for a call. Just reply yes and I&#39;ll send the Competitor Switch + Real-Time Agents Brief.&#10;&#10;Should I send this to you or your Head of CX?">
+                        <p>Hey {{first_name}},</p><p>No need for a call. Just reply yes and I&#39;ll send the Competitor Switch + Real-Time Agents Brief.</p><p>Should I send this to you or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 2 - Video Studio Replace Production Brief</strong>
+              <em>Video Studio Replace Production Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 2 - Video Studio Replace Production Brief steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: still shooting {{use_case}} videos?&#10;&#10;Hey {{first_name}},&#10;&#10;Looking at {{company_name}} — public signals look like filmed / instructional video production for {{segment}} without an AI avatar tool yet. That usually means shoots, reshoots, and a localization queue every time the script changes.&#10;&#10;Happy to share a one-page Video Studio Replace Production Brief: how D-ID turns scripts, briefs, or decks into on-brand avatar videos in minutes across {{language_count}} languages — the same Studio path teams like {{case_customer}} describe for learning content.&#10;&#10;Useful?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="still shooting {{use_case}} videos?" data-preview="still shooting onboarding training videos?">still shooting {{use_case}} videos?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Looking at {{company_name}} — public signals look like filmed / instructional video production for {{segment}} without an AI avatar tool yet. That usually means shoots, reshoots, and a localization queue every time the script changes.&#10;&#10;Happy to share a one-page Video Studio Replace Production Brief: how D-ID turns scripts, briefs, or decks into on-brand avatar videos in minutes across {{language_count}} languages — the same Studio path teams like {{case_customer}} describe for learning content.&#10;&#10;Useful?" data-preview="Hey Jordan,&#10;&#10;Looking at Northline Learning — public signals look like filmed / instructional video production for L&amp;D without an AI avatar tool yet. That usually means shoots, reshoots, and a localization queue every time the script changes.&#10;&#10;Happy to share a one-page Video Studio Replace Production Brief: how D-ID turns scripts, briefs, or decks into on-brand avatar videos in minutes across 120+ languages — the same Studio path teams like SPIN Sport Innovation describe for learning content.&#10;&#10;Useful?">
+                        <p>Hey {{first_name}},</p><p>Looking at {{company_name}} — public signals look like filmed / instructional video production for {{segment}} without an AI avatar tool yet. That usually means shoots, reshoots, and a localization queue every time the script changes.</p><p>Happy to share a one-page Video Studio Replace Production Brief: how D-ID turns scripts, briefs, or decks into on-brand avatar videos in minutes across {{language_count}} languages — the same Studio path teams like {{case_customer}} describe for learning content.</p><p>Useful?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Quick bump. If production hours or multilingual scale is the louder pain this quarter, the Brief is just the side-by-side — no deck required.&#10;&#10;Want me to send it?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Quick bump. If production hours or multilingual scale is the louder pain this quarter, the Brief is just the side-by-side — no deck required.&#10;&#10;Want me to send it?" data-preview="Hey Jordan,&#10;&#10;Quick bump. If production hours or multilingual scale is the louder pain this quarter, the Brief is just the side-by-side — no deck required.&#10;&#10;Want me to send it?">
+                        <p>Hey {{first_name}},</p><p>Quick bump. If production hours or multilingual scale is the louder pain this quarter, the Brief is just the side-by-side — no deck required.</p><p>Want me to send it?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: question for {{first_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;Reply yes and I&#39;ll send the Video Studio Replace Production Brief — or tell me if {{alt_decision_maker}} is the better inbox.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="question for {{first_name}}" data-preview="question for Jordan">question for {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Reply yes and I&#39;ll send the Video Studio Replace Production Brief — or tell me if {{alt_decision_maker}} is the better inbox." data-preview="Hey Jordan,&#10;&#10;Reply yes and I&#39;ll send the Video Studio Replace Production Brief — or tell me if your Head of CX is the better inbox.">
+                        <p>Hey {{first_name}},</p><p>Reply yes and I&#39;ll send the Video Studio Replace Production Brief — or tell me if {{alt_decision_maker}} is the better inbox.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Tier 3 - Visual AI Agent Overlay Brief</strong>
+              <em>Visual AI Agent Overlay Brief</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Tier 3 - Visual AI Agent Overlay Brief steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: face for {{chat_stack}} at {{company_name}}?&#10;&#10;Hey {{first_name}},&#10;&#10;Noticed {{company_name}} running {{chat_stack}} (or similar conversational AI) for {{segment}} without a visual agent. Text answers work until the flow needs tone, presence, and turn-taking — onboarding, support triage, website qualification.&#10;&#10;We sketched a short Visual AI Agent Overlay Brief: how D-ID V4 Expressive Visual Agents sit on your existing LLM/knowledge (RAG + OpenAI-compatible endpoints) and stream a real-time face over WebRTC — without ripping out {{chat_stack}}.&#10;&#10;Worth a skim?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="face for {{chat_stack}} at {{company_name}}?" data-preview="face for Intercom at Northline Learning?">face for {{chat_stack}} at {{company_name}}?</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Noticed {{company_name}} running {{chat_stack}} (or similar conversational AI) for {{segment}} without a visual agent. Text answers work until the flow needs tone, presence, and turn-taking — onboarding, support triage, website qualification.&#10;&#10;We sketched a short Visual AI Agent Overlay Brief: how D-ID V4 Expressive Visual Agents sit on your existing LLM/knowledge (RAG + OpenAI-compatible endpoints) and stream a real-time face over WebRTC — without ripping out {{chat_stack}}.&#10;&#10;Worth a skim?" data-preview="Hey Jordan,&#10;&#10;Noticed Northline Learning running Intercom (or similar conversational AI) for L&amp;D without a visual agent. Text answers work until the flow needs tone, presence, and turn-taking — onboarding, support triage, website qualification.&#10;&#10;We sketched a short Visual AI Agent Overlay Brief: how D-ID V4 Expressive Visual Agents sit on your existing LLM/knowledge (RAG + OpenAI-compatible endpoints) and stream a real-time face over WebRTC — without ripping out Intercom.&#10;&#10;Worth a skim?">
+                        <p>Hey {{first_name}},</p><p>Noticed {{company_name}} running {{chat_stack}} (or similar conversational AI) for {{segment}} without a visual agent. Text answers work until the flow needs tone, presence, and turn-taking — onboarding, support triage, website qualification.</p><p>We sketched a short Visual AI Agent Overlay Brief: how D-ID V4 Expressive Visual Agents sit on your existing LLM/knowledge (RAG + OpenAI-compatible endpoints) and stream a real-time face over WebRTC — without ripping out {{chat_stack}}.</p><p>Worth a skim?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Quick bump on the Visual AI Agent Overlay Brief. Happy to keep it to how a live agent would handle {{use_case}} with exportable conversation logs for QA.&#10;&#10;Either way, appreciate you.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Quick bump on the Visual AI Agent Overlay Brief. Happy to keep it to how a live agent would handle {{use_case}} with exportable conversation logs for QA.&#10;&#10;Either way, appreciate you." data-preview="Hey Jordan,&#10;&#10;Quick bump on the Visual AI Agent Overlay Brief. Happy to keep it to how a live agent would handle onboarding training with exportable conversation logs for QA.&#10;&#10;Either way, appreciate you.">
+                        <p>Hey {{first_name}},</p><p>Quick bump on the Visual AI Agent Overlay Brief. Happy to keep it to how a live agent would handle {{use_case}} with exportable conversation logs for QA.</p><p>Either way, appreciate you.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: question for {{first_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;Just reply yes and I&#39;ll send the Visual AI Agent Overlay Brief. You or {{alt_decision_maker}}?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="question for {{first_name}}" data-preview="question for Jordan">question for {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Just reply yes and I&#39;ll send the Visual AI Agent Overlay Brief. You or {{alt_decision_maker}}?" data-preview="Hey Jordan,&#10;&#10;Just reply yes and I&#39;ll send the Visual AI Agent Overlay Brief. You or your Head of CX?">
+                        <p>Hey {{first_name}},</p><p>Just reply yes and I&#39;ll send the Visual AI Agent Overlay Brief. You or {{alt_decision_maker}}?</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+        <details class="email-sequence" >
+          <summary>
+            <span>
+              <strong>Catch-all - D-ID Visual Agents Playbook</strong>
+              <em>D-ID Visual Agents Playbook</em>
+            </span>
+            <b>Open sequence</b>
+          </summary>
+          <div class="email-tabs" role="tablist" aria-label="Catch-all - D-ID Visual Agents Playbook steps">
+            
+                  <button class="email-tab is-active" type="button" data-email-step="0" role="tab" aria-selected="true">
+                    <span>Step 1</span>
+                    <strong>Day 0</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="1" role="tab" aria-selected="false">
+                    <span>Step 2</span>
+                    <strong>Day 3</strong>
+                  </button>
+                  <button class="email-tab" type="button" data-email-step="2" role="tab" aria-selected="false">
+                    <span>Step 3</span>
+                    <strong>Day 7</strong>
+                  </button>
+          </div>
+          <div class="email-stack">
+            
+                  <article class="email-card is-active" data-email-panel="0">
+                    <div class="email-card__top">
+                      <span>Step 1 · Day 0</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: visual agents idea for {{company_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;Looking at {{company_name}} as a {{segment}} team. We sketched a short D-ID Visual Agents Playbook for marketing, L&amp;D, CX, and sales teams testing where Video Studio avatar videos or real-time Visual AI Agents actually buy hours back — D-ID already positions around {{language_count}} languages, V4 expressive agents, and an enterprise API on d-id.com.&#10;&#10;Want the one-pager?">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="visual agents idea for {{company_name}}" data-preview="visual agents idea for Northline Learning">visual agents idea for {{company_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Looking at {{company_name}} as a {{segment}} team. We sketched a short D-ID Visual Agents Playbook for marketing, L&amp;D, CX, and sales teams testing where Video Studio avatar videos or real-time Visual AI Agents actually buy hours back — D-ID already positions around {{language_count}} languages, V4 expressive agents, and an enterprise API on d-id.com.&#10;&#10;Want the one-pager?" data-preview="Hey Jordan,&#10;&#10;Looking at Northline Learning as a L&amp;D team. We sketched a short D-ID Visual Agents Playbook for marketing, L&amp;D, CX, and sales teams testing where Video Studio avatar videos or real-time Visual AI Agents actually buy hours back — D-ID already positions around 120+ languages, V4 expressive agents, and an enterprise API on d-id.com.&#10;&#10;Want the one-pager?">
+                        <p>Hey {{first_name}},</p><p>Looking at {{company_name}} as a {{segment}} team. We sketched a short D-ID Visual Agents Playbook for marketing, L&amp;D, CX, and sales teams testing where Video Studio avatar videos or real-time Visual AI Agents actually buy hours back — D-ID already positions around {{language_count}} languages, V4 expressive agents, and an enterprise API on d-id.com.</p><p>Want the one-pager?</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="1">
+                    <div class="email-card__top">
+                      <span>Step 2 · Day 3</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: &#10;&#10;Hey {{first_name}},&#10;&#10;Quick bump on the D-ID Visual Agents Playbook. Soft CTA only — happy to send if clarifying Studio video vs live agents for {{use_case}} is on the list this quarter.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="" data-preview=""></h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Quick bump on the D-ID Visual Agents Playbook. Soft CTA only — happy to send if clarifying Studio video vs live agents for {{use_case}} is on the list this quarter." data-preview="Hey Jordan,&#10;&#10;Quick bump on the D-ID Visual Agents Playbook. Soft CTA only — happy to send if clarifying Studio video vs live agents for onboarding training is on the list this quarter.">
+                        <p>Hey {{first_name}},</p><p>Quick bump on the D-ID Visual Agents Playbook. Soft CTA only — happy to send if clarifying Studio video vs live agents for {{use_case}} is on the list this quarter.</p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="email-card" data-email-panel="2">
+                    <div class="email-card__top">
+                      <span>Step 3 · Day 7</span>
+                      <div class="email-actions">
+                        <button class="preview-btn" type="button">Preview variables</button>
+                        <button class="copy-btn" type="button" data-copy="Subject: question for {{first_name}}&#10;&#10;Hey {{first_name}},&#10;&#10;Reply yes and I&#39;ll send the playbook. No call needed unless you want one.">Copy email</button>
+                      </div>
+                    </div>
+                    <div class="email-subject">
+                      <span>Subject</span>
+                      <h3 data-template="question for {{first_name}}" data-preview="question for Jordan">question for {{first_name}}</h3>
+                    </div>
+                    <div class="email-body">
+                      <div data-template="Hey {{first_name}},&#10;&#10;Reply yes and I&#39;ll send the playbook. No call needed unless you want one." data-preview="Hey Jordan,&#10;&#10;Reply yes and I&#39;ll send the playbook. No call needed unless you want one.">
+                        <p>Hey {{first_name}},</p><p>Reply yes and I&#39;ll send the playbook. No call needed unless you want one.</p>
+                      </div>
+                    </div>
+                  </article>
+          </div>
+        </details>
+      </section>
+
+      <section class="journey-section" id="launch" data-section-label="Launch">
+        
+    <div class="section-head">
+      <p class="eyebrow">Launch</p>
+      <h2>Launch the competitor-platform switch route first</h2>
+      <p class="takeaway">Start where ai_avatar_maturity already shows HeyGen, Synthesia, Colossyan, Hour One, Elai, Tavus, or similar. Prove reply density, then roll Replace Production, Visual Agent Overlay, and the remaining-TAM catch-all.</p>
+      <span class="hand-note">launch first</span>
+    </div>
+        
+    <div class="launch-grid">
+      <div class="launch-steps">
+        
+              <div class="launch-step">
+                <span>01</span>
+                <p>Suppress visible D-ID customers first when Nader&#39;s team can share a customer list.</p>
+              </div>
+              <div class="launch-step">
+                <span>02</span>
+                <p>Launch Tier 1 Competitor Switch + Real-Time Agents Brief; hold until &gt;=~1,500 contacts when TAM allows, else run smaller waves with longer reply-density read.</p>
+              </div>
+              <div class="launch-step">
+                <span>03</span>
+                <p>Roll Tier 2 Video Studio Replace Production Brief (A/B production-hours vs multilingual scale), then Tier 3 Visual AI Agent Overlay Brief.</p>
+              </div>
+              <div class="launch-step">
+                <span>04</span>
+                <p>Open Catch-all D-ID Visual Agents Playbook for remaining TAM.</p>
+              </div>
+              <div class="launch-step">
+                <span>05</span>
+                <p>A/B inside exclusive routes: real-time agents vs Studio cost (Tier 1); hours saved vs {{language_count}} languages (Tier 2); CX triage vs website concierge (Tier 3).</p>
+              </div>
+              <div class="launch-step">
+                <span>06</span>
+                <p>Keep segment (marketing vs L&amp;D vs CX vs sales enablement vs developers) and use case as merge tags only — do not split into parallel waterfalls per vertical.</p>
+              </div>
+      </div>
+      <div class="thresholds">
+        <h3>Scale / cut rules</h3>
+        
+              <div class="threshold">
+                <strong>1 positive / 150 sends</strong>
+                <span>Scale that tier</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 300</strong>
+                <span>Fine — keep running</span>
+              </div>
+              <div class="threshold">
+                <strong>1 / 450–500</strong>
+                <span>Test a copy/variant</span>
+              </div>
+              <div class="threshold">
+                <strong>&lt;1% reply after 1,500 sends or past 1/500</strong>
+                <span>Cut or rebuild that tier</span>
+              </div>
+      </div>
+    </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow">Ready to run the waterfall</p>
+          <h2>Next step: turn the strongest tier into booked replies.</h2>
+          <p>Start with Tier 1, send the AI Workforce Blueprint offer, then scale the tiers that clear the reply-density threshold.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.gtmx.run/#book">Book the strategy call</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    const sections = [...document.querySelectorAll('.journey-section')];
+    const railSteps = [...document.querySelectorAll('.rail-step')];
+    const marker = document.getElementById('engineMarker');
+    const mobileBar = document.getElementById('mobileBar');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const mobilePct = document.getElementById('mobilePct');
+    const toast = document.getElementById('toast');
+
+    function setActiveSection() {
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pagePct = Math.round((scrollY / maxScroll) * 100);
+      mobileBar.style.width = pagePct + '%';
+      mobilePct.textContent = pagePct + '%';
+
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.42) activeIndex = index;
+      });
+
+      const active = sections[activeIndex];
+      mobileLabel.textContent = active?.dataset.sectionLabel || 'Journey';
+      railSteps.forEach((step, index) => {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-complete', index < activeIndex);
+      });
+
+      if (marker && railSteps[activeIndex]) {
+        const first = railSteps[0].offsetTop;
+        const current = railSteps[activeIndex].offsetTop;
+        marker.style.transform = 'translateY(' + Math.max(0, current - first) + 'px)';
+      }
+    }
+
+    window.addEventListener('scroll', setActiveSection, { passive: true });
+    window.addEventListener('resize', setActiveSection);
+    setActiveSection();
+
+    document.querySelectorAll('.route-rule').forEach((rule) => {
+      rule.addEventListener('click', () => {
+        document.querySelectorAll('.route-rule').forEach((item) => item.classList.remove('is-active'));
+        rule.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('[data-tier-card]').forEach((card) => {
+      const toggle = () => card.classList.toggle('is-open');
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('button')) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      card.querySelector('.mini-btn')?.addEventListener('click', () => toggle());
+    });
+
+    function activateFilter(toolbar, filter) {
+      toolbar.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.toggle('is-active', chip.dataset.filter === filter);
+      });
+    }
+
+    document.querySelectorAll('.tier-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.tier-toolbar'), filter);
+        document.querySelector('[data-tier-card="' + filter + '"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('[data-tier-card="' + filter + '"]')?.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('.campaign-toolbar .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        activateFilter(chip.closest('.campaign-toolbar'), filter);
+        document.querySelectorAll('.campaign-card').forEach((card) => {
+          const tier = card.dataset.campaignTier;
+          card.hidden = !(filter === 'all' || tier === filter || tier === 'all');
+        });
+      });
+    });
+
+    document.querySelectorAll('.email-sequence').forEach((sequence) => {
+      const tabs = [...sequence.querySelectorAll('.email-tab')];
+      const panels = [...sequence.querySelectorAll('[data-email-panel]')];
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const step = tab.dataset.emailStep;
+          tabs.forEach((item) => {
+            const active = item.dataset.emailStep === step;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.dataset.emailPanel === step);
+          });
+        });
+      });
+    });
+
+    function formatEmailText(value, highlight) {
+      const escaped = String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+      const paragraphs = escaped
+        .split('\n\n')
+        .map((paragraph) => '<p>' + paragraph.replaceAll('\n', '<br>') + '</p>')
+        .join('');
+      if (!highlight) return paragraphs;
+      const terms = ["Jordan","Northline Learning","customer support rep","6","Intercom","healthcare operations","Maya","Synthesia","L&D","VP Learning","your Head of CX","SPIN Sport Innovation","120\\+","onboarding training"];
+      if (!terms.length) return paragraphs;
+      return paragraphs.replace(new RegExp('\\b(' + terms.join('|') + ')\\b', 'g'), '<mark>$1</mark>');
+    }
+
+    document.querySelectorAll('.preview-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.email-card');
+        const subject = card.querySelector('.email-subject h3');
+        const body = card.querySelector('.email-body > div');
+        const previewing = !card.classList.contains('is-previewing');
+        card.classList.toggle('is-previewing', previewing);
+        button.classList.toggle('is-active', previewing);
+        button.textContent = previewing ? 'Show merge tags' : 'Preview variables';
+        subject.textContent = previewing ? subject.dataset.preview : subject.dataset.template;
+        body.innerHTML = formatEmailText(previewing ? body.dataset.preview : body.dataset.template, previewing);
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.dataset.copy || '';
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add('copied');
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          toast.classList.add('show');
+          setTimeout(() => {
+            button.textContent = old;
+            button.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1200);
+        } catch {
+          toast.textContent = 'Copy not available';
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.textContent = 'Copied';
+            toast.classList.remove('show');
+          }, 1200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
