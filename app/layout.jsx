@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import { Instrument_Serif } from 'next/font/google'
 import { Figtree, Caveat } from 'next/font/google'
 import { SITE_URL, SITE_NAME } from '../lib/seo'
+import { organizationSchema, websiteSchema } from '../lib/schema'
 import './globals.css'
 
 const figtree = Figtree({
@@ -73,6 +74,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${figtree.variable} ${caveat.variable}`}>
       <body>
+        {/* Sitewide entity graph. Emitted here, not per page, so every route
+            carries the Organization and WebSite nodes and other blocks can
+            reference them by @id instead of duplicating a publisher object. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema).replace(/</g, '\\u003c') }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema).replace(/</g, '\\u003c') }}
+        />
         {children}
       </body>
     </html>

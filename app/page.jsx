@@ -11,6 +11,7 @@ import Faq from '../components/home/Faq'
 import FinalCTA from '../components/home/FinalCTA'
 import Footer from '../components/home/Footer'
 import { faqs } from '../data/faq'
+import { ORG_ID } from '../lib/schema'
 import { SITE_URL, pageMetadata } from '../lib/seo'
 
 export const metadata = pageMetadata({
@@ -36,30 +37,13 @@ export default function Page() {
     })),
   }
 
-  const orgJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'GTMx',
-    url: SITE_URL,
-    logo: `${SITE_URL}/gtmx-emblem-cream.png`,
-    description: 'Outbound, RevOps, and search systems for B2B tech companies — built into one engine.',
-  }
-
-  const websiteJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: 'GTMx',
-    url: SITE_URL,
-    publisher: { '@type': 'Organization', name: 'GTMx', url: SITE_URL },
-  }
+  // Organization and WebSite now come from the root layout (lib/schema.js),
+  // so every route carries them and they are not duplicated here.
 
   const serviceJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    provider: {
-      '@type': 'Organization',
-      name: 'GTMx',
-    },
+    provider: { '@id': ORG_ID },
     name: 'GTM Engineering — Outbound, RevOps & Search',
     description: 'We engineer the outbound, RevOps, and search systems that turn a working product into predictable pipeline.',
     serviceType: 'Go-to-Market Engineering',
@@ -72,14 +56,6 @@ export default function Page() {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         <script
           type="application/ld+json"
