@@ -19,14 +19,15 @@ const ROUTE_SOURCES = {
   '/contact': ['app/contact/page.jsx'],
   '/engagements': ['app/engagements/page.jsx'],
   '/case-studies': ['app/case-studies/page.jsx', 'data/caseStudies.js'],
-  '/content': ['app/content/page.jsx'],
+  '/blog': ['app/blog/page.jsx'],
   '/services': ['app/services/[slug]/page.jsx', 'data/services.js'],
   '/case-study': ['app/case-studies/[slug]/page.jsx', 'data/caseStudies.js'],
 }
 
 function lastCommit(file) {
   try {
-    const out = execFileSync('git', ['log', '-1', '--format=%cI', '--', file], { encoding: 'utf8' }).trim()
+    // --follow so a rename does not reset the date to the rename commit.
+    const out = execFileSync('git', ['log', '--follow', '-1', '--format=%cI', '--', file], { encoding: 'utf8' }).trim()
     return out || null
   } catch {
     return null

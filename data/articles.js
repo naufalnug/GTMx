@@ -146,7 +146,7 @@ Total cost for the tooling: under $1,000 a month in the engagements GTMx runs. T
 The leverage AI provides isn\u2019t about replacing humans. It\u2019s about letting a lean team operate with the output of a much larger operation \u2014 without the $250K VP of Sales hire.`,
   },
   {
-    slug: 'the-250k-mistake-hiring-us-vp-sales-too-early',
+    slug: 'the-250k-mistake-hiring-vp-sales-first',
     title: 'The $250K Mistake: Why Hiring a VP of Sales First Doesn\u2019t Work',
     date: '2026-03-18',
     excerpt: 'Hiring a VP of Sales before there is a motion to scale sets them up to fail. The problem isn\u2019t the people, it\u2019s the sequence.',

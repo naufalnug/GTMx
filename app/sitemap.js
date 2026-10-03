@@ -37,7 +37,7 @@ export default async function sitemap() {
   )
 
   const articleEntries = articles.map(article => ({
-    url: absoluteUrl(`/content/${article.slug}`),
+    url: absoluteUrl(`/blog/${article.slug}`),
     // A real modification date beats the published date; omit if neither exists.
     ...(article.updatedAt || article.date
       ? { lastModified: new Date(article.updatedAt || article.date) }
@@ -50,7 +50,7 @@ export default async function sitemap() {
     entry(absoluteUrl('/contact'), '/contact'),
     entry(absoluteUrl('/engagements'), '/engagements'),
     entry(absoluteUrl('/case-studies'), '/case-studies'),
-    entry(absoluteUrl('/content'), '/content'),
+    entry(absoluteUrl('/blog'), '/blog'),
     ...serviceEntries,
     ...caseStudyEntries,
     ...articleEntries,

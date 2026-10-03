@@ -40,7 +40,7 @@ export async function generateMetadata({ params }) {
   const image = article.ogImage || article.coverImage || undefined
 
   const meta = pageMetadata({
-    path: `/content/${article.slug}`,
+    path: `/blog/${article.slug}`,
     title,
     description,
     image,
@@ -93,7 +93,7 @@ function buildGraph(article, url) {
     }),
     breadcrumbNode(url, [
       ['Home', SITE_URL],
-      ['Blog', absoluteUrl('/content')],
+      ['Blog', absoluteUrl('/blog')],
       [article.title, url],
     ]),
     faqPageNode(url, article.faqs),
@@ -128,7 +128,7 @@ export default async function ArticlePage({ params }) {
       ? { href: '/services/seo-aeo', name: 'SEO + AEO' }
       : { href: '/services/automated-outbound', name: 'Automated Outbound' }
 
-  const url = absoluteUrl(`/content/${article.slug}`)
+  const url = absoluteUrl(`/blog/${article.slug}`)
   const jsonLdGraph = buildGraph(article, url)
 
   // WYSIWYG posts are stored as HTML (sanitized again on render, so rows that
@@ -146,7 +146,7 @@ export default async function ArticlePage({ params }) {
         <main className="article-page">
           <article className="article-page__inner">
             <div className="article-page__header">
-              <a href="/content" className="article-page__back">&larr; Back to Blog</a>
+              <a href="/blog" className="article-page__back">&larr; Back to Blog</a>
               <div className="article-page__tags">
                 {article.tags.map(tag => (
                   <span key={tag} className="article-page__tag">{tag}</span>
@@ -282,7 +282,7 @@ export default async function ArticlePage({ params }) {
               <ul className="article-page__related-list">
                 {related.map(r => (
                   <li key={r.slug}>
-                    <a href={`/content/${r.slug}`}>{r.title}</a>
+                    <a href={`/blog/${r.slug}`}>{r.title}</a>
                   </li>
                 ))}
                 <li>

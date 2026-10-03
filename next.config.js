@@ -59,6 +59,25 @@ const nextConfig = {
         // permanent and Google treats them the same, but the spec asked for 301.
         statusCode: 301,
       },
+      /* Blog moved /content -> /blog so the URL matches the visible "Blog" label.
+         ORDER MATTERS: the renamed VP of Sales post must match its own rule BEFORE
+         the generic /content/:slug* rule, or it would land on /blog/<old-slug> and
+         need a second hop. Next matches redirects in array order. */
+      {
+        source: '/content/the-250k-mistake-hiring-us-vp-sales-too-early',
+        destination: '/blog/the-250k-mistake-hiring-vp-sales-first',
+        statusCode: 301,
+      },
+      {
+        source: '/content/:slug*',
+        destination: '/blog/:slug*',
+        statusCode: 301,
+      },
+      {
+        source: '/content',
+        destination: '/blog',
+        statusCode: 301,
+      },
     ]
   },
   async headers() {

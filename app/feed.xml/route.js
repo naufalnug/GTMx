@@ -25,7 +25,7 @@ export async function GET() {
 
   const items = articles
     .map(a => {
-      const url = absoluteUrl(`/content/${a.slug}`)
+      const url = absoluteUrl(`/blog/${a.slug}`)
       const pub = rfc822(a.date)
       return [
         '    <item>',
@@ -46,7 +46,7 @@ export async function GET() {
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>${esc(SITE_NAME)} Blog</title>
-    <link>${absoluteUrl('/content')}</link>
+    <link>${absoluteUrl('/blog')}</link>
     <description>${esc(BRAND_DEFINITION)}</description>
     <language>en</language>
     <atom:link href="${absoluteUrl('/feed.xml')}" rel="self" type="application/rss+xml" />

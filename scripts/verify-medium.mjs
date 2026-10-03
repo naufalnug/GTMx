@@ -7,9 +7,9 @@ const BASE = process.env.BASE || 'http://localhost:3000'
 const CANON = 'https://gtmx.run'
 const SVC = ['automated-outbound', 'revops', 'seo-aeo']
 const CS = ['opensponsorship', 'strategy-achievers', 'vidify', 'united-safety-training']
-const POSTS = ['why-your-sales-playbook-wont-scale', 'using-ai-to-build-your-first-outbound-pipeline', 'the-250k-mistake-hiring-us-vp-sales-too-early']
-const ROUTES = ['/', '/about', '/contact', '/engagements', '/case-studies', '/content', '/privacy', '/terms',
-  ...SVC.map(s => `/services/${s}`), ...CS.map(c => `/case-studies/${c}`), ...POSTS.map(p => `/content/${p}`)]
+const POSTS = ['why-your-sales-playbook-wont-scale', 'using-ai-to-build-your-first-outbound-pipeline', 'the-250k-mistake-hiring-vp-sales-first']
+const ROUTES = ['/', '/about', '/contact', '/engagements', '/case-studies', '/blog', '/privacy', '/terms',
+  ...SVC.map(s => `/services/${s}`), ...CS.map(c => `/case-studies/${c}`), ...POSTS.map(p => `/blog/${p}`)]
 /* First Load JS per route after the last approved lever (.claude/perf-results.md), +5%. */
 const JS_BUDGET = { '/': 636.5, '/services/revops': 616.5, '/case-studies/vidify': 614.8, default: 613.0 }
 const GENERIC_H2 = ['The problem.', "What's included.", 'How it works.', 'Fair questions.']
@@ -168,7 +168,7 @@ for (const r of ROUTES) {
   }
 
   // M8 blog
-  if (r.startsWith('/content/')) {
+  if (r.startsWith('/blog/')) {
     if (!/<time[^>]*datetime=/i.test(h)) fail(`${r}: no visible <time datetime>`)
     const hasImg = /<img\b/i.test(h.split('<footer')[0]) || /<svg[^>]+role="img"/i.test(h)
     if (!hasImg) fail(`${r}: post has no image or diagram`)

@@ -38,7 +38,7 @@ export default function Navbar() {
           <a href="/#services">Services</a>
           <a href="/#method">Method</a>
           <a href="/#work">Results</a>
-          <a href="/content">Blog</a>
+          <a href="/blog">Blog</a>
         </nav>
 
         <a href="/#book" className="gnav__cta">Book a call <Arrow /></a>

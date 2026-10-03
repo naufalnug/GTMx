@@ -4,7 +4,7 @@ const ROUTES = [
   ['home', '/'],
   ['about', '/about'],
   ['service', '/services/revops'],
-  ['post', '/content/using-ai-to-build-your-first-outbound-pipeline'],
+  ['post', '/blog/using-ai-to-build-your-first-outbound-pipeline'],
   ['engagements', '/engagements'],
 ]
 

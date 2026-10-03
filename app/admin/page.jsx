@@ -201,7 +201,7 @@ function PostList({ onNew, onEdit, onLogout }) {
               <tr key={p.id}>
                 <td>
                   <strong>{p.title}</strong>
-                  <div className="cms-muted cms-sm">/content/{p.slug}</div>
+                  <div className="cms-muted cms-sm">/blog/{p.slug}</div>
                 </td>
                 <td>
                   <span className={`cms-pill cms-pill-${p.status}`}>{p.status}</span>
@@ -214,7 +214,7 @@ function PostList({ onNew, onEdit, onLogout }) {
                   {p.status === 'published' && (
                     <a
                       className="cms-btn cms-sm cms-btn-ghost"
-                      href={`/content/${p.slug}`}
+                      href={`/blog/${p.slug}`}
                       target="_blank"
                       rel="noreferrer"
                     >
@@ -623,7 +623,7 @@ function PostForm({ id, onDone }) {
               }}
             />
           </label>
-          <div className="cms-muted cms-sm">gtmx.run/content/{f.slug || '…'}</div>
+          <div className="cms-muted cms-sm">gtmx.run/blog/{f.slug || '…'}</div>
 
           <label>
             Meta title

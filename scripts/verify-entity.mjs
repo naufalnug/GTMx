@@ -7,10 +7,10 @@
 const BASE = process.env.BASE || 'http://localhost:3000'
 const SERVICES = ['automated-outbound', 'revops', 'seo-aeo']
 const STUDIES = ['opensponsorship', 'strategy-achievers', 'vidify', 'united-safety-training']
-const POSTS = ['why-your-sales-playbook-wont-scale', 'using-ai-to-build-your-first-outbound-pipeline', 'the-250k-mistake-hiring-us-vp-sales-too-early']
-const ROUTES = ['/', '/about', '/contact', '/case-studies', '/engagements', '/content', '/privacy', '/terms', ...SERVICES.map(s => `/services/${s}`), ...STUDIES.map(s => `/case-studies/${s}`), ...POSTS.map(s => `/content/${s}`)]
+const POSTS = ['why-your-sales-playbook-wont-scale', 'using-ai-to-build-your-first-outbound-pipeline', 'the-250k-mistake-hiring-vp-sales-first']
+const ROUTES = ['/', '/about', '/contact', '/case-studies', '/engagements', '/blog', '/privacy', '/terms', ...SERVICES.map(s => `/services/${s}`), ...STUDIES.map(s => `/case-studies/${s}`), ...POSTS.map(s => `/blog/${s}`)]
 /* Minimum CONTEXTUAL inlinks (header and footer excluded). Phase 4 table. */
-const MIN = r => r.startsWith('/services/') ? 3 : (r.startsWith('/case-studies/') || r.startsWith('/content/') || ['/about', '/contact', '/case-studies'].includes(r)) ? 2 : 0
+const MIN = r => r.startsWith('/services/') ? 3 : (r.startsWith('/case-studies/') || r.startsWith('/blog/') || ['/about', '/contact', '/case-studies'].includes(r)) ? 2 : 0
 /* Strings whose conflicting side was resolved in Phase 2 Group 1 and must not reappear. */
 const REJECTED = ['The GTMx Method, applied to', 'sales-qualified leads booked']
 const fails = [], warns = [], pend = []
@@ -101,7 +101,7 @@ for (const r of ROUTES) {
   nodes.forEach(walk)
   for (const n of nodes) for (const u of [].concat(n.sameAs || [])) seenSameAs.add(u)
   // byline: held by decision D5 until the founder surname is supplied
-  if (r.startsWith('/content/') && !/rel="author"|class="[^"]*byline/i.test(html)) {
+  if (r.startsWith('/blog/') && !/rel="author"|class="[^"]*byline/i.test(html)) {
     (personFound ? fails : pend).push(`${r}: no visible byline linked to the author page`)
   }
 }

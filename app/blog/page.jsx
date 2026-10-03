@@ -13,7 +13,7 @@ import './page.css'
 export const revalidate = 60
 
 export const metadata = pageMetadata({
-  path: '/content',
+  path: '/blog',
   title: 'GTM & AI Content | GTMx',
   description: 'Practical insights on GTM engineering, AI-powered outbound, and pipeline building for B2B tech companies.',
 })
@@ -27,14 +27,14 @@ export default async function ContentPage() {
         data={graph([
           ...baseNodes,
           webPageNode({
-            url: `${SITE_URL}/content`,
+            url: `${SITE_URL}/blog`,
             name: 'GTM Engineering and Outbound Blog',
             description: 'Practical breakdowns on outbound engineering, AI-powered pipeline building, and building a repeatable revenue engine.',
             type: 'CollectionPage',
           }),
-          breadcrumbNode(`${SITE_URL}/content`, [
+          breadcrumbNode(`${SITE_URL}/blog`, [
             ['Home', SITE_URL],
-            ['Blog', `${SITE_URL}/content`],
+            ['Blog', `${SITE_URL}/blog`],
           ]),
         ])}
       />
@@ -59,7 +59,7 @@ export default async function ContentPage() {
             {articles.map((article, i) => (
               <a
                 key={article.slug}
-                href={`/content/${article.slug}`}
+                href={`/blog/${article.slug}`}
                 className={'blog-card blog-card--' + ((i % 3) + 1)}
               >
                 {article.coverImage && (

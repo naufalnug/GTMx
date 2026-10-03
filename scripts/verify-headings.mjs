@@ -6,9 +6,9 @@
 
 const BASE = process.env.BASE || 'http://localhost:3000'
 const ROUTES = ['/', '/services/automated-outbound', '/services/revops', '/services/seo-aeo',
-  '/content', '/content/why-your-sales-playbook-wont-scale',
-  '/content/using-ai-to-build-your-first-outbound-pipeline',
-  '/content/the-250k-mistake-hiring-us-vp-sales-too-early',
+  '/blog', '/blog/why-your-sales-playbook-wont-scale',
+  '/blog/using-ai-to-build-your-first-outbound-pipeline',
+  '/blog/the-250k-mistake-hiring-vp-sales-first',
   '/case-studies/opensponsorship', '/case-studies/strategy-achievers',
   '/case-studies/vidify', '/case-studies/united-safety-training',
   '/about', '/contact', '/case-studies', '/engagements',

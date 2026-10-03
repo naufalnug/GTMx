@@ -4,7 +4,7 @@
 const BASE = process.env.BASE || 'http://localhost:3000'
 const SVC = ['automated-outbound', 'revops', 'seo-aeo']
 const CS = ['opensponsorship', 'strategy-achievers', 'vidify', 'united-safety-training']
-const POSTS = ['why-your-sales-playbook-wont-scale', 'using-ai-to-build-your-first-outbound-pipeline', 'the-250k-mistake-hiring-us-vp-sales-too-early']
+const POSTS = ['why-your-sales-playbook-wont-scale', 'using-ai-to-build-your-first-outbound-pipeline', 'the-250k-mistake-hiring-vp-sales-first']
 /* route -> types that MUST be present (the Phase 7.2 map) */
 const EXPECT = {
   '/': ['Organization', 'WebSite', 'WebPage', 'FAQPage', 'Service'],
@@ -12,13 +12,13 @@ const EXPECT = {
   '/contact': ['Organization', 'WebSite', 'ContactPage', 'BreadcrumbList'],
   '/engagements': ['Organization', 'WebSite', 'WebPage', 'Service', 'BreadcrumbList'],
   '/case-studies': ['Organization', 'WebSite', 'CollectionPage', 'BreadcrumbList'],
-  '/content': ['Organization', 'WebSite', 'CollectionPage', 'BreadcrumbList'],
+  '/blog': ['Organization', 'WebSite', 'CollectionPage', 'BreadcrumbList'],
   '/privacy': ['Organization', 'WebSite', 'WebPage'],
   '/terms': ['Organization', 'WebSite', 'WebPage'],
 }
 for (const s of SVC) EXPECT[`/services/${s}`] = ['Organization', 'WebSite', 'WebPage', 'Service', 'FAQPage', 'BreadcrumbList']
 for (const c of CS) EXPECT[`/case-studies/${c}`] = ['Organization', 'WebSite', 'Article', 'WebPage', 'BreadcrumbList']
-for (const p of POSTS) EXPECT[`/content/${p}`] = ['Organization', 'WebSite', 'BlogPosting', 'WebPage', 'BreadcrumbList']
+for (const p of POSTS) EXPECT[`/blog/${p}`] = ['Organization', 'WebSite', 'BlogPosting', 'WebPage', 'BreadcrumbList']
 
 const BANNED = ['aggregateRating', 'review', 'areaServed', 'priceRange', 'telephone', 'address', 'foundingDate']
 const BANNED_TYPES = ['AggregateRating', 'Review', 'Rating']

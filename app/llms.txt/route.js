@@ -41,7 +41,7 @@ ${caseStudyLinks}
 
 ## Content
 
-- [Blog](${absoluteUrl('/content')}): Practical breakdowns on GTM engineering, AI-powered outbound, and building a repeatable revenue engine.
+- [Blog](${absoluteUrl('/blog')}): Practical breakdowns on GTM engineering, AI-powered outbound, and building a repeatable revenue engine.
 
 ## Company
 
