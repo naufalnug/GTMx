@@ -91,7 +91,7 @@ export default function AboutPage() {
                 <div className="founder-photo">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src="/founder-headshot.jpg"
+                    src="/founder-headshot.webp"
                     alt={`${FOUNDER_NAME}, founder of GTMx`}
                     width={1000}
                     height={1000}

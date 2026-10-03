@@ -9,7 +9,7 @@ export default function Founder() {
       <div className="founder-grid">
         <div className="founder-photo">
           <img
-            src="/founder-headshot.jpg"
+            src="/founder-headshot.webp"
             alt="Josh, founder of GTMx"
             width={1000}
             height={1000}
