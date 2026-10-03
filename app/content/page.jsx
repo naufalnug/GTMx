@@ -23,11 +23,13 @@ export default async function ContentPage() {
       <div className="dd">
         <main className="section blog">
           <div className="sec-head blog__head">
-            <span className="blog__eyebrow">Blog</span>
+            <span className="blog__eyebrow">GTM &amp; AI insights.</span>
             {/* Real <h1> for the standalone blog index (no hero h1 above it).
                 Keeps the .h2 class so the styling is unchanged; only the
-                semantic level moves from h2 → h1 to fix heading order / SEO. */}
-            <h1 className="h2">GTM &amp; AI <span className="hl">insights.</span></h1>
+                semantic level moves from h2 → h1 to fix heading order / SEO.
+                The old tagline "GTM & AI insights." is not deleted -- it moves
+                into the eyebrow above, so the h1 can name the topic instead. */}
+            <h1 className="h2">GTM Engineering and Outbound <span className="hl">Blog</span></h1>
             <p className="sec-lede">
               Practical breakdowns on outbound engineering, AI-powered pipeline building,
               and what it actually takes to build a repeatable revenue engine.
