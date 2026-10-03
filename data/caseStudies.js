@@ -84,11 +84,14 @@ export const caseStudies = [
     company: 'Metatron Concepts (Vidify)',
     vertical: 'B2B Social Media / AI Video Gen',
     badge: 'COLD EMAIL',
-    headline: 'Generated 103 leads and closed $10K+ in revenue',
-    // h1Result intentionally null: this page labels 103 as both 'leads' and
-    // 'opportunities', and headlines $10K+ closed while its stat block says
-    // $133K pipeline. No Vidify number goes in a heading until that is resolved.
-    h1Result: null,
+    headline: 'Generated 103 opportunities and closed $10K+ in revenue',
+    // Uses only the two figures this page states identically everywhere:
+    // the stat cards, the campaign stats table and the homepage all agree on
+    // $133K pipeline and $10K+ closed. The 103 figure stays out of the
+    // heading -- the shared "Leads Generated" metric label still calls it
+    // leads while its value, the campaign stats and the homepage all call it
+    // opportunities. The headline above was corrected to "opportunities".
+    h1Result: '$133K Pipeline and $10K Closed',
     challengeH2: 'The Challenge: Past Agencies Delivered No Results',
     problem: 'Worked with three different agencies before \u2014 none delivered results. Burning through leads without learning anything. No results, no insights \u2014 just costs.',
     metrics: {

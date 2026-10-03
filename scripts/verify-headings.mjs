@@ -49,7 +49,7 @@ for (const route of ROUTES) {
     if (/^\$/.test(t) || /\+$/.test(t) || /^[\d,.]+$/.test(t)) fail(route, `stat used as h${h.lvl}: "${t}"`)
     if (MOCKUP.test(t)) fail(route, `mockup label used as h${h.lvl}: "${t}"`)
     if (isSvc && h.lvl === 2 && GENERIC.includes(t)) fail(route, `generic service h2 still present: "${t}"`)
-    if ((isVidify || /Vidify/i.test(t)) && /\d/.test(t)) fail(route, `Vidify number in h${h.lvl}: "${t}"`)
+    if ((isVidify || /Vidify/i.test(t)) && /103/.test(t)) fail(route, `contested Vidify figure (103 leads vs opportunities) in h${h.lvl}: "${t}"`)
 
     while (stack.length && stack[stack.length - 1].lvl >= h.lvl) stack.pop()
     const key = `${stack.map(s => s.text).join('>')}|${h.lvl}|${t.toLowerCase()}`
