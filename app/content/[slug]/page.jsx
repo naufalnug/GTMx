@@ -45,7 +45,7 @@ export async function generateMetadata({ params }) {
     image,
     imageAlt: article.coverAlt || article.title,
     openGraph: {
-      title: article.metaTitle || article.title,
+      // No `title` override, so og:title and twitter:title inherit `title` (D1).
       description,
       type: 'article',
       ...(article.date ? { publishedTime: article.date } : {}),

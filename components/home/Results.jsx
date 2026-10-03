@@ -51,7 +51,7 @@ export default function Results() {
           </div>
         </a>
 
-        <a className="rcard rcard--c" href="/case-studies/metatron-concepts">
+        <a className="rcard rcard--c" href="/case-studies/vidify">
           <div className="rcard__top">
             <h3 className="rcard__co">Vidify</h3>
             <span className="rcard__vert">AI video generation &middot; B2B</span>

@@ -10,7 +10,7 @@ const ROUTES = ['/', '/services/automated-outbound', '/services/revops', '/servi
   '/content/using-ai-to-build-your-first-outbound-pipeline',
   '/content/the-250k-mistake-hiring-us-vp-sales-too-early',
   '/case-studies/opensponsorship', '/case-studies/strategy-achievers',
-  '/case-studies/metatron-concepts', '/case-studies/united-safety-training',
+  '/case-studies/vidify', '/case-studies/united-safety-training',
   '/privacy', '/terms']
 const GENERIC = ["The problem.", "What's included.", "How it works.", "Fair questions."]
 const MOCKUP = /\.clay|\.json|_audit|_tracker|_scoring|_performance/i
@@ -33,7 +33,7 @@ for (const route of ROUTES) {
     .map(m => ({ lvl: +m[1], text: strip(m[2]) }))
   const body = strip(html.replace(/<h[1-6]\b[^>]*>[\s\S]*?<\/h[1-6]>/gi, ''))
   const isSvc = route.startsWith('/services/')
-  const isVidify = route === '/case-studies/metatron-concepts'
+  const isVidify = route === '/case-studies/vidify'
 
   const h1s = heads.filter(h => h.lvl === 1).length
   if (h1s !== 1) fail(route, `expected exactly 1 h1, found ${h1s}`)

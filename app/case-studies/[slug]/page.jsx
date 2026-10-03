@@ -25,10 +25,11 @@ export async function generateMetadata({ params }) {
   return pageMetadata({
     path: `/case-studies/${study.slug}`,
     title: `${study.company} Case Study | GTMx`,
-    description: study.headline,
+    description: study.metaDescription || study.headline,
     openGraph: {
-      title: `${study.company} \u2014 ${study.headline}`,
-      description: study.headline,
+      // No `title` override: og:title and twitter:title inherit `title`, so all
+      // three stay identical and use one separator convention (decision D1).
+      description: study.metaDescription || study.headline,
       type: 'article',
     },
   })

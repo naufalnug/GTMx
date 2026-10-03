@@ -8,6 +8,7 @@ export const caseStudies = [
     vertical: 'Athlete Marketing Platform \u00b7 Backed by Serena Williams',
     badge: 'AI-PERSONALIZED OUTBOUND',
     headline: `Built a funnel worth over ${F.openSponsorship.pipeline} and helped close ${F.openSponsorship.revenue} in revenue`,
+    metaDescription: `OpenSponsorship worked with GTMx on AI-personalized cold email outbound to brand CMOs. Built a funnel worth over ${F.openSponsorship.pipeline} and closed ${F.openSponsorship.revenue}, from 2,321 contacts.`,
     h1Result: `${F.openSponsorship.pipeline} Pipeline and ${F.openSponsorship.revenue} Closed`,
     challengeH2: 'The Challenge: Reaching Brand CMOs at Scale',
     problem: 'Needed to reach CMOs and senior marketing stakeholders at e-commerce brands with a highly relevant, personalized pitch connecting their products to athlete partnerships.',
@@ -48,6 +49,7 @@ export const caseStudies = [
     vertical: 'Personal Branding Agency',
     badge: 'COLD EMAIL',
     headline: `Built a funnel worth ${F.strategyAchievers.pipeline} and helped close a ${F.strategyAchievers.revenue} deal`,
+    metaDescription: `Strategy Achievers used GTMx to build a cold email engine for its personal branding service. Built a ${F.strategyAchievers.pipeline} funnel and closed a ${F.strategyAchievers.revenue} deal within weeks.`,
     h1Result: `${F.strategyAchievers.pipeline} Pipeline and a ${F.strategyAchievers.revenue} Deal`,
     challengeH2: 'The Challenge: No System for Consistent Leads',
     problem: 'Getting pitched constantly but no outbound system generating consistent, qualified leads for their personal branding services.',
@@ -82,11 +84,15 @@ export const caseStudies = [
   },
   {
     id: 3,
-    slug: 'metatron-concepts',
+    slug: 'vidify',
     company: 'Metatron Concepts (Vidify)',
     vertical: 'B2B Social Media / AI Video Gen',
     badge: 'COLD EMAIL',
     headline: `Generated ${F.vidify.opportunities} opportunities and closed ${F.vidify.revenue} in revenue`,
+    // Deliberately carries NO figure: Vidify's results are an unresolved
+    // contradiction, and no number from that conflict may appear in a meta.
+    metaDescription:
+      'Vidify came to GTMx after three agencies delivered nothing. GTMx built the cold email system that finally produced a working outbound pipeline for the team.',
     // Uses only the two figures this page states identically everywhere:
     // the stat cards, the campaign stats table and the homepage all agree on
     // $133K pipeline and $10K+ closed. The 103 figure stays out of the
@@ -134,6 +140,7 @@ export const caseStudies = [
     vertical: 'Violence Prevention Services',
     badge: 'COLD EMAIL',
     headline: `Generated ${F.unitedSafety.leads} leads across schools, corporates, and churches`,
+    metaDescription: `United Safety Training Systems replaced call-center outreach with GTMx cold email, generating ${F.unitedSafety.leads} leads across schools, corporates and churches.`,
     h1Result: `${F.unitedSafety.leads} Leads`,
     challengeH2: 'The Challenge: Reaching Senior Decision-Makers',
     problem: 'Relied on a call center for appointments. It worked for lower-level prospects, but when targeting senior decision-makers at hospitals, schools, and corporations \u2014 the approach was too aggressive.',

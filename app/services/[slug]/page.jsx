@@ -25,7 +25,7 @@ export async function generateMetadata({ params }) {
     title: `${service.name} | GTMx`,
     description: service.blurb,
     openGraph: {
-      title: `${service.name} — GTMx`,
+      // No `title` override, so og:title and twitter:title inherit `title` (D1).
       description: service.blurb,
     },
   })

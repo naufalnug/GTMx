@@ -46,6 +46,21 @@ const securityHeaders = [
 const nextConfig = {
   // Don't advertise the framework in a response header.
   poweredByHeader: false,
+  /* Permanent redirects. Single hop only: never point one redirect at another.
+     /case-studies/metatron-concepts -> /case-studies/vidify, because every
+     visible surface (homepage card, stats strip, page h1) says "Vidify" while
+     the URL said "metatron-concepts". */
+  async redirects() {
+    return [
+      {
+        source: '/case-studies/metatron-concepts',
+        destination: '/case-studies/vidify',
+        // statusCode 301 rather than `permanent: true`, which emits 308. Both are
+        // permanent and Google treats them the same, but the spec asked for 301.
+        statusCode: 301,
+      },
+    ]
+  },
   async headers() {
     return [
       {

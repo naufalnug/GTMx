@@ -62,7 +62,7 @@ export const metadata = {
   alternates: {
     types: { 'application/rss+xml': [{ url: '/feed.xml', title: 'GTMx Blog' }] },
   },
-  title: 'GTMx — Outbound Revenue Engineering for B2B Tech Companies',
+  title: 'GTMx | Outbound Revenue Engineering for B2B Tech Companies',
   description: 'GTMx builds the outbound revenue engine that gets B2B tech companies their first qualified pipeline. Cold email, LinkedIn outbound, and GTM engineering — done for you.',
   openGraph: {
     type: 'website',

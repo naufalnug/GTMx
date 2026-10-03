@@ -6,7 +6,7 @@
    blog posts are served from the static seed and the CMS path is never exercised. */
 const BASE = process.env.BASE || 'http://localhost:3000'
 const SERVICES = ['automated-outbound', 'revops', 'seo-aeo']
-const STUDIES = ['opensponsorship', 'strategy-achievers', 'metatron-concepts', 'united-safety-training']
+const STUDIES = ['opensponsorship', 'strategy-achievers', 'vidify', 'united-safety-training']
 const POSTS = ['why-your-sales-playbook-wont-scale', 'using-ai-to-build-your-first-outbound-pipeline', 'the-250k-mistake-hiring-us-vp-sales-too-early']
 const ROUTES = ['/', '/about', '/contact', '/case-studies', '/content', '/privacy', '/terms', ...SERVICES.map(s => `/services/${s}`), ...STUDIES.map(s => `/case-studies/${s}`), ...POSTS.map(s => `/content/${s}`)]
 /* Minimum CONTEXTUAL inlinks (header and footer excluded). Phase 4 table. */
