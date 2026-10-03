@@ -61,6 +61,10 @@ export default function AboutPage() {
                   </li>
                 ))}
               </ul>
+              <p>
+                The full list lives on the <a href="/case-studies">case studies page</a>.
+              </p>
+
               <h2>Founder</h2>
               <div className="founder-grid">
                 <div className="founder-photo">

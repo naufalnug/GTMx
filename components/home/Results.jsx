@@ -14,7 +14,7 @@ export default function Results() {
       </div>
 
       <div className="results-grid">
-        <article className="rcard rcard--a">
+        <a className="rcard rcard--a" href="/case-studies/opensponsorship">
           <div className="rcard__top">
             <h3 className="rcard__co">OpenSponsorship</h3>
             <span className="rcard__vert">Athlete marketing &middot; backed by Serena Williams</span>
@@ -30,9 +30,9 @@ export default function Results() {
               <span className="rcard__who">— OpenSponsorship team</span>
             </p>
           </div>
-        </article>
+        </a>
 
-        <article className="rcard rcard--b">
+        <a className="rcard rcard--b" href="/case-studies/strategy-achievers">
           <div className="rcard__top">
             <h3 className="rcard__co">Strategy Achievers</h3>
             <span className="rcard__vert">Personal branding agency</span>
@@ -49,9 +49,9 @@ export default function Results() {
               <span className="rcard__who">— Pascal, CEO</span>
             </p>
           </div>
-        </article>
+        </a>
 
-        <article className="rcard rcard--c">
+        <a className="rcard rcard--c" href="/case-studies/metatron-concepts">
           <div className="rcard__top">
             <h3 className="rcard__co">Vidify</h3>
             <span className="rcard__vert">AI video generation &middot; B2B</span>
@@ -68,8 +68,11 @@ export default function Results() {
               <span className="rcard__who">— Ahmed, Director of PM</span>
             </p>
           </div>
-        </article>
+        </a>
       </div>
+      <p className="results-all">
+        <a href="/case-studies">See all four case studies</a>
+      </p>
     </section>
   )
 }

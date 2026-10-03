@@ -34,6 +34,9 @@ export default function Founder() {
             </svg>
             Connect with me on LinkedIn
           </a>
+          <p className="founder-about-link">
+            <a href="/about">More about GTMx and how we work</a>
+          </p>
           <div className="founder-stats">
             <div className="founder-stat"><div className="v">1M<em>+</em></div><div className="l">emails sent</div></div>
             <div className="founder-stat"><div className="v">YC</div><div className="l">&amp; public-co operators</div></div>

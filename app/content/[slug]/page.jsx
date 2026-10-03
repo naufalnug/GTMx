@@ -102,6 +102,23 @@ export default async function ArticlePage({ params }) {
   const article = await getPublishedArticleBySlug(slug)
   if (!article) notFound()
 
+  // Related posts are chosen by shared tag, not by date (Phase 4 rule). With three
+  // posts live, each one ends up linking to the other two.
+  const allArticles = await getPublishedArticles()
+  const related = allArticles
+    .filter(a => a.slug !== article.slug)
+    .map(a => ({ a, shared: a.tags.filter(t => article.tags.includes(t)).length }))
+    .sort((x, y) => y.shared - x.shared)
+    .slice(0, 2)
+    .map(x => x.a)
+
+  // Tag -> service, so every post also links to the service it is about.
+  const serviceLink = article.tags.some(t => /revops|crm/i.test(t))
+    ? { href: '/services/revops', name: 'RevOps' }
+    : article.tags.some(t => /seo|aeo|search|content/i.test(t))
+      ? { href: '/services/seo-aeo', name: 'SEO + AEO' }
+      : { href: '/services/automated-outbound', name: 'Automated Outbound' }
+
   const url = absoluteUrl(`/content/${article.slug}`)
   const schemas = buildSchemas(article, url)
 
@@ -165,6 +182,22 @@ export default async function ArticlePage({ params }) {
                 ))}
               </section>
             )}
+
+            <section className="article-page__related">
+              <h2 className="article-page__related-title">Keep reading</h2>
+              <ul className="article-page__related-list">
+                {related.map(r => (
+                  <li key={r.slug}>
+                    <a href={`/content/${r.slug}`}>{r.title}</a>
+                  </li>
+                ))}
+                <li>
+                  <a href={serviceLink.href}>
+                    How GTMx builds {serviceLink.name} systems
+                  </a>
+                </li>
+              </ul>
+            </section>
 
             <div className="article-page__cta">
               <p className="article-page__cta-text">Ready to build your revenue engine?</p>
