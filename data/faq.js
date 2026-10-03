@@ -16,7 +16,7 @@ export const faqShared = [
   },
   {
     q: 'Shouldn\u2019t we just hire a VP of Sales or an SDR?',
-    a: `A senior sales hire costs $250K+ fully loaded and takes six months to ramp — and nearly half are replaced within two years. The reason isn't the hire. It's that there's no repeatable process for them to execute against. We build the engine first. You hire the driver into a system that's already producing pipeline. That's the order most founders get backwards.`,
+    a: `A senior sales hire costs $250K+ fully loaded and takes six months to ramp, and many don't last long enough to show a return. The reason isn't the hire. It's that there's no repeatable process for them to execute against. We build the engine first. You hire the driver into a system that's already producing pipeline. That's the order most founders get backwards.`,
   },
   {
     q: 'What\u2019s the pricing model? Do I need to commit for months?',
