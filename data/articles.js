@@ -56,6 +56,14 @@ The product that won through referrals can win through outbound. But the sales m
       'Signals that matter are the ones showing budget and intent, not firmographics alone.',
       'Sequencing and reply triage are what let one person cover what used to need a team.',
     ],
+    sources: [
+      {
+        title: 'Data marketplace: "Buy data from 200+ providers in one place"',
+        publisher: 'Clay',
+        url: 'https://www.clay.com/',
+        readDate: '2026-10-03',
+      },
+    ],
     diagram: {
       title: 'The four layers of an AI-assisted outbound pipeline',
       alt: 'Four stacked layers, from bottom to top: enriched lead list, AI-researched messaging, automated sequencing, and reply triage. Each layer feeds the one above it.',
@@ -80,7 +88,7 @@ Hire a research analyst to manually identify companies that match your ideal cus
 
 ### The AI way: a continuously enriched list
 
-Tools like Clay let you build dynamic lead lists from a large marketplace of data providers. You define signals \u2014 company size, funding stage, tech stack, hiring patterns, expansion indicators \u2014 and the system continuously finds and enriches matching companies.
+Tools like Clay let you build dynamic lead lists from the [200+ data providers](https://www.clay.com/) in its marketplace. You define signals \u2014 company size, funding stage, tech stack, hiring patterns, expansion indicators \u2014 and the system continuously finds and enriches matching companies.
 
 ### Choosing the right signals
 

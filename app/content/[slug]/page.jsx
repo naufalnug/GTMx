@@ -259,6 +259,23 @@ export default async function ArticlePage({ params }) {
               dangerouslySetInnerHTML={{ __html: bodyHtml }}
             />
 
+            {article.sources?.length > 0 && (
+              <section className="article-page__sources">
+                <h2 className="article-page__sources-title">Sources</h2>
+                <ol>
+                  {article.sources.map((s, i) => (
+                    <li key={i}>
+                      <a href={s.url} target="_blank" rel="noopener noreferrer">
+                        {s.title}
+                      </a>
+                      {s.publisher ? `, ${s.publisher}` : ''}. Read{' '}
+                      <time dateTime={s.readDate}>{formatArticleDate(s.readDate)}</time>.
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            )}
+
             {article.faqs.length > 0 && (
               <section className="article-page__faqs">
                 <h2 className="article-page__faqs-title">Frequently asked questions</h2>
