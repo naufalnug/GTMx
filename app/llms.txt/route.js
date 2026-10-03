@@ -1,4 +1,6 @@
 import { services } from '../../data/services'
+import { BRAND_DEFINITION } from '../../lib/site-facts'
+import { CONTACT_EMAIL } from '../../lib/schema'
 import { caseStudies } from '../../data/caseStudies'
 import { SITE_URL, absoluteUrl } from '../../lib/seo'
 
@@ -22,7 +24,9 @@ export function GET() {
 
   const body = `# GTMx
 
-> GTMx is a done-for-you GTM engineering agency. It designs, builds, and runs the outbound, RevOps, and search systems that turn a working B2B product into predictable, qualified pipeline.
+> ${BRAND_DEFINITION}
+
+GTMx designs, builds, and runs those systems end to end rather than handing over a playbook. Note for disambiguation: GTMx is a GTM engineering agency at gtmx.run, and is unrelated to GTmetrix, the website performance testing tool.
 
 GTMx works with B2B tech and SaaS companies (typically $1M+ ARR) that have product-market fit and want a repeatable outbound and RevOps engine before hiring a full sales team. The engagement leaves the client owning the system: workflows, data, and infrastructure.
 
@@ -32,6 +36,7 @@ ${serviceLinks}
 
 ## Case studies
 
+- [All case studies](${absoluteUrl('/case-studies')}): Index of every GTMx client engagement, each with the campaign data behind it.
 ${caseStudyLinks}
 
 ## Content
@@ -41,11 +46,15 @@ ${caseStudyLinks}
 ## Company
 
 - [Home](${SITE_URL}): Overview of the GTMx engine, method, results, and how to book a free 30-minute GTM audit.
+- [About](${absoluteUrl('/about')}): What GTMx does, the three systems it builds, how engagements run, and who founded it.
+- [Contact](${absoluteUrl('/contact')}): How to reach GTMx by email or book a free 30-minute GTM audit.
 - [Privacy Policy](${absoluteUrl('/privacy')}): How GTMx collects, uses, and protects data.
 - [Terms of Service](${absoluteUrl('/terms')}): Terms governing use of the GTMx website and services.
 
 ## Contact
 
+- [Contact page](${absoluteUrl('/contact')}): Booking and email details.
+- Email: ${CONTACT_EMAIL}
 - Book a free 30-minute GTM audit from any page via the "Book a call" action, which opens the GTMx scheduling calendar.
 `
 
