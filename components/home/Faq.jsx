@@ -21,10 +21,12 @@ const PlusIcon = () => (
 function Item({ item, isOpen, onToggle }) {
   return (
     <div className={'faq-item' + (isOpen ? ' open' : '')}>
-      <button className="faq-q" type="button" onClick={onToggle}>
-        {item.q}
-        <span className="ic"><PlusIcon /></span>
-      </button>
+      <h4 className="faq-qh">
+        <button className="faq-q" type="button" onClick={onToggle}>
+          {item.q}
+          <span className="ic"><PlusIcon /></span>
+        </button>
+      </h4>
       <div className="faq-a"><div className="faq-a__inner">{item.a}</div></div>
     </div>
   )
@@ -41,7 +43,7 @@ export default function Faq() {
     <section className="section" id="faq">
       <div className="sec-head">
         <span className="faq-eyebrow">Questions</span>
-        <h2 className="h2">Questions we hear <span className="hl">the most.</span></h2>
+        <h2 className="h2">GTMx FAQs: Outbound, RevOps and <span className="hl">SEO + AEO</span></h2>
         <p className="sec-lede">The objections we hear on every call &mdash; answered up front so you don&apos;t have to ask.</p>
       </div>
 
@@ -66,6 +68,8 @@ export default function Faq() {
             className={'faq-panel' + (activeTab === tab.id ? ' is-active' : '')}
             data-svc={tab.id}
           >
+            {/* Groups this tab's questions in the outline (see Method.jsx). */}
+            <h3 className="u-vh">{tab.label} FAQs</h3>
             {tab.items.map((item, i) => (
               <Item
                 key={i}

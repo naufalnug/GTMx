@@ -13,7 +13,7 @@ export default function Services() {
   return (
     <section className="section" id="services">
       <div className="sec-head">
-        <h2 className="h2">One engine. <span className="hl">Three systems.</span></h2>
+        <h2 className="h2">Three GTM Systems: Automated Outbound, RevOps and <span className="hl">Search</span></h2>
         <p className="sec-lede">Most teams duct-tape tools and agencies together and call it a go-to-market. We build outbound, RevOps, and search as one connected system &mdash; and run it for you.</p>
       </div>
 

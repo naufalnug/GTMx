@@ -101,7 +101,7 @@ export default function Method() {
   return (
     <section className="section" id="method">
       <div className="sec-head">
-        <h2 className="h2">The <span className="hl">GTMx Method.</span></h2>
+        <h2 className="h2">The <span className="hl">GTMx Method</span></h2>
         <p className="sec-lede">One repeatable loop behind every engagement &mdash; same four moves whether we&apos;re building outbound, RevOps, or search. No mystery, no retainer black box.</p>
       </div>
 
@@ -121,12 +121,16 @@ export default function Method() {
       <div>
         {METHOD.map(svc => (
           <div key={svc.id} className={'mpanel' + (active === svc.id ? ' is-active' : '')}>
+            {/* Groups this panel's four steps in the document outline so the
+                same step names under different services are not sibling
+                duplicates. Hidden visually, present in the server HTML. */}
+            <h3 className="u-vh">{svc.label} Method</h3>
             <div className="mtrack">
               {svc.steps.map((st, i) => (
                 <div className="mstep" key={i}>
                   <div className="mstep__tile">{i + 1}</div>
                   <span className="mstep__week">{st.week}</span>
-                  <h3 className="mstep__title">{st.title}</h3>
+                  <h4 className="mstep__title">{st.title}</h4>
                   <p className="mstep__body">{st.body}</p>
                   <div className="mstep__art" dangerouslySetInnerHTML={{ __html: ART[st.art]() }} />
                   <div className="mstep__artcap">{st.cap}</div>

@@ -7,14 +7,14 @@ export default function Results() {
   return (
     <section className="section" id="work">
       <div className="sec-head">
-        <h2 className="h2">Engines we&apos;ve <span className="hl">already built.</span></h2>
+        <h2 className="h2">B2B Outbound Case Studies: Engines We&apos;ve <span className="hl">Already Built</span></h2>
         <p className="sec-lede">Real campaigns, real numbers. Pipeline that turned into booked meetings and closed revenue &mdash; not vanity metrics.</p>
       </div>
 
       <div className="results-grid">
         <article className="rcard rcard--a">
           <div className="rcard__top">
-            <span className="rcard__co">OpenSponsorship</span>
+            <h3 className="rcard__co">OpenSponsorship</h3>
             <span className="rcard__vert">Athlete marketing &middot; backed by Serena Williams</span>
           </div>
           <div className="rcard__body">
@@ -32,7 +32,7 @@ export default function Results() {
 
         <article className="rcard rcard--b">
           <div className="rcard__top">
-            <span className="rcard__co">Strategy Achievers</span>
+            <h3 className="rcard__co">Strategy Achievers</h3>
             <span className="rcard__vert">Personal branding agency</span>
           </div>
           <div className="rcard__body">
@@ -51,7 +51,7 @@ export default function Results() {
 
         <article className="rcard rcard--c">
           <div className="rcard__top">
-            <span className="rcard__co">Vidify</span>
+            <h3 className="rcard__co">Vidify</h3>
             <span className="rcard__vert">AI video generation &middot; B2B</span>
           </div>
           <div className="rcard__body">
