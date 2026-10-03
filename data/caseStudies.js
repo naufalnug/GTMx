@@ -1,3 +1,5 @@
+import { clientFacts as F } from '../lib/site-facts'
+
 export const caseStudies = [
   {
     id: 1,
@@ -5,14 +7,14 @@ export const caseStudies = [
     company: 'OpenSponsorship',
     vertical: 'Athlete Marketing Platform \u00b7 Backed by Serena Williams',
     badge: 'AI-PERSONALIZED OUTBOUND',
-    headline: 'Built a funnel worth over $170K and helped close $10K in revenue',
-    h1Result: '$170K Pipeline and $10K Closed',
+    headline: `Built a funnel worth over ${F.openSponsorship.pipeline} and helped close ${F.openSponsorship.revenue} in revenue`,
+    h1Result: `${F.openSponsorship.pipeline} Pipeline and ${F.openSponsorship.revenue} Closed`,
     challengeH2: 'The Challenge: Reaching Brand CMOs at Scale',
     problem: 'Needed to reach CMOs and senior marketing stakeholders at e-commerce brands with a highly relevant, personalized pitch connecting their products to athlete partnerships.',
     metrics: {
-      leads: '40+ SQLs',
-      revenue: '$10K closed',
-      pipeline: '$170K+ pipeline',
+      leads: `${F.openSponsorship.leads} SQLs`,
+      revenue: `${F.openSponsorship.revenue} closed`,
+      pipeline: `${F.openSponsorship.pipeline}+ pipeline`,
       timeline: '2,321 leads contacted',
     },
     quote: '\u201CThe AI-personalized approach matched each brand\u2019s products with relevant athletes, creating pitches that actually resonated with CMOs.\u201D',
@@ -45,14 +47,14 @@ export const caseStudies = [
     company: 'Strategy Achievers',
     vertical: 'Personal Branding Agency',
     badge: 'COLD EMAIL',
-    headline: 'Built a funnel worth $150K and helped close a $21K deal',
-    h1Result: '$150K Pipeline and a $21K Deal',
+    headline: `Built a funnel worth ${F.strategyAchievers.pipeline} and helped close a ${F.strategyAchievers.revenue} deal`,
+    h1Result: `${F.strategyAchievers.pipeline} Pipeline and a ${F.strategyAchievers.revenue} Deal`,
     challengeH2: 'The Challenge: No System for Consistent Leads',
     problem: 'Getting pitched constantly but no outbound system generating consistent, qualified leads for their personal branding services.',
     metrics: {
-      leads: '~100 leads',
-      revenue: '$21K closed',
-      pipeline: '$150K pipeline',
+      leads: `${F.strategyAchievers.leads} leads`,
+      revenue: `${F.strategyAchievers.revenue} closed`,
+      pipeline: `${F.strategyAchievers.pipeline} pipeline`,
       timeline: 'First results in weeks',
     },
     quote: '\u201CWe launched a new campaign recently, and within 24 hours we had around 6 leads. Within about 45 hours, that grew to 10 people ready to jump on calls.\u201D',
@@ -84,21 +86,23 @@ export const caseStudies = [
     company: 'Metatron Concepts (Vidify)',
     vertical: 'B2B Social Media / AI Video Gen',
     badge: 'COLD EMAIL',
-    headline: 'Generated 103 opportunities and closed $10K+ in revenue',
+    headline: `Generated ${F.vidify.opportunities} opportunities and closed ${F.vidify.revenue} in revenue`,
     // Uses only the two figures this page states identically everywhere:
     // the stat cards, the campaign stats table and the homepage all agree on
     // $133K pipeline and $10K+ closed. The 103 figure stays out of the
     // heading -- the shared "Leads Generated" metric label still calls it
     // leads while its value, the campaign stats and the homepage all call it
     // opportunities. The headline above was corrected to "opportunities".
-    h1Result: '$133K Pipeline and $10K Closed',
+    // NOTE: renders inside the page <h1>; heading text is frozen for this task, so the missing
+    // "+" (metric says "$10K+ closed") cannot be normalised here. Logged under Out of scope.
+    h1Result: `${F.vidify.pipeline} Pipeline and $10K Closed`,
     challengeH2: 'The Challenge: Past Agencies Delivered No Results',
     problem: 'Worked with three different agencies before \u2014 none delivered results. Burning through leads without learning anything. No results, no insights \u2014 just costs.',
     metrics: {
-      leads: '103 opportunities',
-      revenue: '$10K+ closed',
-      pipeline: '$133K pipeline',
-      timeline: '54 opportunities in one month alone',
+      leads: `${F.vidify.opportunities} opportunities`,
+      revenue: `${F.vidify.revenue} closed`,
+      pipeline: `${F.vidify.pipeline} pipeline`,
+      timeline: `${F.vidify.bestMonth} opportunities in one month alone`,
     },
     quote: '\u201CYou weren\u2019t just executing \u2014 you were teaching us while delivering results. Last month alone we generated around 54 opportunities from the campaigns.\u201D',
     quoteName: 'Ahmed, Director of PM \u00b7 Metatron Concepts',
@@ -129,12 +133,12 @@ export const caseStudies = [
     company: 'United Safety Training Systems',
     vertical: 'Violence Prevention Services',
     badge: 'COLD EMAIL',
-    headline: 'Generated 60+ leads across schools, corporates, and churches',
-    h1Result: '60+ Leads',
+    headline: `Generated ${F.unitedSafety.leads} leads across schools, corporates, and churches`,
+    h1Result: `${F.unitedSafety.leads} Leads`,
     challengeH2: 'The Challenge: Reaching Senior Decision-Makers',
     problem: 'Relied on a call center for appointments. It worked for lower-level prospects, but when targeting senior decision-makers at hospitals, schools, and corporations \u2014 the approach was too aggressive.',
     metrics: {
-      leads: '60+ leads',
+      leads: `${F.unitedSafety.leads} leads`,
       revenue: 'Multiple deals closed',
       pipeline: 'Expanding rapidly',
       timeline: 'Consistent 8-12 leads per batch',
