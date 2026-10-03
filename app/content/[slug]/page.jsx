@@ -3,6 +3,7 @@ import Navbar from '../../../components/home/Navbar'
 import Footer from '../../../components/home/Footer'
 import { getPublishedArticles, getPublishedArticleBySlug } from '../../../lib/articles'
 import { pageMetadata, absoluteUrl, SITE_URL, SITE_NAME } from '../../../lib/seo'
+import { authorRef, ORG_ID, FOUNDER_NAME } from '../../../lib/schema'
 import { looksLikeHtml, mdToHtml, sanitizeHtml } from '../../../lib/richtext'
 import '../../home.css'
 import './page.css'
@@ -63,8 +64,8 @@ function buildSchemas(article, url) {
       datePublished: article.date,
       mainEntityOfPage: { '@type': 'WebPage', '@id': url },
       url,
-      author: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
-      publisher: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
+      author: authorRef,
+      publisher: { '@id': ORG_ID },
       ...(article.tags.length ? { keywords: article.tags.join(', ') } : {}),
     },
     {
@@ -150,6 +151,11 @@ export default async function ArticlePage({ params }) {
                 ))}
               </div>
               <h1 className="article-page__title">{article.title}</h1>
+              {/* Visible byline. A <p>, never a heading, linked to the Person
+                  node on /about (decision D5). */}
+              <p className="article-page__byline">
+                By <a href="/about#founder">{FOUNDER_NAME}</a>
+              </p>
               <time className="article-page__date">
                 {new Date(article.date).toLocaleDateString('en-US', {
                   year: 'numeric',

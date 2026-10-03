@@ -4,7 +4,7 @@ import Navbar from '../../components/home/Navbar'
 import Footer from '../../components/home/Footer'
 import { pageMetadata } from '../../lib/seo'
 import { BRAND_DEFINITION } from '../../lib/site-facts'
-import { CONTACT_EMAIL, LEGAL_NAME } from '../../lib/schema'
+import { CONTACT_EMAIL, LEGAL_NAME, FOUNDER_NAME, FOUNDER_JOB_TITLE, FOUNDER_LINKEDIN, personSchema } from '../../lib/schema'
 import { services } from '../../data/services'
 import { caseStudies } from '../../data/caseStudies'
 
@@ -15,17 +15,20 @@ export const metadata = pageMetadata({
 })
 
 /* NOTE on the founder section below.
-   Everything stated is already public on the homepage (components/home/Founder.jsx).
-   Two things are deliberately NOT repeated here:
-   1. The surname. The repo has the first name only and it will not be inferred.
-   2. The "multiple millions of emails / over 5,000 MQLs" line, because that figure
-      is contradiction C6 (the stats block says "1M+") and is unresolved. Copying it
-      onto a new page would spread the conflict to a second URL.
-   Person schema is held for the same reason (decision D5). */
+   The name and both LinkedIn URLs were supplied by the site owner on 2026-10-03
+   and verified before use. The bio paragraph is already public on the homepage
+   (components/home/Founder.jsx).
+   Still deliberately NOT repeated here: the "multiple millions of emails /
+   over 5,000 MQLs" line, because that figure is contradiction C6 (the stats block
+   says "1M+") and copying it would spread the conflict to a second URL. */
 
 export default function AboutPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema).replace(/</g, '\\u003c') }}
+      />
       <Navbar />
       <div className="dd">
         <main className="legal-page">
@@ -65,13 +68,16 @@ export default function AboutPage() {
                 The full list lives on the <a href="/case-studies">case studies page</a>.
               </p>
 
-              <h2>Founder</h2>
+              <h2 id="founder">Founder</h2>
+              <p>
+                <strong>{FOUNDER_NAME}</strong>, {FOUNDER_JOB_TITLE}
+              </p>
               <div className="founder-grid">
                 <div className="founder-photo">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="/founder-headshot.jpg"
-                    alt="Josh, founder of GTMx"
+                    alt={`${FOUNDER_NAME}, founder of GTMx`}
                     width={1000}
                     height={1000}
                     className="founder-photo__img"
@@ -81,9 +87,8 @@ export default function AboutPage() {
                   <span className="founder-photo__tag">Founder</span>
                 </div>
                 <div className="founder-copy">
-                  {/* NEEDS INPUT: founder surname, formal job title, and any further
-                      verifiable bio facts. Person schema and post bylines stay held
-                      until these arrive (decision D5). */}
+                  {/* NEEDS INPUT: further verifiable bio facts beyond the paragraph
+                      below, which is reused from the homepage. */}
                   <p>
                     Hey there, I&apos;m Josh. I&apos;ve worn a lot of hats: project manager, product
                     manager, blogger (back in the pre-ChatGPT days), cold email agency owner, GTM
@@ -93,11 +98,11 @@ export default function AboutPage() {
                   </p>
                   <p>
                     <a
-                      href="https://www.linkedin.com/in/youhavefoundjoshua/"
+                      href={FOUNDER_LINKEDIN}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      Josh on LinkedIn
+                      {FOUNDER_NAME} on LinkedIn
                     </a>
                   </p>
                 </div>
