@@ -39,7 +39,7 @@ export default function ServiceCta({ serviceName }) {
         <span className="scta__blob" style={{ width: 200, height: 200, background: 'rgba(255,253,247,.16)', top: -50, left: -40 }}></span>
         <span className="scta__blob" style={{ width: 160, height: 160, background: 'var(--gold)', bottom: -50, right: -30 }}></span>
         <span className="scta__eyebrow"><span className="dot"></span>Free GTM audit &middot; 30 min</span>
-        <h2>Ready to build your {serviceName.toLowerCase()} engine?</h2>
+        <h2>Ready to Build Your {serviceName} Engine?</h2>
         <p>Pick a time below &mdash; we&apos;ll map exactly what it takes and show you where the pipeline is. No pitch, no fluff.</p>
       </div>
 

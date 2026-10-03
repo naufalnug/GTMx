@@ -130,7 +130,7 @@ export default async function ServicePage({ params }) {
             <div className="wrap">
               <div className="sec-head">
                 <h2 className="h2">How it <span className="hl">works.</span></h2>
-                <p className="lede">The GTMx Method, applied to {service.name.toLowerCase()}.</p>
+                <p className="lede">The GTMx Method, applied to {service.name}.</p>
               </div>
               <div
                 className={'steps' + (stepCount > 4 ? ' no-line' : '')}
@@ -153,7 +153,7 @@ export default async function ServicePage({ params }) {
           </section>
 
           {/* FAQ */}
-          <ServiceFaq items={service.faq} />
+          <ServiceFaq items={service.faq} serviceName={service.name} />
 
           {/* CTA + inline Cal.com booking */}
           <ServiceCta serviceName={service.name} />
