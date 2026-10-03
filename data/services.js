@@ -2,8 +2,8 @@
    GTMx — data/services.js
    Single source of truth for the three service detail pages
    (app/services/[slug]/page.jsx). Ported from the Daydream
-   design handoff (service-data.js). Fields h1 / subhead /
-   problem / proof contain inline HTML (rendered via
+   design handoff (service-data.js). Fields h1 / problemH2 /
+   subhead / problem / proof contain inline HTML (rendered via
    dangerouslySetInnerHTML); icon is the inner markup of an
    <svg> (stroke set by the page).
    ────────────────────────────────────────────── */
@@ -14,9 +14,10 @@ export const services = [
     name: 'Automated Outbound',
     theme: 'svc-outbound',
     blurb: 'Cold email + LinkedIn campaigns that book meetings — built, launched, and run end to end.',
-    kicker: 'Automated Outbound',
+    kicker: 'Booked meetings, on autopilot.',
     icon: '<rect x="7" y="11" width="30" height="22" rx="4"/><path d="M7 14 l15 11 15-11"/>',
-    h1: 'Booked meetings, <span class="hl hl--accent">on autopilot.</span>',
+    h1: 'Done-for-You Cold Email and LinkedIn Outbound <span class="hl hl--accent">Agency</span>',
+    problemH2: 'Why Most Outbound <span class="hl hl--accent">Stalls</span>',
     subhead: 'We co-build the outbound system that books meetings for you &mdash; cold email and LinkedIn, engineered, launched, and run end to end.',
     problem: 'Most outbound stalls for the same reasons: burned domains, bought lists, and copy that reads like everyone else\u2019s. You spin up a tool, blast a few thousand contacts, watch deliverability tank, and conclude outbound doesn\u2019t work. It does &mdash; but only as a <strong>system</strong>, not a one-off campaign. We build that system and run it, so pipeline becomes a process instead of a scramble.',
     included: [
@@ -43,9 +44,10 @@ export const services = [
     name: 'RevOps',
     theme: 'svc-revops',
     blurb: 'GTM engineering as a service — TAM sourcing, enrichment, lead scoring, and a CRM that runs itself.',
-    kicker: 'RevOps \u00b7 GTM engineering',
+    kicker: 'A CRM that runs itself.',
     icon: '<circle cx="13" cy="22" r="5"/><circle cx="31" cy="12" r="5"/><circle cx="31" cy="32" r="5"/><path d="M17.5 19.5 26.5 14M17.5 24.5 26.5 30"/>',
-    h1: 'A CRM that <span class="hl hl--accent">runs itself.</span>',
+    h1: 'Clay and HubSpot RevOps Agency for <span class="hl hl--accent">B2B SaaS</span>',
+    problemH2: 'Why Your CRM Stops Being <span class="hl hl--accent">Trusted</span>',
     subhead: 'Custom Clay and HubSpot builds that give your sales and marketing team the GTM infrastructure they\u2019re missing &mdash; sourcing, enrichment, scoring, and routing, automated.',
     problem: 'Your CRM is half-trusted, your data lives in five places, and someone on the team still spends hours every week copying records and chasing enrichment by hand. Meanwhile the pre-AI playbooks everyone learned are quietly going obsolete. RevOps is the plumbing that fixes this &mdash; a <strong>single source of truth</strong> and the automation that lets your reps actually sell instead of maintaining spreadsheets.',
     included: [
@@ -72,9 +74,10 @@ export const services = [
     name: 'SEO + AEO',
     theme: 'svc-search',
     blurb: 'Rank on Google and get cited by AI answer engines — ChatGPT, Claude, Perplexity, and Gemini.',
-    kicker: 'SEO + AEO \u00b7 search & answer engines',
+    kicker: 'Be the default answer.',
     icon: '<circle cx="20" cy="20" r="11"/><path d="M28 28 35 35"/><path d="M20 13 l1.6 3.4 3.4 1.6 -3.4 1.6 -1.6 3.4 -1.6 -3.4 -3.4 -1.6 3.4 -1.6 z" stroke-width="1.4"/>',
-    h1: 'Be the <span class="hl hl--accent">default answer.</span>',
+    h1: 'AEO and SEO Agency for <span class="hl hl--accent">B2B SaaS</span>',
+    problemH2: 'Why AI Answer Engines Never <span class="hl hl--accent">Cite You</span>',
     subhead: 'Rank on Google and get cited by AI answer engines &mdash; so you\u2019re the answer when buyers search, and when they ask ChatGPT, Claude, Perplexity, or Gemini.',
     problem: 'Buyer research has moved. A growing share of it now starts inside an AI tool, not a search bar &mdash; and the content most agencies ship is tuned for old Google, invisible to ChatGPT, Claude, Perplexity, and Gemini. The result is familiar: months of content, a couple of pages that rank, traffic that doesn\u2019t convert, and <strong>zero citations</strong> where the buying decision actually starts. We optimize for both at once.',
     included: [

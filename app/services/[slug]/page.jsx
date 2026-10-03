@@ -101,7 +101,7 @@ export default async function ServicePage({ params }) {
           {/* PROBLEM */}
           <section className="section">
             <div className="wrap">
-              <div className="sec-head"><h2 className="h2">The <span className="hl hl--accent">problem.</span></h2></div>
+              <div className="sec-head"><h2 className="h2" dangerouslySetInnerHTML={{ __html: service.problemH2 }} /></div>
               <div className="problem-card"><p className="lede" dangerouslySetInnerHTML={{ __html: service.problem }} /></div>
             </div>
           </section>
@@ -110,7 +110,7 @@ export default async function ServicePage({ params }) {
           <section className="section section--paper">
             <div className="wrap">
               <div className="sec-head">
-                <h2 className="h2">What&apos;s <span className="hl">included.</span></h2>
+                <h2 className="h2">What&apos;s Included in Our {service.name} <span className="hl">Service</span></h2>
                 <p className="lede">Everything we build, launch, and run for you &mdash; one connected system, not a pile of tools.</p>
               </div>
               <div className="inc-grid">
@@ -129,7 +129,7 @@ export default async function ServicePage({ params }) {
           <section className="section" id="process">
             <div className="wrap">
               <div className="sec-head">
-                <h2 className="h2">How it <span className="hl">works.</span></h2>
+                <h2 className="h2">How Our {service.name} Engagement <span className="hl">Works</span></h2>
                 <p className="lede">The GTMx Method, applied to {service.name}.</p>
               </div>
               <div
