@@ -136,7 +136,7 @@ export default function Hero() {
           Outbound, RevOps and Search,{' '}
           <br />
           Built Into <span className="win">One Engine
-            <svg viewBox="0 0 220 20" preserveAspectRatio="none"><path d="M3,13 C46,4 92,17 138,9 C170,4 200,13 217,7" fill="none" stroke="#E8552B" strokeWidth="7" strokeLinecap="round" /></svg>
+            <svg viewBox="0 0 220 20" preserveAspectRatio="none" aria-hidden="true"><path d="M3,13 C46,4 92,17 138,9 C170,4 200,13 217,7" fill="none" stroke="#E8552B" strokeWidth="7" strokeLinecap="round" /></svg>
           </span>{' '}
           <span className="scribble" style={{ top: '-0.62em', right: '4%' }}>no duct&nbsp;tape</span>
         </h1>
