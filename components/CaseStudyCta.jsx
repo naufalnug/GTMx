@@ -1,5 +1,6 @@
 'use client'
 
+import BookingFallback from './BookingFallback'
 import { useDeferredCalEmbed } from './useDeferredCalEmbed'
 
 function CaseStudyCta() {
@@ -13,7 +14,7 @@ function CaseStudyCta() {
   })
 
   return (
-    <div className="casestudy__cta">
+    <div className="casestudy__cta" id="book">
       <h2 className="casestudy__cta-title">
         Want Results Like These?
       </h2>
@@ -22,6 +23,7 @@ function CaseStudyCta() {
         that generates qualified leads on autopilot.
       </p>
       <div className="casestudy__cal-embed" id="casestudy-cal-embed"></div>
+      <BookingFallback />
     </div>
   );
 }

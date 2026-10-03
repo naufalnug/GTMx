@@ -295,7 +295,7 @@ export default async function ArticlePage({ params }) {
 
             <div className="article-page__cta">
               <p className="article-page__cta-text">Ready to build your revenue engine?</p>
-              <a href="/#book" className="btn-lg btn-lg--dark">
+              <a href="/book" className="btn-lg btn-lg--dark">
                 Book a free GTM audit
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
               </a>

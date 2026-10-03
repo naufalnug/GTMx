@@ -47,8 +47,8 @@ export default function ContactPage() {
             <div className="legal-page__body">
               <h2>Book a call</h2>
               <p>
-                The fastest route is the booking calendar. Pick a time from the{' '}
-                <a href="/#book">booking section</a> on any page and we&apos;ll map what it takes to
+                The fastest route is the booking calendar. Pick a time on the{' '}
+                <a href="/book">booking page</a> and we&apos;ll map what it takes to
                 build your engine and show you where the pipeline is.
               </p>
 

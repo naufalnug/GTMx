@@ -8,6 +8,7 @@
    Brand colour follows the page's --accent.
    ────────────────────────────────────────────── */
 
+import BookingFallback from '../BookingFallback'
 import { useDeferredCalEmbed } from '../useDeferredCalEmbed'
 
 const CAL_NS = 'initial-consultation-call'
@@ -46,6 +47,7 @@ export default function ServiceCta({ serviceName }) {
       <div className="svc-booking">
         <div className="svc-booking__frame">
           <div id="svc-cal-embed" className="svc-booking__cal"></div>
+          <BookingFallback />
         </div>
       </div>
     </section>

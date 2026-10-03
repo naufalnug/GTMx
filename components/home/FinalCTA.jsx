@@ -8,6 +8,7 @@
    #book target the nav scrolls to.
    ────────────────────────────────────────────── */
 
+import BookingFallback from '../BookingFallback'
 import { useDeferredCalEmbed } from '../useDeferredCalEmbed'
 
 const CAL_NS = 'initial-consultation-call'
@@ -44,6 +45,7 @@ export default function FinalCTA() {
       <div className="booking">
         <div className="booking__frame">
           <div id="cal-inline-booking" className="booking__cal"></div>
+          <BookingFallback />
         </div>
       </div>
     </section>
