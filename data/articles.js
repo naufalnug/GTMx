@@ -147,6 +147,7 @@ The leverage AI provides isn\u2019t about replacing humans. It\u2019s about lett
   },
   {
     slug: 'the-250k-mistake-hiring-vp-sales-first',
+    metaTitle: 'The $250K Mistake: Hiring a VP of Sales First | GTMx',
     title: 'The $250K Mistake: Why Hiring a VP of Sales First Doesn\u2019t Work',
     date: '2026-03-18',
     excerpt: 'Hiring a VP of Sales before there is a motion to scale sets them up to fail. The problem isn\u2019t the people, it\u2019s the sequence.',
