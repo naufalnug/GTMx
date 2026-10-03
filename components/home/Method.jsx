@@ -132,7 +132,14 @@ export default function Method() {
                   <span className="mstep__week">{st.week}</span>
                   <h4 className="mstep__title">{st.title}</h4>
                   <p className="mstep__body">{st.body}</p>
-                  <div className="mstep__art" dangerouslySetInnerHTML={{ __html: ART[st.art]() }} />
+                  {/* Illustrative mockups. aria-hidden so their demo figures (12.4k, 2,847,
+                      "Duplicates: 1,204", 38%) are not read by screen readers, crawlers
+                      or answer engines as real GTMx statistics. No visual change. */}
+                  <div
+                    className="mstep__art"
+                    aria-hidden="true"
+                    dangerouslySetInnerHTML={{ __html: ART[st.art]() }}
+                  />
                   <div className="mstep__artcap">{st.cap}</div>
                 </div>
               ))}

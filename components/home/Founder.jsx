@@ -3,6 +3,8 @@
    The human counterweight to the systems.
    ────────────────────────────────────────────── */
 
+import { founderStats } from '../../lib/site-facts'
+
 export default function Founder() {
   return (
     <section className="section" id="about">
@@ -22,7 +24,7 @@ export default function Founder() {
         <div className="founder-copy">
           <h2 className="h2">I&apos;ve been on <span className="hl">both sides</span> of the table.</h2>
           <p>Hey there, I&apos;m Josh. I&apos;ve worn a lot of hats: project manager, product manager, blogger (back in the pre-ChatGPT days), cold email agency owner, GTM engineer, and then a cold email agency owner again. That loop wasn&apos;t an accident. Every detour taught me something about how B2B pipeline actually gets built, and it kept pulling me back to the thing I&apos;m best at &mdash; which is GTM.</p>
-          <p>To date, I&apos;ve sent <strong>multiple millions of emails</strong> and generated <strong>over 5,000 MQLs</strong> for bootstrapped and VC-backed companies. Let&apos;s have a chat to see if GTMx can help you grow your MRR today.</p>
+          <p>To date, I&apos;ve sent <strong>{founderStats.emailsSent.prose}</strong> and generated <strong>{founderStats.mqls.prose}</strong> for bootstrapped and VC-backed companies (as of {founderStats.emailsSent.asOf}). Let&apos;s have a chat to see if GTMx can help you grow your MRR today.</p>
           <a
             className="founder-linkedin"
             href="https://www.linkedin.com/in/youhavefoundjoshua/"
@@ -38,7 +40,7 @@ export default function Founder() {
             <a href="/about">More about GTMx and how we work</a>
           </p>
           <div className="founder-stats">
-            <div className="founder-stat"><div className="v">1M<em>+</em></div><div className="l">emails sent</div></div>
+            <div className="founder-stat"><div className="v">1M<em>+</em></div><div className="l">emails sent</div></div>{/* value from founderStats.emailsSent.tile */}
             <div className="founder-stat"><div className="v">YC</div><div className="l">&amp; public-co operators</div></div>
             <div className="founder-stat"><div className="v">5000<em>+</em></div><div className="l">MQLs generated</div></div>
           </div>
