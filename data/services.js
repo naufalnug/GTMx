@@ -53,7 +53,7 @@ export const services = [
     included: [
       { title: 'TAM Sourcing', desc: 'Build and segment your total addressable market into clean, prioritized account lists your team can act on.' },
       { title: 'Inbound Orchestration', desc: 'Form fills and sign-ups enriched, scored, qualified, and routed in seconds \u2014 automatically, the moment they land.' },
-      { title: 'CRM Enrichment', desc: 'Keep HubSpot or Salesforce clean and complete with Clay and 120+ data providers wired into your stack.' },
+      { title: 'CRM Enrichment', desc: 'Keep HubSpot or Salesforce clean and complete with Clay and 200+ data providers wired into your stack.' },
       { title: 'Lead Scoring', desc: 'Surface the accounts and contacts most likely to convert so sales spends its time where it pays off.' },
     ],
     process: [
@@ -65,7 +65,7 @@ export const services = [
     faq: [
       { q: 'How do engagements work?', a: 'Two ways. Scoped sprint projects for a specific use case \u2014 TAM sourcing, inbound orchestration, CRM enrichment, or a HubSpot build \u2014 or GTM Engineering as a service, an ongoing subscription with dedicated engineers who adapt to your priorities week to week.' },
       { q: 'Who is RevOps best suited for?', a: 'Tech companies roughly between Seed and Series C, or service businesses with a real sales motion, that need GTM infrastructure built and lack the internal bandwidth to build it well.' },
-      { q: 'What tools do you work in?', a: 'Clay as the engine, connected to HubSpot or Salesforce, plus the 120+ data providers and the rest of your inbox and outreach stack. We work in your tools \u2014 you keep everything.' },
+      { q: 'What tools do you work in?', a: 'Clay as the engine, connected to HubSpot or Salesforce, plus the 200+ data providers and the rest of your inbox and outreach stack. We work in your tools \u2014 you keep everything.' },
       { q: 'Why invest in RevOps now?', a: 'Teams using AI in their revenue operations move faster than the ones still doing it by hand. The right system can replace hundreds of manual hours a month and make the difference between guessing and knowing who to work next.' },
     ],
   },

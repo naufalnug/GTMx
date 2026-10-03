@@ -43,7 +43,7 @@ The product that won through referrals can win through outbound. But the sales m
     slug: 'using-ai-to-build-your-first-outbound-pipeline',
     title: 'Using AI to Build Your First Outbound Pipeline',
     date: '2026-03-25',
-    excerpt: 'AI tools have made it possible for a 3-person team to run outbound like a 20-person operation. Here\u2019s the practical stack.',
+    excerpt: 'AI tools let a small team run outbound at a scale that used to need a much larger one. Here\u2019s the practical stack.',
     tags: ['AI', 'GTM', 'Pipeline'],
     // Answer block and key facts are derived only from sentences already in this
     // post. No new claim, and deliberately no figure: every number in this post is
@@ -108,7 +108,7 @@ Running outbound at scale used to mean hiring a team of SDRs or accepting that y
 
 Current sequencing tools handle the logistics automatically. Emails send in the recipient\u2019s timezone. LinkedIn messages queue during business hours. Follow-ups trigger based on engagement signals, not arbitrary delays.
 
-The AI layer on top of this \u2014 using tools like Claude to analyse reply sentiment, categorise objections, and suggest response variations \u2014 means a single person can manage what used to require a team of 5 SDRs.
+The AI layer on top of this \u2014 using tools like Claude to analyse reply sentiment, categorise objections, and suggest response variations \u2014 means a single person can manage what used to require a whole SDR team.
 
 ## The practical stack
 
