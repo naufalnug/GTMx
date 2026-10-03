@@ -11,6 +11,7 @@ const ROUTES = ['/', '/services/automated-outbound', '/services/revops', '/servi
   '/content/the-250k-mistake-hiring-us-vp-sales-too-early',
   '/case-studies/opensponsorship', '/case-studies/strategy-achievers',
   '/case-studies/vidify', '/case-studies/united-safety-training',
+  '/about', '/contact', '/case-studies', '/engagements',
   '/privacy', '/terms']
 const GENERIC = ["The problem.", "What's included.", "How it works.", "Fair questions."]
 const MOCKUP = /\.clay|\.json|_audit|_tracker|_scoring|_performance/i

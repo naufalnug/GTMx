@@ -48,6 +48,7 @@ export default async function sitemap() {
     entry(absoluteUrl('/'), '/'),
     entry(absoluteUrl('/about'), '/about'),
     entry(absoluteUrl('/contact'), '/contact'),
+    entry(absoluteUrl('/engagements'), '/engagements'),
     entry(absoluteUrl('/case-studies'), '/case-studies'),
     entry(absoluteUrl('/content'), '/content'),
     ...serviceEntries,

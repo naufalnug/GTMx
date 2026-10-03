@@ -130,7 +130,10 @@ export default async function ServicePage({ params }) {
             <div className="wrap">
               <div className="sec-head">
                 <h2 className="h2">How Our {service.name} Engagement <span className="hl">Works</span></h2>
-                <p className="lede">The {service.name} engagement, step by step.</p>
+                <p className="lede">
+                  The {service.name} engagement, step by step.{' '}
+                  <a href="/engagements">How GTMx engagements work</a>.
+                </p>
               </div>
               <div
                 className={'steps' + (stepCount > 4 ? ' no-line' : '')}

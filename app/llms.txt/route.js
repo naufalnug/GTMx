@@ -48,6 +48,7 @@ ${caseStudyLinks}
 - [Home](${SITE_URL}): Overview of the GTMx engine, method, results, and how to book a free 30-minute GTM audit.
 - [About](${absoluteUrl('/about')}): What GTMx does, the three systems it builds, how engagements run, and who founded it.
 - [Contact](${absoluteUrl('/contact')}): How to reach GTMx by email or book a free 30-minute GTM audit.
+- [How engagements work](${absoluteUrl('/engagements')}): The two GTMx engagement models, commitment terms, what the client owns, and how pricing is scoped.
 - [Privacy Policy](${absoluteUrl('/privacy')}): How GTMx collects, uses, and protects data.
 - [Terms of Service](${absoluteUrl('/terms')}): Terms governing use of the GTMx website and services.
 

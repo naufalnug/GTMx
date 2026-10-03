@@ -38,6 +38,7 @@ export default function FinalCTA() {
         <h2>Ready to build your <span className="u">engine?</span></h2>
         <p>Pick a time below and we&apos;ll map exactly what it takes to get your first qualified pipeline &mdash; outbound, RevOps, and search. No pitch, no fluff.</p>
         <p className="final-stamp">&mdash; No obligations &middot; no sales pitch &middot; just clarity &mdash;</p>
+        <p className="final-eng-link"><a href="/engagements">How GTMx engagements work</a></p>
       </div>
 
       <div className="booking">

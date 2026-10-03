@@ -17,6 +17,7 @@ const ROUTE_SOURCES = {
         'components/home/Faq.jsx', 'components/home/Proof.jsx'],
   '/about': ['app/about/page.jsx'],
   '/contact': ['app/contact/page.jsx'],
+  '/engagements': ['app/engagements/page.jsx'],
   '/case-studies': ['app/case-studies/page.jsx', 'data/caseStudies.js'],
   '/content': ['app/content/page.jsx'],
   '/services': ['app/services/[slug]/page.jsx', 'data/services.js'],

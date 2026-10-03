@@ -13,6 +13,7 @@ export default function Footer() {
           <a href="/services/automated-outbound">Automated Outbound</a>
           <a href="/services/revops">RevOps</a>
           <a href="/services/seo-aeo">SEO + AEO</a>
+          <a href="/engagements">How we work</a>
           <a href="/case-studies">Case studies</a>
           <a href="/content">Blog</a>
           <a href="/about">About</a>
