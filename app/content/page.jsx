@@ -47,7 +47,14 @@ export default async function ContentPage() {
                 {article.coverImage && (
                   <div className="blog-card__media">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={article.coverImage} alt="" loading="lazy" />
+                    <img
+                      src={article.coverImage}
+                      alt={article.coverAlt || ''}
+                      width={1200}
+                      height={630}
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </div>
                 )}
                 <div className="blog-card__tags">
@@ -60,7 +67,9 @@ export default async function ContentPage() {
                 <h2 className="blog-card__title">{article.title}</h2>
                 <p className="blog-card__excerpt">{article.excerpt}</p>
                 {formatArticleDate(article.date) && (
-                  <span className="blog-card__date">{formatArticleDate(article.date)}</span>
+                  <time className="blog-card__date" dateTime={article.date}>
+                    {formatArticleDate(article.date)}
+                  </time>
                 )}
               </a>
             ))}

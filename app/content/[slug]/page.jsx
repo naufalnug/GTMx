@@ -170,7 +170,17 @@ export default async function ArticlePage({ params }) {
                 By <a href="/about#founder">{FOUNDER_NAME}</a>
               </p>
               {formatArticleDate(article.date) && (
-                <time className="article-page__date">{formatArticleDate(article.date)}</time>
+                <time className="article-page__date" dateTime={article.date}>
+                  {formatArticleDate(article.date)}
+                </time>
+              )}
+              {realModifiedTime(article) && (
+                <p className="article-page__updated">
+                  Updated{' '}
+                  <time dateTime={realModifiedTime(article)}>
+                    {formatArticleDate(realModifiedTime(article))}
+                  </time>
+                </p>
               )}
             </div>
 
@@ -179,6 +189,69 @@ export default async function ArticlePage({ params }) {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={article.coverImage} alt={article.coverAlt || article.title} />
               </div>
+            )}
+
+            {article.answer && <p className="article-page__answer">{article.answer}</p>}
+
+            {article.keyFacts?.length > 0 && (
+              <div className="article-page__keyfacts">
+                <p className="article-page__keyfacts-label">Key facts</p>
+                <ul>
+                  {article.keyFacts.map((f, i) => (
+                    <li key={i}>{f}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {article.diagram && (
+              <figure className="article-page__figure">
+                <svg
+                  width="640"
+                  height="280"
+                  viewBox="0 0 640 280"
+                  role="img"
+                  aria-label={article.diagram.alt}
+                  className="article-page__svg"
+                >
+                  <title>{article.diagram.alt}</title>
+                  {article.diagram.layers.map(([name, note], i) => {
+                    const y = 16 + i * 66
+                    return (
+                      <g key={name}>
+                        <rect
+                          x="16"
+                          y={y}
+                          width="608"
+                          height="52"
+                          rx="10"
+                          fill={['#C6E8D2', '#CBD2F4', '#E0C6E8', '#ECDFC0'][i % 4]}
+                          stroke="#1A1712"
+                          strokeWidth="2"
+                        />
+                        <text x="34" y={y + 23} fontSize="16" fontWeight="700" fill="#1A1712">
+                          {name}
+                        </text>
+                        <text x="34" y={y + 42} fontSize="13" fill="#1A1712">
+                          {note}
+                        </text>
+                        {i < article.diagram.layers.length - 1 && (
+                          <path d={`M313 ${y + 58} h14 l-7 8 z`} fill="#1A1712" />
+                        )}
+                      </g>
+                    )
+                  })}
+                </svg>
+                <figcaption>
+                  {article.diagram.title}. From the bottom up:{' '}
+                  {article.diagram.layers
+                    .slice()
+                    .reverse()
+                    .map(([name, note]) => `${name} (${note.toLowerCase()})`)
+                    .join(', ')}
+                  .
+                </figcaption>
+              </figure>
             )}
 
             <div

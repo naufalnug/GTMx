@@ -45,17 +45,44 @@ The product that won through referrals can win through outbound. But the sales m
     date: '2026-03-25',
     excerpt: 'AI tools have made it possible for a 3-person team to run outbound like a 20-person operation. Here\u2019s the practical stack.',
     tags: ['AI', 'GTM', 'Pipeline'],
-    body: `Two years ago, building a structured outbound pipeline needed a full SDR team, a demand gen agency, and 6 months of runway to generate the first qualified meetings.
+    // Answer block and key facts are derived only from sentences already in this
+    // post. No new claim, and deliberately no figure: every number in this post is
+    // either unsourced or part of an unresolved cross-page conflict.
+    answer:
+      'GTMx builds a first outbound pipeline with AI by combining four layers: a continuously enriched lead list, messaging researched by AI but written by humans, automated multi-channel sequencing, and a reply layer that triages responses. A lean team can launch in weeks instead of hiring a full SDR team first.',
+    keyFacts: [
+      'Enrichment replaces the manual analyst build: lists are rebuilt continuously instead of going stale.',
+      'Use AI for research and reply analysis, not for writing the email itself.',
+      'Signals that matter are the ones showing budget and intent, not firmographics alone.',
+      'Sequencing and reply triage are what let one person cover what used to need a team.',
+    ],
+    diagram: {
+      title: 'The four layers of an AI-assisted outbound pipeline',
+      alt: 'Four stacked layers, from bottom to top: enriched lead list, AI-researched messaging, automated sequencing, and reply triage. Each layer feeds the one above it.',
+      layers: [
+        ['Reply triage', 'Categorize replies, route the real ones'],
+        ['Sequencing', 'Multi-channel, automated follow-up'],
+        ['Messaging', 'AI researches, a human writes'],
+        ['Enriched list', 'Signals, rebuilt continuously'],
+      ],
+    },
+    body: `In 2024, building a structured outbound pipeline needed a full SDR team, a demand gen agency, and 6 months of runway to generate the first qualified meetings.
 
-Today, a lean team with the right AI stack can launch outbound in weeks and book meetings with enterprise buyers before making a single dedicated sales hire.
+By 2026, a lean team with the right AI stack can launch outbound in weeks and book meetings with enterprise buyers before making a single dedicated sales hire.
 
 Here\u2019s how the stack works in practice.
 
 ## ICP research and list building
 
-The old way: hire a research analyst to manually identify companies that match your ideal customer profile. Takes weeks, produces a spreadsheet that\u2019s outdated by the time it\u2019s done.
+### The old way: a manual analyst build
 
-The AI way: tools like Clay let you build dynamic lead lists using 50+ data enrichment sources. You define signals \u2014 company size, funding stage, tech stack, hiring patterns, expansion indicators \u2014 and the system continuously finds and enriches matching companies.
+Hire a research analyst to manually identify companies that match your ideal customer profile. Takes weeks, produces a spreadsheet that\u2019s outdated by the time it\u2019s done.
+
+### The AI way: a continuously enriched list
+
+Tools like Clay let you build dynamic lead lists from a large marketplace of data providers. You define signals \u2014 company size, funding stage, tech stack, hiring patterns, expansion indicators \u2014 and the system continuously finds and enriches matching companies.
+
+### Choosing the right signals
 
 The key is choosing the right signals for your specific ICP. You\u2019re looking for companies that have the problem you solve, that have budget, and that show buying intent through their actions \u2014 hiring for roles your product replaces, expanding into areas where your solution matters, or using complementary tools in their stack.
 
@@ -71,7 +98,7 @@ The writing itself should still feel human. Short sentences. Specific numbers. A
 
 Running outbound at scale used to mean hiring a team of SDRs or accepting that you could only reach a fraction of your total addressable market.
 
-Modern sequencing tools handle the logistics automatically. Emails send in the recipient\u2019s timezone. LinkedIn messages queue during business hours. Follow-ups trigger based on engagement signals, not arbitrary delays.
+Current sequencing tools handle the logistics automatically. Emails send in the recipient\u2019s timezone. LinkedIn messages queue during business hours. Follow-ups trigger based on engagement signals, not arbitrary delays.
 
 The AI layer on top of this \u2014 using tools like Claude to analyse reply sentiment, categorise objections, and suggest response variations \u2014 means a single person can manage what used to require a team of 5 SDRs.
 
