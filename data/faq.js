@@ -79,7 +79,7 @@ export const faqTabs = [
   },
   {
     id: 'search',
-    label: 'Search',
+    label: 'SEO + AEO',
     items: [
       {
         q: 'What\u2019s the difference between SEO and AEO — and why do I need both?',

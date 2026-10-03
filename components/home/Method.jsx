@@ -87,7 +87,7 @@ const METHOD = [
     { week: 'Weeks 4–6', title: 'Launch', body: 'We switch the system on end-to-end and train your team. New leads get scored, routed, and enriched automatically. Dashboards go live so revenue, marketing, and ops see the same numbers.', art: 'hubspot', cap: 'Live HubSpot dashboard + routing rules' },
     { week: 'Month 2+', title: 'Iterate', body: 'Weekly reviews on what the system catches, misses, and surfaces. We tune the scoring model, refine routing, and ship new workflows as your motion evolves.', art: 'scoring', cap: 'Scoring model + workflow changelog' },
   ] },
-  { id: 'search', label: 'Search', steps: [
+  { id: 'search', label: 'SEO + AEO', steps: [
     { week: 'Week 1', title: 'Audit', body: 'We audit technical SEO, content coverage, backlinks, and your visibility across Google and AI answer engines (ChatGPT, Claude, Perplexity, Gemini). You see where you rank, where you don’t, and where the opportunity is.', art: 'visibility', cap: 'Visibility audit + keyword gap report' },
     { week: 'Weeks 2–4', title: 'Build', body: 'We engineer the content engine: programmatic templates, keyword clusters mapped to buyer intent, technical fixes shipped, and briefs written for both search engines and LLMs. We build for citations, not just rankings.', art: 'cluster', cap: 'Content cluster map + page template' },
     { week: 'Weeks 4–6', title: 'Launch', body: 'Pages ship at scale and technical SEO goes live. We monitor indexation, rankings, and AI citations from day one — tracking when ChatGPT, Claude, Perplexity, and Gemini start citing you.', art: 'citation', cap: 'Rankings + AI citation tracker' },

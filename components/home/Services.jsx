@@ -13,7 +13,7 @@ export default function Services() {
   return (
     <section className="section" id="services">
       <div className="sec-head">
-        <h2 className="h2">Three GTM Systems: Automated Outbound, RevOps and <span className="hl">Search</span></h2>
+        <h2 className="h2">Three GTM Systems: Automated Outbound, RevOps and <span className="hl">SEO + AEO</span></h2>
         <p className="sec-lede">Most teams duct-tape tools and agencies together and call it a go-to-market. We build outbound, RevOps, and search as one connected system &mdash; and run it for you.</p>
       </div>
 
@@ -56,7 +56,7 @@ export default function Services() {
           <div className="card__tile">
             <svg width="32" height="32" viewBox="0 0 44 44" fill="none" stroke="#1A1712" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><circle cx="20" cy="20" r="11" /><path d="M28 28 35 35" /><path d="M20 13 l1.6 3.4 3.4 1.6 -3.4 1.6 -1.6 3.4 -1.6 -3.4 -3.4 -1.6 3.4 -1.6 z" fill="#E8552B" strokeWidth="1.2" /></svg>
           </div>
-          <h3 className="card__title">Search</h3>
+          <h3 className="card__title">SEO + AEO</h3>
           <p className="card__blurb">Rank on Google and get cited by AI answer engines &mdash; ChatGPT, Claude, Perplexity, and Gemini.</p>
           <ul className="card__list">
             <li>Technical SEO &amp; content at scale</li>
