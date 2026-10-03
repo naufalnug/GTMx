@@ -5,6 +5,23 @@ export const articles = [
     date: '2026-04-01',
     excerpt: 'The inbound-led, referral-driven motion that built your early revenue produces silence when you try to scale. Here\u2019s why \u2014 and what to do instead.',
     tags: ['GTM', 'Outbound'],
+    answer:
+      'A sales playbook built on warm, referral-led deals stops working on cold outbound because the two motions rest on different assumptions. GTMx points to three gaps: the relationship gap, the messaging mismatch and the urgency difference. Scaling outbound means rebuilding the motion for buyers who have never heard of you.',
+    keyFacts: [
+      'Warm buyers start with trust already in place. Cold buyers start with none.',
+      'Messaging that works on people who know you gets archived by people who do not.',
+      'Referral cycles run longer and more consensus-driven; cold buyers move faster but disengage faster.',
+      'The fix is buyer research first, then infrastructure built for a cold motion.',
+    ],
+    diagram: {
+      title: 'Three gaps between a referral motion and a cold outbound motion',
+      alt: 'Three gaps stacked: the relationship gap, the messaging mismatch and the urgency difference. Each one separates how warm buyers behave from how cold buyers behave.',
+      layers: [
+        ['Urgency difference', 'Cold buyers move faster, and disengage faster'],
+        ['Messaging mismatch', 'Warm language gets archived by cold buyers'],
+        ['Relationship gap', 'Warm buyers arrive with trust, cold buyers do not'],
+      ],
+    },
     body: `Most B2B tech companies that attempt to scale outbound make the same mistake: they take the sales motion that works with their existing network and try to run it on new buyer segments.
 
 It feels logical. You have a proven product, a growing customer base, and a playbook that\u2019s been generating revenue for years. Why wouldn\u2019t it work on new prospects?
@@ -33,9 +50,13 @@ Your outbound sequences need to account for this. Follow-up cadences that feel a
 
 Don\u2019t copy your existing playbook. Rebuild it for outbound.
 
-Start with buyer research: what are the actual pain points your product solves for your target segment? What language do they use to describe those problems? What social proof do they need to see?
+### Start with buyer research
 
-Then build outbound infrastructure specifically for this motion: optimised email domains, messaging written for cold buyers, LinkedIn profiles that speak to credibility signals your prospects care about, and sequences that match their urgency and follow-up expectations.
+What are the actual pain points your product solves for your target segment? What language do they use to describe those problems? What social proof do they need to see?
+
+### Then build the infrastructure
+
+Build outbound infrastructure specifically for this motion: optimized email domains, messaging written for cold buyers, LinkedIn profiles that speak to credibility signals your prospects care about, and sequences that match their urgency and follow-up expectations.
 
 The product that won through referrals can win through outbound. But the sales motion that gets it there needs to be engineered from scratch.`,
   },
@@ -128,15 +149,33 @@ The leverage AI provides isn\u2019t about replacing humans. It\u2019s about lett
     slug: 'the-250k-mistake-hiring-us-vp-sales-too-early',
     title: 'The $250K Mistake: Why Hiring a VP of Sales First Doesn\u2019t Work',
     date: '2026-03-18',
-    excerpt: 'Nearly half of first senior sales hires at B2B tech companies are replaced within 2 years. The problem isn\u2019t the people \u2014 it\u2019s the sequence.',
+    excerpt: 'Hiring a VP of Sales before there is a motion to scale sets them up to fail. The problem isn\u2019t the people, it\u2019s the sequence.',
     tags: ['GTM', 'Outbound', 'Hiring'],
+    answer:
+      'GTMx recommends building the outbound engine before hiring a VP of Sales. A VP of Sales is a scaling hire, so hiring one as the first move into structured outbound asks that person to define the ICP, build the infrastructure and generate pipeline at the same time. Build the engine first, then hire the driver.',
+    keyFacts: [
+      'A VP of Sales is a scaling hire, not a founding one: the job is to make a working motion bigger.',
+      'Hired too early, they are doing three jobs at once: ICP, infrastructure and pipeline.',
+      'What to have ready first: a validated outbound ICP, working infrastructure, early proof points and CRM foundations.',
+      'A hire who starts with meetings already booked ramps far faster than one who starts from nothing.',
+    ],
+    diagram: {
+      title: 'Build the engine, then hire the driver',
+      alt: 'Two sequences compared. The common order hires a VP of Sales first, who must then define the ICP, build infrastructure and generate pipeline at once. The recommended order builds ICP, infrastructure and proof points first, then hires.',
+      layers: [
+        ['Then hire', 'The VP starts with meetings already booked'],
+        ['Proof points', 'Early meetings prove the motion works'],
+        ['Infrastructure', 'Domains, sequences, CRM, routing'],
+        ['Validated ICP', 'Who actually responds to cold outreach'],
+      ],
+    },
     body: `The default playbook for B2B tech companies looking to scale revenue looks like this: raise a round, hire a VP of Sales, and let them figure it out.
 
 It almost never works the way founders expect.
 
 ## The numbers
 
-A VP of Sales costs $200\u2013300K fully loaded (base + OTE + benefits). They take 3\u20136 months to ramp. And the data is brutal: nearly half of first senior sales hires are replaced within 2 years.
+A VP of Sales costs $200\u2013300K fully loaded (base + OTE + benefits). They take 3\u20136 months to ramp. And first senior sales hires frequently do not last long enough to show a return.
 
 That\u2019s not because companies hire bad people. It\u2019s because they hire the right person into a broken sequence.
 
@@ -163,7 +202,7 @@ Before you put a senior sales hire in place, you need:
 - **First proof points** \u2014 a handful of meetings or early deals that prove the outbound motion works
 - **CRM and RevOps foundations** \u2014 lead routing, pipeline stages, and reporting that a new hire can walk into and immediately operate
 
-When your VP of Sales starts on day one with qualified meetings already on the calendar and infrastructure already running, their ramp time drops from 6 months to 6 weeks. They can focus on what they\u2019re actually good at: closing deals and building a team.
+When your VP of Sales starts on day one with qualified meetings already on the calendar and infrastructure already running, their ramp time drops sharply. They can focus on what they\u2019re actually good at: closing deals and building a team.
 
 ## What this looks like in practice
 
