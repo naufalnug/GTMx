@@ -1,9 +1,17 @@
 import { notFound } from 'next/navigation'
 import Navbar from '../../../components/home/Navbar'
 import Footer from '../../../components/home/Footer'
-import { getPublishedArticles, getPublishedArticleBySlug } from '../../../lib/articles'
+import { getPublishedArticles, getPublishedArticleBySlug, formatArticleDate } from '../../../lib/articles'
 import { pageMetadata, absoluteUrl, SITE_URL, SITE_NAME } from '../../../lib/seo'
 import { authorRef, ORG_ID, FOUNDER_NAME } from '../../../lib/schema'
+
+/* A modification date is only emitted when the CMS actually recorded one AND it is
+   later than the published date. Defaulting it to the published date would assert
+   an edit that never happened; emitting an earlier one is invalid. */
+function realModifiedTime(article) {
+  if (!article.updatedAt || !article.date) return null
+  return new Date(article.updatedAt) > new Date(article.date) ? article.updatedAt : null
+}
 import { looksLikeHtml, mdToHtml, sanitizeHtml } from '../../../lib/richtext'
 import '../../home.css'
 import './page.css'
@@ -27,6 +35,7 @@ export async function generateMetadata({ params }) {
 
   const title = article.metaTitle || `${article.title} | GTMx`
   const description = article.metaDescription || article.excerpt
+  const modifiedTime = realModifiedTime(article)
   const image = article.ogImage || article.coverImage || undefined
 
   const meta = pageMetadata({
@@ -39,7 +48,10 @@ export async function generateMetadata({ params }) {
       title: article.metaTitle || article.title,
       description,
       type: 'article',
-      publishedTime: article.date,
+      ...(article.date ? { publishedTime: article.date } : {}),
+      // Only when a genuine, later modification exists. Never defaulted to the
+      // published date, which would assert an edit that never happened.
+      ...(modifiedTime ? { modifiedTime } : {}),
     },
   })
   // Editor-supplied canonical override (e.g. when the post is syndicated from
@@ -61,7 +73,8 @@ function buildSchemas(article, url) {
       headline: article.title,
       description: article.metaDescription || article.excerpt,
       ...(image ? { image: [image] } : {}),
-      datePublished: article.date,
+      ...(article.date ? { datePublished: article.date } : {}),
+    ...(realModifiedTime(article) ? { dateModified: realModifiedTime(article) } : {}),
       mainEntityOfPage: { '@type': 'WebPage', '@id': url },
       url,
       author: authorRef,
@@ -156,13 +169,9 @@ export default async function ArticlePage({ params }) {
               <p className="article-page__byline">
                 By <a href="/about#founder">{FOUNDER_NAME}</a>
               </p>
-              <time className="article-page__date">
-                {new Date(article.date).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
-              </time>
+              {formatArticleDate(article.date) && (
+                <time className="article-page__date">{formatArticleDate(article.date)}</time>
+              )}
             </div>
 
             {article.coverImage && (

@@ -35,7 +35,10 @@ export default async function sitemap() {
 
   const articleEntries = articles.map(article => ({
     url: absoluteUrl(`/content/${article.slug}`),
-    lastModified: new Date(article.date),
+    // Prefer a real modification date; fall back to published; omit if neither.
+    ...(article.updatedAt || article.date
+      ? { lastModified: new Date(article.updatedAt || article.date) }
+      : {}),
     changeFrequency: 'monthly',
     priority: 0.7,
   }))

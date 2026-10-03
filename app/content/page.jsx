@@ -1,4 +1,5 @@
 import Navbar from '../../components/home/Navbar'
+import { formatArticleDate } from '../../lib/articles'
 import Footer from '../../components/home/Footer'
 import { getPublishedArticles } from '../../lib/articles'
 import { pageMetadata } from '../../lib/seo'
@@ -58,13 +59,9 @@ export default async function ContentPage() {
                     the page h1. Class unchanged → identical styling. */}
                 <h2 className="blog-card__title">{article.title}</h2>
                 <p className="blog-card__excerpt">{article.excerpt}</p>
-                <span className="blog-card__date">
-                  {new Date(article.date).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
-                </span>
+                {formatArticleDate(article.date) && (
+                  <span className="blog-card__date">{formatArticleDate(article.date)}</span>
+                )}
               </a>
             ))}
           </div>
