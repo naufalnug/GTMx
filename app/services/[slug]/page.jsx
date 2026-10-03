@@ -80,7 +80,7 @@ export default async function ServicePage({ params }) {
                 <span className="shero__blob" style={{ width: 160, height: 160, background: 'var(--white)', top: -30, left: -20, opacity: 0.4 }}></span>
                 <span className="shero__blob" style={{ width: 120, height: 120, background: 'var(--gold)', bottom: -20, right: -10 }}></span>
                 <div className="shero__icon">
-                  <svg width="58" height="58" viewBox="0 0 44 44" fill="none" stroke="#1A1712" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: service.icon }} />
+                  <svg aria-hidden="true" width="58" height="58" viewBox="0 0 44 44" fill="none" stroke="#1A1712" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: service.icon }} />
                 </div>
               </div>
             </div>

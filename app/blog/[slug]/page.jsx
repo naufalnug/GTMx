@@ -176,7 +176,14 @@ export default async function ArticlePage({ params }) {
             {article.coverImage && (
               <div className="article-page__cover">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={article.coverImage} alt={article.coverAlt || article.title} />
+                <img
+                  src={article.coverImage}
+                  alt={article.coverAlt || article.title}
+                  width={1200}
+                  height={630}
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
             )}
 

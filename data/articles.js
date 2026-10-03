@@ -15,7 +15,7 @@ export const articles = [
     ],
     diagram: {
       title: 'Three gaps between a referral motion and a cold outbound motion',
-      alt: 'Three gaps stacked: the relationship gap, the messaging mismatch and the urgency difference. Each one separates how warm buyers behave from how cold buyers behave.',
+      alt: 'Diagram: three gaps between a referral motion and a cold outbound motion, listed in the caption below.',
       layers: [
         ['Urgency difference', 'Cold buyers move faster, and disengage faster'],
         ['Messaging mismatch', 'Warm language gets archived by cold buyers'],
@@ -87,7 +87,7 @@ The product that won through referrals can win through outbound. But the sales m
     ],
     diagram: {
       title: 'The four layers of an AI-assisted outbound pipeline',
-      alt: 'Four stacked layers, from bottom to top: enriched lead list, AI-researched messaging, automated sequencing, and reply triage. Each layer feeds the one above it.',
+      alt: 'Diagram: the four layers of an AI-assisted outbound pipeline, listed bottom to top in the caption below.',
       layers: [
         ['Reply triage', 'Categorize replies, route the real ones'],
         ['Sequencing', 'Multi-channel, automated follow-up'],
@@ -162,7 +162,7 @@ The leverage AI provides isn\u2019t about replacing humans. It\u2019s about lett
     ],
     diagram: {
       title: 'Build the engine, then hire the driver',
-      alt: 'Two sequences compared. The common order hires a VP of Sales first, who must then define the ICP, build infrastructure and generate pipeline at once. The recommended order builds ICP, infrastructure and proof points first, then hires.',
+      alt: 'Diagram: build the engine before hiring the driver, with the recommended order listed in the caption below.',
       layers: [
         ['Then hire', 'The VP starts with meetings already booked'],
         ['Proof points', 'Early meetings prove the motion works'],

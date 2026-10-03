@@ -4,6 +4,7 @@
    ────────────────────────────────────────────── */
 
 import { founderStats } from '../../lib/site-facts'
+import { FOUNDER_NAME } from '../../lib/schema'
 
 export default function Founder() {
   return (
@@ -12,7 +13,7 @@ export default function Founder() {
         <div className="founder-photo">
           <img
             src="/founder-headshot.webp"
-            alt="Josh, founder of GTMx"
+            alt={`${FOUNDER_NAME}, founder of GTMx`}
             width={1000}
             height={1000}
             className="founder-photo__img"
