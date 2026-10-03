@@ -82,7 +82,8 @@ for (const r of ROUTES) {
   const nodes = []
   for (const m of html.matchAll(/<script[^>]+application\/ld\+json[^>]*>([\s\S]*?)<\/script>/g)) {
     let o; try { o = JSON.parse(m[1]) } catch (e) { fail(`${r}: invalid JSON-LD (${e.message})`); continue }
-    for (const it of (Array.isArray(o) ? o : [o])) nodes.push(it)
+    // Phase 7 moved every page to a single @graph, so flatten it before checking.
+    for (const it of (Array.isArray(o) ? o : [o])) nodes.push(...(it['@graph'] || [it]))
   }
   const types = nodes.map(n => n['@type'])
   if (!types.includes('Organization')) fail(`${r}: no Organization JSON-LD`)
