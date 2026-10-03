@@ -80,7 +80,11 @@ export default async function CaseStudyPage({ params }) {
           <div className="casestudy__header">
             <a href="/#case-studies" className="casestudy__back">&larr; Back to Case Studies</a>
             <span className="casestudy__badge">{study.badge}</span>
-            <h1 className="casestudy__title">{study.company}</h1>
+            <h1 className="casestudy__title">
+              {study.h1Result
+                ? `${study.company} Case Study: ${study.h1Result}`
+                : `${study.company} Case Study`}
+            </h1>
             <p className="casestudy__vertical">{study.vertical}</p>
             <p className="casestudy__headline">{study.headline}</p>
           </div>
@@ -107,7 +111,7 @@ export default async function CaseStudyPage({ params }) {
 
           {/* The challenge */}
           <section className="casestudy__section">
-            <h2 className="casestudy__h2">The Challenge</h2>
+            <h2 className="casestudy__h2">{study.challengeH2}</h2>
             <p className="casestudy__paragraph">{study.problem}</p>
             <p className="casestudy__paragraph">{study.testimonial.context}</p>
           </section>

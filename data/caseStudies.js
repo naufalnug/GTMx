@@ -6,6 +6,8 @@ export const caseStudies = [
     vertical: 'Athlete Marketing Platform \u00b7 Backed by Serena Williams',
     badge: 'AI-PERSONALIZED OUTBOUND',
     headline: 'Built a funnel worth over $170K and helped close $10K in revenue',
+    h1Result: '$170K Pipeline and $10K Closed',
+    challengeH2: 'The Challenge: Reaching Brand CMOs at Scale',
     problem: 'Needed to reach CMOs and senior marketing stakeholders at e-commerce brands with a highly relevant, personalized pitch connecting their products to athlete partnerships.',
     metrics: {
       leads: '40+ SQLs',
@@ -44,6 +46,8 @@ export const caseStudies = [
     vertical: 'Personal Branding Agency',
     badge: 'COLD EMAIL',
     headline: 'Built a funnel worth $150K and helped close a $21K deal',
+    h1Result: '$150K Pipeline and a $21K Deal',
+    challengeH2: 'The Challenge: No System for Consistent Leads',
     problem: 'Getting pitched constantly but no outbound system generating consistent, qualified leads for their personal branding services.',
     metrics: {
       leads: '~100 leads',
@@ -81,6 +85,11 @@ export const caseStudies = [
     vertical: 'B2B Social Media / AI Video Gen',
     badge: 'COLD EMAIL',
     headline: 'Generated 103 leads and closed $10K+ in revenue',
+    // h1Result intentionally null: this page labels 103 as both 'leads' and
+    // 'opportunities', and headlines $10K+ closed while its stat block says
+    // $133K pipeline. No Vidify number goes in a heading until that is resolved.
+    h1Result: null,
+    challengeH2: 'The Challenge: Past Agencies Delivered No Results',
     problem: 'Worked with three different agencies before \u2014 none delivered results. Burning through leads without learning anything. No results, no insights \u2014 just costs.',
     metrics: {
       leads: '103 opportunities',
@@ -118,6 +127,8 @@ export const caseStudies = [
     vertical: 'Violence Prevention Services',
     badge: 'COLD EMAIL',
     headline: 'Generated 60+ leads across schools, corporates, and churches',
+    h1Result: '60+ Leads',
+    challengeH2: 'The Challenge: Reaching Senior Decision-Makers',
     problem: 'Relied on a call center for appointments. It worked for lower-level prospects, but when targeting senior decision-makers at hospitals, schools, and corporations \u2014 the approach was too aggressive.',
     metrics: {
       leads: '60+ leads',
