@@ -120,7 +120,7 @@ Here\u2019s what we typically deploy for B2B tech companies building their first
 - **AI layer:** Claude (research, messaging analysis, reply handling)
 - **CRM:** HubSpot (pipeline tracking, lead routing)
 
-Total cost for the tooling: under $1,000/month. Total time to first qualified meeting: typically 3\u20134 weeks from launch.
+Total cost for the tooling: under $1,000 a month in the engagements GTMx runs. Total time to first qualified meeting: typically 3\u20134 weeks from launch.
 
 The leverage AI provides isn\u2019t about replacing humans. It\u2019s about letting a lean team operate with the output of a much larger operation \u2014 without the $250K VP of Sales hire.`,
   },
