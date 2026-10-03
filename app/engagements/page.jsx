@@ -4,7 +4,10 @@ import './page.css'
 import Navbar from '../../components/home/Navbar'
 import Footer from '../../components/home/Footer'
 import { pageMetadata } from '../../lib/seo'
-import { CONTACT_EMAIL } from '../../lib/schema'
+import JsonLd from '../../components/JsonLd'
+import { CONTACT_EMAIL, baseNodes, graph, webPageNode, breadcrumbNode, serviceNode } from '../../lib/schema'
+import { SITE_URL } from '../../lib/seo'
+import { services } from '../../data/services'
 
 export const metadata = pageMetadata({
   path: '/engagements',
@@ -22,6 +25,24 @@ export const metadata = pageMetadata({
 export default function EngagementsPage() {
   return (
     <>
+      <JsonLd
+        data={graph([
+          ...baseNodes,
+          webPageNode({
+            url: `${SITE_URL}/engagements`,
+            name: 'How GTMx Engagements Work',
+            description:
+              'The two GTMx engagement models, commitment terms, what the client owns, and how pricing is scoped.',
+          }),
+          // Self-contained Service nodes, so these references resolve inside this
+          // page's own graph rather than pointing at another page.
+          ...services.map(s => serviceNode({ slug: s.slug, name: s.name, description: s.blurb })),
+          breadcrumbNode(`${SITE_URL}/engagements`, [
+            ['Home', SITE_URL],
+            ['How engagements work', `${SITE_URL}/engagements`],
+          ]),
+        ])}
+      />
       <Navbar />
       <div className="dd">
         <main className="legal-page">

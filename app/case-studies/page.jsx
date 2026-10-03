@@ -4,6 +4,9 @@ import Navbar from '../../components/home/Navbar'
 import Footer from '../../components/home/Footer'
 import { pageMetadata } from '../../lib/seo'
 import { caseStudies } from '../../data/caseStudies'
+import JsonLd from '../../components/JsonLd'
+import { baseNodes, graph, webPageNode, breadcrumbNode } from '../../lib/schema'
+import { SITE_URL } from '../../lib/seo'
 
 export const metadata = pageMetadata({
   path: '/case-studies',
@@ -15,6 +18,21 @@ export const metadata = pageMetadata({
 export default function CaseStudiesPage() {
   return (
     <>
+      <JsonLd
+        data={graph([
+          ...baseNodes,
+          webPageNode({
+            url: `${SITE_URL}/case-studies`,
+            name: 'B2B Outbound Case Studies',
+            description: 'Four GTMx client engagements, each written up with the campaign data behind it.',
+            type: 'CollectionPage',
+          }),
+          breadcrumbNode(`${SITE_URL}/case-studies`, [
+            ['Home', SITE_URL],
+            ['Case studies', `${SITE_URL}/case-studies`],
+          ]),
+        ])}
+      />
       <Navbar />
       <div className="dd">
         <main className="legal-page">

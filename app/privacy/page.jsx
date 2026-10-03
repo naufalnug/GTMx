@@ -1,6 +1,8 @@
 import Navbar from '../../components/home/Navbar'
 import Footer from '../../components/home/Footer'
-import { pageMetadata } from '../../lib/seo'
+import { pageMetadata, SITE_URL } from '../../lib/seo'
+import JsonLd from '../../components/JsonLd'
+import { baseNodes, graph, webPageNode } from '../../lib/schema'
 import '../home.css'
 import './page.css'
 
@@ -13,6 +15,16 @@ export const metadata = pageMetadata({
 export default function PrivacyPage() {
   return (
     <>
+      <JsonLd
+        data={graph([
+          ...baseNodes,
+          webPageNode({
+            url: `${SITE_URL}/privacy`,
+            name: 'Privacy Policy',
+            description: 'How GTMx collects, uses, and protects data.',
+          }),
+        ])}
+      />
       <Navbar />
       <div className="dd">
         <main className="legal-page">

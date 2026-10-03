@@ -3,7 +3,9 @@ import '../privacy/page.css'
 import Navbar from '../../components/home/Navbar'
 import Footer from '../../components/home/Footer'
 import { pageMetadata } from '../../lib/seo'
-import { CONTACT_EMAIL, LEGAL_NAME } from '../../lib/schema'
+import JsonLd from '../../components/JsonLd'
+import { CONTACT_EMAIL, LEGAL_NAME, baseNodes, graph, webPageNode, breadcrumbNode } from '../../lib/schema'
+import { SITE_URL } from '../../lib/seo'
 
 export const metadata = pageMetadata({
   path: '/contact',
@@ -15,6 +17,21 @@ export const metadata = pageMetadata({
 export default function ContactPage() {
   return (
     <>
+      <JsonLd
+        data={graph([
+          ...baseNodes,
+          webPageNode({
+            url: `${SITE_URL}/contact`,
+            name: 'Contact GTMx',
+            description: 'How to reach GTMx by email or book a free 30-minute GTM audit.',
+            type: 'ContactPage',
+          }),
+          breadcrumbNode(`${SITE_URL}/contact`, [
+            ['Home', SITE_URL],
+            ['Contact', `${SITE_URL}/contact`],
+          ]),
+        ])}
+      />
       <Navbar />
       <div className="dd">
         <main className="legal-page">

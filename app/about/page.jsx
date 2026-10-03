@@ -4,7 +4,10 @@ import Navbar from '../../components/home/Navbar'
 import Footer from '../../components/home/Footer'
 import { pageMetadata } from '../../lib/seo'
 import { BRAND_DEFINITION } from '../../lib/site-facts'
-import { CONTACT_EMAIL, LEGAL_NAME, FOUNDER_NAME, FOUNDER_JOB_TITLE, FOUNDER_LINKEDIN, personSchema } from '../../lib/schema'
+import JsonLd from '../../components/JsonLd'
+import { CONTACT_EMAIL, LEGAL_NAME, FOUNDER_NAME, FOUNDER_JOB_TITLE, FOUNDER_LINKEDIN,
+  personNode, baseNodes, graph, webPageNode, breadcrumbNode } from '../../lib/schema'
+import { SITE_URL } from '../../lib/seo'
 import { services } from '../../data/services'
 import { caseStudies } from '../../data/caseStudies'
 
@@ -25,9 +28,21 @@ export const metadata = pageMetadata({
 export default function AboutPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema).replace(/</g, '\\u003c') }}
+      <JsonLd
+        data={graph([
+          ...baseNodes,
+          webPageNode({
+            url: `${SITE_URL}/about`,
+            name: 'About GTMx',
+            description: BRAND_DEFINITION,
+            type: 'AboutPage',
+          }),
+          personNode,
+          breadcrumbNode(`${SITE_URL}/about`, [
+            ['Home', SITE_URL],
+            ['About', `${SITE_URL}/about`],
+          ]),
+        ])}
       />
       <Navbar />
       <div className="dd">

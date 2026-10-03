@@ -10,8 +10,11 @@ import Founder from '../components/home/Founder'
 import Faq from '../components/home/Faq'
 import FinalCTA from '../components/home/FinalCTA'
 import Footer from '../components/home/Footer'
-import { faqs } from '../data/faq'
-import { ORG_ID } from '../lib/schema'
+import { faqTabs } from '../data/faq'
+import JsonLd from '../components/JsonLd'
+import { baseNodes, graph, webPageNode, faqPageNode, serviceNode } from '../lib/schema'
+import { BRAND_DEFINITION } from '../lib/site-facts'
+import { services } from '../data/services'
 import { SITE_URL, pageMetadata } from '../lib/seo'
 
 export const metadata = pageMetadata({
@@ -24,43 +27,34 @@ export const metadata = pageMetadata({
 })
 
 export default function Page() {
-  const faqJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqs.map(faq => ({
-      '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.answer,
-      },
-    })),
-  }
+  const url = SITE_URL
 
-  // Organization and WebSite now come from the root layout (lib/schema.js),
-  // so every route carries them and they are not duplicated here.
+  /* FAQPage is built from faqTabs only, NOT the exported `faqs` helper.
+     `faqs` also spreads in `faqShared`, but components/home/Faq.jsx renders
+     only faqTabs, so those three questions were being marked up while being
+     invisible on the page. Structured data must match visible content. */
+  const visibleFaqs = faqTabs.flatMap(tab =>
+    tab.items.map(({ q, a }) => ({ question: q, answer: a }))
+  )
 
-  const serviceJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    provider: { '@id': ORG_ID },
-    name: 'GTM Engineering — Outbound, RevOps & Search',
-    description: 'We engineer the outbound, RevOps, and search systems that turn a working product into predictable pipeline.',
-    serviceType: 'Go-to-Market Engineering',
-  }
+  const jsonLd = graph([
+    ...baseNodes,
+    webPageNode({
+      url,
+      name: 'GTMx',
+      description: BRAND_DEFINITION,
+    }),
+    faqPageNode(url, visibleFaqs),
+    // One Service node per service actually sold, built from the same data the
+    // service cards render from.
+    ...services.map(s => serviceNode({ slug: s.slug, name: s.name, description: s.blurb })),
+  ])
 
   return (
     <>
       <Navbar />
       <div className="dd">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
-        />
+        <JsonLd data={jsonLd} />
         <Hero />
         <main>
           <Partners />

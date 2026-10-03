@@ -4,11 +4,12 @@ import Footer from '../../../components/home/Footer'
 import CaseStudyCta from '../../../components/CaseStudyCta'
 import { caseStudies } from '../../../data/caseStudies'
 import { pageMetadata, absoluteUrl, SITE_URL, SITE_NAME } from '../../../lib/seo'
+import JsonLd from '../../../components/JsonLd'
+import { baseNodes, graph, webPageNode, breadcrumbNode, ORG_ID } from '../../../lib/schema'
 import '../../home.css'
 import './page.css'
 
 // `</script>`-safe JSON-LD serialization (matches the article route).
-const jsonLd = (obj) => JSON.stringify(obj).replace(/</g, '\\u003c')
 
 export function generateStaticParams() {
   return caseStudies.map(study => ({
@@ -43,37 +44,33 @@ export default async function CaseStudyPage({ params }) {
   const url = absoluteUrl(`/case-studies/${study.slug}`)
   // Article uses only data already on the page — no publish date exists in the
   // source, so datePublished is intentionally omitted rather than invented.
-  const schemas = [
+  const jsonLdGraph = graph([
+    ...baseNodes,
     {
-      '@context': 'https://schema.org',
       '@type': 'Article',
-      headline: study.headline,
-      description: study.headline,
+      '@id': `${url}#article`,
+      headline: `${study.company} Case Study`,
+      description: study.metaDescription || study.headline,
+      // Client named as plain text only. No sameAs, no Organization node for the
+      // client, no Review and no Rating.
       about: study.company,
       url,
-      mainEntityOfPage: { '@type': 'WebPage', '@id': url },
-      author: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
-      publisher: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
+      image: `${url}/opengraph-image`,
+      mainEntityOfPage: { '@id': `${url}#webpage` },
+      author: { '@id': ORG_ID },
+      publisher: { '@id': ORG_ID },
     },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
-        { '@type': 'ListItem', position: 2, name: `${study.company} Case Study`, item: url },
-      ],
-    },
-  ]
+    webPageNode({ url, name: `${study.company} Case Study`, description: study.metaDescription || study.headline }),
+    breadcrumbNode(url, [
+      ['Home', SITE_URL],
+      ['Case studies', `${SITE_URL}/case-studies`],
+      [`${study.company} Case Study`, url],
+    ]),
+  ])
 
   return (
     <>
-      {schemas.map((schema, i) => (
-        <script
-          key={i}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: jsonLd(schema) }}
-        />
-      ))}
+      <JsonLd data={jsonLdGraph} />
       <Navbar />
       <div className="dd">
         <main className="casestudy">

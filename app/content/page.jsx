@@ -1,5 +1,8 @@
 import Navbar from '../../components/home/Navbar'
 import { formatArticleDate } from '../../lib/articles'
+import JsonLd from '../../components/JsonLd'
+import { baseNodes, graph, webPageNode, breadcrumbNode } from '../../lib/schema'
+import { SITE_URL } from '../../lib/seo'
 import Footer from '../../components/home/Footer'
 import { getPublishedArticles } from '../../lib/articles'
 import { pageMetadata } from '../../lib/seo'
@@ -20,6 +23,21 @@ export default async function ContentPage() {
 
   return (
     <>
+      <JsonLd
+        data={graph([
+          ...baseNodes,
+          webPageNode({
+            url: `${SITE_URL}/content`,
+            name: 'GTM Engineering and Outbound Blog',
+            description: 'Practical breakdowns on outbound engineering, AI-powered pipeline building, and building a repeatable revenue engine.',
+            type: 'CollectionPage',
+          }),
+          breadcrumbNode(`${SITE_URL}/content`, [
+            ['Home', SITE_URL],
+            ['Blog', `${SITE_URL}/content`],
+          ]),
+        ])}
+      />
       <Navbar />
       <div className="dd">
         <main className="section blog">

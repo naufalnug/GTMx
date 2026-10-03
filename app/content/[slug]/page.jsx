@@ -3,7 +3,8 @@ import Navbar from '../../../components/home/Navbar'
 import Footer from '../../../components/home/Footer'
 import { getPublishedArticles, getPublishedArticleBySlug, formatArticleDate } from '../../../lib/articles'
 import { pageMetadata, absoluteUrl, SITE_URL, SITE_NAME } from '../../../lib/seo'
-import { authorRef, ORG_ID, FOUNDER_NAME } from '../../../lib/schema'
+import JsonLd from '../../../components/JsonLd'
+import { authorRef, ORG_ID, FOUNDER_NAME, baseNodes, graph, webPageNode, breadcrumbNode, faqPageNode } from '../../../lib/schema'
 
 /* A modification date is only emitted when the CMS actually recorded one AND it is
    later than the published date. Defaulting it to the published date would assert
@@ -62,54 +63,48 @@ export async function generateMetadata({ params }) {
   return meta
 }
 
-// Every article page ships BlogPosting + BreadcrumbList; FAQPage is added when
-// the post has FAQs, and any editor-supplied custom schema is layered on last.
-function buildSchemas(article, url) {
-  const image = article.ogImage || article.coverImage
-  const schemas = [
+/* One @graph per page. Every node derives from the same article data that
+   renders the visible page. FAQPage is included only when the post actually has
+   FAQs, which are rendered server-side, so marked-up questions are always
+   visible. Editor-supplied custom schema is layered on last. */
+function buildGraph(article, url) {
+  const image = article.ogImage || article.coverImage || `${url}/opengraph-image`
+  const modified = realModifiedTime(article)
+  return graph([
+    ...baseNodes,
     {
-      '@context': 'https://schema.org',
       '@type': 'BlogPosting',
+      '@id': `${url}#blogposting`,
       headline: article.title,
       description: article.metaDescription || article.excerpt,
-      ...(image ? { image: [image] } : {}),
+      image: [image],
       ...(article.date ? { datePublished: article.date } : {}),
-    ...(realModifiedTime(article) ? { dateModified: realModifiedTime(article) } : {}),
-      mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+      ...(modified ? { dateModified: modified } : {}),
+      mainEntityOfPage: { '@id': `${url}#webpage` },
       url,
       author: authorRef,
       publisher: { '@id': ORG_ID },
       ...(article.tags.length ? { keywords: article.tags.join(', ') } : {}),
     },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: absoluteUrl('/content') },
-        { '@type': 'ListItem', position: 3, name: article.title, item: url },
-      ],
-    },
-  ]
-  if (article.faqs.length) {
-    schemas.push({
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: article.faqs.map((f) => ({
-        '@type': 'Question',
-        name: f.question,
-        acceptedAnswer: { '@type': 'Answer', text: f.answer },
-      })),
-    })
-  }
-  if (article.customSchema) {
-    schemas.push(...(Array.isArray(article.customSchema) ? article.customSchema : [article.customSchema]))
-  }
-  return schemas
+    webPageNode({
+      url,
+      name: article.title,
+      description: article.metaDescription || article.excerpt,
+    }),
+    breadcrumbNode(url, [
+      ['Home', SITE_URL],
+      ['Blog', absoluteUrl('/content')],
+      [article.title, url],
+    ]),
+    faqPageNode(url, article.faqs),
+    ...(article.customSchema
+      ? Array.isArray(article.customSchema)
+        ? article.customSchema
+        : [article.customSchema]
+      : []),
+  ])
 }
 
-// `</script>`-safe JSON-LD serialization.
-const jsonLd = (obj) => JSON.stringify(obj).replace(/</g, '\\u003c')
 
 export default async function ArticlePage({ params }) {
   const { slug } = await params
@@ -134,7 +129,7 @@ export default async function ArticlePage({ params }) {
       : { href: '/services/automated-outbound', name: 'Automated Outbound' }
 
   const url = absoluteUrl(`/content/${article.slug}`)
-  const schemas = buildSchemas(article, url)
+  const jsonLdGraph = buildGraph(article, url)
 
   // WYSIWYG posts are stored as HTML (sanitized again on render, so rows that
   // predate save-time sanitization are covered); legacy posts hold the old
@@ -145,13 +140,7 @@ export default async function ArticlePage({ params }) {
 
   return (
     <>
-      {schemas.map((schema, i) => (
-        <script
-          key={i}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: jsonLd(schema) }}
-        />
-      ))}
+      <JsonLd data={jsonLdGraph} />
       <Navbar />
       <div className="dd">
         <main className="article-page">

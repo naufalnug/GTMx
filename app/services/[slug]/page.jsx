@@ -5,10 +5,11 @@ import ServiceFaq from '../../../components/home/ServiceFaq'
 import ServiceCta from '../../../components/home/ServiceCta'
 import { services } from '../../../data/services'
 import { pageMetadata, absoluteUrl, SITE_URL, SITE_NAME } from '../../../lib/seo'
+import JsonLd from '../../../components/JsonLd'
+import { baseNodes, graph, webPageNode, serviceNode, faqPageNode, breadcrumbNode } from '../../../lib/schema'
 import './page.css'
 
 // `</script>`-safe JSON-LD serialization (matches the article route).
-const jsonLd = (obj) => JSON.stringify(obj).replace(/</g, '\\u003c')
 
 export function generateStaticParams() {
   return services.map(service => ({ slug: service.slug }))
@@ -44,35 +45,22 @@ export default async function ServicePage({ params }) {
   const cols = stepCount <= 4 ? stepCount : 3
 
   const url = absoluteUrl(`/services/${service.slug}`)
-  const schemas = [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'Service',
-      name: service.name,
-      description: service.blurb,
-      serviceType: service.name,
-      url,
-      provider: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
-        { '@type': 'ListItem', position: 2, name: service.name, item: url },
-      ],
-    },
-  ]
+  /* FAQPage is built from service.faq, which is exactly what ServiceFaq renders
+     into the server HTML, so every marked-up question is visible on the page. */
+  const jsonLdGraph = graph([
+    ...baseNodes,
+    webPageNode({ url, name: `${service.name} | GTMx`, description: service.blurb }),
+    serviceNode({ slug: service.slug, name: service.name, description: service.blurb }),
+    faqPageNode(url, service.faq.map(({ q, a }) => ({ question: q, answer: a }))),
+    breadcrumbNode(url, [
+      ['Home', SITE_URL],
+      [service.name, url],
+    ]),
+  ])
 
   return (
     <>
-      {schemas.map((schema, i) => (
-        <script
-          key={i}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: jsonLd(schema) }}
-        />
-      ))}
+      <JsonLd data={jsonLdGraph} />
       <Navbar />
       <div className={`svc-page ${service.theme}`}>
         <main>
